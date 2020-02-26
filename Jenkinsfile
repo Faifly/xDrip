@@ -27,18 +27,18 @@ node {
 
         stage('Build') {
             wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-                sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'id=${simulator_device}' clean build | tee build/xcodebuild.log | xcpretty"
+                sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'id=${simulator_device_id}' clean build | tee build/xcodebuild.log | xcpretty"
             }
         }
 
         stage('Test') {
             wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
                 // Launch simulator and delete app if installed
-                sh "xcrun sumctl boot ${id}"
+                sh "xcrun sumctl boot ${simulator_device_id}"
                 sh "xcrun simctl uninstall booted ${bundle_id} || true"
 
                 // Run tests and generate coverage
-                sh "xcodebuild -scheme '${test_scheme}' -enableCodeCoverage YES -configuration Debug -destination '${simulator_device}' test | tee build/xcodebuild-test.log | xcpretty -r junit --output build/reports/junit.xml"
+                sh "xcodebuild -scheme '${test_scheme}' -enableCodeCoverage YES -configuration Debug -destination 'id=${simulator_device_id}' test | tee build/xcodebuild-test.log | xcpretty -r junit --output build/reports/junit.xml"
                 sh "/usr/local/lib/ruby/gems/2.7.0/bin/slather coverage --scheme '${test_scheme}' --cobertura-xml --output-directory build/coverage '${xcodeproj}'"
             }
 
