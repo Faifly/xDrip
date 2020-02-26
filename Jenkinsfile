@@ -20,8 +20,8 @@ properties([buildDiscarder(logRotator(artifactNumToKeepStr: '50', numToKeepStr: 
 node {
     try {
         stage('Check project') {
-            sendStatusNotification("pending")
             checkout scm
+            sendStatusNotification("pending")
             
             // Delete and recreate build directory
             dir('build') {
