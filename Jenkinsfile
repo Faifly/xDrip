@@ -80,7 +80,7 @@ node {
         stage('Test') {
             wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
                 // Quit the iOS Simulator and reset all simulators so we're always starting with a clean slate
-                sh "xcrun simctl uninstall booted com.faifly.xDrip"
+                sh "xcrun simctl uninstall booted com.faifly.xDrip || true"
 
                 // Run tests and generate coverage
                 sh "xcodebuild -scheme '${test_scheme}' -enableCodeCoverage YES -configuration Debug -destination '${simulator_device}' test | tee build/xcodebuild-test.log | xcpretty -r junit --output build/reports/junit.xml"
