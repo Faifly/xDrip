@@ -10,7 +10,8 @@ def sendFailNotification(e) {
 }
 
 def sendStatusNotification(status) {
-    sh "curl --location --request POST 'https://api.github.com/repos/Faifly/xDrip/statuses/${GIT_COMMIT}' --header 'Content-Type: application/json' --header 'Authorization: token ${env.GITHUB_OAUTH_TOKEN}' --data-raw '{\"state\": \"${status}\", \"target_url\": \"${env.BUILD_URL}\", \"description\": \"The build status is ${status}\", \"context\": \"continuous-integration/jenkins\"}'"
+    GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+    sh "curl --location --request POST 'https://api.github.com/repos/Faifly/xDrip/statuses/${GIT_COMMIT_HASH}' --header 'Content-Type: application/json' --header 'Authorization: token ${env.GITHUB_OAUTH_TOKEN}' --data-raw '{\"state\": \"${status}\", \"target_url\": \"${env.BUILD_URL}\", \"description\": \"The build status is ${status}\", \"context\": \"continuous-integration/jenkins\"}'"
 }
 
 // Configure Jenkins to keep the last 200 build results and the last 50 build artifacts for this job
