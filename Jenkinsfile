@@ -10,7 +10,7 @@ def sendFailNotification(e) {
 }
 
 // Configure Jenkins to keep the last 200 build results and the last 50 build artifacts for this job
-properties([buildDiscarder(logRotator(artifactNumToKeepStr: '50', numToKeepStr: '100'))])
+properties([buildDiscarder(logRotator(artifactNumToKeepStr: '50', numToKeepStr: '200'))])
 
 node {
     try {
