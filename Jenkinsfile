@@ -51,13 +51,14 @@ node {
             step([$class: 'JUnitResultArchiver', testResults: 'build/reports/*.xml'])
             step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'build/coverage/*.xml', failNoReports: true, failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'UTF_8', zoomCoverageChart: true])
         }
-        
-        stage('Notifications') {
-            sendStatusNotification("success")
-        }
     } catch (e) {
-        sendStatusNotification("failure")
         sendFailNotification(e)
         throw e
+    } finally {
+        if (currentBuild.result == 'SUCCESS') {
+            sendStatusNotification("success")
+        } else {
+            sendStatusNotification("failure")
+        }
     }
 }
