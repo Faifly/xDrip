@@ -34,7 +34,7 @@ node {
         stage('Test') {
             wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
                 // Launch simulator and delete app if installed
-                sh "xcrun simctl boot ${simulator_device_id}"
+                sh "xcrun simctl boot ${simulator_device_id} || true"
                 sh "xcrun simctl uninstall ${simulator_device_id} ${bundle_id} || true"
 
                 // Run tests and generate coverage
