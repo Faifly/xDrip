@@ -55,8 +55,8 @@ node {
         sendFailNotification(e)
         throw e
     } finally {
-        echo "${currentBuild.result}"
-        if (currentBuild.result == 'SUCCESS') {
+        echo "${currentBuild.currentResult}"
+        if (currentBuild.currentResult == 'SUCCESS') {
             sendStatusNotification("success")
         } else {
             sendStatusNotification("failure")
