@@ -80,8 +80,7 @@ node {
         stage('Test') {
             wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
                 // Quit the iOS Simulator and reset all simulators so we're always starting with a clean slate
-                sh "killall 'Simulator' 2&> /dev/null || true"
-                sh "xcrun simctl erase all"
+                sh "xcrun simctl uninstall booted com.faifly.xDrip"
 
                 // Run tests and generate coverage
                 sh "xcodebuild -scheme '${test_scheme}' -enableCodeCoverage YES -configuration Debug -destination '${simulator_device}' test | tee build/xcodebuild-test.log | xcpretty -r junit --output build/reports/junit.xml"
@@ -117,7 +116,7 @@ node {
 
             def endTime = System.currentTimeMillis()
             def durationString = createDurationString(startTime, endTime)
-            def testResults = getTestResult()
+            def testResults = "no test r"//getTestResult()
             def testResultString = "no test results"//getTestResultString()
             def unstableFromTests = testResults && (testResults[1] > 0 || testResults[2] > 0)
 
