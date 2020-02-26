@@ -3,7 +3,9 @@ def xcarchive_name = "xDrip.xcarchive"
 def build_scheme = 'xDrip'
 def test_scheme = 'xDrip'
 def bundle_id = 'com.faifly.xDrip'
-def simulator_device_id = '6917EAE7-8315-431A-9331-60E75802917F'
+def simulator_device_id1 = 'D4B27995-A4F3-4465-8D72-B147831C6509'
+def simulator_device_id2 = '319907F1-C4AD-4717-AC99-480B071EEE46'
+def simulator_device_id3 = '2A4B1772-BC67-49DB-B34D-A011AF2A907E'
 
 def sendFailNotification(e) {
     
@@ -27,18 +29,22 @@ node {
 
         stage('Build') {
             wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-                sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'id=${simulator_device_id}' clean build | tee build/xcodebuild.log | xcpretty"
+                sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'id=${simulator_device_id1}' -destination 'id=${simulator_device_id2}' -destination 'id=${simulator_device_id3}' clean build | tee build/xcodebuild.log | xcpretty"
             }
         }
 
         stage('Test') {
             wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
                 // Launch simulator and delete app if installed
-                sh "xcrun sumctl boot ${simulator_device_id}"
-                sh "xcrun simctl uninstall booted ${bundle_id} || true"
+                sh "xcrun simctl boot ${simulator_device_id1}"
+                sh "xcrun simctl uninstall ${simulator_device_id1} ${bundle_id} || true"
+                sh "xcrun simctl boot ${simulator_device_id2}"
+                sh "xcrun simctl uninstall ${simulator_device_id2} ${bundle_id} || true"
+                sh "xcrun simctl boot ${simulator_device_id3}"
+                sh "xcrun simctl uninstall ${simulator_device_id3} ${bundle_id} || true"
 
                 // Run tests and generate coverage
-                sh "xcodebuild -scheme '${test_scheme}' -enableCodeCoverage YES -configuration Debug -destination 'id=${simulator_device_id}' test | tee build/xcodebuild-test.log | xcpretty -r junit --output build/reports/junit.xml"
+                sh "xcodebuild -scheme '${test_scheme}' -configuration Debug -destination 'id=${simulator_device_id1}' -destination 'id=${simulator_device_id2}' -destination 'id=${simulator_device_id3}' test | tee build/xcodebuild-test.log | xcpretty -r junit --output build/reports/junit.xml"
                 sh "/usr/local/lib/ruby/gems/2.7.0/bin/slather coverage --scheme '${test_scheme}' --cobertura-xml --output-directory build/coverage '${xcodeproj}'"
             }
 
