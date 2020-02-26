@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "AKUtils",
+        "repositoryURL": "https://github.com/Artem-Kalmykov/AKUtils.git",
+        "state": {
+          "branch": "master",
+          "revision": "18efb3f1a4a326d173f270275c8876ae04059747",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
