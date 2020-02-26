@@ -5,9 +5,8 @@ def test_scheme = 'xDrip'
 def bundle_id = 'com.faifly.xDrip'
 def simulator_device_id = '6917EAE7-8315-431A-9331-60E75802917F'
 
-def sendFailNotification() {
+def sendFailNotification(e) {
     
-    false
 }
 
 // Configure Jenkins to keep the last 200 build results and the last 50 build artifacts for this job
