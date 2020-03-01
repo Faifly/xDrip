@@ -30,6 +30,10 @@ node {
 
             sh "mkdir -p build"
         }
+        
+        stage('Swiftline') {
+            sh "swiftlint"
+        }
 
         stage('Build') {
             wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {

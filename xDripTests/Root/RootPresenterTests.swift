@@ -57,6 +57,9 @@ final class RootPresenterTests: XCTestCase {
         sut.presentLoad(response: response)
         
         // Then
-        XCTAssertTrue(spy.displayLoadCalled, "presentLoad(response:) should ask the view controller to display the result")
+        XCTAssertTrue(
+            spy.displayLoadCalled,
+            "presentLoad(response:) should ask the view controller to display the result"
+        )
     }
 }

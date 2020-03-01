@@ -25,6 +25,4 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
     var dataStore: RootDataStore?
     
     // MARK: Routing
-    
-    
 }
