@@ -55,7 +55,7 @@ node {
 
                 // Run tests and generate coverage
                 sh "xcodebuild -scheme '${test_scheme}' -configuration Debug -destination 'id=${simulator_device_id}' SWIFT_TREAT_WARNINGS_AS_ERRORS=YES test | tee build/xcodebuild-test.log | xcpretty -r junit --output build/reports/junit.xml"
-                sh "/usr/local/lib/ruby/gems/2.7.0/bin/slather coverage --scheme '${test_scheme}' --cobertura-xml --output-directory build/coverage '${xcodeproj}'"
+                sh "/usr/local/lib/ruby/gems/2.7.0/bin/slather coverage --scheme '${test_scheme}' --binary-basename ${build_scheme} --cobertura-xml --output-directory build/coverage '${xcodeproj}'"
             }
 
             step([$class: 'JUnitResultArchiver', testResults: 'build/reports/*.xml'])
