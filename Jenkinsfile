@@ -34,21 +34,27 @@ node {
         stage('Swiftline') {
             sh "swiftlint"
         }
-
-        stage('Build') {
+        
+        stage('Test Catalyst') {
             wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-                sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'id=${simulator_device_id}' -destination 'platform=macOS' SWIFT_TREAT_WARNINGS_AS_ERRORS=YES clean build | tee build/xcodebuild.log | xcpretty"
+                sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'platform=macOS' SWIFT_TREAT_WARNINGS_AS_ERRORS=YES clean build test | tee build/xcodebuild.log | xcpretty"
             }
         }
 
-        stage('Test') {
+        stage('Build iOS') {
+            wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+                sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'id=${simulator_device_id}' SWIFT_TREAT_WARNINGS_AS_ERRORS=YES clean build | tee build/xcodebuild.log | xcpretty"
+            }
+        }
+
+        stage('Test iOS') {
             wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
                 // Launch simulator and delete app if installed
                 sh "xcrun simctl boot ${simulator_device_id} || true"
                 sh "xcrun simctl uninstall ${simulator_device_id} ${bundle_id} || true"
 
                 // Run tests and generate coverage
-                sh "xcodebuild -scheme '${test_scheme}' -configuration Debug -destination 'id=${simulator_device_id}' -destination 'platform=macOS' test | tee build/xcodebuild-test.log | xcpretty -r junit --output build/reports/junit.xml"
+                sh "xcodebuild -scheme '${test_scheme}' -configuration Debug -destination 'id=${simulator_device_id}' SWIFT_TREAT_WARNINGS_AS_ERRORS=YES test | tee build/xcodebuild-test.log | xcpretty -r junit --output build/reports/junit.xml"
                 sh "/usr/local/lib/ruby/gems/2.7.0/bin/slather coverage --scheme '${test_scheme}' --cobertura-xml --output-directory build/coverage '${xcodeproj}'"
             }
 
