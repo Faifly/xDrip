@@ -53,6 +53,7 @@
 		58160E082402E38200C792F4 /* DualStateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualStateButton.swift; sourceTree = "<group>"; };
 		58160E0C2402E52000C792F4 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		58160E262405950000C792F4 /* Jenkinsfile */ = {isa = PBXFileReference; explicitFileType = text.script.sh; path = Jenkinsfile; sourceTree = SOURCE_ROOT; };
+		582EC946240BE77A00ADF9B0 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		58E5A66C2402B8A7002C2BE3 /* xDrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xDrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -167,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				58160E262405950000C792F4 /* Jenkinsfile */,
+				582EC946240BE77A00ADF9B0 /* .swiftlint.yml */,
 				58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */,
 				58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */,
 				58160DE82402BDF400C792F4 /* xDrip.entitlements */,
@@ -489,6 +491,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = z;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -517,6 +520,7 @@
 				CODE_SIGN_ENTITLEMENTS = xDrip/ApplicationSupport/xDrip.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				DEVELOPMENT_TEAM = J99KK893V2;
 				INFOPLIST_FILE = xDrip/ApplicationSupport/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -537,6 +541,7 @@
 				CODE_SIGN_ENTITLEMENTS = xDrip/ApplicationSupport/xDrip.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				DEVELOPMENT_TEAM = J99KK893V2;
 				INFOPLIST_FILE = xDrip/ApplicationSupport/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -556,6 +561,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J99KK893V2;
 				INFOPLIST_FILE = xDripTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -575,6 +581,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J99KK893V2;
 				INFOPLIST_FILE = xDripTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
