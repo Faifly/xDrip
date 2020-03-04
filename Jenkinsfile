@@ -5,7 +5,7 @@ def test_scheme = 'xDrip'
 def bundle_id = 'com.faifly.xDrip'
 def simulator_device_id = 'D4B27995-A4F3-4465-8D72-B147831C6509'
 
-def sendFailNotification(e) {
+def sendFailNotification() {
     def emailBody = "The build has failed, see ${env.BUILD_URL}"
     def emailSubject = "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}"
     emailext(mimeType: 'text/html', subject: emailSubject, to: 'ar.kalmykov@gmail.com', body: emailBody)
@@ -71,7 +71,7 @@ node {
             sendStatusNotification("success")
         } else {
             sendStatusNotification("failure")
-            sendFailNotification(e)
+            sendFailNotification()
         }
     }
 }
