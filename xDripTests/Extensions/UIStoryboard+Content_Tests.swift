@@ -13,6 +13,5 @@ final class UIStoryboard_Content_Tests: XCTestCase {
     func testStoryboards() {
         XCTAssert(UIStoryboard.Storyboard.root.rawValue == "Root")
         _ = UIStoryboard(board: .root)
-        XCTFail()
     }
 }
