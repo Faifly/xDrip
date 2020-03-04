@@ -6,9 +6,9 @@ def bundle_id = 'com.faifly.xDrip'
 def simulator_device_id = 'D4B27995-A4F3-4465-8D72-B147831C6509'
 
 def sendFailNotification() {
-    def emailBody = "The build has failed, see ${env.BUILD_URL}"
-    def emailSubject = "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}"
-    emailext(mimeType: 'text/html', subject: emailSubject, to: 'ar.kalmykov@gmail.com', body: emailBody)
+    def emailBody = "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}, see ${env.BUILD_URL}"
+    def emailSubject = "The CI job has failed"
+    emailext(mimeType: 'text/html', subject: emailSubject, recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], body: emailBody)
 }
 
 def sendStatusNotification(status) {
