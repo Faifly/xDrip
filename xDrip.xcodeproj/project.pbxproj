@@ -37,7 +37,7 @@
 		58B4F6BB24114E02003C6D8F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F6BA24114E02003C6D8F /* StoreKit.framework */; platformFilter = ios; };
 		58B4F6BD24114E11003C6D8F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F6BC24114E11003C6D8F /* libsqlite3.tbd */; platformFilter = ios; };
 		58B4F6C024114EBA003C6D8F /* ApplicationLaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B4F6BF24114EBA003C6D8F /* ApplicationLaunchController.swift */; };
-		58B4F6C2241158AA003C6D8F /* FirebaseCrashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68224114BCD003C6D8F /* FirebaseCrashlytics.framework */; };
+		58B4F6C2241158AA003C6D8F /* FirebaseCrashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68224114BCD003C6D8F /* FirebaseCrashlytics.framework */; platformFilter = ios; };
 		58B4F6C3241158AD003C6D8F /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68524114BCD003C6D8F /* FirebaseInstanceID.framework */; platformFilter = ios; };
 		58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */; };
 		58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */; };
