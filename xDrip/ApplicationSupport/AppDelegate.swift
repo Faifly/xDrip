@@ -13,6 +13,7 @@ import UIKit
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        ApplicationLaunchController.runAppLaunchSequence()
         return true
     }
 

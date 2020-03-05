@@ -21,6 +21,24 @@
 		58160E062402CB1400C792F4 /* UIStoryboard+Content_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160E052402CB1400C792F4 /* UIStoryboard+Content_Tests.swift */; };
 		58160E092402E38200C792F4 /* DualStateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160E082402E38200C792F4 /* DualStateButton.swift */; };
 		58160E0D2402E52000C792F4 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160E0C2402E52000C792F4 /* TabBarView.swift */; };
+		58B4F67F24114938003C6D8F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 58B4F67E24114938003C6D8F /* GoogleService-Info.plist */; };
+		58B4F6AB24114D2D003C6D8F /* GoogleDataTransport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68724114BCD003C6D8F /* GoogleDataTransport.framework */; };
+		58B4F6AC24114D2D003C6D8F /* GoogleDataTransportCCTSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68824114BCD003C6D8F /* GoogleDataTransportCCTSupport.framework */; };
+		58B4F6AD24114D2D003C6D8F /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68924114BCD003C6D8F /* GoogleAppMeasurement.framework */; };
+		58B4F6AE24114D2D003C6D8F /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68A24114BCD003C6D8F /* FirebaseCore.framework */; };
+		58B4F6AF24114D2D003C6D8F /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68B24114BCD003C6D8F /* FirebaseAnalytics.framework */; };
+		58B4F6B024114D2D003C6D8F /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68C24114BCD003C6D8F /* GoogleUtilities.framework */; };
+		58B4F6B124114D2D003C6D8F /* PromisesObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68D24114BCD003C6D8F /* PromisesObjC.framework */; };
+		58B4F6B224114D2D003C6D8F /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68E24114BCD003C6D8F /* nanopb.framework */; };
+		58B4F6B324114D2D003C6D8F /* FirebaseInstallations.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68F24114BCD003C6D8F /* FirebaseInstallations.framework */; };
+		58B4F6B424114D2D003C6D8F /* FIRAnalyticsConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F69024114BCD003C6D8F /* FIRAnalyticsConnector.framework */; };
+		58B4F6B524114D2D003C6D8F /* FirebaseCoreDiagnostics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F69124114BCD003C6D8F /* FirebaseCoreDiagnostics.framework */; };
+		58B4F6B824114DB0003C6D8F /* Firebase.h in Headers */ = {isa = PBXBuildFile; fileRef = 58B4F6B724114DB0003C6D8F /* Firebase.h */; };
+		58B4F6BB24114E02003C6D8F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F6BA24114E02003C6D8F /* StoreKit.framework */; };
+		58B4F6BD24114E11003C6D8F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F6BC24114E11003C6D8F /* libsqlite3.tbd */; };
+		58B4F6C024114EBA003C6D8F /* ApplicationLaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B4F6BF24114EBA003C6D8F /* ApplicationLaunchController.swift */; };
+		58B4F6C2241158AA003C6D8F /* FirebaseCrashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68224114BCD003C6D8F /* FirebaseCrashlytics.framework */; };
+		58B4F6C3241158AD003C6D8F /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68524114BCD003C6D8F /* FirebaseInstanceID.framework */; };
 		58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */; };
 		58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */; };
 		58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58E5A6782402B8A8002C2BE3 /* Assets.xcassets */; };
@@ -55,6 +73,27 @@
 		58160E262405950000C792F4 /* Jenkinsfile */ = {isa = PBXFileReference; explicitFileType = text.script.sh; path = Jenkinsfile; sourceTree = SOURCE_ROOT; };
 		582EC946240BE77A00ADF9B0 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		58B4F674241015F0003C6D8F /* pull_request_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = pull_request_template.md; path = .github/pull_request_template.md; sourceTree = SOURCE_ROOT; };
+		58B4F67E24114938003C6D8F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		58B4F68224114BCD003C6D8F /* FirebaseCrashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseCrashlytics.framework; sourceTree = "<group>"; };
+		58B4F68324114BCD003C6D8F /* run */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run; sourceTree = "<group>"; };
+		58B4F68424114BCD003C6D8F /* upload-symbols */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "upload-symbols"; sourceTree = "<group>"; };
+		58B4F68524114BCD003C6D8F /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		58B4F68724114BCD003C6D8F /* GoogleDataTransport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleDataTransport.framework; sourceTree = "<group>"; };
+		58B4F68824114BCD003C6D8F /* GoogleDataTransportCCTSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleDataTransportCCTSupport.framework; sourceTree = "<group>"; };
+		58B4F68924114BCD003C6D8F /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
+		58B4F68A24114BCD003C6D8F /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = "<group>"; };
+		58B4F68B24114BCD003C6D8F /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAnalytics.framework; sourceTree = "<group>"; };
+		58B4F68C24114BCD003C6D8F /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
+		58B4F68D24114BCD003C6D8F /* PromisesObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PromisesObjC.framework; sourceTree = "<group>"; };
+		58B4F68E24114BCD003C6D8F /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = nanopb.framework; sourceTree = "<group>"; };
+		58B4F68F24114BCD003C6D8F /* FirebaseInstallations.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseInstallations.framework; sourceTree = "<group>"; };
+		58B4F69024114BCD003C6D8F /* FIRAnalyticsConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FIRAnalyticsConnector.framework; sourceTree = "<group>"; };
+		58B4F69124114BCD003C6D8F /* FirebaseCoreDiagnostics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseCoreDiagnostics.framework; sourceTree = "<group>"; };
+		58B4F6B724114DB0003C6D8F /* Firebase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Firebase.h; sourceTree = "<group>"; };
+		58B4F6B924114DBB003C6D8F /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		58B4F6BA24114E02003C6D8F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
+		58B4F6BC24114E11003C6D8F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
+		58B4F6BF24114EBA003C6D8F /* ApplicationLaunchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationLaunchController.swift; sourceTree = "<group>"; };
 		58E5A66C2402B8A7002C2BE3 /* xDrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xDrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,7 +109,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58B4F6C2241158AA003C6D8F /* FirebaseCrashlytics.framework in Frameworks */,
+				58B4F6BD24114E11003C6D8F /* libsqlite3.tbd in Frameworks */,
+				58B4F6BB24114E02003C6D8F /* StoreKit.framework in Frameworks */,
 				58160E002402C88C00C792F4 /* AKUtils in Frameworks */,
+				58B4F6B324114D2D003C6D8F /* FirebaseInstallations.framework in Frameworks */,
+				58B4F6AE24114D2D003C6D8F /* FirebaseCore.framework in Frameworks */,
+				58B4F6B124114D2D003C6D8F /* PromisesObjC.framework in Frameworks */,
+				58B4F6B424114D2D003C6D8F /* FIRAnalyticsConnector.framework in Frameworks */,
+				58B4F6AF24114D2D003C6D8F /* FirebaseAnalytics.framework in Frameworks */,
+				58B4F6B224114D2D003C6D8F /* nanopb.framework in Frameworks */,
+				58B4F6AC24114D2D003C6D8F /* GoogleDataTransportCCTSupport.framework in Frameworks */,
+				58B4F6C3241158AD003C6D8F /* FirebaseInstanceID.framework in Frameworks */,
+				58B4F6AD24114D2D003C6D8F /* GoogleAppMeasurement.framework in Frameworks */,
+				58B4F6B524114D2D003C6D8F /* FirebaseCoreDiagnostics.framework in Frameworks */,
+				58B4F6AB24114D2D003C6D8F /* GoogleDataTransport.framework in Frameworks */,
+				58B4F6B024114D2D003C6D8F /* GoogleUtilities.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +222,7 @@
 		58732F4D2402BD2B000F38C6 /* ApplicationSupport */ = {
 			isa = PBXGroup;
 			children = (
+				58B4F67E24114938003C6D8F /* GoogleService-Info.plist */,
 				58B4F674241015F0003C6D8F /* pull_request_template.md */,
 				58160E262405950000C792F4 /* Jenkinsfile */,
 				582EC946240BE77A00ADF9B0 /* .swiftlint.yml */,
@@ -179,10 +234,61 @@
 			path = ApplicationSupport;
 			sourceTree = "<group>";
 		};
+		58B4F68024114BCD003C6D8F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				58B4F6BC24114E11003C6D8F /* libsqlite3.tbd */,
+				58B4F6BA24114E02003C6D8F /* StoreKit.framework */,
+				58B4F68124114BCD003C6D8F /* FirebaseCrashlytics */,
+				58B4F68624114BCD003C6D8F /* FirebaseAnalytics */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		58B4F68124114BCD003C6D8F /* FirebaseCrashlytics */ = {
+			isa = PBXGroup;
+			children = (
+				58B4F68224114BCD003C6D8F /* FirebaseCrashlytics.framework */,
+				58B4F68324114BCD003C6D8F /* run */,
+				58B4F68424114BCD003C6D8F /* upload-symbols */,
+				58B4F68524114BCD003C6D8F /* FirebaseInstanceID.framework */,
+			);
+			path = FirebaseCrashlytics;
+			sourceTree = "<group>";
+		};
+		58B4F68624114BCD003C6D8F /* FirebaseAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				58B4F6B724114DB0003C6D8F /* Firebase.h */,
+				58B4F6B924114DBB003C6D8F /* module.modulemap */,
+				58B4F68724114BCD003C6D8F /* GoogleDataTransport.framework */,
+				58B4F68824114BCD003C6D8F /* GoogleDataTransportCCTSupport.framework */,
+				58B4F68924114BCD003C6D8F /* GoogleAppMeasurement.framework */,
+				58B4F68A24114BCD003C6D8F /* FirebaseCore.framework */,
+				58B4F68B24114BCD003C6D8F /* FirebaseAnalytics.framework */,
+				58B4F68C24114BCD003C6D8F /* GoogleUtilities.framework */,
+				58B4F68D24114BCD003C6D8F /* PromisesObjC.framework */,
+				58B4F68E24114BCD003C6D8F /* nanopb.framework */,
+				58B4F68F24114BCD003C6D8F /* FirebaseInstallations.framework */,
+				58B4F69024114BCD003C6D8F /* FIRAnalyticsConnector.framework */,
+				58B4F69124114BCD003C6D8F /* FirebaseCoreDiagnostics.framework */,
+			);
+			path = FirebaseAnalytics;
+			sourceTree = "<group>";
+		};
+		58B4F6BE24114EA7003C6D8F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				58B4F6BF24114EBA003C6D8F /* ApplicationLaunchController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		58E5A6632402B8A7002C2BE3 = {
 			isa = PBXGroup;
 			children = (
 				58E5A66E2402B8A7002C2BE3 /* xDrip */,
+				58B4F68024114BCD003C6D8F /* Frameworks */,
 				58E5A6852402B8A9002C2BE3 /* xDripTests */,
 				58E5A66D2402B8A7002C2BE3 /* Products */,
 			);
@@ -200,9 +306,10 @@
 		58E5A66E2402B8A7002C2BE3 /* xDrip */ = {
 			isa = PBXGroup;
 			children = (
+				58160DE92402C2A900C792F4 /* Scenes */,
+				58B4F6BE24114EA7003C6D8F /* Controllers */,
 				58160E072402E37600C792F4 /* Components */,
 				58160E012402C8B100C792F4 /* Extensions */,
-				58160DE92402C2A900C792F4 /* Scenes */,
 				58732F4D2402BD2B000F38C6 /* ApplicationSupport */,
 				58732F4C2402BD1C000F38C6 /* Resources */,
 			);
@@ -221,14 +328,27 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		58B4F6A024114CE6003C6D8F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58B4F6B824114DB0003C6D8F /* Firebase.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		58E5A66B2402B8A7002C2BE3 /* xDrip */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 58E5A68B2402B8A9002C2BE3 /* Build configuration list for PBXNativeTarget "xDrip" */;
 			buildPhases = (
+				58B4F6A024114CE6003C6D8F /* Headers */,
 				58E5A6682402B8A7002C2BE3 /* Sources */,
 				58E5A6692402B8A7002C2BE3 /* Frameworks */,
 				58E5A66A2402B8A7002C2BE3 /* Resources */,
+				58B4F6C124114F78003C6D8F /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -307,6 +427,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58160DEC2402C3BC00C792F4 /* Root.storyboard in Resources */,
+				58B4F67F24114938003C6D8F /* GoogleService-Info.plist in Resources */,
 				58E5A67C2402B8A8002C2BE3 /* LaunchScreen.storyboard in Resources */,
 				58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */,
 			);
@@ -321,6 +442,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		58B4F6C124114F78003C6D8F /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+			);
+			name = Crashlytics;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PROJECT_DIR}/Frameworks/FirebaseCrashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		58E5A6682402B8A7002C2BE3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -333,6 +477,7 @@
 				58160DF62402C7F600C792F4 /* RootInteractor.swift in Sources */,
 				58160DF52402C7F600C792F4 /* RootViewController.swift in Sources */,
 				58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */,
+				58B4F6C024114EBA003C6D8F /* ApplicationLaunchController.swift in Sources */,
 				58160DF42402C7F600C792F4 /* RootModels.swift in Sources */,
 				58160E0D2402E52000C792F4 /* TabBarView.swift in Sources */,
 				58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */,
@@ -521,14 +666,21 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = xDrip/ApplicationSupport/xDrip.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
-				DEVELOPMENT_TEAM = J99KK893V2;
+				DEVELOPMENT_TEAM = B2YEP8DDS6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks/FirebaseAnalytics",
+					"$(PROJECT_DIR)/Frameworks/FirebaseCrashlytics",
+				);
 				INFOPLIST_FILE = xDrip/ApplicationSupport/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.faifly.xDrip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -542,14 +694,21 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = xDrip/ApplicationSupport/xDrip.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
-				DEVELOPMENT_TEAM = J99KK893V2;
+				DEVELOPMENT_TEAM = B2YEP8DDS6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks/FirebaseAnalytics",
+					"$(PROJECT_DIR)/Frameworks/FirebaseCrashlytics",
+				);
 				INFOPLIST_FILE = xDrip/ApplicationSupport/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.faifly.xDrip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -563,7 +722,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J99KK893V2;
+				DEVELOPMENT_TEAM = B2YEP8DDS6;
 				INFOPLIST_FILE = xDripTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -583,7 +742,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J99KK893V2;
+				DEVELOPMENT_TEAM = B2YEP8DDS6;
 				INFOPLIST_FILE = xDripTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
