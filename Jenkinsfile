@@ -41,6 +41,7 @@ node {
             wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
                 sh "set -o pipefail"
                 sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'platform=macOS' SWIFT_TREAT_WARNINGS_AS_ERRORS=YES clean build test | tee build/xcodebuild.log | xcpretty"
+                sh "test ${PIPESTATUS[0]} -eq 0"
             }
         }
 
