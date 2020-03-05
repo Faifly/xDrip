@@ -37,8 +37,9 @@
 		58B4F6BB24114E02003C6D8F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F6BA24114E02003C6D8F /* StoreKit.framework */; platformFilter = ios; };
 		58B4F6BD24114E11003C6D8F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F6BC24114E11003C6D8F /* libsqlite3.tbd */; platformFilter = ios; };
 		58B4F6C024114EBA003C6D8F /* ApplicationLaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B4F6BF24114EBA003C6D8F /* ApplicationLaunchController.swift */; };
-		58B4F6C2241158AA003C6D8F /* FirebaseCrashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68224114BCD003C6D8F /* FirebaseCrashlytics.framework */; platformFilter = ios; };
 		58B4F6C3241158AD003C6D8F /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68524114BCD003C6D8F /* FirebaseInstanceID.framework */; platformFilter = ios; };
+		58B4F6C4241161E6003C6D8F /* FirebaseCrashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68224114BCD003C6D8F /* FirebaseCrashlytics.framework */; platformFilter = ios; settings = {ATTRIBUTES = (Required, ); }; };
+		58B4F6C62411623F003C6D8F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F6C52411623E003C6D8F /* libc++.tbd */; platformFilter = ios; };
 		58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */; };
 		58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */; };
 		58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58E5A6782402B8A8002C2BE3 /* Assets.xcassets */; };
@@ -94,6 +95,7 @@
 		58B4F6BA24114E02003C6D8F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		58B4F6BC24114E11003C6D8F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		58B4F6BF24114EBA003C6D8F /* ApplicationLaunchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationLaunchController.swift; sourceTree = "<group>"; };
+		58B4F6C52411623E003C6D8F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
 		58E5A66C2402B8A7002C2BE3 /* xDrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xDrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,10 +111,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58B4F6C2241158AA003C6D8F /* FirebaseCrashlytics.framework in Frameworks */,
+				58B4F6C62411623F003C6D8F /* libc++.tbd in Frameworks */,
 				58B4F6BD24114E11003C6D8F /* libsqlite3.tbd in Frameworks */,
 				58B4F6BB24114E02003C6D8F /* StoreKit.framework in Frameworks */,
 				58160E002402C88C00C792F4 /* AKUtils in Frameworks */,
+				58B4F6C4241161E6003C6D8F /* FirebaseCrashlytics.framework in Frameworks */,
 				58B4F6B324114D2D003C6D8F /* FirebaseInstallations.framework in Frameworks */,
 				58B4F6AE24114D2D003C6D8F /* FirebaseCore.framework in Frameworks */,
 				58B4F6B124114D2D003C6D8F /* PromisesObjC.framework in Frameworks */,
@@ -237,6 +240,7 @@
 		58B4F68024114BCD003C6D8F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58B4F6C52411623E003C6D8F /* libc++.tbd */,
 				58B4F6BC24114E11003C6D8F /* libsqlite3.tbd */,
 				58B4F6BA24114E02003C6D8F /* StoreKit.framework */,
 				58B4F68124114BCD003C6D8F /* FirebaseCrashlytics */,
