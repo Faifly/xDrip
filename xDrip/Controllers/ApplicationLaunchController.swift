@@ -7,11 +7,14 @@
 //
 
 import UIKit
+#if !targetEnvironment(macCatalyst)
 import FirebaseCore
-import FirebaseCrashlytics
+#endif
 
 final class ApplicationLaunchController {
     static func runAppLaunchSequence() {
+        #if !targetEnvironment(macCatalyst)
         FirebaseApp.configure()
+        #endif
     }
 }
