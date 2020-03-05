@@ -39,9 +39,7 @@ node {
         
         stage('Test Catalyst') {
             wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-                sh "set -o pipefail"
-                sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'platform=macOS' SWIFT_TREAT_WARNINGS_AS_ERRORS=YES clean build test | tee build/xcodebuild.log | xcpretty -t"
-                sh "test \$? -eq 0"
+                sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'platform=macOS' SWIFT_TREAT_WARNINGS_AS_ERRORS=YES clean build test"
             }
         }
 
