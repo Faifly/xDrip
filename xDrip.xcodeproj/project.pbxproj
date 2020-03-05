@@ -40,6 +40,7 @@
 		58B4F6C3241158AD003C6D8F /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68524114BCD003C6D8F /* FirebaseInstanceID.framework */; platformFilter = ios; };
 		58B4F6C4241161E6003C6D8F /* FirebaseCrashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68224114BCD003C6D8F /* FirebaseCrashlytics.framework */; platformFilter = ios; settings = {ATTRIBUTES = (Required, ); }; };
 		58B4F6C62411623F003C6D8F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F6C52411623E003C6D8F /* libc++.tbd */; platformFilter = ios; };
+		58B4F6C924116394003C6D8F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58B4F6CB24116394003C6D8F /* Localizable.strings */; };
 		58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */; };
 		58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */; };
 		58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58E5A6782402B8A8002C2BE3 /* Assets.xcassets */; };
@@ -96,6 +97,9 @@
 		58B4F6BC24114E11003C6D8F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		58B4F6BF24114EBA003C6D8F /* ApplicationLaunchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationLaunchController.swift; sourceTree = "<group>"; };
 		58B4F6C52411623E003C6D8F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
+		58B4F6CA24116394003C6D8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		58B4F6CC241163B4003C6D8F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		58B4F6CD241164BA003C6D8F /* localization */ = {isa = PBXFileReference; lastKnownFileType = text; path = localization; sourceTree = SOURCE_ROOT; };
 		58E5A66C2402B8A7002C2BE3 /* xDrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xDrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -218,6 +222,7 @@
 			children = (
 				58E5A6782402B8A8002C2BE3 /* Assets.xcassets */,
 				58E5A67A2402B8A8002C2BE3 /* LaunchScreen.storyboard */,
+				58B4F6CB24116394003C6D8F /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -233,6 +238,7 @@
 				58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */,
 				58160DE82402BDF400C792F4 /* xDrip.entitlements */,
 				58E5A67D2402B8A8002C2BE3 /* Info.plist */,
+				58B4F6CD241164BA003C6D8F /* localization */,
 			);
 			path = ApplicationSupport;
 			sourceTree = "<group>";
@@ -348,6 +354,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 58E5A68B2402B8A9002C2BE3 /* Build configuration list for PBXNativeTarget "xDrip" */;
 			buildPhases = (
+				58B4F6CE241164E4003C6D8F /* Localization */,
 				58B4F6A024114CE6003C6D8F /* Headers */,
 				58E5A6682402B8A7002C2BE3 /* Sources */,
 				58E5A6692402B8A7002C2BE3 /* Frameworks */,
@@ -410,6 +417,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 58E5A6632402B8A7002C2BE3;
 			packageReferences = (
@@ -430,6 +438,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58B4F6C924116394003C6D8F /* Localizable.strings in Resources */,
 				58160DEC2402C3BC00C792F4 /* Root.storyboard in Resources */,
 				58B4F67F24114938003C6D8F /* GoogleService-Info.plist in Resources */,
 				58E5A67C2402B8A8002C2BE3 /* LaunchScreen.storyboard in Resources */,
@@ -466,6 +475,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PROJECT_DIR}/Frameworks/FirebaseCrashlytics/run\"\n";
+		};
+		58B4F6CE241164E4003C6D8F /* Localization */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Localization;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "node localization/update_localization.js\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -510,6 +537,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		58B4F6CB24116394003C6D8F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				58B4F6CA24116394003C6D8F /* en */,
+				58B4F6CC241163B4003C6D8F /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		58E5A67A2402B8A8002C2BE3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
