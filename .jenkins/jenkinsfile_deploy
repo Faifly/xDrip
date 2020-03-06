@@ -29,7 +29,8 @@ node {
         }
         
         stage('Increment iOS version') {
-            buildNumber = sh("/usr/libexec/PlistBuddy ${info_plist_path} -c \"Print CFBundleVersion\"") + 1
+            buildNumber = sh("/usr/libexec/PlistBuddy ${info_plist_path} -c \"Print CFBundleVersion\"")
+            buildNumber++
             sh "/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${buildNumber}\" ${info_plist_path}"
         }
         
