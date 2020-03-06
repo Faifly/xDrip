@@ -29,9 +29,9 @@ node {
         }
         
         stage('Increment iOS version') {
-            sh "buildNumber=$(/usr/libexec/PlistBuddy ${info_plist_path} -c "Print CFBundleVersion")"
-            sh "buildNumber=$(($buildNumber + 1))"
-            sh "/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" ${info_plist_path}"
+            sh "buildNumber=\$(/usr/libexec/PlistBuddy ${info_plist_path} -c "Print CFBundleVersion")"
+            sh "buildNumber=\$(($buildNumber + 1))"
+            sh "/usr/libexec/PlistBuddy -c "Set :CFBundleVersion \$buildNumber" ${info_plist_path}"
         }
         
         stage('Deploy iOS') {
@@ -55,5 +55,11 @@ node {
         }
     } catch (e) {
         throw e
+    } finally {
+        if (currentBuild.currentResult == 'SUCCESS') {
+            print('Everything's good, shutting down...')
+        } else {
+            sendFailNotification()
+        }
     }
 }
