@@ -50,7 +50,7 @@ node {
         stage('Deploy macOS') {
             sh "xcrun xcodebuild -scheme ${build_scheme} -destination platform=macOS clean build archive -archivePath ${archive_path_macos} | xcpretty"
             sh "xcrun xcodebuild -exportArchive -archivePath ${archive_path_macos} -exportOptionsPlist ${export_options_path_macos} -exportPath build"
-            sh "ditto -c -k --keepParent \"build/${build_scheme}.app\" \"build/${build_scheme}.zip\"""
+            sh "ditto -c -k --keepParent \"build/${build_scheme}.app\" \"build/${build_scheme}.zip\""
             archiveArtifacts artifacts: "build/${build_scheme}.zip", fingerprint: true
         }
     } catch (e) {
