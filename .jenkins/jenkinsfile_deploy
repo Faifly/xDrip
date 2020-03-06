@@ -1,0 +1,59 @@
+def archive_path_ios = 'build/xDrip_ios.xcarchive'
+def archive_path_macos = 'build/xDrip_macos.xcarchive'
+def build_scheme = 'xDrip'
+def export_options_path_ios = '.jenkins/export_options_ios.plist'
+def export_options_path_macos = '.jenkins/export_options_macos.plist'
+def ipa_path = 'build/xDrip.ipa'
+def info_plist_path = 'xDrip/ApplicationSupport/Info.plist'
+
+def sendFailNotification() {
+    def emailBody = "${env.JOB_NAME} - Build# ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}, see ${env.BUILD_URL}"
+    def emailSubject = "The CI job has failed"
+    emailext(mimeType: 'text/html', subject: emailSubject, recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], body: emailBody)
+}
+
+// Configure Jenkins to keep the last 200 build results and the last 50 build artifacts for this job
+properties([buildDiscarder(logRotator(artifactNumToKeepStr: '50', numToKeepStr: '100'))])
+
+node {
+    try {
+        stage('Checkout project') {
+            checkout scm
+            
+            // Delete and recreate build directory
+            dir('build') {
+                deleteDir()
+            }
+
+            sh "mkdir -p build"
+        }
+        
+        stage('Increment iOS version') {
+            sh "buildNumber=$(/usr/libexec/PlistBuddy ${info_plist_path} -c "Print CFBundleVersion")"
+            sh "buildNumber=$(($buildNumber + 1))"
+            sh "/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" ${info_plist_path}"
+        }
+        
+        stage('Deploy iOS') {
+            sh "xcrun xcodebuild -scheme ${build_scheme} -destination generic/platform=iOS clean build archive -archivePath ${archive_path_ios} | xcpretty"
+            sh "xcrun xcodebuild -exportArchive -archivePath ${archive_path_ios} -exportOptionsPlist ${export_options_path_ios} -exportPath build"
+            sh "xcrun altool --upload-app -f ${ipa_path} -u ${env.AC_ACCOUNT_AKALMYKOV} -p ${env.AC_PASSWORD_AKALMYKOV}"
+            archiveArtifacts artifacts: "${ipa_path}", fingerprint: true
+        }
+        
+        stage('Commit build number') {
+            sh "git add ${info_plist_path}"
+            sh "git commit -m \"[CI-Auto] Increment build number.\""
+            sh "git push origin HEAD"
+        }
+        
+        stage('Deploy macOS') {
+            sh "xcrun xcodebuild -scheme ${build_scheme} -destination platform=macOS clean build archive -archivePath ${archive_path_macos} | xcpretty"
+            sh "xcrun xcodebuild -exportArchive -archivePath ${archive_path_macos} -exportOptionsPlist ${export_options_path_macos} -exportPath build"
+            sh "ditto -c -k --keepParent \"build/${build_scheme}.app\" \"build/${build_scheme}.zip\"""
+            archiveArtifacts artifacts: "build/${build_scheme}.zip", fingerprint: true
+        }
+    } catch (e) {
+        throw e
+    }
+}
