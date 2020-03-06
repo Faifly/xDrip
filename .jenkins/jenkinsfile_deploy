@@ -57,7 +57,7 @@ node {
         throw e
     } finally {
         if (currentBuild.currentResult == 'SUCCESS') {
-            print('Everything's good, shutting down...')
+            echo 'Everything's good, shutting down...'
         } else {
             sendFailNotification()
         }
