@@ -29,9 +29,8 @@ node {
         }
         
         stage('Increment iOS version') {
-            sh "buildNumber=\$(/usr/libexec/PlistBuddy ${info_plist_path} -c \"Print CFBundleVersion\")"
-            sh "buildNumber=\$((\$buildNumber + 1))"
-            sh "/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion \$buildNumber\" ${info_plist_path}"
+            def buildNumber = sh "/usr/libexec/PlistBuddy ${info_plist_path} -c \"Print CFBundleVersion\"" + 1
+            sh "/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${buildNumber}\" ${info_plist_path}"
         }
         
         stage('Deploy iOS') {
