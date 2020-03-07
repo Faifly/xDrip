@@ -29,7 +29,8 @@ node {
         }
         
         stage('Increment iOS version') {
-            def buildNumber = sh(script: "/usr/libexec/PlistBuddy ${info_plist_path} -c \"Print CFBundleVersion\"", returnStdout: true).toString()
+            def buildNumber = sh(script: "/usr/libexec/PlistBuddy ${info_plist_path} -c \"Print CFBundleVersion\"", returnStdout: true)
+            println buildNumber
             buildNumber += 1
             sh "/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${buildNumber}\" ${info_plist_path}"
         }
