@@ -1,2 +1,2 @@
 # xDrip
-Port from Nightscout xDrip+ to iOS Swift
+Port from Nightscout xDrip+ to iOS
