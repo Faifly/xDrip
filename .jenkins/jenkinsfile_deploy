@@ -52,7 +52,7 @@ node {
             sh "git config --global user.email \"ar.kalmykov@gmail.com\""
             sh "git config --global user.name \"Mr. Jenkins\""
             sh "git stash"
-            def git_branch = sh(script: "git name-rev --name-only HEAD", returnStdout: true).trim().substring(15)​
+            def git_branch = sh(script: "git name-rev --name-only HEAD", returnStdout: true).trim()
             sh "git checkout ${git_branch}"
             sh "git stash apply"
             sh "git add ${info_plist_path}"
