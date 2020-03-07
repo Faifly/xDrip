@@ -46,7 +46,7 @@ node {
             sh "git config --global user.name \"Mr. Jenkins\""
             sh "git add ${info_plist_path}"
             sh "git commit -m \"[CI-Auto] Increment build number.\""
-            sh "git push origin HEAD"
+            sh "git push origin develop"
         }
         
         stage('Deploy macOS') {
