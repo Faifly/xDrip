@@ -55,6 +55,7 @@ node {
             def git_branch = sh(script: "git name-rev --name-only HEAD", returnStdout: true).trim()
             git_branch = git_branch.substring(15)
             sh "git checkout ${git_branch}"
+            sh "git pull"
             sh "git stash apply"
             sh "git add ${info_plist_path}"
             sh "git commit -m \"[CI-Auto] Increment build number.\""
