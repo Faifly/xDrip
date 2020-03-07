@@ -68,5 +68,6 @@ node {
         } else {
             sendFailNotification()
         }
+        deleteDir()
     }
 }
