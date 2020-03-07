@@ -72,7 +72,6 @@
 		58160E052402CB1400C792F4 /* UIStoryboard+Content_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Content_Tests.swift"; sourceTree = "<group>"; };
 		58160E082402E38200C792F4 /* DualStateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualStateButton.swift; sourceTree = "<group>"; };
 		58160E0C2402E52000C792F4 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
-		58160E262405950000C792F4 /* Jenkinsfile */ = {isa = PBXFileReference; explicitFileType = text.script.sh; path = Jenkinsfile; sourceTree = SOURCE_ROOT; };
 		582EC946240BE77A00ADF9B0 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		58B4F674241015F0003C6D8F /* pull_request_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = pull_request_template.md; path = .github/pull_request_template.md; sourceTree = SOURCE_ROOT; };
 		58B4F67E24114938003C6D8F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -100,6 +99,10 @@
 		58B4F6CA24116394003C6D8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		58B4F6CC241163B4003C6D8F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		58B4F6CD241164BA003C6D8F /* localization */ = {isa = PBXFileReference; lastKnownFileType = text; path = localization; sourceTree = SOURCE_ROOT; };
+		58B4F6D024127F73003C6D8F /* jenkinsfile_test */ = {isa = PBXFileReference; lastKnownFileType = text; path = jenkinsfile_test; sourceTree = "<group>"; };
+		58B4F6D124127F87003C6D8F /* jenkinsfile_deploy */ = {isa = PBXFileReference; lastKnownFileType = text; path = jenkinsfile_deploy; sourceTree = "<group>"; };
+		58B4F6D3241282CD003C6D8F /* export_options_ios.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = export_options_ios.plist; sourceTree = "<group>"; };
+		58B4F6D42412A4CC003C6D8F /* export_options_macos.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = export_options_macos.plist; sourceTree = "<group>"; };
 		58E5A66C2402B8A7002C2BE3 /* xDrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xDrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -230,9 +233,9 @@
 		58732F4D2402BD2B000F38C6 /* ApplicationSupport */ = {
 			isa = PBXGroup;
 			children = (
+				58B4F6CF24127F73003C6D8F /* .jenkins */,
 				58B4F67E24114938003C6D8F /* GoogleService-Info.plist */,
 				58B4F674241015F0003C6D8F /* pull_request_template.md */,
-				58160E262405950000C792F4 /* Jenkinsfile */,
 				582EC946240BE77A00ADF9B0 /* .swiftlint.yml */,
 				58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */,
 				58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */,
@@ -293,6 +296,17 @@
 			);
 			path = Controllers;
 			sourceTree = "<group>";
+		};
+		58B4F6CF24127F73003C6D8F /* .jenkins */ = {
+			isa = PBXGroup;
+			children = (
+				58B4F6D3241282CD003C6D8F /* export_options_ios.plist */,
+				58B4F6D42412A4CC003C6D8F /* export_options_macos.plist */,
+				58B4F6D024127F73003C6D8F /* jenkinsfile_test */,
+				58B4F6D124127F87003C6D8F /* jenkinsfile_deploy */,
+			);
+			path = .jenkins;
+			sourceTree = SOURCE_ROOT;
 		};
 		58E5A6632402B8A7002C2BE3 = {
 			isa = PBXGroup;

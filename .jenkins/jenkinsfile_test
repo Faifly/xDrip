@@ -33,7 +33,7 @@ node {
             sh "mkdir -p build"
         }
         
-        stage('Swiftline') {
+        stage('Swiftlint') {
             sh "swiftlint"
         }
         
@@ -66,12 +66,12 @@ node {
     } catch (e) {
         throw e
     } finally {
-        echo "${currentBuild.currentResult}"
         if (currentBuild.currentResult == 'SUCCESS') {
             sendStatusNotification("success")
         } else {
             sendStatusNotification("failure")
             sendFailNotification()
         }
+        deleteDir()
     }
 }
