@@ -49,11 +49,11 @@ node {
         }*/
         
         stage('Commit build number') {
-            sh "printenv"
             sh "git config --global user.email \"ar.kalmykov@gmail.com\""
             sh "git config --global user.name \"Mr. Jenkins\""
             sh "git stash"
-            sh "git checkout ${GIT_BRANCH}"
+            def git_branch = sh(script: "git name-rev --name-only HEAD", returnStdout: true).trim()
+            sh "git checkout ${git_branch}"
             sh "git stash apply"
             sh "git add ${info_plist_path}"
             sh "git commit -m \"[CI-Auto] Increment build number.\""
