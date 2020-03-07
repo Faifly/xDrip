@@ -49,6 +49,7 @@ node {
         }*/
         
         stage('Commit build number') {
+            sh "printenv"
             sh "git config --global user.email \"ar.kalmykov@gmail.com\""
             sh "git config --global user.name \"Mr. Jenkins\""
             sh "git stash"
