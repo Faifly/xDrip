@@ -39,14 +39,6 @@ node {
             sh "xcrun xcodebuild -exportArchive -archivePath ${archive_path_ios} -exportOptionsPlist ${export_options_path_ios} -exportPath build -allowProvisioningUpdates"
             sh "xcrun altool --upload-app -f ${ipa_path} -u ${env.AC_ACCOUNT_AKALMYKOV} -p ${env.AC_PASSWORD_AKALMYKOV}"
             archiveArtifacts artifacts: "${ipa_path}", fingerprint: true
-        }*/
-        
-        stage('Commit build number') {
-            sh "git config --global user.email \"ar.kalmykov@gmail.com\""
-            sh "git config --global user.name \"Mr. Jenkins\""
-            sh "git add ${info_plist_path}"
-            sh "git commit -m \"[CI-Auto] Increment build number.\""
-            sh "git push origin develop"
         }
         
         stage('Deploy macOS') {
@@ -54,6 +46,15 @@ node {
             sh "xcrun xcodebuild -exportArchive -archivePath ${archive_path_macos} -exportOptionsPlist ${export_options_path_macos} -exportPath build -allowProvisioningUpdates"
             sh "ditto -c -k --keepParent \"build/${build_scheme}.app\" \"build/${build_scheme}.zip\""
             archiveArtifacts artifacts: "build/${build_scheme}.zip", fingerprint: true
+        }*/
+        
+        stage('Commit build number') {
+            sh "git config --global user.email \"ar.kalmykov@gmail.com\""
+            sh "git config --global user.name \"Mr. Jenkins\""
+            sh "git checkout develop"
+            sh "git add ${info_plist_path}"
+            sh "git commit -m \"[CI-Auto] Increment build number.\""
+            sh "git push origin HEAD"
         }
     } catch (e) {
         throw e
