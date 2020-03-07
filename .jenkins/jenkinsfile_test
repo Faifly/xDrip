@@ -72,5 +72,6 @@ node {
             sendStatusNotification("failure")
             sendFailNotification()
         }
+        deleteDir()
     }
 }

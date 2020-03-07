@@ -34,7 +34,7 @@ node {
             sh "/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${buildNumber}\" ${info_plist_path}"
         }
         
-        /*stage('Deploy iOS') {
+        stage('Deploy iOS') {
             sh "xcrun xcodebuild -scheme ${build_scheme} -destination generic/platform=iOS clean build archive -archivePath ${archive_path_ios} | xcpretty"
             sh "xcrun xcodebuild -exportArchive -archivePath ${archive_path_ios} -exportOptionsPlist ${export_options_path_ios} -exportPath build -allowProvisioningUpdates"
             sh "xcrun altool --upload-app -f ${ipa_path} -u ${env.AC_ACCOUNT_AKALMYKOV} -p ${env.AC_PASSWORD_AKALMYKOV}"
@@ -46,7 +46,7 @@ node {
             sh "xcrun xcodebuild -exportArchive -archivePath ${archive_path_macos} -exportOptionsPlist ${export_options_path_macos} -exportPath build -allowProvisioningUpdates"
             sh "ditto -c -k --keepParent \"build/${build_scheme}.app\" \"build/${build_scheme}.zip\""
             archiveArtifacts artifacts: "build/${build_scheme}.zip", fingerprint: true
-        }*/
+        }
         
         stage('Commit build number') {
             sh "git config --global user.email \"ar.kalmykov@gmail.com\""
