@@ -14,6 +14,7 @@ import UIKit
 
 protocol RootPresentationLogic {
     func presentLoad(response: Root.Load.Response)
+    func presentAddEntry(response: Root.ShowAddEntry.Response)
 }
 
 final class RootPresenter: RootPresentationLogic {
@@ -24,5 +25,10 @@ final class RootPresenter: RootPresentationLogic {
     func presentLoad(response: Root.Load.Response) {
         let viewModel = Root.Load.ViewModel()
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    func presentAddEntry(response: Root.ShowAddEntry.Response) {
+        let viewModel = Root.ShowAddEntry.ViewModel()
+        viewController?.displayAddEntry(viewModel: viewModel)
     }
 }

@@ -13,5 +13,17 @@ final class UIStoryboard_Content_Tests: XCTestCase {
     func testStoryboards() {
         XCTAssert(UIStoryboard.Storyboard.root.rawValue == "Root")
         _ = UIStoryboard(board: .root)
+        
+        XCTAssert(UIStoryboard.Storyboard.home.rawValue == "Home")
+        _ = UIStoryboard(board: .home)
+        
+        XCTAssert(UIStoryboard.Storyboard.stats.rawValue == "Stats")
+        _ = UIStoryboard(board: .stats)
+        
+        XCTAssert(UIStoryboard.Storyboard.history.rawValue == "History")
+        _ = UIStoryboard(board: .history)
+        
+        XCTAssert(UIStoryboard.Storyboard.settings.rawValue == "Settings")
+        _ = UIStoryboard(board: .settings)
     }
 }

@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icon_plus_light.png",
+      "filename" : "+@1x.png",
       "scale" : "1x"
     },
     {
@@ -18,7 +18,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "icon_plus_light@2x.png",
+      "filename" : "+@2x.png",
       "scale" : "2x"
     },
     {
@@ -34,7 +34,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "icon_plus_light@3x.png",
+      "filename" : "+@3x.png",
       "scale" : "3x"
     },
     {

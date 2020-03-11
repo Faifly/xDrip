@@ -15,9 +15,39 @@ import UIKit
 enum Root {
     // MARK: Models
     
+    enum TabButton {
+        case chart
+        case plus
+        case history
+        case settings
+    }
+    
     // MARK: Use cases
     
     enum Load {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum TabSelection {
+        struct Request {
+            let button: TabButton
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum ShowAddEntry {
         struct Request {
         }
         

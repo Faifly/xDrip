@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icon_settings_light.png",
+      "filename" : "settings@1x.png",
       "scale" : "1x"
     },
     {
@@ -18,7 +18,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "icon_settings_light@2x.png",
+      "filename" : "settings@2x.png",
       "scale" : "2x"
     },
     {
@@ -34,7 +34,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "icon_settings_light@3x.png",
+      "filename" : "settings@3x.png",
       "scale" : "3x"
     },
     {

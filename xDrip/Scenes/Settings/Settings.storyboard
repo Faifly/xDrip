@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZK2-X7-Jlw">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="9QQ-dp-xgc">
+            <objects>
+                <navigationController id="ZK2-X7-Jlw" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="a35-jZ-mZE">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Mob-jV-bjB" kind="relationship" relationship="rootViewController" id="b2E-fL-Fxi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PjH-9e-UBc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-929" y="139"/>
+        </scene>
+        <!--Settings Root View Controller-->
+        <scene sceneID="CJo-z2-7u0">
+            <objects>
+                <viewController storyboardIdentifier="SettingsRootViewController" id="Mob-jV-bjB" customClass="SettingsRootViewController" customModule="xDrip" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rJD-LJ-014">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnp-p4-Jhc">
+                                <rect key="frame" x="175.5" y="437.5" width="63.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="vnp-p4-Jhc" firstAttribute="centerX" secondItem="rJD-LJ-014" secondAttribute="centerX" id="H1S-b8-iWI"/>
+                            <constraint firstItem="vnp-p4-Jhc" firstAttribute="centerY" secondItem="rJD-LJ-014" secondAttribute="centerY" id="qZV-zr-qNj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="TqY-hZ-dCT"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ovI-O9-j0A">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="QC3-Ek-nXD">
+                            <connections>
+                                <action selector="onCancelButtonTap" destination="Mob-jV-bjB" id="odU-31-Iow"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pS4-wr-fLh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="77" y="139"/>
+        </scene>
+    </scenes>
+</document>

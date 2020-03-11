@@ -14,9 +14,10 @@ import UIKit
 
 protocol RootDisplayLogic: class {
     func displayLoad(viewModel: Root.Load.ViewModel)
+    func displayAddEntry(viewModel: Root.ShowAddEntry.ViewModel)
 }
 
-final class RootViewController: UIViewController, RootDisplayLogic {
+class RootViewController: UIViewController, RootDisplayLogic {
     var interactor: RootBusinessLogic?
     var router: (NSObjectProtocol & RootRoutingLogic & RootDataPassing)?
     
@@ -37,6 +38,7 @@ final class RootViewController: UIViewController, RootDisplayLogic {
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
+        interactor.router = router
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
@@ -55,13 +57,25 @@ final class RootViewController: UIViewController, RootDisplayLogic {
     // MARK: Do something
     
     private func doLoad() {
+        setupUI()
+        
         let request = Root.Load.Request()
         interactor?.doLoad(request: request)
+    }
+    
+    private func setupUI() {
+        tabBarContainer.itemSelectionHandler = { [weak self] tabButton in
+            guard let self = self else { return }
+            let request = Root.TabSelection.Request(button: tabButton)
+            self.interactor?.doTabSelection(request: request)
+        }
     }
     
     // MARK: Display
     
     func displayLoad(viewModel: Root.Load.ViewModel) {
-        
+    }
+    
+    func displayAddEntry(viewModel: Root.ShowAddEntry.ViewModel) {
     }
 }

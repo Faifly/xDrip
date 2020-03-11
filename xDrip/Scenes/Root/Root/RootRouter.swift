@@ -13,7 +13,9 @@
 import UIKit
 
 @objc protocol RootRoutingLogic {
-    
+    func routeToStats()
+    func routeToHistory()
+    func routeToSettings()
 }
 
 protocol RootDataPassing {
@@ -25,4 +27,21 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
     var dataStore: RootDataStore?
     
     // MARK: Routing
+    
+    func routeToStats() {
+        presentRootController(forStoryboard: UIStoryboard(board: .stats))
+    }
+    
+    func routeToHistory() {
+        presentRootController(forStoryboard: UIStoryboard(board: .history))
+    }
+    
+    func routeToSettings() {
+        presentRootController(forStoryboard: UIStoryboard(board: .settings))
+    }
+    
+    private func presentRootController(forStoryboard storyboard: UIStoryboard) {
+        guard let initialViewController = storyboard.instantiateInitialViewController() else { return }
+        viewController?.present(initialViewController, animated: true, completion: nil)
+    }
 }

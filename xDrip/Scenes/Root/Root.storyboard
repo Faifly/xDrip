@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MMQ-Ke-irg">
-    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
@@ -17,43 +17,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IXU-jy-bCk">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IXU-jy-bCk" customClass="TabBarView" customModule="xDrip" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="802" width="414" height="94"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wLx-1O-Lae">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="59H-vo-yYs" customClass="DualStateButton" customModule="xDrip" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="9.5" width="83" height="41"/>
-                                                <state key="normal" image="icon_home_deselected"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="image" keyPath="deselectedImage" value="icon_home_deselected"/>
-                                                    <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon_home_selected"/>
-                                                </userDefinedRuntimeAttributes>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pe-aV-93r" customClass="DualStateButton" customModule="xDrip" customModuleProvider="target">
-                                                <rect key="frame" x="83" y="11" width="82.5" height="38"/>
-                                                <state key="normal" image="icon_chart_deselected"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="image" keyPath="deselectedImage" value="icon_chart_deselected"/>
-                                                    <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon_chart_selected"/>
-                                                </userDefinedRuntimeAttributes>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pe-aV-93r">
+                                                <rect key="frame" x="0.0" y="10.5" width="103.5" height="39"/>
+                                                <state key="normal" image="icon_chart"/>
+                                                <connections>
+                                                    <action selector="onChartButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="SVg-dc-EZS"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AY-7l-Tua">
-                                                <rect key="frame" x="165.5" y="0.0" width="83" height="60"/>
+                                                <rect key="frame" x="103.5" y="0.0" width="103.5" height="60"/>
                                                 <state key="normal" image="icon_plus"/>
+                                                <connections>
+                                                    <action selector="onPlusButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="D75-b6-s7T"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOJ-uT-N0e" customClass="DualStateButton" customModule="xDrip" customModuleProvider="target">
-                                                <rect key="frame" x="248.5" y="6" width="82.5" height="48"/>
-                                                <state key="normal" image="icon_history_deselected"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon_history_selected"/>
-                                                    <userDefinedRuntimeAttribute type="image" keyPath="deselectedImage" value="icon_history_deselected"/>
-                                                </userDefinedRuntimeAttributes>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOJ-uT-N0e">
+                                                <rect key="frame" x="207" y="6" width="103.5" height="48"/>
+                                                <state key="normal" image="icon_history"/>
+                                                <connections>
+                                                    <action selector="onHistoryButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="nd4-fS-NjK"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APK-T9-Ijv">
-                                                <rect key="frame" x="331" y="19" width="83" height="22"/>
+                                                <rect key="frame" x="310.5" y="19" width="103.5" height="22"/>
                                                 <state key="normal" image="icon_settings"/>
+                                                <connections>
+                                                    <action selector="onSettingsButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="uz6-0w-CvK"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -64,35 +60,58 @@
                                     <constraint firstItem="wLx-1O-Lae" firstAttribute="leading" secondItem="IXU-jy-bCk" secondAttribute="leading" id="W2c-HB-x7J"/>
                                     <constraint firstItem="wLx-1O-Lae" firstAttribute="top" secondItem="IXU-jy-bCk" secondAttribute="top" id="Zna-K6-Fl5"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="chartButton" destination="1Pe-aV-93r" id="lEg-nb-yua"/>
+                                    <outlet property="historyButton" destination="qOJ-uT-N0e" id="9VV-qH-cmT"/>
+                                    <outlet property="plusButton" destination="3AY-7l-Tua" id="qN3-HA-70c"/>
+                                    <outlet property="settingsButton" destination="APK-T9-Ijv" id="Aog-9I-ziH"/>
+                                </connections>
                             </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BhB-zm-eRV">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="802"/>
+                                <connections>
+                                    <segue destination="6a4-eR-Hsq" kind="embed" id="H38-9I-QkA"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" name="Background2"/>
                         <constraints>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="1Iw-ON-YKh" secondAttribute="bottom" constant="-60" id="Aeg-Us-GzU"/>
+                            <constraint firstItem="BhB-zm-eRV" firstAttribute="top" secondItem="zwN-Hw-sQM" secondAttribute="top" id="Sbn-dn-gmi"/>
+                            <constraint firstItem="BhB-zm-eRV" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="h04-a0-MMc"/>
+                            <constraint firstItem="BhB-zm-eRV" firstAttribute="trailing" secondItem="1Iw-ON-YKh" secondAttribute="trailing" id="hrh-2i-s9h"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="trailing" secondItem="1Iw-ON-YKh" secondAttribute="trailing" id="iMf-ne-cUH"/>
                             <constraint firstItem="wLx-1O-Lae" firstAttribute="bottom" secondItem="1Iw-ON-YKh" secondAttribute="bottom" id="liL-AG-FjG"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="nLp-36-nVi"/>
+                            <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="BhB-zm-eRV" secondAttribute="bottom" id="plG-GW-enP"/>
                             <constraint firstAttribute="bottom" secondItem="IXU-jy-bCk" secondAttribute="bottom" id="xHt-j7-hEI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1Iw-ON-YKh"/>
                     </view>
+                    <connections>
+                        <outlet property="tabBarContainer" destination="IXU-jy-bCk" id="KJb-3A-WvT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="da0-RS-3uS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-17.39130434782609" y="127.90178571428571"/>
         </scene>
+        <!--Home-->
+        <scene sceneID="YbW-kn-gVP">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Home" id="6a4-eR-Hsq" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F2I-Wh-dGF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="697" y="128"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="icon_chart_deselected" width="19" height="19"/>
-        <image name="icon_chart_selected" width="19" height="18.5"/>
-        <image name="icon_history_deselected" width="22" height="24"/>
-        <image name="icon_history_selected" width="22" height="24"/>
-        <image name="icon_home_deselected" width="23" height="20.5"/>
-        <image name="icon_home_selected" width="23" height="20.5"/>
-        <image name="icon_plus" width="50" height="50"/>
+        <image name="icon_chart" width="19.5" height="19.5"/>
+        <image name="icon_history" width="22" height="24"/>
+        <image name="icon_plus" width="49.5" height="49.5"/>
         <image name="icon_settings" width="20" height="10"/>
         <namedColor name="Background1">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.070588235294117646" green="0.68235294117647061" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Background2">
             <color red="0.96470588235294119" green="0.96862745098039216" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

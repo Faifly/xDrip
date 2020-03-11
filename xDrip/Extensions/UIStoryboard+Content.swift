@@ -11,6 +11,10 @@ import UIKit
 extension UIStoryboard {
     enum Storyboard: String {
         case root = "Root"
+        case home = "Home"
+        case stats = "Stats"
+        case history = "History"
+        case settings = "Settings"
     }
     
     convenience init(board: Storyboard) {

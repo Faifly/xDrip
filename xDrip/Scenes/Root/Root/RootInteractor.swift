@@ -14,6 +14,7 @@ import UIKit
 
 protocol RootBusinessLogic {
     func doLoad(request: Root.Load.Request)
+    func doTabSelection(request: Root.TabSelection.Request)
 }
 
 protocol RootDataStore {
@@ -22,11 +23,23 @@ protocol RootDataStore {
 
 final class RootInteractor: RootBusinessLogic, RootDataStore {
     var presenter: RootPresentationLogic?
+    var router: RootRoutingLogic?
     
     // MARK: Do something
     
     func doLoad(request: Root.Load.Request) {
         let response = Root.Load.Response()
         presenter?.presentLoad(response: response)
+    }
+    
+    func doTabSelection(request: Root.TabSelection.Request) {
+        switch request.button {
+        case .chart: router?.routeToStats()
+        case .history: router?.routeToHistory()
+        case .settings: router?.routeToSettings()
+        case .plus:
+            let response = Root.ShowAddEntry.Response()
+            presenter?.presentAddEntry(response: response)
+        }
     }
 }
