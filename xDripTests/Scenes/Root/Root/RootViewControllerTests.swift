@@ -57,6 +57,9 @@ final class RootViewControllerTests: XCTestCase {
         func doTabSelection(request: Root.TabSelection.Request) {
             lastTabBarButtonSelected = request.button
         }
+        
+        func doShowAddEntry(request: Root.ShowAddEntry.Request) {
+        }
     }
     
     // MARK: Tests

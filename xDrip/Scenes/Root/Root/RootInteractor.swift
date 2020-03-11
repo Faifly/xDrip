@@ -15,6 +15,7 @@ import UIKit
 protocol RootBusinessLogic {
     func doLoad(request: Root.Load.Request)
     func doTabSelection(request: Root.TabSelection.Request)
+    func doShowAddEntry(request: Root.ShowAddEntry.Request)
 }
 
 protocol RootDataStore {
@@ -38,8 +39,11 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
         case .history: router?.routeToHistory()
         case .settings: router?.routeToSettings()
         case .plus:
-            let response = Root.ShowAddEntry.Response()
+            let response = Root.ShowAddEntryOptionsList.Response()
             presenter?.presentAddEntry(response: response)
         }
+    }
+    
+    func doShowAddEntry(request: Root.ShowAddEntry.Request) {
     }
 }

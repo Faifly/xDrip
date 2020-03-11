@@ -16,6 +16,8 @@ import UIKit
     func routeToStats()
     func routeToHistory()
     func routeToSettings()
+    
+    func routeToAddEntry()
 }
 
 protocol RootDataPassing {
@@ -38,6 +40,10 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
     
     func routeToSettings() {
         presentRootController(forStoryboard: UIStoryboard(board: .settings))
+    }
+    
+    func routeToAddEntry() {
+        
     }
     
     private func presentRootController(forStoryboard storyboard: UIStoryboard) {

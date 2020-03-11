@@ -14,7 +14,7 @@ import UIKit
 
 protocol RootDisplayLogic: class {
     func displayLoad(viewModel: Root.Load.ViewModel)
-    func displayAddEntry(viewModel: Root.ShowAddEntry.ViewModel)
+    func displayAddEntry(viewModel: Root.ShowAddEntryOptionsList.ViewModel)
 }
 
 class RootViewController: UIViewController, RootDisplayLogic {
@@ -76,6 +76,6 @@ class RootViewController: UIViewController, RootDisplayLogic {
     func displayLoad(viewModel: Root.Load.ViewModel) {
     }
     
-    func displayAddEntry(viewModel: Root.ShowAddEntry.ViewModel) {
+    func displayAddEntry(viewModel: Root.ShowAddEntryOptionsList.ViewModel) {
     }
 }

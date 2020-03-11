@@ -11,6 +11,7 @@
  - [ ] I have checked that my changes work correctly on devices with and without a Home button.
  - [ ] I have added unit tests for the new logic.
  - [ ] I have achieved maximum possible code coverage for the new code.
+ - [ ] I have checked that my UI works correctly on both Light and Dark themes.
 
  #### Acceptance Criteria
  <!--- Add acceptance criteria of your work if applicable. This is to give reviewers a better understanding how your changes should behave. -->

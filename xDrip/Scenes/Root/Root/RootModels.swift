@@ -22,6 +22,13 @@ enum Root {
         case settings
     }
     
+    enum EntryType {
+        case injection
+        case food
+        case training
+        case calibration
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -47,8 +54,20 @@ enum Root {
         }
     }
     
+    enum ShowAddEntryOptionsList {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
     enum ShowAddEntry {
         struct Request {
+            let type: EntryType
         }
         
         struct Response {

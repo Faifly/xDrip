@@ -82,6 +82,19 @@
 		58B5FD9A24192E5A00DB857D /* SettingsRootInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FD9624192E5A00DB857D /* SettingsRootInteractorTests.swift */; };
 		58B5FD9B24192E5A00DB857D /* SettingsRootRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FD9724192E5A00DB857D /* SettingsRootRouterTests.swift */; };
 		58B5FD9C24192E5A00DB857D /* SettingsRootPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FD9824192E5A00DB857D /* SettingsRootPresenterTests.swift */; };
+		58B5FDAB2419334F00DB857D /* AddInjectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDA62419334F00DB857D /* AddInjectionPresenter.swift */; };
+		58B5FDAC2419334F00DB857D /* AddInjectionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDA72419334F00DB857D /* AddInjectionRouter.swift */; };
+		58B5FDAD2419334F00DB857D /* AddInjectionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDA82419334F00DB857D /* AddInjectionModels.swift */; };
+		58B5FDAE2419334F00DB857D /* AddInjectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDA92419334F00DB857D /* AddInjectionViewController.swift */; };
+		58B5FDAF2419334F00DB857D /* AddInjectionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDAA2419334F00DB857D /* AddInjectionInteractor.swift */; };
+		58B5FDB52419340C00DB857D /* AddInjectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDB12419340C00DB857D /* AddInjectionViewControllerTests.swift */; };
+		58B5FDB62419340C00DB857D /* AddInjectionInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDB22419340C00DB857D /* AddInjectionInteractorTests.swift */; };
+		58B5FDB72419340C00DB857D /* AddInjectionRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDB32419340C00DB857D /* AddInjectionRouterTests.swift */; };
+		58B5FDB82419340C00DB857D /* AddInjectionPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDB42419340C00DB857D /* AddInjectionPresenterTests.swift */; };
+		58B5FDBA2419398600DB857D /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDB92419398600DB857D /* DatePicker.swift */; };
+		58B5FDBF24193BBF00DB857D /* GlucoseDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDBE24193BBF00DB857D /* GlucoseDataService.swift */; };
+		58B5FDC224193C2200DB857D /* GlucoseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDC124193C2200DB857D /* GlucoseData.swift */; };
+		58B5FDC424193DF500DB857D /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDC324193DF500DB857D /* SubscriptionService.swift */; };
 		58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */; };
 		58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */; };
 		58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58E5A6782402B8A8002C2BE3 /* Assets.xcassets */; };
@@ -185,6 +198,19 @@
 		58B5FD9624192E5A00DB857D /* SettingsRootInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRootInteractorTests.swift; sourceTree = "<group>"; };
 		58B5FD9724192E5A00DB857D /* SettingsRootRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRootRouterTests.swift; sourceTree = "<group>"; };
 		58B5FD9824192E5A00DB857D /* SettingsRootPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRootPresenterTests.swift; sourceTree = "<group>"; };
+		58B5FDA62419334F00DB857D /* AddInjectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInjectionPresenter.swift; sourceTree = "<group>"; };
+		58B5FDA72419334F00DB857D /* AddInjectionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInjectionRouter.swift; sourceTree = "<group>"; };
+		58B5FDA82419334F00DB857D /* AddInjectionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInjectionModels.swift; sourceTree = "<group>"; };
+		58B5FDA92419334F00DB857D /* AddInjectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInjectionViewController.swift; sourceTree = "<group>"; };
+		58B5FDAA2419334F00DB857D /* AddInjectionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInjectionInteractor.swift; sourceTree = "<group>"; };
+		58B5FDB12419340C00DB857D /* AddInjectionViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInjectionViewControllerTests.swift; sourceTree = "<group>"; };
+		58B5FDB22419340C00DB857D /* AddInjectionInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInjectionInteractorTests.swift; sourceTree = "<group>"; };
+		58B5FDB32419340C00DB857D /* AddInjectionRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInjectionRouterTests.swift; sourceTree = "<group>"; };
+		58B5FDB42419340C00DB857D /* AddInjectionPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInjectionPresenterTests.swift; sourceTree = "<group>"; };
+		58B5FDB92419398600DB857D /* DatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePicker.swift; sourceTree = "<group>"; };
+		58B5FDBE24193BBF00DB857D /* GlucoseDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseDataService.swift; sourceTree = "<group>"; };
+		58B5FDC124193C2200DB857D /* GlucoseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseData.swift; sourceTree = "<group>"; };
+		58B5FDC324193DF500DB857D /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
 		58E5A66C2402B8A7002C2BE3 /* xDrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xDrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -247,6 +273,7 @@
 			children = (
 				58160DEB2402C3BC00C792F4 /* Root.storyboard */,
 				58160E0A2402E4B100C792F4 /* Root */,
+				58B5FD9D2419318E00DB857D /* AddInjection */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -282,6 +309,7 @@
 		58160E072402E37600C792F4 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				58B5FDB92419398600DB857D /* DatePicker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -495,6 +523,7 @@
 			isa = PBXGroup;
 			children = (
 				58160DF72402C82B00C792F4 /* Root */,
+				58B5FDB0241933BE00DB857D /* AddInjection */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -575,6 +604,46 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		58B5FD9D2419318E00DB857D /* AddInjection */ = {
+			isa = PBXGroup;
+			children = (
+				58B5FDA62419334F00DB857D /* AddInjectionPresenter.swift */,
+				58B5FDA72419334F00DB857D /* AddInjectionRouter.swift */,
+				58B5FDA82419334F00DB857D /* AddInjectionModels.swift */,
+				58B5FDA92419334F00DB857D /* AddInjectionViewController.swift */,
+				58B5FDAA2419334F00DB857D /* AddInjectionInteractor.swift */,
+			);
+			path = AddInjection;
+			sourceTree = "<group>";
+		};
+		58B5FDB0241933BE00DB857D /* AddInjection */ = {
+			isa = PBXGroup;
+			children = (
+				58B5FDB12419340C00DB857D /* AddInjectionViewControllerTests.swift */,
+				58B5FDB22419340C00DB857D /* AddInjectionInteractorTests.swift */,
+				58B5FDB32419340C00DB857D /* AddInjectionRouterTests.swift */,
+				58B5FDB42419340C00DB857D /* AddInjectionPresenterTests.swift */,
+			);
+			path = AddInjection;
+			sourceTree = "<group>";
+		};
+		58B5FDBB24193B4E00DB857D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				58B5FDC324193DF500DB857D /* SubscriptionService.swift */,
+				58B5FDBE24193BBF00DB857D /* GlucoseDataService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		58B5FDC024193C0600DB857D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				58B5FDC124193C2200DB857D /* GlucoseData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		58E5A6632402B8A7002C2BE3 = {
 			isa = PBXGroup;
 			children = (
@@ -598,6 +667,8 @@
 			isa = PBXGroup;
 			children = (
 				58160DE92402C2A900C792F4 /* Scenes */,
+				58B5FDBB24193B4E00DB857D /* Services */,
+				58B5FDC024193C0600DB857D /* Model */,
 				58B4F6BE24114EA7003C6D8F /* Controllers */,
 				58160E072402E37600C792F4 /* Components */,
 				58160E012402C8B100C792F4 /* Extensions */,
@@ -786,10 +857,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58B5FDAC2419334F00DB857D /* AddInjectionRouter.swift in Sources */,
 				58B5FD3E24190E6700DB857D /* StatsRootModels.swift in Sources */,
 				58160DF32402C7F600C792F4 /* RootRouter.swift in Sources */,
+				58B5FDAB2419334F00DB857D /* AddInjectionPresenter.swift in Sources */,
 				58B5FD3F24190E6700DB857D /* StatsRootViewController.swift in Sources */,
 				58160DF22402C7F600C792F4 /* RootPresenter.swift in Sources */,
+				58B5FDC224193C2200DB857D /* GlucoseData.swift in Sources */,
 				58B5FD56241910BD00DB857D /* SettingsRootInteractor.swift in Sources */,
 				58B5FD3D24190E6700DB857D /* StatsRootRouter.swift in Sources */,
 				58B5FD53241910BD00DB857D /* SettingsRootRouter.swift in Sources */,
@@ -798,6 +872,7 @@
 				58B5FD55241910BD00DB857D /* SettingsRootViewController.swift in Sources */,
 				58160E032402C8CE00C792F4 /* UIStoryboard+Content.swift in Sources */,
 				58B5FD3624190E2F00DB857D /* HomeInteractor.swift in Sources */,
+				58B5FDAD2419334F00DB857D /* AddInjectionModels.swift in Sources */,
 				58B5FD3224190E2F00DB857D /* HomePresenter.swift in Sources */,
 				58B5FD4824190EB300DB857D /* HistoryRootRouter.swift in Sources */,
 				58B5FD4024190E6700DB857D /* StatsRootInteractor.swift in Sources */,
@@ -805,10 +880,14 @@
 				58B5FD54241910BD00DB857D /* SettingsRootModels.swift in Sources */,
 				58B5FD3C24190E6700DB857D /* StatsRootPresenter.swift in Sources */,
 				58160DF62402C7F600C792F4 /* RootInteractor.swift in Sources */,
+				58B5FDC424193DF500DB857D /* SubscriptionService.swift in Sources */,
+				58B5FDBF24193BBF00DB857D /* GlucoseDataService.swift in Sources */,
 				58B5FD3424190E2F00DB857D /* HomeModels.swift in Sources */,
 				58B5FD3324190E2F00DB857D /* HomeRouter.swift in Sources */,
 				58160DF52402C7F600C792F4 /* RootViewController.swift in Sources */,
+				58B5FDAF2419334F00DB857D /* AddInjectionInteractor.swift in Sources */,
 				58B5FD4B24190EB300DB857D /* HistoryRootInteractor.swift in Sources */,
+				58B5FDAE2419334F00DB857D /* AddInjectionViewController.swift in Sources */,
 				58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */,
 				58B4F6C024114EBA003C6D8F /* ApplicationLaunchController.swift in Sources */,
 				58B5FD4924190EB300DB857D /* HistoryRootModels.swift in Sources */,
@@ -816,6 +895,7 @@
 				58160E0D2402E52000C792F4 /* TabBarView.swift in Sources */,
 				58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */,
 				58B5FD52241910BD00DB857D /* SettingsRootPresenter.swift in Sources */,
+				58B5FDBA2419398600DB857D /* DatePicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,6 +905,7 @@
 			files = (
 				58B5FD862419287900DB857D /* StatsRootViewControllerTests.swift in Sources */,
 				58B5FD9A24192E5A00DB857D /* SettingsRootInteractorTests.swift in Sources */,
+				58B5FDB62419340C00DB857D /* AddInjectionInteractorTests.swift in Sources */,
 				58B5FD5D241922DC00DB857D /* RootRouterTests.swift in Sources */,
 				58B5FD872419287900DB857D /* StatsRootInteractorTests.swift in Sources */,
 				58B5FD7E2419280100DB857D /* HomeRouterTests.swift in Sources */,
@@ -840,7 +921,10 @@
 				58B5FD7D2419280100DB857D /* HomeInteractorTests.swift in Sources */,
 				58160DFB2402C83900C792F4 /* RootViewControllerTests.swift in Sources */,
 				58B5FD9324192BB200DB857D /* HistoryRootPresenterTests.swift in Sources */,
+				58B5FDB82419340C00DB857D /* AddInjectionPresenterTests.swift in Sources */,
 				58B5FD7C2419280100DB857D /* HomeViewControllerTests.swift in Sources */,
+				58B5FDB52419340C00DB857D /* AddInjectionViewControllerTests.swift in Sources */,
+				58B5FDB72419340C00DB857D /* AddInjectionRouterTests.swift in Sources */,
 				58160DFD2402C83900C792F4 /* RootPresenterTests.swift in Sources */,
 				58B5FD9124192BB200DB857D /* HistoryRootInteractorTests.swift in Sources */,
 				58B5FD5B24191E4E00DB857D /* TabBarViewTests.swift in Sources */,

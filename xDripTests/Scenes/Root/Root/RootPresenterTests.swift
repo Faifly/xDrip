@@ -45,7 +45,7 @@ final class RootPresenterTests: XCTestCase {
             displayLoadCalled = true
         }
         
-        func displayAddEntry(viewModel: Root.ShowAddEntry.ViewModel) {
+        func displayAddEntry(viewModel: Root.ShowAddEntryOptionsList.ViewModel) {
             displayAddEntryCalled = true
         }
     }
@@ -72,7 +72,7 @@ final class RootPresenterTests: XCTestCase {
         // Given
         let spy = RootDisplayLogicSpy()
         sut.viewController = spy
-        let response = Root.ShowAddEntry.Response()
+        let response = Root.ShowAddEntryOptionsList.Response()
         
         // When
         sut.presentAddEntry(response: response)

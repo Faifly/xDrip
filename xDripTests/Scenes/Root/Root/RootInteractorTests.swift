@@ -45,7 +45,7 @@ final class RootInteractorTests: XCTestCase {
             presentLoadCalled = true
         }
         
-        func presentAddEntry(response: Root.ShowAddEntry.Response) {
+        func presentAddEntry(response: Root.ShowAddEntryOptionsList.Response) {
             presentAddEntryCalled = true
         }
     }
@@ -65,6 +65,10 @@ final class RootInteractorTests: XCTestCase {
         
         func routeToSettings() {
             routeToSettingsCalled = true
+        }
+        
+        func routeToAddEntry() {
+            
         }
     }
     
