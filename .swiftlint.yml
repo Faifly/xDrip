@@ -2,3 +2,6 @@ disabled_rules:
     - trailing_whitespace
     - type_name
     - nesting
+
+excluded:
+    - xDripTests

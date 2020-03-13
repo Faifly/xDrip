@@ -45,7 +45,6 @@ class StatsRootViewController: UIViewController, StatsRootDisplayLogic {
     
     // MARK: IB
     
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {

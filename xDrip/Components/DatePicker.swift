@@ -9,7 +9,7 @@
 import UIKit
 
 final class DatePicker {
-    typealias Callback = (Date) -> ()
+    typealias Callback = (Date) -> Void
     
     static func showDatePicker(from sender: UIView, callback: Callback) {
         

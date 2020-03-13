@@ -45,7 +45,6 @@ class SettingsRootViewController: UIViewController, SettingsRootDisplayLogic {
     
     // MARK: IB
     
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {

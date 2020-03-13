@@ -25,6 +25,4 @@ final class AddInjectionRouter: NSObject, AddInjectionRoutingLogic, AddInjection
     var dataStore: AddInjectionDataStore?
     
     // MARK: Routing
-    
-    
 }

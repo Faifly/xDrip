@@ -14,7 +14,7 @@ final class TabBarView: UIView {
     @IBOutlet private weak var historyButton: UIButton!
     @IBOutlet private weak var settingsButton: UIButton!
     
-    var itemSelectionHandler: ((Root.TabButton) -> ())?
+    var itemSelectionHandler: ((Root.TabButton) -> Void)?
     
     @IBAction private func onChartButtonTap() {
         itemSelectionHandler?(.chart)

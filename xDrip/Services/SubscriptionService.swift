@@ -10,7 +10,7 @@ import Foundation
 
 protocol SubscriptionService {
     associatedtype Data
-    typealias ListenerCallback = (Data) -> ()
+    typealias ListenerCallback = (Data) -> Void
     
     func subscribe(listener: AnyHashable, callback: @escaping ListenerCallback)
     func unsubscribe(listener: AnyHashable)

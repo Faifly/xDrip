@@ -45,7 +45,6 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     
     // MARK: IB
     
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {

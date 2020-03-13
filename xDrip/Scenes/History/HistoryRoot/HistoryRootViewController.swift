@@ -45,7 +45,6 @@ class HistoryRootViewController: UIViewController, HistoryRootDisplayLogic {
     
     // MARK: IB
     
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {

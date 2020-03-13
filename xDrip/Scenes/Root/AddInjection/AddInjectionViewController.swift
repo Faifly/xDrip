@@ -45,7 +45,6 @@ class AddInjectionViewController: UIViewController, AddInjectionDisplayLogic {
     
     // MARK: IB
     
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {

@@ -25,6 +25,4 @@ final class HomeRouter: NSObject, HomeRoutingLogic, HomeDataPassing {
     var dataStore: HomeDataStore?
     
     // MARK: Routing
-    
-    
 }
