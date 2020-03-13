@@ -26,7 +26,11 @@ final class HistoryRootRouterTests: XCTestCase {
     }
     
     private func createSpy() -> ViewControllerSpy {
-        return ViewControllerSpy(coder: NSKeyedUnarchiver(forReadingWith: Data()))!
+        let archiver = NSKeyedArchiver(requiringSecureCoding: false)
+        archiver.finishEncoding()
+        let data = archiver.encodedData
+        let unarchiver = try! NSKeyedUnarchiver(forReadingFrom: data)
+        return ViewControllerSpy(coder: unarchiver)!
     }
     
     // MARK: Test doubles
