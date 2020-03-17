@@ -25,5 +25,8 @@ final class UIStoryboard_Content_Tests: XCTestCase {
         
         XCTAssert(UIStoryboard.Storyboard.settings.rawValue == "Settings")
         _ = UIStoryboard(board: .settings)
+        
+        XCTAssert(UIStoryboard.Storyboard.entries.rawValue == "Entries")
+        _ = UIStoryboard(board: .entries)
     }
 }

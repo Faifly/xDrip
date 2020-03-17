@@ -15,6 +15,7 @@ extension UIStoryboard {
         case stats = "Stats"
         case history = "History"
         case settings = "Settings"
+        case entries = "Entries"
     }
     
     convenience init(board: Storyboard) {

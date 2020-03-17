@@ -104,33 +104,6 @@
             </objects>
             <point key="canvasLocation" x="697" y="128"/>
         </scene>
-        <!--Add Injection View Controller-->
-        <scene sceneID="0f4-de-iOI">
-            <objects>
-                <viewController storyboardIdentifier="AddInjectionViewController" id="LD5-QC-Sg0" customClass="AddInjectionViewController" customModule="xDrip" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ibO-I4-yrr">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add injection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Woz-hj-gcP">
-                                <rect key="frame" x="157" y="437.5" width="100" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="Woz-hj-gcP" firstAttribute="centerY" secondItem="ibO-I4-yrr" secondAttribute="centerY" id="e7e-cE-Xhf"/>
-                            <constraint firstItem="Woz-hj-gcP" firstAttribute="centerX" secondItem="ibO-I4-yrr" secondAttribute="centerX" id="uIb-F0-2S9"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="biP-AB-Py3"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="X8m-VD-wv2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1400" y="128"/>
-        </scene>
     </scenes>
     <resources>
         <image name="icon_chart" width="19.5" height="19.5"/>
