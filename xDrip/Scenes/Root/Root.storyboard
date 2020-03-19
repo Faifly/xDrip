@@ -23,7 +23,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wLx-1O-Lae">
                                         <rect key="frame" x="16" y="0.0" width="382" height="60"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8U-cP-BgB">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8U-cP-BgB" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="8" width="76.333333333333329" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="Calibration" image="icon_calibration">
@@ -33,7 +33,7 @@
                                                     <action selector="onCalibrationButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="U2G-cN-dBp"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pe-aV-93r">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pe-aV-93r" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
                                                 <rect key="frame" x="76.333333333333343" y="8" width="76.333333333333343" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="Statistics" image="icon_chart">
@@ -43,7 +43,7 @@
                                                     <action selector="onChartButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="SVg-dc-EZS"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AY-7l-Tua">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AY-7l-Tua" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
                                                 <rect key="frame" x="152.66666666666666" y="8" width="76.666666666666657" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="Add" image="icon_plus">
@@ -53,7 +53,7 @@
                                                     <action selector="onPlusButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="D75-b6-s7T"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOJ-uT-N0e">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOJ-uT-N0e" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
                                                 <rect key="frame" x="229.33333333333334" y="8" width="76.333333333333343" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="History" image="icon_history">
@@ -63,7 +63,7 @@
                                                     <action selector="onHistoryButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="nd4-fS-NjK"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APK-T9-Ijv">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APK-T9-Ijv" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
                                                 <rect key="frame" x="305.66666666666669" y="8" width="76.333333333333314" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="Settings" image="icon_settings">

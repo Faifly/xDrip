@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C48E6D8242384EE006B63B0 /* UIButton+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6D7242384ED006B63B0 /* UIButton+Custom.swift */; };
+		2C48E6DE2423946C006B63B0 /* CenteredTitleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6DD2423946C006B63B0 /* CenteredTitleButton.swift */; };
 		580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */; };
 		580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7792421457600C34948 /* EditFoodEntryRouter.swift */; };
 		580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC77A2421457600C34948 /* EditFoodEntryModels.swift */; };
@@ -140,7 +140,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2C48E6D7242384ED006B63B0 /* UIButton+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Custom.swift"; sourceTree = "<group>"; };
+		2C48E6DD2423946C006B63B0 /* CenteredTitleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CenteredTitleButton.swift; path = xDrip/Extensions/CenteredTitleButton.swift; sourceTree = SOURCE_ROOT; };
 		580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryPresenter.swift; sourceTree = "<group>"; };
 		580EC7792421457600C34948 /* EditFoodEntryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryRouter.swift; sourceTree = "<group>"; };
 		580EC77A2421457600C34948 /* EditFoodEntryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryModels.swift; sourceTree = "<group>"; };
@@ -442,7 +442,6 @@
 			isa = PBXGroup;
 			children = (
 				58160E022402C8CE00C792F4 /* UIStoryboard+Content.swift */,
-				2C48E6D7242384ED006B63B0 /* UIButton+Custom.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -458,6 +457,7 @@
 		58160E072402E37600C792F4 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				2C48E6DD2423946C006B63B0 /* CenteredTitleButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1008,7 +1008,6 @@
 			files = (
 				58B5FD3E24190E6700DB857D /* StatsRootModels.swift in Sources */,
 				580EC79324214CDD00C34948 /* EntriesListViewController.swift in Sources */,
-				2C48E6D8242384EE006B63B0 /* UIButton+Custom.swift in Sources */,
 				580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */,
 				58160DF32402C7F600C792F4 /* RootRouter.swift in Sources */,
 				580EC7AC242151BC00C34948 /* EditTrainingInteractor.swift in Sources */,
@@ -1025,6 +1024,7 @@
 				58B5FD55241910BD00DB857D /* SettingsRootViewController.swift in Sources */,
 				58160E032402C8CE00C792F4 /* UIStoryboard+Content.swift in Sources */,
 				580EC7BD2421521C00C34948 /* EditCalibrationRouter.swift in Sources */,
+				2C48E6DE2423946C006B63B0 /* CenteredTitleButton.swift in Sources */,
 				58B5FD3624190E2F00DB857D /* HomeInteractor.swift in Sources */,
 				58B5FD3224190E2F00DB857D /* HomePresenter.swift in Sources */,
 				580EC79124214CDD00C34948 /* EntriesListRouter.swift in Sources */,
