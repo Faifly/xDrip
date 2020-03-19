@@ -10,7 +10,7 @@ import UIKit
 
 final class CenteredTitleButton: UIButton {
     
-    let padding: CGFloat = 4.0
+    let padding: CGFloat = 5.0
     
     override func titleRect(forContentRect contentRect: CGRect) -> CGRect {
         let rect = super.titleRect(forContentRect: contentRect)
