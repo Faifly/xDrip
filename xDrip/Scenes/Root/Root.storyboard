@@ -21,89 +21,66 @@
                                 <rect key="frame" x="0.0" y="802" width="414" height="94"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wLx-1O-Lae">
-                                        <rect key="frame" x="16" y="0.0" width="382" height="40"/>
+                                        <rect key="frame" x="16" y="0.0" width="382" height="60"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8U-cP-BgB">
-                                                <rect key="frame" x="0.0" y="0.0" width="76.333333333333329" height="40"/>
-                                                <state key="normal" image="icon_calibration"/>
+                                                <rect key="frame" x="0.0" y="8" width="76.333333333333329" height="44"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <state key="normal" title="Calibration" image="icon_calibration">
+                                                    <color key="titleColor" red="0.22748714689999999" green="0.7450742722" blue="0.50192731619999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="onCalibrationButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="U2G-cN-dBp"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pe-aV-93r">
-                                                <rect key="frame" x="76.333333333333343" y="0.0" width="76.333333333333343" height="40"/>
-                                                <state key="normal" image="icon_chart"/>
+                                                <rect key="frame" x="76.333333333333343" y="8" width="76.333333333333343" height="44"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <state key="normal" title="Statistics" image="icon_chart">
+                                                    <color key="titleColor" red="0.98886758090000004" green="0.63687688109999996" blue="0.2429971695" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="onChartButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="SVg-dc-EZS"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AY-7l-Tua">
-                                                <rect key="frame" x="152.66666666666666" y="0.0" width="76.666666666666657" height="40"/>
-                                                <state key="normal" image="icon_plus"/>
+                                                <rect key="frame" x="152.66666666666666" y="8" width="76.666666666666657" height="44"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <state key="normal" title="Add" image="icon_plus">
+                                                    <color key="titleColor" red="0.13808101419999999" green="0.51264941689999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="onPlusButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="D75-b6-s7T"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOJ-uT-N0e">
-                                                <rect key="frame" x="229.33333333333334" y="0.0" width="76.333333333333343" height="40"/>
-                                                <state key="normal" image="icon_history"/>
+                                                <rect key="frame" x="229.33333333333334" y="8" width="76.333333333333343" height="44"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <state key="normal" title="History" image="icon_history">
+                                                    <color key="titleColor" red="0.99312549829999996" green="0.27941277619999999" blue="0.4235225916" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="onHistoryButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="nd4-fS-NjK"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APK-T9-Ijv">
-                                                <rect key="frame" x="305.66666666666669" y="0.0" width="76.333333333333314" height="40"/>
-                                                <state key="normal" image="icon_settings"/>
+                                                <rect key="frame" x="305.66666666666669" y="8" width="76.333333333333314" height="44"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <state key="normal" title="Settings" image="icon_settings">
+                                                    <color key="titleColor" red="0.43533146379999998" green="0.43519854549999998" blue="0.43921682239999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="onSettingsButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="uz6-0w-CvK"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="qha-bG-pD6">
-                                        <rect key="frame" x="16" y="40" width="382" height="12"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calibration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YW6-OZ-c2U">
-                                                <rect key="frame" x="0.0" y="0.0" width="76.333333333333329" height="12"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                <color key="textColor" red="0.22748714689999999" green="0.7450742722" blue="0.50192731619999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Statistics" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qqM-z6-mnO">
-                                                <rect key="frame" x="76.333333333333343" y="0.0" width="76.333333333333343" height="12"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AsT-C1-ZkV">
-                                                <rect key="frame" x="152.66666666666666" y="0.0" width="76.666666666666657" height="12"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                <color key="textColor" red="0.13808101419999999" green="0.51264941689999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQY-4p-5Do">
-                                                <rect key="frame" x="229.33333333333334" y="0.0" width="76.333333333333343" height="12"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                <color key="textColor" red="0.99312549829999996" green="0.27941277619999999" blue="0.4235225916" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="adz-Bm-iXh">
-                                                <rect key="frame" x="305.66666666666669" y="0.0" width="76.333333333333314" height="12"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                <color key="textColor" red="0.43533146379999998" green="0.43519854549999998" blue="0.43921682239999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" name="Background2"/>
                                 <constraints>
-                                    <constraint firstItem="qha-bG-pD6" firstAttribute="top" secondItem="wLx-1O-Lae" secondAttribute="bottom" id="6zi-1J-3Sl"/>
                                     <constraint firstAttribute="trailing" secondItem="wLx-1O-Lae" secondAttribute="trailing" constant="16" id="O1g-Re-WUi"/>
-                                    <constraint firstAttribute="trailing" secondItem="qha-bG-pD6" secondAttribute="trailing" constant="16" id="RTa-W5-2Eh"/>
                                     <constraint firstItem="wLx-1O-Lae" firstAttribute="leading" secondItem="IXU-jy-bCk" secondAttribute="leading" constant="16" id="W2c-HB-x7J"/>
                                     <constraint firstItem="wLx-1O-Lae" firstAttribute="top" secondItem="IXU-jy-bCk" secondAttribute="top" id="Zna-K6-Fl5"/>
-                                    <constraint firstItem="qha-bG-pD6" firstAttribute="leading" secondItem="IXU-jy-bCk" secondAttribute="leading" constant="16" id="yma-8g-Hc9"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="calibrationButton" destination="E8U-cP-BgB" id="LKs-ll-Hwh"/>
@@ -124,10 +101,10 @@
                         <constraints>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="1Iw-ON-YKh" secondAttribute="bottom" constant="-60" id="Aeg-Us-GzU"/>
                             <constraint firstItem="BhB-zm-eRV" firstAttribute="top" secondItem="zwN-Hw-sQM" secondAttribute="top" id="Sbn-dn-gmi"/>
-                            <constraint firstItem="1Iw-ON-YKh" firstAttribute="bottom" secondItem="qha-bG-pD6" secondAttribute="bottom" constant="8" id="YUi-4a-r4T"/>
                             <constraint firstItem="BhB-zm-eRV" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="h04-a0-MMc"/>
                             <constraint firstItem="BhB-zm-eRV" firstAttribute="trailing" secondItem="1Iw-ON-YKh" secondAttribute="trailing" id="hrh-2i-s9h"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="trailing" secondItem="1Iw-ON-YKh" secondAttribute="trailing" id="iMf-ne-cUH"/>
+                            <constraint firstItem="1Iw-ON-YKh" firstAttribute="bottom" secondItem="wLx-1O-Lae" secondAttribute="bottom" id="kMs-6v-hh0"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="nLp-36-nVi"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="BhB-zm-eRV" secondAttribute="bottom" id="plG-GW-enP"/>
                             <constraint firstAttribute="bottom" secondItem="IXU-jy-bCk" secondAttribute="bottom" id="xHt-j7-hEI"/>

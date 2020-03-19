@@ -17,6 +17,14 @@ final class TabBarView: UIView {
     
     var itemSelectionHandler: ((Root.TabButton) -> Void)?
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        [calibrationButton, chartButton, plusButton, historyButton, settingsButton].forEach { (button) in
+            button?.centerVertically()
+        }
+    }
+    
     @IBAction private func onCalibrationButtonTap() {
         itemSelectionHandler?(.calibration)
     }
