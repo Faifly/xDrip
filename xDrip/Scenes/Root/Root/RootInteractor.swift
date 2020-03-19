@@ -35,6 +35,7 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
     
     func doTabSelection(request: Root.TabSelection.Request) {
         switch request.button {
+        case .calibration: router?.routeToCalibration()
         case .chart: router?.routeToStats()
         case .history: router?.routeToHistory()
         case .settings: router?.routeToSettings()

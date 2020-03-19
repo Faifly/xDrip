@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MMQ-Ke-irg">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MMQ-Ke-irg">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,31 +21,38 @@
                                 <rect key="frame" x="0.0" y="802" width="414" height="94"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wLx-1O-Lae">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                        <rect key="frame" x="16" y="0.0" width="382" height="40"/>
                                         <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8U-cP-BgB">
+                                                <rect key="frame" x="0.0" y="0.0" width="76.333333333333329" height="40"/>
+                                                <state key="normal" image="icon_calibration"/>
+                                                <connections>
+                                                    <action selector="onCalibrationButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="U2G-cN-dBp"/>
+                                                </connections>
+                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pe-aV-93r">
-                                                <rect key="frame" x="0.0" y="10.5" width="103.5" height="39"/>
+                                                <rect key="frame" x="76.333333333333343" y="0.0" width="76.333333333333343" height="40"/>
                                                 <state key="normal" image="icon_chart"/>
                                                 <connections>
                                                     <action selector="onChartButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="SVg-dc-EZS"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AY-7l-Tua">
-                                                <rect key="frame" x="103.5" y="0.0" width="103.5" height="60"/>
+                                                <rect key="frame" x="152.66666666666666" y="0.0" width="76.666666666666657" height="40"/>
                                                 <state key="normal" image="icon_plus"/>
                                                 <connections>
                                                     <action selector="onPlusButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="D75-b6-s7T"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOJ-uT-N0e">
-                                                <rect key="frame" x="207" y="6" width="103.5" height="48"/>
+                                                <rect key="frame" x="229.33333333333334" y="0.0" width="76.333333333333343" height="40"/>
                                                 <state key="normal" image="icon_history"/>
                                                 <connections>
                                                     <action selector="onHistoryButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="nd4-fS-NjK"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APK-T9-Ijv">
-                                                <rect key="frame" x="310.5" y="19" width="103.5" height="22"/>
+                                                <rect key="frame" x="305.66666666666669" y="0.0" width="76.333333333333314" height="40"/>
                                                 <state key="normal" image="icon_settings"/>
                                                 <connections>
                                                     <action selector="onSettingsButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="uz6-0w-CvK"/>
@@ -53,14 +60,53 @@
                                             </button>
                                         </subviews>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="qha-bG-pD6">
+                                        <rect key="frame" x="16" y="40" width="382" height="12"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calibration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YW6-OZ-c2U">
+                                                <rect key="frame" x="0.0" y="0.0" width="76.333333333333329" height="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" red="0.22748714689999999" green="0.7450742722" blue="0.50192731619999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Statistics" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qqM-z6-mnO">
+                                                <rect key="frame" x="76.333333333333343" y="0.0" width="76.333333333333343" height="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AsT-C1-ZkV">
+                                                <rect key="frame" x="152.66666666666666" y="0.0" width="76.666666666666657" height="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" red="0.13808101419999999" green="0.51264941689999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQY-4p-5Do">
+                                                <rect key="frame" x="229.33333333333334" y="0.0" width="76.333333333333343" height="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" red="0.99312549829999996" green="0.27941277619999999" blue="0.4235225916" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="adz-Bm-iXh">
+                                                <rect key="frame" x="305.66666666666669" y="0.0" width="76.333333333333314" height="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" red="0.43533146379999998" green="0.43519854549999998" blue="0.43921682239999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
-                                <color key="backgroundColor" name="Background1"/>
+                                <color key="backgroundColor" name="Background2"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="wLx-1O-Lae" secondAttribute="trailing" id="O1g-Re-WUi"/>
-                                    <constraint firstItem="wLx-1O-Lae" firstAttribute="leading" secondItem="IXU-jy-bCk" secondAttribute="leading" id="W2c-HB-x7J"/>
+                                    <constraint firstItem="qha-bG-pD6" firstAttribute="top" secondItem="wLx-1O-Lae" secondAttribute="bottom" id="6zi-1J-3Sl"/>
+                                    <constraint firstAttribute="trailing" secondItem="wLx-1O-Lae" secondAttribute="trailing" constant="16" id="O1g-Re-WUi"/>
+                                    <constraint firstAttribute="trailing" secondItem="qha-bG-pD6" secondAttribute="trailing" constant="16" id="RTa-W5-2Eh"/>
+                                    <constraint firstItem="wLx-1O-Lae" firstAttribute="leading" secondItem="IXU-jy-bCk" secondAttribute="leading" constant="16" id="W2c-HB-x7J"/>
                                     <constraint firstItem="wLx-1O-Lae" firstAttribute="top" secondItem="IXU-jy-bCk" secondAttribute="top" id="Zna-K6-Fl5"/>
+                                    <constraint firstItem="qha-bG-pD6" firstAttribute="leading" secondItem="IXU-jy-bCk" secondAttribute="leading" constant="16" id="yma-8g-Hc9"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="calibrationButton" destination="E8U-cP-BgB" id="LKs-ll-Hwh"/>
                                     <outlet property="chartButton" destination="1Pe-aV-93r" id="lEg-nb-yua"/>
                                     <outlet property="historyButton" destination="qOJ-uT-N0e" id="9VV-qH-cmT"/>
                                     <outlet property="plusButton" destination="3AY-7l-Tua" id="qN3-HA-70c"/>
@@ -78,10 +124,10 @@
                         <constraints>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="1Iw-ON-YKh" secondAttribute="bottom" constant="-60" id="Aeg-Us-GzU"/>
                             <constraint firstItem="BhB-zm-eRV" firstAttribute="top" secondItem="zwN-Hw-sQM" secondAttribute="top" id="Sbn-dn-gmi"/>
+                            <constraint firstItem="1Iw-ON-YKh" firstAttribute="bottom" secondItem="qha-bG-pD6" secondAttribute="bottom" constant="8" id="YUi-4a-r4T"/>
                             <constraint firstItem="BhB-zm-eRV" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="h04-a0-MMc"/>
                             <constraint firstItem="BhB-zm-eRV" firstAttribute="trailing" secondItem="1Iw-ON-YKh" secondAttribute="trailing" id="hrh-2i-s9h"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="trailing" secondItem="1Iw-ON-YKh" secondAttribute="trailing" id="iMf-ne-cUH"/>
-                            <constraint firstItem="wLx-1O-Lae" firstAttribute="bottom" secondItem="1Iw-ON-YKh" secondAttribute="bottom" id="liL-AG-FjG"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="nLp-36-nVi"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="BhB-zm-eRV" secondAttribute="bottom" id="plG-GW-enP"/>
                             <constraint firstAttribute="bottom" secondItem="IXU-jy-bCk" secondAttribute="bottom" id="xHt-j7-hEI"/>
@@ -106,13 +152,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon_chart" width="19.5" height="19.5"/>
-        <image name="icon_history" width="22" height="24"/>
-        <image name="icon_plus" width="49.5" height="49.5"/>
-        <image name="icon_settings" width="20" height="10"/>
-        <namedColor name="Background1">
-            <color red="0.070588235294117646" green="0.68235294117647061" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <image name="icon_calibration" width="22" height="22"/>
+        <image name="icon_chart" width="22" height="22"/>
+        <image name="icon_history" width="25" height="22"/>
+        <image name="icon_plus" width="22" height="22"/>
+        <image name="icon_settings" width="22" height="22"/>
         <namedColor name="Background2">
             <color red="0.96470588235294119" green="0.96862745098039216" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

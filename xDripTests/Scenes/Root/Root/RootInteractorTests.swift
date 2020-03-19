@@ -51,9 +51,14 @@ final class RootInteractorTests: XCTestCase {
     }
     
     final class RootRoutingLogicSpy: RootRoutingLogic {
+        var routeToCalibrationCalled = false
         var routeToStatsCalled = false
         var routeToHistoryCalled = false
         var routeToSettingsCalled = false
+        
+        func routeToCalibration() {
+            routeToCalibrationCalled = true
+        }
         
         func routeToStats() {
             routeToStatsCalled = true
@@ -96,7 +101,13 @@ final class RootInteractorTests: XCTestCase {
         sut.router = routerSpy
         
         // When
-        var request = Root.TabSelection.Request(button: .chart)
+        var request = Root.TabSelection.Request(button: .calibration)
+        sut.doTabSelection(request: request)
+        // Then
+        XCTAssertTrue(routerSpy.routeToCalibrationCalled)
+        
+        // When
+        request = Root.TabSelection.Request(button: .chart)
         sut.doTabSelection(request: request)
         // Then
         XCTAssertTrue(routerSpy.routeToStatsCalled)

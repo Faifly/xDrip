@@ -16,6 +16,7 @@ enum Root {
     // MARK: Models
     
     enum TabButton {
+        case calibration
         case chart
         case plus
         case history
