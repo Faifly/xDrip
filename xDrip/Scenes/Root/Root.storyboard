@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MMQ-Ke-irg">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MMQ-Ke-irg">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,35 +18,57 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IXU-jy-bCk" customClass="TabBarView" customModule="xDrip" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="802" width="414" height="94"/>
+                                <rect key="frame" x="0.0" y="812" width="414" height="84"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wLx-1O-Lae">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                    <stackView opaque="NO" contentMode="scaleAspectFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wLx-1O-Lae">
+                                        <rect key="frame" x="16" y="8" width="382" height="22"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pe-aV-93r">
-                                                <rect key="frame" x="0.0" y="10.5" width="103.5" height="39"/>
-                                                <state key="normal" image="icon_chart"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8U-cP-BgB" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="76.333333333333329" height="22"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                                <state key="normal" title="Calibration" image="icon_calibration">
+                                                    <color key="titleColor" name="tabBarGreen"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="onCalibrationButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="U2G-cN-dBp"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pe-aV-93r" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
+                                                <rect key="frame" x="76.333333333333343" y="0.0" width="76.333333333333343" height="22"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                                <state key="normal" title="Statistics" image="icon_chart">
+                                                    <color key="titleColor" name="tabBarOrange"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="onChartButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="SVg-dc-EZS"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AY-7l-Tua">
-                                                <rect key="frame" x="103.5" y="0.0" width="103.5" height="60"/>
-                                                <state key="normal" image="icon_plus"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AY-7l-Tua" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
+                                                <rect key="frame" x="152.66666666666666" y="0.0" width="76.666666666666657" height="22"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                                <state key="normal" title="Add" image="icon_plus">
+                                                    <color key="titleColor" name="tabBarBlue"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="onPlusButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="D75-b6-s7T"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOJ-uT-N0e">
-                                                <rect key="frame" x="207" y="6" width="103.5" height="48"/>
-                                                <state key="normal" image="icon_history"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOJ-uT-N0e" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
+                                                <rect key="frame" x="229.33333333333334" y="0.0" width="76.333333333333343" height="22"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                                <state key="normal" title="History" image="icon_history">
+                                                    <color key="titleColor" name="tabBarRed"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="onHistoryButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="nd4-fS-NjK"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APK-T9-Ijv">
-                                                <rect key="frame" x="310.5" y="19" width="103.5" height="22"/>
-                                                <state key="normal" image="icon_settings"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APK-T9-Ijv" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
+                                                <rect key="frame" x="305.66666666666669" y="0.0" width="76.333333333333314" height="22"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                                <state key="normal" title="Settings" image="icon_settings">
+                                                    <color key="titleColor" name="tabBarGray"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="onSettingsButtonTap" destination="IXU-jy-bCk" eventType="touchUpInside" id="uz6-0w-CvK"/>
                                                 </connections>
@@ -54,13 +76,14 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" name="Background1"/>
+                                <color key="backgroundColor" name="Background2"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="wLx-1O-Lae" secondAttribute="trailing" id="O1g-Re-WUi"/>
-                                    <constraint firstItem="wLx-1O-Lae" firstAttribute="leading" secondItem="IXU-jy-bCk" secondAttribute="leading" id="W2c-HB-x7J"/>
-                                    <constraint firstItem="wLx-1O-Lae" firstAttribute="top" secondItem="IXU-jy-bCk" secondAttribute="top" id="Zna-K6-Fl5"/>
+                                    <constraint firstAttribute="trailing" secondItem="wLx-1O-Lae" secondAttribute="trailing" constant="16" id="O1g-Re-WUi"/>
+                                    <constraint firstItem="wLx-1O-Lae" firstAttribute="leading" secondItem="IXU-jy-bCk" secondAttribute="leading" constant="16" id="W2c-HB-x7J"/>
+                                    <constraint firstItem="wLx-1O-Lae" firstAttribute="top" secondItem="IXU-jy-bCk" secondAttribute="top" constant="8" id="Zna-K6-Fl5"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="calibrationButton" destination="E8U-cP-BgB" id="LKs-ll-Hwh"/>
                                     <outlet property="chartButton" destination="1Pe-aV-93r" id="lEg-nb-yua"/>
                                     <outlet property="historyButton" destination="qOJ-uT-N0e" id="9VV-qH-cmT"/>
                                     <outlet property="plusButton" destination="3AY-7l-Tua" id="qN3-HA-70c"/>
@@ -68,22 +91,32 @@
                                 </connections>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BhB-zm-eRV">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="802"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
                                 <connections>
                                     <segue destination="6a4-eR-Hsq" kind="embed" id="H38-9I-QkA"/>
                                 </connections>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZH5-bl-nxa" userLabel="tabBarBorder">
+                                <rect key="frame" x="0.0" y="811" width="414" height="1"/>
+                                <color key="backgroundColor" name="tabBarBorderColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="aun-Hx-RbH"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" name="Background2"/>
                         <constraints>
-                            <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="1Iw-ON-YKh" secondAttribute="bottom" constant="-60" id="Aeg-Us-GzU"/>
+                            <constraint firstItem="ZH5-bl-nxa" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="0p7-DX-Uiv"/>
+                            <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="1Iw-ON-YKh" secondAttribute="bottom" constant="-50" id="Aeg-Us-GzU"/>
+                            <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="ZH5-bl-nxa" secondAttribute="bottom" id="ORA-C7-IaO"/>
                             <constraint firstItem="BhB-zm-eRV" firstAttribute="top" secondItem="zwN-Hw-sQM" secondAttribute="top" id="Sbn-dn-gmi"/>
                             <constraint firstItem="BhB-zm-eRV" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="h04-a0-MMc"/>
                             <constraint firstItem="BhB-zm-eRV" firstAttribute="trailing" secondItem="1Iw-ON-YKh" secondAttribute="trailing" id="hrh-2i-s9h"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="trailing" secondItem="1Iw-ON-YKh" secondAttribute="trailing" id="iMf-ne-cUH"/>
-                            <constraint firstItem="wLx-1O-Lae" firstAttribute="bottom" secondItem="1Iw-ON-YKh" secondAttribute="bottom" id="liL-AG-FjG"/>
+                            <constraint firstItem="1Iw-ON-YKh" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="wLx-1O-Lae" secondAttribute="bottom" id="kMs-6v-hh0"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="nLp-36-nVi"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="BhB-zm-eRV" secondAttribute="bottom" id="plG-GW-enP"/>
+                            <constraint firstItem="1Iw-ON-YKh" firstAttribute="trailing" secondItem="ZH5-bl-nxa" secondAttribute="trailing" id="ptO-b8-oUI"/>
                             <constraint firstAttribute="bottom" secondItem="IXU-jy-bCk" secondAttribute="bottom" id="xHt-j7-hEI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1Iw-ON-YKh"/>
@@ -106,15 +139,31 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon_chart" width="19.5" height="19.5"/>
-        <image name="icon_history" width="22" height="24"/>
-        <image name="icon_plus" width="49.5" height="49.5"/>
-        <image name="icon_settings" width="20" height="10"/>
-        <namedColor name="Background1">
-            <color red="0.070588235294117646" green="0.68235294117647061" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <image name="icon_calibration" width="22" height="22"/>
+        <image name="icon_chart" width="22" height="22"/>
+        <image name="icon_history" width="25" height="22"/>
+        <image name="icon_plus" width="22" height="22"/>
+        <image name="icon_settings" width="22" height="22"/>
         <namedColor name="Background2">
-            <color red="0.96470588235294119" green="0.96862745098039216" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="tabBarBlue">
+            <color red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="tabBarBorderColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.77647058823529413" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="tabBarGray">
+            <color red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="tabBarGreen">
+            <color red="0.22352941176470587" green="0.74117647058823533" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="tabBarOrange">
+            <color red="0.99607843139999996" green="0.59607843140000005" blue="0.16862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="tabBarRed">
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

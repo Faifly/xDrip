@@ -9,12 +9,17 @@
 import UIKit
 
 final class TabBarView: UIView {
-    @IBOutlet private weak var chartButton: UIButton!
-    @IBOutlet private weak var plusButton: UIButton!
-    @IBOutlet private weak var historyButton: UIButton!
-    @IBOutlet private weak var settingsButton: UIButton!
+    @IBOutlet private weak var calibrationButton: CenteredTitleButton!
+    @IBOutlet private weak var chartButton: CenteredTitleButton!
+    @IBOutlet private weak var plusButton: CenteredTitleButton!
+    @IBOutlet private weak var historyButton: CenteredTitleButton!
+    @IBOutlet private weak var settingsButton: CenteredTitleButton!
     
     var itemSelectionHandler: ((Root.TabButton) -> Void)?
+    
+    @IBAction private func onCalibrationButtonTap() {
+        itemSelectionHandler?(.calibration)
+    }
     
     @IBAction private func onChartButtonTap() {
         itemSelectionHandler?(.chart)

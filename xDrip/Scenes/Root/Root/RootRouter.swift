@@ -13,6 +13,7 @@
 import UIKit
 
 @objc protocol RootRoutingLogic {
+    func routeToCalibration()
     func routeToStats()
     func routeToHistory()
     func routeToSettings()
@@ -29,6 +30,10 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
     var dataStore: RootDataStore?
     
     // MARK: Routing
+    
+    func routeToCalibration() {
+        
+    }
     
     func routeToStats() {
         presentRootController(forStoryboard: UIStoryboard(board: .stats))

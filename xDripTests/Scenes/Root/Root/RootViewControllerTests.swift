@@ -101,26 +101,35 @@ final class RootViewControllerTests: XCTestCase {
             XCTFail("Couldn't obtain stack view")
             return
         }
-        guard stackView.arrangedSubviews.count == 4 else {
-            XCTFail("Expected button count: 4, found: \(stackView.arrangedSubviews.count)")
+        guard stackView.arrangedSubviews.count == 5 else {
+            XCTFail("Expected button count: 5, found: \(stackView.arrangedSubviews.count)")
             return
         }
-        guard let chartButton = stackView.arrangedSubviews[0] as? UIButton else {
+        guard let calibrationButton = stackView.arrangedSubviews[0] as? UIButton else {
+            XCTFail("Couldn't cast calibration button to UIButton")
+            return
+        }
+        guard let chartButton = stackView.arrangedSubviews[1] as? UIButton else {
             XCTFail("Couldn't cast chart button to UIButton")
             return
         }
-        guard let plusButton = stackView.arrangedSubviews[1] as? UIButton else {
+        guard let plusButton = stackView.arrangedSubviews[2] as? UIButton else {
             XCTFail("Couldn't cast plus button to UIButton")
             return
         }
-        guard let historyButton = stackView.arrangedSubviews[2] as? UIButton else {
+        guard let historyButton = stackView.arrangedSubviews[3] as? UIButton else {
             XCTFail("Couldn't cast history button to UIButton")
             return
         }
-        guard let settingsButton = stackView.arrangedSubviews[3] as? UIButton else {
+        guard let settingsButton = stackView.arrangedSubviews[4] as? UIButton else {
             XCTFail("Couldn't cast settings button to UIButton")
             return
         }
+        
+        // When
+        calibrationButton.sendActions(for: .touchUpInside)
+        // Then
+        XCTAssertTrue(spy.lastTabBarButtonSelected == .calibration)
         
         // When
         chartButton.sendActions(for: .touchUpInside)
