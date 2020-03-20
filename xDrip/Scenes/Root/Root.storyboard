@@ -21,10 +21,10 @@
                                 <rect key="frame" x="0.0" y="812" width="414" height="84"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleAspectFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wLx-1O-Lae">
-                                        <rect key="frame" x="16" y="8" width="382" height="22"/>
+                                        <rect key="frame" x="16" y="8" width="382" height="42"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8U-cP-BgB" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="76.333333333333329" height="22"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="76.333333333333329" height="42"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                 <state key="normal" title="Calibration" image="icon_calibration">
                                                     <color key="titleColor" name="tabBarGreen"/>
@@ -34,7 +34,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pe-aV-93r" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
-                                                <rect key="frame" x="76.333333333333343" y="0.0" width="76.333333333333343" height="22"/>
+                                                <rect key="frame" x="76.333333333333343" y="0.0" width="76.333333333333343" height="42"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                 <state key="normal" title="Statistics" image="icon_chart">
                                                     <color key="titleColor" name="tabBarOrange"/>
@@ -44,7 +44,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AY-7l-Tua" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
-                                                <rect key="frame" x="152.66666666666666" y="0.0" width="76.666666666666657" height="22"/>
+                                                <rect key="frame" x="152.66666666666666" y="0.0" width="76.666666666666657" height="42"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                 <state key="normal" title="Add" image="icon_plus">
                                                     <color key="titleColor" name="tabBarBlue"/>
@@ -54,7 +54,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOJ-uT-N0e" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
-                                                <rect key="frame" x="229.33333333333334" y="0.0" width="76.333333333333343" height="22"/>
+                                                <rect key="frame" x="229.33333333333334" y="0.0" width="76.333333333333343" height="42"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                 <state key="normal" title="History" image="icon_history">
                                                     <color key="titleColor" name="tabBarRed"/>
@@ -64,7 +64,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APK-T9-Ijv" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
-                                                <rect key="frame" x="305.66666666666669" y="0.0" width="76.333333333333314" height="22"/>
+                                                <rect key="frame" x="305.66666666666669" y="0.0" width="76.333333333333314" height="42"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                 <state key="normal" title="Settings" image="icon_settings">
                                                     <color key="titleColor" name="tabBarGray"/>
@@ -76,7 +76,7 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" name="Background2"/>
+                                <color key="backgroundColor" name="tabBarBackground"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="wLx-1O-Lae" secondAttribute="trailing" constant="16" id="O1g-Re-WUi"/>
                                     <constraint firstItem="wLx-1O-Lae" firstAttribute="leading" secondItem="IXU-jy-bCk" secondAttribute="leading" constant="16" id="W2c-HB-x7J"/>
@@ -147,23 +147,26 @@
         <namedColor name="Background2">
             <color red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="tabBarBackground">
+            <color red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="tabBarBlue">
-            <color red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.4779999852180481" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tabBarBorderColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.77647058823529413" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tabBarGray">
-            <color red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tabBarGreen">
-            <color red="0.22352941176470587" green="0.74117647058823533" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.22352941176470589" green="0.74117647058823533" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tabBarOrange">
-            <color red="0.99607843139999996" green="0.59607843140000005" blue="0.16862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.99607843137254903" green="0.59607843137254901" blue="0.16862745098039217" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tabBarRed">
-            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
