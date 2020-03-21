@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2C48E6DE2423946C006B63B0 /* CenteredTitleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6DD2423946C006B63B0 /* CenteredTitleButton.swift */; };
+		2C48E6E02424C4D9006B63B0 /* TimeFrameSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6DF2424C4D9006B63B0 /* TimeFrameSelectionView.swift */; };
+		2C48E6E22424C4E9006B63B0 /* TimeFrameSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C48E6E12424C4E9006B63B0 /* TimeFrameSelectionView.xib */; };
 		580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */; };
 		580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7792421457600C34948 /* EditFoodEntryRouter.swift */; };
 		580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC77A2421457600C34948 /* EditFoodEntryModels.swift */; };
@@ -141,6 +143,8 @@
 
 /* Begin PBXFileReference section */
 		2C48E6DD2423946C006B63B0 /* CenteredTitleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CenteredTitleButton.swift; path = xDrip/Extensions/CenteredTitleButton.swift; sourceTree = SOURCE_ROOT; };
+		2C48E6DF2424C4D9006B63B0 /* TimeFrameSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TimeFrameSelectionView.swift; path = xDrip/Extensions/TimeFrameSelectionView.swift; sourceTree = SOURCE_ROOT; };
+		2C48E6E12424C4E9006B63B0 /* TimeFrameSelectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TimeFrameSelectionView.xib; path = xDrip/Extensions/TimeFrameSelectionView.xib; sourceTree = SOURCE_ROOT; };
 		580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryPresenter.swift; sourceTree = "<group>"; };
 		580EC7792421457600C34948 /* EditFoodEntryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryRouter.swift; sourceTree = "<group>"; };
 		580EC77A2421457600C34948 /* EditFoodEntryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryModels.swift; sourceTree = "<group>"; };
@@ -458,6 +462,8 @@
 			isa = PBXGroup;
 			children = (
 				2C48E6DD2423946C006B63B0 /* CenteredTitleButton.swift */,
+				2C48E6DF2424C4D9006B63B0 /* TimeFrameSelectionView.swift */,
+				2C48E6E12424C4E9006B63B0 /* TimeFrameSelectionView.xib */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -940,6 +946,7 @@
 			files = (
 				58B4F6C924116394003C6D8F /* Localizable.strings in Resources */,
 				58B5FD2324190BFC00DB857D /* Stats.storyboard in Resources */,
+				2C48E6E22424C4E9006B63B0 /* TimeFrameSelectionView.xib in Resources */,
 				58B5FD2524190C3B00DB857D /* History.storyboard in Resources */,
 				58B5FD2B24190D3A00DB857D /* Home.storyboard in Resources */,
 				58B5FD2724190C4400DB857D /* Settings.storyboard in Resources */,
@@ -1028,6 +1035,7 @@
 				58B5FD3624190E2F00DB857D /* HomeInteractor.swift in Sources */,
 				58B5FD3224190E2F00DB857D /* HomePresenter.swift in Sources */,
 				580EC79124214CDD00C34948 /* EntriesListRouter.swift in Sources */,
+				2C48E6E02424C4D9006B63B0 /* TimeFrameSelectionView.swift in Sources */,
 				580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */,
 				580EC7C02421521C00C34948 /* EditCalibrationInteractor.swift in Sources */,
 				580EC7812421457700C34948 /* EditFoodEntryInteractor.swift in Sources */,

@@ -45,11 +45,17 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     
     // MARK: IB
     
+    @IBOutlet weak var timeLineSegmentView: TimeFrameSelectionView!
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
+        
+        timeLineSegmentView.delegate = self
+        
+        timeLineSegmentView.config(with: ["1H", "3H", "6H", "12H", "24H"])
     }
     
     // MARK: Do something
@@ -62,6 +68,12 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     // MARK: Display
     
     func displayLoad(viewModel: Home.Load.ViewModel) {
+        
+    }
+}
+
+extension HomeViewController: TimeFrameSelectionDelegate {
+    func segmentDidChange(index: Int) {
         
     }
 }
