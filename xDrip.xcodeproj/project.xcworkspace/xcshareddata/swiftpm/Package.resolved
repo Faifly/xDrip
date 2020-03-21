@@ -2,12 +2,39 @@
   "object": {
     "pins": [
       {
+        "package": "AKRealmUtils",
+        "repositoryURL": "https://github.com/Artem-Kalmykov/AKRealmUtils.git",
+        "state": {
+          "branch": "master",
+          "revision": "8e00b07fd6e55ae8b65a50b93d8c606e263caf89",
+          "version": null
+        }
+      },
+      {
         "package": "AKUtils",
         "repositoryURL": "https://github.com/Artem-Kalmykov/AKUtils.git",
         "state": {
           "branch": "master",
           "revision": "85f127de1daef4ecc1d9f4988f31966f94db116a",
           "version": null
+        }
+      },
+      {
+        "package": "Realm",
+        "repositoryURL": "https://github.com/realm/realm-cocoa.git",
+        "state": {
+          "branch": "master",
+          "revision": "ad6f5f94b023caaec57c99f7a986160f8c087d0c",
+          "version": null
+        }
+      },
+      {
+        "package": "RealmCore",
+        "repositoryURL": "https://github.com/realm/realm-core",
+        "state": {
+          "branch": null,
+          "revision": "35662ff940e340bf630ad1d1d88acfc7af18bee6",
+          "version": "5.23.8"
         }
       }
     ]
