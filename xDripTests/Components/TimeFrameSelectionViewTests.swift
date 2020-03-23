@@ -37,7 +37,7 @@ class TimeFrameSelectionViewTests: XCTestCase {
         XCTAssert(firstButton.frame.width == sut.frame.width / CGFloat(titles.count))
         
         // resizing
-        sut.frame = CGRect(x: 0, y: 0, width: 450, height: 30)
+        sut.bounds = CGRect(x: 0, y: 0, width: 450, height: 30)
         sut.setNeedsLayout()
         sut.layoutIfNeeded()
         
@@ -65,6 +65,20 @@ class TimeFrameSelectionViewTests: XCTestCase {
             XCTFail("Expected button count: \(titles.count), found: \(stackView.arrangedSubviews.count)")
             return
         }
+        
+        // get first segment button
+        guard let firstButton = stackView.arrangedSubviews[0] as? UIButton else {
+            XCTFail("Cannot cast first subview to UIButton")
+            return
+        }
+        
+        XCTAssert(firstButton.titleLabel!.text == "1")
+        
+        // when press first segment
+        firstButton.sendActions(for: .touchUpInside)
+        
+        // then
+        XCTAssert(index == 0)
         
         // get second segment button
         guard let secondButton = stackView.arrangedSubviews[1] as? UIButton else {
@@ -94,6 +108,29 @@ class TimeFrameSelectionViewTests: XCTestCase {
         // then
         XCTAssert(index == 2)
         
+        // when press first segment
+        firstButton.sendActions(for: .touchUpInside)
+        
+        // then
+        XCTAssert(index == 0)
+    }
+    
+    func testContentChanging() {
+        let sut = TimeFrameSelectionView()
+        var titles = ["1", "2", "3"]
+        
+        sut.config(with: titles)
+        
+        guard let stackView = sut.subviews.compactMap({ $0 as? UIStackView }).first  else {
+            XCTFail("Cannot obtain value for stackView")
+            return
+        }
+        
+        guard stackView.arrangedSubviews.count == titles.count else {
+            XCTFail("Expected button count: \(titles.count), found: \(stackView.arrangedSubviews.count)")
+            return
+        }
+        
         // get first segment button
         guard let firstButton = stackView.arrangedSubviews[0] as? UIButton else {
             XCTFail("Cannot cast first subview to UIButton")
@@ -102,10 +139,37 @@ class TimeFrameSelectionViewTests: XCTestCase {
         
         XCTAssert(firstButton.titleLabel!.text == "1")
         
-        // when press third segment
-        firstButton.sendActions(for: .touchUpInside)
+        titles = ["first", "second", "third", "fourth"]
+        sut.config(with: titles)
         
-        // then
-        XCTAssert(index == 0)
+        guard let secondStackView = sut.subviews.compactMap({ $0 as? UIStackView }).first  else {
+            XCTFail("Cannot obtain value for stackView")
+            return
+        }
+        
+        guard secondStackView.arrangedSubviews.count == titles.count else {
+            XCTFail("Expected button count: \(titles.count), found: \(secondStackView.arrangedSubviews.count)")
+            return
+        }
+        
+        guard let anotherFirstButton = secondStackView.arrangedSubviews[0] as? UIButton else {
+            XCTFail("Cannot cast first subview to UIButton")
+            return
+        }
+        
+        XCTAssert(anotherFirstButton.titleLabel!.text == "first")
+    }
+    
+    func testConfigWithEmptyArray() {
+        let sut = TimeFrameSelectionView()
+        
+        sut.config(with: [])
+        
+        guard let stackView = sut.subviews.compactMap({ $0 as? UIStackView }).first  else {
+            XCTFail("Cannot obtain value for stackView")
+            return
+        }
+        
+        XCTAssert(stackView.arrangedSubviews.count == 0)
     }
 }

@@ -12,6 +12,8 @@
 		2C48E6E42428AA78006B63B0 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */; };
 		2C48E6E82428DC92006B63B0 /* TimeFrameSelectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E72428DC92006B63B0 /* TimeFrameSelectionViewTests.swift */; };
 		2C48E6EA2428F592006B63B0 /* UIColor+Colors_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */; };
+		2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */; };
+		2C48E6EE242909F4006B63B0 /* UIView+Bindings_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */; };
 		580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */; };
 		580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7792421457600C34948 /* EditFoodEntryRouter.swift */; };
 		580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC77A2421457600C34948 /* EditFoodEntryModels.swift */; };
@@ -187,6 +189,8 @@
 		2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 		2C48E6E72428DC92006B63B0 /* TimeFrameSelectionViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFrameSelectionViewTests.swift; sourceTree = "<group>"; };
 		2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors_Tests.swift"; sourceTree = "<group>"; };
+		2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings.swift"; sourceTree = "<group>"; };
+		2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings_Tests.swift"; sourceTree = "<group>"; };
 		580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryPresenter.swift; sourceTree = "<group>"; };
 		580EC7792421457600C34948 /* EditFoodEntryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryRouter.swift; sourceTree = "<group>"; };
 		580EC77A2421457600C34948 /* EditFoodEntryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryModels.swift; sourceTree = "<group>"; };
@@ -527,6 +531,7 @@
 			children = (
 				58160E022402C8CE00C792F4 /* UIStoryboard+Content.swift */,
 				2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */,
+				2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -536,6 +541,7 @@
 			children = (
 				58160E052402CB1400C792F4 /* UIStoryboard+Content_Tests.swift */,
 				2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */,
+				2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1274,6 +1280,7 @@
 				58B5FDC424193DF500DB857D /* SubscriptionService.swift in Sources */,
 				58B5FDBF24193BBF00DB857D /* GlucoseDataService.swift in Sources */,
 				580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */,
+				2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */,
 				58B5FD3424190E2F00DB857D /* HomeModels.swift in Sources */,
 				580EC7A8242151BC00C34948 /* EditTrainingPresenter.swift in Sources */,
 				58B5FD3324190E2F00DB857D /* HomeRouter.swift in Sources */,
@@ -1327,6 +1334,7 @@
 				58A8A41F24251F0300CCFCAC /* UserDeviceModeTests.swift in Sources */,
 				58160E062402CB1400C792F4 /* UIStoryboard+Content_Tests.swift in Sources */,
 				58B5FD7F2419280100DB857D /* HomePresenterTests.swift in Sources */,
+				2C48E6EE242909F4006B63B0 /* UIView+Bindings_Tests.swift in Sources */,
 				580EC7B4242151EB00C34948 /* EditTrainingRouterTests.swift in Sources */,
 				58788B7A24264AC2000EB113 /* AbstractEntriesWorkerTests.swift in Sources */,
 				580EC7C62421525300C34948 /* EditCalibrationViewControllerTests.swift in Sources */,
