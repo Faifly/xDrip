@@ -51,7 +51,7 @@ final class TimeFrameSelectionView: UIView {
     
     override var bounds: CGRect {
         didSet {
-            self.singleSegmentWidth = (self.frame.width - CGFloat(4 * buttons.count)) / CGFloat(buttons.count)
+            self.singleSegmentWidth = (self.frame.width - (2.0 * selectedSegmentViewConstraintsToSuperviewConstant * CGFloat(buttons.count))) / CGFloat(buttons.count)
             self.selectedSegmentViewWidthConstraint?.constant = singleSegmentWidth
             
             self.setupSeparators()
@@ -166,7 +166,7 @@ final class TimeFrameSelectionView: UIView {
         selectedSegmentBackgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -selectedSegmentViewConstraintsToSuperviewConstant).isActive = true
         
         let count = buttons.count == 0 ? 1 : buttons.count
-        self.singleSegmentWidth = ((self.frame.width - (selectedSegmentViewConstraintsToSuperviewConstant * CGFloat(count))) / CGFloat(count))
+        self.singleSegmentWidth = ((self.frame.width - (2 * selectedSegmentViewConstraintsToSuperviewConstant * CGFloat(count))) / CGFloat(count))
         selectedSegmentViewWidthConstraint = selectedSegmentBackgroundView.widthAnchor.constraint(equalToConstant: singleSegmentWidth)
         selectedSegmentViewWidthConstraint?.isActive = true
     }
