@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import AKUtils
 
 protocol HomeDisplayLogic: class {
     func displayLoad(viewModel: Home.Load.ViewModel)
@@ -70,11 +71,13 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     }
     
     private func setupUI() {
-        let titles = [NSLocalizedString("home_time_frame_1h", comment: "1H"),
-                      NSLocalizedString("home_time_frame_3h", comment: "3H"),
-                      NSLocalizedString("home_time_frame_6h", comment: "6H"),
-                      NSLocalizedString("home_time_frame_12h", comment: "12H"),
-                      NSLocalizedString("home_time_frame_24h", comment: "24H")]
+        let titles = [
+            "home_time_frame_1h".localized,
+            "home_time_frame_3h".localized,
+            "home_time_frame_6h".localized,
+            "home_time_frame_12h".localized,
+            "home_time_frame_24h".localized
+        ]
         
         timeLineSegmentView.config(with: titles)
         

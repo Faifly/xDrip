@@ -15,16 +15,21 @@ final class TimeFrameSelectionView: UIView {
     private let backgroundViewCornerRadius: CGFloat = 9.0
     private let selectedSegmentViewCornerRadius: CGFloat = 7.0
     
+    private let separatorWidthConstraintConstant: CGFloat = 1.0
+    private let separatorHeightConstraintConstant: CGFloat = 12.0
+    
+    private let labelRegularFont = UIFont.systemFont(ofSize: 16.0, weight: .regular)
+    private let labelMediumFont = UIFont.systemFont(ofSize: 16.0, weight: .medium)
     
     private var selectedSegmentBackgroundView = UIView()
-    private var selectedSegmentViewWidthConstraint: NSLayoutConstraint?
-    private var selectedSegmentViewLeadingConstraint: NSLayoutConstraint?
+    private var selectedSegmentViewWidthConstraint: NSLayoutConstraint? = nil
+    private var selectedSegmentViewLeadingConstraint: NSLayoutConstraint? = nil
     
     private var separators: [UIView] = []
     private var stackView = UIStackView()
     private var selectedSegment = 0
     
-    private var hiddenSeparators: [UIView?] = []
+    private var hiddenSeparators: [UIView] = []
     
     private var singleSegmentWidth: CGFloat = 0.0
     
@@ -40,39 +45,32 @@ final class TimeFrameSelectionView: UIView {
     
     override var bounds: CGRect {
         didSet {
+            self.singleSegmentWidth = (self.frame.width - CGFloat(4 * buttons.count)) / CGFloat(buttons.count)
+            self.selectedSegmentViewWidthConstraint?.constant = singleSegmentWidth
+            
             self.setupSeparators()
+            self.bringSubviewToFront(selectedSegmentBackgroundView)
+            self.bringSubviewToFront(stackView)
         }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        self.singleSegmentWidth = (self.frame.width - CGFloat(4 * buttons.count)) / CGFloat(buttons.count)
-        self.selectedSegmentViewWidthConstraint?.constant = singleSegmentWidth
     }
     
     private func setupUI() {
         self.layer.cornerRadius = backgroundViewCornerRadius
         self.backgroundColor = UIColor.timeFrameSegmentBackgroundColor
-        
-        self.setupSelectedSegmentView()
     }
     
     func config(with buttons: [String]) {
         self.buttons = buttons
         
         self.setupSeparators()
-        
-        self.bringSubviewToFront(selectedSegmentBackgroundView)
-        
+        self.setupSelectedSegmentView()
         self.setupStackView()
-        
         self.setupButtons()
     }
     
     private func setupButtons() {
         for (i, button) in self.buttons.enumerated() {
-            let font = UIFont.systemFont(ofSize: 16.0, weight: selectedSegment == i ? .medium : .regular)
+            let font = selectedSegment == i ? labelMediumFont : labelRegularFont
             
             let btn = createButton(with: button, font: font, tag: i)
             btn.addTarget(self, action: #selector(onSegmentButtonTap(_:)), for: .touchUpInside)
@@ -127,8 +125,8 @@ final class TimeFrameSelectionView: UIView {
             
             separator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: widthConstraint - 1).isActive = true
             separator.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-            separator.widthAnchor.constraint(equalToConstant: 1.0).isActive = true
-            separator.heightAnchor.constraint(equalToConstant: 12.0).isActive = true
+            separator.widthAnchor.constraint(equalToConstant: separatorWidthConstraintConstant).isActive = true
+            separator.heightAnchor.constraint(equalToConstant: separatorHeightConstraintConstant).isActive = true
             
             separators.append(separator)
         }
@@ -158,7 +156,9 @@ final class TimeFrameSelectionView: UIView {
         selectedSegmentBackgroundView.topAnchor.constraint(equalTo: self.topAnchor, constant: 2.0).isActive = true
         selectedSegmentBackgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -2.0).isActive = true
         
-        selectedSegmentViewWidthConstraint = selectedSegmentBackgroundView.widthAnchor.constraint(equalToConstant: self.frame.width - 4)
+        let count = buttons.count == 0 ? 1 : buttons.count
+        self.singleSegmentWidth = (self.frame.width - CGFloat(4 * count)) / CGFloat(count)
+        selectedSegmentViewWidthConstraint = selectedSegmentBackgroundView.widthAnchor.constraint(equalToConstant: singleSegmentWidth)
         selectedSegmentViewWidthConstraint?.isActive = true
     }
     
@@ -185,37 +185,37 @@ final class TimeFrameSelectionView: UIView {
         
         selectedSegment = index
         
-        let newLeadingConstraingConstant = 2 + CGFloat(index) * (singleSegmentWidth + 4)
+        let newLeadingConstraingConstant = 2.0 + CGFloat(index) * (singleSegmentWidth + 4.0)
         self.selectedSegmentViewLeadingConstraint?.constant = newLeadingConstraingConstant
         
-        var firstSeparator: UIView? = nil
-        var secondSeparator: UIView? = nil
+        var separatorsToHide: [UIView] = []
         
         if index == 0 {
-            firstSeparator = separators[0]
+            separatorsToHide.append(separators[0])
         } else if index == separators.count {
-            secondSeparator = separators[separators.count - 1]
+            separatorsToHide.append(separators[separators.count - 1])
         } else {
-            firstSeparator = separators[index - 1]
-            secondSeparator = separators[index]
+            separatorsToHide.append(separators[index - 1])
+            separatorsToHide.append(separators[index])
         }
         
-        hiddenSeparators.removeAll(where: { $0 == firstSeparator || $0 == secondSeparator })
+        hiddenSeparators = Array(Set(hiddenSeparators).subtracting(separatorsToHide))
         
         UIView.animate(withDuration: 0.3) {
             self.layoutIfNeeded()
             
-            prevButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .regular)
-            selectedButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .medium)
+            prevButton.titleLabel?.font = self.labelRegularFont
+            selectedButton.titleLabel?.font = self.labelMediumFont
             
             self.hiddenSeparators.forEach { (view) in
-                view?.alpha = 0.3
+                view.alpha = 0.3
             }
             
-            firstSeparator?.alpha = 0
-            secondSeparator?.alpha = 0
+            separatorsToHide.forEach { (view) in
+                view.alpha = 0.0
+            }
             
-            self.hiddenSeparators = [firstSeparator, secondSeparator]
+            self.hiddenSeparators = separatorsToHide
         }
     }
     

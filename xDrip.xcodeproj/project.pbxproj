@@ -10,6 +10,8 @@
 		2C48E6DE2423946C006B63B0 /* CenteredTitleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6DD2423946C006B63B0 /* CenteredTitleButton.swift */; };
 		2C48E6E02424C4D9006B63B0 /* TimeFrameSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6DF2424C4D9006B63B0 /* TimeFrameSelectionView.swift */; };
 		2C48E6E42428AA78006B63B0 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */; };
+		2C48E6E82428DC92006B63B0 /* TimeFrameSelectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E72428DC92006B63B0 /* TimeFrameSelectionViewTests.swift */; };
+		2C48E6EA2428F592006B63B0 /* UIColor+Colors_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */; };
 		580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */; };
 		580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7792421457600C34948 /* EditFoodEntryRouter.swift */; };
 		580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC77A2421457600C34948 /* EditFoodEntryModels.swift */; };
@@ -183,6 +185,8 @@
 		2C48E6DD2423946C006B63B0 /* CenteredTitleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CenteredTitleButton.swift; path = xDrip/Extensions/CenteredTitleButton.swift; sourceTree = SOURCE_ROOT; };
 		2C48E6DF2424C4D9006B63B0 /* TimeFrameSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TimeFrameSelectionView.swift; path = xDrip/Extensions/TimeFrameSelectionView.swift; sourceTree = SOURCE_ROOT; };
 		2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
+		2C48E6E72428DC92006B63B0 /* TimeFrameSelectionViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFrameSelectionViewTests.swift; sourceTree = "<group>"; };
+		2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors_Tests.swift"; sourceTree = "<group>"; };
 		580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryPresenter.swift; sourceTree = "<group>"; };
 		580EC7792421457600C34948 /* EditFoodEntryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryRouter.swift; sourceTree = "<group>"; };
 		580EC77A2421457600C34948 /* EditFoodEntryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryModels.swift; sourceTree = "<group>"; };
@@ -531,6 +535,7 @@
 			isa = PBXGroup;
 			children = (
 				58160E052402CB1400C792F4 /* UIStoryboard+Content_Tests.swift */,
+				2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -614,6 +619,7 @@
 			isa = PBXGroup;
 			children = (
 				58788B8F2426597F000EB113 /* CenteredTitleButtonTests.swift */,
+				2C48E6E72428DC92006B63B0 /* TimeFrameSelectionViewTests.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1297,6 +1303,7 @@
 			files = (
 				58B5FD862419287900DB857D /* StatsRootViewControllerTests.swift in Sources */,
 				58788B902426597F000EB113 /* CenteredTitleButtonTests.swift in Sources */,
+				2C48E6EA2428F592006B63B0 /* UIColor+Colors_Tests.swift in Sources */,
 				58B5FD9A24192E5A00DB857D /* SettingsRootInteractorTests.swift in Sources */,
 				58B5FD5D241922DC00DB857D /* RootRouterTests.swift in Sources */,
 				58B5FD872419287900DB857D /* StatsRootInteractorTests.swift in Sources */,
@@ -1347,6 +1354,7 @@
 				580EC7862421459400C34948 /* EditFoodEntryViewControllerTests.swift in Sources */,
 				58B5FD5B24191E4E00DB857D /* TabBarViewTests.swift in Sources */,
 				580EC7C82421525300C34948 /* EditCalibrationRouterTests.swift in Sources */,
+				2C48E6E82428DC92006B63B0 /* TimeFrameSelectionViewTests.swift in Sources */,
 				58B5FD9924192E5A00DB857D /* SettingsRootViewControllerTests.swift in Sources */,
 				58788B8524265235000EB113 /* CarbEntryTests.swift in Sources */,
 				580EC7B2242151EB00C34948 /* EditTrainingViewControllerTests.swift in Sources */,
