@@ -40,11 +40,15 @@ final class TimeFrameSelectionView: UIView {
     
     override var bounds: CGRect {
         didSet {
-            self.singleSegmentWidth = (self.frame.width - CGFloat(4 * buttons.count)) / CGFloat(buttons.count)
-            self.selectedSegmentViewWidthConstraint?.constant = singleSegmentWidth
-            
             self.setupSeparators()
         }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.singleSegmentWidth = (self.frame.width - CGFloat(4 * buttons.count)) / CGFloat(buttons.count)
+        self.selectedSegmentViewWidthConstraint?.constant = singleSegmentWidth
     }
     
     private func setupUI() {
