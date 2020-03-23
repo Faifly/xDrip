@@ -15,7 +15,7 @@ class UIView_Bindings_Tests: XCTestCase {
         
         view.bindToSuperview()
         
-        XCTAssert(view.translatesAutoresizingMaskIntoConstraints == true)
+        XCTAssertTrue(view.translatesAutoresizingMaskIntoConstraints)
     }
     
     func testBind() {
@@ -27,5 +27,7 @@ class UIView_Bindings_Tests: XCTestCase {
         subview.bindToSuperview()
         
         XCTAssert(parentView.constraints.count == 4)
+        
+        parentView.constraints.forEach({ XCTAssertTrue($0.isActive) })
     }
 }

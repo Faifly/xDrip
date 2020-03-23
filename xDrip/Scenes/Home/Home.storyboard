@@ -29,22 +29,9 @@
                                     <constraint firstAttribute="height" constant="30" id="0bO-7V-i9O"/>
                                 </constraints>
                             </view>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="LOc-lX-OLp">
-                                <rect key="frame" x="16" y="154" width="382" height="32"/>
-                                <segments>
-                                    <segment title="1H"/>
-                                    <segment title="3H"/>
-                                    <segment title="6H"/>
-                                    <segment title="12H"/>
-                                    <segment title="24H"/>
-                                </segments>
-                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="dbo-8t-M4x" firstAttribute="trailing" secondItem="LOc-lX-OLp" secondAttribute="trailing" constant="16" id="7uv-Ks-uQj"/>
-                            <constraint firstItem="LOc-lX-OLp" firstAttribute="leading" secondItem="dbo-8t-M4x" secondAttribute="leading" constant="16" id="Bj8-jm-yvC"/>
-                            <constraint firstItem="LOc-lX-OLp" firstAttribute="top" secondItem="7mk-6j-2a0" secondAttribute="bottom" constant="16" id="Rjq-Lr-s7a"/>
                             <constraint firstItem="7mk-6j-2a0" firstAttribute="leading" secondItem="dbo-8t-M4x" secondAttribute="leading" constant="16" id="Uug-fE-5r4"/>
                             <constraint firstItem="dbo-8t-M4x" firstAttribute="trailing" secondItem="7mk-6j-2a0" secondAttribute="trailing" constant="16" id="YOU-Pt-nqA"/>
                             <constraint firstItem="FuX-l4-xN6" firstAttribute="centerY" secondItem="PBf-4w-eF3" secondAttribute="centerY" id="Z0P-QB-3dY"/>

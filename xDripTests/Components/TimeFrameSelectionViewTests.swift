@@ -34,7 +34,7 @@ class TimeFrameSelectionViewTests: XCTestCase {
         }
 
         // test button width before resize
-        XCTAssert(firstButton.frame.width == sut.frame.width / CGFloat(titles.count))
+        XCTAssertTrue(abs(firstButton.frame.width - sut.frame.width / CGFloat(titles.count)).rounded() <= .ulpOfOne)
         
         // resizing
         sut.bounds = CGRect(x: 0, y: 0, width: 450, height: 30)
@@ -42,7 +42,7 @@ class TimeFrameSelectionViewTests: XCTestCase {
         sut.layoutIfNeeded()
         
         // test after resizing
-        XCTAssert(firstButton.frame.width == sut.frame.width / CGFloat(titles.count))
+        XCTAssertTrue(abs(firstButton.frame.width - sut.frame.width / CGFloat(titles.count)).rounded() <= .ulpOfOne)
     }
     
     func testEvents() {
@@ -116,10 +116,12 @@ class TimeFrameSelectionViewTests: XCTestCase {
     }
     
     func testContentChanging() {
-        let sut = TimeFrameSelectionView()
+        let sut = TimeFrameSelectionView(frame: CGRect(x: 0, y: 0, width: 250, height: 30))
         var titles = ["1", "2", "3"]
         
         sut.config(with: titles)
+        sut.setNeedsLayout()
+        sut.layoutIfNeeded()
         
         guard let stackView = sut.subviews.compactMap({ $0 as? UIStackView }).first  else {
             XCTFail("Cannot obtain value for stackView")
@@ -138,9 +140,12 @@ class TimeFrameSelectionViewTests: XCTestCase {
         }
         
         XCTAssert(firstButton.titleLabel!.text == "1")
+        XCTAssertTrue(abs(firstButton.frame.width - sut.frame.width / CGFloat(titles.count)) <= .ulpOfOne)
         
         titles = ["first", "second", "third", "fourth"]
         sut.config(with: titles)
+        sut.setNeedsLayout()
+        sut.layoutIfNeeded()
         
         guard let secondStackView = sut.subviews.compactMap({ $0 as? UIStackView }).first  else {
             XCTFail("Cannot obtain value for stackView")
@@ -158,6 +163,7 @@ class TimeFrameSelectionViewTests: XCTestCase {
         }
         
         XCTAssert(anotherFirstButton.titleLabel!.text == "first")
+        XCTAssertTrue(abs(anotherFirstButton.frame.width - sut.frame.width / CGFloat(titles.count)).rounded() <= .ulpOfOne)
     }
     
     func testConfigWithEmptyArray() {
