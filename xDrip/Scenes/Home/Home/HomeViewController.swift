@@ -53,9 +53,7 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
         super.viewDidLoad()
         doLoad()
         
-        timeLineSegmentView.delegate = self
-        
-        timeLineSegmentView.config(with: ["1H", "3H", "6H", "12H", "24H"])
+        setupUI()
     }
     
     // MARK: Do something
@@ -70,10 +68,19 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     func displayLoad(viewModel: Home.Load.ViewModel) {
         
     }
-}
-
-extension HomeViewController: TimeFrameSelectionDelegate {
-    func segmentDidChange(index: Int) {
+    
+    private func setupUI() {
+        let titles = [NSLocalizedString("home_time_frame_1h", comment: "1H"),
+                      NSLocalizedString("home_time_frame_3h", comment: "3H"),
+                      NSLocalizedString("home_time_frame_6h", comment: "6H"),
+                      NSLocalizedString("home_time_frame_12h", comment: "12H"),
+                      NSLocalizedString("home_time_frame_24h", comment: "24H")]
         
+        timeLineSegmentView.config(with: titles)
+        
+        timeLineSegmentView.segmentChangedHandler = { (index) in
+            // TO DO: - Handle segment changed
+            print("TimeFrameSegmentDidChange index = \(index)")
+        }
     }
 }

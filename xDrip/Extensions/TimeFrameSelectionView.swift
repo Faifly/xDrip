@@ -8,18 +8,17 @@
 
 import UIKit
 
-protocol TimeFrameSelectionDelegate: class {
-    func segmentDidChange(index: Int)
-}
-
-class TimeFrameSelectionView: UIView {
+final class TimeFrameSelectionView: UIView {
     
-    @IBOutlet var contentView: UIView!
-    @IBOutlet weak var selectedSegmentBackgroundView: UIView!
-    @IBOutlet weak var selectedSegmentViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var selectedSegmentViewLeadingConstraint: NSLayoutConstraint!
+    typealias SegmentChangeCallback = (Int) -> ()
     
-    weak var delegate: TimeFrameSelectionDelegate?
+    private let backgroundViewCornerRadius: CGFloat = 9.0
+    private let selectedSegmentViewCornerRadius: CGFloat = 7.0
+    
+    
+    private var selectedSegmentBackgroundView = UIView()
+    private var selectedSegmentViewWidthConstraint: NSLayoutConstraint?
+    private var selectedSegmentViewLeadingConstraint: NSLayoutConstraint?
     
     private var separators: [UIView] = []
     private var stackView = UIStackView()
@@ -29,67 +28,59 @@ class TimeFrameSelectionView: UIView {
     
     private var singleSegmentWidth: CGFloat = 0.0
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.commonInit()
-    }
+    private var buttons: [String] = []
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.commonInit()
-    }
-    
-    private func commonInit() {
-        Bundle.main.loadNibNamed("TimeFrameSelectionView", owner: self, options: nil)
-
-        addSubview(contentView)
-        contentView.frame = self.bounds
-    }
+    var segmentChangedHandler: SegmentChangeCallback?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.contentView.layer.cornerRadius = 9
-        self.selectedSegmentBackgroundView.layer.cornerRadius = 7
+        setupUI()
+    }
+    
+    override var bounds: CGRect {
+        didSet {
+            self.singleSegmentWidth = (self.frame.width - CGFloat(4 * buttons.count)) / CGFloat(buttons.count)
+            self.selectedSegmentViewWidthConstraint?.constant = singleSegmentWidth
+            
+            self.setupSeparators()
+        }
+    }
+    
+    private func setupUI() {
+        self.layer.cornerRadius = backgroundViewCornerRadius
+        self.backgroundColor = UIColor.timeFrameSegmentBackgroundColor
         
-        self.selectedSegmentBackgroundView.layer.shadowOffset = CGSize(width: 0, height: 3)
-        self.selectedSegmentBackgroundView.layer.shadowRadius = 3
-        self.selectedSegmentBackgroundView.layer.shadowOpacity = 0.12
-        self.selectedSegmentBackgroundView.layer.shadowColor = UIColor.black.cgColor
+        self.setupSelectedSegmentView()
     }
     
     func config(with buttons: [String]) {
+        self.buttons = buttons
+        
+        self.setupSeparators()
+        
+        self.bringSubviewToFront(selectedSegmentBackgroundView)
+        
+        self.setupStackView()
+        
+        self.setupButtons()
+    }
+    
+    private func setupButtons() {
+        for (i, button) in self.buttons.enumerated() {
+            let font = UIFont.systemFont(ofSize: 16.0, weight: selectedSegment == i ? .medium : .regular)
+            
+            let btn = createButton(with: button, font: font, tag: i)
+            btn.addTarget(self, action: #selector(onSegmentButtonTap(_:)), for: .touchUpInside)
+            
+            stackView.addArrangedSubview(btn)
+        }
+    }
+    
+    private func setupStackView() {
         if stackView.superview != nil {
             stackView.removeFromSuperview()
         }
-        
-        separators.forEach { (view) in
-            view.removeFromSuperview()
-        }
-        
-        self.singleSegmentWidth = (self.contentView.frame.width - CGFloat(4 * buttons.count)) / CGFloat(buttons.count)
-        self.selectedSegmentViewWidthConstraint.constant = singleSegmentWidth
-        
-        let width = self.contentView.frame.width / CGFloat(buttons.count)
-        for i in 0 ..< buttons.count - 1  {
-            let separator = UIView()
-            separator.backgroundColor = UIColor(named: "timeFrameSegmentSeparatorColor")
-            separator.alpha = selectedSegment == i ? 0.0 : 0.3
-            
-            separator.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(separator)
-            
-            let widthConstraint = CGFloat(i + 1) * width
-            
-            separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: widthConstraint - 1).isActive = true
-            separator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-            separator.widthAnchor.constraint(equalToConstant: 1.0).isActive = true
-            separator.heightAnchor.constraint(equalToConstant: 12.0).isActive = true
-            
-            separators.append(separator)
-        }
-        
-        contentView.bringSubviewToFront(selectedSegmentBackgroundView)
         
         stackView = UIStackView()
         stackView.axis = .horizontal
@@ -97,41 +88,101 @@ class TimeFrameSelectionView: UIView {
         stackView.distribution = .fillEqually
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(stackView)
+        self.addSubview(stackView)
         
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+    }
+    
+    private func setupSeparators() {
+        separators.forEach { (view) in
+            view.removeFromSuperview()
+        }
         
-        for (i, button) in buttons.enumerated() {
-            let btn = UIButton()
+        separators = []
+        hiddenSeparators = []
+        
+        let width = self.frame.width / CGFloat(self.buttons.count)
+        for i in 0 ..< self.buttons.count - 1 {
+            let separator = UIView()
+            separator.backgroundColor = UIColor.timeFrameSegmentSeparatorColor
             
-            btn.setTitle(button, for: .normal)
-            btn.setTitleColor(UIColor(named: "timeFrameSegmentLabelColor"), for: .normal)
-            btn.titleLabel?.textAlignment = .center
+            if selectedSegment == i {
+                separator.alpha = 0.0
+                hiddenSeparators.append(separator)
+            } else {
+                separator.alpha = 0.3
+            }
             
-            btn.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: selectedSegment == i ? .medium : .regular)
+            separator.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview(separator)
             
-            btn.tag = i
-            btn.addTarget(self, action: #selector(onSegmentButtonTap(_:)), for: .touchUpInside)
+            let widthConstraint = CGFloat(i + 1) * width
             
-            stackView.addArrangedSubview(btn)
+            separator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: widthConstraint - 1).isActive = true
+            separator.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+            separator.widthAnchor.constraint(equalToConstant: 1.0).isActive = true
+            separator.heightAnchor.constraint(equalToConstant: 12.0).isActive = true
+            
+            separators.append(separator)
         }
     }
     
-    private func selectSegment(index: Int) {
-        guard stackView.arrangedSubviews.count > 1 else {
-            return
+    private func setupSelectedSegmentView() {
+        if selectedSegmentBackgroundView.superview != nil {
+            selectedSegmentBackgroundView.removeFromSuperview()
         }
         
-        let prevButton = stackView.arrangedSubviews[selectedSegment] as! UIButton
-        let selectedButton = stackView.arrangedSubviews[index] as! UIButton
+        selectedSegmentBackgroundView = UIView()
+        selectedSegmentBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.addSubview(selectedSegmentBackgroundView)
+        
+        selectedSegmentBackgroundView.backgroundColor = UIColor.timeFrameSegmentSelectedColor
+        selectedSegmentBackgroundView.layer.cornerRadius = selectedSegmentViewCornerRadius
+        
+        selectedSegmentBackgroundView.layer.shadowOffset = CGSize(width: 0, height: 3)
+        selectedSegmentBackgroundView.layer.shadowRadius = 3
+        selectedSegmentBackgroundView.layer.shadowOpacity = 0.12
+        selectedSegmentBackgroundView.layer.shadowColor = UIColor.black.cgColor
+        
+        selectedSegmentViewLeadingConstraint = selectedSegmentBackgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 2.0)
+        selectedSegmentViewLeadingConstraint?.isActive = true
+        
+        selectedSegmentBackgroundView.topAnchor.constraint(equalTo: self.topAnchor, constant: 2.0).isActive = true
+        selectedSegmentBackgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -2.0).isActive = true
+        
+        selectedSegmentViewWidthConstraint = selectedSegmentBackgroundView.widthAnchor.constraint(equalToConstant: self.frame.width - 4)
+        selectedSegmentViewWidthConstraint?.isActive = true
+    }
+    
+    private func createButton(with title: String, font: UIFont, tag: Int) -> UIButton {
+        let button = UIButton()
+        
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(UIColor.timeFrameSegmentLabelColor, for: .normal)
+        button.titleLabel?.textAlignment = .center
+        
+        button.titleLabel?.font = font
+        
+        button.tag = tag
+        
+        return button
+    }
+    
+    private func selectSegment(index: Int) {
+        guard stackView.arrangedSubviews.count > 1,
+            let prevButton = stackView.arrangedSubviews[selectedSegment] as? UIButton,
+            let selectedButton = stackView.arrangedSubviews[index] as? UIButton  else {
+            return
+        }
         
         selectedSegment = index
         
         let newLeadingConstraingConstant = 2 + CGFloat(index) * (singleSegmentWidth + 4)
-        self.selectedSegmentViewLeadingConstraint.constant = newLeadingConstraingConstant
+        self.selectedSegmentViewLeadingConstraint?.constant = newLeadingConstraingConstant
         
         var firstSeparator: UIView? = nil
         var secondSeparator: UIView? = nil
@@ -148,7 +199,7 @@ class TimeFrameSelectionView: UIView {
         hiddenSeparators.removeAll(where: { $0 == firstSeparator || $0 == secondSeparator })
         
         UIView.animate(withDuration: 0.3) {
-            self.contentView.layoutIfNeeded()
+            self.layoutIfNeeded()
             
             prevButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .regular)
             selectedButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .medium)
@@ -171,6 +222,6 @@ class TimeFrameSelectionView: UIView {
         }
         
         selectSegment(index: button.tag)
-        delegate?.segmentDidChange(index: button.tag)
+        segmentChangedHandler?(button.tag)
     }
 }
