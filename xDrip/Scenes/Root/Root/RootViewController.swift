@@ -77,5 +77,30 @@ class RootViewController: UIViewController, RootDisplayLogic {
     }
     
     func displayAddEntry(viewModel: Root.ShowAddEntryOptionsList.ViewModel) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let action: ((Root.EntryType) -> ()) = { [weak self] entryType in
+            let request = Root.ShowAddEntry.Request(type: entryType)
+            self?.interactor?.doShowAddEntry(request: request)
+        }
+        
+        viewModel.types.forEach { (type) in
+            let alertAction = UIAlertAction(title: type.rawValue.localized, style: .default) { _ in
+                action(type)
+            }
+            alertController.addAction(alertAction)
+        }
+        
+        alertController.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
+        
+        
+        // for macCatalyst and iPad
+        if let popoverController = alertController.popoverPresentationController {
+          popoverController.sourceView = self.view
+          popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+          popoverController.permittedArrowDirections = []
+        }
+        
+        self.present(alertController, animated: true)
     }
 }
