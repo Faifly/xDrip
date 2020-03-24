@@ -5,3 +5,8 @@
 "home_time_frame_6h" = "6Ч";
 "home_time_frame_12h" = "12Ч";
 "home_time_frame_24h" = "24Ч";
+
+"root_add_entry_food" = "Еда";
+"root_add_entry_bolus" = "Лекарства";
+"root_add_entry_carbs" = "Углеводы";
+"root_add_entry_training" = "Тренировки";

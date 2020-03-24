@@ -79,28 +79,30 @@ class RootViewController: UIViewController, RootDisplayLogic {
     func displayAddEntry(viewModel: Root.ShowAddEntryOptionsList.ViewModel) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let action: ((Root.EntryType) -> ()) = { [weak self] entryType in
+        let action: ((Int) -> ()) = { [weak self] entryIndex in
             guard let self = self else { return }
-            let request = Root.ShowAddEntry.Request(type: entryType)
+            let request = Root.ShowAddEntry.Request(index: entryIndex)
             self.interactor?.doShowAddEntry(request: request)
         }
         
-        viewModel.types.forEach { (type) in
-            let alertAction = UIAlertAction(title: type.rawValue.localized, style: .default) { _ in
-                action(type)
+        for (index, title) in viewModel.titles.enumerated() {
+            let alertAction = UIAlertAction(title: title, style: .default) { _ in
+                action(index)
             }
             alertController.addAction(alertAction)
         }
         
         alertController.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
         
-        
-        // for macCatalyst and iPad
         if let popoverController = alertController.popoverPresentationController {
-            popoverController.sourceView = self.view.subviews.first(where: { $0 is TabBarView })
+            guard let stackView = tabBarContainer.subviews.first as? UIStackView,
+                stackView.arrangedSubviews.count > 3,
+                let plusButton = stackView.arrangedSubviews[2] as? UIButton else { return }
+            
+            popoverController.sourceView = plusButton
             popoverController.permittedArrowDirections = [.down]
         }
         
-        self.present(alertController, animated: true)
+        present(alertController, animated: true)
     }
 }

@@ -17,7 +17,27 @@ protocol RootPresentationLogic {
     func presentAddEntry(response: Root.ShowAddEntryOptionsList.Response)
 }
 
+private extension Root.EntryType {
+    var label: String {
+        switch self {
+        case .bolus:
+            return "root_add_entry_bolus".localized
+        case .calibration:
+            return ""
+        case .carbs:
+            return "root_add_entry_carbs".localized
+        case .food:
+            return "root_add_entry_food".localized
+        case .injection:
+            return ""
+        case .training:
+            return "root_add_entry_training".localized
+        }
+    }
+}
+
 final class RootPresenter: RootPresentationLogic {
+    
     weak var viewController: RootDisplayLogic?
     
     // MARK: Do something
@@ -28,7 +48,9 @@ final class RootPresenter: RootPresentationLogic {
     }
     
     func presentAddEntry(response: Root.ShowAddEntryOptionsList.Response) {
-        let viewModel = Root.ShowAddEntryOptionsList.ViewModel()
+        let titles = response.types.map({ $0.label })
+        
+        let viewModel = Root.ShowAddEntryOptionsList.ViewModel(titles: titles)
         viewController?.displayAddEntry(viewModel: viewModel)
     }
 }

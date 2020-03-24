@@ -23,13 +23,13 @@ enum Root {
         case settings
     }
     
-    enum EntryType: String {
-        case injection = "Injection"
-        case food = "Food"
-        case training = "Training"
-        case calibration = "Calibration"
-        case bolus = "Bolus"
-        case carbs = "Carbs"
+    enum EntryType {
+        case injection
+        case food
+        case training
+        case calibration
+        case bolus
+        case carbs
     }
     
     // MARK: Use cases
@@ -62,16 +62,17 @@ enum Root {
         }
         
         struct Response {
+            let types: [EntryType]
         }
         
         struct ViewModel {
-            let types: [EntryType] = [.food, .bolus, .carbs, .training]
+            let titles: [String]
         }
     }
     
     enum ShowAddEntry {
         struct Request {
-            let type: EntryType
+            let index: Int
         }
         
         struct Response {
