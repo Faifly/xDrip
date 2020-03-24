@@ -72,7 +72,8 @@ final class RootPresenterTests: XCTestCase {
         // Given
         let spy = RootDisplayLogicSpy()
         sut.viewController = spy
-        let response = Root.ShowAddEntryOptionsList.Response()
+        
+        let response = Root.ShowAddEntryOptionsList.Response(types: [])
         
         // When
         sut.presentAddEntry(response: response)

@@ -51,6 +51,8 @@ final class RootViewControllerTests: XCTestCase {
         var lastTabBarButtonSelected: Root.TabButton?
         var selectedEntryType: Root.EntryType?
         
+        let entries: [Root.EntryType] = [.food, .bolus, .carbs, .training]
+        
         func doLoad(request: Root.Load.Request) {
             doLoadCalled = true
         }
@@ -60,7 +62,8 @@ final class RootViewControllerTests: XCTestCase {
         }
         
         func doShowAddEntry(request: Root.ShowAddEntry.Request) {
-            selectedEntryType = request.type
+            let type = entries[request.index]
+            selectedEntryType = type
         }
     }
     
@@ -160,7 +163,12 @@ final class RootViewControllerTests: XCTestCase {
         sut.interactor = spy
         loadView()
         
-        let viewModel = Root.ShowAddEntryOptionsList.ViewModel()
+        var titles: [String] = []
+        for (i, _) in spy.entries.enumerated() {
+            titles.append(String(i))
+        }
+        
+        let viewModel = Root.ShowAddEntryOptionsList.ViewModel(titles: titles)
         sut.displayAddEntry(viewModel: viewModel)
         
         guard let alertController = sut.presentedViewController as? UIAlertController else {
@@ -168,54 +176,21 @@ final class RootViewControllerTests: XCTestCase {
             return
         }
         
-        guard alertController.actions.count == 5 else {
-            XCTFail("Expected actions count: 5, found: \(alertController.actions.count + 1)") // +1 because of cancel action
+        guard alertController.actions.count == titles.count + 1 else {
+            XCTFail("Expected actions count: \(titles.count), found: \(alertController.actions.count)") // +1 because of cancel action
             return
         }
         
-        // food action tests
-        // When
-        let foodAction = alertController.actions[0]
-        // Then
-        XCTAssertTrue(foodAction.title == Root.EntryType.food.rawValue.localized)
-        
-        // When
-        alertController.sendAction(action: foodAction)
-        // Then
-        XCTAssertTrue(spy.selectedEntryType == .food)
-        
-        // bolus action tests
-        // When
-        let bolusAction = alertController.actions[1]
-        // Then
-        XCTAssertTrue(bolusAction.title == Root.EntryType.bolus.rawValue.localized)
-        
-        // When
-        alertController.sendAction(action: bolusAction)
-        // Then
-        XCTAssertTrue(spy.selectedEntryType == .bolus)
-        
-        // carbs action tests
-        // When
-        let carbsAction = alertController.actions[2]
-        // Then
-        XCTAssertTrue(carbsAction.title == Root.EntryType.carbs.rawValue.localized)
-        
-        // When
-        alertController.sendAction(action: carbsAction)
-        // Then
-        XCTAssertTrue(spy.selectedEntryType == .carbs)
-        
-        // training action tests
-        // When
-        let trainingAction = alertController.actions[3]
-        // Then
-        XCTAssertTrue(trainingAction.title == Root.EntryType.training.rawValue.localized)
-        
-        // When
-        alertController.sendAction(action: trainingAction)
-        // Then
-        XCTAssertTrue(spy.selectedEntryType == .training)
+        for i in 0 ..< alertController.actions.count - 1 {
+            let action = alertController.actions[i]
+            
+            XCTAssertTrue(action.title == titles[i])
+            
+            // When
+            alertController.sendAction(action: action)
+            // Then
+            XCTAssertTrue(spy.selectedEntryType == spy.entries[i])
+        }
     }
 }
 
