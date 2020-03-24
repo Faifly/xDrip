@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import AKUtils
 
 protocol HomeDisplayLogic: class {
     func displayLoad(viewModel: Home.Load.ViewModel)
@@ -45,11 +46,15 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     
     // MARK: IB
     
+    @IBOutlet weak var timeLineSegmentView: TimeFrameSelectionView!
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
+        
+        setupUI()
     }
     
     // MARK: Do something
@@ -63,5 +68,22 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     
     func displayLoad(viewModel: Home.Load.ViewModel) {
         
+    }
+    
+    private func setupUI() {
+        let titles = [
+            "home_time_frame_1h".localized,
+            "home_time_frame_3h".localized,
+            "home_time_frame_6h".localized,
+            "home_time_frame_12h".localized,
+            "home_time_frame_24h".localized
+        ]
+        
+        timeLineSegmentView.config(with: titles)
+        
+        timeLineSegmentView.segmentChangedHandler = { (index) in
+            // TO DO: - Handle segment changed
+            print("TimeFrameSegmentDidChange index = \(index)")
+        }
     }
 }

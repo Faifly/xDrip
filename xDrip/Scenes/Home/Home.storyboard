@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="en1-zC-tf5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="en1-zC-tf5">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,15 +22,28 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7mk-6j-2a0" customClass="TimeFrameSelectionView" customModule="xDrip" customModuleProvider="target">
+                                <rect key="frame" x="16" y="108" width="382" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="0bO-7V-i9O"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="7mk-6j-2a0" firstAttribute="leading" secondItem="dbo-8t-M4x" secondAttribute="leading" constant="16" id="Uug-fE-5r4"/>
+                            <constraint firstItem="dbo-8t-M4x" firstAttribute="trailing" secondItem="7mk-6j-2a0" secondAttribute="trailing" constant="16" id="YOU-Pt-nqA"/>
                             <constraint firstItem="FuX-l4-xN6" firstAttribute="centerY" secondItem="PBf-4w-eF3" secondAttribute="centerY" id="Z0P-QB-3dY"/>
+                            <constraint firstItem="7mk-6j-2a0" firstAttribute="top" secondItem="dbo-8t-M4x" secondAttribute="top" constant="64" id="dLh-gY-TcQ"/>
                             <constraint firstItem="FuX-l4-xN6" firstAttribute="centerX" secondItem="PBf-4w-eF3" secondAttribute="centerX" id="p6J-sK-YZY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dbo-8t-M4x"/>
                     </view>
                     <navigationItem key="navigationItem" id="p6t-2r-Ed3"/>
+                    <connections>
+                        <outlet property="timeLineSegmentView" destination="7mk-6j-2a0" id="DpX-Qf-N1R"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yRe-Ym-0ll" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
