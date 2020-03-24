@@ -80,8 +80,9 @@ class RootViewController: UIViewController, RootDisplayLogic {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let action: ((Root.EntryType) -> ()) = { [weak self] entryType in
+            guard let self = self else { return }
             let request = Root.ShowAddEntry.Request(type: entryType)
-            self?.interactor?.doShowAddEntry(request: request)
+            self.interactor?.doShowAddEntry(request: request)
         }
         
         viewModel.types.forEach { (type) in

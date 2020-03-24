@@ -49,6 +49,7 @@ final class RootViewControllerTests: XCTestCase {
     final class RootBusinessLogicSpy: RootBusinessLogic {
         var doLoadCalled = false
         var lastTabBarButtonSelected: Root.TabButton?
+        var selectedEntryType: Root.EntryType?
         
         func doLoad(request: Root.Load.Request) {
             doLoadCalled = true
@@ -59,6 +60,7 @@ final class RootViewControllerTests: XCTestCase {
         }
         
         func doShowAddEntry(request: Root.ShowAddEntry.Request) {
+            selectedEntryType = request.type
         }
     }
     
@@ -150,5 +152,79 @@ final class RootViewControllerTests: XCTestCase {
         settingsButton.sendActions(for: .touchUpInside)
         // Then
         XCTAssertTrue(spy.lastTabBarButtonSelected == .settings)
+    }
+    
+    func testShowAddEntry() {
+        // Given
+        let spy = RootBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        
+        let viewModel = Root.ShowAddEntryOptionsList.ViewModel()
+        sut.displayAddEntry(viewModel: viewModel)
+        
+        guard let alertController = sut.presentedViewController as? UIAlertController else {
+            XCTFail("Couldn't obtain alert controller")
+            return
+        }
+        
+        guard alertController.actions.count == 5 else {
+            XCTFail("Expected actions count: 5, found: \(alertController.actions.count + 1)") // +1 because of cancel action
+            return
+        }
+        
+        // food action tests
+        // When
+        let foodAction = alertController.actions[0]
+        // Then
+        XCTAssertTrue(foodAction.title == Root.EntryType.food.rawValue.localized)
+        
+        // When
+        alertController.sendAction(action: foodAction)
+        // Then
+        XCTAssertTrue(spy.selectedEntryType == .food)
+        
+        // bolus action tests
+        // When
+        let bolusAction = alertController.actions[1]
+        // Then
+        XCTAssertTrue(bolusAction.title == Root.EntryType.bolus.rawValue.localized)
+        
+        // When
+        alertController.sendAction(action: bolusAction)
+        // Then
+        XCTAssertTrue(spy.selectedEntryType == .bolus)
+        
+        // carbs action tests
+        // When
+        let carbsAction = alertController.actions[2]
+        // Then
+        XCTAssertTrue(carbsAction.title == Root.EntryType.carbs.rawValue.localized)
+        
+        // When
+        alertController.sendAction(action: carbsAction)
+        // Then
+        XCTAssertTrue(spy.selectedEntryType == .carbs)
+        
+        // training action tests
+        // When
+        let trainingAction = alertController.actions[3]
+        // Then
+        XCTAssertTrue(trainingAction.title == Root.EntryType.training.rawValue.localized)
+        
+        // When
+        alertController.sendAction(action: trainingAction)
+        // Then
+        XCTAssertTrue(spy.selectedEntryType == .training)
+    }
+}
+
+extension UIAlertController {
+    typealias AlertHandler = @convention(block) (UIAlertAction) -> Void
+
+    func sendAction(action: UIAlertAction) {
+        guard let block = action.value(forKey: "handler") else { return }
+        let handler = unsafeBitCast(block as AnyObject, to: AlertHandler.self)
+        handler(action)
     }
 }
