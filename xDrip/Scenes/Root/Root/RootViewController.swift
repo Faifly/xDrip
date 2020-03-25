@@ -92,14 +92,10 @@ class RootViewController: UIViewController, RootDisplayLogic {
             alertController.addAction(alertAction)
         }
         
-        alertController.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
         
         if let popoverController = alertController.popoverPresentationController {
-            guard let stackView = tabBarContainer.subviews.first as? UIStackView,
-                stackView.arrangedSubviews.count > 3,
-                let plusButton = stackView.arrangedSubviews[2] as? UIButton else { return }
-            
-            popoverController.sourceView = plusButton
+            popoverController.sourceView = tabBarContainer.plusButton
             popoverController.permittedArrowDirections = [.down]
         }
         

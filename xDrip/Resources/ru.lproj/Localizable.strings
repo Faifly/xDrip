@@ -1,4 +1,7 @@
 // AUTO-GENERATED
+// General
+"cancel" = "Отмена";
+
 // Home
 "home_time_frame_1h" = "1Ч";
 "home_time_frame_3h" = "3Ч";
@@ -6,6 +9,7 @@
 "home_time_frame_12h" = "12Ч";
 "home_time_frame_24h" = "24Ч";
 
+// Root
 "root_add_entry_food" = "Еда";
 "root_add_entry_bolus" = "Лекарства";
 "root_add_entry_carbs" = "Углеводы";

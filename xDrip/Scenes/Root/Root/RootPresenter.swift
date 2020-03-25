@@ -48,7 +48,7 @@ final class RootPresenter: RootPresentationLogic {
     }
     
     func presentAddEntry(response: Root.ShowAddEntryOptionsList.Response) {
-        let titles = response.types.map({ $0.label })
+        let titles = response.types.map { $0.label }
         
         let viewModel = Root.ShowAddEntryOptionsList.ViewModel(titles: titles)
         viewController?.displayAddEntry(viewModel: viewModel)
