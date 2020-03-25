@@ -77,5 +77,28 @@ class RootViewController: UIViewController, RootDisplayLogic {
     }
     
     func displayAddEntry(viewModel: Root.ShowAddEntryOptionsList.ViewModel) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let action: ((Int) -> ()) = { [weak self] entryIndex in
+            guard let self = self else { return }
+            let request = Root.ShowAddEntry.Request(index: entryIndex)
+            self.interactor?.doShowAddEntry(request: request)
+        }
+        
+        for (index, title) in viewModel.titles.enumerated() {
+            let alertAction = UIAlertAction(title: title, style: .default) { _ in
+                action(index)
+            }
+            alertController.addAction(alertAction)
+        }
+        
+        alertController.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = tabBarContainer.plusButton
+            popoverController.permittedArrowDirections = [.down]
+        }
+        
+        present(alertController, animated: true)
     }
 }

@@ -28,6 +28,8 @@ enum Root {
         case food
         case training
         case calibration
+        case bolus
+        case carbs
     }
     
     // MARK: Use cases
@@ -60,15 +62,17 @@ enum Root {
         }
         
         struct Response {
+            let types: [EntryType]
         }
         
         struct ViewModel {
+            let titles: [String]
         }
     }
     
     enum ShowAddEntry {
         struct Request {
-            let type: EntryType
+            let index: Int
         }
         
         struct Response {

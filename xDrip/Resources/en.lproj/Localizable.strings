@@ -1,7 +1,16 @@
 // AUTO-GENERATED
+// General
+"cancel" = "Cancel";
+
 // Home
 "home_time_frame_1h" = "1H";
 "home_time_frame_3h" = "3H";
 "home_time_frame_6h" = "6H";
 "home_time_frame_12h" = "12H";
 "home_time_frame_24h" = "24H";
+
+// Root
+"root_add_entry_food" = "Food";
+"root_add_entry_bolus" = "Bolus";
+"root_add_entry_carbs" = "Carbs";
+"root_add_entry_training" = "Training";

@@ -26,6 +26,8 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
     var presenter: RootPresentationLogic?
     var router: RootRoutingLogic?
     
+    private let entryTypes: [Root.EntryType] = [.food, .bolus, .carbs, .training]
+    
     // MARK: Do something
     
     func doLoad(request: Root.Load.Request) {
@@ -40,11 +42,14 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
         case .history: router?.routeToHistory()
         case .settings: router?.routeToSettings()
         case .plus:
-            let response = Root.ShowAddEntryOptionsList.Response()
+            let response = Root.ShowAddEntryOptionsList.Response(types: entryTypes)
             presenter?.presentAddEntry(response: response)
         }
     }
     
     func doShowAddEntry(request: Root.ShowAddEntry.Request) {
+        let type = entryTypes[request.index]
+        
+        // TO DO: - add route to add entry
     }
 }

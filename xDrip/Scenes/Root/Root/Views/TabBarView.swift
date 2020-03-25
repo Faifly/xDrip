@@ -11,7 +11,7 @@ import UIKit
 final class TabBarView: UIView {
     @IBOutlet private weak var calibrationButton: CenteredTitleButton!
     @IBOutlet private weak var chartButton: CenteredTitleButton!
-    @IBOutlet private weak var plusButton: CenteredTitleButton!
+    @IBOutlet private(set) weak var plusButton: CenteredTitleButton!
     @IBOutlet private weak var historyButton: CenteredTitleButton!
     @IBOutlet private weak var settingsButton: CenteredTitleButton!
     

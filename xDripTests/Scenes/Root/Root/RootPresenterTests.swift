@@ -40,6 +40,7 @@ final class RootPresenterTests: XCTestCase {
     final class RootDisplayLogicSpy: RootDisplayLogic {
         var displayLoadCalled = false
         var displayAddEntryCalled = false
+        var titles: [String] = []
         
         func displayLoad(viewModel: Root.Load.ViewModel) {
             displayLoadCalled = true
@@ -47,6 +48,7 @@ final class RootPresenterTests: XCTestCase {
         
         func displayAddEntry(viewModel: Root.ShowAddEntryOptionsList.ViewModel) {
             displayAddEntryCalled = true
+            titles = viewModel.titles
         }
     }
     
@@ -72,7 +74,9 @@ final class RootPresenterTests: XCTestCase {
         // Given
         let spy = RootDisplayLogicSpy()
         sut.viewController = spy
-        let response = Root.ShowAddEntryOptionsList.Response()
+        
+        let entryTypes: [Root.EntryType] = [.food, .bolus, .carbs, .training]
+        let response = Root.ShowAddEntryOptionsList.Response(types: entryTypes)
         
         // When
         sut.presentAddEntry(response: response)
@@ -82,5 +86,15 @@ final class RootPresenterTests: XCTestCase {
             spy.displayAddEntryCalled,
             "presentLoad(response:) should ask the view controller to display the result"
         )
+        
+        guard spy.titles.count == 4 else {
+            XCTFail("Expected titles count: 4, found: \(spy.titles.count)")
+            return
+        }
+        
+        XCTAssertTrue(spy.titles[0] == "root_add_entry_food".localized)
+        XCTAssertTrue(spy.titles[1] == "root_add_entry_bolus".localized)
+        XCTAssertTrue(spy.titles[2] == "root_add_entry_carbs".localized)
+        XCTAssertTrue(spy.titles[3] == "root_add_entry_training".localized)
     }
 }

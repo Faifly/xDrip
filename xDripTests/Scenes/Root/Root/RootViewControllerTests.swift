@@ -49,6 +49,9 @@ final class RootViewControllerTests: XCTestCase {
     final class RootBusinessLogicSpy: RootBusinessLogic {
         var doLoadCalled = false
         var lastTabBarButtonSelected: Root.TabButton?
+        var selectedEntryType: Root.EntryType?
+        
+        let entries: [Root.EntryType] = [.food, .bolus, .carbs, .training]
         
         func doLoad(request: Root.Load.Request) {
             doLoadCalled = true
@@ -59,6 +62,8 @@ final class RootViewControllerTests: XCTestCase {
         }
         
         func doShowAddEntry(request: Root.ShowAddEntry.Request) {
+            let type = entries[request.index]
+            selectedEntryType = type
         }
     }
     
@@ -150,5 +155,51 @@ final class RootViewControllerTests: XCTestCase {
         settingsButton.sendActions(for: .touchUpInside)
         // Then
         XCTAssertTrue(spy.lastTabBarButtonSelected == .settings)
+    }
+    
+    func testShowAddEntry() {
+        // Given
+        let spy = RootBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        
+        var titles: [String] = []
+        for (i, _) in spy.entries.enumerated() {
+            titles.append(String(i))
+        }
+        
+        let viewModel = Root.ShowAddEntryOptionsList.ViewModel(titles: titles)
+        sut.displayAddEntry(viewModel: viewModel)
+        
+        guard let alertController = sut.presentedViewController as? UIAlertController else {
+            XCTFail("Couldn't obtain alert controller")
+            return
+        }
+        
+        guard alertController.actions.count == titles.count + 1 else {
+            XCTFail("Expected actions count: \(titles.count), found: \(alertController.actions.count)") // +1 because of cancel action
+            return
+        }
+        
+        for i in 0 ..< alertController.actions.count - 1 {
+            let action = alertController.actions[i]
+            
+            XCTAssertTrue(action.title == titles[i])
+            
+            // When
+            alertController.sendAction(action: action)
+            // Then
+            XCTAssertTrue(spy.selectedEntryType == spy.entries[i])
+        }
+    }
+}
+
+extension UIAlertController {
+    typealias AlertHandler = @convention(block) (UIAlertAction) -> Void
+
+    func sendAction(action: UIAlertAction) {
+        guard let block = action.value(forKey: "handler") else { return }
+        let handler = unsafeBitCast(block as AnyObject, to: AlertHandler.self)
+        handler(action)
     }
 }
