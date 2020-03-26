@@ -60,7 +60,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="poO-e0-fgy">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="2T8-10-bDx" id="0SO-GG-46s"/>
@@ -73,7 +73,7 @@
                             <constraint firstItem="poO-e0-fgy" firstAttribute="leading" secondItem="uPv-Nt-ZRE" secondAttribute="leading" id="6vo-mB-dNr"/>
                             <constraint firstItem="uPv-Nt-ZRE" firstAttribute="trailing" secondItem="poO-e0-fgy" secondAttribute="trailing" id="T9Z-Gs-Xef"/>
                             <constraint firstItem="poO-e0-fgy" firstAttribute="top" secondItem="uPv-Nt-ZRE" secondAttribute="top" id="YwL-Yx-Ze8"/>
-                            <constraint firstItem="uPv-Nt-ZRE" firstAttribute="bottom" secondItem="poO-e0-fgy" secondAttribute="bottom" id="fBc-ea-tpb"/>
+                            <constraint firstAttribute="bottom" secondItem="poO-e0-fgy" secondAttribute="bottom" id="fBc-ea-tpb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uPv-Nt-ZRE"/>
                     </view>

@@ -56,7 +56,7 @@ final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStor
     private func createDummies() {
         entries = []
         
-        for _ in 0 ... 15 {
+        for _ in 0 ... 20 {
             let randValue = Double.random(in: 0...40)
             let randomTimeInterval = TimeInterval.random(in: 0 ... 1_000_000_000)
             let date = Date(timeIntervalSince1970: randomTimeInterval)
