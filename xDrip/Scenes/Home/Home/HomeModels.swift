@@ -27,4 +27,15 @@ enum Home {
         struct ViewModel {
         }
     }
+    
+    enum ShowEntriesList {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
 }

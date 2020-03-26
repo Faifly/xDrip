@@ -19,10 +19,38 @@ protocol EntriesListPresentationLogic {
 final class EntriesListPresenter: EntriesListPresentationLogic {
     weak var viewController: EntriesListDisplayLogic?
     
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "dd.MM.YYYY HH:mm"
+        
+        return formatter
+    }
+    
     // MARK: Do something
     
     func presentLoad(response: EntriesList.Load.Response) {
-        let viewModel = EntriesList.Load.ViewModel()
+        let responseData = response.entries
+        var cellData: [EntriesList.CellData] = []
+        
+        responseData.forEach { (entry) in
+            var value = ""
+            
+            if response.type == .bolus {
+                value = String(format: "%.02f mg", (entry as! BolusEntry).amount)
+            } else {
+                value = String(format: "%.02f mg", (entry as! CarbEntry).amount)
+            }
+            
+            let date = dateFormatter.string(from: entry.date ?? Date())
+            
+            cellData.append(
+                EntriesList.CellData(value: value,
+                                     date: date)
+            )
+        }
+        
+        let viewModel = EntriesList.Load.ViewModel(cellData: cellData)
         viewController?.displayLoad(viewModel: viewModel)
     }
 }

@@ -46,7 +46,9 @@ final class EntriesListInteractorTests: XCTestCase {
     }
     
     final class EntriesListRoutingLogicSpy: EntriesListRoutingLogic {
-        
+        func dismissSelf() {
+            
+        }
     }
     
     // MARK: Tests

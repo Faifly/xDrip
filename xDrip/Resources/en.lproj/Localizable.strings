@@ -1,6 +1,9 @@
 // AUTO-GENERATED
 // General
 "cancel" = "Cancel";
+"data" = "Data";
+"edit" = "Edit";
+"done" = "Done";
 
 // Home
 "home_time_frame_1h" = "1H";

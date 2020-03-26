@@ -44,12 +44,27 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     }
     
     // MARK: IB
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var editBarButtonItem: UIBarButtonItem!
+    
+    private var isEdit: Bool = false {
+        didSet {
+            editBarButtonItem.title = isEdit ? "done".localized : "edit".localized
+            editBarButtonItem.style = isEdit ? .done : .plain
+            
+            tableView.isEditing = isEdit
+        }
+    }
+    
+    private var cellData: [EntriesList.CellData] = []
     
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
+        
+        setupUI()
     }
     
     // MARK: Do something
@@ -59,9 +74,89 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
         interactor?.doLoad(request: request)
     }
     
+    @IBAction private func onCancelButtonTap() {
+        let request = EntriesList.Cancel.Request()
+        interactor?.doCancel(request: request)
+    }
+    
+    @IBAction func onEditButtonTap() {
+        isEdit.toggle()
+    }
+    
+    
     // MARK: Display
     
     func displayLoad(viewModel: EntriesList.Load.ViewModel) {
+        cellData = viewModel.cellData
+        tableView.reloadData()
+    }
+    
+    private func setupUI() {
+        editBarButtonItem.title = "edit".localized
         
+        view.addBlur()
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension EntriesListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
+        let data = cellData[indexPath.row]
+        
+        cell.textLabel?.text = data.value
+        cell.textLabel?.textAlignment = .left
+        cell.textLabel?.textColor = UIColor.timeFrameSegmentLabelColor
+        
+        cell.detailTextLabel?.text = data.date
+        
+        cell.selectionStyle = .default
+        cell.accessoryType = .disclosureIndicator
+        
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cellData.count
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return isEdit
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "data".uppercased().localized
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            print("try delete")
+            
+            let request = EntriesList.DeleteEntry.Request(index: indexPath.row)
+            interactor?.doDeleteEntry(request: request)
+            
+            cellData.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+}
+
+// MARK: UITableViewDelegate
+
+extension EntriesListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let request = EntriesList.ShowSelectedEntry.Request(index: indexPath.row)
+        interactor?.doShowSelectedEntry(request: request)
     }
 }

@@ -15,6 +15,16 @@ import UIKit
 enum EntriesList {
     // MARK: Models
     
+    enum EntryType {
+        case bolus
+        case carbs
+    }
+    
+    struct CellData {
+        let value: String
+        let date: String
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -22,6 +32,46 @@ enum EntriesList {
         }
         
         struct Response {
+            let entries: [AbstractEntry]
+            let type: EntryType
+        }
+        
+        struct ViewModel {
+            let cellData: [CellData]
+        }
+    }
+    
+    enum Cancel {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum DeleteEntry {
+        struct Request {
+            let index: Int
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum ShowSelectedEntry {
+        struct Request {
+            let index: Int
+        }
+        
+        struct Response {
+            let entry: AbstractEntry
+            let type: EntriesList.EntryType
         }
         
         struct ViewModel {

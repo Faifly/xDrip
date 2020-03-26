@@ -13,7 +13,7 @@
 import UIKit
 
 @objc protocol HomeRoutingLogic {
-    
+    func routeToEntriesList()
 }
 
 protocol HomeDataPassing {
@@ -25,4 +25,10 @@ final class HomeRouter: NSObject, HomeRoutingLogic, HomeDataPassing {
     var dataStore: HomeDataStore?
     
     // MARK: Routing
+    
+    func routeToEntriesList() {
+        let controller = UIStoryboard(board: .entries).instantiateViewController(withIdentifier: "EntriesListNavigationController")
+        
+        viewController?.present(controller, animated: true)
+    }
 }

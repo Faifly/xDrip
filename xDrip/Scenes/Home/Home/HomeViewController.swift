@@ -64,6 +64,11 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
         interactor?.doLoad(request: request)
     }
     
+    @IBAction func toEntriesList() {
+        let request = Home.ShowEntriesList.Request()
+        interactor?.doShowEntriesList(request: request)
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: Home.Load.ViewModel) {

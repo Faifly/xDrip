@@ -46,10 +46,15 @@ final class EntriesListViewControllerTests: XCTestCase {
     // MARK: Test doubles
     
     final class EntriesListBusinessLogicSpy: EntriesListBusinessLogic {
+        
         var doLoadCalled = false
         
         func doLoad(request: EntriesList.Load.Request) {
             doLoadCalled = true
+        }
+        
+        func doCancel(request: EntriesList.Cancel.Request) {
+            
         }
     }
     
@@ -69,7 +74,7 @@ final class EntriesListViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = EntriesList.Load.ViewModel()
+        let viewModel = EntriesList.Load.ViewModel(cellData: [])
         
         // When
         loadView()

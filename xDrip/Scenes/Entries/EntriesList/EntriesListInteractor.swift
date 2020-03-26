@@ -14,6 +14,9 @@ import UIKit
 
 protocol EntriesListBusinessLogic {
     func doLoad(request: EntriesList.Load.Request)
+    func doCancel(request: EntriesList.Cancel.Request)
+    func doDeleteEntry(request: EntriesList.DeleteEntry.Request)
+    func doShowSelectedEntry(request: EntriesList.ShowSelectedEntry.Request)
 }
 
 protocol EntriesListDataStore {
@@ -24,10 +27,47 @@ final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStor
     var presenter: EntriesListPresentationLogic?
     var router: EntriesListRoutingLogic?
     
+    private var entries: [AbstractEntry] = []
+    private var type: EntriesList.EntryType = .carbs
+    
     // MARK: Do something
     
     func doLoad(request: EntriesList.Load.Request) {
-        let response = EntriesList.Load.Response()
+        createDummies()
+        
+        let response = EntriesList.Load.Response(entries: entries, type: .carbs)
         presenter?.presentLoad(response: response)
+    }
+    
+    func doCancel(request: EntriesList.Cancel.Request) {
+        router?.dismissSelf()
+    }
+    
+    func doDeleteEntry(request: EntriesList.DeleteEntry.Request) {
+        entries.remove(at: request.index)
+    }
+    
+    func doShowSelectedEntry(request: EntriesList.ShowSelectedEntry.Request) {
+        let entry = entries[request.index]
+        
+        // add route to edit entry controller
+    }
+    
+    private func createDummies() {
+        entries = []
+        
+        for _ in 0 ... 15 {
+            let randValue = Double.random(in: 0...40)
+            let randomTimeInterval = TimeInterval.random(in: 0 ... 1_000_000_000)
+            let date = Date(timeIntervalSince1970: randomTimeInterval)
+            
+            if type == .bolus {
+                let entry = BolusEntry(amount: randValue, date: date)
+                entries.append(entry)
+            } else {
+                let entry = CarbEntry(amount: randValue, foodType: nil, assimilationDuration: 0.0, date: date)
+                entries.append(entry)
+            }
+        }
     }
 }

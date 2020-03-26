@@ -1,6 +1,9 @@
 // AUTO-GENERATED
 // General
 "cancel" = "Отмена";
+"data" = "Данные";
+"edit" = "Редактировать";
+"done" = "Готово";
 
 // Home
 "home_time_frame_1h" = "1Ч";

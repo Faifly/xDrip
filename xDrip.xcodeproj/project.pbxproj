@@ -14,6 +14,7 @@
 		2C48E6EA2428F592006B63B0 /* UIColor+Colors_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */; };
 		2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */; };
 		2C48E6EE242909F4006B63B0 /* UIView+Bindings_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */; };
+		2CBF32A1242CEB6500DE944A /* UIView+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBF32A0242CEB6500DE944A /* UIView+Custom.swift */; };
 		580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */; };
 		580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7792421457600C34948 /* EditFoodEntryRouter.swift */; };
 		580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC77A2421457600C34948 /* EditFoodEntryModels.swift */; };
@@ -191,6 +192,7 @@
 		2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors_Tests.swift"; sourceTree = "<group>"; };
 		2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings.swift"; sourceTree = "<group>"; };
 		2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings_Tests.swift"; sourceTree = "<group>"; };
+		2CBF32A0242CEB6500DE944A /* UIView+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Custom.swift"; sourceTree = "<group>"; };
 		580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryPresenter.swift; sourceTree = "<group>"; };
 		580EC7792421457600C34948 /* EditFoodEntryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryRouter.swift; sourceTree = "<group>"; };
 		580EC77A2421457600C34948 /* EditFoodEntryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryModels.swift; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 				58160E022402C8CE00C792F4 /* UIStoryboard+Content.swift */,
 				2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */,
 				2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */,
+				2CBF32A0242CEB6500DE944A /* UIView+Custom.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1245,6 +1248,7 @@
 				58B5FDC224193C2200DB857D /* GlucoseData.swift in Sources */,
 				58B5FD56241910BD00DB857D /* SettingsRootInteractor.swift in Sources */,
 				58B5FD3D24190E6700DB857D /* StatsRootRouter.swift in Sources */,
+				2CBF32A1242CEB6500DE944A /* UIView+Custom.swift in Sources */,
 				58B5FD53241910BD00DB857D /* SettingsRootRouter.swift in Sources */,
 				58B5FD4724190EB300DB857D /* HistoryRootPresenter.swift in Sources */,
 				580EC79024214CDD00C34948 /* EntriesListPresenter.swift in Sources */,
