@@ -74,7 +74,7 @@ final class EntriesListViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = EntriesList.Load.ViewModel(cellData: [])
+        let viewModel = EntriesList.Load.ViewModel(cellViewModel: [])
         
         // When
         loadView()

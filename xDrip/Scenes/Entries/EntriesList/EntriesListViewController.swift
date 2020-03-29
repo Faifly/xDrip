@@ -16,6 +16,34 @@ protocol EntriesListDisplayLogic: class {
     func displayLoad(viewModel: EntriesList.Load.ViewModel)
 }
 
+final class EntriesListSceneBuilder {
+    func configSceneForCarbs(for viewController: EntriesListViewController) {
+        let persistenceWorker = EntriesListCarbsPersistenceWorker()
+        let formattingWorker = EntriesListCarbsFormattingWorker()
+        
+        viewController.title = "entries_list_scene_title_carbs".localized
+        
+        guard let interactor = viewController.interactor as? EntriesListInteractor,
+        let presenter = interactor.presenter as? EntriesListPresenter else { return }
+        
+        interactor.inject(persistenceWorker: persistenceWorker)
+        presenter.inject(formattingWorker: formattingWorker)
+    }
+    
+    func configSceneForBolus(for viewController: EntriesListViewController) {
+        let persistenceWorker = EntriesListBolusPersistenceWorker()
+        let formattingWorker = EntriesListBolusFormattingWorker()
+        
+        viewController.title = "entries_list_scene_title_bolus".localized
+        
+        guard let interactor = viewController.interactor as? EntriesListInteractor,
+        let presenter = interactor.presenter as? EntriesListPresenter else { return }
+        
+        interactor.inject(persistenceWorker: persistenceWorker)
+        presenter.inject(formattingWorker: formattingWorker)
+    }
+}
+
 class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     var interactor: EntriesListBusinessLogic?
     var router: (NSObjectProtocol & EntriesListRoutingLogic & EntriesListDataPassing)?
@@ -45,18 +73,11 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     
     // MARK: IB
     @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var editBarButtonItem: UIBarButtonItem!
+    private var tableController = EntriesListTableController(data: [])
     
-    private var isEdit: Bool = false {
-        didSet {
-            editBarButtonItem.title = isEdit ? "done".localized : "edit".localized
-            editBarButtonItem.style = isEdit ? .done : .plain
-            
-            tableView.isEditing = isEdit
-        }
-    }
+    private var isEdit: Bool = false
     
-    private var cellData: [EntriesList.CellData] = []
+    private var sectionViewModels: [EntriesList.SectionViewModel] = []
     
     // MARK: View lifecycle
     
@@ -79,84 +100,56 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
         interactor?.doCancel(request: request)
     }
     
-    @IBAction func onEditButtonTap() {
+    @objc
+    private func onEditButtonTap() {
         isEdit.toggle()
+        setupRightBarButtonItem()
+        tableView.isEditing = isEdit
     }
-    
     
     // MARK: Display
     
     func displayLoad(viewModel: EntriesList.Load.ViewModel) {
-        cellData = viewModel.cellData
-        tableView.reloadData()
+        sectionViewModels = viewModel.items
+        
+        setupTableView()
     }
     
     private func setupUI() {
-        editBarButtonItem.title = "edit".localized
+        setupRightBarButtonItem()
         
         view.addBlur()
     }
-}
-
-// MARK: - UITableViewDataSource
-
-extension EntriesListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
-        let data = cellData[indexPath.row]
+    
+    private func setupRightBarButtonItem() {
+        let item = UIBarButtonItem(barButtonSystemItem: isEdit ? .done : .edit,
+                               target: self,
+                               action: #selector(onEditButtonTap))
         
-        cell.textLabel?.text = data.value
-        cell.textLabel?.textAlignment = .left
-        cell.textLabel?.textColor = UIColor.timeFrameSegmentLabelColor
+        navigationItem.rightBarButtonItem = item
+    }
+    
+    private func setupTableView() {
+        tableController = EntriesListTableController(data: sectionViewModels)
         
-        cell.detailTextLabel?.text = data.date
+        tableView.delegate = tableController
+        tableView.dataSource = tableController
         
-        cell.selectionStyle = .default
-        cell.accessoryType = .disclosureIndicator
-        
-        return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellData.count
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return isEdit
-    }
-    
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "data".uppercased().localized
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            print("try delete")
+        tableController.didDeleteEntry = { [weak self] indexPath in
+            guard let self = self else { return }
+            
+            self.sectionViewModels[indexPath.section].items.remove(at: indexPath.row)
             
             let request = EntriesList.DeleteEntry.Request(index: indexPath.row)
-            interactor?.doDeleteEntry(request: request)
-            
-            cellData.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.interactor?.doDeleteEntry(request: request)
         }
-    }
-}
-
-// MARK: UITableViewDelegate
-
-extension EntriesListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         
-        let request = EntriesList.ShowSelectedEntry.Request(index: indexPath.row)
-        interactor?.doShowSelectedEntry(request: request)
+        tableController.didSelectEntry = { [weak self] indexPath in
+            guard let self = self else { return }
+            let request = EntriesList.ShowSelectedEntry.Request(index: indexPath.row)
+            self.interactor?.doShowSelectedEntry(request: request)
+        }
+        
+        tableView.reloadData()
     }
 }

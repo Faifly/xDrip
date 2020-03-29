@@ -24,6 +24,8 @@ final class EntriesListRouter: NSObject, EntriesListRoutingLogic, EntriesListDat
     weak var viewController: EntriesListViewController?
     var dataStore: EntriesListDataStore?
     
+    static let entriesListNavigationControllerIdentifier = "EntriesListNavigationController"
+    
     // MARK: Routing
     
     func dismissSelf() {

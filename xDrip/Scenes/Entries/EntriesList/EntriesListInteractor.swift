@@ -17,6 +17,7 @@ protocol EntriesListBusinessLogic {
     func doCancel(request: EntriesList.Cancel.Request)
     func doDeleteEntry(request: EntriesList.DeleteEntry.Request)
     func doShowSelectedEntry(request: EntriesList.ShowSelectedEntry.Request)
+    func inject(persistenceWorker: EntriesListEntryPersistenceWorker)
 }
 
 protocol EntriesListDataStore {
@@ -26,16 +27,14 @@ protocol EntriesListDataStore {
 final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStore {
     var presenter: EntriesListPresentationLogic?
     var router: EntriesListRoutingLogic?
-    
-    private var entries: [AbstractEntry] = []
-    private var type: EntriesList.EntryType = .carbs
+    private var entriesWorker: EntriesListEntryPersistenceWorker?
     
     // MARK: Do something
     
     func doLoad(request: EntriesList.Load.Request) {
-        createDummies()
+        let entries = entriesWorker?.fetchEntries() ?? []
         
-        let response = EntriesList.Load.Response(entries: entries, type: .carbs)
+        let response = EntriesList.Load.Response(entries: entries)
         presenter?.presentLoad(response: response)
     }
     
@@ -44,30 +43,74 @@ final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStor
     }
     
     func doDeleteEntry(request: EntriesList.DeleteEntry.Request) {
-        entries.remove(at: request.index)
+        entriesWorker?.deleteEntry(request.index)
     }
     
     func doShowSelectedEntry(request: EntriesList.ShowSelectedEntry.Request) {
-        let entry = entries[request.index]
+        let entry = entriesWorker?.fetchEntries()[request.index]
         
         // add route to edit entry controller
     }
     
-    private func createDummies() {
-        entries = []
+    func inject(persistenceWorker: EntriesListEntryPersistenceWorker) {
+        entriesWorker = persistenceWorker
+    }
+}
+
+protocol EntriesListEntryPersistenceWorker {
+    func fetchEntries() -> [AbstractEntry]
+    func deleteEntry(_ index: Int)
+}
+
+final class EntriesListCarbsPersistenceWorker: EntriesListEntryPersistenceWorker {
+    private var carbs: [CarbEntry] = []
+    
+    func fetchEntries() -> [AbstractEntry] {
+        carbs = []
         
         for _ in 0 ... 20 {
-            let randValue = Double.random(in: 0...40)
+            let randValue = Double.random(in: 0...100)
             let randomTimeInterval = TimeInterval.random(in: 0 ... 1_000_000_000)
             let date = Date(timeIntervalSince1970: randomTimeInterval)
             
-            if type == .bolus {
-                let entry = BolusEntry(amount: randValue, date: date)
-                entries.append(entry)
-            } else {
-                let entry = CarbEntry(amount: randValue, foodType: nil, assimilationDuration: 0.0, date: date)
-                entries.append(entry)
-            }
+            let entry = CarbEntry(amount: randValue,
+                                  foodType: nil,
+                                  assimilationDuration: 0.0,
+                                  date: date)
+                carbs.append(entry)
         }
+        
+        return carbs
+    }
+
+    func deleteEntry(_ index: Int) {
+        let entry = carbs.remove(at: index)
+        
+        // add delete from database
+    }
+}
+
+final class EntriesListBolusPersistenceWorker: EntriesListEntryPersistenceWorker {
+    private var bolusEntries: [BolusEntry] = []
+    
+    func fetchEntries() -> [AbstractEntry] {
+        bolusEntries = []
+        
+        for _ in 0 ... 20 {
+            let randValue = Double.random(in: 0...100)
+            let randomTimeInterval = TimeInterval.random(in: 0 ... 1_000_000_000)
+            let date = Date(timeIntervalSince1970: randomTimeInterval)
+            
+            let entry = BolusEntry(amount: randValue, date: date)
+                bolusEntries.append(entry)
+        }
+        
+        return bolusEntries
+    }
+
+    func deleteEntry(_ index: Int) {
+        let entry = bolusEntries.remove(at: index)
+        
+        // add delete from database
     }
 }

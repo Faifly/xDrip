@@ -15,14 +15,14 @@ import UIKit
 enum EntriesList {
     // MARK: Models
     
-    enum EntryType {
-        case bolus
-        case carbs
-    }
-    
-    struct CellData {
+    struct CellViewModel {
         let value: String
         let date: String
+    }
+    
+    struct SectionViewModel {
+        let title: String
+        var items: [CellViewModel]
     }
     
     // MARK: Use cases
@@ -33,11 +33,10 @@ enum EntriesList {
         
         struct Response {
             let entries: [AbstractEntry]
-            let type: EntryType
         }
         
         struct ViewModel {
-            let cellData: [CellData]
+            let items: [SectionViewModel]
         }
     }
     
@@ -70,8 +69,6 @@ enum EntriesList {
         }
         
         struct Response {
-            let entry: AbstractEntry
-            let type: EntriesList.EntryType
         }
         
         struct ViewModel {

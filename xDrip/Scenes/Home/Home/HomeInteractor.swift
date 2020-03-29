@@ -33,6 +33,13 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     }
     
     func doShowEntriesList(request: Home.ShowEntriesList.Request) {
-        router?.routeToEntriesList()
+        switch request.entriesType {
+        case .bolus:
+            router?.routeToBolusEntriesList()
+        case .carbs:
+            router?.routeToCarbsEntriesList()
+        default:
+            break
+        }
     }
 }

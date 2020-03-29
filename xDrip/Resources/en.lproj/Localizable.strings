@@ -1,9 +1,6 @@
 // AUTO-GENERATED
 // General
 "cancel" = "Cancel";
-"data" = "Data";
-"edit" = "Edit";
-"done" = "Done";
 
 // Home
 "home_time_frame_1h" = "1H";
@@ -17,3 +14,8 @@
 "root_add_entry_bolus" = "Bolus";
 "root_add_entry_carbs" = "Carbs";
 "root_add_entry_training" = "Training";
+
+// Entries List
+"entries_list_data_section_title" = "Data";
+"entries_list_scene_title_carbs" = "Active Carbohydrates";
+"entries_list_scene_title_bolus" = "Active insulin";

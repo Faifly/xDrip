@@ -30,6 +30,7 @@ enum Home {
     
     enum ShowEntriesList {
         struct Request {
+            let entriesType: Root.EntryType
         }
         
         struct Response {

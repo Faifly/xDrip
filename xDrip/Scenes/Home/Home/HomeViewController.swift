@@ -65,7 +65,7 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     }
     
     @IBAction func toEntriesList() {
-        let request = Home.ShowEntriesList.Request()
+        let request = Home.ShowEntriesList.Request(entriesType: Bool.random() ? .carbs : .bolus)
         interactor?.doShowEntriesList(request: request)
     }
     
