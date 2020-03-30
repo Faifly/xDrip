@@ -15,14 +15,9 @@ import UIKit
 enum EntriesList {
     // MARK: Models
     
-    struct CellViewModel {
-        let value: String
-        let date: String
-    }
-    
     struct SectionViewModel {
         let title: String
-        var items: [CellViewModel]
+        var items: [EntriesListTableViewCell.ViewModel]
     }
     
     // MARK: Use cases

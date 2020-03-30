@@ -8,7 +8,11 @@
 
 import UIKit
 
-class EntriesListTableViewCell: UITableViewCell {
+final class EntriesListTableViewCell: UITableViewCell, ViewModelConfigurable {
+    struct ViewModel {
+        let value: String
+        let date: String
+    }
 
     @IBOutlet private weak var valueLabel: UILabel!
     @IBOutlet private weak var dateLabel: UILabel!
@@ -19,8 +23,8 @@ class EntriesListTableViewCell: UITableViewCell {
         valueLabel.textColor = UIColor.timeFrameSegmentLabelColor
     }
     
-    func config(with model: EntriesList.CellViewModel) {
-        valueLabel.text = model.value
-        dateLabel.text = model.date
+    func configure(withViewModel viewModel: ViewModel) {
+        valueLabel.text = viewModel.value
+        dateLabel.text = viewModel.date
     }
 }

@@ -16,34 +16,6 @@ protocol EntriesListDisplayLogic: class {
     func displayLoad(viewModel: EntriesList.Load.ViewModel)
 }
 
-final class EntriesListSceneBuilder {
-    func configSceneForCarbs(for viewController: EntriesListViewController) {
-        let persistenceWorker = EntriesListCarbsPersistenceWorker()
-        let formattingWorker = EntriesListCarbsFormattingWorker()
-        
-        viewController.title = "entries_list_scene_title_carbs".localized
-        
-        guard let interactor = viewController.interactor as? EntriesListInteractor,
-        let presenter = interactor.presenter as? EntriesListPresenter else { return }
-        
-        interactor.inject(persistenceWorker: persistenceWorker)
-        presenter.inject(formattingWorker: formattingWorker)
-    }
-    
-    func configSceneForBolus(for viewController: EntriesListViewController) {
-        let persistenceWorker = EntriesListBolusPersistenceWorker()
-        let formattingWorker = EntriesListBolusFormattingWorker()
-        
-        viewController.title = "entries_list_scene_title_bolus".localized
-        
-        guard let interactor = viewController.interactor as? EntriesListInteractor,
-        let presenter = interactor.presenter as? EntriesListPresenter else { return }
-        
-        interactor.inject(persistenceWorker: persistenceWorker)
-        presenter.inject(formattingWorker: formattingWorker)
-    }
-}
-
 class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     var interactor: EntriesListBusinessLogic?
     var router: (NSObjectProtocol & EntriesListRoutingLogic & EntriesListDataPassing)?
@@ -73,10 +45,8 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     
     // MARK: IB
     @IBOutlet private weak var tableView: UITableView!
-    private var tableController = EntriesListTableController(data: [])
-    
+    private var tableController = EntriesListTableController()
     private var isEdit: Bool = false
-    
     private var sectionViewModels: [EntriesList.SectionViewModel] = []
     
     // MARK: View lifecycle
@@ -86,6 +56,7 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
         doLoad()
         
         setupUI()
+        setupTableView()
     }
     
     // MARK: Do something
@@ -112,7 +83,8 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     func displayLoad(viewModel: EntriesList.Load.ViewModel) {
         sectionViewModels = viewModel.items
         
-        setupTableView()
+        tableController.reload(with: viewModel.items)
+        tableView.reloadData()
     }
     
     private func setupUI() {
@@ -130,8 +102,6 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     }
     
     private func setupTableView() {
-        tableController = EntriesListTableController(data: sectionViewModels)
-        
         tableView.delegate = tableController
         tableView.dataSource = tableController
         
@@ -149,7 +119,5 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
             let request = EntriesList.ShowSelectedEntry.Request(index: indexPath.row)
             self.interactor?.doShowSelectedEntry(request: request)
         }
-        
-        tableView.reloadData()
     }
 }

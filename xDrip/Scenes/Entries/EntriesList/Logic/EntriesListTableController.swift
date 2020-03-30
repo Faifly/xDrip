@@ -9,22 +9,22 @@
 import Foundation
 import UIKit
 
-class EntriesListTableController: NSObject, UITableViewDelegate, UITableViewDataSource {
+final class EntriesListTableController: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     private var data: [EntriesList.SectionViewModel] = []
     
     var didDeleteEntry: ((IndexPath) -> ())?
     var didSelectEntry: ((IndexPath) -> ())?
     
-    init(data: [EntriesList.SectionViewModel]) {
+    func reload(with data: [EntriesList.SectionViewModel]) {
         self.data = data
     }
     
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        let cell = tableView.dequeueReusableCell(ofType: EntriesListTableViewCell.self, for: indexPath)
        let cellData = data[indexPath.section].items[indexPath.row]
        
-       cell.config(with: cellData)
+       cell.configure(withViewModel: cellData)
        
        return cell
    }

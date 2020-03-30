@@ -44,9 +44,9 @@ final class HomeRouter: NSObject, HomeRoutingLogic, HomeDataPassing {
         
         switch type {
         case .carbs:
-            builder.configSceneForCarbs(for: entriesListViewController)
+            builder.configureSceneForCarbs(entriesListViewController)
         case .bolus:
-            builder.configSceneForBolus(for: entriesListViewController)
+            builder.configureSceneForBolus(entriesListViewController)
         default:
             break
         }

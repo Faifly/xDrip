@@ -15,7 +15,16 @@
 		2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */; };
 		2C48E6EE242909F4006B63B0 /* UIView+Bindings_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */; };
 		2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */; };
-		2CBF32A1242CEB6500DE944A /* UIView+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBF32A0242CEB6500DE944A /* UIView+Custom.swift */; };
+		2CBE1A86243204CC003BE14E /* ViewModelConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */; };
+		2CBE1A8924320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A8824320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift */; };
+		2CBE1A8B24320F94003BE14E /* EntriesListFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A8A24320F94003BE14E /* EntriesListFormattingWorker.swift */; };
+		2CBE1A8D243211A5003BE14E /* EntriesListSceneBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A8C243211A5003BE14E /* EntriesListSceneBuilder.swift */; };
+		2CBE1A902432127C003BE14E /* EntriesListCarbsPersistenceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A8F2432127C003BE14E /* EntriesListCarbsPersistenceWorker.swift */; };
+		2CBE1A922432128E003BE14E /* EntriesListBolusPersistenceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A912432128E003BE14E /* EntriesListBolusPersistenceWorker.swift */; };
+		2CBE1A94243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A93243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift */; };
+		2CBE1A96243212D7003BE14E /* EntriesListBolusFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A95243212D7003BE14E /* EntriesListBolusFormattingWorker.swift */; };
+		2CBE1A98243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A97243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift */; };
+		2CBF32A1242CEB6500DE944A /* UIView+Effects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBF32A0242CEB6500DE944A /* UIView+Effects.swift */; };
 		2CBF32A4242E030700DE944A /* EntriesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */; };
 		580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */; };
 		580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7792421457600C34948 /* EditFoodEntryRouter.swift */; };
@@ -195,7 +204,16 @@
 		2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings.swift"; sourceTree = "<group>"; };
 		2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings_Tests.swift"; sourceTree = "<group>"; };
 		2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableController.swift; sourceTree = "<group>"; };
-		2CBF32A0242CEB6500DE944A /* UIView+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Custom.swift"; sourceTree = "<group>"; };
+		2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConfigurable.swift; sourceTree = "<group>"; };
+		2CBE1A8824320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListEntryPersistenceWorker.swift; sourceTree = "<group>"; };
+		2CBE1A8A24320F94003BE14E /* EntriesListFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListFormattingWorker.swift; sourceTree = "<group>"; };
+		2CBE1A8C243211A5003BE14E /* EntriesListSceneBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListSceneBuilder.swift; sourceTree = "<group>"; };
+		2CBE1A8F2432127C003BE14E /* EntriesListCarbsPersistenceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListCarbsPersistenceWorker.swift; sourceTree = "<group>"; };
+		2CBE1A912432128E003BE14E /* EntriesListBolusPersistenceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListBolusPersistenceWorker.swift; sourceTree = "<group>"; };
+		2CBE1A93243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListCarbsFormattingWorker.swift; sourceTree = "<group>"; };
+		2CBE1A95243212D7003BE14E /* EntriesListBolusFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListBolusFormattingWorker.swift; sourceTree = "<group>"; };
+		2CBE1A97243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListAbstractFormattingWorker.swift; sourceTree = "<group>"; };
+		2CBF32A0242CEB6500DE944A /* UIView+Effects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Effects.swift"; sourceTree = "<group>"; };
 		2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableViewCell.swift; sourceTree = "<group>"; };
 		580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryPresenter.swift; sourceTree = "<group>"; };
 		580EC7792421457600C34948 /* EditFoodEntryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryRouter.swift; sourceTree = "<group>"; };
@@ -406,12 +424,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2CBE1A812430F6EC003BE14E /* Helpers */ = {
+		2CBE1A812430F6EC003BE14E /* Logic */ = {
 			isa = PBXGroup;
 			children = (
 				2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */,
+				2CBE1A8C243211A5003BE14E /* EntriesListSceneBuilder.swift */,
 			);
-			path = Helpers;
+			path = Logic;
+			sourceTree = "<group>";
+		};
+		2CBE1A84243204A3003BE14E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		2CBE1A8724320EB3003BE14E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2CBE1A8824320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift */,
+				2CBE1A8A24320F94003BE14E /* EntriesListFormattingWorker.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		2CBE1A8E243211FC003BE14E /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				2CBE1A8F2432127C003BE14E /* EntriesListCarbsPersistenceWorker.swift */,
+				2CBE1A912432128E003BE14E /* EntriesListBolusPersistenceWorker.swift */,
+				2CBE1A97243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift */,
+				2CBE1A93243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift */,
+				2CBE1A95243212D7003BE14E /* EntriesListBolusFormattingWorker.swift */,
+			);
+			path = Workers;
 			sourceTree = "<group>";
 		};
 		2CBF32A2242E02E700DE944A /* Cells */ = {
@@ -425,7 +473,9 @@
 		580EC78A24214CC600C34948 /* EntriesList */ = {
 			isa = PBXGroup;
 			children = (
-				2CBE1A812430F6EC003BE14E /* Helpers */,
+				2CBE1A8E243211FC003BE14E /* Workers */,
+				2CBE1A8724320EB3003BE14E /* Protocols */,
+				2CBE1A812430F6EC003BE14E /* Logic */,
 				2CBF32A2242E02E700DE944A /* Cells */,
 				580EC78B24214CDD00C34948 /* EntriesListPresenter.swift */,
 				580EC78C24214CDD00C34948 /* EntriesListRouter.swift */,
@@ -556,7 +606,7 @@
 				58160E022402C8CE00C792F4 /* UIStoryboard+Content.swift */,
 				2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */,
 				2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */,
-				2CBF32A0242CEB6500DE944A /* UIView+Custom.swift */,
+				2CBF32A0242CEB6500DE944A /* UIView+Effects.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1055,6 +1105,7 @@
 			children = (
 				58160DE92402C2A900C792F4 /* Scenes */,
 				58B5FDBB24193B4E00DB857D /* Services */,
+				2CBE1A84243204A3003BE14E /* Protocols */,
 				58B5FDC024193C0600DB857D /* Model */,
 				58B4F6BE24114EA7003C6D8F /* Controllers */,
 				58160E072402E37600C792F4 /* Components */,
@@ -1255,6 +1306,7 @@
 			files = (
 				58DDC45A2423C82A008CB04D /* CarbEntry.swift in Sources */,
 				2C48E6E42428AA78006B63B0 /* UIColor+Colors.swift in Sources */,
+				2CBE1A922432128E003BE14E /* EntriesListBolusPersistenceWorker.swift in Sources */,
 				58B5FD3E24190E6700DB857D /* StatsRootModels.swift in Sources */,
 				580EC79324214CDD00C34948 /* EntriesListViewController.swift in Sources */,
 				580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */,
@@ -1270,9 +1322,10 @@
 				58B5FDC224193C2200DB857D /* GlucoseData.swift in Sources */,
 				58B5FD56241910BD00DB857D /* SettingsRootInteractor.swift in Sources */,
 				58B5FD3D24190E6700DB857D /* StatsRootRouter.swift in Sources */,
-				2CBF32A1242CEB6500DE944A /* UIView+Custom.swift in Sources */,
+				2CBF32A1242CEB6500DE944A /* UIView+Effects.swift in Sources */,
 				58B5FD53241910BD00DB857D /* SettingsRootRouter.swift in Sources */,
 				58B5FD4724190EB300DB857D /* HistoryRootPresenter.swift in Sources */,
+				2CBE1A98243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift in Sources */,
 				580EC79024214CDD00C34948 /* EntriesListPresenter.swift in Sources */,
 				58B5FD4A24190EB300DB857D /* HistoryRootViewController.swift in Sources */,
 				58B5FD55241910BD00DB857D /* SettingsRootViewController.swift in Sources */,
@@ -1281,6 +1334,7 @@
 				580EC7BD2421521C00C34948 /* EditCalibrationRouter.swift in Sources */,
 				2C48E6DE2423946C006B63B0 /* CenteredTitleButton.swift in Sources */,
 				58B5FD3624190E2F00DB857D /* HomeInteractor.swift in Sources */,
+				2CBE1A96243212D7003BE14E /* EntriesListBolusFormattingWorker.swift in Sources */,
 				58A8A42B242523DF00CCFCAC /* FoodEntriesWorker.swift in Sources */,
 				58DDC45E2423C99B008CB04D /* TrainingEntry.swift in Sources */,
 				58B5FD3224190E2F00DB857D /* HomePresenter.swift in Sources */,
@@ -1304,12 +1358,15 @@
 				580EC79224214CDD00C34948 /* EntriesListModels.swift in Sources */,
 				58160DF62402C7F600C792F4 /* RootInteractor.swift in Sources */,
 				580EC7AA242151BC00C34948 /* EditTrainingModels.swift in Sources */,
+				2CBE1A8D243211A5003BE14E /* EntriesListSceneBuilder.swift in Sources */,
+				2CBE1A902432127C003BE14E /* EntriesListCarbsPersistenceWorker.swift in Sources */,
 				58B5FDC424193DF500DB857D /* SubscriptionService.swift in Sources */,
 				58B5FDBF24193BBF00DB857D /* GlucoseDataService.swift in Sources */,
 				580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */,
 				2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */,
 				58B5FD3424190E2F00DB857D /* HomeModels.swift in Sources */,
 				580EC7A8242151BC00C34948 /* EditTrainingPresenter.swift in Sources */,
+				2CBE1A8924320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift in Sources */,
 				58B5FD3324190E2F00DB857D /* HomeRouter.swift in Sources */,
 				2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */,
 				58160DF52402C7F600C792F4 /* RootViewController.swift in Sources */,
@@ -1323,12 +1380,15 @@
 				580EC7BE2421521C00C34948 /* EditCalibrationModels.swift in Sources */,
 				580EC7AB242151BC00C34948 /* EditTrainingViewController.swift in Sources */,
 				58160DF42402C7F600C792F4 /* RootModels.swift in Sources */,
+				2CBE1A94243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift in Sources */,
 				58160E0D2402E52000C792F4 /* TabBarView.swift in Sources */,
 				580EC79424214CDD00C34948 /* EntriesListInteractor.swift in Sources */,
 				58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */,
 				58788B7724264A36000EB113 /* CalibrationEntriesWorker.swift in Sources */,
 				58DDC44F2423B5B1008CB04D /* UserInjectionType.swift in Sources */,
 				58B5FD52241910BD00DB857D /* SettingsRootPresenter.swift in Sources */,
+				2CBE1A8B24320F94003BE14E /* EntriesListFormattingWorker.swift in Sources */,
+				2CBE1A86243204CC003BE14E /* ViewModelConfigurable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
