@@ -36,7 +36,38 @@ final class HomeRouterTests: XCTestCase {
     // MARK: Test doubles
     
     final class ViewControllerSpy: HomeViewController {
+        var lastPresentedViewController: UIViewController?
+        
+        override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+            lastPresentedViewController = viewControllerToPresent
+        }
     }
     
     // MARK: Tests
+    
+    func testRootToBolusEntriesList() {
+        // Given
+        let spy = createSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.routeToBolusEntriesList()
+        
+        // Then
+        let entriesListNavController = spy.lastPresentedViewController as! UINavigationController
+        XCTAssert(entriesListNavController.viewControllers[0] is EntriesListViewController)
+    }
+    
+    func testRootToCarbsEntriesList() {
+        // Given
+        let spy = createSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.routeToCarbsEntriesList()
+        
+        // Then
+        let entriesListNavController = spy.lastPresentedViewController as! UINavigationController
+        XCTAssert(entriesListNavController.viewControllers[0] is EntriesListViewController)
+    }
 }

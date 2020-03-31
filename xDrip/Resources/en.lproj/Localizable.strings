@@ -19,3 +19,4 @@
 "entries_list_data_section_title" = "Data";
 "entries_list_scene_title_carbs" = "Active Carbohydrates";
 "entries_list_scene_title_bolus" = "Active insulin";
+"entries_list_cell_no_date" = "No date specified";

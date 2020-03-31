@@ -15,11 +15,9 @@ final class EntriesListSceneBuilder {
         
         viewController.title = "entries_list_scene_title_carbs".localized
         
-        guard let interactor = viewController.interactor as? EntriesListInteractor,
-        let presenter = interactor.presenter as? EntriesListPresenter else { return }
-        
-        interactor.inject(persistenceWorker: persistenceWorker)
-        presenter.inject(formattingWorker: formattingWorker)
+        inject(formattingWorker: formattingWorker,
+               persistenceWorker: persistenceWorker,
+               for: viewController)
     }
     
     func configureSceneForBolus(_ viewController: EntriesListViewController) {
@@ -28,10 +26,19 @@ final class EntriesListSceneBuilder {
         
         viewController.title = "entries_list_scene_title_bolus".localized
         
-        guard let interactor = viewController.interactor as? EntriesListInteractor,
-        let presenter = interactor.presenter as? EntriesListPresenter else { return }
+        inject(formattingWorker: formattingWorker,
+               persistenceWorker: persistenceWorker,
+               for: viewController)
+    }
+    
+    private func inject(formattingWorker: EntriesListFormattingWorker,
+                        persistenceWorker: EntriesListEntryPersistenceWorker,
+                        for viewController: EntriesListViewController) {
         
-        interactor.inject(persistenceWorker: persistenceWorker)
-        presenter.inject(formattingWorker: formattingWorker)
+        let interactor = viewController.interactor
+        let presenter = interactor?.presenter
+        
+        interactor?.inject(persistenceWorker: persistenceWorker)
+        presenter?.inject(formattingWorker: formattingWorker)
     }
 }

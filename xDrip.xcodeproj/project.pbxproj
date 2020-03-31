@@ -24,6 +24,8 @@
 		2CBE1A94243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A93243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift */; };
 		2CBE1A96243212D7003BE14E /* EntriesListBolusFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A95243212D7003BE14E /* EntriesListBolusFormattingWorker.swift */; };
 		2CBE1A98243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A97243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift */; };
+		2CBE1A9B24323A58003BE14E /* EntriesListTableControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A9A24323A58003BE14E /* EntriesListTableControllerTests.swift */; };
+		2CBE1A9D2433718C003BE14E /* EntriesListSceneBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A9C2433718C003BE14E /* EntriesListSceneBuilderTests.swift */; };
 		2CBF32A1242CEB6500DE944A /* UIView+Effects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBF32A0242CEB6500DE944A /* UIView+Effects.swift */; };
 		2CBF32A4242E030700DE944A /* EntriesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */; };
 		580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */; };
@@ -213,6 +215,8 @@
 		2CBE1A93243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListCarbsFormattingWorker.swift; sourceTree = "<group>"; };
 		2CBE1A95243212D7003BE14E /* EntriesListBolusFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListBolusFormattingWorker.swift; sourceTree = "<group>"; };
 		2CBE1A97243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListAbstractFormattingWorker.swift; sourceTree = "<group>"; };
+		2CBE1A9A24323A58003BE14E /* EntriesListTableControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableControllerTests.swift; sourceTree = "<group>"; };
+		2CBE1A9C2433718C003BE14E /* EntriesListSceneBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListSceneBuilderTests.swift; sourceTree = "<group>"; };
 		2CBF32A0242CEB6500DE944A /* UIView+Effects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Effects.swift"; sourceTree = "<group>"; };
 		2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableViewCell.swift; sourceTree = "<group>"; };
 		580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryPresenter.swift; sourceTree = "<group>"; };
@@ -462,6 +466,15 @@
 			path = Workers;
 			sourceTree = "<group>";
 		};
+		2CBE1A9924323A3B003BE14E /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				2CBE1A9A24323A58003BE14E /* EntriesListTableControllerTests.swift */,
+				2CBE1A9C2433718C003BE14E /* EntriesListSceneBuilderTests.swift */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
 		2CBF32A2242E02E700DE944A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -489,6 +502,7 @@
 		580EC79524214D0200C34948 /* EntriesList */ = {
 			isa = PBXGroup;
 			children = (
+				2CBE1A9924323A3B003BE14E /* Logic */,
 				580EC79624214D1200C34948 /* EntriesListViewControllerTests.swift */,
 				580EC79724214D1200C34948 /* EntriesListInteractorTests.swift */,
 				580EC79824214D1200C34948 /* EntriesListRouterTests.swift */,
@@ -1403,6 +1417,7 @@
 				58B5FD5D241922DC00DB857D /* RootRouterTests.swift in Sources */,
 				58B5FD872419287900DB857D /* StatsRootInteractorTests.swift in Sources */,
 				580EC7B3242151EB00C34948 /* EditTrainingInteractorTests.swift in Sources */,
+				2CBE1A9B24323A58003BE14E /* EntriesListTableControllerTests.swift in Sources */,
 				58B5FD7E2419280100DB857D /* HomeRouterTests.swift in Sources */,
 				58788B7F24264D13000EB113 /* AbstractRealmTest.swift in Sources */,
 				58788B7C24264CF5000EB113 /* FoodEntriesWorkerTests.swift in Sources */,
@@ -1446,6 +1461,7 @@
 				58A8A42124251F5500CCFCAC /* UserInjectionTypeTests.swift in Sources */,
 				58788B83242650FC000EB113 /* CalibrationEntriesWorkerTests.swift in Sources */,
 				58160DFD2402C83900C792F4 /* RootPresenterTests.swift in Sources */,
+				2CBE1A9D2433718C003BE14E /* EntriesListSceneBuilderTests.swift in Sources */,
 				58B5FD9124192BB200DB857D /* HistoryRootInteractorTests.swift in Sources */,
 				580EC7862421459400C34948 /* EditFoodEntryViewControllerTests.swift in Sources */,
 				58B5FD5B24191E4E00DB857D /* TabBarViewTests.swift in Sources */,

@@ -13,6 +13,8 @@
 import UIKit
 
 protocol EntriesListBusinessLogic {
+    var presenter: EntriesListPresentationLogic? { get }
+    
     func doLoad(request: EntriesList.Load.Request)
     func doCancel(request: EntriesList.Cancel.Request)
     func doDeleteEntry(request: EntriesList.DeleteEntry.Request)
