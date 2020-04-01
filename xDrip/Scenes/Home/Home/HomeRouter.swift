@@ -36,9 +36,9 @@ final class HomeRouter: NSObject, HomeRoutingLogic, HomeDataPassing {
     }
     
     private func routeToEntriesList(for type: Root.EntryType) {
-        let controller = UIStoryboard(board: .entries).instantiateViewController(withIdentifier: EntriesListRouter.entriesListNavigationControllerIdentifier) as! UINavigationController
-        
-        let entriesListViewController = controller.topViewController as! EntriesListViewController
+        guard let controller = UIStoryboard(board: .entries).instantiateViewController(withIdentifier: EntriesListRouter.entriesListNavigationControllerIdentifier) as? UINavigationController,
+            let entriesListViewController = controller.topViewController as? EntriesListViewController
+            else { return }
         
         let builder = EntriesListSceneBuilder()
         

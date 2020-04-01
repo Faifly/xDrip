@@ -11,7 +11,7 @@ import Foundation
 final class EntriesListCarbsFormattingWorker: EntriesListAbstractFormattingWorker, EntriesListFormattingWorker {
     
     func formatEntries(_ entries: [AbstractEntry]) -> [EntriesListTableViewCell.ViewModel] {
-        let cellViewModels = entries.compactMap { transformToViewModel(($0 as? CarbEntry)) }
+        let cellViewModels = entries.compactMap { transformToViewModel($0 as? CarbEntry) }
         
         return cellViewModels
     }
@@ -20,7 +20,7 @@ final class EntriesListCarbsFormattingWorker: EntriesListAbstractFormattingWorke
         guard let entry = entry else { return nil }
         
         let value = String(format: "%.02f g", entry.amount)
-        let date = self.getDateString(for: entry)
+        let date = getDateString(for: entry)
         
         return EntriesListTableViewCell.ViewModel(value: value, date: date)
     }

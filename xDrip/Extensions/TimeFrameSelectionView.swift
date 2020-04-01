@@ -63,7 +63,7 @@ final class TimeFrameSelectionView: UIView {
     
     private func setupUI() {
         self.layer.cornerRadius = backgroundViewCornerRadius
-        self.backgroundColor = UIColor.timeFrameSegmentBackgroundColor
+        self.backgroundColor = .timeFrameSegmentBackgroundColor
     }
     
     func config(with buttons: [String]) {
@@ -119,7 +119,7 @@ final class TimeFrameSelectionView: UIView {
         let width = self.frame.width / CGFloat(self.buttons.count)
         for i in 0 ..< self.buttons.count - 1 {
             let separator = UIView()
-            separator.backgroundColor = UIColor.timeFrameSegmentSeparatorColor
+            separator.backgroundColor = .timeFrameSegmentSeparatorColor
             
             if selectedSegment == i {
                 separator.alpha = hiddenSeparatorAlpha
@@ -152,7 +152,7 @@ final class TimeFrameSelectionView: UIView {
         
         self.addSubview(selectedSegmentBackgroundView)
         
-        selectedSegmentBackgroundView.backgroundColor = UIColor.timeFrameSegmentSelectedColor
+        selectedSegmentBackgroundView.backgroundColor = .timeFrameSegmentSelectedColor
         selectedSegmentBackgroundView.layer.cornerRadius = selectedSegmentViewCornerRadius
         
         selectedSegmentBackgroundView.layer.shadowOffset = CGSize(width: 0, height: 3)
@@ -176,7 +176,7 @@ final class TimeFrameSelectionView: UIView {
         let button = UIButton()
         
         button.setTitle(title, for: .normal)
-        button.setTitleColor(UIColor.timeFrameSegmentLabelColor, for: .normal)
+        button.setTitleColor(.timeFrameSegmentLabelColor, for: .normal)
         button.titleLabel?.textAlignment = .center
         
         button.titleLabel?.font = font

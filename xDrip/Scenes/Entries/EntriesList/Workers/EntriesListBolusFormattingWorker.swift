@@ -11,7 +11,7 @@ import Foundation
 final class EntriesListBolusFormattingWorker: EntriesListAbstractFormattingWorker, EntriesListFormattingWorker {
     
     func formatEntries(_ entries: [AbstractEntry]) -> [EntriesListTableViewCell.ViewModel] {
-        let cellViewModels = entries.compactMap { transformToViewModel(($0 as? BolusEntry)) }
+        let cellViewModels = entries.compactMap { transformToViewModel($0 as? BolusEntry) }
         
         return cellViewModels
     }
@@ -20,7 +20,7 @@ final class EntriesListBolusFormattingWorker: EntriesListAbstractFormattingWorke
         guard let entry = entry else { return nil }
         
         let value = String(format: "%.02f U", entry.amount)
-        let date = self.getDateString(for: entry)
+        let date = getDateString(for: entry)
         
         return EntriesListTableViewCell.ViewModel(value: value, date: date)
     }

@@ -51,7 +51,7 @@ final class EntriesListRouterTests: XCTestCase {
         sut.viewController = spy
         
         // When
-        sut.dismissSelf()
+        sut.dismissScene()
         
         // Then
         XCTAssertTrue(spy.dismissCalled)

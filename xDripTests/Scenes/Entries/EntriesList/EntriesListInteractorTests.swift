@@ -49,10 +49,10 @@ final class EntriesListInteractorTests: XCTestCase {
     }
     
     final class EntriesListRoutingLogicSpy: EntriesListRoutingLogic {
-        var dismissSelfCalled = false
+        var dismissSceneCalled = false
         
-        func dismissSelf() {
-            dismissSelfCalled = true
+        func dismissScene() {
+            dismissSceneCalled = true
         }
     }
     
@@ -81,6 +81,6 @@ final class EntriesListInteractorTests: XCTestCase {
         sut.doCancel(request: request)
         
         // Then
-        XCTAssertTrue(spy.dismissSelfCalled)
+        XCTAssertTrue(spy.dismissSceneCalled)
     }
 }

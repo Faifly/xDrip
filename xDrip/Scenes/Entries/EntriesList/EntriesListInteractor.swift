@@ -41,7 +41,7 @@ final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStor
     }
     
     func doCancel(request: EntriesList.Cancel.Request) {
-        router?.dismissSelf()
+        router?.dismissScene()
     }
     
     func doDeleteEntry(request: EntriesList.DeleteEntry.Request) {

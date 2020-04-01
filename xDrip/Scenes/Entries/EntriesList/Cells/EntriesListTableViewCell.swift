@@ -20,7 +20,7 @@ final class EntriesListTableViewCell: UITableViewCell, ViewModelConfigurable {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        valueLabel.textColor = UIColor.timeFrameSegmentLabelColor
+        valueLabel.textColor = .timeFrameSegmentLabelColor
     }
     
     func configure(withViewModel viewModel: ViewModel) {

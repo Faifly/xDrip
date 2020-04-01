@@ -45,9 +45,9 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     
     // MARK: IB
     @IBOutlet private weak var tableView: UITableView!
-    private var tableController = EntriesListTableController()
-    private var isEdit: Bool = false
-    private var sectionViewModels: [EntriesList.SectionViewModel] = []
+    private let tableController = EntriesListTableController()
+    private var isEdit = false
+    private var sectionViewModels = [EntriesList.SectionViewModel]()
     
     // MARK: View lifecycle
     
@@ -71,8 +71,7 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
         interactor?.doCancel(request: request)
     }
     
-    @objc
-    private func onEditButtonTap() {
+    @objc private func onEditButtonTap() {
         isEdit.toggle()
         setupRightBarButtonItem()
         tableView.isEditing = isEdit
@@ -83,8 +82,8 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     func displayLoad(viewModel: EntriesList.Load.ViewModel) {
         sectionViewModels = viewModel.items
         
+        tableController.tableView = tableView
         tableController.reload(with: viewModel.items)
-        tableView.reloadData()
     }
     
     private func setupUI() {
@@ -94,9 +93,11 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     }
     
     private func setupRightBarButtonItem() {
-        let item = UIBarButtonItem(barButtonSystemItem: isEdit ? .done : .edit,
-                               target: self,
-                               action: #selector(onEditButtonTap))
+        let item = UIBarButtonItem(
+            barButtonSystemItem: isEdit ? .done : .edit,
+            target: self,
+            action: #selector(onEditButtonTap)
+        )
         
         navigationItem.rightBarButtonItem = item
     }

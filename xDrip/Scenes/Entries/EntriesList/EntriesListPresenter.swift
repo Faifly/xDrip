@@ -27,7 +27,7 @@ final class EntriesListPresenter: EntriesListPresentationLogic {
         let entries = response.entries
         let cellViewModel = formattingWorker?.formatEntries(entries) ?? []
         
-        let title = "entries_list_data_section_title".localized.uppercased()
+        let title = "entries_list_data_section_title".localized
         
         let viewModel = EntriesList.Load.ViewModel(items: [EntriesList.SectionViewModel(title: title, items: cellViewModel)])
         viewController?.displayLoad(viewModel: viewModel)

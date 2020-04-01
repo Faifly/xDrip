@@ -10,12 +10,12 @@ import UIKit
 
 extension UIView {
     func addBlur() {
-        self.backgroundColor = .clear
+        backgroundColor = .clear
         
         let blurEffect = UIBlurEffect(style: .prominent)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = self.bounds
+        blurEffectView.frame = bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.insertSubview(blurEffectView, at: 0)
+        insertSubview(blurEffectView, at: 0)
     }
 }

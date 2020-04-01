@@ -16,7 +16,7 @@
 "root_add_entry_training" = "Тренировки";
 
 // Entries List
-"entries_list_data_section_title" = "Данные";
+"entries_list_data_section_title" = "ДАННЫЕ";
 "entries_list_scene_title_carbs" = "Активные углеводы";
 "entries_list_scene_title_bolus" = "Активный инсулин";
 "entries_list_cell_no_date" = "Дата не указана";

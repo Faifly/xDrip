@@ -15,9 +15,11 @@ final class EntriesListSceneBuilder {
         
         viewController.title = "entries_list_scene_title_carbs".localized
         
-        inject(formattingWorker: formattingWorker,
-               persistenceWorker: persistenceWorker,
-               for: viewController)
+        inject(
+            formattingWorker: formattingWorker,
+            persistenceWorker: persistenceWorker,
+            for: viewController
+        )
     }
     
     func configureSceneForBolus(_ viewController: EntriesListViewController) {
@@ -26,9 +28,11 @@ final class EntriesListSceneBuilder {
         
         viewController.title = "entries_list_scene_title_bolus".localized
         
-        inject(formattingWorker: formattingWorker,
-               persistenceWorker: persistenceWorker,
-               for: viewController)
+        inject(
+            formattingWorker: formattingWorker,
+            persistenceWorker: persistenceWorker,
+            for: viewController
+        )
     }
     
     private func inject(formattingWorker: EntriesListFormattingWorker,

@@ -13,7 +13,7 @@
 import UIKit
 
 @objc protocol EntriesListRoutingLogic {
-    func dismissSelf()
+    func dismissScene()
 }
 
 protocol EntriesListDataPassing {
@@ -28,7 +28,7 @@ final class EntriesListRouter: NSObject, EntriesListRoutingLogic, EntriesListDat
     
     // MARK: Routing
     
-    func dismissSelf() {
+    func dismissScene() {
         viewController?.dismiss(animated: true, completion: nil)
     }
 }
