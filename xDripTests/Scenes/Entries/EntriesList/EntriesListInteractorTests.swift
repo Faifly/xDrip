@@ -43,10 +43,17 @@ final class EntriesListInteractorTests: XCTestCase {
         func presentLoad(response: EntriesList.Load.Response) {
             presentLoadCalled = true
         }
+        
+        func inject(formattingWorker: EntriesListFormattingWorker) {
+        }
     }
     
     final class EntriesListRoutingLogicSpy: EntriesListRoutingLogic {
+        var dismissSceneCalled = false
         
+        func dismissScene() {
+            dismissSceneCalled = true
+        }
     }
     
     // MARK: Tests
@@ -62,5 +69,18 @@ final class EntriesListInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+    }
+    
+    func testDoCancel() {
+        // Given
+        let spy = EntriesListRoutingLogicSpy()
+        sut.router = spy
+        let request = EntriesList.Cancel.Request()
+        
+        // When
+        sut.doCancel(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.dismissSceneCalled)
     }
 }

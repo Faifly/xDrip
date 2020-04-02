@@ -36,7 +36,24 @@ final class EntriesListRouterTests: XCTestCase {
     // MARK: Test doubles
     
     final class ViewControllerSpy: EntriesListViewController {
+        var dismissCalled = false
+        
+        override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+            dismissCalled = true
+        }
     }
     
     // MARK: Tests
+    
+    func testDismissSelf() {
+        // Given
+        let spy = createSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.dismissScene()
+        
+        // Then
+        XCTAssertTrue(spy.dismissCalled)
+    }
 }

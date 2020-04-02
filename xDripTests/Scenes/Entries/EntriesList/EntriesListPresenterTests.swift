@@ -51,7 +51,7 @@ final class EntriesListPresenterTests: XCTestCase {
         // Given
         let spy = EntriesListDisplayLogicSpy()
         sut.viewController = spy
-        let response = EntriesList.Load.Response()
+        let response = EntriesList.Load.Response(entries: [])
         
         // When
         sut.presentLoad(response: response)

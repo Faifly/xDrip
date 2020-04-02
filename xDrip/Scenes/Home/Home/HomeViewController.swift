@@ -64,6 +64,11 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
         interactor?.doLoad(request: request)
     }
     
+    @IBAction func toEntriesList() {
+        let request = Home.ShowEntriesList.Request(entriesType: Bool.random() ? .carbs : .bolus)
+        interactor?.doShowEntriesList(request: request)
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: Home.Load.ViewModel) {

@@ -27,4 +27,16 @@ enum Home {
         struct ViewModel {
         }
     }
+    
+    enum ShowEntriesList {
+        struct Request {
+            let entriesType: Root.EntryType
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
 }
