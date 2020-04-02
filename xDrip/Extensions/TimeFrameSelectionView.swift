@@ -52,28 +52,28 @@ final class TimeFrameSelectionView: UIView {
     override var bounds: CGRect {
         didSet {
             let count: CGFloat = buttons.count == 0 ? 1.0 : CGFloat(buttons.count)
-            self.singleSegmentWidth = ((self.frame.width - (2.0 * selectedSegmentViewConstraintsToSuperviewConstant * count)) / count)
-            self.selectedSegmentViewWidthConstraint?.constant = singleSegmentWidth
+            singleSegmentWidth = ((frame.width - (2.0 * selectedSegmentViewConstraintsToSuperviewConstant * count)) / count)
+            selectedSegmentViewWidthConstraint?.constant = singleSegmentWidth
             
-            self.setupSeparators()
-            self.bringSubviewToFront(selectedSegmentBackgroundView)
-            self.bringSubviewToFront(stackView)
+            setupSeparators()
+            bringSubviewToFront(selectedSegmentBackgroundView)
+            bringSubviewToFront(stackView)
         }
     }
     
     private func setupUI() {
-        self.layer.cornerRadius = backgroundViewCornerRadius
-        self.backgroundColor = .timeFrameSegmentBackgroundColor
+        layer.cornerRadius = backgroundViewCornerRadius
+        backgroundColor = .timeFrameSegmentBackgroundColor
     }
     
     func config(with buttons: [String]) {
         self.buttons = buttons
         
-        self.setupSeparators()
-        self.setupSelectedSegmentView()
-        self.setupStackView()
-        self.setupButtons()
-        self.selectSegment(index: 0)
+        setupSeparators()
+        setupSelectedSegmentView()
+        setupStackView()
+        setupButtons()
+        selectSegment(index: 0)
     }
     
     private func setupButtons() {
@@ -99,7 +99,7 @@ final class TimeFrameSelectionView: UIView {
         stackView.alignment = .center
         stackView.distribution = .fillEqually
         
-        self.addSubview(stackView)
+        addSubview(stackView)
         
         stackView.bindToSuperview()
     }
@@ -112,12 +112,12 @@ final class TimeFrameSelectionView: UIView {
         separators = []
         hiddenSeparators = []
         
-        guard self.buttons.count > 1 else {
+        guard buttons.count > 1 else {
             return
         }
         
-        let width = self.frame.width / CGFloat(self.buttons.count)
-        for i in 0 ..< self.buttons.count - 1 {
+        let width = self.frame.width / CGFloat(buttons.count)
+        for i in 0 ..< buttons.count - 1 {
             let separator = UIView()
             separator.backgroundColor = .timeFrameSegmentSeparatorColor
             
@@ -129,12 +129,12 @@ final class TimeFrameSelectionView: UIView {
             }
             
             separator.translatesAutoresizingMaskIntoConstraints = false
-            self.addSubview(separator)
+            addSubview(separator)
             
             let widthConstraint = CGFloat(i + 1) * width
             
-            separator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: widthConstraint - 1).isActive = true
-            separator.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+            separator.leadingAnchor.constraint(equalTo: leadingAnchor, constant: widthConstraint - 1).isActive = true
+            separator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
             separator.widthAnchor.constraint(equalToConstant: separatorWidthConstraintConstant).isActive = true
             separator.heightAnchor.constraint(equalToConstant: separatorHeightConstraintConstant).isActive = true
             
@@ -150,7 +150,7 @@ final class TimeFrameSelectionView: UIView {
         selectedSegmentBackgroundView = UIView()
         selectedSegmentBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.addSubview(selectedSegmentBackgroundView)
+        addSubview(selectedSegmentBackgroundView)
         
         selectedSegmentBackgroundView.backgroundColor = .timeFrameSegmentSelectedColor
         selectedSegmentBackgroundView.layer.cornerRadius = selectedSegmentViewCornerRadius
@@ -160,14 +160,14 @@ final class TimeFrameSelectionView: UIView {
         selectedSegmentBackgroundView.layer.shadowOpacity = 0.12
         selectedSegmentBackgroundView.layer.shadowColor = UIColor.black.cgColor
         
-        selectedSegmentViewLeadingConstraint = selectedSegmentBackgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: selectedSegmentViewConstraintsToSuperviewConstant)
+        selectedSegmentViewLeadingConstraint = selectedSegmentBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: selectedSegmentViewConstraintsToSuperviewConstant)
         selectedSegmentViewLeadingConstraint?.isActive = true
         
-        selectedSegmentBackgroundView.topAnchor.constraint(equalTo: self.topAnchor, constant: selectedSegmentViewConstraintsToSuperviewConstant).isActive = true
-        selectedSegmentBackgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -selectedSegmentViewConstraintsToSuperviewConstant).isActive = true
+        selectedSegmentBackgroundView.topAnchor.constraint(equalTo: topAnchor, constant: selectedSegmentViewConstraintsToSuperviewConstant).isActive = true
+        selectedSegmentBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -selectedSegmentViewConstraintsToSuperviewConstant).isActive = true
         
         let count: CGFloat = buttons.count == 0 ? 1.0 : CGFloat(buttons.count)
-        self.singleSegmentWidth = ((self.frame.width - (2.0 * selectedSegmentViewConstraintsToSuperviewConstant * count)) / count)
+        singleSegmentWidth = ((frame.width - (2.0 * selectedSegmentViewConstraintsToSuperviewConstant * count)) / count)
         selectedSegmentViewWidthConstraint = selectedSegmentBackgroundView.widthAnchor.constraint(equalToConstant: singleSegmentWidth)
         selectedSegmentViewWidthConstraint?.isActive = true
     }
@@ -196,7 +196,7 @@ final class TimeFrameSelectionView: UIView {
         selectedSegment = index
         
         let newLeadingConstraingConstant = selectedSegmentViewConstraintsToSuperviewConstant + CGFloat(index) * (singleSegmentWidth + 2 * selectedSegmentViewConstraintsToSuperviewConstant)
-        self.selectedSegmentViewLeadingConstraint?.constant = newLeadingConstraingConstant
+        selectedSegmentViewLeadingConstraint?.constant = newLeadingConstraingConstant
         
         var separatorsToHide: [UIView] = []
         
