@@ -66,6 +66,7 @@ node {
     } catch (e) {
         throw e
     } finally {
+        echo "${currentBuild.currentResult}"
         if (currentBuild.currentResult == 'SUCCESS') {
             sendStatusNotification("success")
         } else {
