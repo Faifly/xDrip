@@ -36,7 +36,6 @@ final class User: Object {
     // MARK: Device mode
     
     @objc private dynamic var rawDeviceMode: Int = DeviceMode.default.rawValue
-    @objc private(set) dynamic var isDeviceTypeSet: Bool = false
     
     private(set) var deviceMode: DeviceMode {
         get {
@@ -47,17 +46,15 @@ final class User: Object {
         }
     }
     
-    func updateDeviceMode(_ deviceMode: DeviceMode, isDeviceTypeSet: Bool) {
+    func updateDeviceMode(_ deviceMode: DeviceMode) {
         Realm.shared.safeWrite {
             self.deviceMode = deviceMode
-            self.isDeviceTypeSet = isDeviceTypeSet
         }
     }
     
     // MARK: Injection type
     
     @objc private dynamic var rawInjectionType: Int = InjectionType.default.rawValue
-    @objc private(set) dynamic var isUserInjectionTypeSet: Bool = false
     
     private(set) var injectionType: InjectionType {
         get {
@@ -68,17 +65,15 @@ final class User: Object {
         }
     }
     
-    func updateInjectionType(_ injectionType: InjectionType, isInjectionTypeSet: Bool) {
+    func updateInjectionType(_ injectionType: InjectionType) {
         Realm.shared.safeWrite {
             self.injectionType = injectionType
-            self.isUserInjectionTypeSet = isInjectionTypeSet
         }
     }
     
     // MARK: Unit
     
     @objc private dynamic var rawUnit: Int = GlucoseUnit.default.rawValue
-    @objc private(set) dynamic var isUnitSet: Bool = false
     
     private(set) var unit: GlucoseUnit {
         get {
@@ -89,10 +84,9 @@ final class User: Object {
         }
     }
     
-    func updateUnit(_ unit: GlucoseUnit, isUnitSet: Bool) {
+    func updateUnit(_ unit: GlucoseUnit) {
         Realm.shared.safeWrite {
             self.unit = unit
-            self.isUnitSet = isUnitSet
         }
     }
     
@@ -121,11 +115,12 @@ final class User: Object {
     
     let glucoseData = List<GlucoseData>()
     
-    func addGlucoseDataEntry(_ value: Double, date: Date = Date()) {
+    @discardableResult func addGlucoseDataEntry(_ value: Double, date: Date = Date()) -> GlucoseData {
+        let entry = GlucoseData(value: value, date: date)
         Realm.shared.safeWrite {
-            let entry = GlucoseData(value: value, date: date)
             glucoseData.append(entry)
         }
+        return entry
     }
     
     // MARK: Settings
@@ -159,6 +154,15 @@ final class User: Object {
     func updateInsulinActionTime(_ time: TimeInterval) {
         Realm.shared.safeWrite {
             self.insulinActionTime = time
+        }
+    }
+    
+    // MARK: Initial setup
+    @objc private(set) dynamic var isInitialSetupDone = false
+    
+    func setIsInitialSetupDone(_ done: Bool) {
+        Realm.shared.safeWrite {
+            self.isInitialSetupDone = done
         }
     }
 }

@@ -30,7 +30,7 @@ final class EntriesListCarbsPersistenceWorker: EntriesListEntryPersistenceWorker
     }
 
     func deleteEntry(_ index: Int) {
-        let entry = carbs.remove(at: index)
+        _ = carbs.remove(at: index)
         
         // add delete from database
     }

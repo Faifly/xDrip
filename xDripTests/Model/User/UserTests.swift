@@ -24,63 +24,6 @@ final class UserTests: AbstractRealmTest {
         XCTAssertTrue(realm.objects(User.self).count == 1)
     }
     
-    func testDeviceMode() {
-        let user = User.current
-        XCTAssertTrue(user.deviceMode == .default)
-        XCTAssertFalse(user.isDeviceTypeSet)
-        
-        user.updateDeviceMode(.follower, isDeviceTypeSet: true)
-        XCTAssertTrue(user.deviceMode == .follower)
-        XCTAssertTrue(user.isDeviceTypeSet)
-        
-        user.updateDeviceMode(.main, isDeviceTypeSet: false)
-        XCTAssertTrue(user.deviceMode == .main)
-        XCTAssertFalse(user.isDeviceTypeSet)
-        
-        realm.safeWrite {
-            user.setValue(-1, forKey: "rawDeviceMode")
-        }
-        XCTAssertTrue(user.deviceMode == .default)
-    }
-    
-    func testInjectionType() {
-        let user = User.current
-        XCTAssertTrue(user.injectionType == .default)
-        XCTAssertFalse(user.isUserInjectionTypeSet)
-        
-        user.updateInjectionType(.pen, isInjectionTypeSet: true)
-        XCTAssertTrue(user.injectionType == .pen)
-        XCTAssertTrue(user.isUserInjectionTypeSet)
-        
-        user.updateInjectionType(.pump, isInjectionTypeSet: false)
-        XCTAssertTrue(user.injectionType == .pump)
-        XCTAssertFalse(user.isUserInjectionTypeSet)
-        
-        realm.safeWrite {
-            user.setValue(-1, forKey: "rawInjectionType")
-        }
-        XCTAssertTrue(user.injectionType == .default)
-    }
-    
-    func testUnit() {
-        let user = User.current
-        XCTAssertTrue(user.unit == .default)
-        XCTAssertFalse(user.isUnitSet)
-        
-        user.updateUnit(.mgDl, isUnitSet: true)
-        XCTAssertTrue(user.unit == .mgDl)
-        XCTAssertTrue(user.isUnitSet)
-        
-        user.updateUnit(.mmolL, isUnitSet: false)
-        XCTAssertTrue(user.unit == .mmolL)
-        XCTAssertFalse(user.isUnitSet)
-        
-        realm.safeWrite {
-            user.setValue(-1, forKey: "rawUnit")
-        }
-        XCTAssertTrue(user.unit == .default)
-    }
-    
     func testWarningLevels() {
         let user = User.current
         XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 0)

@@ -46,6 +46,7 @@ class RootViewController: UIViewController, RootDisplayLogic {
     
     // MARK: IB
     @IBOutlet private weak var tabBarContainer: TabBarView!
+    @IBOutlet private weak var homeContainerView: UIView!
     
     // MARK: View lifecycle
     
@@ -54,10 +55,17 @@ class RootViewController: UIViewController, RootDisplayLogic {
         doLoad()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let request = Root.InitialSetup.Request()
+        interactor?.doShowInitialSetupIfNeeded(request: request)
+    }
+    
     // MARK: Do something
     
     private func doLoad() {
         setupUI()
+        embed(HomeViewController.self, in: homeContainerView)
         
         let request = Root.Load.Request()
         interactor?.doLoad(request: request)

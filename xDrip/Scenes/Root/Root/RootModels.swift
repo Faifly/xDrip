@@ -45,6 +45,17 @@ enum Root {
         }
     }
     
+    enum InitialSetup {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
     enum TabSelection {
         struct Request {
             let button: TabButton

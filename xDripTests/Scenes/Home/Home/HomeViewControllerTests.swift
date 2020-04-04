@@ -35,7 +35,7 @@ final class HomeViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupHomeViewController() {
-        sut = UIStoryboard(board: .home).instantiate(HomeViewController.self)
+        sut = HomeViewController()
     }
     
     func loadView() {

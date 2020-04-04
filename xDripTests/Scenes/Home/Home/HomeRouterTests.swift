@@ -25,14 +25,6 @@ final class HomeRouterTests: XCTestCase {
         sut = HomeRouter()
     }
     
-    private func createSpy() -> ViewControllerSpy {
-        let archiver = NSKeyedArchiver(requiringSecureCoding: false)
-        archiver.finishEncoding()
-        let data = archiver.encodedData
-        let unarchiver = try! NSKeyedUnarchiver(forReadingFrom: data)
-        return ViewControllerSpy(coder: unarchiver)!
-    }
-    
     // MARK: Test doubles
     
     final class ViewControllerSpy: HomeViewController {
@@ -47,7 +39,7 @@ final class HomeRouterTests: XCTestCase {
     
     func testRootToBolusEntriesList() {
         // Given
-        let spy = createSpy()
+        let spy = ViewControllerSpy()
         sut.viewController = spy
         
         // When
@@ -60,7 +52,7 @@ final class HomeRouterTests: XCTestCase {
     
     func testRootToCarbsEntriesList() {
         // Given
-        let spy = createSpy()
+        let spy = ViewControllerSpy()
         sut.viewController = spy
         
         // When

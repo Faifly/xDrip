@@ -28,6 +28,19 @@ enum Home {
         }
     }
     
+    enum GlucoseDataUpdate {
+        struct Request {
+        }
+        
+        struct Response {
+            let glucoseData: GlucoseData
+        }
+        
+        struct ViewModel {
+            let glucoseValue: String?
+        }
+    }
+    
     enum ShowEntriesList {
         struct Request {
             let entriesType: Root.EntryType
