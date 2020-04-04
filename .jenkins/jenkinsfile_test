@@ -12,7 +12,6 @@ def sendFailNotification() {
 }
 
 def sendStatusNotification(status) {
-    sh "pwd"
     GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
     sh "curl --location --request POST 'https://api.github.com/repos/Faifly/xDrip/statuses/${GIT_COMMIT_HASH}' --header 'Content-Type: application/json' --header 'Authorization: token ${env.GITHUB_OAUTH_TOKEN}' --data-raw '{\"state\": \"${status}\", \"target_url\": \"${env.BUILD_URL}\", \"description\": \"The build status is ${status}\", \"context\": \"continuous-integration/jenkins\"}'"
 }
@@ -69,15 +68,14 @@ pipeline {
         }
     }
     post {
-        always {
-            deleteDir()
-        }
         failure {
             sendStatusNotification("failure")
             sendFailNotification()
+            deleteDir()
         }
         success {
             sendStatusNotification("success")
+            deleteDir()
         }
     }
 }
