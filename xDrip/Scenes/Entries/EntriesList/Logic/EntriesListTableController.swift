@@ -13,7 +13,13 @@ typealias EntriesListTableViewCallback = ((IndexPath) -> ())
 
 final class EntriesListTableController: NSObject, UITableViewDelegate, UITableViewDataSource {
     
-    weak var tableView: UITableView?
+    weak var tableView: UITableView? {
+        didSet {
+            tableView?.delegate = self
+            tableView?.dataSource = self
+            tableView?.registerNib(type: EntriesListTableViewCell.self)
+        }
+    }
     private var data: [EntriesList.SectionViewModel] = []
     
     var didDeleteEntry: EntriesListTableViewCallback?

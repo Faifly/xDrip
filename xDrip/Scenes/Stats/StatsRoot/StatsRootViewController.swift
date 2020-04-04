@@ -16,14 +16,18 @@ protocol StatsRootDisplayLogic: class {
     func displayLoad(viewModel: StatsRoot.Load.ViewModel)
 }
 
-class StatsRootViewController: UIViewController, StatsRootDisplayLogic {
+class StatsRootViewController: NibViewController, StatsRootDisplayLogic {
     var interactor: StatsRootBusinessLogic?
     var router: (NSObjectProtocol & StatsRootRoutingLogic & StatsRootDataPassing)?
     
     // MARK: Object lifecycle
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("Use regular init")
+    }
+    
+    required init() {
+        super.init()
         setup()
     }
     
@@ -55,11 +59,21 @@ class StatsRootViewController: UIViewController, StatsRootDisplayLogic {
     // MARK: Do something
     
     private func doLoad() {
+        setupNavigationItems()
+        
         let request = StatsRoot.Load.Request()
         interactor?.doLoad(request: request)
     }
     
-    @IBAction private func onCancelButtonTap() {
+    private func setupNavigationItems() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(onCancelButtonTap)
+        )
+    }
+    
+    @objc private func onCancelButtonTap() {
         let request = StatsRoot.Cancel.Request()
         interactor?.doCancel(request: request)
     }

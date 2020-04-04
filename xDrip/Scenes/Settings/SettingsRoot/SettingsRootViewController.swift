@@ -16,14 +16,18 @@ protocol SettingsRootDisplayLogic: class {
     func displayLoad(viewModel: SettingsRoot.Load.ViewModel)
 }
 
-class SettingsRootViewController: UIViewController, SettingsRootDisplayLogic {
+class SettingsRootViewController: NibViewController, SettingsRootDisplayLogic {
     var interactor: SettingsRootBusinessLogic?
     var router: (NSObjectProtocol & SettingsRootRoutingLogic & SettingsRootDataPassing)?
     
     // MARK: Object lifecycle
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("Use regular init")
+    }
+    
+    required init() {
+        super.init()
         setup()
     }
     
@@ -55,11 +59,21 @@ class SettingsRootViewController: UIViewController, SettingsRootDisplayLogic {
     // MARK: Do something
     
     private func doLoad() {
+        setupNavigationItems()
+        
         let request = SettingsRoot.Load.Request()
         interactor?.doLoad(request: request)
     }
     
-    @IBAction private func onCancelButtonTap() {
+    private func setupNavigationItems() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(onCancelButtonTap)
+        )
+    }
+    
+    @objc private func onCancelButtonTap() {
         let request = SettingsRoot.Cancel.Request()
         interactor?.doCancel(request: request)
     }

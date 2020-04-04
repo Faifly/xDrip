@@ -35,7 +35,7 @@ final class EditFoodEntryViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupEditFoodEntryViewController() {
-        sut = UIStoryboard(board: .entries).instantiate(EditFoodEntryViewController.self)
+        sut = EditFoodEntryViewController()
     }
     
     func loadView() {

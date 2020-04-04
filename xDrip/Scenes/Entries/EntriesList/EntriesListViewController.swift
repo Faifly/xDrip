@@ -16,23 +16,33 @@ protocol EntriesListDisplayLogic: class {
     func displayLoad(viewModel: EntriesList.Load.ViewModel)
 }
 
-class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
+class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
     var interactor: EntriesListBusinessLogic?
     var router: (NSObjectProtocol & EntriesListRoutingLogic & EntriesListDataPassing)?
     
     // MARK: Object lifecycle
     
+    required init(persistenceWorker: EntriesListEntryPersistenceWorker,
+                  formattingWorker: EntriesListFormattingWorker) {
+        super.init()
+        setup(persistenceWorker: persistenceWorker, formattingWorker: formattingWorker)
+    }
+    
+    required init() {
+        fatalError("Use DI init")
+    }
+    
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
+        fatalError("Use DI init")
     }
     
     // MARK: Setup
     
-    private func setup() {
+    private func setup(persistenceWorker: EntriesListEntryPersistenceWorker,
+                       formattingWorker: EntriesListFormattingWorker) {
         let viewController = self
-        let interactor = EntriesListInteractor()
-        let presenter = EntriesListPresenter()
+        let interactor = EntriesListInteractor(persistenceWorker: persistenceWorker)
+        let presenter = EntriesListPresenter(formattingWorker: formattingWorker)
         let router = EntriesListRouter()
         viewController.interactor = interactor
         viewController.router = router
@@ -45,6 +55,7 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     
     // MARK: IB
     @IBOutlet private weak var tableView: UITableView!
+    
     private let tableController = EntriesListTableController()
     private var isEdit = false
     private var sectionViewModels = [EntriesList.SectionViewModel]()
@@ -66,7 +77,7 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
         interactor?.doLoad(request: request)
     }
     
-    @IBAction private func onCancelButtonTap() {
+    @objc private func onCancelButtonTap() {
         let request = EntriesList.Cancel.Request()
         interactor?.doCancel(request: request)
     }
@@ -89,6 +100,12 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     private func setupUI() {
         setupRightBarButtonItem()
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(onCancelButtonTap)
+        )
+        
         view.addBlur()
     }
     
@@ -103,9 +120,6 @@ class EntriesListViewController: UIViewController, EntriesListDisplayLogic {
     }
     
     private func setupTableView() {
-        tableView.delegate = tableController
-        tableView.dataSource = tableController
-        
         tableController.didDeleteEntry = { [weak self] indexPath in
             guard let self = self else { return }
             

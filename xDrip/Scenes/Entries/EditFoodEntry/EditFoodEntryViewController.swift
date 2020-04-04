@@ -16,14 +16,18 @@ protocol EditFoodEntryDisplayLogic: class {
     func displayLoad(viewModel: EditFoodEntry.Load.ViewModel)
 }
 
-class EditFoodEntryViewController: UIViewController, EditFoodEntryDisplayLogic {
+class EditFoodEntryViewController: NibViewController, EditFoodEntryDisplayLogic {
     var interactor: EditFoodEntryBusinessLogic?
     var router: (NSObjectProtocol & EditFoodEntryRoutingLogic & EditFoodEntryDataPassing)?
     
     // MARK: Object lifecycle
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("Use regular init")
+    }
+    
+    required init() {
+        super.init()
         setup()
     }
     

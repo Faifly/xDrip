@@ -36,7 +36,7 @@ final class RootViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupRootViewController() {
-        sut = UIStoryboard(board: .root).instantiate(RootViewController.self)
+        sut = RootViewController()
     }
     
     func loadView() {

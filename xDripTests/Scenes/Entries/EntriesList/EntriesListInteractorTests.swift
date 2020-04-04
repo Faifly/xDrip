@@ -32,7 +32,9 @@ final class EntriesListInteractorTests: XCTestCase {
     // MARK: Test setup
     
     func setupEntriesListInteractor() {
-        sut = EntriesListInteractor()
+        sut = EntriesListInteractor(
+            persistenceWorker: EntriesListCarbsPersistenceWorker()
+        )
     }
     
     // MARK: Test doubles

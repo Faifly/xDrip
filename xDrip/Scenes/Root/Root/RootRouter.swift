@@ -37,15 +37,15 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
     }
     
     func routeToStats() {
-        presentRootController(forStoryboard: UIStoryboard(board: .stats))
+        presentViewController(StatsRootViewController())
     }
     
     func routeToHistory() {
-        presentRootController(forStoryboard: UIStoryboard(board: .history))
+        presentViewController(HistoryRootViewController())
     }
     
     func routeToSettings() {
-        presentRootController(forStoryboard: UIStoryboard(board: .settings))
+        presentViewController(SettingsRootViewController())
     }
     
     func routeToAddEntry() {
@@ -57,8 +57,7 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
         self.viewController?.present(viewController, animated: true, completion: nil)
     }
     
-    private func presentRootController(forStoryboard storyboard: UIStoryboard) {
-        guard let initialViewController = storyboard.instantiateInitialViewController() else { return }
-        viewController?.present(initialViewController, animated: true, completion: nil)
+    private func presentViewController(_ viewController: UIViewController) {
+        self.viewController?.present(viewController.embedInNavigation(), animated: true, completion: nil)
     }
 }

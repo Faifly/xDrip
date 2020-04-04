@@ -14,26 +14,25 @@ import UIKit
 
 protocol EntriesListPresentationLogic {
     func presentLoad(response: EntriesList.Load.Response)
-    func inject(formattingWorker: EntriesListFormattingWorker)
 }
 
 final class EntriesListPresenter: EntriesListPresentationLogic {
     weak var viewController: EntriesListDisplayLogic?
-    private var formattingWorker: EntriesListFormattingWorker?
+    let formattingWorker: EntriesListFormattingWorker
+    
+    init(formattingWorker: EntriesListFormattingWorker) {
+        self.formattingWorker = formattingWorker
+    }
     
     // MARK: Do something
     
     func presentLoad(response: EntriesList.Load.Response) {
         let entries = response.entries
-        let cellViewModel = formattingWorker?.formatEntries(entries) ?? []
+        let cellViewModel = formattingWorker.formatEntries(entries)
         
         let title = "entries_list_data_section_title".localized
         
         let viewModel = EntriesList.Load.ViewModel(items: [EntriesList.SectionViewModel(title: title, items: cellViewModel)])
         viewController?.displayLoad(viewModel: viewModel)
-    }
-    
-    func inject(formattingWorker: EntriesListFormattingWorker) {
-        self.formattingWorker = formattingWorker
     }
 }

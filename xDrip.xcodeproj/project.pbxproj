@@ -167,7 +167,6 @@
 		580EC79B24214D1200C34948 /* EntriesListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC79724214D1200C34948 /* EntriesListInteractorTests.swift */; };
 		580EC79C24214D1200C34948 /* EntriesListRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC79824214D1200C34948 /* EntriesListRouterTests.swift */; };
 		580EC79D24214D1200C34948 /* EntriesListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC79924214D1200C34948 /* EntriesListPresenterTests.swift */; };
-		580EC7A02421510C00C34948 /* Entries.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 580EC79F2421510C00C34948 /* Entries.storyboard */; };
 		580EC7A8242151BC00C34948 /* EditTrainingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7A3242151BC00C34948 /* EditTrainingPresenter.swift */; };
 		580EC7A9242151BC00C34948 /* EditTrainingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7A4242151BC00C34948 /* EditTrainingRouter.swift */; };
 		580EC7AA242151BC00C34948 /* EditTrainingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7A5242151BC00C34948 /* EditTrainingModels.swift */; };
@@ -186,7 +185,6 @@
 		580EC7C72421525300C34948 /* EditCalibrationInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7C32421525300C34948 /* EditCalibrationInteractorTests.swift */; };
 		580EC7C82421525300C34948 /* EditCalibrationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7C42421525300C34948 /* EditCalibrationRouterTests.swift */; };
 		580EC7C92421525300C34948 /* EditCalibrationPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7C52421525300C34948 /* EditCalibrationPresenterTests.swift */; };
-		58160DEC2402C3BC00C792F4 /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58160DEB2402C3BC00C792F4 /* Root.storyboard */; };
 		58160DF22402C7F600C792F4 /* RootPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160DED2402C7F600C792F4 /* RootPresenter.swift */; };
 		58160DF32402C7F600C792F4 /* RootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160DEE2402C7F600C792F4 /* RootRouter.swift */; };
 		58160DF42402C7F600C792F4 /* RootModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160DEF2402C7F600C792F4 /* RootModels.swift */; };
@@ -196,8 +194,16 @@
 		58160DFC2402C83900C792F4 /* RootInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160DF92402C83900C792F4 /* RootInteractorTests.swift */; };
 		58160DFD2402C83900C792F4 /* RootPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160DFA2402C83900C792F4 /* RootPresenterTests.swift */; };
 		58160E002402C88C00C792F4 /* AKUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 58160DFF2402C88C00C792F4 /* AKUtils */; };
-		58160E032402C8CE00C792F4 /* UIStoryboard+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160E022402C8CE00C792F4 /* UIStoryboard+Content.swift */; };
 		58160E0D2402E52000C792F4 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160E0C2402E52000C792F4 /* TabBarView.swift */; };
+		58184A472438BE8E00E848C6 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A462438BE8E00E848C6 /* RootViewController.xib */; };
+		58184A492438C1E800E848C6 /* EditFoodEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A482438C1E800E848C6 /* EditFoodEntryViewController.xib */; };
+		58184A4B2438C20D00E848C6 /* EntriesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A4A2438C20D00E848C6 /* EntriesListViewController.xib */; };
+		58184A4D2438C30500E848C6 /* EditTrainingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A4C2438C30500E848C6 /* EditTrainingViewController.xib */; };
+		58184A4F2438C31C00E848C6 /* EditCalibrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A4E2438C31C00E848C6 /* EditCalibrationViewController.xib */; };
+		58184A512438C36700E848C6 /* StatsRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A502438C36700E848C6 /* StatsRootViewController.xib */; };
+		58184A532438C51100E848C6 /* HistoryRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A522438C51100E848C6 /* HistoryRootViewController.xib */; };
+		58184A552438C53600E848C6 /* SettingsRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A542438C53600E848C6 /* SettingsRootViewController.xib */; };
+		58184A572438C64100E848C6 /* EntriesListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A562438C64100E848C6 /* EntriesListTableViewCell.xib */; };
 		58788B7324264711000EB113 /* AbstractEntriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B7224264711000EB113 /* AbstractEntriesWorker.swift */; };
 		58788B75242647C5000EB113 /* TrainingEntriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B74242647C5000EB113 /* TrainingEntriesWorker.swift */; };
 		58788B7724264A36000EB113 /* CalibrationEntriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B7624264A36000EB113 /* CalibrationEntriesWorker.swift */; };
@@ -242,9 +248,6 @@
 		58B4F6C4241161E6003C6D8F /* FirebaseCrashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68224114BCD003C6D8F /* FirebaseCrashlytics.framework */; platformFilter = ios; settings = {ATTRIBUTES = (Required, ); }; };
 		58B4F6C62411623F003C6D8F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F6C52411623E003C6D8F /* libc++.tbd */; platformFilter = ios; };
 		58B4F6C924116394003C6D8F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58B4F6CB24116394003C6D8F /* Localizable.strings */; };
-		58B5FD2324190BFC00DB857D /* Stats.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58B5FD2224190BFC00DB857D /* Stats.storyboard */; };
-		58B5FD2524190C3B00DB857D /* History.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58B5FD2424190C3B00DB857D /* History.storyboard */; };
-		58B5FD2724190C4400DB857D /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58B5FD2624190C4400DB857D /* Settings.storyboard */; };
 		58B5FD3224190E2F00DB857D /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FD2D24190E2F00DB857D /* HomePresenter.swift */; };
 		58B5FD3324190E2F00DB857D /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FD2E24190E2F00DB857D /* HomeRouter.swift */; };
 		58B5FD3424190E2F00DB857D /* HomeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FD2F24190E2F00DB857D /* HomeModels.swift */; };
@@ -475,7 +478,6 @@
 		580EC79724214D1200C34948 /* EntriesListInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListInteractorTests.swift; sourceTree = "<group>"; };
 		580EC79824214D1200C34948 /* EntriesListRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListRouterTests.swift; sourceTree = "<group>"; };
 		580EC79924214D1200C34948 /* EntriesListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListPresenterTests.swift; sourceTree = "<group>"; };
-		580EC79F2421510C00C34948 /* Entries.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Entries.storyboard; sourceTree = "<group>"; };
 		580EC7A3242151BC00C34948 /* EditTrainingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingPresenter.swift; sourceTree = "<group>"; };
 		580EC7A4242151BC00C34948 /* EditTrainingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingRouter.swift; sourceTree = "<group>"; };
 		580EC7A5242151BC00C34948 /* EditTrainingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingModels.swift; sourceTree = "<group>"; };
@@ -495,7 +497,6 @@
 		580EC7C42421525300C34948 /* EditCalibrationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCalibrationRouterTests.swift; sourceTree = "<group>"; };
 		580EC7C52421525300C34948 /* EditCalibrationPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCalibrationPresenterTests.swift; sourceTree = "<group>"; };
 		58160DE82402BDF400C792F4 /* xDrip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = xDrip.entitlements; sourceTree = "<group>"; };
-		58160DEB2402C3BC00C792F4 /* Root.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
 		58160DED2402C7F600C792F4 /* RootPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPresenter.swift; sourceTree = "<group>"; };
 		58160DEE2402C7F600C792F4 /* RootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouter.swift; sourceTree = "<group>"; };
 		58160DEF2402C7F600C792F4 /* RootModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootModels.swift; sourceTree = "<group>"; };
@@ -504,8 +505,16 @@
 		58160DF82402C83900C792F4 /* RootViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewControllerTests.swift; sourceTree = "<group>"; };
 		58160DF92402C83900C792F4 /* RootInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootInteractorTests.swift; sourceTree = "<group>"; };
 		58160DFA2402C83900C792F4 /* RootPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPresenterTests.swift; sourceTree = "<group>"; };
-		58160E022402C8CE00C792F4 /* UIStoryboard+Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Content.swift"; sourceTree = "<group>"; };
 		58160E0C2402E52000C792F4 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		58184A462438BE8E00E848C6 /* RootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
+		58184A482438C1E800E848C6 /* EditFoodEntryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditFoodEntryViewController.xib; sourceTree = "<group>"; };
+		58184A4A2438C20D00E848C6 /* EntriesListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntriesListViewController.xib; sourceTree = "<group>"; };
+		58184A4C2438C30500E848C6 /* EditTrainingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditTrainingViewController.xib; sourceTree = "<group>"; };
+		58184A4E2438C31C00E848C6 /* EditCalibrationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditCalibrationViewController.xib; sourceTree = "<group>"; };
+		58184A502438C36700E848C6 /* StatsRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsRootViewController.xib; sourceTree = "<group>"; };
+		58184A522438C51100E848C6 /* HistoryRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryRootViewController.xib; sourceTree = "<group>"; };
+		58184A542438C53600E848C6 /* SettingsRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsRootViewController.xib; sourceTree = "<group>"; };
+		58184A562438C64100E848C6 /* EntriesListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntriesListTableViewCell.xib; sourceTree = "<group>"; };
 		582EC946240BE77A00ADF9B0 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		58788B7224264711000EB113 /* AbstractEntriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractEntriesWorker.swift; sourceTree = "<group>"; };
 		58788B74242647C5000EB113 /* TrainingEntriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingEntriesWorker.swift; sourceTree = "<group>"; };
@@ -560,9 +569,6 @@
 		58B4F6D124127F87003C6D8F /* jenkinsfile_deploy */ = {isa = PBXFileReference; lastKnownFileType = text; path = jenkinsfile_deploy; sourceTree = "<group>"; };
 		58B4F6D3241282CD003C6D8F /* export_options_ios.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = export_options_ios.plist; sourceTree = "<group>"; };
 		58B4F6D42412A4CC003C6D8F /* export_options_macos.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = export_options_macos.plist; sourceTree = "<group>"; };
-		58B5FD2224190BFC00DB857D /* Stats.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Stats.storyboard; sourceTree = "<group>"; };
-		58B5FD2424190C3B00DB857D /* History.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = History.storyboard; sourceTree = "<group>"; };
-		58B5FD2624190C4400DB857D /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		58B5FD2D24190E2F00DB857D /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		58B5FD2E24190E2F00DB857D /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		58B5FD2F24190E2F00DB857D /* HomeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModels.swift; sourceTree = "<group>"; };
@@ -713,6 +719,7 @@
 			isa = PBXGroup;
 			children = (
 				2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */,
+				58184A562438C64100E848C6 /* EntriesListTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1224,6 +1231,7 @@
 				580EC78C24214CDD00C34948 /* EntriesListRouter.swift */,
 				580EC78D24214CDD00C34948 /* EntriesListModels.swift */,
 				580EC78E24214CDD00C34948 /* EntriesListViewController.swift */,
+				58184A4A2438C20D00E848C6 /* EntriesListViewController.xib */,
 				580EC78F24214CDD00C34948 /* EntriesListInteractor.swift */,
 			);
 			path = EntriesList;
@@ -1244,7 +1252,6 @@
 		580EC79E242150ED00C34948 /* Entries */ = {
 			isa = PBXGroup;
 			children = (
-				580EC79F2421510C00C34948 /* Entries.storyboard */,
 				58B5FD9D2419318E00DB857D /* EditFoodEntry */,
 				580EC78A24214CC600C34948 /* EntriesList */,
 				580EC7A2242151A900C34948 /* EditTraining */,
@@ -1271,6 +1278,7 @@
 				580EC7A4242151BC00C34948 /* EditTrainingRouter.swift */,
 				580EC7A5242151BC00C34948 /* EditTrainingModels.swift */,
 				580EC7A6242151BC00C34948 /* EditTrainingViewController.swift */,
+				58184A4C2438C30500E848C6 /* EditTrainingViewController.xib */,
 				580EC7A7242151BC00C34948 /* EditTrainingInteractor.swift */,
 			);
 			path = EditTraining;
@@ -1294,6 +1302,7 @@
 				580EC7B82421521C00C34948 /* EditCalibrationRouter.swift */,
 				580EC7B92421521C00C34948 /* EditCalibrationModels.swift */,
 				580EC7BA2421521C00C34948 /* EditCalibrationViewController.swift */,
+				58184A4E2438C31C00E848C6 /* EditCalibrationViewController.xib */,
 				580EC7BB2421521C00C34948 /* EditCalibrationInteractor.swift */,
 			);
 			path = EditCalibration;
@@ -1327,7 +1336,6 @@
 		58160DEA2402C34700C792F4 /* Root */ = {
 			isa = PBXGroup;
 			children = (
-				58160DEB2402C3BC00C792F4 /* Root.storyboard */,
 				58160E0A2402E4B100C792F4 /* Root */,
 			);
 			path = Root;
@@ -1348,7 +1356,6 @@
 		58160E012402C8B100C792F4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				58160E022402C8CE00C792F4 /* UIStoryboard+Content.swift */,
 				2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */,
 				2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */,
 				2CBF32A0242CEB6500DE944A /* UIView+Effects.swift */,
@@ -1388,6 +1395,7 @@
 				58160DEE2402C7F600C792F4 /* RootRouter.swift */,
 				58160DEF2402C7F600C792F4 /* RootModels.swift */,
 				58160DF02402C7F600C792F4 /* RootViewController.swift */,
+				58184A462438BE8E00E848C6 /* RootViewController.xib */,
 				58160DF12402C7F600C792F4 /* RootInteractor.swift */,
 			);
 			path = Root;
@@ -1578,7 +1586,6 @@
 		58B5FD1F24190BAF00DB857D /* Stats */ = {
 			isa = PBXGroup;
 			children = (
-				58B5FD2224190BFC00DB857D /* Stats.storyboard */,
 				58B5FD2824190CD800DB857D /* StatsRoot */,
 			);
 			path = Stats;
@@ -1587,7 +1594,6 @@
 		58B5FD2024190BB900DB857D /* History */ = {
 			isa = PBXGroup;
 			children = (
-				58B5FD2424190C3B00DB857D /* History.storyboard */,
 				58B5FD4124190E9E00DB857D /* HistoryRoot */,
 			);
 			path = History;
@@ -1596,7 +1602,6 @@
 		58B5FD2124190BC700DB857D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				58B5FD2624190C4400DB857D /* Settings.storyboard */,
 				58B5FD4C241910AF00DB857D /* SettingsRoot */,
 			);
 			path = Settings;
@@ -1609,6 +1614,7 @@
 				58B5FD3824190E6700DB857D /* StatsRootRouter.swift */,
 				58B5FD3924190E6700DB857D /* StatsRootModels.swift */,
 				58B5FD3A24190E6700DB857D /* StatsRootViewController.swift */,
+				58184A502438C36700E848C6 /* StatsRootViewController.xib */,
 				58B5FD3B24190E6700DB857D /* StatsRootInteractor.swift */,
 			);
 			path = StatsRoot;
@@ -1643,6 +1649,7 @@
 				58B5FD4324190EB300DB857D /* HistoryRootRouter.swift */,
 				58B5FD4424190EB300DB857D /* HistoryRootModels.swift */,
 				58B5FD4524190EB300DB857D /* HistoryRootViewController.swift */,
+				58184A522438C51100E848C6 /* HistoryRootViewController.xib */,
 				58B5FD4624190EB300DB857D /* HistoryRootInteractor.swift */,
 			);
 			path = HistoryRoot;
@@ -1655,6 +1662,7 @@
 				58B5FD4E241910BD00DB857D /* SettingsRootRouter.swift */,
 				58B5FD4F241910BD00DB857D /* SettingsRootModels.swift */,
 				58B5FD50241910BD00DB857D /* SettingsRootViewController.swift */,
+				58184A542438C53600E848C6 /* SettingsRootViewController.xib */,
 				58B5FD51241910BD00DB857D /* SettingsRootInteractor.swift */,
 			);
 			path = SettingsRoot;
@@ -1766,6 +1774,7 @@
 				580EC7792421457600C34948 /* EditFoodEntryRouter.swift */,
 				580EC77A2421457600C34948 /* EditFoodEntryModels.swift */,
 				580EC77B2421457600C34948 /* EditFoodEntryViewController.swift */,
+				58184A482438C1E800E848C6 /* EditFoodEntryViewController.xib */,
 				580EC77C2421457600C34948 /* EditFoodEntryInteractor.swift */,
 			);
 			path = EditFoodEntry;
@@ -1994,24 +2003,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				58B4F6C924116394003C6D8F /* Localizable.strings in Resources */,
-				58B5FD2324190BFC00DB857D /* Stats.storyboard in Resources */,
+				58184A472438BE8E00E848C6 /* RootViewController.xib in Resources */,
 				5805CA0E243892D6002AFA1B /* InitialSetupSettingsViewController.xib in Resources */,
-				58B5FD2524190C3B00DB857D /* History.storyboard in Resources */,
+				58184A4B2438C20D00E848C6 /* EntriesListViewController.xib in Resources */,
+				58184A572438C64100E848C6 /* EntriesListTableViewCell.xib in Resources */,
+				58184A4D2438C30500E848C6 /* EditTrainingViewController.xib in Resources */,
 				5805CA0C243892D6002AFA1B /* InitialSetupIntroViewController.xib in Resources */,
-				58B5FD2724190C4400DB857D /* Settings.storyboard in Resources */,
+				58184A492438C1E800E848C6 /* EditFoodEntryViewController.xib in Resources */,
+				58184A552438C53600E848C6 /* SettingsRootViewController.xib in Resources */,
 				5805CA03243892D6002AFA1B /* InitialSetupG6WarmUpViewController.xib in Resources */,
 				5805CA06243892D6002AFA1B /* InitialSetupG6ConnectViewController.xib in Resources */,
 				5805CA08243892D6002AFA1B /* InitialSetupG6SensorAgeViewController.xib in Resources */,
 				5805CA14243892D6002AFA1B /* InitialSetupInjectionTypeViewController.xib in Resources */,
-				580EC7A02421510C00C34948 /* Entries.storyboard in Resources */,
-				58160DEC2402C3BC00C792F4 /* Root.storyboard in Resources */,
 				58B4F67F24114938003C6D8F /* GoogleService-Info.plist in Resources */,
+				58184A532438C51100E848C6 /* HistoryRootViewController.xib in Resources */,
 				58E5A67C2402B8A8002C2BE3 /* LaunchScreen.storyboard in Resources */,
 				5805CA0A243892D6002AFA1B /* InitialSetupG6DeviceIDViewController.xib in Resources */,
 				5805CA12243892D6002AFA1B /* InitialSetupDeviceModeViewController.xib in Resources */,
 				58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */,
+				58184A512438C36700E848C6 /* StatsRootViewController.xib in Resources */,
 				5805CA10243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.xib in Resources */,
 				5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */,
+				58184A4F2438C31C00E848C6 /* EditCalibrationViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2118,7 +2131,6 @@
 				5805C9B924389230002AFA1B /* CGMBluetoothServiceDelegate.swift in Sources */,
 				58DDC4642423CAA3008CB04D /* CalibrationEntry.swift in Sources */,
 				5805C9A324389230002AFA1B /* DexcomG6PairRequestTxMessage.swift in Sources */,
-				58160E032402C8CE00C792F4 /* UIStoryboard+Content.swift in Sources */,
 				5805CA1D243892D6002AFA1B /* InitialSetupViewController.swift in Sources */,
 				5805C9A724389230002AFA1B /* DexcomG6TransmitterTimeTxMessage.swift in Sources */,
 				580EC7BD2421521C00C34948 /* EditCalibrationRouter.swift in Sources */,

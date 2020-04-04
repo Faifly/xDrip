@@ -16,14 +16,18 @@ protocol HistoryRootDisplayLogic: class {
     func displayLoad(viewModel: HistoryRoot.Load.ViewModel)
 }
 
-class HistoryRootViewController: UIViewController, HistoryRootDisplayLogic {
+class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
     var interactor: HistoryRootBusinessLogic?
     var router: (NSObjectProtocol & HistoryRootRoutingLogic & HistoryRootDataPassing)?
     
     // MARK: Object lifecycle
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("Use regular init")
+    }
+    
+    required init() {
+        super.init()
         setup()
     }
     
@@ -55,11 +59,21 @@ class HistoryRootViewController: UIViewController, HistoryRootDisplayLogic {
     // MARK: Do something
     
     private func doLoad() {
+        setupNavigationItems()
+        
         let request = HistoryRoot.Load.Request()
         interactor?.doLoad(request: request)
     }
     
-    @IBAction private func onCancelButtonTap() {
+    private func setupNavigationItems() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(onCancelButtonTap)
+        )
+    }
+    
+    @objc private func onCancelButtonTap() {
         let request = HistoryRoot.Cancel.Request()
         interactor?.doCancel(request: request)
     }

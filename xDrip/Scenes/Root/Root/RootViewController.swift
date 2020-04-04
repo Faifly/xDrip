@@ -17,14 +17,18 @@ protocol RootDisplayLogic: class {
     func displayAddEntry(viewModel: Root.ShowAddEntryOptionsList.ViewModel)
 }
 
-class RootViewController: UIViewController, RootDisplayLogic {
+class RootViewController: NibViewController, RootDisplayLogic {
     var interactor: RootBusinessLogic?
     var router: (NSObjectProtocol & RootRoutingLogic & RootDataPassing)?
     
     // MARK: Object lifecycle
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("Use regular init")
+    }
+    
+    required init() {
+        super.init()
         setup()
     }
     

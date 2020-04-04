@@ -9,7 +9,6 @@
 import UIKit
 
 @UIApplicationMain final class AppDelegate: UIResponder, UIApplicationDelegate {
-    
     var window: UIWindow?
     
     func application(
@@ -17,6 +16,7 @@ import UIKit
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         ApplicationLaunchController.runAppLaunchSequence()
+        window = ApplicationLaunchController.createWindow()
         return true
     }
 

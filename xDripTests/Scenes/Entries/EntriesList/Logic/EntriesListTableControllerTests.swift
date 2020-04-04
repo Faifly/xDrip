@@ -41,11 +41,10 @@ class EntriesListTableControllerTests: XCTestCase {
     }
     
     func setupEntriesListViewController() {
-        let controller = UIStoryboard(board: .entries).instantiateViewController(withIdentifier: EntriesListRouter.entriesListNavigationControllerIdentifier) as! UINavigationController
-        
-        let entriesListViewController = controller.topViewController as! EntriesListViewController
-        
-        viewController = entriesListViewController
+        viewController = EntriesListViewController(
+            persistenceWorker: EntriesListCarbsPersistenceWorker(),
+            formattingWorker: EntriesListCarbsFormattingWorker()
+        )
         
         guard let tableView = viewController.view.subviews.first(where: { $0 is UITableView }) as? UITableView else { return }
         

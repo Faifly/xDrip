@@ -35,7 +35,7 @@ final class EditTrainingViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupEditTrainingViewController() {
-        sut = UIStoryboard(board: .entries).instantiate(EditTrainingViewController.self)
+        sut = EditTrainingViewController()
     }
     
     func loadView() {

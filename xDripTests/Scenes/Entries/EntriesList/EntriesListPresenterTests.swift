@@ -32,7 +32,7 @@ final class EntriesListPresenterTests: XCTestCase {
     // MARK: Test setup
     
     func setupEntriesListPresenter() {
-        sut = EntriesListPresenter()
+        sut = EntriesListPresenter(formattingWorker: EntriesListCarbsFormattingWorker())
     }
     
     // MARK: Test doubles

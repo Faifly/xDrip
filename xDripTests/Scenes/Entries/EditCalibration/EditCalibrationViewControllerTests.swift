@@ -35,7 +35,7 @@ final class EditCalibrationViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupEditCalibrationViewController() {
-        sut = UIStoryboard(board: .entries).instantiate(EditCalibrationViewController.self)
+        sut = EditCalibrationViewController()
     }
     
     func loadView() {
