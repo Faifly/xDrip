@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/Artem-Kalmykov/AKUtils.git",
         "state": {
           "branch": "master",
-          "revision": "85f127de1daef4ecc1d9f4988f31966f94db116a",
+          "revision": "b5535e4c39573b5e70a2cd35e07ce770ac569c46",
           "version": null
         }
       },
@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/realm/realm-cocoa.git",
         "state": {
           "branch": "master",
-          "revision": "ad6f5f94b023caaec57c99f7a986160f8c087d0c",
+          "revision": "272a273f5ae256486b50ff4c70d6207a5de4fa91",
           "version": null
         }
       },

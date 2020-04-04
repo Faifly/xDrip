@@ -35,7 +35,10 @@ final class EntriesListViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupEntriesListViewController() {
-        sut = UIStoryboard(board: .entries).instantiate(EntriesListViewController.self)
+        sut = EntriesListViewController(
+            persistenceWorker: EntriesListCarbsPersistenceWorker(),
+            formattingWorker: EntriesListCarbsFormattingWorker()
+        )
     }
     
     func loadView() {
@@ -174,6 +177,7 @@ final class EntriesListViewControllerTests: XCTestCase {
         // Given
         let spy = EntriesListBusinessLogicSpy()
         sut.interactor = spy
+        loadView()
         
         let target = sut.navigationItem.leftBarButtonItem!.target!
         let action = sut.navigationItem.leftBarButtonItem!.action!

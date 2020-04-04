@@ -35,7 +35,7 @@ final class HistoryRootViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupHistoryRootViewController() {
-        sut = UIStoryboard(board: .history).instantiate(HistoryRootViewController.self)
+        sut = HistoryRootViewController()
     }
     
     func loadView() {
@@ -87,6 +87,7 @@ final class HistoryRootViewControllerTests: XCTestCase {
         // Given
         let spy = HistoryRootBusinessLogicSpy()
         sut.interactor = spy
+        loadView()
         
         let target = sut.navigationItem.leftBarButtonItem!.target!
         let action = sut.navigationItem.leftBarButtonItem!.action!

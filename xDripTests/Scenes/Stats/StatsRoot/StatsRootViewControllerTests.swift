@@ -35,7 +35,7 @@ final class StatsRootViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupStatsRootViewController() {
-        sut = UIStoryboard(board: .stats).instantiate(StatsRootViewController.self)
+        sut = StatsRootViewController()
     }
     
     func loadView() {
@@ -87,6 +87,7 @@ final class StatsRootViewControllerTests: XCTestCase {
         // Given
         let spy = StatsRootBusinessLogicSpy()
         sut.interactor = spy
+        loadView()
         
         let target = sut.navigationItem.leftBarButtonItem!.target!
         let action = sut.navigationItem.leftBarButtonItem!.action!

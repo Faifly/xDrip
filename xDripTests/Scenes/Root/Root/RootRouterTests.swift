@@ -18,11 +18,7 @@ final class RootRouterTests: XCTestCase {
     }
     
     private func createSpy() -> ViewControllerSpy {
-        let archiver = NSKeyedArchiver(requiringSecureCoding: false)
-        archiver.finishEncoding()
-        let data = archiver.encodedData
-        let unarchiver = try! NSKeyedUnarchiver(forReadingFrom: data)
-        return ViewControllerSpy(coder: unarchiver)!
+        return ViewControllerSpy()
     }
     
     // MARK: Test Doubles

@@ -13,18 +13,15 @@ final class EntriesListTableViewCell: UITableViewCell, ViewModelConfigurable {
         let value: String
         let date: String
     }
-
-    @IBOutlet private weak var valueLabel: UILabel!
-    @IBOutlet private weak var dateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        valueLabel.textColor = .timeFrameSegmentLabelColor
+        detailTextLabel?.textColor = .timeFrameSegmentLabelColor
     }
     
     func configure(withViewModel viewModel: ViewModel) {
-        valueLabel.text = viewModel.value
-        dateLabel.text = viewModel.date
+        textLabel?.text = viewModel.value
+        detailTextLabel?.text = viewModel.date
     }
 }

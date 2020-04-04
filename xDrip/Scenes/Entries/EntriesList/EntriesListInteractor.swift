@@ -13,13 +13,10 @@
 import UIKit
 
 protocol EntriesListBusinessLogic {
-    var presenter: EntriesListPresentationLogic? { get }
-    
     func doLoad(request: EntriesList.Load.Request)
     func doCancel(request: EntriesList.Cancel.Request)
     func doDeleteEntry(request: EntriesList.DeleteEntry.Request)
     func doShowSelectedEntry(request: EntriesList.ShowSelectedEntry.Request)
-    func inject(persistenceWorker: EntriesListEntryPersistenceWorker)
 }
 
 protocol EntriesListDataStore {
@@ -29,12 +26,17 @@ protocol EntriesListDataStore {
 final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStore {
     var presenter: EntriesListPresentationLogic?
     var router: EntriesListRoutingLogic?
-    private var entriesWorker: EntriesListEntryPersistenceWorker?
+    
+    let entriesWorker: EntriesListEntryPersistenceWorker
+    
+    init(persistenceWorker: EntriesListEntryPersistenceWorker) {
+        entriesWorker = persistenceWorker
+    }
     
     // MARK: Do something
     
     func doLoad(request: EntriesList.Load.Request) {
-        let entries = entriesWorker?.fetchEntries() ?? []
+        let entries = entriesWorker.fetchEntries()
         
         let response = EntriesList.Load.Response(entries: entries)
         presenter?.presentLoad(response: response)
@@ -45,16 +47,12 @@ final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStor
     }
     
     func doDeleteEntry(request: EntriesList.DeleteEntry.Request) {
-        entriesWorker?.deleteEntry(request.index)
+        entriesWorker.deleteEntry(request.index)
     }
     
     func doShowSelectedEntry(request: EntriesList.ShowSelectedEntry.Request) {
-        _ = entriesWorker?.fetchEntries()[request.index]
+        _ = entriesWorker.fetchEntries()[request.index]
         
         // add route to edit entry controller
-    }
-    
-    func inject(persistenceWorker: EntriesListEntryPersistenceWorker) {
-        entriesWorker = persistenceWorker
     }
 }

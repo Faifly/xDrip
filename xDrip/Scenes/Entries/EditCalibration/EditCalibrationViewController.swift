@@ -16,14 +16,18 @@ protocol EditCalibrationDisplayLogic: class {
     func displayLoad(viewModel: EditCalibration.Load.ViewModel)
 }
 
-class EditCalibrationViewController: UIViewController, EditCalibrationDisplayLogic {
+class EditCalibrationViewController: NibViewController, EditCalibrationDisplayLogic {
     var interactor: EditCalibrationBusinessLogic?
     var router: (NSObjectProtocol & EditCalibrationRoutingLogic & EditCalibrationDataPassing)?
     
     // MARK: Object lifecycle
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("Use regular init")
+    }
+    
+    required init() {
+        super.init()
         setup()
     }
     

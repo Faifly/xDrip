@@ -35,7 +35,7 @@ final class SettingsRootViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupSettingsRootViewController() {
-        sut = UIStoryboard(board: .settings).instantiate(SettingsRootViewController.self)
+        sut = SettingsRootViewController()
     }
     
     func loadView() {
@@ -87,6 +87,7 @@ final class SettingsRootViewControllerTests: XCTestCase {
         // Given
         let spy = SettingsRootBusinessLogicSpy()
         sut.interactor = spy
+        loadView()
         
         let target = sut.navigationItem.leftBarButtonItem!.target!
         let action = sut.navigationItem.leftBarButtonItem!.action!

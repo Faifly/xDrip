@@ -28,11 +28,10 @@ class EntriesListSceneBuilderTests: XCTestCase {
     }
     
     private func setupEntriesListViewController() {
-        let controller = UIStoryboard(board: .entries).instantiateViewController(withIdentifier: EntriesListRouter.entriesListNavigationControllerIdentifier) as! UINavigationController
-        
-        let entriesListViewController = controller.topViewController as! EntriesListViewController
-        
-        viewController = entriesListViewController
+        viewController = EntriesListViewController(
+            persistenceWorker: EntriesListCarbsPersistenceWorker(),
+            formattingWorker: EntriesListCarbsFormattingWorker()
+        )
     }
     
     final class EntriesListBusinessLogicSpy: EntriesListBusinessLogic {
@@ -68,32 +67,24 @@ class EntriesListSceneBuilderTests: XCTestCase {
     }
     
     func testConfigurateForCarbs() {
-        let presenterSpy = EntriesListPresentationLogicSpy()
-        let interactorSpy = EntriesListBusinessLogicSpy()
-        interactorSpy.presenter = presenterSpy
+        let builder = EntriesListSceneBuilder()
+        let viewController = builder.createSceneForCarbs()
         
-        viewController.interactor = interactorSpy
+        let interactor = viewController.interactor as! EntriesListInteractor
+        let presenter = interactor.presenter as! EntriesListPresenter
         
-        sut.configureSceneForCarbs(viewController)
-        
-        loadView()
-        
-        XCTAssertTrue(interactorSpy.worker is EntriesListCarbsPersistenceWorker)
-        XCTAssertTrue(presenterSpy.worker is EntriesListCarbsFormattingWorker)
+        XCTAssertTrue(interactor.entriesWorker is EntriesListCarbsPersistenceWorker)
+        XCTAssertTrue(presenter.formattingWorker is EntriesListCarbsFormattingWorker)
     }
     
     func testConfigurateForBolus() {
-        let presenterSpy = EntriesListPresentationLogicSpy()
-        let interactorSpy = EntriesListBusinessLogicSpy()
-        interactorSpy.presenter = presenterSpy
+        let builder = EntriesListSceneBuilder()
+        let viewController = builder.createSceneForBolus()
         
-        viewController.interactor = interactorSpy
+        let interactor = viewController.interactor as! EntriesListInteractor
+        let presenter = interactor.presenter as! EntriesListPresenter
         
-        sut.configureSceneForBolus(viewController)
-        
-        loadView()
-        
-        XCTAssertTrue(interactorSpy.worker is EntriesListBolusPersistenceWorker)
-        XCTAssertTrue(presenterSpy.worker is EntriesListBolusFormattingWorker)
+        XCTAssertTrue(interactor.entriesWorker is EntriesListBolusPersistenceWorker)
+        XCTAssertTrue(presenter.formattingWorker is EntriesListBolusFormattingWorker)
     }
 }

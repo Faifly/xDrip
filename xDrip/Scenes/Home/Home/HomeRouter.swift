@@ -36,21 +36,18 @@ final class HomeRouter: NSObject, HomeRoutingLogic, HomeDataPassing {
     }
     
     private func routeToEntriesList(for type: Root.EntryType) {
-        guard let controller = UIStoryboard(board: .entries).instantiateViewController(withIdentifier: EntriesListRouter.entriesListNavigationControllerIdentifier) as? UINavigationController,
-            let entriesListViewController = controller.topViewController as? EntriesListViewController
-            else { return }
-        
         let builder = EntriesListSceneBuilder()
-        
+        let viewController: UIViewController?
         switch type {
         case .carbs:
-            builder.configureSceneForCarbs(entriesListViewController)
+            viewController = builder.createSceneForCarbs()
         case .bolus:
-            builder.configureSceneForBolus(entriesListViewController)
+            viewController = builder.createSceneForBolus()
         default:
-            break
+            viewController = nil
         }
         
-        viewController?.present(controller, animated: true)
+        guard let controller = viewController else { return }
+        self.viewController?.present(controller.embedInNavigation(), animated: true)
     }
 }

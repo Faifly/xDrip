@@ -17,4 +17,11 @@ final class ApplicationLaunchController {
         FirebaseApp.configure()
         #endif
     }
+    
+    static func createWindow() -> UIWindow {
+        let window = UIWindow()
+        window.rootViewController = RootViewController()
+        window.makeKeyAndVisible()
+        return window
+    }
 }

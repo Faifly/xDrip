@@ -9,40 +9,27 @@
 import Foundation
 
 final class EntriesListSceneBuilder {
-    func configureSceneForCarbs(_ viewController: EntriesListViewController) {
+    func createSceneForCarbs() -> EntriesListViewController {
         let persistenceWorker = EntriesListCarbsPersistenceWorker()
         let formattingWorker = EntriesListCarbsFormattingWorker()
         
-        viewController.title = "entries_list_scene_title_carbs".localized
-        
-        inject(
-            formattingWorker: formattingWorker,
+        let viewController = EntriesListViewController(
             persistenceWorker: persistenceWorker,
-            for: viewController
+            formattingWorker: formattingWorker
         )
+        viewController.title = "entries_list_scene_title_carbs".localized
+        return viewController
     }
     
-    func configureSceneForBolus(_ viewController: EntriesListViewController) {
+    func createSceneForBolus() -> EntriesListViewController {
         let persistenceWorker = EntriesListBolusPersistenceWorker()
         let formattingWorker = EntriesListBolusFormattingWorker()
         
-        viewController.title = "entries_list_scene_title_bolus".localized
-        
-        inject(
-            formattingWorker: formattingWorker,
+        let viewController = EntriesListViewController(
             persistenceWorker: persistenceWorker,
-            for: viewController
+            formattingWorker: formattingWorker
         )
-    }
-    
-    private func inject(formattingWorker: EntriesListFormattingWorker,
-                        persistenceWorker: EntriesListEntryPersistenceWorker,
-                        for viewController: EntriesListViewController) {
-        
-        let interactor = viewController.interactor
-        let presenter = interactor?.presenter
-        
-        interactor?.inject(persistenceWorker: persistenceWorker)
-        presenter?.inject(formattingWorker: formattingWorker)
+        viewController.title = "entries_list_scene_title_bolus".localized
+        return viewController
     }
 }

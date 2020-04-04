@@ -16,14 +16,18 @@ protocol EditTrainingDisplayLogic: class {
     func displayLoad(viewModel: EditTraining.Load.ViewModel)
 }
 
-class EditTrainingViewController: UIViewController, EditTrainingDisplayLogic {
+class EditTrainingViewController: NibViewController, EditTrainingDisplayLogic {
     var interactor: EditTrainingBusinessLogic?
     var router: (NSObjectProtocol & EditTrainingRoutingLogic & EditTrainingDataPassing)?
     
     // MARK: Object lifecycle
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("Use regular init")
+    }
+    
+    required init() {
+        super.init()
         setup()
     }
     
