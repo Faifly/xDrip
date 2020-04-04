@@ -25,18 +25,41 @@ final class HomeRouterTests: XCTestCase {
         sut = HomeRouter()
     }
     
-    private func createSpy() -> ViewControllerSpy {
-        let archiver = NSKeyedArchiver(requiringSecureCoding: false)
-        archiver.finishEncoding()
-        let data = archiver.encodedData
-        let unarchiver = try! NSKeyedUnarchiver(forReadingFrom: data)
-        return ViewControllerSpy(coder: unarchiver)!
-    }
-    
     // MARK: Test doubles
     
     final class ViewControllerSpy: HomeViewController {
+        var lastPresentedViewController: UIViewController?
+        
+        override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+            lastPresentedViewController = viewControllerToPresent
+        }
     }
     
     // MARK: Tests
+    
+    func testRootToBolusEntriesList() {
+        // Given
+        let spy = ViewControllerSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.routeToBolusEntriesList()
+        
+        // Then
+        let entriesListNavController = spy.lastPresentedViewController as! UINavigationController
+        XCTAssert(entriesListNavController.viewControllers[0] is EntriesListViewController)
+    }
+    
+    func testRootToCarbsEntriesList() {
+        // Given
+        let spy = ViewControllerSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.routeToCarbsEntriesList()
+        
+        // Then
+        let entriesListNavController = spy.lastPresentedViewController as! UINavigationController
+        XCTAssert(entriesListNavController.viewControllers[0] is EntriesListViewController)
+    }
 }

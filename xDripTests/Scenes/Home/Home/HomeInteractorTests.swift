@@ -43,6 +43,22 @@ final class HomeInteractorTests: XCTestCase {
         func presentLoad(response: Home.Load.Response) {
             presentLoadCalled = true
         }
+        
+        func presentGlucoseData(response: Home.GlucoseDataUpdate.Response) {
+        }
+    }
+    
+    final class HomeRoutingLogicSpy: HomeRoutingLogic {
+        var toCarbsCalled = false
+        var toBolusCalled = false
+        
+        func routeToCarbsEntriesList() {
+            toCarbsCalled = true
+        }
+        
+        func routeToBolusEntriesList() {
+            toBolusCalled = true
+        }
     }
     
     // MARK: Tests
@@ -58,5 +74,26 @@ final class HomeInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+    }
+    
+    func testDoShowEntriesList() {
+        let spy = HomeRoutingLogicSpy()
+        sut.router = spy
+        
+        var request = Home.ShowEntriesList.Request(entriesType: .carbs)
+        
+        // When
+        sut.doShowEntriesList(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.toCarbsCalled)
+        
+        request = Home.ShowEntriesList.Request(entriesType: .bolus)
+        
+        //When
+        sut.doShowEntriesList(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.toBolusCalled)
     }
 }

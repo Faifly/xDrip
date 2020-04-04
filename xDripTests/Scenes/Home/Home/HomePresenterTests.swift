@@ -43,6 +43,10 @@ final class HomePresenterTests: XCTestCase {
         func displayLoad(viewModel: Home.Load.ViewModel) {
             displayLoadCalled = true
         }
+        
+        func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel) {
+            
+        }
     }
     
     // MARK: Tests

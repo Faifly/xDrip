@@ -1,5 +1,5 @@
 //
-//  InitialSetupIntoViewController.swift
+//  InitialSetupIntroViewController.swift
 //  xDrip
 //
 //  Created by Artem Kalmykov on 28.03.2020.

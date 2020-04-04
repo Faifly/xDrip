@@ -65,6 +65,9 @@ final class RootViewControllerTests: XCTestCase {
             let type = entries[request.index]
             selectedEntryType = type
         }
+        
+        func doShowInitialSetupIfNeeded(request: Root.InitialSetup.Request) {
+        }
     }
     
     // MARK: Tests

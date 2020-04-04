@@ -14,6 +14,7 @@ import UIKit
 
 protocol HomeBusinessLogic {
     func doLoad(request: Home.Load.Request)
+    func doShowEntriesList(request: Home.ShowEntriesList.Request)
 }
 
 protocol HomeDataStore {
@@ -36,6 +37,17 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             guard let self = self else { return }
             let response = Home.GlucoseDataUpdate.Response(glucoseData: data)
             self.presenter?.presentGlucoseData(response: response)
+        }
+    }
+    
+    func doShowEntriesList(request: Home.ShowEntriesList.Request) {
+        switch request.entriesType {
+        case .bolus:
+            router?.routeToBolusEntriesList()
+        case .carbs:
+            router?.routeToCarbsEntriesList()
+        default:
+            break
         }
     }
 }

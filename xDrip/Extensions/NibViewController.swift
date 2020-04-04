@@ -9,12 +9,26 @@
 import UIKit
 
 class NibViewController: UIViewController, NibLoadable {
-    init() {
+    required init() {
         super.init(nibName: type(of: self).nibName, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+}
+
+extension UIViewController {
+    func embed<T: NibViewController>(_ type: T.Type, in view: UIView) {
+        let viewController = T.init()
+        
+        viewController.willMove(toParent: self)
+        addChild(viewController)
+        viewController.didMove(toParent: self)
+        
+        viewController.loadViewIfNeeded()
+        view.addSubview(viewController.view)
+        viewController.view.bindToSuperview()
     }
 }
 

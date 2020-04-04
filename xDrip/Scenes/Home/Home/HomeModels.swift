@@ -40,4 +40,16 @@ enum Home {
             let glucoseValue: String?
         }
     }
+    
+    enum ShowEntriesList {
+        struct Request {
+            let entriesType: Root.EntryType
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
 }

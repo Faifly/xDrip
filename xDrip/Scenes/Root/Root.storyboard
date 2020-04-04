@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MMQ-Ke-irg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MMQ-Ke-irg">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -90,12 +90,6 @@
                                     <outlet property="settingsButton" destination="APK-T9-Ijv" id="Aog-9I-ziH"/>
                                 </connections>
                             </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BhB-zm-eRV">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
-                                <connections>
-                                    <segue destination="6a4-eR-Hsq" kind="embed" id="H38-9I-QkA"/>
-                                </connections>
-                            </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZH5-bl-nxa" userLabel="tabBarBorder">
                                 <rect key="frame" x="0.0" y="811" width="414" height="1"/>
                                 <color key="backgroundColor" name="tabBarBorderColor"/>
@@ -103,39 +97,36 @@
                                     <constraint firstAttribute="height" constant="1" id="aun-Hx-RbH"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fMa-eF-U6k">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="811"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" name="Background2"/>
                         <constraints>
                             <constraint firstItem="ZH5-bl-nxa" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="0p7-DX-Uiv"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="1Iw-ON-YKh" secondAttribute="bottom" constant="-50" id="Aeg-Us-GzU"/>
+                            <constraint firstItem="fMa-eF-U6k" firstAttribute="trailing" secondItem="1Iw-ON-YKh" secondAttribute="trailing" id="Bla-lb-yvq"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="ZH5-bl-nxa" secondAttribute="bottom" id="ORA-C7-IaO"/>
-                            <constraint firstItem="BhB-zm-eRV" firstAttribute="top" secondItem="zwN-Hw-sQM" secondAttribute="top" id="Sbn-dn-gmi"/>
-                            <constraint firstItem="BhB-zm-eRV" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="h04-a0-MMc"/>
-                            <constraint firstItem="BhB-zm-eRV" firstAttribute="trailing" secondItem="1Iw-ON-YKh" secondAttribute="trailing" id="hrh-2i-s9h"/>
+                            <constraint firstItem="ZH5-bl-nxa" firstAttribute="top" secondItem="fMa-eF-U6k" secondAttribute="bottom" id="OuV-GY-3Du"/>
+                            <constraint firstItem="fMa-eF-U6k" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="STG-6C-bhm"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="trailing" secondItem="1Iw-ON-YKh" secondAttribute="trailing" id="iMf-ne-cUH"/>
                             <constraint firstItem="1Iw-ON-YKh" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="wLx-1O-Lae" secondAttribute="bottom" id="kMs-6v-hh0"/>
                             <constraint firstItem="IXU-jy-bCk" firstAttribute="leading" secondItem="1Iw-ON-YKh" secondAttribute="leading" id="nLp-36-nVi"/>
-                            <constraint firstItem="IXU-jy-bCk" firstAttribute="top" secondItem="BhB-zm-eRV" secondAttribute="bottom" id="plG-GW-enP"/>
+                            <constraint firstItem="fMa-eF-U6k" firstAttribute="top" secondItem="zwN-Hw-sQM" secondAttribute="top" id="od1-GW-zDA"/>
                             <constraint firstItem="1Iw-ON-YKh" firstAttribute="trailing" secondItem="ZH5-bl-nxa" secondAttribute="trailing" id="ptO-b8-oUI"/>
                             <constraint firstAttribute="bottom" secondItem="IXU-jy-bCk" secondAttribute="bottom" id="xHt-j7-hEI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1Iw-ON-YKh"/>
                     </view>
                     <connections>
+                        <outlet property="homeContainerView" destination="fMa-eF-U6k" id="Eye-nC-muw"/>
                         <outlet property="tabBarContainer" destination="IXU-jy-bCk" id="KJb-3A-WvT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="da0-RS-3uS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-17.39130434782609" y="127.90178571428571"/>
-        </scene>
-        <!--Home-->
-        <scene sceneID="YbW-kn-gVP">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Home" id="6a4-eR-Hsq" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="F2I-Wh-dGF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="697" y="128"/>
         </scene>
     </scenes>
     <resources>

@@ -35,7 +35,7 @@ final class HomeViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupHomeViewController() {
-        sut = UIStoryboard(board: .home).instantiate(HomeViewController.self)
+        sut = HomeViewController()
     }
     
     func loadView() {
@@ -47,9 +47,14 @@ final class HomeViewControllerTests: XCTestCase {
     
     final class HomeBusinessLogicSpy: HomeBusinessLogic {
         var doLoadCalled = false
+        var doShowEntriesListCalled = false
         
         func doLoad(request: Home.Load.Request) {
             doLoadCalled = true
+        }
+        
+        func doShowEntriesList(request: Home.ShowEntriesList.Request) {
+            doShowEntriesListCalled = true
         }
     }
     

@@ -13,7 +13,8 @@
 import UIKit
 
 @objc protocol HomeRoutingLogic {
-    
+    func routeToCarbsEntriesList()
+    func routeToBolusEntriesList()
 }
 
 protocol HomeDataPassing {
@@ -25,4 +26,31 @@ final class HomeRouter: NSObject, HomeRoutingLogic, HomeDataPassing {
     var dataStore: HomeDataStore?
     
     // MARK: Routing
+    
+    func routeToBolusEntriesList() {
+        routeToEntriesList(for: .bolus)
+    }
+    
+    func routeToCarbsEntriesList() {
+        routeToEntriesList(for: .carbs)
+    }
+    
+    private func routeToEntriesList(for type: Root.EntryType) {
+        guard let controller = UIStoryboard(board: .entries).instantiateViewController(withIdentifier: EntriesListRouter.entriesListNavigationControllerIdentifier) as? UINavigationController,
+            let entriesListViewController = controller.topViewController as? EntriesListViewController
+            else { return }
+        
+        let builder = EntriesListSceneBuilder()
+        
+        switch type {
+        case .carbs:
+            builder.configureSceneForCarbs(entriesListViewController)
+        case .bolus:
+            builder.configureSceneForBolus(entriesListViewController)
+        default:
+            break
+        }
+        
+        viewController?.present(controller, animated: true)
+    }
 }

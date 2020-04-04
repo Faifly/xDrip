@@ -15,10 +15,52 @@ import UIKit
 enum EntriesList {
     // MARK: Models
     
+    struct SectionViewModel {
+        let title: String
+        var items: [EntriesListTableViewCell.ViewModel]
+    }
+    
     // MARK: Use cases
     
     enum Load {
         struct Request {
+        }
+        
+        struct Response {
+            let entries: [AbstractEntry]
+        }
+        
+        struct ViewModel {
+            let items: [SectionViewModel]
+        }
+    }
+    
+    enum Cancel {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum DeleteEntry {
+        struct Request {
+            let index: Int
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum ShowSelectedEntry {
+        struct Request {
+            let index: Int
         }
         
         struct Response {

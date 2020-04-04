@@ -18,15 +18,19 @@ protocol HomeDisplayLogic: class {
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel)
 }
 
-class HomeViewController: UIViewController, HomeDisplayLogic {
+class HomeViewController: NibViewController, HomeDisplayLogic {
     var interactor: HomeBusinessLogic?
     var router: (NSObjectProtocol & HomeRoutingLogic & HomeDataPassing)?
     
     // MARK: Object lifecycle
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    required init() {
+        super.init()
         setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("Use regular .init()")
     }
     
     // MARK: Setup
@@ -47,7 +51,7 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     
     // MARK: IB
     
-    @IBOutlet weak var timeLineSegmentView: TimeFrameSelectionView!
+    @IBOutlet weak var timeLineSegmentView: UISegmentedControl!
     @IBOutlet weak var glucoseLabel: UILabel!
     
     // MARK: View lifecycle
@@ -64,6 +68,15 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     private func doLoad() {
         let request = Home.Load.Request()
         interactor?.doLoad(request: request)
+    }
+    
+    @IBAction private func toEntriesList() {
+        let request = Home.ShowEntriesList.Request(entriesType: Bool.random() ? .carbs : .bolus)
+        interactor?.doShowEntriesList(request: request)
+    }
+    
+    @IBAction private func onTimeFrameSegmentSelected() {
+        
     }
     
     // MARK: Display
@@ -85,11 +98,14 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
             "home_time_frame_24h".localized
         ]
         
-        timeLineSegmentView.config(with: titles)
-        
-        timeLineSegmentView.segmentChangedHandler = { (index) in
-            // TO DO: - Handle segment changed
-            print("TimeFrameSegmentDidChange index = \(index)")
+        timeLineSegmentView.removeAllSegments()
+        titles.forEach {
+            timeLineSegmentView.insertSegment(
+                withTitle: $0,
+                at: timeLineSegmentView.numberOfSegments,
+                animated: false
+            )
         }
+        timeLineSegmentView.selectedSegmentIndex = 0
     }
 }

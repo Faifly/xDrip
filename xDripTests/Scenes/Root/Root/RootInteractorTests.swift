@@ -77,6 +77,9 @@ final class RootInteractorTests: XCTestCase {
         func routeToAddEntry() {
             
         }
+        
+        func routeToInitialSetup() {
+        }
     }
     
     // MARK: Tests
