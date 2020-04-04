@@ -27,7 +27,7 @@ final class EntriesListBolusPersistenceWorker: EntriesListEntryPersistenceWorker
     }
 
     func deleteEntry(_ index: Int) {
-        let entry = bolusEntries.remove(at: index)
+        _ = bolusEntries.remove(at: index)
         
         // add delete from database
     }

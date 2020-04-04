@@ -49,7 +49,7 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
     }
     
     func doShowAddEntry(request: Root.ShowAddEntry.Request) {
-        let type = entryTypes[request.index]
+        _ = entryTypes[request.index]
         
         // TO DO: - add route to add entry
     }

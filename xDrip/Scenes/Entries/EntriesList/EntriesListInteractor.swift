@@ -49,7 +49,7 @@ final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStor
     }
     
     func doShowSelectedEntry(request: EntriesList.ShowSelectedEntry.Request) {
-        let entry = entriesWorker?.fetchEntries()[request.index]
+        _ = entriesWorker?.fetchEntries()[request.index]
         
         // add route to edit entry controller
     }
