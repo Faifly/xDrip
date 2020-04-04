@@ -19,6 +19,7 @@ import UIKit
     func routeToSettings()
     
     func routeToAddEntry()
+    func routeToInitialSetup()
 }
 
 protocol RootDataPassing {
@@ -49,6 +50,11 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
     
     func routeToAddEntry() {
         
+    }
+    
+    func routeToInitialSetup() {
+        let viewController = InitialSetupViewController()
+        self.viewController?.present(viewController, animated: true, completion: nil)
     }
     
     private func presentRootController(forStoryboard storyboard: UIStoryboard) {

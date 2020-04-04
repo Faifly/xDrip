@@ -15,6 +15,7 @@ import AKUtils
 
 protocol HomeDisplayLogic: class {
     func displayLoad(viewModel: Home.Load.ViewModel)
+    func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel)
 }
 
 class HomeViewController: UIViewController, HomeDisplayLogic {
@@ -47,6 +48,7 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     // MARK: IB
     
     @IBOutlet weak var timeLineSegmentView: TimeFrameSelectionView!
+    @IBOutlet weak var glucoseLabel: UILabel!
     
     // MARK: View lifecycle
     
@@ -68,6 +70,10 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     
     func displayLoad(viewModel: Home.Load.ViewModel) {
         
+    }
+    
+    func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel) {
+        glucoseLabel.text = viewModel.glucoseValue
     }
     
     private func setupUI() {

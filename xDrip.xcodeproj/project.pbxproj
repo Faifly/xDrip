@@ -14,6 +14,13 @@
 		2C48E6EA2428F592006B63B0 /* UIColor+Colors_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */; };
 		2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */; };
 		2C48E6EE242909F4006B63B0 /* UIView+Bindings_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */; };
+		5805C96D24385F1F002AFA1B /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C96C24385F1F002AFA1B /* String+Validation.swift */; };
+		5805C97124386122002AFA1B /* InitialSetupG6SensorAgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C96F24386122002AFA1B /* InitialSetupG6SensorAgeViewController.swift */; };
+		5805C97224386122002AFA1B /* InitialSetupG6SensorAgeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C97024386122002AFA1B /* InitialSetupG6SensorAgeViewController.xib */; };
+		5805C974243861D2002AFA1B /* InitialSetupDexcomG6SensorAgeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C973243861D2002AFA1B /* InitialSetupDexcomG6SensorAgeWorker.swift */; };
+		5805C976243863EB002AFA1B /* DexcomG6TransmitterTimeTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C975243863EB002AFA1B /* DexcomG6TransmitterTimeTxMessage.swift */; };
+		5805C97824386452002AFA1B /* DexcomG6TransmitterTimeRxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C97724386452002AFA1B /* DexcomG6TransmitterTimeRxMessage.swift */; };
+		5805C97B24387656002AFA1B /* HomeGlucoseDataWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C97A24387656002AFA1B /* HomeGlucoseDataWorker.swift */; };
 		580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */; };
 		580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7792421457600C34948 /* EditFoodEntryRouter.swift */; };
 		580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC77A2421457600C34948 /* EditFoodEntryModels.swift */; };
@@ -78,6 +85,42 @@
 		58788B8B242657E6000EB113 /* TrainingIntensityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B8A242657E6000EB113 /* TrainingIntensityTests.swift */; };
 		58788B8D2426582B000EB113 /* CalibrationEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B8C2426582B000EB113 /* CalibrationEntryTests.swift */; };
 		58788B902426597F000EB113 /* CenteredTitleButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B8F2426597F000EB113 /* CenteredTitleButtonTests.swift */; };
+		587F60F52432422100F0FA87 /* CGMBluetoothServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F60F42432422100F0FA87 /* CGMBluetoothServiceError.swift */; };
+		587F60F8243245AE00F0FA87 /* DexcomG6Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F60F7243245AE00F0FA87 /* DexcomG6Constants.swift */; };
+		587F60FB2432556200F0FA87 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F60FA2432556200F0FA87 /* LogController.swift */; };
+		587F60FD24325C0E00F0FA87 /* DexcomG6OpCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F60FC24325C0E00F0FA87 /* DexcomG6OpCode.swift */; };
+		587F610224325F0900F0FA87 /* DexcomG6MessageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F610124325F0900F0FA87 /* DexcomG6MessageWorker.swift */; };
+		587F610424325F1500F0FA87 /* DexcomG6OutgoingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F610324325F1500F0FA87 /* DexcomG6OutgoingMessage.swift */; };
+		587F61062432646300F0FA87 /* DexcomG6AuthRequestTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F61052432646300F0FA87 /* DexcomG6AuthRequestTxMessage.swift */; };
+		587F61082432653B00F0FA87 /* DexcomG6MessageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F61072432653B00F0FA87 /* DexcomG6MessageFactory.swift */; };
+		587F610C243267CF00F0FA87 /* DexcomG6AuthRequestRxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F610B243267CF00F0FA87 /* DexcomG6AuthRequestRxMessage.swift */; };
+		587F610E2432691D00F0FA87 /* DexcomG6AuthChallengeTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F610D2432691D00F0FA87 /* DexcomG6AuthChallengeTxMessage.swift */; };
+		587F6110243280AD00F0FA87 /* Data+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F610F243280AD00F0FA87 /* Data+Hex.swift */; };
+		587F6112243281E200F0FA87 /* DexcomG6Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F6111243281E200F0FA87 /* DexcomG6Error.swift */; };
+		587F61142432851800F0FA87 /* DexcomG6AuthChallengeRxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F61132432851800F0FA87 /* DexcomG6AuthChallengeRxMessage.swift */; };
+		587F6116243288FB00F0FA87 /* DexcomG6BatteryStatusTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F6115243288FB00F0FA87 /* DexcomG6BatteryStatusTxMessage.swift */; };
+		587F612024339C1A00F0FA87 /* DexcomG6PairRequestRxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F611F24339C1A00F0FA87 /* DexcomG6PairRequestRxMessage.swift */; };
+		587F612224339F7900F0FA87 /* DexcomG6MessageWorkerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F612124339F7900F0FA87 /* DexcomG6MessageWorkerDelegate.swift */; };
+		587F61242433A21A00F0FA87 /* DexcomG6PairRequestTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F61232433A21A00F0FA87 /* DexcomG6PairRequestTxMessage.swift */; };
+		587F61262433A2D000F0FA87 /* DexcomG6FirmwareVersionTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F61252433A2D000F0FA87 /* DexcomG6FirmwareVersionTxMessage.swift */; };
+		587F61282433A99B00F0FA87 /* DexcomG6CharacteristicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F61272433A99B00F0FA87 /* DexcomG6CharacteristicType.swift */; };
+		587F612A2433AEB000F0FA87 /* DexcomG6TransmitterVersionTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F61292433AEB000F0FA87 /* DexcomG6TransmitterVersionTxMessage.swift */; };
+		587F612C2433AF0F00F0FA87 /* DexcomG6SensorDataTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F612B2433AF0F00F0FA87 /* DexcomG6SensorDataTxMessage.swift */; };
+		587F612E2433AF9100F0FA87 /* DexcomG6SensorDataRxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F612D2433AF9100F0FA87 /* DexcomG6SensorDataRxMessage.swift */; };
+		587F613E2434F58E00F0FA87 /* NibViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F613D2434F58E00F0FA87 /* NibViewController.swift */; };
+		587F61402434F92800F0FA87 /* InitialSetupIntroViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 587F613F2434F92800F0FA87 /* InitialSetupIntroViewController.xib */; };
+		587F61482434FD2900F0FA87 /* InitialSetupDeviceModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 587F61472434FD2900F0FA87 /* InitialSetupDeviceModeViewController.xib */; };
+		587F614B2434FD7700F0FA87 /* InitialSetupInjectionTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 587F614A2434FD7700F0FA87 /* InitialSetupInjectionTypeViewController.xib */; };
+		587F614E2434FDB400F0FA87 /* InitialSetupSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 587F614D2434FDB400F0FA87 /* InitialSetupSettingsViewController.xib */; };
+		587F61512434FDEF00F0FA87 /* InitialSetupTransmitterTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 587F61502434FDEF00F0FA87 /* InitialSetupTransmitterTypeViewController.xib */; };
+		587F61542434FE2F00F0FA87 /* InitialSetupG6DeviceIDViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 587F61532434FE2F00F0FA87 /* InitialSetupG6DeviceIDViewController.xib */; };
+		587F61572434FE7700F0FA87 /* InitialSetupG6ConnectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 587F61562434FE7700F0FA87 /* InitialSetupG6ConnectViewController.xib */; };
+		587F615A2434FEAF00F0FA87 /* InitialSetupG6WarmUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 587F61592434FEAF00F0FA87 /* InitialSetupG6WarmUpViewController.xib */; };
+		587F615C2435004700F0FA87 /* DexcomG6TransmitterVersionRxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F615B2435004700F0FA87 /* DexcomG6TransmitterVersionRxMessage.swift */; };
+		587F615E2435023A00F0FA87 /* DexcomG6BatteryStatusRxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F615D2435023A00F0FA87 /* DexcomG6BatteryStatusRxMessage.swift */; };
+		587F617A24365DDA00F0FA87 /* CGMBluetoothServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F617924365DDA00F0FA87 /* CGMBluetoothServiceDelegate.swift */; };
+		587F617C24365DF100F0FA87 /* CGMDeviceMetadataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F617B24365DF100F0FA87 /* CGMDeviceMetadataType.swift */; };
+		587F617E24365ED500F0FA87 /* CGMDeviceMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F617D24365ED500F0FA87 /* CGMDeviceMetadata.swift */; };
 		58A8A4122425040400CCFCAC /* AKRealmUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 58A8A4112425040400CCFCAC /* AKRealmUtils */; };
 		58A8A416242505DD00CCFCAC /* GlucoseUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A415242505DD00CCFCAC /* GlucoseUnitTests.swift */; };
 		58A8A418242507D100CCFCAC /* GlucoseDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A417242507D100CCFCAC /* GlucoseDataTests.swift */; };
@@ -88,6 +131,11 @@
 		58A8A42324251FC400CCFCAC /* GlucoseWarningLevelSettingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A42224251FC400CCFCAC /* GlucoseWarningLevelSettingTests.swift */; };
 		58A8A4262425215500CCFCAC /* AbstractEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A4252425215500CCFCAC /* AbstractEntryTests.swift */; };
 		58A8A42B242523DF00CCFCAC /* FoodEntriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A42A242523DF00CCFCAC /* FoodEntriesWorker.swift */; };
+		58B0B963242FC3DC00FAE249 /* InitialSetupDexcomG6IDSavingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B0B962242FC3DC00FAE249 /* InitialSetupDexcomG6IDSavingWorker.swift */; };
+		58B0B965242FC56C00FAE249 /* InitialSetupDexcomG6ConnectionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B0B964242FC56C00FAE249 /* InitialSetupDexcomG6ConnectionWorker.swift */; };
+		58B0B968242FC71500FAE249 /* DexcomG6BluetoothService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B0B967242FC71500FAE249 /* DexcomG6BluetoothService.swift */; };
+		58B0B96B242FC7B200FAE249 /* CGMController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B0B96A242FC7B200FAE249 /* CGMController.swift */; };
+		58B0B96D242FC83E00FAE249 /* CGMBluetoothService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B0B96C242FC83E00FAE249 /* CGMBluetoothService.swift */; };
 		58B4F67F24114938003C6D8F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 58B4F67E24114938003C6D8F /* GoogleService-Info.plist */; };
 		58B4F6AB24114D2D003C6D8F /* GoogleDataTransport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68724114BCD003C6D8F /* GoogleDataTransport.framework */; platformFilter = ios; };
 		58B4F6AC24114D2D003C6D8F /* GoogleDataTransportCCTSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68824114BCD003C6D8F /* GoogleDataTransportCCTSupport.framework */; platformFilter = ios; };
@@ -150,9 +198,27 @@
 		58B5FD9A24192E5A00DB857D /* SettingsRootInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FD9624192E5A00DB857D /* SettingsRootInteractorTests.swift */; };
 		58B5FD9B24192E5A00DB857D /* SettingsRootRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FD9724192E5A00DB857D /* SettingsRootRouterTests.swift */; };
 		58B5FD9C24192E5A00DB857D /* SettingsRootPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FD9824192E5A00DB857D /* SettingsRootPresenterTests.swift */; };
-		58B5FDBF24193BBF00DB857D /* GlucoseDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDBE24193BBF00DB857D /* GlucoseDataService.swift */; };
 		58B5FDC224193C2200DB857D /* GlucoseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDC124193C2200DB857D /* GlucoseData.swift */; };
-		58B5FDC424193DF500DB857D /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5FDC324193DF500DB857D /* SubscriptionService.swift */; };
+		58CD802F242FA07800F95F75 /* CGMDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD802E242FA07800F95F75 /* CGMDevice.swift */; };
+		58CD8036242FA16600F95F75 /* InitialSetupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8031242FA16600F95F75 /* InitialSetupPresenter.swift */; };
+		58CD8037242FA16600F95F75 /* InitialSetupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8032242FA16600F95F75 /* InitialSetupRouter.swift */; };
+		58CD8038242FA16600F95F75 /* InitialSetupModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8033242FA16600F95F75 /* InitialSetupModels.swift */; };
+		58CD8039242FA16600F95F75 /* InitialSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8034242FA16600F95F75 /* InitialSetupViewController.swift */; };
+		58CD803A242FA16600F95F75 /* InitialSetupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8035242FA16600F95F75 /* InitialSetupInteractor.swift */; };
+		58CD803D242FA1CD00F95F75 /* InitialSetupStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD803C242FA1CD00F95F75 /* InitialSetupStep.swift */; };
+		58CD8043242FA35300F95F75 /* InitialSetupIntoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8042242FA35300F95F75 /* InitialSetupIntoViewController.swift */; };
+		58CD8045242FA37600F95F75 /* InitialSetupAbstractStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8044242FA37600F95F75 /* InitialSetupAbstractStepViewController.swift */; };
+		58CD8047242FA8C400F95F75 /* InitialSetupGenericStepWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8046242FA8C400F95F75 /* InitialSetupGenericStepWorker.swift */; };
+		58CD8049242FADFA00F95F75 /* InitialSetupStepProvidingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8048242FADFA00F95F75 /* InitialSetupStepProvidingWorker.swift */; };
+		58CD804B242FB36500F95F75 /* InitialSetupG6StepWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD804A242FB36500F95F75 /* InitialSetupG6StepWorker.swift */; };
+		58CD804F242FB5C200F95F75 /* InitialSetupDeviceModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD804E242FB5C200F95F75 /* InitialSetupDeviceModeViewController.swift */; };
+		58CD8051242FB5F500F95F75 /* InitialSetupInjectionTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8050242FB5F500F95F75 /* InitialSetupInjectionTypeViewController.swift */; };
+		58CD8053242FB61700F95F75 /* InitialSetupSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8052242FB61700F95F75 /* InitialSetupSettingsViewController.swift */; };
+		58CD8055242FB63A00F95F75 /* InitialSetupTransmitterTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8054242FB63A00F95F75 /* InitialSetupTransmitterTypeViewController.swift */; };
+		58CD8057242FB67800F95F75 /* InitialSetupG6DeviceIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8056242FB67800F95F75 /* InitialSetupG6DeviceIDViewController.swift */; };
+		58CD8059242FB69400F95F75 /* InitialSetupG6ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD8058242FB69400F95F75 /* InitialSetupG6ConnectViewController.swift */; };
+		58CD805B242FB6AD00F95F75 /* InitialSetupG6WarmUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD805A242FB6AD00F95F75 /* InitialSetupG6WarmUpViewController.swift */; };
+		58CD805D242FBCF800F95F75 /* CGMDeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD805C242FBCF800F95F75 /* CGMDeviceType.swift */; };
 		58D4FD362423B3300044E687 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 58D4FD352423B3300044E687 /* Realm */; };
 		58D4FD382423B3300044E687 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 58D4FD372423B3300044E687 /* RealmSwift */; };
 		58D4FD3B2423B39C0044E687 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D4FD3A2423B39C0044E687 /* User.swift */; };
@@ -191,6 +257,13 @@
 		2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors_Tests.swift"; sourceTree = "<group>"; };
 		2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings.swift"; sourceTree = "<group>"; };
 		2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings_Tests.swift"; sourceTree = "<group>"; };
+		5805C96C24385F1F002AFA1B /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
+		5805C96F24386122002AFA1B /* InitialSetupG6SensorAgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupG6SensorAgeViewController.swift; sourceTree = "<group>"; };
+		5805C97024386122002AFA1B /* InitialSetupG6SensorAgeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupG6SensorAgeViewController.xib; sourceTree = "<group>"; };
+		5805C973243861D2002AFA1B /* InitialSetupDexcomG6SensorAgeWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupDexcomG6SensorAgeWorker.swift; sourceTree = "<group>"; };
+		5805C975243863EB002AFA1B /* DexcomG6TransmitterTimeTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6TransmitterTimeTxMessage.swift; sourceTree = "<group>"; };
+		5805C97724386452002AFA1B /* DexcomG6TransmitterTimeRxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6TransmitterTimeRxMessage.swift; sourceTree = "<group>"; };
+		5805C97A24387656002AFA1B /* HomeGlucoseDataWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGlucoseDataWorker.swift; sourceTree = "<group>"; };
 		580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryPresenter.swift; sourceTree = "<group>"; };
 		580EC7792421457600C34948 /* EditFoodEntryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryRouter.swift; sourceTree = "<group>"; };
 		580EC77A2421457600C34948 /* EditFoodEntryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryModels.swift; sourceTree = "<group>"; };
@@ -256,6 +329,42 @@
 		58788B8A242657E6000EB113 /* TrainingIntensityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingIntensityTests.swift; sourceTree = "<group>"; };
 		58788B8C2426582B000EB113 /* CalibrationEntryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationEntryTests.swift; sourceTree = "<group>"; };
 		58788B8F2426597F000EB113 /* CenteredTitleButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredTitleButtonTests.swift; sourceTree = "<group>"; };
+		587F60F42432422100F0FA87 /* CGMBluetoothServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMBluetoothServiceError.swift; sourceTree = "<group>"; };
+		587F60F7243245AE00F0FA87 /* DexcomG6Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6Constants.swift; sourceTree = "<group>"; };
+		587F60FA2432556200F0FA87 /* LogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
+		587F60FC24325C0E00F0FA87 /* DexcomG6OpCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6OpCode.swift; sourceTree = "<group>"; };
+		587F610124325F0900F0FA87 /* DexcomG6MessageWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6MessageWorker.swift; sourceTree = "<group>"; };
+		587F610324325F1500F0FA87 /* DexcomG6OutgoingMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6OutgoingMessage.swift; sourceTree = "<group>"; };
+		587F61052432646300F0FA87 /* DexcomG6AuthRequestTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6AuthRequestTxMessage.swift; sourceTree = "<group>"; };
+		587F61072432653B00F0FA87 /* DexcomG6MessageFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6MessageFactory.swift; sourceTree = "<group>"; };
+		587F610B243267CF00F0FA87 /* DexcomG6AuthRequestRxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6AuthRequestRxMessage.swift; sourceTree = "<group>"; };
+		587F610D2432691D00F0FA87 /* DexcomG6AuthChallengeTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6AuthChallengeTxMessage.swift; sourceTree = "<group>"; };
+		587F610F243280AD00F0FA87 /* Data+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Hex.swift"; sourceTree = "<group>"; };
+		587F6111243281E200F0FA87 /* DexcomG6Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6Error.swift; sourceTree = "<group>"; };
+		587F61132432851800F0FA87 /* DexcomG6AuthChallengeRxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6AuthChallengeRxMessage.swift; sourceTree = "<group>"; };
+		587F6115243288FB00F0FA87 /* DexcomG6BatteryStatusTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6BatteryStatusTxMessage.swift; sourceTree = "<group>"; };
+		587F611F24339C1A00F0FA87 /* DexcomG6PairRequestRxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6PairRequestRxMessage.swift; sourceTree = "<group>"; };
+		587F612124339F7900F0FA87 /* DexcomG6MessageWorkerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6MessageWorkerDelegate.swift; sourceTree = "<group>"; };
+		587F61232433A21A00F0FA87 /* DexcomG6PairRequestTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6PairRequestTxMessage.swift; sourceTree = "<group>"; };
+		587F61252433A2D000F0FA87 /* DexcomG6FirmwareVersionTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6FirmwareVersionTxMessage.swift; sourceTree = "<group>"; };
+		587F61272433A99B00F0FA87 /* DexcomG6CharacteristicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6CharacteristicType.swift; sourceTree = "<group>"; };
+		587F61292433AEB000F0FA87 /* DexcomG6TransmitterVersionTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6TransmitterVersionTxMessage.swift; sourceTree = "<group>"; };
+		587F612B2433AF0F00F0FA87 /* DexcomG6SensorDataTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6SensorDataTxMessage.swift; sourceTree = "<group>"; };
+		587F612D2433AF9100F0FA87 /* DexcomG6SensorDataRxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6SensorDataRxMessage.swift; sourceTree = "<group>"; };
+		587F613D2434F58E00F0FA87 /* NibViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibViewController.swift; sourceTree = "<group>"; };
+		587F613F2434F92800F0FA87 /* InitialSetupIntroViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupIntroViewController.xib; sourceTree = "<group>"; };
+		587F61472434FD2900F0FA87 /* InitialSetupDeviceModeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupDeviceModeViewController.xib; sourceTree = "<group>"; };
+		587F614A2434FD7700F0FA87 /* InitialSetupInjectionTypeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupInjectionTypeViewController.xib; sourceTree = "<group>"; };
+		587F614D2434FDB400F0FA87 /* InitialSetupSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupSettingsViewController.xib; sourceTree = "<group>"; };
+		587F61502434FDEF00F0FA87 /* InitialSetupTransmitterTypeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupTransmitterTypeViewController.xib; sourceTree = "<group>"; };
+		587F61532434FE2F00F0FA87 /* InitialSetupG6DeviceIDViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupG6DeviceIDViewController.xib; sourceTree = "<group>"; };
+		587F61562434FE7700F0FA87 /* InitialSetupG6ConnectViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupG6ConnectViewController.xib; sourceTree = "<group>"; };
+		587F61592434FEAF00F0FA87 /* InitialSetupG6WarmUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupG6WarmUpViewController.xib; sourceTree = "<group>"; };
+		587F615B2435004700F0FA87 /* DexcomG6TransmitterVersionRxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6TransmitterVersionRxMessage.swift; sourceTree = "<group>"; };
+		587F615D2435023A00F0FA87 /* DexcomG6BatteryStatusRxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6BatteryStatusRxMessage.swift; sourceTree = "<group>"; };
+		587F617924365DDA00F0FA87 /* CGMBluetoothServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMBluetoothServiceDelegate.swift; sourceTree = "<group>"; };
+		587F617B24365DF100F0FA87 /* CGMDeviceMetadataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMDeviceMetadataType.swift; sourceTree = "<group>"; };
+		587F617D24365ED500F0FA87 /* CGMDeviceMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMDeviceMetadata.swift; sourceTree = "<group>"; };
 		58A8A415242505DD00CCFCAC /* GlucoseUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseUnitTests.swift; sourceTree = "<group>"; };
 		58A8A417242507D100CCFCAC /* GlucoseDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseDataTests.swift; sourceTree = "<group>"; };
 		58A8A419242507F100CCFCAC /* GlucoseWarningLevelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseWarningLevelTests.swift; sourceTree = "<group>"; };
@@ -265,6 +374,11 @@
 		58A8A42224251FC400CCFCAC /* GlucoseWarningLevelSettingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseWarningLevelSettingTests.swift; sourceTree = "<group>"; };
 		58A8A4252425215500CCFCAC /* AbstractEntryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractEntryTests.swift; sourceTree = "<group>"; };
 		58A8A42A242523DF00CCFCAC /* FoodEntriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodEntriesWorker.swift; sourceTree = "<group>"; };
+		58B0B962242FC3DC00FAE249 /* InitialSetupDexcomG6IDSavingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupDexcomG6IDSavingWorker.swift; sourceTree = "<group>"; };
+		58B0B964242FC56C00FAE249 /* InitialSetupDexcomG6ConnectionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupDexcomG6ConnectionWorker.swift; sourceTree = "<group>"; };
+		58B0B967242FC71500FAE249 /* DexcomG6BluetoothService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DexcomG6BluetoothService.swift; path = Service/DexcomG6BluetoothService.swift; sourceTree = "<group>"; };
+		58B0B96A242FC7B200FAE249 /* CGMController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMController.swift; sourceTree = "<group>"; };
+		58B0B96C242FC83E00FAE249 /* CGMBluetoothService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMBluetoothService.swift; sourceTree = "<group>"; };
 		58B4F674241015F0003C6D8F /* pull_request_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = pull_request_template.md; path = .github/pull_request_template.md; sourceTree = SOURCE_ROOT; };
 		58B4F67E24114938003C6D8F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		58B4F68224114BCD003C6D8F /* FirebaseCrashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseCrashlytics.framework; sourceTree = "<group>"; };
@@ -337,9 +451,27 @@
 		58B5FD9624192E5A00DB857D /* SettingsRootInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRootInteractorTests.swift; sourceTree = "<group>"; };
 		58B5FD9724192E5A00DB857D /* SettingsRootRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRootRouterTests.swift; sourceTree = "<group>"; };
 		58B5FD9824192E5A00DB857D /* SettingsRootPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRootPresenterTests.swift; sourceTree = "<group>"; };
-		58B5FDBE24193BBF00DB857D /* GlucoseDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseDataService.swift; sourceTree = "<group>"; };
 		58B5FDC124193C2200DB857D /* GlucoseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseData.swift; sourceTree = "<group>"; };
-		58B5FDC324193DF500DB857D /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
+		58CD802E242FA07800F95F75 /* CGMDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMDevice.swift; sourceTree = "<group>"; };
+		58CD8031242FA16600F95F75 /* InitialSetupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupPresenter.swift; sourceTree = "<group>"; };
+		58CD8032242FA16600F95F75 /* InitialSetupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupRouter.swift; sourceTree = "<group>"; };
+		58CD8033242FA16600F95F75 /* InitialSetupModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupModels.swift; sourceTree = "<group>"; };
+		58CD8034242FA16600F95F75 /* InitialSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupViewController.swift; sourceTree = "<group>"; };
+		58CD8035242FA16600F95F75 /* InitialSetupInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupInteractor.swift; sourceTree = "<group>"; };
+		58CD803C242FA1CD00F95F75 /* InitialSetupStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupStep.swift; sourceTree = "<group>"; };
+		58CD8042242FA35300F95F75 /* InitialSetupIntoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupIntoViewController.swift; sourceTree = "<group>"; };
+		58CD8044242FA37600F95F75 /* InitialSetupAbstractStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupAbstractStepViewController.swift; sourceTree = "<group>"; };
+		58CD8046242FA8C400F95F75 /* InitialSetupGenericStepWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupGenericStepWorker.swift; sourceTree = "<group>"; };
+		58CD8048242FADFA00F95F75 /* InitialSetupStepProvidingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupStepProvidingWorker.swift; sourceTree = "<group>"; };
+		58CD804A242FB36500F95F75 /* InitialSetupG6StepWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupG6StepWorker.swift; sourceTree = "<group>"; };
+		58CD804E242FB5C200F95F75 /* InitialSetupDeviceModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupDeviceModeViewController.swift; sourceTree = "<group>"; };
+		58CD8050242FB5F500F95F75 /* InitialSetupInjectionTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupInjectionTypeViewController.swift; sourceTree = "<group>"; };
+		58CD8052242FB61700F95F75 /* InitialSetupSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupSettingsViewController.swift; sourceTree = "<group>"; };
+		58CD8054242FB63A00F95F75 /* InitialSetupTransmitterTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupTransmitterTypeViewController.swift; sourceTree = "<group>"; };
+		58CD8056242FB67800F95F75 /* InitialSetupG6DeviceIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupG6DeviceIDViewController.swift; sourceTree = "<group>"; };
+		58CD8058242FB69400F95F75 /* InitialSetupG6ConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupG6ConnectViewController.swift; sourceTree = "<group>"; };
+		58CD805A242FB6AD00F95F75 /* InitialSetupG6WarmUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupG6WarmUpViewController.swift; sourceTree = "<group>"; };
+		58CD805C242FBCF800F95F75 /* CGMDeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMDeviceType.swift; sourceTree = "<group>"; };
 		58D4FD3A2423B39C0044E687 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		58D4FD3D2423B4130044E687 /* UserDeviceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDeviceMode.swift; sourceTree = "<group>"; };
 		58DDC44E2423B5B1008CB04D /* UserInjectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInjectionType.swift; sourceTree = "<group>"; };
@@ -400,6 +532,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5805C96E243860FA002AFA1B /* InitialSetupG6SensorAgeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5805C96F24386122002AFA1B /* InitialSetupG6SensorAgeViewController.swift */,
+				5805C97024386122002AFA1B /* InitialSetupG6SensorAgeViewController.xib */,
+			);
+			path = InitialSetupG6SensorAgeViewController;
+			sourceTree = "<group>";
+		};
+		5805C97924387645002AFA1B /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				5805C97A24387656002AFA1B /* HomeGlucoseDataWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
 		580EC78A24214CC600C34948 /* EntriesList */ = {
 			isa = PBXGroup;
 			children = (
@@ -501,6 +650,7 @@
 				58B5FD1F24190BAF00DB857D /* Stats */,
 				58B5FD2024190BB900DB857D /* History */,
 				58B5FD2124190BC700DB857D /* Settings */,
+				58CD8030242FA14700F95F75 /* InitialSetup */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -532,6 +682,9 @@
 				58160E022402C8CE00C792F4 /* UIStoryboard+Content.swift */,
 				2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */,
 				2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */,
+				587F610F243280AD00F0FA87 /* Data+Hex.swift */,
+				587F613D2434F58E00F0FA87 /* NibViewController.swift */,
+				5805C96C24385F1F002AFA1B /* String+Validation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -630,6 +783,132 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		587F60F62432459D00F0FA87 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				587F610024325E2100F0FA87 /* Messages */,
+				587F60F7243245AE00F0FA87 /* DexcomG6Constants.swift */,
+				587F60FC24325C0E00F0FA87 /* DexcomG6OpCode.swift */,
+				587F610124325F0900F0FA87 /* DexcomG6MessageWorker.swift */,
+				587F612124339F7900F0FA87 /* DexcomG6MessageWorkerDelegate.swift */,
+				587F61072432653B00F0FA87 /* DexcomG6MessageFactory.swift */,
+				587F6111243281E200F0FA87 /* DexcomG6Error.swift */,
+				587F61272433A99B00F0FA87 /* DexcomG6CharacteristicType.swift */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
+		587F610024325E2100F0FA87 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				587F610A243267B000F0FA87 /* Outgoing */,
+				587F6109243267AB00F0FA87 /* Incoming */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
+		587F6109243267AB00F0FA87 /* Incoming */ = {
+			isa = PBXGroup;
+			children = (
+				587F610B243267CF00F0FA87 /* DexcomG6AuthRequestRxMessage.swift */,
+				587F61132432851800F0FA87 /* DexcomG6AuthChallengeRxMessage.swift */,
+				587F611F24339C1A00F0FA87 /* DexcomG6PairRequestRxMessage.swift */,
+				587F615D2435023A00F0FA87 /* DexcomG6BatteryStatusRxMessage.swift */,
+				587F612D2433AF9100F0FA87 /* DexcomG6SensorDataRxMessage.swift */,
+				587F615B2435004700F0FA87 /* DexcomG6TransmitterVersionRxMessage.swift */,
+				5805C97724386452002AFA1B /* DexcomG6TransmitterTimeRxMessage.swift */,
+			);
+			path = Incoming;
+			sourceTree = "<group>";
+		};
+		587F610A243267B000F0FA87 /* Outgoing */ = {
+			isa = PBXGroup;
+			children = (
+				587F610324325F1500F0FA87 /* DexcomG6OutgoingMessage.swift */,
+				587F61052432646300F0FA87 /* DexcomG6AuthRequestTxMessage.swift */,
+				587F610D2432691D00F0FA87 /* DexcomG6AuthChallengeTxMessage.swift */,
+				587F61232433A21A00F0FA87 /* DexcomG6PairRequestTxMessage.swift */,
+				587F6115243288FB00F0FA87 /* DexcomG6BatteryStatusTxMessage.swift */,
+				587F61252433A2D000F0FA87 /* DexcomG6FirmwareVersionTxMessage.swift */,
+				587F61292433AEB000F0FA87 /* DexcomG6TransmitterVersionTxMessage.swift */,
+				587F612B2433AF0F00F0FA87 /* DexcomG6SensorDataTxMessage.swift */,
+				5805C975243863EB002AFA1B /* DexcomG6TransmitterTimeTxMessage.swift */,
+			);
+			path = Outgoing;
+			sourceTree = "<group>";
+		};
+		587F61452434FD0300F0FA87 /* InitialSetupIntroViewController */ = {
+			isa = PBXGroup;
+			children = (
+				58CD8042242FA35300F95F75 /* InitialSetupIntoViewController.swift */,
+				587F613F2434F92800F0FA87 /* InitialSetupIntroViewController.xib */,
+			);
+			path = InitialSetupIntroViewController;
+			sourceTree = "<group>";
+		};
+		587F61462434FD0F00F0FA87 /* InitialSetupDeviceModeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				58CD804E242FB5C200F95F75 /* InitialSetupDeviceModeViewController.swift */,
+				587F61472434FD2900F0FA87 /* InitialSetupDeviceModeViewController.xib */,
+			);
+			path = InitialSetupDeviceModeViewController;
+			sourceTree = "<group>";
+		};
+		587F61492434FD6200F0FA87 /* InitialSetupInjectionTypeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				58CD8050242FB5F500F95F75 /* InitialSetupInjectionTypeViewController.swift */,
+				587F614A2434FD7700F0FA87 /* InitialSetupInjectionTypeViewController.xib */,
+			);
+			path = InitialSetupInjectionTypeViewController;
+			sourceTree = "<group>";
+		};
+		587F614C2434FDA100F0FA87 /* InitialSetupSettingsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				58CD8052242FB61700F95F75 /* InitialSetupSettingsViewController.swift */,
+				587F614D2434FDB400F0FA87 /* InitialSetupSettingsViewController.xib */,
+			);
+			path = InitialSetupSettingsViewController;
+			sourceTree = "<group>";
+		};
+		587F614F2434FDD900F0FA87 /* InitialSetupTransmitterTypeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				58CD8054242FB63A00F95F75 /* InitialSetupTransmitterTypeViewController.swift */,
+				587F61502434FDEF00F0FA87 /* InitialSetupTransmitterTypeViewController.xib */,
+			);
+			path = InitialSetupTransmitterTypeViewController;
+			sourceTree = "<group>";
+		};
+		587F61522434FE1200F0FA87 /* InitialSetupG6DeviceIDViewController */ = {
+			isa = PBXGroup;
+			children = (
+				58CD8056242FB67800F95F75 /* InitialSetupG6DeviceIDViewController.swift */,
+				587F61532434FE2F00F0FA87 /* InitialSetupG6DeviceIDViewController.xib */,
+			);
+			path = InitialSetupG6DeviceIDViewController;
+			sourceTree = "<group>";
+		};
+		587F61552434FE5B00F0FA87 /* InitialSetupG6ConnectViewController */ = {
+			isa = PBXGroup;
+			children = (
+				58CD8058242FB69400F95F75 /* InitialSetupG6ConnectViewController.swift */,
+				587F61562434FE7700F0FA87 /* InitialSetupG6ConnectViewController.xib */,
+			);
+			path = InitialSetupG6ConnectViewController;
+			sourceTree = "<group>";
+		};
+		587F61582434FE9B00F0FA87 /* InitialSetupG6WarmUpViewController */ = {
+			isa = PBXGroup;
+			children = (
+				58CD805A242FB6AD00F95F75 /* InitialSetupG6WarmUpViewController.swift */,
+				587F61592434FEAF00F0FA87 /* InitialSetupG6WarmUpViewController.xib */,
+			);
+			path = InitialSetupG6WarmUpViewController;
+			sourceTree = "<group>";
+		};
 		58A8A413242505BF00CCFCAC /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -686,6 +965,36 @@
 			path = Workers;
 			sourceTree = "<group>";
 		};
+		58B0B961242FC3BC00FAE249 /* DexcomG6 */ = {
+			isa = PBXGroup;
+			children = (
+				58B0B962242FC3DC00FAE249 /* InitialSetupDexcomG6IDSavingWorker.swift */,
+				5805C973243861D2002AFA1B /* InitialSetupDexcomG6SensorAgeWorker.swift */,
+				58B0B964242FC56C00FAE249 /* InitialSetupDexcomG6ConnectionWorker.swift */,
+			);
+			path = DexcomG6;
+			sourceTree = "<group>";
+		};
+		58B0B966242FC6F400FAE249 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				58B0B96E242FC9D300FAE249 /* DexcomG6 */,
+				58B0B96C242FC83E00FAE249 /* CGMBluetoothService.swift */,
+				587F617924365DDA00F0FA87 /* CGMBluetoothServiceDelegate.swift */,
+				587F60F42432422100F0FA87 /* CGMBluetoothServiceError.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		58B0B96E242FC9D300FAE249 /* DexcomG6 */ = {
+			isa = PBXGroup;
+			children = (
+				587F60F62432459D00F0FA87 /* Logic */,
+				58B0B967242FC71500FAE249 /* DexcomG6BluetoothService.swift */,
+			);
+			path = DexcomG6;
+			sourceTree = "<group>";
+		};
 		58B4F68024114BCD003C6D8F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -733,6 +1042,8 @@
 			isa = PBXGroup;
 			children = (
 				58B4F6BF24114EBA003C6D8F /* ApplicationLaunchController.swift */,
+				58B0B96A242FC7B200FAE249 /* CGMController.swift */,
+				587F60FA2432556200F0FA87 /* LogController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -799,6 +1110,7 @@
 		58B5FD2C24190D4700DB857D /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				5805C97924387645002AFA1B /* Workers */,
 				58B5FD2D24190E2F00DB857D /* HomePresenter.swift */,
 				58B5FD2E24190E2F00DB857D /* HomeRouter.swift */,
 				58B5FD2F24190E2F00DB857D /* HomeModels.swift */,
@@ -955,8 +1267,7 @@
 		58B5FDBB24193B4E00DB857D /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				58B5FDC324193DF500DB857D /* SubscriptionService.swift */,
-				58B5FDBE24193BBF00DB857D /* GlucoseDataService.swift */,
+				58B0B966242FC6F400FAE249 /* Bluetooth */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -967,8 +1278,87 @@
 				58DDC4652423CB03008CB04D /* Glucose */,
 				58D4FD3C2423B3D40044E687 /* User */,
 				58DDC4582423C816008CB04D /* Entries */,
+				58CD802D242FA06D00F95F75 /* Device */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		58CD802D242FA06D00F95F75 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				58CD802E242FA07800F95F75 /* CGMDevice.swift */,
+				58CD805C242FBCF800F95F75 /* CGMDeviceType.swift */,
+				587F617D24365ED500F0FA87 /* CGMDeviceMetadata.swift */,
+				587F617B24365DF100F0FA87 /* CGMDeviceMetadataType.swift */,
+			);
+			path = Device;
+			sourceTree = "<group>";
+		};
+		58CD8030242FA14700F95F75 /* InitialSetup */ = {
+			isa = PBXGroup;
+			children = (
+				58CD803B242FA19300F95F75 /* Protocols */,
+				58CD803E242FA25C00F95F75 /* Workers */,
+				58CD8041242FA33000F95F75 /* ViewControllers */,
+				58CD8031242FA16600F95F75 /* InitialSetupPresenter.swift */,
+				58CD8032242FA16600F95F75 /* InitialSetupRouter.swift */,
+				58CD8033242FA16600F95F75 /* InitialSetupModels.swift */,
+				58CD8034242FA16600F95F75 /* InitialSetupViewController.swift */,
+				58CD8035242FA16600F95F75 /* InitialSetupInteractor.swift */,
+			);
+			path = InitialSetup;
+			sourceTree = "<group>";
+		};
+		58CD803B242FA19300F95F75 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				58CD803C242FA1CD00F95F75 /* InitialSetupStep.swift */,
+				58CD8048242FADFA00F95F75 /* InitialSetupStepProvidingWorker.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		58CD803E242FA25C00F95F75 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				58B0B961242FC3BC00FAE249 /* DexcomG6 */,
+				58CD8046242FA8C400F95F75 /* InitialSetupGenericStepWorker.swift */,
+				58CD804A242FB36500F95F75 /* InitialSetupG6StepWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		58CD8041242FA33000F95F75 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				58CD8044242FA37600F95F75 /* InitialSetupAbstractStepViewController.swift */,
+				58CD804C242FB5A200F95F75 /* Generic */,
+				58CD804D242FB5AA00F95F75 /* G6 */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		58CD804C242FB5A200F95F75 /* Generic */ = {
+			isa = PBXGroup;
+			children = (
+				587F61452434FD0300F0FA87 /* InitialSetupIntroViewController */,
+				587F61462434FD0F00F0FA87 /* InitialSetupDeviceModeViewController */,
+				587F61492434FD6200F0FA87 /* InitialSetupInjectionTypeViewController */,
+				587F614C2434FDA100F0FA87 /* InitialSetupSettingsViewController */,
+				587F614F2434FDD900F0FA87 /* InitialSetupTransmitterTypeViewController */,
+			);
+			path = Generic;
+			sourceTree = "<group>";
+		};
+		58CD804D242FB5AA00F95F75 /* G6 */ = {
+			isa = PBXGroup;
+			children = (
+				587F61522434FE1200F0FA87 /* InitialSetupG6DeviceIDViewController */,
+				5805C96E243860FA002AFA1B /* InitialSetupG6SensorAgeViewController */,
+				587F61552434FE5B00F0FA87 /* InitialSetupG6ConnectViewController */,
+				587F61582434FE9B00F0FA87 /* InitialSetupG6WarmUpViewController */,
+			);
+			path = G6;
 			sourceTree = "<group>";
 		};
 		58D4FD3C2423B3D40044E687 /* User */ = {
@@ -1160,16 +1550,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5805C97224386122002AFA1B /* InitialSetupG6SensorAgeViewController.xib in Resources */,
 				58B4F6C924116394003C6D8F /* Localizable.strings in Resources */,
 				58B5FD2324190BFC00DB857D /* Stats.storyboard in Resources */,
 				58B5FD2524190C3B00DB857D /* History.storyboard in Resources */,
+				587F614B2434FD7700F0FA87 /* InitialSetupInjectionTypeViewController.xib in Resources */,
+				587F61542434FE2F00F0FA87 /* InitialSetupG6DeviceIDViewController.xib in Resources */,
 				58B5FD2B24190D3A00DB857D /* Home.storyboard in Resources */,
 				58B5FD2724190C4400DB857D /* Settings.storyboard in Resources */,
+				587F61402434F92800F0FA87 /* InitialSetupIntroViewController.xib in Resources */,
+				587F61512434FDEF00F0FA87 /* InitialSetupTransmitterTypeViewController.xib in Resources */,
+				587F615A2434FEAF00F0FA87 /* InitialSetupG6WarmUpViewController.xib in Resources */,
 				580EC7A02421510C00C34948 /* Entries.storyboard in Resources */,
 				58160DEC2402C3BC00C792F4 /* Root.storyboard in Resources */,
 				58B4F67F24114938003C6D8F /* GoogleService-Info.plist in Resources */,
 				58E5A67C2402B8A8002C2BE3 /* LaunchScreen.storyboard in Resources */,
 				58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */,
+				587F61482434FD2900F0FA87 /* InitialSetupDeviceModeViewController.xib in Resources */,
+				587F614E2434FDB400F0FA87 /* InitialSetupSettingsViewController.xib in Resources */,
+				587F61572434FE7700F0FA87 /* InitialSetupG6ConnectViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1229,36 +1628,66 @@
 			buildActionMask = 2147483647;
 			files = (
 				58DDC45A2423C82A008CB04D /* CarbEntry.swift in Sources */,
+				587F61082432653B00F0FA87 /* DexcomG6MessageFactory.swift in Sources */,
 				2C48E6E42428AA78006B63B0 /* UIColor+Colors.swift in Sources */,
 				58B5FD3E24190E6700DB857D /* StatsRootModels.swift in Sources */,
+				587F6110243280AD00F0FA87 /* Data+Hex.swift in Sources */,
 				580EC79324214CDD00C34948 /* EntriesListViewController.swift in Sources */,
+				587F617E24365ED500F0FA87 /* CGMDeviceMetadata.swift in Sources */,
 				580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */,
+				58CD802F242FA07800F95F75 /* CGMDevice.swift in Sources */,
+				587F61242433A21A00F0FA87 /* DexcomG6PairRequestTxMessage.swift in Sources */,
 				58160DF32402C7F600C792F4 /* RootRouter.swift in Sources */,
 				58DDC4602423C9EF008CB04D /* TrainingIntensity.swift in Sources */,
 				580EC7AC242151BC00C34948 /* EditTrainingInteractor.swift in Sources */,
 				58B5FD3F24190E6700DB857D /* StatsRootViewController.swift in Sources */,
+				587F60FD24325C0E00F0FA87 /* DexcomG6OpCode.swift in Sources */,
+				587F612224339F7900F0FA87 /* DexcomG6MessageWorkerDelegate.swift in Sources */,
 				58D4FD3E2423B4130044E687 /* UserDeviceMode.swift in Sources */,
+				58CD8049242FADFA00F95F75 /* InitialSetupStepProvidingWorker.swift in Sources */,
+				58CD804B242FB36500F95F75 /* InitialSetupG6StepWorker.swift in Sources */,
+				58B0B965242FC56C00FAE249 /* InitialSetupDexcomG6ConnectionWorker.swift in Sources */,
+				58CD8037242FA16600F95F75 /* InitialSetupRouter.swift in Sources */,
+				587F612E2433AF9100F0FA87 /* DexcomG6SensorDataRxMessage.swift in Sources */,
 				58160DF22402C7F600C792F4 /* RootPresenter.swift in Sources */,
+				58CD8057242FB67800F95F75 /* InitialSetupG6DeviceIDViewController.swift in Sources */,
 				58788B7324264711000EB113 /* AbstractEntriesWorker.swift in Sources */,
 				58DDC4512423B758008CB04D /* GlucoseUnit.swift in Sources */,
+				587F61062432646300F0FA87 /* DexcomG6AuthRequestTxMessage.swift in Sources */,
+				587F61282433A99B00F0FA87 /* DexcomG6CharacteristicType.swift in Sources */,
+				587F615C2435004700F0FA87 /* DexcomG6TransmitterVersionRxMessage.swift in Sources */,
+				58B0B96D242FC83E00FAE249 /* CGMBluetoothService.swift in Sources */,
+				58CD805B242FB6AD00F95F75 /* InitialSetupG6WarmUpViewController.swift in Sources */,
 				580EC7802421457700C34948 /* EditFoodEntryViewController.swift in Sources */,
 				58B5FDC224193C2200DB857D /* GlucoseData.swift in Sources */,
 				58B5FD56241910BD00DB857D /* SettingsRootInteractor.swift in Sources */,
+				587F612C2433AF0F00F0FA87 /* DexcomG6SensorDataTxMessage.swift in Sources */,
 				58B5FD3D24190E6700DB857D /* StatsRootRouter.swift in Sources */,
+				5805C96D24385F1F002AFA1B /* String+Validation.swift in Sources */,
 				58B5FD53241910BD00DB857D /* SettingsRootRouter.swift in Sources */,
+				58CD8039242FA16600F95F75 /* InitialSetupViewController.swift in Sources */,
 				58B5FD4724190EB300DB857D /* HistoryRootPresenter.swift in Sources */,
 				580EC79024214CDD00C34948 /* EntriesListPresenter.swift in Sources */,
+				587F617A24365DDA00F0FA87 /* CGMBluetoothServiceDelegate.swift in Sources */,
+				58CD8036242FA16600F95F75 /* InitialSetupPresenter.swift in Sources */,
+				58CD803D242FA1CD00F95F75 /* InitialSetupStep.swift in Sources */,
 				58B5FD4A24190EB300DB857D /* HistoryRootViewController.swift in Sources */,
+				58CD803A242FA16600F95F75 /* InitialSetupInteractor.swift in Sources */,
 				58B5FD55241910BD00DB857D /* SettingsRootViewController.swift in Sources */,
 				58DDC4642423CAA3008CB04D /* CalibrationEntry.swift in Sources */,
+				587F612024339C1A00F0FA87 /* DexcomG6PairRequestRxMessage.swift in Sources */,
 				58160E032402C8CE00C792F4 /* UIStoryboard+Content.swift in Sources */,
 				580EC7BD2421521C00C34948 /* EditCalibrationRouter.swift in Sources */,
+				587F610224325F0900F0FA87 /* DexcomG6MessageWorker.swift in Sources */,
 				2C48E6DE2423946C006B63B0 /* CenteredTitleButton.swift in Sources */,
 				58B5FD3624190E2F00DB857D /* HomeInteractor.swift in Sources */,
+				58CD804F242FB5C200F95F75 /* InitialSetupDeviceModeViewController.swift in Sources */,
 				58A8A42B242523DF00CCFCAC /* FoodEntriesWorker.swift in Sources */,
 				58DDC45E2423C99B008CB04D /* TrainingEntry.swift in Sources */,
 				58B5FD3224190E2F00DB857D /* HomePresenter.swift in Sources */,
 				580EC79124214CDD00C34948 /* EntriesListRouter.swift in Sources */,
+				587F61262433A2D000F0FA87 /* DexcomG6FirmwareVersionTxMessage.swift in Sources */,
+				587F60F8243245AE00F0FA87 /* DexcomG6Constants.swift in Sources */,
 				2C48E6E02424C4D9006B63B0 /* TimeFrameSelectionView.swift in Sources */,
 				580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */,
 				580EC7C02421521C00C34948 /* EditCalibrationInteractor.swift in Sources */,
@@ -1268,39 +1697,66 @@
 				58B5FD4824190EB300DB857D /* HistoryRootRouter.swift in Sources */,
 				58B5FD4024190E6700DB857D /* StatsRootInteractor.swift in Sources */,
 				580EC7A9242151BC00C34948 /* EditTrainingRouter.swift in Sources */,
+				58CD8051242FB5F500F95F75 /* InitialSetupInjectionTypeViewController.swift in Sources */,
 				58B5FD3524190E2F00DB857D /* HomeViewController.swift in Sources */,
 				580EC7BC2421521C00C34948 /* EditCalibrationPresenter.swift in Sources */,
 				58DDC4552423C4F5008CB04D /* GlucoseWarningLevelSetting.swift in Sources */,
+				587F60F52432422100F0FA87 /* CGMBluetoothServiceError.swift in Sources */,
 				58B5FD54241910BD00DB857D /* SettingsRootModels.swift in Sources */,
 				58B5FD3C24190E6700DB857D /* StatsRootPresenter.swift in Sources */,
 				58D4FD3B2423B39C0044E687 /* User.swift in Sources */,
 				580EC79224214CDD00C34948 /* EntriesListModels.swift in Sources */,
+				58CD8038242FA16600F95F75 /* InitialSetupModels.swift in Sources */,
 				58160DF62402C7F600C792F4 /* RootInteractor.swift in Sources */,
 				580EC7AA242151BC00C34948 /* EditTrainingModels.swift in Sources */,
-				58B5FDC424193DF500DB857D /* SubscriptionService.swift in Sources */,
-				58B5FDBF24193BBF00DB857D /* GlucoseDataService.swift in Sources */,
+				5805C97124386122002AFA1B /* InitialSetupG6SensorAgeViewController.swift in Sources */,
+				587F61142432851800F0FA87 /* DexcomG6AuthChallengeRxMessage.swift in Sources */,
+				5805C97824386452002AFA1B /* DexcomG6TransmitterTimeRxMessage.swift in Sources */,
+				58CD805D242FBCF800F95F75 /* CGMDeviceType.swift in Sources */,
 				580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */,
+				58B0B963242FC3DC00FAE249 /* InitialSetupDexcomG6IDSavingWorker.swift in Sources */,
+				587F60FB2432556200F0FA87 /* LogController.swift in Sources */,
+				58CD8055242FB63A00F95F75 /* InitialSetupTransmitterTypeViewController.swift in Sources */,
+				587F617C24365DF100F0FA87 /* CGMDeviceMetadataType.swift in Sources */,
 				2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */,
+				5805C976243863EB002AFA1B /* DexcomG6TransmitterTimeTxMessage.swift in Sources */,
+				587F6112243281E200F0FA87 /* DexcomG6Error.swift in Sources */,
 				58B5FD3424190E2F00DB857D /* HomeModels.swift in Sources */,
 				580EC7A8242151BC00C34948 /* EditTrainingPresenter.swift in Sources */,
 				58B5FD3324190E2F00DB857D /* HomeRouter.swift in Sources */,
 				58160DF52402C7F600C792F4 /* RootViewController.swift in Sources */,
 				58B5FD4B24190EB300DB857D /* HistoryRootInteractor.swift in Sources */,
+				587F613E2434F58E00F0FA87 /* NibViewController.swift in Sources */,
 				58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */,
+				587F615E2435023A00F0FA87 /* DexcomG6BatteryStatusRxMessage.swift in Sources */,
 				58788B75242647C5000EB113 /* TrainingEntriesWorker.swift in Sources */,
+				5805C974243861D2002AFA1B /* InitialSetupDexcomG6SensorAgeWorker.swift in Sources */,
 				58DDC4622423CA58008CB04D /* AbstractEntry.swift in Sources */,
+				587F610E2432691D00F0FA87 /* DexcomG6AuthChallengeTxMessage.swift in Sources */,
+				587F612A2433AEB000F0FA87 /* DexcomG6TransmitterVersionTxMessage.swift in Sources */,
+				587F610C243267CF00F0FA87 /* DexcomG6AuthRequestRxMessage.swift in Sources */,
+				58CD8043242FA35300F95F75 /* InitialSetupIntoViewController.swift in Sources */,
 				58B4F6C024114EBA003C6D8F /* ApplicationLaunchController.swift in Sources */,
 				58B5FD4924190EB300DB857D /* HistoryRootModels.swift in Sources */,
 				58DDC4572423C561008CB04D /* GlucoseWarningLevel.swift in Sources */,
+				58CD8059242FB69400F95F75 /* InitialSetupG6ConnectViewController.swift in Sources */,
 				580EC7BE2421521C00C34948 /* EditCalibrationModels.swift in Sources */,
+				58CD8045242FA37600F95F75 /* InitialSetupAbstractStepViewController.swift in Sources */,
 				580EC7AB242151BC00C34948 /* EditTrainingViewController.swift in Sources */,
 				58160DF42402C7F600C792F4 /* RootModels.swift in Sources */,
 				58160E0D2402E52000C792F4 /* TabBarView.swift in Sources */,
 				580EC79424214CDD00C34948 /* EntriesListInteractor.swift in Sources */,
+				5805C97B24387656002AFA1B /* HomeGlucoseDataWorker.swift in Sources */,
+				58B0B96B242FC7B200FAE249 /* CGMController.swift in Sources */,
 				58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */,
+				587F6116243288FB00F0FA87 /* DexcomG6BatteryStatusTxMessage.swift in Sources */,
 				58788B7724264A36000EB113 /* CalibrationEntriesWorker.swift in Sources */,
 				58DDC44F2423B5B1008CB04D /* UserInjectionType.swift in Sources */,
 				58B5FD52241910BD00DB857D /* SettingsRootPresenter.swift in Sources */,
+				587F610424325F1500F0FA87 /* DexcomG6OutgoingMessage.swift in Sources */,
+				58B0B968242FC71500FAE249 /* DexcomG6BluetoothService.swift in Sources */,
+				58CD8053242FB61700F95F75 /* InitialSetupSettingsViewController.swift in Sources */,
+				58CD8047242FA8C400F95F75 /* InitialSetupGenericStepWorker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

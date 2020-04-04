@@ -16,6 +16,7 @@ protocol RootBusinessLogic {
     func doLoad(request: Root.Load.Request)
     func doTabSelection(request: Root.TabSelection.Request)
     func doShowAddEntry(request: Root.ShowAddEntry.Request)
+    func doShowInitialSetupIfNeeded(request: Root.InitialSetup.Request)
 }
 
 protocol RootDataStore {
@@ -51,5 +52,11 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
         let type = entryTypes[request.index]
         
         // TO DO: - add route to add entry
+    }
+    
+    func doShowInitialSetupIfNeeded(request: Root.InitialSetup.Request) {
+        if !User.current.isInitialSetupDone {
+            router?.routeToInitialSetup()
+        }
     }
 }

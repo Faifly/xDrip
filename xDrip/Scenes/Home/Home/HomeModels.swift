@@ -27,4 +27,17 @@ enum Home {
         struct ViewModel {
         }
     }
+    
+    enum GlucoseDataUpdate {
+        struct Request {
+        }
+        
+        struct Response {
+            let glucoseData: GlucoseData
+        }
+        
+        struct ViewModel {
+            let glucoseValue: String?
+        }
+    }
 }

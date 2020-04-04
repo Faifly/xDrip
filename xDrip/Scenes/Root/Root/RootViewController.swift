@@ -54,6 +54,12 @@ class RootViewController: UIViewController, RootDisplayLogic {
         doLoad()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let request = Root.InitialSetup.Request()
+        interactor?.doShowInitialSetupIfNeeded(request: request)
+    }
+    
     // MARK: Do something
     
     private func doLoad() {

@@ -24,10 +24,18 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     var presenter: HomePresentationLogic?
     var router: HomeRoutingLogic?
     
+    private let glucoseDataWorker = HomeGlucoseDataWorker()
+    
     // MARK: Do something
     
     func doLoad(request: Home.Load.Request) {
         let response = Home.Load.Response()
         presenter?.presentLoad(response: response)
+        
+        glucoseDataWorker.glucoseDataHandler = { [weak self] data in
+            guard let self = self else { return }
+            let response = Home.GlucoseDataUpdate.Response(glucoseData: data)
+            self.presenter?.presentGlucoseData(response: response)
+        }
     }
 }

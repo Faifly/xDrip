@@ -14,6 +14,7 @@ import UIKit
 
 protocol HomePresentationLogic {
     func presentLoad(response: Home.Load.Response)
+    func presentGlucoseData(response: Home.GlucoseDataUpdate.Response)
 }
 
 final class HomePresenter: HomePresentationLogic {
@@ -24,5 +25,24 @@ final class HomePresenter: HomePresentationLogic {
     func presentLoad(response: Home.Load.Response) {
         let viewModel = Home.Load.ViewModel()
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    func presentGlucoseData(response: Home.GlucoseDataUpdate.Response) {
+        let valueString = "\(response.glucoseData.value)"
+        let dateString: String
+        if let date = response.glucoseData.date {
+            dateString = DateFormatter.localizedString(
+                from: date,
+                dateStyle: .short,
+                timeStyle: .medium
+            )
+        } else {
+            dateString = "Unknown"
+        }
+        
+        let viewModel = Home.GlucoseDataUpdate.ViewModel(
+            glucoseValue: "\(valueString), last updated: \(dateString)"
+        )
+        viewController?.displayGlucoseData(viewModel: viewModel)
     }
 }

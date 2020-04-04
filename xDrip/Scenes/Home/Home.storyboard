@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="en1-zC-tf5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="en1-zC-tf5">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,12 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Home" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FuX-l4-xN6">
-                                <rect key="frame" x="184" y="437.5" width="46" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7mk-6j-2a0" customClass="TimeFrameSelectionView" customModule="xDrip" customModuleProvider="target">
                                 <rect key="frame" x="16" y="108" width="382" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -29,19 +23,26 @@
                                     <constraint firstAttribute="height" constant="30" id="0bO-7V-i9O"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rI7-NN-O7G">
+                                <rect key="frame" x="186" y="437.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="rI7-NN-O7G" firstAttribute="centerX" secondItem="PBf-4w-eF3" secondAttribute="centerX" id="NPt-sP-cPk"/>
+                            <constraint firstItem="rI7-NN-O7G" firstAttribute="centerY" secondItem="PBf-4w-eF3" secondAttribute="centerY" id="TUU-Jl-u2w"/>
                             <constraint firstItem="7mk-6j-2a0" firstAttribute="leading" secondItem="dbo-8t-M4x" secondAttribute="leading" constant="16" id="Uug-fE-5r4"/>
                             <constraint firstItem="dbo-8t-M4x" firstAttribute="trailing" secondItem="7mk-6j-2a0" secondAttribute="trailing" constant="16" id="YOU-Pt-nqA"/>
-                            <constraint firstItem="FuX-l4-xN6" firstAttribute="centerY" secondItem="PBf-4w-eF3" secondAttribute="centerY" id="Z0P-QB-3dY"/>
                             <constraint firstItem="7mk-6j-2a0" firstAttribute="top" secondItem="dbo-8t-M4x" secondAttribute="top" constant="64" id="dLh-gY-TcQ"/>
-                            <constraint firstItem="FuX-l4-xN6" firstAttribute="centerX" secondItem="PBf-4w-eF3" secondAttribute="centerX" id="p6J-sK-YZY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dbo-8t-M4x"/>
                     </view>
                     <navigationItem key="navigationItem" id="p6t-2r-Ed3"/>
                     <connections>
+                        <outlet property="glucoseLabel" destination="rI7-NN-O7G" id="pGu-yf-3jJ"/>
                         <outlet property="timeLineSegmentView" destination="7mk-6j-2a0" id="DpX-Qf-N1R"/>
                     </connections>
                 </viewController>
