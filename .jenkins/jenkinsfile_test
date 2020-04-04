@@ -42,7 +42,7 @@ pipeline {
         
         stage('Test Catalyst') {
             steps {
-                sh "rm -rd ~/Library/Containers/maccatalyst.${bundle_id}"
+                sh "rm -rd ~/Library/Containers/maccatalyst.${bundle_id} || true"
                 sh "xcrun xcodebuild -scheme '${build_scheme}' -destination 'platform=macOS' SWIFT_TREAT_WARNINGS_AS_ERRORS=YES clean build test"
             }
         }
