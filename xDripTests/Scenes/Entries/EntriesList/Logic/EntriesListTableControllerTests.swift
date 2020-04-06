@@ -8,20 +8,28 @@
 
 import XCTest
 @testable import xDrip
+import AKUtils
 
 class EntriesListTableControllerTests: XCTestCase {
 
     var window: UIWindow!
-    var viewController: EntriesListViewController!
-    var tableView: UITableView!
     
-    let sut = EntriesListTableController()
+    var sut: EntriesListTableController!
+    
+    var tableView = UITableView()
     
     var calledDelete = false
     var calledSelect = false
     
     override func setUp() {
         super.setUp()
+        
+        window = UIWindow()
+        setupEntriesListTableController()
+    }
+    
+    func setupEntriesListTableController() {
+        sut = EntriesListTableController()
         
         sut.didDeleteEntry = { indexPath in
             self.calledDelete = true
@@ -30,9 +38,6 @@ class EntriesListTableControllerTests: XCTestCase {
         sut.didSelectEntry = { indexPath in
             self.calledSelect = true
         }
-        
-        window = UIWindow()
-        setupEntriesListViewController()
     }
     
     override func tearDown() {
@@ -40,32 +45,18 @@ class EntriesListTableControllerTests: XCTestCase {
         super.tearDown()
     }
     
-    func setupEntriesListViewController() {
-        viewController = EntriesListViewController(
-            persistenceWorker: EntriesListCarbsPersistenceWorker(),
-            formattingWorker: EntriesListCarbsFormattingWorker()
-        )
-        
-        guard let tableView = viewController.view.subviews.first(where: { $0 is UITableView }) as? UITableView else { return }
-        
-        tableView.delegate = sut
-        tableView.dataSource = sut
-        
-        self.tableView = tableView
-    }
-    
     func loadView() {
-        window.addSubview(viewController.view)
+        window.addSubview(tableView)
         RunLoop.current.run(until: Date())
+        
+        sut.tableView = tableView
     }
     
     func testReload() {
         loadView()
         
-        sut.reload(with: [])
         var data = generateDummyData(sectionCount: 2)
         sut.reload(with: data)
-        tableView.reloadData()
         
         XCTAssertTrue(tableView.numberOfSections == 2)
         XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 20)
@@ -73,7 +64,6 @@ class EntriesListTableControllerTests: XCTestCase {
         
         data.removeLast()
         sut.reload(with: data)
-        tableView.reloadData()
         
         XCTAssertTrue(tableView.numberOfSections == 1)
         XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 20)
@@ -83,10 +73,8 @@ class EntriesListTableControllerTests: XCTestCase {
     func testSelectEntryCall() {
         loadView()
         
-        sut.reload(with: [])
         let data = generateDummyData()
         sut.reload(with: data)
-        tableView.reloadData()
         
         let indexPath = IndexPath(row: 10, section: 0)
         sut.tableView(tableView, didSelectRowAt: indexPath)
@@ -97,26 +85,24 @@ class EntriesListTableControllerTests: XCTestCase {
     func testDeleteEntry() {
         loadView()
         
-        sut.reload(with: [])
-        let data = generateDummyData()
-        sut.reload(with: data)
-        tableView.reloadData()
-        
-        let indexPath = IndexPath(row: 10, section: 0)
-        
-        sut.tableView(tableView, commit: .delete, forRowAt: indexPath)
-        
-        XCTAssertTrue(calledDelete)
-        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 19)
+        dispatchAfter(seconds: 1) {
+            let data = self.generateDummyData()
+            self.sut.reload(with: data)
+            
+            let indexPath = IndexPath(row: 10, section: 0)
+            
+            self.sut.tableView(self.tableView, commit: .delete, forRowAt: indexPath)
+            
+            XCTAssertTrue(self.calledDelete)
+            XCTAssertTrue(self.tableView.numberOfRows(inSection: 0) == 19)
+        }
     }
     
     func test() {
         loadView()
         
-        sut.reload(with: [])
         let data = generateDummyData()
         sut.reload(with: data)
-        tableView.reloadData()
         
         let indexPath = IndexPath(row: 10, section: 0)
         
@@ -133,10 +119,8 @@ class EntriesListTableControllerTests: XCTestCase {
     func testCellForRow() {
         loadView()
         
-        sut.reload(with: [])
         let data = generateDummyData()
         sut.reload(with: data)
-        tableView.reloadData()
         
         let indexPath = IndexPath(row: 10, section: 0)
         

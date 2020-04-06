@@ -12,6 +12,7 @@
 
 @testable import xDrip
 import XCTest
+import AKUtils
 
 final class EntriesListViewControllerTests: XCTestCase {
     // MARK: Subject under test
@@ -135,11 +136,13 @@ final class EntriesListViewControllerTests: XCTestCase {
             return
         }
         
-        let indexPath = IndexPath(row: 10, section: 0)
-        tableController.tableView(tableView, commit: .delete, forRowAt: indexPath)
-        
-        XCTAssertTrue(spy.deleteEntryCalled)
-        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 19)
+        dispatchAfter(seconds: 1) {
+            let indexPath = IndexPath(row: 10, section: 0)
+            tableController.tableView(tableView, commit: .delete, forRowAt: indexPath)
+            
+            XCTAssertTrue(spy.deleteEntryCalled)
+            XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 19)
+        }
     }
     
     func testShowSelectedEntry() {

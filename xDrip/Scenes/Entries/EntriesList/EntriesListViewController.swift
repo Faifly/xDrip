@@ -93,7 +93,6 @@ class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
     func displayLoad(viewModel: EntriesList.Load.ViewModel) {
         sectionViewModels = viewModel.items
         
-        tableController.tableView = tableView
         tableController.reload(with: viewModel.items)
     }
     
@@ -120,6 +119,8 @@ class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
     }
     
     private func setupTableView() {
+        tableController.tableView = tableView
+        
         tableController.didDeleteEntry = { [weak self] indexPath in
             guard let self = self else { return }
             
