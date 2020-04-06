@@ -20,6 +20,7 @@ final class DebugController {
     private let maxLogSize = 1000
     private(set) var logs: [String] = []
     
+    #if targetEnvironment(macCatalyst)
     func showLogWindow() {
         UIApplication.shared.requestSceneSessionActivation(
             nil,
@@ -28,6 +29,7 @@ final class DebugController {
             errorHandler: nil
         )
     }
+    #endif
     
     func log(message: StaticString, args: [CVarArg]) {
         let date = DateFormatter.localizedString(from: Date(), dateStyle: .none, timeStyle: .medium)
