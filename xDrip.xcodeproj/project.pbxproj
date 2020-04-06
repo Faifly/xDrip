@@ -305,6 +305,14 @@
 		58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */; };
 		58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58E5A6782402B8A8002C2BE3 /* Assets.xcassets */; };
 		58E5A67C2402B8A8002C2BE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58E5A67A2402B8A8002C2BE3 /* LaunchScreen.storyboard */; };
+		58F4CC79243B9F470053D17C /* MacMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC78243B9F470053D17C /* MacMenuController.swift */; };
+		58F4CC7B243BA0CB0053D17C /* DebugController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC7A243BA0CB0053D17C /* DebugController.swift */; };
+		58F4CC83243BA2110053D17C /* DebugLogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC7E243BA2110053D17C /* DebugLogPresenter.swift */; };
+		58F4CC84243BA2110053D17C /* DebugLogRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC7F243BA2110053D17C /* DebugLogRouter.swift */; };
+		58F4CC85243BA2110053D17C /* DebugLogModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC80243BA2110053D17C /* DebugLogModels.swift */; };
+		58F4CC86243BA2110053D17C /* DebugLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC81243BA2110053D17C /* DebugLogViewController.swift */; };
+		58F4CC87243BA2110053D17C /* DebugLogInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC82243BA2110053D17C /* DebugLogInteractor.swift */; };
+		58F4CC89243BA21D0053D17C /* DebugLogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58F4CC88243BA21D0053D17C /* DebugLogViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -628,6 +636,14 @@
 		58E5A67D2402B8A8002C2BE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58E5A6822402B8A9002C2BE3 /* xDripTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = xDripTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		58E5A6882402B8A9002C2BE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58F4CC78243B9F470053D17C /* MacMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMenuController.swift; sourceTree = "<group>"; };
+		58F4CC7A243BA0CB0053D17C /* DebugController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugController.swift; sourceTree = "<group>"; };
+		58F4CC7E243BA2110053D17C /* DebugLogPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogPresenter.swift; sourceTree = "<group>"; };
+		58F4CC7F243BA2110053D17C /* DebugLogRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogRouter.swift; sourceTree = "<group>"; };
+		58F4CC80243BA2110053D17C /* DebugLogModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogModels.swift; sourceTree = "<group>"; };
+		58F4CC81243BA2110053D17C /* DebugLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogViewController.swift; sourceTree = "<group>"; };
+		58F4CC82243BA2110053D17C /* DebugLogInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogInteractor.swift; sourceTree = "<group>"; };
+		58F4CC88243BA21D0053D17C /* DebugLogViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugLogViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1329,6 +1345,7 @@
 				58B5FD2024190BB900DB857D /* History */,
 				58B5FD2124190BC700DB857D /* Settings */,
 				5805C9D2243892D6002AFA1B /* InitialSetup */,
+				58F4CC7C243BA1FC0053D17C /* Debug */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -1568,6 +1585,8 @@
 				58B4F6BF24114EBA003C6D8F /* ApplicationLaunchController.swift */,
 				5805C9C424389275002AFA1B /* CGMController.swift */,
 				5805C9C524389275002AFA1B /* LogController.swift */,
+				58F4CC78243B9F470053D17C /* MacMenuController.swift */,
+				58F4CC7A243BA0CB0053D17C /* DebugController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1895,6 +1914,27 @@
 			path = xDripTests;
 			sourceTree = "<group>";
 		};
+		58F4CC7C243BA1FC0053D17C /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				58F4CC7D243BA2030053D17C /* DebugLog */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		58F4CC7D243BA2030053D17C /* DebugLog */ = {
+			isa = PBXGroup;
+			children = (
+				58F4CC7E243BA2110053D17C /* DebugLogPresenter.swift */,
+				58F4CC7F243BA2110053D17C /* DebugLogRouter.swift */,
+				58F4CC80243BA2110053D17C /* DebugLogModels.swift */,
+				58F4CC81243BA2110053D17C /* DebugLogViewController.swift */,
+				58F4CC88243BA21D0053D17C /* DebugLogViewController.xib */,
+				58F4CC82243BA2110053D17C /* DebugLogInteractor.swift */,
+			);
+			path = DebugLog;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2021,6 +2061,7 @@
 				5805CA0A243892D6002AFA1B /* InitialSetupG6DeviceIDViewController.xib in Resources */,
 				5805CA12243892D6002AFA1B /* InitialSetupDeviceModeViewController.xib in Resources */,
 				58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */,
+				58F4CC89243BA21D0053D17C /* DebugLogViewController.xib in Resources */,
 				58184A512438C36700E848C6 /* StatsRootViewController.xib in Resources */,
 				5805CA10243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.xib in Resources */,
 				5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */,
@@ -2092,6 +2133,7 @@
 				2CBE1A922432128E003BE14E /* EntriesListBolusPersistenceWorker.swift in Sources */,
 				58B5FD3E24190E6700DB857D /* StatsRootModels.swift in Sources */,
 				5805C9A124389230002AFA1B /* DexcomG6SensorDataTxMessage.swift in Sources */,
+				58F4CC84243BA2110053D17C /* DebugLogRouter.swift in Sources */,
 				5805C9A424389230002AFA1B /* DexcomG6AuthRequestTxMessage.swift in Sources */,
 				5805C9C724389275002AFA1B /* LogController.swift in Sources */,
 				580EC79324214CDD00C34948 /* EntriesListViewController.swift in Sources */,
@@ -2100,6 +2142,7 @@
 				5805C9A824389230002AFA1B /* DexcomG6FirmwareVersionTxMessage.swift in Sources */,
 				58DDC4602423C9EF008CB04D /* TrainingIntensity.swift in Sources */,
 				580EC7AC242151BC00C34948 /* EditTrainingInteractor.swift in Sources */,
+				58F4CC7B243BA0CB0053D17C /* DebugController.swift in Sources */,
 				58B5FD3F24190E6700DB857D /* StatsRootViewController.swift in Sources */,
 				58D4FD3E2423B4130044E687 /* UserDeviceMode.swift in Sources */,
 				58160DF22402C7F600C792F4 /* RootPresenter.swift in Sources */,
@@ -2127,12 +2170,14 @@
 				5805C9AD24389230002AFA1B /* DexcomG6SensorDataRxMessage.swift in Sources */,
 				58B5FD55241910BD00DB857D /* SettingsRootViewController.swift in Sources */,
 				5805CA17243892D6002AFA1B /* InitialSetupDexcomG6SensorAgeWorker.swift in Sources */,
+				58F4CC83243BA2110053D17C /* DebugLogPresenter.swift in Sources */,
 				5805C9A524389230002AFA1B /* DexcomG6AuthChallengeTxMessage.swift in Sources */,
 				5805C9B924389230002AFA1B /* CGMBluetoothServiceDelegate.swift in Sources */,
 				58DDC4642423CAA3008CB04D /* CalibrationEntry.swift in Sources */,
 				5805C9A324389230002AFA1B /* DexcomG6PairRequestTxMessage.swift in Sources */,
 				5805CA1D243892D6002AFA1B /* InitialSetupViewController.swift in Sources */,
 				5805C9A724389230002AFA1B /* DexcomG6TransmitterTimeTxMessage.swift in Sources */,
+				58F4CC85243BA2110053D17C /* DebugLogModels.swift in Sources */,
 				580EC7BD2421521C00C34948 /* EditCalibrationRouter.swift in Sources */,
 				58B5FD3624190E2F00DB857D /* HomeInteractor.swift in Sources */,
 				2CBE1A96243212D7003BE14E /* EntriesListBolusFormattingWorker.swift in Sources */,
@@ -2178,11 +2223,14 @@
 				5805C9A624389230002AFA1B /* DexcomG6BatteryStatusTxMessage.swift in Sources */,
 				580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */,
 				5805C9B124389230002AFA1B /* DexcomG6MessageFactory.swift in Sources */,
+				58F4CC86243BA2110053D17C /* DebugLogViewController.swift in Sources */,
 				5805CA1B243892D6002AFA1B /* InitialSetupRouter.swift in Sources */,
 				5805C9AF24389230002AFA1B /* DexcomG6PairRequestRxMessage.swift in Sources */,
 				2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */,
 				5805C9CD243892A8002AFA1B /* Data+Hex.swift in Sources */,
+				58F4CC79243B9F470053D17C /* MacMenuController.swift in Sources */,
 				58B5FD3424190E2F00DB857D /* HomeModels.swift in Sources */,
+				58F4CC87243BA2110053D17C /* DebugLogInteractor.swift in Sources */,
 				5805CA1F243892D6002AFA1B /* InitialSetupStep.swift in Sources */,
 				580EC7A8242151BC00C34948 /* EditTrainingPresenter.swift in Sources */,
 				5805CA13243892D6002AFA1B /* InitialSetupDeviceModeViewController.swift in Sources */,

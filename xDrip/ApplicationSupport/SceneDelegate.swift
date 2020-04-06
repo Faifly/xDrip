@@ -13,9 +13,17 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     @available(iOS 13.0, *)
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        if let window = UIApplication.shared.delegate?.window {
+        guard let windowScene = scene as? UIWindowScene else { return }
+        
+        if session.configuration.name == DebugController.debugLogWindowID {
+            windowScene.title = "Debug Log"
+            let window = UIWindow(windowScene: windowScene)
+            window.rootViewController = DebugLogViewController()
+            window.makeKeyAndVisible()
             self.window = window
-            window?.windowScene = scene as? UIWindowScene
+        } else if let window = UIApplication.shared.delegate?.window {
+            self.window = window
+            window?.windowScene = windowScene
         }
     }
 }
