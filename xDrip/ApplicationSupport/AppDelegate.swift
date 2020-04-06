@@ -29,7 +29,21 @@ import UIKit
         configurationForConnecting connectingSceneSession: UISceneSession,
         options: UIScene.ConnectionOptions
     ) -> UISceneConfiguration {
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+        if options.userActivities.first?.activityType == DebugController.debugLogWindowID {
+            return UISceneConfiguration(
+                name: DebugController.debugLogWindowID,
+                sessionRole: connectingSceneSession.role
+            )
+        } else {
+            return UISceneConfiguration(
+                name: "Default Configuration",
+                sessionRole: connectingSceneSession.role
+            )
+        }
+    }
+    
+    override func buildMenu(with builder: UIMenuBuilder) {
+        MacMenuController.buildMenu(builder)
     }
     #endif
 }
