@@ -195,6 +195,16 @@ final class RootViewControllerTests: XCTestCase {
             XCTAssertTrue(spy.selectedEntryType == spy.entries[i])
         }
     }
+    
+    func testHomeViewController() {
+        // When
+        loadView()
+        
+        // Then
+        XCTAssert(sut.presentingViewController == nil)
+        XCTAssert(sut.children.count == 1)
+        XCTAssert(sut.children[0] is HomeViewController)
+    }
 }
 
 extension UIAlertController {
