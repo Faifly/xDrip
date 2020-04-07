@@ -99,11 +99,7 @@ final class DexcomG6MessageWorker {
     
     private func handleAuthResponse(_ response: DexcomG6AuthChallengeRxMessage) throws {
         guard response.authenticated else { throw DexcomG6Error.notAuthenticated }
-        if response.paired {
-            isPaired = true
-        } else {
-            createDataRequest(ofType: .pairRequestTx)
-        }
+        isPaired = true
     }
     
     private func handlePairResponse(_ response: DexcomG6PairRequestRxMessage) throws {
