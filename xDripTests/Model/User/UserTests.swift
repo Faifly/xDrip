@@ -24,39 +24,6 @@ final class UserTests: AbstractRealmTest {
         XCTAssertTrue(realm.objects(User.self).count == 1)
     }
     
-    func testWarningLevels() {
-        let user = User.current
-        XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 0)
-        
-        XCTAssertTrue(user.warningLevelValue(for: .urgentLow) == GlucoseWarningLevel.urgentLow.defaultValue)
-        XCTAssertTrue(user.warningLevelValue(for: .low) == GlucoseWarningLevel.low.defaultValue)
-        XCTAssertTrue(user.warningLevelValue(for: .high) == GlucoseWarningLevel.high.defaultValue)
-        XCTAssertTrue(user.warningLevelValue(for: .urgentHigh) == GlucoseWarningLevel.urgentHigh.defaultValue)
-        
-        // When using getters, no objects should be created yet
-        XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 0)
-        
-        user.configureWarningLevel(.urgentLow, value: 1.1)
-        XCTAssertTrue(abs(user.warningLevelValue(for: .urgentLow) - 1.1) <= .ulpOfOne)
-        XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 1)
-        
-        user.configureWarningLevel(.low, value: 2.2)
-        XCTAssertTrue(abs(user.warningLevelValue(for: .low) - 2.2) <= .ulpOfOne)
-        XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 2)
-        
-        user.configureWarningLevel(.high, value: 3.3)
-        XCTAssertTrue(abs(user.warningLevelValue(for: .high) - 3.3) <= .ulpOfOne)
-        XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 3)
-        
-        user.configureWarningLevel(.urgentHigh, value: 4.4)
-        XCTAssertTrue(abs(user.warningLevelValue(for: .urgentHigh) - 4.4) <= .ulpOfOne)
-        XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 4)
-        
-        user.configureWarningLevel(.urgentHigh, value: 5.5)
-        XCTAssertTrue(abs(user.warningLevelValue(for: .urgentHigh) - 5.5) <= .ulpOfOne)
-        XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 4)
-    }
-    
     func testGlucoseData() {
         let user = User.current
         XCTAssertTrue(user.glucoseData.count == 0)
@@ -74,43 +41,5 @@ final class UserTests: AbstractRealmTest {
         XCTAssertTrue(user.glucoseData.count == 2)
         XCTAssertTrue(abs(user.glucoseData[1].value - 2.2) <= .ulpOfOne)
         XCTAssertTrue(abs(user.glucoseData[1].date!.timeIntervalSince1970 - 6.0) <= .ulpOfOne)
-    }
-    
-    func testInsulinChartSetting() {
-        let user = User.current
-        XCTAssertTrue(user.isInsulinChartEnabled)
-        
-        user.updateInsulinChartEnabled(false)
-        XCTAssertFalse(user.isInsulinChartEnabled)
-        
-        user.updateInsulinChartEnabled(true)
-        XCTAssertTrue(user.isInsulinChartEnabled)
-    }
-    
-    func testCarbsChartSetting() {
-        let user = User.current
-        XCTAssertTrue(user.isCarbohydratesChartEnabled)
-        
-        user.updateCarbohydratesChartEnabled(false)
-        XCTAssertFalse(user.isCarbohydratesChartEnabled)
-        
-        user.updateCarbohydratesChartEnabled(true)
-        XCTAssertTrue(user.isCarbohydratesChartEnabled)
-    }
-    
-    func testAbsorptionRateSetting() {
-        let user = User.current
-        XCTAssertTrue(abs(user.carbsAbsorptionRate - 1200.0) <= .ulpOfOne)
-        
-        user.updateCarbsAbsorptionRate(1.1)
-        XCTAssertTrue(abs(user.carbsAbsorptionRate - 1.1) <= .ulpOfOne)
-    }
-    
-    func testInsulinActionTime() {
-        let user = User.current
-        XCTAssertTrue(abs(user.insulinActionTime - 21600.0) <= .ulpOfOne)
-        
-        user.updateInsulinActionTime(1.1)
-        XCTAssertTrue(abs(user.insulinActionTime - 1.1) <= .ulpOfOne)
     }
 }

@@ -59,13 +59,13 @@ final class InitialSetupInteractor: InitialSetupBusinessLogic, InitialSetupDataS
     }
     
     func doSelectDeviceMode(request: InitialSetup.SelectDeviceMode.Request) {
-        User.current.updateDeviceMode(request.deviceMode)
+        User.current.settings.updateDeviceMode(request.deviceMode)
         stepProvidingWorker?.completeStep()
         showNextStep()
     }
     
     func doSelectInjectionType(request: InitialSetup.SelectInjectionType.Request) {
-        User.current.updateInjectionType(request.injectionType)
+        User.current.settings.updateInjectionType(request.injectionType)
         stepProvidingWorker?.completeStep()
         showNextStep()
     }

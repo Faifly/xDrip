@@ -23,7 +23,7 @@ final class InitialSetupGenericStepWorker: InitialSetupStepProvidingWorker {
             currentStep = .deviceMode
             
         case .deviceMode:
-            switch User.current.deviceMode {
+            switch User.current.settings.deviceMode {
             case .main: currentStep = .injectionType
             case .follower: currentStep = nil
             }

@@ -11,6 +11,6 @@ import XCTest
 
 final class UserDeviceModeTests: XCTestCase {
     func testDefaultValue() {
-        XCTAssertTrue(User.DeviceMode.default == .main)
+        XCTAssertTrue(UserDeviceMode.default == .main)
     }
 }

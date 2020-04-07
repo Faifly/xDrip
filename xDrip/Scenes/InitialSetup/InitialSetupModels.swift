@@ -60,7 +60,7 @@ enum InitialSetup {
     
     enum SelectDeviceMode {
         struct Request {
-            let deviceMode: User.DeviceMode
+            let deviceMode: UserDeviceMode
         }
         
         struct Response {
@@ -72,7 +72,7 @@ enum InitialSetup {
     
     enum SelectInjectionType {
         struct Request {
-            let injectionType: User.InjectionType
+            let injectionType: UserInjectionType
         }
         
         struct Response {

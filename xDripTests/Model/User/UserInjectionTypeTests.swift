@@ -11,6 +11,6 @@ import XCTest
 
 final class UserInjectionTypeTests: XCTestCase {
     func testDefaultValue() {
-        XCTAssertTrue(User.InjectionType.default == .pen)
+        XCTAssertTrue(UserInjectionType.default == .pen)
     }
 }

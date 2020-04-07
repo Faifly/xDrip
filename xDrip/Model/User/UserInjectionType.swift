@@ -8,13 +8,11 @@
 
 import Foundation
 
-extension User {
-    enum InjectionType: Int {
-        case pen
-        case pump
-        
-        static var `default`: InjectionType {
-            return .pen
-        }
+enum UserInjectionType: Int {
+    case pen
+    case pump
+    
+    static var `default`: UserInjectionType {
+        return .pen
     }
 }

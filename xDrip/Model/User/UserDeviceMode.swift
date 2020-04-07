@@ -8,13 +8,11 @@
 
 import Foundation
 
-extension User {
-    enum DeviceMode: Int {
-        case main
-        case follower
-        
-        static var `default`: DeviceMode {
-            return .main
-        }
+enum UserDeviceMode: Int {
+    case main
+    case follower
+    
+    static var `default`: UserDeviceMode {
+        return .main
     }
 }
