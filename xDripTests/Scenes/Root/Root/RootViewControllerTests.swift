@@ -201,9 +201,17 @@ final class RootViewControllerTests: XCTestCase {
         loadView()
         
         // Then
+        XCTAssertTrue(sut.isBeingPresented)
         XCTAssert(sut.presentingViewController == nil)
         XCTAssert(sut.children.count == 1)
         XCTAssert(sut.children[0] is HomeViewController)
+        
+        guard let container = sut.value(forKey: "homeContainerView") as? UIView else {
+            XCTFail("Cannot obtain homeContainerView")
+            return
+        }
+        
+        XCTAssert(sut.children[0].view.superview == container)
     }
 }
 
