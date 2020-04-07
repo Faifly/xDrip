@@ -12,7 +12,7 @@ struct DexcomG6PairRequestTxMessage: DexcomG6OutgoingMessage {
     let data: Data
     
     init() {
-        data = Data([DexcomG6OpCode.pairRequestTx.rawValue])
+        data = Data([DexcomG6OpCode.pairRequestTx.rawValue]).appendingCRC()
     }
     
     var characteristic: DexcomG6CharacteristicType {
