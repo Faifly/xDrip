@@ -21,10 +21,7 @@ struct LogController {
         case 6: os_log(message, log: .default, type: type, args[0], args[1], args[2], args[3], args[4], args[5])
         default: os_log(message, log: .default, type: type, args)
         }
-    }
-    
-    static func log(message: StaticString, type: OSLogType) {
-        os_log(message, log: .default, type: type)
+        DebugController.shared.log(message: message, args: args)
     }
     
     static func log(message: StaticString, type: OSLogType, error: Error?) {
