@@ -7,6 +7,40 @@
 //
 
 import XCTest
+@testable import xDrip
 
 final class InitialSetupG6StepWorkerTests: XCTestCase {
+    
+    let sut = InitialSetupG6StepWorker()
+    
+    func testInitConnectionStep() {
+        // When
+        sut.initConnectionStep()
+        
+        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupG6ConnectViewController)
+    }
+    
+    func testCompleteStep() {
+        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupG6DeviceIDViewController)
+        
+        // When
+        sut.completeStep()
+        // Then
+        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupG6SensorAgeViewController)
+        
+        // When
+        sut.completeStep()
+        // Then
+        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupG6ConnectViewController)
+        
+        // When
+        sut.completeStep()
+        // Then
+        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupG6WarmUpViewController)
+        
+        // When
+        sut.completeStep()
+        // Then
+        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupG6WarmUpViewController)
+    }
 }
