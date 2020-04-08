@@ -16,6 +16,20 @@ final class InitialSetupG6ConnectViewController: InitialSetupAbstractStepViewCon
         let transmitterTime: String?
     }
     
+    required init(connectionWorker: InitialSetupDexcomG6ConnectionWorkerProtocol) {
+        super.init()
+        
+        worker = connectionWorker
+    }
+    
+    required init() {
+        fatalError("Use DI init")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("Use DI init")
+    }
+    
     @IBOutlet private weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var firmwareLabel: UILabel!
     @IBOutlet private weak var batteryALabel: UILabel!
@@ -28,16 +42,16 @@ final class InitialSetupG6ConnectViewController: InitialSetupAbstractStepViewCon
         interactor?.doCompleteCustomDeviceStep(request: request)
     }
     
-    private let worker = InitialSetupDexcomG6ConnectionWorker()
+    private var worker: InitialSetupDexcomG6ConnectionWorkerProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        worker.onSuccessfulConnection = { [weak self] viewModel in
+        worker?.onSuccessfulConnection = { [weak self] viewModel in
             guard let self = self else { return }
             self.update(withViewModel: viewModel)
         }
-        worker.startConnectionProcess()
+        worker?.startConnectionProcess()
     }
     
     private func update(withViewModel viewModel: ViewModel) {

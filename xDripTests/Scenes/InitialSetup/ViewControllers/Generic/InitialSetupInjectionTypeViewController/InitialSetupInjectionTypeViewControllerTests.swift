@@ -36,7 +36,7 @@ final class InitialSetupInjectionTypeViewControllerTests: XCTestCase {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let penButton = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "penButton" }) as? UIButton else {
+        guard let penButton = sut.view.findView(with: "penButton") as? UIButton else {
             XCTFail("Cannot obtain button")
             return
         }
@@ -47,7 +47,7 @@ final class InitialSetupInjectionTypeViewControllerTests: XCTestCase {
         XCTAssertTrue(spy.calledSelectInjectionType)
         XCTAssert(spy.injectionType == .pen)
         
-        guard let pumpButton = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "pumpButton" }) as? UIButton else {
+        guard let pumpButton = sut.view.findView(with: "pumpButton") as? UIButton else {
             XCTFail("Cannot obtain button")
             return
         }

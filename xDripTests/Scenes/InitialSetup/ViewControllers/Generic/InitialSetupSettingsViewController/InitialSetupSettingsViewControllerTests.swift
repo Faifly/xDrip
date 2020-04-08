@@ -33,7 +33,7 @@ final class InitialSetupSettingsViewControllerTests: XCTestCase {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let button = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "saveButton" }) as? UIButton else {
+        guard let button = sut.view.findView(with: "saveButton") as? UIButton else {
             XCTFail("Cannot obtain button")
             return
         }

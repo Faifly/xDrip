@@ -11,7 +11,17 @@ import XCTest
 
 final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
     
-    let sut = InitialSetupG6ConnectViewController()
+    var sut: InitialSetupG6ConnectViewController!
+    
+    override func setUp() {
+        super.setUp()
+        
+        setupInitialSetupG6ConnectionViewController()
+    }
+    
+    private func setupInitialSetupG6ConnectionViewController() {
+        sut = InitialSetupG6ConnectViewController(connectionWorker: InitialSetupDexcomG6ConnectionWorkerSpy())
+    }
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
         var calledCompleteSetup = false
@@ -31,11 +41,30 @@ final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
         }
     }
     
+    private class InitialSetupDexcomG6ConnectionWorkerSpy: InitialSetupDexcomG6ConnectionWorkerProtocol {
+        var calledStartConnectionProcess = false
+        
+        var onSuccessfulConnection: ((InitialSetupG6ConnectViewController.ViewModel) -> ())?
+        
+        func startConnectionProcess() {
+            calledStartConnectionProcess = true
+            
+            let viewModel = InitialSetupG6ConnectViewController.ViewModel(
+                firmware: "firmware",
+                batteryA: "batteryA",
+                batteryB: "batteryB",
+                transmitterTime: "transmitterTime"
+            )
+            
+            onSuccessfulConnection?(viewModel)
+        }
+    }
+    
     func testOnContinueButton() {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let continueButton = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "continueButton" }) as? UIButton else {
+        guard let continueButton = sut.view.findView(with: "continueButton") as? UIButton else {
             XCTFail("Cannot obtain button")
             return
         }
@@ -48,78 +77,33 @@ final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
     }
     
     func testUpdate() {
-        let controller = CGMController.shared
+        let view = sut.view
         
-        guard let firmwareLabel = getView(for: "firmwareLabel") as? UILabel else {
+        guard let firmwareLabel = view?.findView(with: "firmwareLabel") as? UILabel else {
             XCTFail("Cannot obtain firmware label")
             return
         }
-        guard let batteryALabel = getView(for: "batteryALabel") as? UILabel else {
+        guard let batteryALabel = view?.findView(with: "batteryALabel") as? UILabel else {
             XCTFail("Cannot obtain batteryA label")
             return
         }
-        guard let batteryBLabel = getView(for: "batteryBLabel") as? UILabel else {
+        guard let batteryBLabel = view?.findView(with: "batteryBLabel") as? UILabel else {
             XCTFail("Cannot obtain batteryB label")
             return
         }
-        guard let transmitterTimeLabel = getView(for: "transmitterTimeLabel") as? UILabel else {
+        guard let transmitterTimeLabel = view?.findView(with: "transmitterTimeLabel") as? UILabel else {
             XCTFail("Cannot obtain transmitter time label")
             return
         }
-        guard let continueButton = getView(for: "continueButton") as? UIButton else {
+        guard let continueButton = view?.findView(with: "continueButton") as? UIButton else {
             XCTFail("Cannot obtain continue button")
             return
         }
         
-        XCTAssert(firmwareLabel.text == "Unknown")
-        XCTAssert(batteryALabel.text == "Unknown")
-        XCTAssert(batteryBLabel.text == "Unknown")
-        XCTAssert(transmitterTimeLabel.text == "Unknown")
-        XCTAssert(continueButton.isEnabled == false)
-        
-        
-        // When
-        controller.serviceDidUpdateMetadata(.firmwareVersion, value: "firmware")
-        // Then
-        XCTAssert(firmwareLabel.text == "Unknown")
-        XCTAssert(batteryALabel.text == "Unknown")
-        XCTAssert(batteryBLabel.text == "Unknown")
-        XCTAssert(transmitterTimeLabel.text == "Unknown")
-        XCTAssert(continueButton.isEnabled == false)
-        
-        // When
-        controller.serviceDidUpdateMetadata(.batteryVoltageA, value: "batteryA")
-        // Then
-        XCTAssert(firmwareLabel.text == "Unknown")
-        XCTAssert(batteryALabel.text == "Unknown")
-        XCTAssert(batteryBLabel.text == "Unknown")
-        XCTAssert(transmitterTimeLabel.text == "Unknown")
-        XCTAssert(continueButton.isEnabled == false)
-        
-        // When
-        controller.serviceDidUpdateMetadata(.batteryVoltageB, value: "batteryB")
-        // Then
-        XCTAssert(firmwareLabel.text == "Unknown")
-        XCTAssert(batteryALabel.text == "Unknown")
-        XCTAssert(batteryBLabel.text == "Unknown")
-        XCTAssert(transmitterTimeLabel.text == "Unknown")
-        XCTAssert(continueButton.isEnabled == false)
-        
-        // When
-        controller.serviceDidUpdateMetadata(.transmitterTime, value: "transmitterTime")
-        // Then
         XCTAssert(firmwareLabel.text == "firmware")
         XCTAssert(batteryALabel.text == "batteryA")
         XCTAssert(batteryBLabel.text == "batteryB")
         XCTAssert(transmitterTimeLabel.text == "transmitterTime")
         XCTAssert(continueButton.isEnabled == true)
-    }
-    
-    private func getView(for accessibilityID: String) -> UIView? {
-        guard let view = sut.view.subviews.first(where: { $0.accessibilityIdentifier == accessibilityID }) else {
-            return nil
-        }
-        
-        return view
     }
 }

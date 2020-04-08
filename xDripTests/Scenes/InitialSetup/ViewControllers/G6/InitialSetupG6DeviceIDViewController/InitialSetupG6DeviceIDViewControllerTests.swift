@@ -35,12 +35,12 @@ final class InitialSetupG6DeviceIDViewControllerTests: XCTestCase {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let textField = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "deviceIDTextField" }) as? UITextField else {
+        guard let textField = sut.view.findView(with: "deviceIDTextField") as? UITextField else {
             XCTFail("Cannot obtain textfield")
             return
         }
         
-        guard let continueButton = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "continueButton" }) as? UIButton else {
+        guard let continueButton = sut.view.findView(with: "continueButton") as? UIButton else {
             XCTFail("Cannot obtain button")
             return
         }

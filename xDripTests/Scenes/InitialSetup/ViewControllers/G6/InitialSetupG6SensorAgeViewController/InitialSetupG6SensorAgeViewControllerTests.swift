@@ -35,7 +35,7 @@ final class InitialSetupG6SensorAgeViewControllerTests: XCTestCase {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let continueButton = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "continueButton" }) as? UIButton else {
+        guard let continueButton = sut.view.findView(with: "continueButton") as? UIButton else {
             XCTFail("Cannot obtain button")
             return
         }

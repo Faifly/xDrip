@@ -36,7 +36,7 @@ final class InitialSetupTransmitterTypeViewControllerTests: XCTestCase {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let button = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "dexcomG6Button" }) as? UIButton else {
+        guard let button = sut.view.findView(with: "dexcomG6Button") as? UIButton else {
             XCTFail("Cannot obtain button")
             return
         }

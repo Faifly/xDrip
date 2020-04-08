@@ -36,7 +36,7 @@ final class InitialSetupDeviceModeViewControllerTests: XCTestCase {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let mainButton = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "mainButton" }) as? UIButton else {
+        guard let mainButton = sut.view.findView(with: "mainButton") as? UIButton else {
             XCTFail("Cannot obtain button")
             return
         }
@@ -47,7 +47,7 @@ final class InitialSetupDeviceModeViewControllerTests: XCTestCase {
         XCTAssertTrue(spy.calledSelectDeviceMode)
         XCTAssert(spy.deviceMode == .main)
         
-        guard let followerButton = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "followerButton" }) as? UIButton else {
+        guard let followerButton = sut.view.findView(with: "followerButton") as? UIButton else {
             XCTFail("Cannot obtain button")
             return
         }

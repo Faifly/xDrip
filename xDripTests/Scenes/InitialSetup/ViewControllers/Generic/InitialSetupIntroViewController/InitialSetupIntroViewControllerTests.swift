@@ -38,7 +38,7 @@ final class InitialSetupIntroViewControllerTests: XCTestCase {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let button = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "beginSetupButton"}) as? UIButton else {
+        guard let button = sut.view.findView(with: "beginSetupButton") as? UIButton else {
             XCTFail("Cannot obtain button")
             return
         }
@@ -53,7 +53,7 @@ final class InitialSetupIntroViewControllerTests: XCTestCase {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let button = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "skipButton" }) as? UIButton else {
+        guard let button = sut.view.findView(with: "skipButton") as? UIButton else {
             XCTFail("Cannot obtain button")
             return
         }

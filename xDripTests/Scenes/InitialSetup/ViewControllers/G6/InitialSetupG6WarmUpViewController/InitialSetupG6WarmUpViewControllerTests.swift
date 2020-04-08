@@ -35,7 +35,7 @@ final class InitialSetupG6WarmUpViewControllerTests: XCTestCase {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let finishButton = sut.view.subviews.first(where: { $0.accessibilityIdentifier == "finishButton" }) as? UIButton else {
+        guard let finishButton = sut.view.findView(with: "finishButton") as? UIButton else {
             XCTFail("Cannot obtain button")
             return
         }
