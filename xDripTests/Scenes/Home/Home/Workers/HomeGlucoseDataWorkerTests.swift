@@ -10,4 +10,23 @@ import XCTest
 @testable import xDrip
 
 final class HomeGlucoseDataWorkerTests: XCTestCase {
+    
+    let sut = HomeGlucoseDataWorker()
+    var calledDataHandler = false
+    
+    override func setUp() {
+        super.setUp()
+        
+        sut.glucoseDataHandler = { _ in
+            self.calledDataHandler = true
+        }
+    }
+    
+    func testCallback() {
+        // When
+        CGMController.shared.serviceDidReceiveGlucoseReading(raw: 0.0, filtered: 0.0)
+        
+        // Then
+        XCTAssertTrue(calledDataHandler)
+    }
 }
