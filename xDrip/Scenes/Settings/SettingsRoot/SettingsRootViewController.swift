@@ -16,19 +16,19 @@ protocol SettingsRootDisplayLogic: class {
     func displayLoad(viewModel: SettingsRoot.Load.ViewModel)
 }
 
-class SettingsRootViewController: NibViewController, SettingsRootDisplayLogic {
+class SettingsRootViewController: BaseSettingsViewController, SettingsRootDisplayLogic {
     var interactor: SettingsRootBusinessLogic?
     var router: (NSObjectProtocol & SettingsRootRoutingLogic & SettingsRootDataPassing)?
     
     // MARK: Object lifecycle
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Use regular init")
-    }
-    
     required init() {
         super.init()
         setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("Use regular init")
     }
     
     // MARK: Setup
@@ -81,6 +81,6 @@ class SettingsRootViewController: NibViewController, SettingsRootDisplayLogic {
     // MARK: Display
     
     func displayLoad(viewModel: SettingsRoot.Load.ViewModel) {
-        
+        update(with: viewModel.tableViewModel)
     }
 }

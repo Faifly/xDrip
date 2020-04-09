@@ -22,7 +22,65 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsRoot.Load.Response) {
-        let viewModel = SettingsRoot.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [
+            createApplicationSetupSection(response: response),
+            createProfileSetupSection(response: response)
+        ])
+        
+        let viewModel = SettingsRoot.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    private func createApplicationSetupSection(response: SettingsRoot.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createDisclosureCell(.chartSettings, detailText: nil, selectionHandler: response.selectionHandler),
+            createDisclosureCell(.alert, detailText: nil, selectionHandler: response.selectionHandler),
+            createDisclosureCell(.cloudUpload, detailText: nil, selectionHandler: response.selectionHandler),
+            createDisclosureCell(.modeSettings, detailText: "Master/Follower", selectionHandler: response.selectionHandler),
+            createDisclosureCell(.sensor, detailText: nil, selectionHandler: response.selectionHandler),
+            createDisclosureCell(.transmitter, detailText: nil, selectionHandler: response.selectionHandler)
+        ]
+        
+        return BaseSettings.Section.normal(cells: cells, header: "APPLICATION SETUP", footer: nil)
+    }
+    
+    private func createProfileSetupSection(response: SettingsRoot.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createDisclosureCell(.rangeSelection, detailText: nil, selectionHandler: response.selectionHandler),
+            createDisclosureCell(.userType, detailText: "Pen/Pump", selectionHandler: response.selectionHandler),
+            createDisclosureCell(.units, detailText: nil, selectionHandler: response.selectionHandler),
+            createDisclosureCell(.carbsDurationTime, detailText: nil, selectionHandler: response.selectionHandler),
+            createDisclosureCell(.insulinDurationTime, detailText: nil, selectionHandler: response.selectionHandler)
+        ]
+        
+        return BaseSettings.Section.normal(cells: cells, header: "PROFILE SETUP", footer: nil)
+    }
+    
+    private func createDisclosureCell(
+        _ field: SettingsRoot.Field,
+        detailText: String?,
+        selectionHandler: @escaping (SettingsRoot.Field) -> Void) -> BaseSettings.Cell {
+        return .disclosure(mainText: field.title, detailText: detailText) {
+            selectionHandler(field)
+        }
+    }
+}
+
+private extension SettingsRoot.Field {
+    var title: String {
+        switch self {
+        case .chartSettings: return "Chart Settings"
+        case .alert: return "Alert"
+        case .cloudUpload: return "Cloud Upload"
+        case .modeSettings: return "Mode Settings"
+        case .sensor: return "Sensor"
+        case .transmitter: return "Transmitter"
+        case .rangeSelection: return "Range Selection"
+        case .userType: return "User Type"
+        case .units: return "Units"
+        case .carbsDurationTime: return "Carbs Duration Time"
+        case .insulinDurationTime: return "Insulin Duration Time"
+        case .nightscoutService: return "Nightscout (Pump)"
+        }
     }
 }
