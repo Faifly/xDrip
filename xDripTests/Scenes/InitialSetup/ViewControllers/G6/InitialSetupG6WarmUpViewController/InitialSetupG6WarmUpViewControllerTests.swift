@@ -31,7 +31,7 @@ final class InitialSetupG6WarmUpViewControllerTests: XCTestCase {
         }
     }
     
-    func test() {
+    func testOnFinishButton() {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         

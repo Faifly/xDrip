@@ -32,7 +32,7 @@ final class InitialSetupDeviceModeViewControllerTests: XCTestCase {
         func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) { }
     }
     
-    func test() {
+    func testButtonsCallback() {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
