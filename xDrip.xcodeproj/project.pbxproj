@@ -317,6 +317,15 @@
 		580E4CD5243F78CB00565EDE /* SettingsUnitsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CD1243F78CB00565EDE /* SettingsUnitsInteractorTests.swift */; };
 		580E4CD6243F78CB00565EDE /* SettingsUnitsRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CD2243F78CB00565EDE /* SettingsUnitsRouterTests.swift */; };
 		580E4CD7243F78CB00565EDE /* SettingsUnitsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CD3243F78CB00565EDE /* SettingsUnitsPresenterTests.swift */; };
+		580E4CDF243F802F00565EDE /* SettingsModeMasterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CD9243F802F00565EDE /* SettingsModeMasterPresenter.swift */; };
+		580E4CE0243F802F00565EDE /* SettingsModeMasterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CDA243F802F00565EDE /* SettingsModeMasterRouter.swift */; };
+		580E4CE1243F802F00565EDE /* SettingsModeMasterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CDB243F802F00565EDE /* SettingsModeMasterModels.swift */; };
+		580E4CE2243F802F00565EDE /* SettingsModeMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CDC243F802F00565EDE /* SettingsModeMasterViewController.swift */; };
+		580E4CE3243F802F00565EDE /* SettingsModeMasterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CDD243F802F00565EDE /* SettingsModeMasterInteractor.swift */; };
+		580E4CEA243F805C00565EDE /* SettingsModeMasterViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CE6243F805C00565EDE /* SettingsModeMasterViewControllerTests.swift */; };
+		580E4CEB243F805C00565EDE /* SettingsModeMasterInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CE7243F805C00565EDE /* SettingsModeMasterInteractorTests.swift */; };
+		580E4CEC243F805C00565EDE /* SettingsModeMasterRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CE8243F805C00565EDE /* SettingsModeMasterRouterTests.swift */; };
+		580E4CED243F805C00565EDE /* SettingsModeMasterPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CE9243F805C00565EDE /* SettingsModeMasterPresenterTests.swift */; };
 		580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */; };
 		580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7792421457600C34948 /* EditFoodEntryRouter.swift */; };
 		580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC77A2421457600C34948 /* EditFoodEntryModels.swift */; };
@@ -826,6 +835,15 @@
 		580E4CD1243F78CB00565EDE /* SettingsUnitsInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsInteractorTests.swift; sourceTree = "<group>"; };
 		580E4CD2243F78CB00565EDE /* SettingsUnitsRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsRouterTests.swift; sourceTree = "<group>"; };
 		580E4CD3243F78CB00565EDE /* SettingsUnitsPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUnitsPresenterTests.swift; sourceTree = "<group>"; };
+		580E4CD9243F802F00565EDE /* SettingsModeMasterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterPresenter.swift; sourceTree = "<group>"; };
+		580E4CDA243F802F00565EDE /* SettingsModeMasterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterRouter.swift; sourceTree = "<group>"; };
+		580E4CDB243F802F00565EDE /* SettingsModeMasterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterModels.swift; sourceTree = "<group>"; };
+		580E4CDC243F802F00565EDE /* SettingsModeMasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterViewController.swift; sourceTree = "<group>"; };
+		580E4CDD243F802F00565EDE /* SettingsModeMasterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterInteractor.swift; sourceTree = "<group>"; };
+		580E4CE6243F805C00565EDE /* SettingsModeMasterViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterViewControllerTests.swift; sourceTree = "<group>"; };
+		580E4CE7243F805C00565EDE /* SettingsModeMasterInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterInteractorTests.swift; sourceTree = "<group>"; };
+		580E4CE8243F805C00565EDE /* SettingsModeMasterRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterRouterTests.swift; sourceTree = "<group>"; };
+		580E4CE9243F805C00565EDE /* SettingsModeMasterPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterPresenterTests.swift; sourceTree = "<group>"; };
 		580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryPresenter.swift; sourceTree = "<group>"; };
 		580EC7792421457600C34948 /* EditFoodEntryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryRouter.swift; sourceTree = "<group>"; };
 		580EC77A2421457600C34948 /* EditFoodEntryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryModels.swift; sourceTree = "<group>"; };
@@ -1747,6 +1765,7 @@
 			isa = PBXGroup;
 			children = (
 				580E4BC6243F733600565EDE /* SettingsModeRoot */,
+				580E4CD8243F801700565EDE /* SettingsModeMaster */,
 				580E4BC7243F735C00565EDE /* SettingsModeFollower */,
 			);
 			path = SettingsMode;
@@ -2009,6 +2028,7 @@
 			isa = PBXGroup;
 			children = (
 				580E4C86243F77F100565EDE /* SettingsModeRoot */,
+				580E4CE5243F804A00565EDE /* SettingsModeMaster */,
 				580E4C8F243F780500565EDE /* SettingsModeFollower */,
 			);
 			path = SettingsMode;
@@ -2121,6 +2141,29 @@
 				580E4CD3243F78CB00565EDE /* SettingsUnitsPresenterTests.swift */,
 			);
 			path = SettingsUnits;
+			sourceTree = "<group>";
+		};
+		580E4CD8243F801700565EDE /* SettingsModeMaster */ = {
+			isa = PBXGroup;
+			children = (
+				580E4CD9243F802F00565EDE /* SettingsModeMasterPresenter.swift */,
+				580E4CDA243F802F00565EDE /* SettingsModeMasterRouter.swift */,
+				580E4CDB243F802F00565EDE /* SettingsModeMasterModels.swift */,
+				580E4CDC243F802F00565EDE /* SettingsModeMasterViewController.swift */,
+				580E4CDD243F802F00565EDE /* SettingsModeMasterInteractor.swift */,
+			);
+			path = SettingsModeMaster;
+			sourceTree = "<group>";
+		};
+		580E4CE5243F804A00565EDE /* SettingsModeMaster */ = {
+			isa = PBXGroup;
+			children = (
+				580E4CE6243F805C00565EDE /* SettingsModeMasterViewControllerTests.swift */,
+				580E4CE7243F805C00565EDE /* SettingsModeMasterInteractorTests.swift */,
+				580E4CE8243F805C00565EDE /* SettingsModeMasterRouterTests.swift */,
+				580E4CE9243F805C00565EDE /* SettingsModeMasterPresenterTests.swift */,
+			);
+			path = SettingsModeMaster;
 			sourceTree = "<group>";
 		};
 		580EC78A24214CC600C34948 /* EntriesList */ = {
@@ -3198,6 +3241,7 @@
 				5805CA1D243892D6002AFA1B /* InitialSetupViewController.swift in Sources */,
 				5805C9A724389230002AFA1B /* DexcomG6TransmitterTimeTxMessage.swift in Sources */,
 				580E4B72243F716000565EDE /* SettingsAlertSingleTypeRouter.swift in Sources */,
+				580E4CE2243F802F00565EDE /* SettingsModeMasterViewController.swift in Sources */,
 				58F4CC85243BA2110053D17C /* DebugLogModels.swift in Sources */,
 				58443257243CD35600282A6C /* Settings.swift in Sources */,
 				580EC7BD2421521C00C34948 /* EditCalibrationRouter.swift in Sources */,
@@ -3207,10 +3251,12 @@
 				58A8A42B242523DF00CCFCAC /* FoodEntriesWorker.swift in Sources */,
 				58DDC45E2423C99B008CB04D /* TrainingEntry.swift in Sources */,
 				58B5FD3224190E2F00DB857D /* HomePresenter.swift in Sources */,
+				580E4CE1243F802F00565EDE /* SettingsModeMasterModels.swift in Sources */,
 				580EC79124214CDD00C34948 /* EntriesListRouter.swift in Sources */,
 				580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */,
 				580E4C05243F746F00565EDE /* SettingsUserTypeRootModels.swift in Sources */,
 				5805C9B724389230002AFA1B /* DexcomG6BluetoothService.swift in Sources */,
+				580E4CDF243F802F00565EDE /* SettingsModeMasterPresenter.swift in Sources */,
 				5805CA04243892D6002AFA1B /* InitialSetupG6WarmUpViewController.swift in Sources */,
 				580E4B74243F716000565EDE /* SettingsAlertSingleTypeViewController.swift in Sources */,
 				5805CA16243892D6002AFA1B /* InitialSetupDexcomG6IDSavingWorker.swift in Sources */,
@@ -3267,6 +3313,7 @@
 				580E4C04243F746F00565EDE /* SettingsUserTypeRootRouter.swift in Sources */,
 				5805C9B024389230002AFA1B /* DexcomG6OpCode.swift in Sources */,
 				5805C9B524389230002AFA1B /* DexcomG6Constants.swift in Sources */,
+				580E4CE0243F802F00565EDE /* SettingsModeMasterRouter.swift in Sources */,
 				5805C9A624389230002AFA1B /* DexcomG6BatteryStatusTxMessage.swift in Sources */,
 				580E4BEB243F73B200565EDE /* SettingsSensorViewController.swift in Sources */,
 				580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */,
@@ -3330,6 +3377,7 @@
 				2CBE1A94243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift in Sources */,
 				5805C9BA24389230002AFA1B /* CGMBluetoothService.swift in Sources */,
 				580E4B99243F721500565EDE /* NightscoutCloudConfigurationPresenter.swift in Sources */,
+				580E4CE3243F802F00565EDE /* SettingsModeMasterInteractor.swift in Sources */,
 				58160E0D2402E52000C792F4 /* TabBarView.swift in Sources */,
 				580EC79424214CDD00C34948 /* EntriesListInteractor.swift in Sources */,
 				584432AA243CFD9B00282A6C /* SettingsChartPresenter.swift in Sources */,
@@ -3408,12 +3456,14 @@
 				580EC79D24214D1200C34948 /* EntriesListPresenterTests.swift in Sources */,
 				58788B8B242657E6000EB113 /* TrainingIntensityTests.swift in Sources */,
 				5805CA792438A3B8002AFA1B /* DexcomG6AuthChallengeTxMessageTests.swift in Sources */,
+				580E4CEB243F805C00565EDE /* SettingsModeMasterInteractorTests.swift in Sources */,
 				5805CA822438A44B002AFA1B /* DexcomG6AuthRequestRxMessageTests.swift in Sources */,
 				5805CA402438A01D002AFA1B /* InitialSetupDeviceModeViewControllerTests.swift in Sources */,
 				5805CAA22438A707002AFA1B /* UIView+Effects_Tests.swift in Sources */,
 				58A8A42324251FC400CCFCAC /* GlucoseWarningLevelSettingTests.swift in Sources */,
 				580E4C4C243F773500565EDE /* SettingsAlertTypesRouterTests.swift in Sources */,
 				580EC7C92421525300C34948 /* EditCalibrationPresenterTests.swift in Sources */,
+				580E4CED243F805C00565EDE /* SettingsModeMasterPresenterTests.swift in Sources */,
 				5805CA862438A4B7002AFA1B /* DexcomG6AuthChallengeRxMessageTests.swift in Sources */,
 				580E4C95243F781500565EDE /* SettingsModeFollowerInteractorTests.swift in Sources */,
 				5805CA6B2438A2EE002AFA1B /* DexcomG6CharacteristicTypeTests.swift in Sources */,
@@ -3443,6 +3493,7 @@
 				58443268243CF93C00282A6C /* ChartSettingsTests.swift in Sources */,
 				580E4CB1243F786100565EDE /* SettingsChartRangesRouterTests.swift in Sources */,
 				5844326C243CF96B00282A6C /* AlertConfigurationTests.swift in Sources */,
+				580E4CEA243F805C00565EDE /* SettingsModeMasterViewControllerTests.swift in Sources */,
 				2C48E6EE242909F4006B63B0 /* UIView+Bindings_Tests.swift in Sources */,
 				580EC7B4242151EB00C34948 /* EditTrainingRouterTests.swift in Sources */,
 				584432B7243CFE1900282A6C /* SettingsChartInteractorTests.swift in Sources */,
@@ -3517,6 +3568,7 @@
 				5805CAA42438A72E002AFA1B /* Data+Hex_Tests.swift in Sources */,
 				58788B83242650FC000EB113 /* CalibrationEntriesWorkerTests.swift in Sources */,
 				580E4C4B243F773500565EDE /* SettingsAlertTypesInteractorTests.swift in Sources */,
+				580E4CEC243F805C00565EDE /* SettingsModeMasterRouterTests.swift in Sources */,
 				5805CA5A2438A148002AFA1B /* InitialSetupPresenterTests.swift in Sources */,
 				58160DFD2402C83900C792F4 /* RootPresenterTests.swift in Sources */,
 				2CBE1A9D2433718C003BE14E /* EntriesListSceneBuilderTests.swift in Sources */,
