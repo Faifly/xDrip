@@ -28,11 +28,23 @@ final class SettingsRootInteractor: SettingsRootBusinessLogic, SettingsRootDataS
     // MARK: Do something
     
     func doLoad(request: SettingsRoot.Load.Request) {
-        let response = SettingsRoot.Load.Response()
+        let user = User.current
+        
+        let response = SettingsRoot.Load.Response(
+            deviceMode: user.settings.deviceMode,
+            injectionType: user.settings.injectionType) { [weak self] field in
+                self?.handleFieldSelection(field)
+        }
         presenter?.presentLoad(response: response)
     }
     
     func doCancel(request: SettingsRoot.Cancel.Request) {
         router?.dismissSelf()
+    }
+    
+    // MARK: Logic
+    
+    private func handleFieldSelection(_ field: SettingsRoot.Field) {
+        
     }
 }

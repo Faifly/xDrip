@@ -15,6 +15,21 @@ import UIKit
 enum SettingsRoot {
     // MARK: Models
     
+    enum Field {
+        case chartSettings
+        case alert
+        case cloudUpload
+        case modeSettings
+        case sensor
+        case transmitter
+        case rangeSelection
+        case userType
+        case units
+        case carbsDurationTime
+        case insulinDurationTime
+        case nightscoutService
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -22,9 +37,13 @@ enum SettingsRoot {
         }
         
         struct Response {
+            let deviceMode: UserDeviceMode
+            let injectionType: UserInjectionType
+            let selectionHandler: (Field) -> Void
         }
         
         struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
         }
     }
     
