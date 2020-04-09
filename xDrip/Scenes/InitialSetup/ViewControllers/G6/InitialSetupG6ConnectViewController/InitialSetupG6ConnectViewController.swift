@@ -41,7 +41,7 @@ final class InitialSetupG6ConnectViewController: InitialSetupAbstractStepViewCon
         interactor?.doCompleteCustomDeviceStep(request: request)
     }
     
-    private var worker: InitialSetupDexcomG6ConnectionWorkerProtocol
+    private let worker: InitialSetupDexcomG6ConnectionWorkerProtocol
     
     override func viewDidLoad() {
         super.viewDidLoad()

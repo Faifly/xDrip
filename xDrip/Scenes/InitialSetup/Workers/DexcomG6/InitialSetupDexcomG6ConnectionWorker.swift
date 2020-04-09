@@ -9,7 +9,7 @@
 import Foundation
 
 
-protocol InitialSetupDexcomG6ConnectionWorkerProtocol {
+protocol InitialSetupDexcomG6ConnectionWorkerProtocol: class {
     var onSuccessfulConnection: ((InitialSetupG6ConnectViewController.ViewModel) -> ())? { get set }
     func startConnectionProcess()
 }
