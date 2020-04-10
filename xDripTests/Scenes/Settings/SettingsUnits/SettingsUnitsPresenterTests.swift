@@ -43,6 +43,8 @@ final class SettingsUnitsPresenterTests: XCTestCase {
         func displayLoad(viewModel: SettingsUnits.Load.ViewModel) {
             displayLoadCalled = true
         }
+        
+        func displaySelect(viewModel: SettingsUnits.Select.ViewModel) { }
     }
     
     // MARK: Tests
@@ -51,7 +53,7 @@ final class SettingsUnitsPresenterTests: XCTestCase {
         // Given
         let spy = SettingsUnitsDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsUnits.Load.Response()
+        let response = SettingsUnits.Load.Response(currentSelectedUnit: .default, selectionHandler: { _ in })
         
         // When
         sut.presentLoad(response: response)

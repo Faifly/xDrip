@@ -43,6 +43,8 @@ final class SettingsUnitsInteractorTests: XCTestCase {
         func presentLoad(response: SettingsUnits.Load.Response) {
             presentLoadCalled = true
         }
+        
+        func presentSelected(response: SettingsUnits.Select.Response) { }
     }
     
     final class SettingsUnitsRoutingLogicSpy: SettingsUnitsRoutingLogic {

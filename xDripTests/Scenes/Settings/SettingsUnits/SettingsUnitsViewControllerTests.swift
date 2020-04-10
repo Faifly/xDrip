@@ -69,7 +69,7 @@ final class SettingsUnitsViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsUnits.Load.ViewModel()
+        let viewModel = SettingsUnits.Load.ViewModel(tableViewModel: BaseSettings.ViewModel(sections: []))
         
         // When
         loadView()
