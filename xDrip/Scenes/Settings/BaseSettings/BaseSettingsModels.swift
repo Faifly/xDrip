@@ -11,7 +11,6 @@ import UIKit
 enum BaseSettings {
     enum Cell {
         case disclosure(mainText: String, detailText: String?, selectionHandler: () -> Void)
-        case checkmark(mainText: String, selected: Bool, selectionHandler: () -> Void)
         case textInput(mainText: String, detailText: String?, textChangedHandler: (String?) -> Void)
         case rightSwitch(text: String, isSwitchOn: Bool, switchHandler: (Bool) -> Void)
         case volumeSlider(value: Float, changeHandler: (Float) -> Void)
@@ -20,7 +19,7 @@ enum BaseSettings {
     
     enum Section {
         case normal(cells: [Cell], header: String?, footer: String?)
-        case singleSelection(cells: [String], header: String?, footer: String?, selectionHandler: (Int) -> Void)
+        case singleSelection(cells: [(String, Bool)], header: String?, footer: String?, selectionHandler: (Int) -> Void)
         
         var rowsCount: Int {
             switch self {

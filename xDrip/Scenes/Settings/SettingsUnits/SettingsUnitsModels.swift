@@ -23,7 +23,21 @@ enum SettingsUnits {
         
         struct Response {
             let currentSelectedUnit: GlucoseUnit
-            let selectionHandler: (GlucoseUnit) -> Void
+            let selectionHandler: (Int) -> Void
+        }
+        
+        struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
+        }
+    }
+    
+    enum Select {
+        struct Request {
+        }
+        
+        struct Response {
+            let currentSelectedUnit: GlucoseUnit
+            let selectionHandler: (Int) -> Void
         }
         
         struct ViewModel {

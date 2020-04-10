@@ -20,11 +20,6 @@ final class BaseSettingsCellFactory {
             cell.configure(mainText: mainText, detailText: detailText)
             return cell
             
-        case let .checkmark(mainText, selected, _):
-            let cell = tableView.dequeueReusableCell(ofType: BaseSettingsDisclosureCell.self, for: indexPath)
-            cell.configure(mainText: mainText, selected: selected)
-            return cell
-            
         case .textInput(_, _, _):
             // TODO: Implement
             fatalError()
@@ -43,8 +38,12 @@ final class BaseSettingsCellFactory {
         }
     }
     
-    func createSingleSelectionCell(title: String, indexPath: IndexPath) -> UITableViewCell {
-        // TODO: Implement
-        fatalError()
+    func createSingleSelectionCell(title: String, selected: Bool, indexPath: IndexPath) -> UITableViewCell {
+        guard let tableView = tableView else { fatalError() }
+        
+        let cell = tableView.dequeueReusableCell(ofType: BaseSettingsDisclosureCell.self, for: indexPath)
+        cell.configure(mainText: title, selected: selected)
+        
+        return cell
     }
 }

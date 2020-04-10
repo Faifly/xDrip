@@ -50,6 +50,7 @@ class BaseSettingsViewController: UIViewController {
         self.viewModel = viewModel
         if animated {
             // TODO: Implement
+            tableView.reloadSections(IndexSet(integersIn: 0 ..< viewModel.sections.count), with: .automatic)
         } else {
             tableView.reloadData()
         }
@@ -57,14 +58,14 @@ class BaseSettingsViewController: UIViewController {
     
     private func handleSelectionForNormalCell(_ cell: BaseSettings.Cell) {
         switch cell {
-        case .disclosure(_, _, let selectionHandler), .checkmark(_, _, let selectionHandler) :
+        case .disclosure(_, _, let selectionHandler):
             selectionHandler()
         default: break
         }
     }
     
     private func handleSingleSelection(indexPath: IndexPath, callback: (Int) -> Void) {
-        // TODO: Implement
+        callback(indexPath.row)
     }
 }
 
@@ -85,7 +86,7 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
             return cellFactory.createCell(ofType: cells[indexPath.row], indexPath: indexPath)
             
         case .singleSelection(let cells, _, _, _):
-            return cellFactory.createSingleSelectionCell(title: cells[indexPath.row], indexPath: indexPath)
+            return cellFactory.createSingleSelectionCell(title: cells[indexPath.row].0, selected: cells[indexPath.row].1, indexPath: indexPath)
         }
     }
     

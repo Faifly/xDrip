@@ -29,14 +29,20 @@ final class SettingsUnitsInteractor: SettingsUnitsBusinessLogic, SettingsUnitsDa
     func doLoad(request: SettingsUnits.Load.Request) {
         let user = User.current
         
-        let response = SettingsUnits.Load.Response(currentSelectedUnit: user.settings.unit) { [weak self] (unit) in
-            self?.handleUnitSelection(unit)
+        let response = SettingsUnits.Load.Response(currentSelectedUnit: user.settings.unit) { [weak self] (index) in
+            self?.handleUnitSelection(index)
         }
         presenter?.presentLoad(response: response)
     }
     
-    private func handleUnitSelection(_ unit: GlucoseUnit) {
+    private func handleUnitSelection(_ index: Int) {
+        guard let unit = GlucoseUnit(rawValue: index) else { return }
+        
         User.current.settings.updateUnit(unit)
-        doLoad(request: SettingsUnits.Load.Request())
+        
+        let response = SettingsUnits.Select.Response(currentSelectedUnit: unit) { [weak self] index in
+            self?.handleUnitSelection(index)
+        }
+        presenter?.presentSelected(response: response)
     }
 }

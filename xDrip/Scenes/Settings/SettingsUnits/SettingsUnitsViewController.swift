@@ -14,6 +14,7 @@ import UIKit
 
 protocol SettingsUnitsDisplayLogic: class {
     func displayLoad(viewModel: SettingsUnits.Load.ViewModel)
+    func displaySelect(viewModel: SettingsUnits.Select.ViewModel)
 }
 
 class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisplayLogic {
@@ -71,5 +72,9 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
     
     func displayLoad(viewModel: SettingsUnits.Load.ViewModel) {
         update(with: viewModel.tableViewModel)
+    }
+    
+    func displaySelect(viewModel: SettingsUnits.Select.ViewModel) {
+        update(with: viewModel.tableViewModel, animated: true)
     }
 }

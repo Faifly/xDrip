@@ -14,6 +14,7 @@ import UIKit
 
 protocol SettingsUnitsPresentationLogic {
     func presentLoad(response: SettingsUnits.Load.Response)
+    func presentSelected(response: SettingsUnits.Select.Response)
 }
 
 final class SettingsUnitsPresenter: SettingsUnitsPresentationLogic {
@@ -30,23 +31,25 @@ final class SettingsUnitsPresenter: SettingsUnitsPresentationLogic {
         viewController?.displayLoad(viewModel: viewModel)
     }
     
-    private func createUnitsSection(response: SettingsUnits.Load.Response) -> BaseSettings.Section {
-        var cells = [BaseSettings.Cell]()
+    func presentSelected(response: SettingsUnits.Select.Response) {
+        let tableViewModel = BaseSettings.ViewModel(sections: [
+            createUnitsSection(response: response)
+        ])
         
-        GlucoseUnit.allCases.forEach { (unit) in
-            cells.append(createCheckmarkCell(unit, selected: unit == response.currentSelectedUnit, selectionHandler: response.selectionHandler))
-        }
-        
-        return BaseSettings.Section.normal(cells: cells, header: nil, footer: nil)
+        let viewModel = SettingsUnits.Select.ViewModel(tableViewModel: tableViewModel)
+        viewController?.displaySelect(viewModel: viewModel)
     }
     
-    private func createCheckmarkCell(
-        _ unit: GlucoseUnit,
-        selected: Bool,
-        selectionHandler: @escaping (GlucoseUnit) -> Void) -> BaseSettings.Cell {
-        return BaseSettings.Cell.checkmark(mainText: unit.title, selected: selected) {
-            selectionHandler(unit)
-        }
+    private func createUnitsSection(response: SettingsUnits.Load.Response) -> BaseSettings.Section {
+        let titles = GlucoseUnit.allCases.map { ($0.title, $0 == response.currentSelectedUnit) }
+        
+        return BaseSettings.Section.singleSelection(cells: titles, header: nil, footer: nil, selectionHandler: response.selectionHandler)
+    }
+    
+    private func createUnitsSection(response: SettingsUnits.Select.Response) -> BaseSettings.Section {
+        let titles = GlucoseUnit.allCases.map { ($0.title, $0 == response.currentSelectedUnit) }
+        
+        return BaseSettings.Section.singleSelection(cells: titles, header: nil, footer: nil, selectionHandler: response.selectionHandler)
     }
 }
 
