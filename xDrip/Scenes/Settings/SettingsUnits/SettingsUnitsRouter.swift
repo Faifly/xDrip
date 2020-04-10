@@ -13,7 +13,7 @@
 import UIKit
 
 @objc protocol SettingsUnitsRoutingLogic {
-    
+    func dismissScene()
 }
 
 protocol SettingsUnitsDataPassing {
@@ -26,4 +26,7 @@ final class SettingsUnitsRouter: NSObject, SettingsUnitsRoutingLogic, SettingsUn
     
     // MARK: Routing
     
+    func dismissScene() {
+        viewController?.dismiss(animated: true, completion: nil)
+    }
 }

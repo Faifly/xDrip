@@ -27,7 +27,16 @@ final class SettingsUnitsInteractor: SettingsUnitsBusinessLogic, SettingsUnitsDa
     // MARK: Do something
     
     func doLoad(request: SettingsUnits.Load.Request) {
-        let response = SettingsUnits.Load.Response()
+        let user = User.current
+        
+        let response = SettingsUnits.Load.Response(currentSelectedUnit: user.settings.unit) { [weak self] (unit) in
+            self?.handleUnitSelection(unit)
+        }
         presenter?.presentLoad(response: response)
+    }
+    
+    private func handleUnitSelection(_ unit: GlucoseUnit) {
+        User.current.settings.updateUnit(unit)
+        doLoad(request: SettingsUnits.Load.Request())
     }
 }

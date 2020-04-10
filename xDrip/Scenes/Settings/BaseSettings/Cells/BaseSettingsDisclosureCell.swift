@@ -13,4 +13,10 @@ final class BaseSettingsDisclosureCell: UITableViewCell {
         textLabel?.text = mainText
         detailTextLabel?.text = detailText
     }
+    
+    func configure(mainText: String, selected: Bool) {
+        textLabel?.text = mainText
+        detailTextLabel?.text = nil
+        accessoryType = selected ? .checkmark : .none
+    }
 }

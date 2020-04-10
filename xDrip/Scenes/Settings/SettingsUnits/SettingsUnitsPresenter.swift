@@ -22,7 +22,39 @@ final class SettingsUnitsPresenter: SettingsUnitsPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsUnits.Load.Response) {
-        let viewModel = SettingsUnits.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [
+            createUnitsSection(response: response)
+        ])
+        
+        let viewModel = SettingsUnits.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    private func createUnitsSection(response: SettingsUnits.Load.Response) -> BaseSettings.Section {
+        var cells = [BaseSettings.Cell]()
+        
+        GlucoseUnit.allCases.forEach { (unit) in
+            cells.append(createCheckmarkCell(unit, selected: unit == response.currentSelectedUnit, selectionHandler: response.selectionHandler))
+        }
+        
+        return BaseSettings.Section.normal(cells: cells, header: nil, footer: nil)
+    }
+    
+    private func createCheckmarkCell(
+        _ unit: GlucoseUnit,
+        selected: Bool,
+        selectionHandler: @escaping (GlucoseUnit) -> Void) -> BaseSettings.Cell {
+        return BaseSettings.Cell.checkmark(mainText: unit.title, selected: selected) {
+            selectionHandler(unit)
+        }
+    }
+}
+
+private extension GlucoseUnit {
+    var title: String {
+        switch self {
+        case .mgDl: return "mgDl"
+        case .mmolL: return "mmolL"
+        }
     }
 }

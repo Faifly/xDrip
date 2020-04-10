@@ -57,7 +57,7 @@ class BaseSettingsViewController: UIViewController {
     
     private func handleSelectionForNormalCell(_ cell: BaseSettings.Cell) {
         switch cell {
-        case .disclosure(_, _, let selectionHandler) :
+        case .disclosure(_, _, let selectionHandler), .checkmark(_, _, let selectionHandler) :
             selectionHandler()
         default: break
         }

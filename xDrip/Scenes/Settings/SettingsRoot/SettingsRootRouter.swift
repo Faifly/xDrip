@@ -14,6 +14,7 @@ import UIKit
 
 @objc protocol SettingsRootRoutingLogic {
     func dismissSelf()
+    func routeToUnits()
 }
 
 protocol SettingsRootDataPassing {
@@ -28,5 +29,10 @@ final class SettingsRootRouter: NSObject, SettingsRootRoutingLogic, SettingsRoot
     
     func dismissSelf() {
         viewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    func routeToUnits() {
+        let unitsController = SettingsUnitsViewController()
+        viewController?.navigationController?.pushViewController(unitsController, animated: true)
     }
 }

@@ -52,6 +52,8 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
+        
+        setupUI()
     }
     
     // MARK: Do something
@@ -61,9 +63,13 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
         interactor?.doLoad(request: request)
     }
     
+    private func setupUI() {
+        title = "Units"
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: SettingsUnits.Load.ViewModel) {
-        
+        update(with: viewModel.tableViewModel)
     }
 }

@@ -20,6 +20,11 @@ final class BaseSettingsCellFactory {
             cell.configure(mainText: mainText, detailText: detailText)
             return cell
             
+        case let .checkmark(mainText, selected, _):
+            let cell = tableView.dequeueReusableCell(ofType: BaseSettingsDisclosureCell.self, for: indexPath)
+            cell.configure(mainText: mainText, selected: selected)
+            return cell
+            
         case .textInput(_, _, _):
             // TODO: Implement
             fatalError()
