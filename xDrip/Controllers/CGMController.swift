@@ -53,9 +53,17 @@ final class CGMController {
     private(set) var service: CGMBluetoothService?
     
     func setupService(for type: CGMDeviceType) {
+        #if targetEnvironment(simulator)
+        injectBluetoothService(MockedBluetoothService(delegate: self))
+        #else
         switch type {
-        case .dexcomG6: service = DexcomG6BluetoothService(delegate: self)
+        case .dexcomG6: injectBluetoothService(DexcomG6BluetoothService(delegate: self))
         }
+        #endif
+    }
+    
+    func injectBluetoothService(_ service: CGMBluetoothService) {
+        self.service = service
     }
 }
 

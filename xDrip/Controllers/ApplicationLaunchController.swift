@@ -16,6 +16,7 @@ final class ApplicationLaunchController {
         #if !targetEnvironment(macCatalyst)
         FirebaseApp.configure()
         #endif
+        setupDevice()
     }
     
     static func createWindow() -> UIWindow {
@@ -23,5 +24,12 @@ final class ApplicationLaunchController {
         window.rootViewController = RootViewController()
         window.makeKeyAndVisible()
         return window
+    }
+    
+    private static func setupDevice() {
+        if let deviceType = CGMDevice.current.deviceType, !CGMDevice.current.isSetupInProgress {
+            CGMController.shared.setupService(for: deviceType)
+            CGMController.shared.service?.connect()
+        }
     }
 }
