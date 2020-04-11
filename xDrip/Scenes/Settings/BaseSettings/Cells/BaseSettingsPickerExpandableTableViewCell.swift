@@ -68,8 +68,8 @@ extension BaseSettingsPickerExpandableTableViewCell: UIPickerViewDelegate, UIPic
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         var string = ""
-        for i in 0 ..< pickerView.numberOfComponents {
-            string += dataSource[i][pickerView.selectedRow(inComponent: i)] + " "
+        for idx in 0 ..< pickerView.numberOfComponents {
+            string += dataSource[idx][pickerView.selectedRow(inComponent: idx)] + " "
         }
         
         print(string)
