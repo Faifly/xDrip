@@ -14,7 +14,7 @@ enum BaseSettings {
         case textInput(mainText: String, detailText: String?, textChangedHandler: (String?) -> Void)
         case rightSwitch(text: String, isSwitchOn: Bool, switchHandler: (Bool) -> Void)
         case volumeSlider(value: Float, changeHandler: (Float) -> Void)
-        case pickerExpandable(mainText: String, detailText: String?, picker: UIPickerView)
+        case pickerExpandable(mainText: String, detailText: String?, dataSource: [[String]], picker: UIView)
     }
     
     enum Section {

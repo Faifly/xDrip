@@ -10,7 +10,14 @@ import UIKit
 
 class BaseSettingsViewController: UIViewController {
     private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
+        var tableView: UITableView
+        
+        if #available(iOS 13.0, *) {
+            tableView = UITableView(frame: .zero, style: .insetGrouped)
+        } else {
+            tableView = UITableView(frame: .zero, style: .grouped)
+        }
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -18,6 +25,11 @@ class BaseSettingsViewController: UIViewController {
         tableView.bindToSuperview()
         
         tableView.registerNib(type: BaseSettingsDisclosureCell.self)
+        tableView.registerNib(type: BaseSettingsSingleSelectionTableViewCell.self)
+        tableView.registerNib(type: BaseSettingsRightSwitchTableViewCell.self)
+        tableView.registerNib(type: BaseSettingsVolumeSliderTableViewCell.self)
+        tableView.registerNib(type: BaseSettingsPickerExpandableTableViewCell.self)
+        tableView.registerNib(type: BaseSettingsTextInputTableViewCell.self)
         
         return tableView
     }()
@@ -105,6 +117,22 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
         switch section {
         case .normal(let cells, _, _):
             handleSelectionForNormalCell(cells[indexPath.row])
+            
+            switch cells[indexPath.row] {
+            case .pickerExpandable(_, _, _, _):
+                guard let cell = tableView.cellForRow(at: indexPath) as? BaseSettingsPickerExpandableTableViewCell else {
+                    break
+                }
+                
+                cell.addPicker()
+                
+                tableView.deselectRow(at: indexPath, animated: true)
+                
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            default:
+                break
+            }
             
         case .singleSelection(_, _, _, let selectionHandler):
             handleSingleSelection(indexPath: indexPath, callback: selectionHandler)

@@ -23,6 +23,7 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
     
     func presentLoad(response: SettingsRoot.Load.Response) {
         let tableViewModel = BaseSettings.ViewModel(sections: [
+            createTestSection(),
             createApplicationSetupSection(response: response),
             createProfileSetupSection(response: response)
         ])
@@ -50,10 +51,22 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
             createDisclosureCell(.userType, detailText: "Pen/Pump", selectionHandler: response.selectionHandler),
             createDisclosureCell(.units, detailText: nil, selectionHandler: response.selectionHandler),
             createDisclosureCell(.carbsDurationTime, detailText: nil, selectionHandler: response.selectionHandler),
-            createDisclosureCell(.insulinDurationTime, detailText: nil, selectionHandler: response.selectionHandler)
+            createDisclosureCell(.insulinDurationTime, detailText: nil, selectionHandler: response.selectionHandler),
         ]
         
         return BaseSettings.Section.normal(cells: cells, header: "PROFILE SETUP", footer: nil)
+    }
+    
+    private func createTestSection() -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createRightSwitchCell(.alert, isSwitchOn: Bool.random(), switchHandler: { _ in }),
+            createVolumeSliderCell(Float.random(in: 0...1), valueChangedHandler: { _ in }),
+            createTextInputCell(.modeSettings, detailText: "test text", textChangeHandler: { _ in }),
+            createPickerExpandableCell(.carbsDurationTime, detailText: nil, picker: UIPickerView()),
+            createPickerExpandableCell(.insulinDurationTime, detailText: nil, picker: UIDatePicker())
+        ]
+        
+        return BaseSettings.Section.normal(cells: cells, header: "TEST", footer: nil)
     }
     
     private func createDisclosureCell(
@@ -63,6 +76,33 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
         return .disclosure(mainText: field.title, detailText: detailText) {
             selectionHandler(field)
         }
+    }
+    
+    private func createRightSwitchCell(
+        _ field: SettingsRoot.Field,
+        isSwitchOn: Bool,
+        switchHandler: @escaping (Bool) -> Void) -> BaseSettings.Cell {
+        return .rightSwitch(text: field.title, isSwitchOn: isSwitchOn) { _ in }
+    }
+    
+    private func createPickerExpandableCell(
+        _ field: SettingsRoot.Field,
+        detailText: String?,
+        picker: UIView) -> BaseSettings.Cell {
+        return .pickerExpandable(mainText: field.title, detailText: nil, dataSource: [["1", "2", "3"], ["1", "2"], ["mgDl", "mmolL"]], picker: picker)
+    }
+    
+    private func createVolumeSliderCell(
+        _ value: Float,
+        valueChangedHandler: @escaping (Float) -> Void) -> BaseSettings.Cell {
+        return .volumeSlider(value: value, changeHandler: valueChangedHandler)
+    }
+    
+    private func createTextInputCell(
+        _ field: SettingsRoot.Field,
+        detailText: String?,
+        textChangeHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
+        return .textInput(mainText: field.title, detailText: detailText, textChangedHandler: textChangeHandler)
     }
 }
 

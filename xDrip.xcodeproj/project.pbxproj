@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C09D21224410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */; };
+		2C09D21324410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */; };
+		2C09D2162441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */; };
+		2C09D2172441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D2152441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.xib */; };
+		2C09D21E2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D21C2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.swift */; };
+		2C09D21F2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D21D2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.xib */; };
+		2C09D2222441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2202441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.swift */; };
+		2C09D2232441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D2212441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.xib */; };
+		2C09D2262441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2242441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift */; };
+		2C09D2272441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D2252441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib */; };
 		2C48E6E42428AA78006B63B0 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */; };
 		2C48E6EA2428F592006B63B0 /* UIColor+Colors_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */; };
 		2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */; };
@@ -527,6 +537,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsRightSwitchTableViewCell.swift; sourceTree = "<group>"; };
+		2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsRightSwitchTableViewCell.xib; sourceTree = "<group>"; };
+		2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsSingleSelectionTableViewCell.swift; sourceTree = "<group>"; };
+		2C09D2152441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsSingleSelectionTableViewCell.xib; sourceTree = "<group>"; };
+		2C09D21C2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsVolumeSliderTableViewCell.swift; sourceTree = "<group>"; };
+		2C09D21D2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsVolumeSliderTableViewCell.xib; sourceTree = "<group>"; };
+		2C09D2202441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsPickerExpandableTableViewCell.swift; sourceTree = "<group>"; };
+		2C09D2212441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsPickerExpandableTableViewCell.xib; sourceTree = "<group>"; };
+		2C09D2242441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsTextInputTableViewCell.swift; sourceTree = "<group>"; };
+		2C09D2252441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsTextInputTableViewCell.xib; sourceTree = "<group>"; };
 		2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 		2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors_Tests.swift"; sourceTree = "<group>"; };
 		2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings.swift"; sourceTree = "<group>"; };
@@ -1644,6 +1664,16 @@
 			children = (
 				580E4B41243E38B300565EDE /* BaseSettingsDisclosureCell.swift */,
 				580E4B42243E38B300565EDE /* BaseSettingsDisclosureCell.xib */,
+				2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */,
+				2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */,
+				2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */,
+				2C09D2152441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.xib */,
+				2C09D21C2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.swift */,
+				2C09D21D2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.xib */,
+				2C09D2202441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.swift */,
+				2C09D2212441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.xib */,
+				2C09D2242441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift */,
+				2C09D2252441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -3079,6 +3109,7 @@
 			files = (
 				580E4BFA243F73E200565EDE /* SettingsChartRangesViewController.xib in Resources */,
 				58B4F6C924116394003C6D8F /* Localizable.strings in Resources */,
+				2C09D21F2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.xib in Resources */,
 				58184A472438BE8E00E848C6 /* RootViewController.xib in Resources */,
 				5805CA0E243892D6002AFA1B /* InitialSetupSettingsViewController.xib in Resources */,
 				58184A4B2438C20D00E848C6 /* EntriesListViewController.xib in Resources */,
@@ -3086,6 +3117,8 @@
 				58184A4D2438C30500E848C6 /* EditTrainingViewController.xib in Resources */,
 				5805CA0C243892D6002AFA1B /* InitialSetupIntroViewController.xib in Resources */,
 				58184A492438C1E800E848C6 /* EditFoodEntryViewController.xib in Resources */,
+				2C09D2272441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib in Resources */,
+				2C09D21324410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib in Resources */,
 				580E4C22243F74A300565EDE /* SettingsPumpUserViewController.xib in Resources */,
 				5805CA03243892D6002AFA1B /* InitialSetupG6WarmUpViewController.xib in Resources */,
 				5805CA06243892D6002AFA1B /* InitialSetupG6ConnectViewController.xib in Resources */,
@@ -3094,8 +3127,10 @@
 				58B4F67F24114938003C6D8F /* GoogleService-Info.plist in Resources */,
 				58184A532438C51100E848C6 /* HistoryRootViewController.xib in Resources */,
 				58E5A67C2402B8A8002C2BE3 /* LaunchScreen.storyboard in Resources */,
+				2C09D2232441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.xib in Resources */,
 				580E4C08243F746F00565EDE /* SettingsUserTypeRootViewController.xib in Resources */,
 				5805CA0A243892D6002AFA1B /* InitialSetupG6DeviceIDViewController.xib in Resources */,
+				2C09D2172441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.xib in Resources */,
 				5805CA12243892D6002AFA1B /* InitialSetupDeviceModeViewController.xib in Resources */,
 				58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */,
 				58F4CC89243BA21D0053D17C /* DebugLogViewController.xib in Resources */,
@@ -3246,6 +3281,7 @@
 				580E4B65243F713A00565EDE /* SettingsAlertTypesRouter.swift in Sources */,
 				580E4BC0243F733100565EDE /* SettingsModeRootPresenter.swift in Sources */,
 				580E4B9B243F721500565EDE /* NightscoutCloudConfigurationModels.swift in Sources */,
+				2C09D2162441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift in Sources */,
 				58DDC4642423CAA3008CB04D /* CalibrationEntry.swift in Sources */,
 				580E4C20243F74A300565EDE /* SettingsPumpUserViewController.swift in Sources */,
 				580E4BA9243F723200565EDE /* NightscoutCloudExtraOptionsViewController.swift in Sources */,
@@ -3343,6 +3379,7 @@
 				5805C9AF24389230002AFA1B /* DexcomG6PairRequestRxMessage.swift in Sources */,
 				580E4B9D243F721500565EDE /* NightscoutCloudConfigurationInteractor.swift in Sources */,
 				2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */,
+				2C09D2222441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.swift in Sources */,
 				5805C9CD243892A8002AFA1B /* Data+Hex.swift in Sources */,
 				58F4CC79243B9F470053D17C /* MacMenuController.swift in Sources */,
 				580E4BA7243F723200565EDE /* NightscoutCloudExtraOptionsRouter.swift in Sources */,
@@ -3361,12 +3398,14 @@
 				58B5FD3324190E2F00DB857D /* HomeRouter.swift in Sources */,
 				2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */,
 				58160DF52402C7F600C792F4 /* RootViewController.swift in Sources */,
+				2C09D21224410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift in Sources */,
 				5805C9C02438925F002AFA1B /* CGMDeviceMetadataType.swift in Sources */,
 				580E4BB4243F725600565EDE /* NightscoutCloudBackfillRouter.swift in Sources */,
 				5805C9C12438925F002AFA1B /* CGMDeviceMetadata.swift in Sources */,
 				580E4BE9243F73B200565EDE /* SettingsSensorRouter.swift in Sources */,
 				58B5FD4B24190EB300DB857D /* HistoryRootInteractor.swift in Sources */,
 				580E4C21243F74A300565EDE /* SettingsPumpUserInteractor.swift in Sources */,
+				2C09D21E2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.swift in Sources */,
 				58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */,
 				58788B75242647C5000EB113 /* TrainingEntriesWorker.swift in Sources */,
 				58DDC4622423CA58008CB04D /* AbstractEntry.swift in Sources */,
@@ -3408,6 +3447,7 @@
 				580E4BB3243F725600565EDE /* NightscoutCloudBackfillPresenter.swift in Sources */,
 				580E4B5A243F711200565EDE /* SettingsAlertRootViewController.swift in Sources */,
 				5805CA15243892D6002AFA1B /* InitialSetupInjectionTypeViewController.swift in Sources */,
+				2C09D2262441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift in Sources */,
 				580E4BDF243F739C00565EDE /* SettingsTransmitterInteractor.swift in Sources */,
 				580E4C14243F748500565EDE /* SettingsPenUserInteractor.swift in Sources */,
 				58DDC44F2423B5B1008CB04D /* UserInjectionType.swift in Sources */,
