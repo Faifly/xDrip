@@ -327,6 +327,8 @@
 		580E4CEB243F805C00565EDE /* SettingsModeMasterInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CE7243F805C00565EDE /* SettingsModeMasterInteractorTests.swift */; };
 		580E4CEC243F805C00565EDE /* SettingsModeMasterRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CE8243F805C00565EDE /* SettingsModeMasterRouterTests.swift */; };
 		580E4CED243F805C00565EDE /* SettingsModeMasterPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CE9243F805C00565EDE /* SettingsModeMasterPresenterTests.swift */; };
+		580E4CF02440BC0300565EDE /* MockedBluetoothService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CEF2440BC0300565EDE /* MockedBluetoothService.swift */; };
+		580E4CF22440BC6300565EDE /* MockedBluetoothServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CF12440BC6300565EDE /* MockedBluetoothServiceConfiguration.swift */; };
 		580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */; };
 		580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7792421457600C34948 /* EditFoodEntryRouter.swift */; };
 		580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC77A2421457600C34948 /* EditFoodEntryModels.swift */; };
@@ -846,6 +848,8 @@
 		580E4CE7243F805C00565EDE /* SettingsModeMasterInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterInteractorTests.swift; sourceTree = "<group>"; };
 		580E4CE8243F805C00565EDE /* SettingsModeMasterRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterRouterTests.swift; sourceTree = "<group>"; };
 		580E4CE9243F805C00565EDE /* SettingsModeMasterPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterPresenterTests.swift; sourceTree = "<group>"; };
+		580E4CEF2440BC0300565EDE /* MockedBluetoothService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedBluetoothService.swift; sourceTree = "<group>"; };
+		580E4CF12440BC6300565EDE /* MockedBluetoothServiceConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedBluetoothServiceConfiguration.swift; sourceTree = "<group>"; };
 		580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryPresenter.swift; sourceTree = "<group>"; };
 		580EC7792421457600C34948 /* EditFoodEntryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryRouter.swift; sourceTree = "<group>"; };
 		580EC77A2421457600C34948 /* EditFoodEntryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryModels.swift; sourceTree = "<group>"; };
@@ -1143,6 +1147,7 @@
 		5805C97E24389230002AFA1B /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
+				580E4CEE2440BBE400565EDE /* Mocked */,
 				5805C97F24389230002AFA1B /* DexcomG6 */,
 				5805C99D24389230002AFA1B /* CGMBluetoothServiceError.swift */,
 				5805C99E24389230002AFA1B /* CGMBluetoothServiceDelegate.swift */,
@@ -2166,6 +2171,15 @@
 				580E4CE9243F805C00565EDE /* SettingsModeMasterPresenterTests.swift */,
 			);
 			path = SettingsModeMaster;
+			sourceTree = "<group>";
+		};
+		580E4CEE2440BBE400565EDE /* Mocked */ = {
+			isa = PBXGroup;
+			children = (
+				580E4CEF2440BC0300565EDE /* MockedBluetoothService.swift */,
+				580E4CF12440BC6300565EDE /* MockedBluetoothServiceConfiguration.swift */,
+			);
+			path = Mocked;
 			sourceTree = "<group>";
 		};
 		580EC78A24214CC600C34948 /* EntriesList */ = {
@@ -3239,6 +3253,7 @@
 				580E4C20243F74A300565EDE /* SettingsPumpUserViewController.swift in Sources */,
 				580E4BA9243F723200565EDE /* NightscoutCloudExtraOptionsViewController.swift in Sources */,
 				580E4BD0243F736D00565EDE /* SettingsModeFollowerModels.swift in Sources */,
+				580E4CF22440BC6300565EDE /* MockedBluetoothServiceConfiguration.swift in Sources */,
 				580E4B9C243F721500565EDE /* NightscoutCloudConfigurationViewController.swift in Sources */,
 				5805C9A324389230002AFA1B /* DexcomG6PairRequestTxMessage.swift in Sources */,
 				5805CA1D243892D6002AFA1B /* InitialSetupViewController.swift in Sources */,
@@ -3311,6 +3326,7 @@
 				580EC7AA242151BC00C34948 /* EditTrainingModels.swift in Sources */,
 				2CBE1A8D243211A5003BE14E /* EntriesListSceneBuilder.swift in Sources */,
 				580E4BDE243F739C00565EDE /* SettingsTransmitterViewController.swift in Sources */,
+				580E4CF02440BC0300565EDE /* MockedBluetoothService.swift in Sources */,
 				2CBE1A902432127C003BE14E /* EntriesListCarbsPersistenceWorker.swift in Sources */,
 				5805CA19243892D6002AFA1B /* InitialSetupG6StepWorker.swift in Sources */,
 				580E4C04243F746F00565EDE /* SettingsUserTypeRootRouter.swift in Sources */,

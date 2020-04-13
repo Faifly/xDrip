@@ -43,6 +43,7 @@ final class InitialSetupDexcomG6ConnectionWorker: NSObject, InitialSetupDexcomG6
         guard let voltageA = device.metadata(ofType: .batteryVoltageA)?.value else { return }
         guard let voltageB = device.metadata(ofType: .batteryVoltageB)?.value else { return }
         guard let transmitterTime = device.metadata(ofType: .transmitterTime)?.value else { return }
+        CGMDevice.current.updateSetupProgress(false)
         
         let viewModel = InitialSetupG6ConnectViewController.ViewModel(
             firmware: firmware,
