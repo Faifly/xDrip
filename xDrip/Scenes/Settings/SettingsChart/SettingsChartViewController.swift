@@ -58,8 +58,14 @@ class SettingsChartViewController: BaseSettingsViewController, SettingsChartDisp
     // MARK: Do something
     
     private func doLoad() {
+        setupUI()
+        
         let request = SettingsChart.Load.Request()
         interactor?.doLoad(request: request)
+    }
+    
+    private func setupUI() {
+        title = "Chart Settings"
     }
     
     // MARK: Display

@@ -13,7 +13,7 @@ class BaseSettingsViewController: UIViewController {
         var tableView: UITableView
         
         if #available(iOS 13.0, *) {
-            tableView = UITableView(frame: .zero, style: .insetGrouped)
+            tableView = UITableView(frame: .zero, style: isRootSettings && UIDevice.current.userInterfaceIdiom == .pad ? .grouped :.insetGrouped)
         } else {
             tableView = UITableView(frame: .zero, style: .grouped)
         }
@@ -36,6 +36,8 @@ class BaseSettingsViewController: UIViewController {
     
     private var viewModel: BaseSettings.ViewModel?
     private let cellFactory = BaseSettingsCellFactory()
+    
+    var isRootSettings = false
     
     required init() {
         super.init(nibName: nil, bundle: nil)

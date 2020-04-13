@@ -43,13 +43,13 @@ final class SettingsUnitsPresenter: SettingsUnitsPresentationLogic {
     private func createUnitsSection(response: SettingsUnits.Load.Response) -> BaseSettings.Section {
         let titles = GlucoseUnit.allCases.map { ($0.title, $0 == response.currentSelectedUnit) }
         
-        return BaseSettings.Section.singleSelection(cells: titles, header: nil, footer: nil, selectionHandler: response.selectionHandler)
+        return BaseSettings.Section.singleSelection(cells: titles, header: " ", footer: nil, selectionHandler: response.selectionHandler)
     }
     
     private func createUnitsSection(response: SettingsUnits.Select.Response) -> BaseSettings.Section {
         let titles = GlucoseUnit.allCases.map { ($0.title, $0 == response.currentSelectedUnit) }
         
-        return BaseSettings.Section.singleSelection(cells: titles, header: nil, footer: nil, selectionHandler: response.selectionHandler)
+        return BaseSettings.Section.singleSelection(cells: titles, header: " ", footer: nil, selectionHandler: response.selectionHandler)
     }
 }
 

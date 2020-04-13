@@ -17,6 +17,7 @@
 		2C09D2232441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D2212441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.xib */; };
 		2C09D2262441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2242441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift */; };
 		2C09D2272441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D2252441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib */; };
+		2C09D22B24447D3D008538E9 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D22A24447D3D008538E9 /* SplitViewController.swift */; };
 		2C48E6E42428AA78006B63B0 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */; };
 		2C48E6EA2428F592006B63B0 /* UIColor+Colors_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */; };
 		2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */; };
@@ -547,6 +548,7 @@
 		2C09D2212441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsPickerExpandableTableViewCell.xib; sourceTree = "<group>"; };
 		2C09D2242441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsTextInputTableViewCell.swift; sourceTree = "<group>"; };
 		2C09D2252441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsTextInputTableViewCell.xib; sourceTree = "<group>"; };
+		2C09D22A24447D3D008538E9 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 		2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors_Tests.swift"; sourceTree = "<group>"; };
 		2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings.swift"; sourceTree = "<group>"; };
@@ -2680,6 +2682,7 @@
 				580E4BEE243F73CA00565EDE /* SettingsChartRanges */,
 				580E4BFB243F743E00565EDE /* SettingsUserType */,
 				580E4C23243F74AB00565EDE /* SettingsUnits */,
+				2C09D22A24447D3D008538E9 /* SplitViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -3385,6 +3388,7 @@
 				580E4BA7243F723200565EDE /* NightscoutCloudExtraOptionsRouter.swift in Sources */,
 				580E4BB6243F725600565EDE /* NightscoutCloudBackfillViewController.swift in Sources */,
 				58B5FD3424190E2F00DB857D /* HomeModels.swift in Sources */,
+				2C09D22B24447D3D008538E9 /* SplitViewController.swift in Sources */,
 				580E4BCF243F736D00565EDE /* SettingsModeFollowerRouter.swift in Sources */,
 				58F4CC87243BA2110053D17C /* DebugLogInteractor.swift in Sources */,
 				5805CA1F243892D6002AFA1B /* InitialSetupStep.swift in Sources */,

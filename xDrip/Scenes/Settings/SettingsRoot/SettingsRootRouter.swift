@@ -32,7 +32,10 @@ final class SettingsRootRouter: NSObject, SettingsRootRoutingLogic, SettingsRoot
     }
     
     func routeToUnits() {
-        let unitsController = SettingsUnitsViewController()
-        viewController?.navigationController?.pushViewController(unitsController, animated: true)
+        present(SettingsUnitsViewController())
+    }
+    
+    private func present(_ viewController: UIViewController) {
+        self.viewController?.splitViewController?.showDetailViewController(viewController.embedInNavigation(), sender: nil)
     }
 }

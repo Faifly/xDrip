@@ -53,13 +53,13 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
-        
-        setupUI()
     }
     
     // MARK: Do something
     
     private func doLoad() {
+        setupUI()
+        
         let request = SettingsUnits.Load.Request()
         interactor?.doLoad(request: request)
     }

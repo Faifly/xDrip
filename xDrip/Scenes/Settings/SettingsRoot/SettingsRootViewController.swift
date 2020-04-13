@@ -52,17 +52,24 @@ class SettingsRootViewController: BaseSettingsViewController, SettingsRootDispla
     // MARK: View lifecycle
     
     override func viewDidLoad() {
+        isRootSettings = true
         super.viewDidLoad()
+        
         doLoad()
     }
     
     // MARK: Do something
     
     private func doLoad() {
+        setupUI()
         setupNavigationItems()
         
         let request = SettingsRoot.Load.Request()
         interactor?.doLoad(request: request)
+    }
+    
+    private func setupUI() {
+        title = "Settings"
     }
     
     private func setupNavigationItems() {
