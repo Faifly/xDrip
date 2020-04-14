@@ -2325,7 +2325,6 @@
 				5805C9CC243892A8002AFA1B /* Data+Hex.swift */,
 				5805C9CE243892AE002AFA1B /* NibViewController.swift */,
 				5805C9D0243892B3002AFA1B /* String+Validation.swift */,
-				2C87F045243E69C0002CF3D8 /* UView+Tests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2339,6 +2338,7 @@
 				5805CAA32438A72E002AFA1B /* Data+Hex_Tests.swift */,
 				5805CAA52438A748002AFA1B /* NibViewControllerTests.swift */,
 				5805CAA72438A760002AFA1B /* String+Validation_Tests.swift */,
+				2C87F045243E69C0002CF3D8 /* UView+Tests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
