@@ -22,13 +22,13 @@ final class BaseSettingsCellFactory {
             
         case let .textInput(mainText, detailText, textChangeHandler):
             let cell = tableView.dequeueReusableCell(ofType: BaseSettingsTextInputTableViewCell.self, for: indexPath)
-            cell.configurate(mainText: mainText, detailText: detailText, textChangeHandler: textChangeHandler)
+            cell.configure(mainText: mainText, detailText: detailText, textChangeHandler: textChangeHandler)
             
             return cell
             
         case let .rightSwitch(mainText, isOn, handler):
             let cell = tableView.dequeueReusableCell(ofType: BaseSettingsRightSwitchTableViewCell.self, for: indexPath)
-            cell.configurate(mainText: mainText, isSwitchOn: isOn)
+            cell.configure(mainText: mainText, isSwitchOn: isOn)
             cell.valueChangedHandler = handler
             
             return cell
@@ -40,20 +40,20 @@ final class BaseSettingsCellFactory {
             
             return cell
             
-        case let .pickerExpandable(mainText, detailText, dataSource, picker):
+        case let .pickerExpandable(mainText, detailText, picker):
             let cell = tableView.dequeueReusableCell(ofType: BaseSettingsPickerExpandableTableViewCell.self, for: indexPath)
             
-            cell.configure(mainText: mainText, detailText: detailText, dataSource: dataSource, pickerView: picker)
+            cell.configure(mainText: mainText, detailText: detailText, pickerView: picker)
             
             return cell
         }
     }
     
-    func createSingleSelectionCell(title: String, selected: Bool, indexPath: IndexPath) -> UITableViewCell {
+    func createSingleSelectionCell(title: String, selectedIndex: Int, indexPath: IndexPath) -> UITableViewCell {
         guard let tableView = tableView else { fatalError() }
         
         let cell = tableView.dequeueReusableCell(ofType: BaseSettingsSingleSelectionTableViewCell.self, for: indexPath)
-        cell.configure(mainText: title, selected: selected)
+        cell.configure(mainText: title, selected: selectedIndex == indexPath.row)
         
         return cell
     }

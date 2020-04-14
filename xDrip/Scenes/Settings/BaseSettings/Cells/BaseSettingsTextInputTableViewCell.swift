@@ -8,10 +8,10 @@
 
 import UIKit
 
-class BaseSettingsTextInputTableViewCell: UITableViewCell {
+final class BaseSettingsTextInputTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var mainTextLabel: UILabel!
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak private var mainTextLabel: UILabel!
+    @IBOutlet weak private var textField: UITextField!
     
     private var textChangeHandler: ((String?) -> Void)?
     
@@ -21,17 +21,21 @@ class BaseSettingsTextInputTableViewCell: UITableViewCell {
         textField.delegate = self
     }
     
-    func configurate(mainText: String, detailText: String?, textChangeHandler: ((String?) -> Void)?) {
+    func configure(mainText: String, detailText: String?, textChangeHandler: ((String?) -> Void)?) {
         mainTextLabel.text = mainText
         textField.placeholder = detailText
         self.textChangeHandler = textChangeHandler
     }
+    
+    @IBAction private func editingChanged(_ sender: UITextField) {
+        textChangeHandler?(sender.text)
+    }
+    
 }
 
 extension BaseSettingsTextInputTableViewCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        textChangeHandler?(textField.text)
         return true
     }
 }

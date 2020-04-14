@@ -51,7 +51,7 @@
             <connections>
                 <outlet property="detailLabel" destination="imx-Og-Hri" id="Xk2-DN-Vfd"/>
                 <outlet property="mainTextLabel" destination="qCj-Ye-u3f" id="vXh-N0-DH2"/>
-                <outlet property="vertStackView" destination="Tng-e1-xNk" id="oe2-hN-Me6"/>
+                <outlet property="verticalStackView" destination="Tng-e1-xNk" id="oe2-hN-Me6"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="152.67857142857142"/>
         </tableViewCell>

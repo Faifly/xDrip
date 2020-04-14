@@ -45,7 +45,7 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
     }
     
     func routeToSettings() {
-        let splitViewController = SplitViewController()
+        let splitViewController = SettingsSplitViewController()
         splitViewController.viewControllers = [SettingsRootViewController().embedInNavigation(), SettingsChartViewController().embedInNavigation()]
         splitViewController.modalPresentationStyle = .fullScreen
         

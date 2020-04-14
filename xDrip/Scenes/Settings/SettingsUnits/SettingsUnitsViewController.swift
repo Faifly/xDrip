@@ -48,6 +48,8 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
     
     // MARK: IB
     
+    private var tableViewModel = BaseSettings.ViewModel(sections: [])
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -65,16 +67,28 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
     }
     
     private func setupUI() {
-        title = "Units"
+        title = "settings_units_title".localized
     }
     
     // MARK: Display
     
     func displayLoad(viewModel: SettingsUnits.Load.ViewModel) {
+        tableViewModel = viewModel.tableViewModel
         update(with: viewModel.tableViewModel)
     }
     
     func displaySelect(viewModel: SettingsUnits.Select.ViewModel) {
-        update(with: viewModel.tableViewModel, animated: true)
+        var newSections = [BaseSettings.Section]()
+        tableViewModel.sections.forEach { section in
+            switch section {
+            case let .singleSelection(cells, _, header, footer, selectionHandler):
+                newSections.append(.singleSelection(cells: cells, selectedIndex: viewModel.currentSelectedUnitIndex, header: header, footer: footer, selectionHandler: selectionHandler))
+            default:
+                break
+            }
+        }
+        
+        tableViewModel = BaseSettings.ViewModel(sections: newSections)
+        update(with: tableViewModel, animated: true)
     }
 }

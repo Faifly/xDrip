@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseSettingsRightSwitchTableViewCell: UITableViewCell {
+final class BaseSettingsRightSwitchTableViewCell: UITableViewCell {
     private var rightSwitch = UISwitch()
     
     var valueChangedHandler: ((Bool) -> Void)?
@@ -18,14 +18,16 @@ class BaseSettingsRightSwitchTableViewCell: UITableViewCell {
         
         accessoryView = rightSwitch
         rightSwitch.sizeToFit()
+        
+        rightSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
     }
     
-    func configurate(mainText: String, isSwitchOn: Bool) {
+    func configure(mainText: String, isSwitchOn: Bool) {
         textLabel?.text = mainText
-        rightSwitch.setOn(isSwitchOn, animated: true)
+        rightSwitch.setOn(isSwitchOn, animated: false)
     }
     
-    @objc func switchValueChanged() {
+    @objc private func switchValueChanged() {
         let value = rightSwitch.isOn
         valueChangedHandler?(value)
     }

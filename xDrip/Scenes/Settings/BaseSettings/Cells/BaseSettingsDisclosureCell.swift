@@ -12,6 +12,5 @@ final class BaseSettingsDisclosureCell: UITableViewCell {
     func configure(mainText: String, detailText: String?) {
         textLabel?.text = mainText
         detailTextLabel?.text = detailText
-        accessoryType = .disclosureIndicator
     }
 }

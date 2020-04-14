@@ -8,17 +8,17 @@
 
 import UIKit
 
-class BaseSettingsVolumeSliderTableViewCell: UITableViewCell {
+final class BaseSettingsVolumeSliderTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak private var slider: UISlider!
     
     var onSliderValueChanged: ((Float) -> Void)?
     
     func configure(value: Float) {
-        slider.setValue(value, animated: true)
+        slider.setValue(value, animated: false)
     }
     
-    @IBAction func onValueChanged(_ sender: UISlider) {
+    @IBAction private func onValueChanged(_ sender: UISlider) {
         onSliderValueChanged?(sender.value)
     }
 }

@@ -18,6 +18,7 @@ protocol SettingsRootPresentationLogic {
 
 final class SettingsRootPresenter: SettingsRootPresentationLogic {
     weak var viewController: SettingsRootDisplayLogic?
+    private var dataSource = [BaseSettingsPickerViewController]()
     
     // MARK: Do something
     
@@ -89,7 +90,21 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
         _ field: SettingsRoot.Field,
         detailText: String?,
         picker: UIView) -> BaseSettings.Cell {
-        return .pickerExpandable(mainText: field.title, detailText: nil, dataSource: [["1", "2", "3"], ["1", "2"], ["mgDl", "mmolL"]], picker: picker)
+        
+        if let pickerView = picker as? UIPickerView {
+            let data = [
+                ["1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3"],
+                ["1", "2", "1", "2", "3", "1", "2", "3"],
+                ["mgDl", "mmolL", "mgDl", "mmolL", "mgDl", "mmolL", "mgDl", "mmolL"]
+            ]
+            let source = BaseSettingsPickerViewController(data: data)
+            dataSource.append(source)
+            pickerView.dataSource = source
+            pickerView.delegate = source
+            pickerView.reloadAllComponents()
+        }
+        
+        return .pickerExpandable(mainText: field.title, detailText: nil, picker: picker)
     }
     
     private func createVolumeSliderCell(
@@ -109,18 +124,18 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
 private extension SettingsRoot.Field {
     var title: String {
         switch self {
-        case .chartSettings: return "Chart Settings"
-        case .alert: return "Alert"
-        case .cloudUpload: return "Cloud Upload"
-        case .modeSettings: return "Mode Settings"
-        case .sensor: return "Sensor"
-        case .transmitter: return "Transmitter"
-        case .rangeSelection: return "Range Selection"
-        case .userType: return "User Type"
-        case .units: return "Units"
-        case .carbsDurationTime: return "Carbs Duration Time"
-        case .insulinDurationTime: return "Insulin Duration Time"
-        case .nightscoutService: return "Nightscout (Pump)"
+        case .chartSettings: return "settings_chart_title".localized
+        case .alert: return "settings_alert_title".localized
+        case .cloudUpload: return "settings_cloud_upload_title".localized
+        case .modeSettings: return "settings_mode_title".localized
+        case .sensor: return "settings_sensor_title".localized
+        case .transmitter: return "settings_transmitter_title".localized
+        case .rangeSelection: return "settings_range_selection_title".localized
+        case .userType: return "settings_user_type_title".localized
+        case .units: return "settings_units_title".localized
+        case .carbsDurationTime: return "settings_carbs_duration_time_title".localized
+        case .insulinDurationTime: return "settings_insulin_duration_time_title".localized
+        case .nightscoutService: return "settings_nightscout_pump_title".localized
         }
     }
 }

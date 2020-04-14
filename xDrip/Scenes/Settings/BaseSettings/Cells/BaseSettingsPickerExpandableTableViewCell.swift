@@ -8,40 +8,36 @@
 
 import UIKit
 
-class BaseSettingsPickerExpandableTableViewCell: UITableViewCell {
+final class BaseSettingsPickerExpandableTableViewCell: UITableViewCell {
     
-    @IBOutlet weak private var vertStackView: UIStackView!
+    @IBOutlet weak private var verticalStackView: UIStackView!
     @IBOutlet weak private var mainTextLabel: UILabel!
     @IBOutlet weak private var detailLabel: UILabel!
     
     private var picker = UIView()
-    private var dataSource = [[String]]()
     
-    func configure(mainText: String, detailText: String?, dataSource: [[String]], pickerView: UIView) {
+    func configure(mainText: String, detailText: String?, pickerView: UIView) {
         mainTextLabel.text = mainText
         detailLabel.text = detailText
         picker = pickerView
-        self.dataSource = dataSource
         
         setupPickerView()
     }
     
     private func setupPickerView() {
         if let picker = picker as? UIPickerView {
-            picker.delegate = self
-            picker.dataSource = self
-            
-            picker.reloadAllComponents()
+            guard let controller = picker.delegate as? BaseSettingsPickerViewController else { return }
+            controller.delegate = self
         } else if let picker = picker as? UIDatePicker {
             picker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
         }
     }
     
     func addPicker() {
-        if vertStackView.arrangedSubviews.contains(picker) {
+        if verticalStackView.arrangedSubviews.contains(picker) {
             picker.removeFromSuperview()
         } else {
-            vertStackView.addArrangedSubview(picker)
+            verticalStackView.addArrangedSubview(picker)
         }
     }
     
@@ -53,26 +49,10 @@ class BaseSettingsPickerExpandableTableViewCell: UITableViewCell {
     }
 }
 
-extension BaseSettingsPickerExpandableTableViewCell: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return dataSource.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return dataSource[component].count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return dataSource[component][row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        var string = ""
-        for idx in 0 ..< pickerView.numberOfComponents {
-            string += dataSource[idx][pickerView.selectedRow(inComponent: idx)] + " "
-        }
+extension BaseSettingsPickerExpandableTableViewCell: BaseSettingsPickerViewDelegate {
+    func pickerValueChanged(selectedValues: [String]) {
+        let formattedString = selectedValues.joined(separator: " ")
         
-        print(string)
-        detailLabel.text = string
+        detailLabel.text = formattedString
     }
 }

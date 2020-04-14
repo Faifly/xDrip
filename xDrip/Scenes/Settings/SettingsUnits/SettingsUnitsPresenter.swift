@@ -32,32 +32,25 @@ final class SettingsUnitsPresenter: SettingsUnitsPresentationLogic {
     }
     
     func presentSelected(response: SettingsUnits.Select.Response) {
-        let tableViewModel = BaseSettings.ViewModel(sections: [
-            createUnitsSection(response: response)
-        ])
+        let index = GlucoseUnit.allCases.firstIndex(of: response.currentSelectedUnit) ?? 0
         
-        let viewModel = SettingsUnits.Select.ViewModel(tableViewModel: tableViewModel)
+        let viewModel = SettingsUnits.Select.ViewModel(currentSelectedUnitIndex: index)
         viewController?.displaySelect(viewModel: viewModel)
     }
     
     private func createUnitsSection(response: SettingsUnits.Load.Response) -> BaseSettings.Section {
-        let titles = GlucoseUnit.allCases.map { ($0.title, $0 == response.currentSelectedUnit) }
+        let titles = GlucoseUnit.allCases.map { $0.title }
+        let index = GlucoseUnit.allCases.firstIndex(of: response.currentSelectedUnit) ?? 0
         
-        return BaseSettings.Section.singleSelection(cells: titles, header: " ", footer: nil, selectionHandler: response.selectionHandler)
-    }
-    
-    private func createUnitsSection(response: SettingsUnits.Select.Response) -> BaseSettings.Section {
-        let titles = GlucoseUnit.allCases.map { ($0.title, $0 == response.currentSelectedUnit) }
-        
-        return BaseSettings.Section.singleSelection(cells: titles, header: " ", footer: nil, selectionHandler: response.selectionHandler)
+        return BaseSettings.Section.singleSelection(cells: titles, selectedIndex: index, header: " ", footer: nil, selectionHandler: response.selectionHandler)
     }
 }
 
 private extension GlucoseUnit {
     var title: String {
         switch self {
-        case .mgDl: return "mgDl"
-        case .mmolL: return "mmolL"
+        case .mgDl: return "settings_units_mgdl".localized
+        case .mmolL: return "settings_units_mmolL".localized
         }
     }
 }

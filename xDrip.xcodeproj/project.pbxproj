@@ -17,11 +17,12 @@
 		2C09D2232441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D2212441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.xib */; };
 		2C09D2262441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2242441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift */; };
 		2C09D2272441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D2252441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib */; };
-		2C09D22B24447D3D008538E9 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D22A24447D3D008538E9 /* SplitViewController.swift */; };
+		2C09D22B24447D3D008538E9 /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D22A24447D3D008538E9 /* SettingsSplitViewController.swift */; };
 		2C48E6E42428AA78006B63B0 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */; };
 		2C48E6EA2428F592006B63B0 /* UIColor+Colors_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */; };
 		2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */; };
 		2C48E6EE242909F4006B63B0 /* UIView+Bindings_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */; };
+		2C531F6C2445C81E006F4532 /* BaseSettingsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C531F6B2445C81E006F4532 /* BaseSettingsPickerViewController.swift */; };
 		2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */; };
 		2CBE1A86243204CC003BE14E /* ViewModelConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */; };
 		2CBE1A8924320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A8824320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift */; };
@@ -548,11 +549,12 @@
 		2C09D2212441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsPickerExpandableTableViewCell.xib; sourceTree = "<group>"; };
 		2C09D2242441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsTextInputTableViewCell.swift; sourceTree = "<group>"; };
 		2C09D2252441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsTextInputTableViewCell.xib; sourceTree = "<group>"; };
-		2C09D22A24447D3D008538E9 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		2C09D22A24447D3D008538E9 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 		2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors_Tests.swift"; sourceTree = "<group>"; };
 		2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings.swift"; sourceTree = "<group>"; };
 		2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings_Tests.swift"; sourceTree = "<group>"; };
+		2C531F6B2445C81E006F4532 /* BaseSettingsPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsPickerViewController.swift; sourceTree = "<group>"; };
 		2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableController.swift; sourceTree = "<group>"; };
 		2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConfigurable.swift; sourceTree = "<group>"; };
 		2CBE1A8824320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListEntryPersistenceWorker.swift; sourceTree = "<group>"; };
@@ -1108,6 +1110,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C531F6F2445FE27006F4532 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2C531F6B2445C81E006F4532 /* BaseSettingsPickerViewController.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		2CBE1A812430F6EC003BE14E /* Logic */ = {
 			isa = PBXGroup;
 			children = (
@@ -2467,6 +2477,7 @@
 		586EF6B9243E326A004F08B1 /* BaseSettings */ = {
 			isa = PBXGroup;
 			children = (
+				2C531F6F2445FE27006F4532 /* Helpers */,
 				580E4B40243E388600565EDE /* Cells */,
 				580E4B3A243E336000565EDE /* BaseSettingsModels.swift */,
 				580E4B3C243E360400565EDE /* BaseSettingsViewController.swift */,
@@ -2682,7 +2693,7 @@
 				580E4BEE243F73CA00565EDE /* SettingsChartRanges */,
 				580E4BFB243F743E00565EDE /* SettingsUserType */,
 				580E4C23243F74AB00565EDE /* SettingsUnits */,
-				2C09D22A24447D3D008538E9 /* SplitViewController.swift */,
+				2C09D22A24447D3D008538E9 /* SettingsSplitViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -3388,7 +3399,7 @@
 				580E4BA7243F723200565EDE /* NightscoutCloudExtraOptionsRouter.swift in Sources */,
 				580E4BB6243F725600565EDE /* NightscoutCloudBackfillViewController.swift in Sources */,
 				58B5FD3424190E2F00DB857D /* HomeModels.swift in Sources */,
-				2C09D22B24447D3D008538E9 /* SplitViewController.swift in Sources */,
+				2C09D22B24447D3D008538E9 /* SettingsSplitViewController.swift in Sources */,
 				580E4BCF243F736D00565EDE /* SettingsModeFollowerRouter.swift in Sources */,
 				58F4CC87243BA2110053D17C /* DebugLogInteractor.swift in Sources */,
 				5805CA1F243892D6002AFA1B /* InitialSetupStep.swift in Sources */,
@@ -3432,6 +3443,7 @@
 				580E4C2A243F74F000565EDE /* SettingsUnitsPresenter.swift in Sources */,
 				5805CA1E243892D6002AFA1B /* InitialSetupStepProvidingWorker.swift in Sources */,
 				5805C9D1243892B3002AFA1B /* String+Validation.swift in Sources */,
+				2C531F6C2445C81E006F4532 /* BaseSettingsPickerViewController.swift in Sources */,
 				5805C9CF243892AE002AFA1B /* NibViewController.swift in Sources */,
 				2CBE1A94243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift in Sources */,
 				5805C9BA24389230002AFA1B /* CGMBluetoothService.swift in Sources */,

@@ -12,11 +12,7 @@ class BaseSettingsViewController: UIViewController {
     private lazy var tableView: UITableView = {
         var tableView: UITableView
         
-        if #available(iOS 13.0, *) {
-            tableView = UITableView(frame: .zero, style: isRootSettings && UIDevice.current.userInterfaceIdiom == .pad ? .grouped :.insetGrouped)
-        } else {
-            tableView = UITableView(frame: .zero, style: .grouped)
-        }
+        tableView = UITableView(frame: .zero, style: tableViewStyle)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -34,10 +30,16 @@ class BaseSettingsViewController: UIViewController {
         return tableView
     }()
     
+    var tableViewStyle: UITableView.Style {
+        if #available(iOS 13.0, *) {
+            return .insetGrouped
+        } else {
+            return .grouped
+        }
+    }
+    
     private var viewModel: BaseSettings.ViewModel?
     private let cellFactory = BaseSettingsCellFactory()
-    
-    var isRootSettings = false
     
     required init() {
         super.init(nibName: nil, bundle: nil)
@@ -99,8 +101,8 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
         case .normal(let cells, _, _):
             return cellFactory.createCell(ofType: cells[indexPath.row], indexPath: indexPath)
             
-        case .singleSelection(let cells, _, _, _):
-            return cellFactory.createSingleSelectionCell(title: cells[indexPath.row].0, selected: cells[indexPath.row].1, indexPath: indexPath)
+        case let .singleSelection(cells, selectedIndex, _, _, _):
+            return cellFactory.createSingleSelectionCell(title: cells[indexPath.row], selectedIndex: selectedIndex, indexPath: indexPath)
         }
     }
     
@@ -121,7 +123,7 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
             handleSelectionForNormalCell(cells[indexPath.row])
             
             switch cells[indexPath.row] {
-            case .pickerExpandable(_, _, _, _):
+            case .pickerExpandable:
                 guard let cell = tableView.cellForRow(at: indexPath) as? BaseSettingsPickerExpandableTableViewCell else {
                     break
                 }
@@ -136,7 +138,7 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
                 break
             }
             
-        case .singleSelection(_, _, _, let selectionHandler):
+        case .singleSelection(_, _, _, _, let selectionHandler):
             handleSingleSelection(indexPath: indexPath, callback: selectionHandler)
         }
     }

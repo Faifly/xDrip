@@ -40,9 +40,7 @@ final class SettingsUnitsInteractor: SettingsUnitsBusinessLogic, SettingsUnitsDa
         
         User.current.settings.updateUnit(unit)
         
-        let response = SettingsUnits.Select.Response(currentSelectedUnit: unit) { [weak self] index in
-            self?.handleUnitSelection(index)
-        }
+        let response = SettingsUnits.Select.Response(currentSelectedUnit: unit)
         presenter?.presentSelected(response: response)
     }
 }

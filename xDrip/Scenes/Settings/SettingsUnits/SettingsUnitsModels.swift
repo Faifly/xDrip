@@ -37,11 +37,10 @@ enum SettingsUnits {
         
         struct Response {
             let currentSelectedUnit: GlucoseUnit
-            let selectionHandler: (Int) -> Void
         }
         
         struct ViewModel {
-            let tableViewModel: BaseSettings.ViewModel
+            let currentSelectedUnitIndex: Int
         }
     }
 }

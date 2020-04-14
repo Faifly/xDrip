@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseSettingsSingleSelectionTableViewCell: UITableViewCell {
+final class BaseSettingsSingleSelectionTableViewCell: UITableViewCell {
     func configure(mainText: String, selected: Bool) {
         textLabel?.text = mainText
         detailTextLabel?.text = ""
