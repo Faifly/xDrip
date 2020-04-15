@@ -16,49 +16,49 @@ extension UIColor {
         case tabBarGreen
         case tabBarOrange
         case tabBarRed
-        case timeFrameSegmentBackgroundColor
-        case timeFrameSegmentLabelColor
-        case timeFrameSegmentSelectedColor
-        case timeFrameSegmentSeparatorColor
+        case borderColor
+        case chartGridLineColor
+        case chartTextColor
+        case detailTextColor
     }
     
-    static var tabBarBackgroundColor: UIColor? {
-        return UIColor(named: Colors.tabBarBackground.rawValue)
+    static var tabBarBackgroundColor: UIColor {
+        return UIColor(named: Colors.tabBarBackground.rawValue)!
     }
     
-    static var tabBarBlueColor: UIColor? {
-        return UIColor(named: Colors.tabBarBlue.rawValue)
+    static var tabBarBlueColor: UIColor {
+        return UIColor(named: Colors.tabBarBlue.rawValue)!
     }
     
-    static var tabBarGrayColor: UIColor? {
-        return UIColor(named: Colors.tabBarGray.rawValue)
+    static var tabBarGrayColor: UIColor {
+        return UIColor(named: Colors.tabBarGray.rawValue)!
     }
     
-    static var tabBarGreenColor: UIColor? {
-        return UIColor(named: Colors.tabBarGreen.rawValue)
+    static var tabBarGreenColor: UIColor {
+        return UIColor(named: Colors.tabBarGreen.rawValue)!
     }
     
-    static var tabBarOrangeColor: UIColor? {
-        return UIColor(named: Colors.tabBarOrange.rawValue)
+    static var tabBarOrangeColor: UIColor {
+        return UIColor(named: Colors.tabBarOrange.rawValue)!
     }
     
-    static var tabBarRedColor: UIColor? {
-        return UIColor(named: Colors.tabBarRed.rawValue)
+    static var tabBarRedColor: UIColor {
+        return UIColor(named: Colors.tabBarRed.rawValue)!
     }
     
-    static var timeFrameSegmentBackgroundColor: UIColor? {
-        return UIColor(named: Colors.timeFrameSegmentBackgroundColor.rawValue)
+    static var borderColor: UIColor {
+        return UIColor(named: Colors.borderColor.rawValue)!
     }
     
-    static var timeFrameSegmentLabelColor: UIColor? {
-        return UIColor(named: Colors.timeFrameSegmentLabelColor.rawValue)
+    static var chartGridLineColor: UIColor {
+        return UIColor(named: Colors.chartGridLineColor.rawValue)!
     }
     
-    static var timeFrameSegmentSelectedColor: UIColor? {
-        return UIColor(named: Colors.timeFrameSegmentSelectedColor.rawValue)
+    static var chartTextColor: UIColor {
+        return UIColor(named: Colors.chartTextColor.rawValue)!
     }
     
-    static var timeFrameSegmentSeparatorColor: UIColor? {
-        return UIColor(named: Colors.timeFrameSegmentSeparatorColor.rawValue)
+    static var detailTextColor: UIColor {
+        return UIColor(named: Colors.detailTextColor.rawValue)!
     }
 }

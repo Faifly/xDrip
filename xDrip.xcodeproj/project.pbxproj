@@ -328,6 +328,9 @@
 		580E4CED243F805C00565EDE /* SettingsModeMasterPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CE9243F805C00565EDE /* SettingsModeMasterPresenterTests.swift */; };
 		580E4CF02440BC0300565EDE /* MockedBluetoothService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CEF2440BC0300565EDE /* MockedBluetoothService.swift */; };
 		580E4CF22440BC6300565EDE /* MockedBluetoothServiceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CF12440BC6300565EDE /* MockedBluetoothServiceConfiguration.swift */; };
+		580E4CF42440D24800565EDE /* BaseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CF32440D24800565EDE /* BaseChartView.swift */; };
+		580E4CF72441BED600565EDE /* GlucoseHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CF62441BED600565EDE /* GlucoseHistoryView.swift */; };
+		580E4CF92441BF1E00565EDE /* GlucoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4CF82441BF1E00565EDE /* GlucoseChartView.swift */; };
 		580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */; };
 		580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7792421457600C34948 /* EditFoodEntryRouter.swift */; };
 		580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC77A2421457600C34948 /* EditFoodEntryModels.swift */; };
@@ -405,6 +408,7 @@
 		584432B7243CFE1900282A6C /* SettingsChartInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584432B3243CFE1900282A6C /* SettingsChartInteractorTests.swift */; };
 		584432B8243CFE1900282A6C /* SettingsChartRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584432B4243CFE1900282A6C /* SettingsChartRouterTests.swift */; };
 		584432B9243CFE1900282A6C /* SettingsChartPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584432B5243CFE1900282A6C /* SettingsChartPresenterTests.swift */; };
+		5860385B24462B64008D54B6 /* ChartVerticalLabelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860385A24462B64008D54B6 /* ChartVerticalLabelsView.swift */; };
 		58788B7324264711000EB113 /* AbstractEntriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B7224264711000EB113 /* AbstractEntriesWorker.swift */; };
 		58788B75242647C5000EB113 /* TrainingEntriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B74242647C5000EB113 /* TrainingEntriesWorker.swift */; };
 		58788B7724264A36000EB113 /* CalibrationEntriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B7624264A36000EB113 /* CalibrationEntriesWorker.swift */; };
@@ -514,6 +518,7 @@
 		58F4CC86243BA2110053D17C /* DebugLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC81243BA2110053D17C /* DebugLogViewController.swift */; };
 		58F4CC87243BA2110053D17C /* DebugLogInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC82243BA2110053D17C /* DebugLogInteractor.swift */; };
 		58F4CC89243BA21D0053D17C /* DebugLogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58F4CC88243BA21D0053D17C /* DebugLogViewController.xib */; };
+		58F72D882441BFF4007AB093 /* ChartScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F72D872441BFF4007AB093 /* ChartScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -848,6 +853,9 @@
 		580E4CE9243F805C00565EDE /* SettingsModeMasterPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeMasterPresenterTests.swift; sourceTree = "<group>"; };
 		580E4CEF2440BC0300565EDE /* MockedBluetoothService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedBluetoothService.swift; sourceTree = "<group>"; };
 		580E4CF12440BC6300565EDE /* MockedBluetoothServiceConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedBluetoothServiceConfiguration.swift; sourceTree = "<group>"; };
+		580E4CF32440D24800565EDE /* BaseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseChartView.swift; sourceTree = "<group>"; };
+		580E4CF62441BED600565EDE /* GlucoseHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseHistoryView.swift; sourceTree = "<group>"; };
+		580E4CF82441BF1E00565EDE /* GlucoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseChartView.swift; sourceTree = "<group>"; };
 		580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryPresenter.swift; sourceTree = "<group>"; };
 		580EC7792421457600C34948 /* EditFoodEntryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryRouter.swift; sourceTree = "<group>"; };
 		580EC77A2421457600C34948 /* EditFoodEntryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFoodEntryModels.swift; sourceTree = "<group>"; };
@@ -926,6 +934,7 @@
 		584432B3243CFE1900282A6C /* SettingsChartInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChartInteractorTests.swift; sourceTree = "<group>"; };
 		584432B4243CFE1900282A6C /* SettingsChartRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChartRouterTests.swift; sourceTree = "<group>"; };
 		584432B5243CFE1900282A6C /* SettingsChartPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChartPresenterTests.swift; sourceTree = "<group>"; };
+		5860385A24462B64008D54B6 /* ChartVerticalLabelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartVerticalLabelsView.swift; sourceTree = "<group>"; };
 		58788B7224264711000EB113 /* AbstractEntriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractEntriesWorker.swift; sourceTree = "<group>"; };
 		58788B74242647C5000EB113 /* TrainingEntriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingEntriesWorker.swift; sourceTree = "<group>"; };
 		58788B7624264A36000EB113 /* CalibrationEntriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationEntriesWorker.swift; sourceTree = "<group>"; };
@@ -1046,6 +1055,7 @@
 		58F4CC81243BA2110053D17C /* DebugLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogViewController.swift; sourceTree = "<group>"; };
 		58F4CC82243BA2110053D17C /* DebugLogInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogInteractor.swift; sourceTree = "<group>"; };
 		58F4CC88243BA21D0053D17C /* DebugLogViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugLogViewController.xib; sourceTree = "<group>"; };
+		58F72D872441BFF4007AB093 /* ChartScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2180,6 +2190,18 @@
 			path = Mocked;
 			sourceTree = "<group>";
 		};
+		580E4CFA2441BF2100565EDE /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				580E4CF32440D24800565EDE /* BaseChartView.swift */,
+				5860385A24462B64008D54B6 /* ChartVerticalLabelsView.swift */,
+				580E4CF82441BF1E00565EDE /* GlucoseChartView.swift */,
+				58F72D872441BFF4007AB093 /* ChartScrollView.swift */,
+				580E4CF62441BED600565EDE /* GlucoseHistoryView.swift */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
 		580EC78A24214CC600C34948 /* EntriesList */ = {
 			isa = PBXGroup;
 			children = (
@@ -2343,6 +2365,7 @@
 		58160E072402E37600C792F4 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				580E4CFA2441BF2100565EDE /* Charts */,
 				5805C9C92438929E002AFA1B /* CenteredTitleButton.swift */,
 			);
 			path = Components;
@@ -3171,6 +3194,7 @@
 				580E4C2B243F74F000565EDE /* SettingsUnitsRouter.swift in Sources */,
 				58DDC45A2423C82A008CB04D /* CarbEntry.swift in Sources */,
 				5805C9A224389230002AFA1B /* DexcomG6TransmitterVersionTxMessage.swift in Sources */,
+				580E4CF92441BF1E00565EDE /* GlucoseChartView.swift in Sources */,
 				2C48E6E42428AA78006B63B0 /* UIColor+Colors.swift in Sources */,
 				580E4C1F243F74A300565EDE /* SettingsPumpUserModels.swift in Sources */,
 				580E4B90243F71DC00565EDE /* SettingsCloudTypesInteractor.swift in Sources */,
@@ -3206,6 +3230,7 @@
 				58443263243CEB4700282A6C /* BasalRate.swift in Sources */,
 				58B5FDC224193C2200DB857D /* GlucoseData.swift in Sources */,
 				580E4C10243F748500565EDE /* SettingsPenUserPresenter.swift in Sources */,
+				5860385B24462B64008D54B6 /* ChartVerticalLabelsView.swift in Sources */,
 				5805CA05243892D6002AFA1B /* InitialSetupG6ConnectViewController.swift in Sources */,
 				5805CA07243892D6002AFA1B /* InitialSetupG6SensorAgeViewController.swift in Sources */,
 				58B5FD56241910BD00DB857D /* SettingsRootInteractor.swift in Sources */,
@@ -3227,6 +3252,7 @@
 				580E4BD1243F736D00565EDE /* SettingsModeFollowerViewController.swift in Sources */,
 				580E4C2C243F74F000565EDE /* SettingsUnitsModels.swift in Sources */,
 				5805C9AA24389230002AFA1B /* DexcomG6BatteryStatusRxMessage.swift in Sources */,
+				580E4CF72441BED600565EDE /* GlucoseHistoryView.swift in Sources */,
 				580E4B82243F717E00565EDE /* SettingsAlertSoundInteractor.swift in Sources */,
 				580EC79024214CDD00C34948 /* EntriesListPresenter.swift in Sources */,
 				580E4BF5243F73E200565EDE /* SettingsChartRangesPresenter.swift in Sources */,
@@ -3283,6 +3309,7 @@
 				580E4B80243F717E00565EDE /* SettingsAlertSoundModels.swift in Sources */,
 				580EC7812421457700C34948 /* EditFoodEntryInteractor.swift in Sources */,
 				5805C9AB24389230002AFA1B /* DexcomG6AuthChallengeRxMessage.swift in Sources */,
+				580E4CF42440D24800565EDE /* BaseChartView.swift in Sources */,
 				580E4BE8243F73B200565EDE /* SettingsSensorPresenter.swift in Sources */,
 				580E4C1D243F74A300565EDE /* SettingsPumpUserPresenter.swift in Sources */,
 				580E4B7E243F717E00565EDE /* SettingsAlertSoundPresenter.swift in Sources */,
@@ -3371,6 +3398,7 @@
 				58788B75242647C5000EB113 /* TrainingEntriesWorker.swift in Sources */,
 				58DDC4622423CA58008CB04D /* AbstractEntry.swift in Sources */,
 				580E4C2E243F74F000565EDE /* SettingsUnitsInteractor.swift in Sources */,
+				58F72D882441BFF4007AB093 /* ChartScrollView.swift in Sources */,
 				5805CA0B243892D6002AFA1B /* InitialSetupAbstractStepViewController.swift in Sources */,
 				58B4F6C024114EBA003C6D8F /* ApplicationLaunchController.swift in Sources */,
 				58B5FD4924190EB300DB857D /* HistoryRootModels.swift in Sources */,

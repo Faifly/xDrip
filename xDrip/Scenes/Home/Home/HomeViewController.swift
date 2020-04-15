@@ -86,7 +86,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     }
     
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel) {
-        glucoseLabel.text = viewModel.glucoseValue
+        glucoseLabel?.text = viewModel.glucoseValue
     }
     
     private func setupUI() {

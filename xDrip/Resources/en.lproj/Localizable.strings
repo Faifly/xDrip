@@ -20,3 +20,23 @@
 "entries_list_scene_title_carbs" = "Active Carbohydrates";
 "entries_list_scene_title_bolus" = "Active insulin";
 "entries_list_cell_no_date" = "No date specified";
+
+// Settings
+"settings_title" = "Settings";
+"settings_units_title" = "Units";
+"settings_chart_title" = "Chart Settings";
+"settings_alert_title" = "Alert";
+"settings_mode_title" = "Mode Settings";
+"settings_cloud_upload_title" = "Cloud Upload";
+"settings_sensor_title" = "Sensor";
+"settings_transmitter_title" = "Transmitter";
+"settings_range_selection_title" = "Range Selection";
+"settings_user_type_title" = "User Type";
+"settings_carbs_duration_time_title" = "Carbs Duration Time";
+"settings_insulin_duration_time_title" = "Insulin Duration Time";
+"settings_nightscout_pump_title" = "Nightscout (Pump)";
+
+
+// Settings Units
+"settings_units_mgdl" = "mg/Dl";
+"settings_units_mmolL" = "mmol/L";
