@@ -67,7 +67,7 @@ final class RootRouterTests: XCTestCase {
         sut.routeToSettings()
         
         // Then
-        guard let splitViewController = spy.lastPresentedViewController as? SplitViewController else {
+        guard let splitViewController = spy.lastPresentedViewController as? SettingsSplitViewController else {
             XCTFail("Cannot obtain split view controller")
             return
         }
