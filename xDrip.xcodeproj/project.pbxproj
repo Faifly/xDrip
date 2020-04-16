@@ -23,6 +23,7 @@
 		2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */; };
 		2C48E6EE242909F4006B63B0 /* UIView+Bindings_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */; };
 		2C531F6C2445C81E006F4532 /* BaseSettingsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C531F6B2445C81E006F4532 /* BaseSettingsPickerViewController.swift */; };
+		2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C87F045243E69C0002CF3D8 /* UView+Tests.swift */; };
 		2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */; };
 		2CBE1A86243204CC003BE14E /* ViewModelConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */; };
 		2CBE1A8924320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A8824320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift */; };
@@ -555,6 +556,7 @@
 		2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings.swift"; sourceTree = "<group>"; };
 		2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings_Tests.swift"; sourceTree = "<group>"; };
 		2C531F6B2445C81E006F4532 /* BaseSettingsPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsPickerViewController.swift; sourceTree = "<group>"; };
+		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
 		2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableController.swift; sourceTree = "<group>"; };
 		2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConfigurable.swift; sourceTree = "<group>"; };
 		2CBE1A8824320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListEntryPersistenceWorker.swift; sourceTree = "<group>"; };
@@ -2378,6 +2380,7 @@
 				5805CAA32438A72E002AFA1B /* Data+Hex_Tests.swift */,
 				5805CAA52438A748002AFA1B /* NibViewControllerTests.swift */,
 				5805CAA72438A760002AFA1B /* String+Validation_Tests.swift */,
+				2C87F045243E69C0002CF3D8 /* UView+Tests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3499,6 +3502,7 @@
 				580E4C72243F77A800565EDE /* NightscoutCloudConfigurationPresenterTests.swift in Sources */,
 				5805CA472438A06A002AFA1B /* InitialSetupG6WarmUpViewControllerTests.swift in Sources */,
 				58B5FD5D241922DC00DB857D /* RootRouterTests.swift in Sources */,
+				2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */,
 				580E4CBC243F788D00565EDE /* SettingsUserTypeRootPresenterTests.swift in Sources */,
 				580E4C83243F77D900565EDE /* NightscoutCloudBackfillRouterTests.swift in Sources */,
 				584432B6243CFE1900282A6C /* SettingsChartViewControllerTests.swift in Sources */,
