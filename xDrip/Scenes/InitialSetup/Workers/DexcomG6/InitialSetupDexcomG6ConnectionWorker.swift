@@ -8,7 +8,13 @@
 
 import Foundation
 
-final class InitialSetupDexcomG6ConnectionWorker: NSObject {
+
+protocol InitialSetupDexcomG6ConnectionWorkerProtocol: class {
+    var onSuccessfulConnection: ((InitialSetupG6ConnectViewController.ViewModel) -> ())? { get set }
+    func startConnectionProcess()
+}
+
+final class InitialSetupDexcomG6ConnectionWorker: NSObject, InitialSetupDexcomG6ConnectionWorkerProtocol {
     var onSuccessfulConnection: ((InitialSetupG6ConnectViewController.ViewModel) -> ())?
     private var requiredFields: Set<CGMDeviceMetadataType> = [
         .firmwareVersion,
