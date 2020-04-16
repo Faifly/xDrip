@@ -24,11 +24,7 @@ final class ChartScrollView: UIView, GlucoseChartProvider {
         view.layer.cornerRadius = 5.0
         view.layer.borderWidth = 1.0
         view.layer.borderColor = UIColor.chartGridLineColor.cgColor
-        view.isUserInteractionEnabled = true
-        
-        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(sliderPanned(_:)))
-        view.addGestureRecognizer(panRecognizer)
-        
+        view.isUserInteractionEnabled = false
         return view
     }()
     
@@ -38,12 +34,22 @@ final class ChartScrollView: UIView, GlucoseChartProvider {
     
     private var leftLimit: CGFloat = 0.0
     private var rightLimit: CGFloat = 0.0
-    private var sliderWidth: CGFloat {
-        return (bounds.width - chartInsets.left - chartInsets.right + 8.0) * sliderRelativeWidth + 4.0
+    var sliderWidth: CGFloat {
+        return min(bounds.width * sliderRelativeWidth, bounds.width - chartInsets.left - chartInsets.right)
     }
     
-    var sliderRelativeWidth: CGFloat = 0.0
-    var currentRelativeOffset: CGFloat = 0.0
+    var sliderRelativeWidth: CGFloat = 0.0 {
+        didSet {
+            updateLimits()
+            updateSliderPosition()
+        }
+    }
+    var currentRelativeOffset: CGFloat = 0.0 {
+        didSet {
+            updateLimits()
+            updateSliderPosition()
+        }
+    }
     var onRelativeOffsetChanged: ((CGFloat) -> Void)?
     
     required init() {
@@ -68,7 +74,7 @@ final class ChartScrollView: UIView, GlucoseChartProvider {
     
     private func updateSliderPosition() {
         slider.frame = CGRect(
-            x: (bounds.width - chartInsets.right - chartInsets.left) * currentRelativeOffset + chartInsets.left - 4.0,
+            x: min((bounds.width - chartInsets.right - chartInsets.left) * currentRelativeOffset + chartInsets.left, rightLimit),
             y: yMargin,
             width: sliderWidth,
             height: bounds.height - yMargin * 2.0
@@ -77,7 +83,7 @@ final class ChartScrollView: UIView, GlucoseChartProvider {
     
     private func updateLimits() {
         leftLimit = chartInsets.left
-        rightLimit = bounds.width - chartInsets.right - sliderWidth + 4.0
+        rightLimit = bounds.width - chartInsets.right - sliderWidth
     }
     
     private func setupSlider() {
@@ -91,21 +97,33 @@ final class ChartScrollView: UIView, GlucoseChartProvider {
     
     private var tapCenterXOffset: CGFloat?
     
-    @objc private func sliderPanned(_ sender: UIPanGestureRecognizer) {
-        switch sender.state {
-        case .began:
-            tapCenterXOffset = sender.location(in: slider).x
-            
-        case .changed:
-            guard let offset = tapCenterXOffset else { return }
-            let location = sender.location(in: self)
-            let targetX = location.x - offset - slider.bounds.width / 2.0
-            if targetX >= leftLimit && targetX <= rightLimit {
-                slider.frame.origin.x = targetX
-                currentRelativeOffset = slider.frame.origin.x / (bounds.width - chartInsets.right - chartInsets.left)
-            }
-            
-        default: break
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard (1.0 - sliderRelativeWidth) > .ulpOfOne else { return }
+        guard let location = touches.first?.location(in: self) else { return }
+        if slider.frame.contains(location) {
+            tapCenterXOffset = location.x - slider.frame.origin.x - slider.bounds.width / 2.0
+        } else {
+            slider.center.x = location.x
+            tapCenterXOffset = 0.0
         }
     }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard (1.0 - sliderRelativeWidth) > .ulpOfOne else { return }
+        guard let location = touches.first?.location(in: self) else { return }
+        guard let offset = tapCenterXOffset else { return }
+        var targetX = location.x - offset - slider.bounds.width / 2.0
+        if targetX < leftLimit {
+            targetX = leftLimit
+        } else if targetX > rightLimit {
+            targetX = rightLimit
+        }
+        
+        currentRelativeOffset = (-chartInsets.left + targetX) / (bounds.width - chartInsets.right - chartInsets.left)
+        onRelativeOffsetChanged?(currentRelativeOffset)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {}
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {}
+    override func touchesEstimatedPropertiesUpdated(_ touches: Set<UITouch>) {}
 }

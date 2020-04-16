@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="xDrip" customModuleProvider="target">
             <connections>
+                <outlet property="glucoseChart" destination="dSe-Qa-bqu" id="leZ-tw-snL"/>
                 <outlet property="timeLineSegmentView" destination="kVg-zr-V5c" id="1OU-lX-GZs"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bzO-Wv-6Q2"/>
             </connections>

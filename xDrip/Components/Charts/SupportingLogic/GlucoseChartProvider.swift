@@ -1,8 +1,8 @@
 //
-//  GlucoseChartView.swift
+//  GlucoseChartProvider.swift
 //  xDrip
 //
-//  Created by Artem Kalmykov on 11.04.2020.
+//  Created by Artem Kalmykov on 16.04.2020.
 //  Copyright © 2020 Faifly. All rights reserved.
 //
 
@@ -33,7 +33,6 @@ extension GlucoseChartProvider where Self: UIView {
         context.setLineWidth(0.0)
         
         for entry in entries {
-            print(entry)
             let centerX = CGFloat((entry.date.timeIntervalSince1970 - minDate) * pixelsPerSecond) + insets.left
             let centerY = CGFloat((yRange.upperBound - entry.value) * pixelsPerValue) + insets.top
             let circleRect = CGRect(
@@ -52,30 +51,5 @@ extension GlucoseChartProvider where Self: UIView {
             context.setFillColor(color.cgColor)
             context.fillEllipse(in: circleRect)
         }
-    }
-}
-
-final class GlucoseChartView: BaseChartView, GlucoseChartProvider {
-    var entries: [GlucoseChartGlucoseEntry] = []
-    let circleSide: CGFloat = 6.0
-    var dateInterval = DateInterval()
-    var yRange: ClosedRange<Double> = 0.0...0.0
-    var insets: UIEdgeInsets {
-        return chartInsets
-    }
-    
-    required init() {
-        super.init(frame: .zero)
-        translatesAutoresizingMaskIntoConstraints = false
-        isOpaque = false
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) is not permitted")
-    }
-    
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        drawGlucoseChart()
     }
 }

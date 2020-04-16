@@ -8,33 +8,16 @@
 
 import UIKit
 
-enum GlucoseChartSeverityLevel {
-    case low
-    case normal
-    case high
-}
-
-protocol GlucoseChartGlucoseEntry {
-    var value: Double { get }
-    var date: Date { get }
-    var severity: GlucoseChartSeverityLevel { get }
-}
-
-extension DateInterval {
-    init(endDate: Date, duration: TimeInterval) {
-        let startDate = Date(timeIntervalSince1970: endDate.timeIntervalSince1970 - duration)
-        self.init(start: startDate, end: endDate)
-    }
-}
-
 final class GlucoseHistoryView: UIView {
     private let verticalLines: Int = 5
+    private var forwardTimeOffset: TimeInterval = 600.0
     
     private let scrollContainer: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.isScrollEnabled = false
         return scrollView
     }()
     private let leftLabelsView = ChartVerticalLabelsView()
@@ -44,8 +27,8 @@ final class GlucoseHistoryView: UIView {
     
     private var glucoseEntries: [GlucoseChartGlucoseEntry] = []
     
-    var globalDateRange: DateInterval = DateInterval(endDate: Date() + 600.0, duration: 86400.0 + 600.0)
-    var localDateRange: DateInterval = DateInterval(endDate: Date() + 600.0, duration: 3600.0 + 600.0)
+    private var globalDateRange: DateInterval = DateInterval()
+    private var localDateRange: DateInterval = DateInterval()
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -55,7 +38,11 @@ final class GlucoseHistoryView: UIView {
     private func commonInit() {
         setupViews()
         setupScrolling()
-        setupDummy()
+        setTimeFrame(.secondsPerHour)
+        
+        DispatchQueue.main.async {
+            self.setupDummy()
+        }
     }
     
     private func setupViews() {
@@ -104,27 +91,53 @@ final class GlucoseHistoryView: UIView {
     }
     
     private func setupScrolling() {
-        
+        chartScrollView.onRelativeOffsetChanged = { [weak self] offset in
+            guard let self = self else { return }
+            let contentWidth = self.scrollContainer.contentSize.width
+            let maxPossibleOffset = (contentWidth - self.scrollContainer.bounds.width) / contentWidth
+            self.scrollContainer.contentOffset = CGPoint(
+                x: contentWidth * offset + 30.0 * offset / maxPossibleOffset,
+                y: 0.0
+            )
+        }
+    }
+    
+    func setTimeFrame(_ localInterval: TimeInterval) {
+        forwardTimeOffset = horizontalInterval(for: localInterval)
+        globalDateRange = DateInterval(
+            endDate: Date() + forwardTimeOffset,
+            duration: .secondsPerDay + forwardTimeOffset
+        )
+        localDateRange = DateInterval(endDate: globalDateRange.end, duration: localInterval + forwardTimeOffset)
+        updateChart()
     }
     
     /// Should be sorted by date ascending
     func setup(with entries: [GlucoseChartGlucoseEntry]) {
         glucoseEntries = entries
+        updateChart()
+    }
+    
+    private func updateChart() {
         calculateVerticalLeftLabels()
         calculateHorizontalBottomLabels()
         
-        let scrollSegments = CGFloat(globalDateRange.duration / localDateRange.duration)
-        let chartWidth = bounds.width * scrollSegments
+        let scrollSegments = CGFloat(
+            (globalDateRange.duration - forwardTimeOffset) / (localDateRange.duration - forwardTimeOffset)
+        )
+        let chartWidth = scrollContainer.bounds.width * scrollSegments
         chartWidthConstraint?.constant = chartWidth
         
-        chartView.entries = entries
+        chartView.entries = glucoseEntries
         chartView.dateInterval = globalDateRange
+        chartView.setNeedsDisplay()
         
         chartScrollView.currentRelativeOffset = (scrollSegments - 1.0) / scrollSegments
         chartScrollView.sliderRelativeWidth = 1.0 / scrollSegments
-        chartScrollView.entries = entries
+        chartScrollView.entries = glucoseEntries
         chartScrollView.dateInterval = globalDateRange
         chartScrollView.yRange = chartView.yRange
+        chartScrollView.setNeedsDisplay()
         
         scrollContainer.layoutIfNeeded()
         scrollContainer.contentOffset = CGPoint(x: chartWidth - scrollContainer.bounds.width, y: 0.0)
@@ -143,6 +156,7 @@ final class GlucoseHistoryView: UIView {
         }
         
         leftLabelsView.labels = labels
+        leftLabelsView.setNeedsDisplay()
         chartView.verticalLinesCount = labels.count
         chartView.yRange = adjustedMinValue...adjustedMaxValue
     }
@@ -150,14 +164,12 @@ final class GlucoseHistoryView: UIView {
     private func calculateHorizontalBottomLabels() {
         var globalHorizontalLabels: [String] = []
         
-        let hours = Int((localDateRange.duration / 3600.0).rounded())
-        let considerMinutes = hours <= 1
-        let interval = considerMinutes ? 600.0 : (hours >= 12 ? 10800.0 : 3600.0)
+        let interval = horizontalInterval(for: localDateRange.duration)
 
         let initialGridDate: Date
         let now = Date()
         
-        if considerMinutes {
+        if interval < .secondsPerHour {
             let currentMinute = Calendar.current.component(.minute, from: now)
             let targetMinute = Int((Double(currentMinute) / 10.0).rounded(.down) * 10.0)
             var components = Calendar.current.dateComponents(in: .current, from: now)
@@ -166,8 +178,11 @@ final class GlucoseHistoryView: UIView {
             components.nanosecond = 0
             initialGridDate = Calendar.current.date(from: components) ?? now
         } else {
-            guard let targetDate = Calendar.current.date(bySetting: .minute, value: 0, of: now) else { return }
-            initialGridDate = Calendar.current.date(bySetting: .second, value: 0, of: targetDate) ?? Date()
+            var components = Calendar.current.dateComponents(in: .current, from: now)
+            components.minute = 0
+            components.second = 0
+            components.nanosecond = 0
+            initialGridDate = Calendar.current.date(from: components) ?? now
         }
         
         let dateFormatter = DateFormatter()
@@ -186,9 +201,20 @@ final class GlucoseHistoryView: UIView {
         chartView.relativeHorizontalInterval = CGFloat(interval / globalDateRange.duration)
     }
     
+    private func horizontalInterval(for localInterval: TimeInterval) -> TimeInterval {
+        let hours = Int((localInterval / .secondsPerHour).rounded())
+        switch hours {
+        case 0...1: return 10.0 * .secondsPerMinute
+        case 2...11: return .secondsPerHour
+        case 12...23: return .secondsPerHour * 3.0
+        case 24: return .secondsPerHour * 4.0
+        default: return TimeInterval(hours) / 4.0 * .secondsPerHour
+        }
+    }
+    
     private func setupDummy() {
         let now = Date().timeIntervalSince1970
-        let count = 400
+        let count = 50
         var entries: [DummyEntry] = []
         var previous: Double = 10.0
         var modifier: Double = 1.0

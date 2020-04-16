@@ -15,6 +15,7 @@ import UIKit
 protocol HomeBusinessLogic {
     func doLoad(request: Home.Load.Request)
     func doShowEntriesList(request: Home.ShowEntriesList.Request)
+    func doChangeGlucoseChartTimeFrame(request: Home.ChangeGlucoseChartTimeFrame.Request)
 }
 
 protocol HomeDataStore {
@@ -49,5 +50,12 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         default:
             break
         }
+    }
+    
+    func doChangeGlucoseChartTimeFrame(request: Home.ChangeGlucoseChartTimeFrame.Request) {
+        let response = Home.ChangeGlucoseChartTimeFrame.Response(
+            timeInterval: .secondsPerHour * TimeInterval(request.hours)
+        )
+        presenter?.presentGlucoseChartTimeFrameChange(response: response)
     }
 }

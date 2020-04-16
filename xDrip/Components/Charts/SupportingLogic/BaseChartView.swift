@@ -74,20 +74,21 @@ class BaseChartView: UIView {
         context.setLineDash(phase: 1.0, lengths: [4.0, 2.0])
         
         var offset = chartInsets.left + absoluteHorizontalStartingOffset
-//        var offset: CGFloat = 0.0
         let linesLimit = bounds.width - chartInsets.right
         var index = 0
-        while offset < linesLimit && index < formattedHorizontalLabels.count {
+        while offset < linesLimit {
             let start = CGPoint(x: offset, y: chartInsets.top)
             let end = CGPoint(x: offset, y: bounds.height - chartInsets.bottom)
             context.move(to: start)
             context.addLine(to: end)
             context.strokePath()
             
-            let labelRect = CGRect(x: offset, y: end.y + 6.0, width: absoluteHorizontalInterval, height: 16.0)
-            formattedHorizontalLabels[index].draw(in: labelRect)
+            if index < formattedHorizontalLabels.count {
+                let labelRect = CGRect(x: offset, y: end.y + 6.0, width: absoluteHorizontalInterval, height: 16.0)
+                formattedHorizontalLabels[index].draw(in: labelRect)
+                index += 1
+            }
             
-            index += 1
             offset += absoluteHorizontalInterval
         }
         

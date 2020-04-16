@@ -52,4 +52,18 @@ enum Home {
         struct ViewModel {
         }
     }
+    
+    enum ChangeGlucoseChartTimeFrame {
+        struct Request {
+            let hours: Int
+        }
+        
+        struct Response {
+            let timeInterval: TimeInterval
+        }
+        
+        struct ViewModel {
+            let timeInterval: TimeInterval
+        }
+    }
 }

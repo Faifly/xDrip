@@ -15,6 +15,7 @@ import UIKit
 protocol HomePresentationLogic {
     func presentLoad(response: Home.Load.Response)
     func presentGlucoseData(response: Home.GlucoseDataUpdate.Response)
+    func presentGlucoseChartTimeFrameChange(response: Home.ChangeGlucoseChartTimeFrame.Response)
 }
 
 final class HomePresenter: HomePresentationLogic {
@@ -44,5 +45,10 @@ final class HomePresenter: HomePresentationLogic {
             glucoseValue: "\(valueString), last updated: \(dateString)"
         )
         viewController?.displayGlucoseData(viewModel: viewModel)
+    }
+    
+    func presentGlucoseChartTimeFrameChange(response: Home.ChangeGlucoseChartTimeFrame.Response) {
+        let viewModel = Home.ChangeGlucoseChartTimeFrame.ViewModel(timeInterval: response.timeInterval)
+        viewController?.displayGlucoseChartTimeFrame(viewModel: viewModel)
     }
 }
