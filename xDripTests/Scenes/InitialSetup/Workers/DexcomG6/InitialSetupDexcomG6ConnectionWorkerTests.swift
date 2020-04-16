@@ -28,7 +28,11 @@ final class InitialSetupDexcomG6ConnectionWorkerTests: XCTestCase {
         
         // Then
         XCTAssertTrue(CGMDevice.current.isSetupInProgress)
+        #if targetEnvironment(simulator)
+        XCTAssertTrue(CGMController.shared.service is MockedBluetoothService)
+        #else
         XCTAssertTrue(CGMController.shared.service is DexcomG6BluetoothService)
+        #endif
     }
     
     func testHandleSuccessfulConnection() {
