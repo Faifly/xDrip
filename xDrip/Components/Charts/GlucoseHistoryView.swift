@@ -29,6 +29,7 @@ final class GlucoseHistoryView: UIView {
     
     private var globalDateRange: DateInterval = DateInterval()
     private var localDateRange: DateInterval = DateInterval()
+    private var localInterval: TimeInterval = .secondsPerHour
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -39,14 +40,11 @@ final class GlucoseHistoryView: UIView {
         setupViews()
         setupScrolling()
         setTimeFrame(.secondsPerHour)
-        
-        DispatchQueue.main.async {
-            self.setupDummy()
-        }
     }
     
     private func setupViews() {
         isOpaque = false
+        backgroundColor = .background1
         
         addSubview(leftLabelsView)
         addSubview(scrollContainer)
@@ -103,19 +101,25 @@ final class GlucoseHistoryView: UIView {
     }
     
     func setTimeFrame(_ localInterval: TimeInterval) {
+        self.localInterval = localInterval
         forwardTimeOffset = horizontalInterval(for: localInterval)
-        globalDateRange = DateInterval(
-            endDate: Date() + forwardTimeOffset,
-            duration: .secondsPerDay + forwardTimeOffset
-        )
-        localDateRange = DateInterval(endDate: globalDateRange.end, duration: localInterval + forwardTimeOffset)
+        updateIntervals()
         updateChart()
     }
     
     /// Should be sorted by date ascending
     func setup(with entries: [GlucoseChartGlucoseEntry]) {
         glucoseEntries = entries
+        updateIntervals()
         updateChart()
+    }
+    
+    private func updateIntervals() {
+        globalDateRange = DateInterval(
+            endDate: Date() + forwardTimeOffset,
+            duration: .secondsPerDay + forwardTimeOffset
+        )
+        localDateRange = DateInterval(endDate: globalDateRange.end, duration: localInterval + forwardTimeOffset)
     }
     
     private func updateChart() {
@@ -152,7 +156,7 @@ final class GlucoseHistoryView: UIView {
         
         var labels: [String] = []
         for i in 0..<verticalLines {
-            labels.append(String(format: "%g", adjustedMinValue + step * Double(i)))
+            labels.append(String(format: "%0.f", adjustedMinValue + step * Double(i)))
         }
         
         leftLabelsView.labels = labels
@@ -210,37 +214,5 @@ final class GlucoseHistoryView: UIView {
         case 24: return .secondsPerHour * 4.0
         default: return TimeInterval(hours) / 4.0 * .secondsPerHour
         }
-    }
-    
-    private func setupDummy() {
-        let now = Date().timeIntervalSince1970
-        let count = 50
-        var entries: [DummyEntry] = []
-        var previous: Double = 10.0
-        var modifier: Double = 1.0
-        for i in 0..<count {
-            previous += modifier
-            if previous == 15.0 {
-                modifier = -1
-            } else if previous == 10.0 {
-                modifier = 1.0
-            }
-            let date = Date(timeIntervalSince1970: now - Double(i) * (86400.0 / Double(count)))
-            let severity: GlucoseChartSeverityLevel
-            switch previous {
-            case 0.0...8.0: severity = .low
-            case 8.0...12.0: severity = .normal
-            default: severity = .high
-            }
-            entries.append(DummyEntry(value: previous, date: date, severity: severity))
-        }
-        
-        setup(with: entries.reversed())
-    }
-    
-    private struct DummyEntry: GlucoseChartGlucoseEntry {
-        let value: Double
-        let date: Date
-        let severity: GlucoseChartSeverityLevel
     }
 }

@@ -33,11 +33,11 @@ enum Home {
         }
         
         struct Response {
-            let glucoseData: GlucoseData
+            let glucoseData: [GlucoseData]
         }
         
         struct ViewModel {
-            let glucoseValue: String?
+            let glucoseValues: [GlucoseChartGlucoseEntry]
         }
     }
     

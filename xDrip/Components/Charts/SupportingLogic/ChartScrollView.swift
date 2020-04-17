@@ -20,7 +20,7 @@ final class ChartScrollView: UIView, GlucoseChartProvider {
     private lazy var slider: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(white: 1.0, alpha: 0.7)
+        view.backgroundColor = .chartSliderBackground
         view.layer.cornerRadius = 5.0
         view.layer.borderWidth = 1.0
         view.layer.borderColor = UIColor.chartGridLineColor.cgColor
@@ -56,7 +56,7 @@ final class ChartScrollView: UIView, GlucoseChartProvider {
         super.init(frame: .zero)
         
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .white
+        backgroundColor = .background1
         isOpaque = false
         
         setupSlider()

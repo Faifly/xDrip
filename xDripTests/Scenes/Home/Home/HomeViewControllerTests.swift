@@ -56,6 +56,9 @@ final class HomeViewControllerTests: XCTestCase {
         func doShowEntriesList(request: Home.ShowEntriesList.Request) {
             doShowEntriesListCalled = true
         }
+        
+        func doChangeGlucoseChartTimeFrame(request: Home.ChangeGlucoseChartTimeFrame.Request) {
+        }
     }
     
     // MARK: Tests

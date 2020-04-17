@@ -24,4 +24,12 @@ enum GlucoseUnit: Int {
         case .mmolL: return value / GlucoseUnit.convertionScale
         }
     }
+    
+    static func convertToUserDefined(_ value: Double) -> Double {
+        let userDefined = User.current.settings.unit
+        switch userDefined {
+        case .default: return value
+        default: return userDefined.convertToAnother(value)
+        }
+    }
 }

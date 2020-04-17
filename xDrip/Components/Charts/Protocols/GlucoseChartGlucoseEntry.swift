@@ -9,9 +9,9 @@
 import Foundation
 
 enum GlucoseChartSeverityLevel {
-    case low
     case normal
-    case high
+    case abnormal
+    case critical
 }
 
 protocol GlucoseChartGlucoseEntry {

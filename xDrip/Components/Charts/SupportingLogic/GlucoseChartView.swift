@@ -21,6 +21,7 @@ final class GlucoseChartView: BaseChartView, GlucoseChartProvider {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         isOpaque = false
+        backgroundColor = .background1
     }
     
     required init?(coder: NSCoder) {

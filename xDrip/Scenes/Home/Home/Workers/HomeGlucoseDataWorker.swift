@@ -11,15 +11,26 @@
 //
 
 import UIKit
+import AKUtils
 
-final class HomeGlucoseDataWorker: NSObject {
-    var glucoseDataHandler: ((GlucoseData) -> Void)?
+protocol HomeGlucoseDataWorkerProtocol: class {
+    var glucoseDataHandler: (() -> Void)? { get set }
+    func fetchGlucoseData() -> [GlucoseData]
+}
+
+final class HomeGlucoseDataWorker: NSObject, HomeGlucoseDataWorkerProtocol {
+    var glucoseDataHandler: (() -> Void)?
     
     override init() {
         super.init()
-        CGMController.shared.subscribeForGlucoseDataEvents(listener: self) { [weak self] data in
+        CGMController.shared.subscribeForGlucoseDataEvents(listener: self) { [weak self] _ in
             guard let self = self else { return }
-            self.glucoseDataHandler?(data)
+            self.glucoseDataHandler?()
         }
+    }
+    
+    func fetchGlucoseData() -> [GlucoseData] {
+        let minimumDate = Date() - .secondsPerDay
+        return Array(User.current.glucoseData.filter { $0.date >=? minimumDate }).sorted(by: { $0.date >? $1.date })
     }
 }

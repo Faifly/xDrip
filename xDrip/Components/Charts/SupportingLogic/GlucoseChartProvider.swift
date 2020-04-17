@@ -44,9 +44,9 @@ extension GlucoseChartProvider where Self: UIView {
             
             let color: UIColor
             switch entry.severity {
-            case .low: color = .yellow
-            case .normal: color = .green
-            case .high: color = .red
+            case .normal: color = .chartValueNormal
+            case .abnormal: color = .chartValueAbnormal
+            case .critical: color = .chartValueCritical
             }
             context.setFillColor(color.cgColor)
             context.fillEllipse(in: circleRect)

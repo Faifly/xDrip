@@ -21,6 +21,12 @@ protocol HomePresentationLogic {
 final class HomePresenter: HomePresentationLogic {
     weak var viewController: HomeDisplayLogic?
     
+    private let glucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol
+    
+    init() {
+        glucoseFormattingWorker = HomeGlucoseFormattingWorker()
+    }
+    
     // MARK: Do something
     
     func presentLoad(response: Home.Load.Response) {
@@ -29,21 +35,8 @@ final class HomePresenter: HomePresentationLogic {
     }
     
     func presentGlucoseData(response: Home.GlucoseDataUpdate.Response) {
-        let valueString = "\(response.glucoseData.value)"
-        let dateString: String
-        if let date = response.glucoseData.date {
-            dateString = DateFormatter.localizedString(
-                from: date,
-                dateStyle: .short,
-                timeStyle: .medium
-            )
-        } else {
-            dateString = "Unknown"
-        }
-        
-        let viewModel = Home.GlucoseDataUpdate.ViewModel(
-            glucoseValue: "\(valueString), last updated: \(dateString)"
-        )
+        let values = glucoseFormattingWorker.formatEntries(response.glucoseData)
+        let viewModel = Home.GlucoseDataUpdate.ViewModel(glucoseValues: values)
         viewController?.displayGlucoseData(viewModel: viewModel)
     }
     

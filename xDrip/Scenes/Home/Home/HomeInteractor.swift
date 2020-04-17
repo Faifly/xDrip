@@ -26,7 +26,14 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     var presenter: HomePresentationLogic?
     var router: HomeRoutingLogic?
     
-    private let glucoseDataWorker = HomeGlucoseDataWorker()
+    private let glucoseDataWorker: HomeGlucoseDataWorkerProtocol
+    
+    init() {
+        glucoseDataWorker = HomeGlucoseDataWorker()
+        glucoseDataWorker.glucoseDataHandler = { [weak self] in
+            self?.updateGlucoseChartData()
+        }
+    }
     
     // MARK: Do something
     
@@ -34,11 +41,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         let response = Home.Load.Response()
         presenter?.presentLoad(response: response)
         
-        glucoseDataWorker.glucoseDataHandler = { [weak self] data in
-            guard let self = self else { return }
-            let response = Home.GlucoseDataUpdate.Response(glucoseData: data)
-            self.presenter?.presentGlucoseData(response: response)
-        }
+        updateGlucoseChartData()
     }
     
     func doShowEntriesList(request: Home.ShowEntriesList.Request) {
@@ -57,5 +60,12 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             timeInterval: .secondsPerHour * TimeInterval(request.hours)
         )
         presenter?.presentGlucoseChartTimeFrameChange(response: response)
+    }
+    
+    // MARK: Logic
+    
+    private func updateGlucoseChartData() {
+        let response = Home.GlucoseDataUpdate.Response(glucoseData: glucoseDataWorker.fetchGlucoseData())
+        self.presenter?.presentGlucoseData(response: response)
     }
 }
