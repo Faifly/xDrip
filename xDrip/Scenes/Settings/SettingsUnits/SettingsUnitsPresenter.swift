@@ -14,7 +14,6 @@ import UIKit
 
 protocol SettingsUnitsPresentationLogic {
     func presentLoad(response: SettingsUnits.Load.Response)
-    func presentSelected(response: SettingsUnits.Select.Response)
 }
 
 final class SettingsUnitsPresenter: SettingsUnitsPresentationLogic {
@@ -31,18 +30,11 @@ final class SettingsUnitsPresenter: SettingsUnitsPresentationLogic {
         viewController?.displayLoad(viewModel: viewModel)
     }
     
-    func presentSelected(response: SettingsUnits.Select.Response) {
-        let index = GlucoseUnit.allCases.firstIndex(of: response.currentSelectedUnit) ?? 0
-        
-        let viewModel = SettingsUnits.Select.ViewModel(currentSelectedUnitIndex: index)
-        viewController?.displaySelect(viewModel: viewModel)
-    }
-    
     private func createUnitsSection(response: SettingsUnits.Load.Response) -> BaseSettings.Section {
         let titles = GlucoseUnit.allCases.map { $0.title }
         let index = GlucoseUnit.allCases.firstIndex(of: response.currentSelectedUnit) ?? 0
         
-        return BaseSettings.Section.singleSelection(cells: titles, selectedIndex: index, header: " ", footer: nil, selectionHandler: response.selectionHandler)
+        return BaseSettings.Section.singleSelection(cells: titles, selectedIndex: index, header: nil, footer: nil, selectionHandler: response.selectionHandler)
     }
 }
 

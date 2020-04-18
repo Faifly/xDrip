@@ -14,7 +14,7 @@ enum BaseSettings {
         case textInput(mainText: String, detailText: String?, textChangedHandler: (String?) -> Void)
         case rightSwitch(text: String, isSwitchOn: Bool, switchHandler: (Bool) -> Void)
         case volumeSlider(value: Float, changeHandler: (Float) -> Void)
-        case pickerExpandable(mainText: String, detailText: String?, picker: UIView)
+        case pickerExpandable(mainText: String, detailText: String?, picker: BaseSettingsPickerView)
     }
     
     enum Section {
@@ -44,6 +44,6 @@ enum BaseSettings {
     }
     
     struct ViewModel {
-        let sections: [Section]
+        var sections: [Section]
     }
 }

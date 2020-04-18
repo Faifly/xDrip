@@ -1,28 +1,35 @@
 //
-//  BaseSettingsPickerViewDataSource.swift
+//  CustomPickerView.swift
 //  xDrip
 //
-//  Created by Ivan Skoryk on 14.04.2020.
+//  Created by Ivan Skoryk on 18.04.2020.
 //  Copyright © 2020 Faifly. All rights reserved.
 //
 
 import UIKit
 
-protocol BaseSettingsPickerViewDelegate: class {
-    func pickerValueChanged(selectedValues: [String])
-}
-
-final class BaseSettingsPickerViewController: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
+final class CustomPickerView: UIPickerView, BaseSettingsPickerView {
+    
+    var onValueChanged: ((String?) -> Void)?
+    var formatValues: (([String]) -> (String))?
     
     private let data: [[String]]
     
-    weak var delegate: BaseSettingsPickerViewDelegate?
-    
     init(data: [[String]]) {
         self.data = data
-        super.init()
+        
+        super.init(frame: CGRect.zero)
+        
+        delegate = self
+        dataSource = self
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("Not implemented")
+    }
+}
+
+extension CustomPickerView: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return data.count
     }
@@ -42,6 +49,7 @@ final class BaseSettingsPickerViewController: NSObject, UIPickerViewDataSource, 
             values.append(data[idx][pickerView.selectedRow(inComponent: idx)])
         }
         
-        delegate?.pickerValueChanged(selectedValues: values)
+        let formattedString = formatValues?(values)
+        onValueChanged?(formattedString)
     }
 }

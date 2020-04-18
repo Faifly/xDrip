@@ -9,7 +9,7 @@
 import UIKit
 
 final class BaseSettingsRightSwitchTableViewCell: UITableViewCell {
-    private var rightSwitch = UISwitch()
+    private let rightSwitch = UISwitch()
     
     var valueChangedHandler: ((Bool) -> Void)?
     

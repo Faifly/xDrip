@@ -72,7 +72,7 @@ class SettingsRootViewController: BaseSettingsViewController, SettingsRootDispla
     }
     
     private func setupUI() {
-        title = "settings_title".localized
+        title = "settings_root_title".localized
     }
     
     private func setupNavigationItems() {

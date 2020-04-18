@@ -65,7 +65,7 @@ class SettingsChartViewController: BaseSettingsViewController, SettingsChartDisp
     }
     
     private func setupUI() {
-        title = "settings_chart_title".localized
+        title = "settings_root_chart_title".localized
     }
     
     // MARK: Display

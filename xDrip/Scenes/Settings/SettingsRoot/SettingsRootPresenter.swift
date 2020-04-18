@@ -18,13 +18,11 @@ protocol SettingsRootPresentationLogic {
 
 final class SettingsRootPresenter: SettingsRootPresentationLogic {
     weak var viewController: SettingsRootDisplayLogic?
-    private var dataSource = [BaseSettingsPickerViewController]()
     
     // MARK: Do something
     
     func presentLoad(response: SettingsRoot.Load.Response) {
         let tableViewModel = BaseSettings.ViewModel(sections: [
-            createTestSection(),
             createApplicationSetupSection(response: response),
             createProfileSetupSection(response: response)
         ])
@@ -52,22 +50,10 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
             createDisclosureCell(.userType, detailText: "Pen/Pump", selectionHandler: response.selectionHandler),
             createDisclosureCell(.units, detailText: nil, selectionHandler: response.selectionHandler),
             createDisclosureCell(.carbsDurationTime, detailText: nil, selectionHandler: response.selectionHandler),
-            createDisclosureCell(.insulinDurationTime, detailText: nil, selectionHandler: response.selectionHandler),
+            createDisclosureCell(.insulinDurationTime, detailText: nil, selectionHandler: response.selectionHandler)
         ]
         
         return BaseSettings.Section.normal(cells: cells, header: "PROFILE SETUP", footer: nil)
-    }
-    
-    private func createTestSection() -> BaseSettings.Section {
-        let cells: [BaseSettings.Cell] = [
-            createRightSwitchCell(.alert, isSwitchOn: Bool.random(), switchHandler: { _ in }),
-            createVolumeSliderCell(Float.random(in: 0...1), valueChangedHandler: { _ in }),
-            createTextInputCell(.modeSettings, detailText: "test text", textChangeHandler: { _ in }),
-            createPickerExpandableCell(.carbsDurationTime, detailText: nil, picker: UIPickerView()),
-            createPickerExpandableCell(.insulinDurationTime, detailText: nil, picker: UIDatePicker())
-        ]
-        
-        return BaseSettings.Section.normal(cells: cells, header: "TEST", footer: nil)
     }
     
     private func createDisclosureCell(
@@ -88,20 +74,34 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
     
     private func createPickerExpandableCell(
         _ field: SettingsRoot.Field,
-        detailText: String?,
-        picker: UIView) -> BaseSettings.Cell {
+        detailText: String?) -> BaseSettings.Cell {
         
-        if let pickerView = picker as? UIPickerView {
-            let data = [
-                ["1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3"],
-                ["1", "2", "1", "2", "3", "1", "2", "3"],
-                ["mgDl", "mmolL", "mgDl", "mmolL", "mgDl", "mmolL", "mgDl", "mmolL"]
-            ]
-            let source = BaseSettingsPickerViewController(data: data)
-            dataSource.append(source)
-            pickerView.dataSource = source
-            pickerView.delegate = source
-            pickerView.reloadAllComponents()
+        // TODO: Add proper data set
+        let data = [
+            ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+            ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+            ["mgDl", "mmolL"]
+        ]
+        
+        let picker = CustomPickerView(data: data)
+        
+        picker.formatValues = { values in
+            guard values.count == 3 else { return "" }
+            
+            return "\(values[0]) / \(values[1]) \(values[2])"
+        }
+        
+        return .pickerExpandable(mainText: field.title, detailText: nil, picker: picker)
+    }
+    
+    private func createDatePickerExpandableCell(
+        _ field: SettingsRoot.Field,
+        detailText: String?) -> BaseSettings.Cell {
+        
+        let picker = CustomDatePicker()
+        
+        picker.formatDate = { date in
+            return DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
         }
         
         return .pickerExpandable(mainText: field.title, detailText: nil, picker: picker)
@@ -124,18 +124,18 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
 private extension SettingsRoot.Field {
     var title: String {
         switch self {
-        case .chartSettings: return "settings_chart_title".localized
-        case .alert: return "settings_alert_title".localized
-        case .cloudUpload: return "settings_cloud_upload_title".localized
-        case .modeSettings: return "settings_mode_title".localized
-        case .sensor: return "settings_sensor_title".localized
-        case .transmitter: return "settings_transmitter_title".localized
-        case .rangeSelection: return "settings_range_selection_title".localized
-        case .userType: return "settings_user_type_title".localized
-        case .units: return "settings_units_title".localized
-        case .carbsDurationTime: return "settings_carbs_duration_time_title".localized
-        case .insulinDurationTime: return "settings_insulin_duration_time_title".localized
-        case .nightscoutService: return "settings_nightscout_pump_title".localized
+        case .chartSettings: return "settings_root_chart_title".localized
+        case .alert: return "settings_root_alert_title".localized
+        case .cloudUpload: return "settings_root_cloud_upload_title".localized
+        case .modeSettings: return "settings_root_mode_title".localized
+        case .sensor: return "settings_root_sensor_title".localized
+        case .transmitter: return "settings_root_transmitter_title".localized
+        case .rangeSelection: return "settings_root_range_selection_title".localized
+        case .userType: return "settings_root_user_type_title".localized
+        case .units: return "settings_root_units_title".localized
+        case .carbsDurationTime: return "settings_root_carbs_duration_time_title".localized
+        case .insulinDurationTime: return "settings_root_insulin_duration_time_title".localized
+        case .nightscoutService: return "settings_root_nightscout_pump_title".localized
         }
     }
 }

@@ -14,7 +14,6 @@ import UIKit
 
 protocol SettingsUnitsDisplayLogic: class {
     func displayLoad(viewModel: SettingsUnits.Load.ViewModel)
-    func displaySelect(viewModel: SettingsUnits.Select.ViewModel)
 }
 
 class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisplayLogic {
@@ -75,20 +74,5 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
     func displayLoad(viewModel: SettingsUnits.Load.ViewModel) {
         tableViewModel = viewModel.tableViewModel
         update(with: viewModel.tableViewModel)
-    }
-    
-    func displaySelect(viewModel: SettingsUnits.Select.ViewModel) {
-        var newSections = [BaseSettings.Section]()
-        tableViewModel.sections.forEach { section in
-            switch section {
-            case let .singleSelection(cells, _, header, footer, selectionHandler):
-                newSections.append(.singleSelection(cells: cells, selectedIndex: viewModel.currentSelectedUnitIndex, header: header, footer: footer, selectionHandler: selectionHandler))
-            default:
-                break
-            }
-        }
-        
-        tableViewModel = BaseSettings.ViewModel(sections: newSections)
-        update(with: tableViewModel, animated: true)
     }
 }

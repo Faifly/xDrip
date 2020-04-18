@@ -39,8 +39,6 @@ final class SettingsUnitsInteractor: SettingsUnitsBusinessLogic, SettingsUnitsDa
         guard let unit = GlucoseUnit(rawValue: index) else { return }
         
         User.current.settings.updateUnit(unit)
-        
-        let response = SettingsUnits.Select.Response(currentSelectedUnit: unit)
-        presenter?.presentSelected(response: response)
+        NotificationCenter.default.postSettingsChangeNotification(setting: .unit)
     }
 }

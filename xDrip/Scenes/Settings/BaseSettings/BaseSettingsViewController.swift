@@ -10,9 +10,7 @@ import UIKit
 
 class BaseSettingsViewController: UIViewController {
     private lazy var tableView: UITableView = {
-        var tableView: UITableView
-        
-        tableView = UITableView(frame: .zero, style: tableViewStyle)
+        var tableView = UITableView(frame: .zero, style: tableViewStyle)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -81,6 +79,20 @@ class BaseSettingsViewController: UIViewController {
     }
     
     private func handleSingleSelection(indexPath: IndexPath, callback: (Int) -> Void) {
+        guard let section = viewModel?.sections[indexPath.section] else { return }
+        
+        switch section {
+        case let .singleSelection(cells, _, header, footer, selectionHandler):
+            viewModel?.sections[indexPath.section] = .singleSelection(cells: cells,
+                                                                      selectedIndex: indexPath.row,
+                                                                      header: header, footer: footer,
+                                                                      selectionHandler: selectionHandler)
+        default:
+            break
+        }
+        
+        tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+        
         callback(indexPath.row)
     }
 }
@@ -106,6 +118,14 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return viewModel?.sections[section].header == nil ? UIView() : nil
+    }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return viewModel?.sections[section].header
     }
@@ -128,7 +148,7 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
                     break
                 }
                 
-                cell.addPicker()
+                cell.togglePickerVisivility()
                 
                 tableView.deselectRow(at: indexPath, animated: true)
                 

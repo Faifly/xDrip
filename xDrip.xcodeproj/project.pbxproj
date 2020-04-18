@@ -22,7 +22,10 @@
 		2C48E6EA2428F592006B63B0 /* UIColor+Colors_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */; };
 		2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */; };
 		2C48E6EE242909F4006B63B0 /* UIView+Bindings_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */; };
-		2C531F6C2445C81E006F4532 /* BaseSettingsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C531F6B2445C81E006F4532 /* BaseSettingsPickerViewController.swift */; };
+		2C493C2324489ABF00F4A54B /* Settings+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C2224489ABF00F4A54B /* Settings+Notifications.swift */; };
+		2C493C25244B164800F4A54B /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C24244B164800F4A54B /* CustomPickerView.swift */; };
+		2C493C28244B18CA00F4A54B /* BaseSettingsPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C27244B18CA00F4A54B /* BaseSettingsPickerView.swift */; };
+		2C493C2A244B205800F4A54B /* CustomDatePIcker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C29244B205800F4A54B /* CustomDatePIcker.swift */; };
 		2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C87F045243E69C0002CF3D8 /* UView+Tests.swift */; };
 		2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */; };
 		2CBE1A86243204CC003BE14E /* ViewModelConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */; };
@@ -555,7 +558,10 @@
 		2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors_Tests.swift"; sourceTree = "<group>"; };
 		2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings.swift"; sourceTree = "<group>"; };
 		2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings_Tests.swift"; sourceTree = "<group>"; };
-		2C531F6B2445C81E006F4532 /* BaseSettingsPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsPickerViewController.swift; sourceTree = "<group>"; };
+		2C493C2224489ABF00F4A54B /* Settings+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Notifications.swift"; sourceTree = "<group>"; };
+		2C493C24244B164800F4A54B /* CustomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
+		2C493C27244B18CA00F4A54B /* BaseSettingsPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsPickerView.swift; sourceTree = "<group>"; };
+		2C493C29244B205800F4A54B /* CustomDatePIcker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePIcker.swift; sourceTree = "<group>"; };
 		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
 		2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableController.swift; sourceTree = "<group>"; };
 		2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConfigurable.swift; sourceTree = "<group>"; };
@@ -1112,10 +1118,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C493C26244B18B500F4A54B /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2C493C27244B18CA00F4A54B /* BaseSettingsPickerView.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		2C531F6F2445FE27006F4532 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				2C531F6B2445C81E006F4532 /* BaseSettingsPickerViewController.swift */,
+				2C493C24244B164800F4A54B /* CustomPickerView.swift */,
+				2C493C29244B205800F4A54B /* CustomDatePIcker.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2480,11 +2495,13 @@
 		586EF6B9243E326A004F08B1 /* BaseSettings */ = {
 			isa = PBXGroup;
 			children = (
+				2C493C26244B18B500F4A54B /* Protocols */,
 				2C531F6F2445FE27006F4532 /* Helpers */,
 				580E4B40243E388600565EDE /* Cells */,
 				580E4B3A243E336000565EDE /* BaseSettingsModels.swift */,
 				580E4B3C243E360400565EDE /* BaseSettingsViewController.swift */,
 				580E4B3E243E37E800565EDE /* BaseSettingsCellFactory.swift */,
+				2C493C2224489ABF00F4A54B /* Settings+Notifications.swift */,
 			);
 			path = BaseSettings;
 			sourceTree = "<group>";
@@ -3238,10 +3255,12 @@
 				580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */,
 				58160DF32402C7F600C792F4 /* RootRouter.swift in Sources */,
 				580E4BA6243F723200565EDE /* NightscoutCloudExtraOptionsPresenter.swift in Sources */,
+				2C493C25244B164800F4A54B /* CustomPickerView.swift in Sources */,
 				5805C9A824389230002AFA1B /* DexcomG6FirmwareVersionTxMessage.swift in Sources */,
 				58DDC4602423C9EF008CB04D /* TrainingIntensity.swift in Sources */,
 				580E4C07243F746F00565EDE /* SettingsUserTypeRootInteractor.swift in Sources */,
 				580EC7AC242151BC00C34948 /* EditTrainingInteractor.swift in Sources */,
+				2C493C2A244B205800F4A54B /* CustomDatePIcker.swift in Sources */,
 				58F4CC7B243BA0CB0053D17C /* DebugController.swift in Sources */,
 				580E4BF8243F73E200565EDE /* SettingsChartRangesViewController.swift in Sources */,
 				58B5FD3F24190E6700DB857D /* StatsRootViewController.swift in Sources */,
@@ -3388,8 +3407,10 @@
 				580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */,
 				5805C9B124389230002AFA1B /* DexcomG6MessageFactory.swift in Sources */,
 				580E4B64243F713A00565EDE /* SettingsAlertTypesPresenter.swift in Sources */,
+				2C493C28244B18CA00F4A54B /* BaseSettingsPickerView.swift in Sources */,
 				58F4CC86243BA2110053D17C /* DebugLogViewController.swift in Sources */,
 				5805CA1B243892D6002AFA1B /* InitialSetupRouter.swift in Sources */,
+				2C493C2324489ABF00F4A54B /* Settings+Notifications.swift in Sources */,
 				580E4B8D243F71DC00565EDE /* SettingsCloudTypesRouter.swift in Sources */,
 				580E4B3F243E37E800565EDE /* BaseSettingsCellFactory.swift in Sources */,
 				580E4C11243F748500565EDE /* SettingsPenUserRouter.swift in Sources */,
@@ -3446,7 +3467,6 @@
 				580E4C2A243F74F000565EDE /* SettingsUnitsPresenter.swift in Sources */,
 				5805CA1E243892D6002AFA1B /* InitialSetupStepProvidingWorker.swift in Sources */,
 				5805C9D1243892B3002AFA1B /* String+Validation.swift in Sources */,
-				2C531F6C2445C81E006F4532 /* BaseSettingsPickerViewController.swift in Sources */,
 				5805C9CF243892AE002AFA1B /* NibViewController.swift in Sources */,
 				2CBE1A94243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift in Sources */,
 				5805C9BA24389230002AFA1B /* CGMBluetoothService.swift in Sources */,

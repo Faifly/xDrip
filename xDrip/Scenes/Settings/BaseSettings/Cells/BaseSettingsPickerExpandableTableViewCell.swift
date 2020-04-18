@@ -14,45 +14,25 @@ final class BaseSettingsPickerExpandableTableViewCell: UITableViewCell {
     @IBOutlet weak private var mainTextLabel: UILabel!
     @IBOutlet weak private var detailLabel: UILabel!
     
-    private var picker = UIView()
+    private var picker: BaseSettingsPickerView?
     
-    func configure(mainText: String, detailText: String?, pickerView: UIView) {
+    func configure(mainText: String, detailText: String?, pickerView: BaseSettingsPickerView) {
         mainTextLabel.text = mainText
         detailLabel.text = detailText
         picker = pickerView
         
-        setupPickerView()
-    }
-    
-    private func setupPickerView() {
-        if let picker = picker as? UIPickerView {
-            guard let controller = picker.delegate as? BaseSettingsPickerViewController else { return }
-            controller.delegate = self
-        } else if let picker = picker as? UIDatePicker {
-            picker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
+        picker?.onValueChanged = { [weak self] detailString in
+            self?.detailLabel.text = detailString
         }
     }
     
-    func addPicker() {
+    func togglePickerVisivility() {
+        guard let picker = picker as? UIView else { return }
+        
         if verticalStackView.arrangedSubviews.contains(picker) {
             picker.removeFromSuperview()
         } else {
             verticalStackView.addArrangedSubview(picker)
         }
-    }
-    
-    @objc private func dateChanged() {
-        guard let picker = picker as? UIDatePicker else { return }
-        
-        let date = DateFormatter.localizedString(from: picker.date, dateStyle: .short, timeStyle: .short)
-        detailLabel.text = date
-    }
-}
-
-extension BaseSettingsPickerExpandableTableViewCell: BaseSettingsPickerViewDelegate {
-    func pickerValueChanged(selectedValues: [String]) {
-        let formattedString = selectedValues.joined(separator: " ")
-        
-        detailLabel.text = formattedString
     }
 }
