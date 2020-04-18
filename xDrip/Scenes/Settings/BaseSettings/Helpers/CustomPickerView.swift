@@ -18,14 +18,14 @@ final class CustomPickerView: UIPickerView, BaseSettingsPickerView {
     init(data: [[String]]) {
         self.data = data
         
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
         
         delegate = self
         dataSource = self
     }
     
     required init?(coder: NSCoder) {
-        fatalError("Not implemented")
+        fatalError("init(coder:) is not permitted")
     }
 }
 

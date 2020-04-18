@@ -66,7 +66,7 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
     }
     
     private func setupUI() {
-        title = "settings_units_title".localized
+        title = "settings_root_units_title".localized
     }
     
     // MARK: Display

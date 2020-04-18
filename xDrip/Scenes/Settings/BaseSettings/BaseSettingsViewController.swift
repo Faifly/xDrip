@@ -83,10 +83,13 @@ class BaseSettingsViewController: UIViewController {
         
         switch section {
         case let .singleSelection(cells, _, header, footer, selectionHandler):
-            viewModel?.sections[indexPath.section] = .singleSelection(cells: cells,
-                                                                      selectedIndex: indexPath.row,
-                                                                      header: header, footer: footer,
-                                                                      selectionHandler: selectionHandler)
+            viewModel?.sections[indexPath.section] = .singleSelection(
+                cells: cells,
+                selectedIndex: indexPath.row,
+                header: header,
+                footer: footer,
+                selectionHandler: selectionHandler
+            )
         default:
             break
         }
@@ -119,7 +122,7 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        return 40.0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

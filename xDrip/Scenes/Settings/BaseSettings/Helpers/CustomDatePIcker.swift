@@ -1,5 +1,5 @@
 //
-//  CustomDatePIcker.swift
+//  CustomDatePicker.swift
 //  xDrip
 //
 //  Created by Ivan Skoryk on 18.04.2020.
@@ -14,12 +14,13 @@ final class CustomDatePicker: UIDatePicker, BaseSettingsPickerView {
     var formatDate: ((Date) -> (String))?
     
     init() {
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
         addTarget(self, action: #selector(handleValueChanged), for: .valueChanged)
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        addTarget(self, action: #selector(handleValueChanged), for: .valueChanged)
     }
     
     @objc private func handleValueChanged() {

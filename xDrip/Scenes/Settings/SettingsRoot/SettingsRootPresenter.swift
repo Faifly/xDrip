@@ -72,41 +72,6 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
         return .rightSwitch(text: field.title, isSwitchOn: isSwitchOn) { _ in }
     }
     
-    private func createPickerExpandableCell(
-        _ field: SettingsRoot.Field,
-        detailText: String?) -> BaseSettings.Cell {
-        
-        // TODO: Add proper data set
-        let data = [
-            ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
-            ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
-            ["mgDl", "mmolL"]
-        ]
-        
-        let picker = CustomPickerView(data: data)
-        
-        picker.formatValues = { values in
-            guard values.count == 3 else { return "" }
-            
-            return "\(values[0]) / \(values[1]) \(values[2])"
-        }
-        
-        return .pickerExpandable(mainText: field.title, detailText: nil, picker: picker)
-    }
-    
-    private func createDatePickerExpandableCell(
-        _ field: SettingsRoot.Field,
-        detailText: String?) -> BaseSettings.Cell {
-        
-        let picker = CustomDatePicker()
-        
-        picker.formatDate = { date in
-            return DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
-        }
-        
-        return .pickerExpandable(mainText: field.title, detailText: nil, picker: picker)
-    }
-    
     private func createVolumeSliderCell(
         _ value: Float,
         valueChangedHandler: @escaping (Float) -> Void) -> BaseSettings.Cell {
