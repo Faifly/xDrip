@@ -28,17 +28,5 @@ class UIColor_Colors_Tests: XCTestCase {
         
         XCTAssert(UIColor.Colors.tabBarRed.rawValue == "tabBarRed")
         _ = UIColor.tabBarRedColor
-        
-        XCTAssert(UIColor.Colors.timeFrameSegmentBackgroundColor.rawValue == "timeFrameSegmentBackgroundColor")
-        _ = UIColor.timeFrameSegmentBackgroundColor
-        
-        XCTAssert(UIColor.Colors.timeFrameSegmentLabelColor.rawValue == "timeFrameSegmentLabelColor")
-        _ = UIColor.timeFrameSegmentLabelColor
-        
-        XCTAssert(UIColor.Colors.timeFrameSegmentSelectedColor.rawValue == "timeFrameSegmentSelectedColor")
-        _ = UIColor.timeFrameSegmentSelectedColor
-        
-        XCTAssert(UIColor.Colors.timeFrameSegmentSeparatorColor.rawValue == "timeFrameSegmentSeparatorColor")
-        _ = UIColor.timeFrameSegmentSeparatorColor
     }
 }

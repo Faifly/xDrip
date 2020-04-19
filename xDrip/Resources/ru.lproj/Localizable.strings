@@ -20,3 +20,23 @@
 "entries_list_scene_title_carbs" = "Активные углеводы";
 "entries_list_scene_title_bolus" = "Активный инсулин";
 "entries_list_cell_no_date" = "Дата не указана";
+
+// Settings Root
+"settings_root_title" = "Настройки";
+"settings_root_units_title" = "Единицы измерения";
+"settings_root_chart_title" = "Настройки диаграммы";
+"settings_root_alert_title" = "Оповещение";
+"settings_root_mode_title" = "Mode Settings";
+"settings_root_cloud_upload_title" = "Загрузки в облако";
+"settings_root_sensor_title" = "Детектор";
+"settings_root_transmitter_title" = "Передатчик";
+"settings_root_range_selection_title" = "Выбор диапазона";
+"settings_root_user_type_title" = "Тип пользователя";
+"settings_root_carbs_duration_time_title" = "Время углеводов";
+"settings_root_insulin_duration_time_title" = "Время инсулина";
+"settings_root_nightscout_pump_title" = "Nightscout (Помпа)";
+
+
+// Settings Units
+"settings_units_mgdl" = "мг/дл";
+"settings_units_mmolL" = "ммоль/л";
