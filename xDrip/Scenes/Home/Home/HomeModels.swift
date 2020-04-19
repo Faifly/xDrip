@@ -38,6 +38,7 @@ enum Home {
         
         struct ViewModel {
             let glucoseValues: [GlucoseChartGlucoseEntry]
+            let unit: String
         }
     }
     

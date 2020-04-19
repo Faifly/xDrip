@@ -498,6 +498,8 @@
 		58B853422448CAA80045F30A /* GlucoseChartGlucoseEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B853412448CAA80045F30A /* GlucoseChartGlucoseEntry.swift */; };
 		58B85356244A021B0045F30A /* HomeGlucoseFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B85355244A021B0045F30A /* HomeGlucoseFormattingWorker.swift */; };
 		58B95B4E244A09E40005CA60 /* Settings+WarningLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B4D244A09E40005CA60 /* Settings+WarningLevels.swift */; };
+		58B95B50244B13400005CA60 /* ChartEntryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B4F244B13400005CA60 /* ChartEntryDetailView.swift */; };
+		58B95B52244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B51244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift */; };
 		58D4FD362423B3300044E687 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 58D4FD352423B3300044E687 /* Realm */; };
 		58D4FD382423B3300044E687 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 58D4FD372423B3300044E687 /* RealmSwift */; };
 		58D4FD3B2423B39C0044E687 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D4FD3A2423B39C0044E687 /* User.swift */; };
@@ -524,7 +526,7 @@
 		58F4CC86243BA2110053D17C /* DebugLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC81243BA2110053D17C /* DebugLogViewController.swift */; };
 		58F4CC87243BA2110053D17C /* DebugLogInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC82243BA2110053D17C /* DebugLogInteractor.swift */; };
 		58F4CC89243BA21D0053D17C /* DebugLogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58F4CC88243BA21D0053D17C /* DebugLogViewController.xib */; };
-		58F72D882441BFF4007AB093 /* ChartScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F72D872441BFF4007AB093 /* ChartScrollView.swift */; };
+		58F72D882441BFF4007AB093 /* ChartSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F72D872441BFF4007AB093 /* ChartSliderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1039,6 +1041,8 @@
 		58B853412448CAA80045F30A /* GlucoseChartGlucoseEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseChartGlucoseEntry.swift; sourceTree = "<group>"; };
 		58B85355244A021B0045F30A /* HomeGlucoseFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGlucoseFormattingWorker.swift; sourceTree = "<group>"; };
 		58B95B4D244A09E40005CA60 /* Settings+WarningLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+WarningLevels.swift"; sourceTree = "<group>"; };
+		58B95B4F244B13400005CA60 /* ChartEntryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartEntryDetailView.swift; sourceTree = "<group>"; };
+		58B95B51244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseChartScrollContainer.swift; sourceTree = "<group>"; };
 		58D4FD3A2423B39C0044E687 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		58D4FD3D2423B4130044E687 /* UserDeviceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDeviceMode.swift; sourceTree = "<group>"; };
 		58DDC44E2423B5B1008CB04D /* UserInjectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInjectionType.swift; sourceTree = "<group>"; };
@@ -1067,7 +1071,7 @@
 		58F4CC81243BA2110053D17C /* DebugLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogViewController.swift; sourceTree = "<group>"; };
 		58F4CC82243BA2110053D17C /* DebugLogInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogInteractor.swift; sourceTree = "<group>"; };
 		58F4CC88243BA21D0053D17C /* DebugLogViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugLogViewController.xib; sourceTree = "<group>"; };
-		58F72D872441BFF4007AB093 /* ChartScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScrollView.swift; sourceTree = "<group>"; };
+		58F72D872441BFF4007AB093 /* ChartSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartSliderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1669,7 +1673,9 @@
 				5860385A24462B64008D54B6 /* ChartVerticalLabelsView.swift */,
 				58B8533D2448CA1B0045F30A /* GlucoseChartProvider.swift */,
 				580E4CF82441BF1E00565EDE /* GlucoseChartView.swift */,
-				58F72D872441BFF4007AB093 /* ChartScrollView.swift */,
+				58F72D872441BFF4007AB093 /* ChartSliderView.swift */,
+				58B95B4F244B13400005CA60 /* ChartEntryDetailView.swift */,
+				58B95B51244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift */,
 			);
 			path = SupportingLogic;
 			sourceTree = "<group>";
@@ -3308,6 +3314,7 @@
 				580E4BC4243F733100565EDE /* SettingsModeRootInteractor.swift in Sources */,
 				5805C9B924389230002AFA1B /* CGMBluetoothServiceDelegate.swift in Sources */,
 				580E4B65243F713A00565EDE /* SettingsAlertTypesRouter.swift in Sources */,
+				58B95B52244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift in Sources */,
 				580E4BC0243F733100565EDE /* SettingsModeRootPresenter.swift in Sources */,
 				580E4B9B243F721500565EDE /* NightscoutCloudConfigurationModels.swift in Sources */,
 				58DDC4642423CAA3008CB04D /* CalibrationEntry.swift in Sources */,
@@ -3376,6 +3383,7 @@
 				58B5FD54241910BD00DB857D /* SettingsRootModels.swift in Sources */,
 				580E4C2D243F74F000565EDE /* SettingsUnitsViewController.swift in Sources */,
 				58B5FD3C24190E6700DB857D /* StatsRootPresenter.swift in Sources */,
+				58B95B50244B13400005CA60 /* ChartEntryDetailView.swift in Sources */,
 				584432AD243CFD9B00282A6C /* SettingsChartViewController.swift in Sources */,
 				580E4B81243F717E00565EDE /* SettingsAlertSoundViewController.swift in Sources */,
 				580E4B43243E38B300565EDE /* BaseSettingsDisclosureCell.swift in Sources */,
@@ -3437,7 +3445,7 @@
 				58788B75242647C5000EB113 /* TrainingEntriesWorker.swift in Sources */,
 				58DDC4622423CA58008CB04D /* AbstractEntry.swift in Sources */,
 				580E4C2E243F74F000565EDE /* SettingsUnitsInteractor.swift in Sources */,
-				58F72D882441BFF4007AB093 /* ChartScrollView.swift in Sources */,
+				58F72D882441BFF4007AB093 /* ChartSliderView.swift in Sources */,
 				5805CA0B243892D6002AFA1B /* InitialSetupAbstractStepViewController.swift in Sources */,
 				58B4F6C024114EBA003C6D8F /* ApplicationLaunchController.swift in Sources */,
 				58B5FD4924190EB300DB857D /* HistoryRootModels.swift in Sources */,

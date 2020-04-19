@@ -11,6 +11,7 @@ import UIKit
 extension UIColor {
     enum Colors: String {
         case background1
+        case background2
         case tabBarBackground
         case tabBarBlue
         case tabBarGray
@@ -20,15 +21,22 @@ extension UIColor {
         case borderColor
         case chartGridLineColor
         case chartTextColor
-        case detailTextColor
+        case lowEmphasisText
+        case mediumEmphasisText
+        case highEmphasisText
         case chartValueNormal
         case chartValueAbnormal
         case chartValueCritical
         case chartSliderBackground
+        case chartSelectionLine
     }
     
     static var background1: UIColor {
         return UIColor(named: Colors.background1.rawValue)!
+    }
+    
+    static var background2: UIColor {
+        return UIColor(named: Colors.background2.rawValue)!
     }
     
     static var tabBarBackgroundColor: UIColor {
@@ -67,8 +75,16 @@ extension UIColor {
         return UIColor(named: Colors.chartTextColor.rawValue)!
     }
     
-    static var detailTextColor: UIColor {
-        return UIColor(named: Colors.detailTextColor.rawValue)!
+    static var lowEmphasisText: UIColor {
+        return UIColor(named: Colors.lowEmphasisText.rawValue)!
+    }
+    
+    static var mediumEmphasisText: UIColor {
+        return UIColor(named: Colors.mediumEmphasisText.rawValue)!
+    }
+    
+    static var highEmphasisText: UIColor {
+        return UIColor(named: Colors.highEmphasisText.rawValue)!
     }
     
     static var chartValueNormal: UIColor {
@@ -85,5 +101,9 @@ extension UIColor {
     
     static var chartSliderBackground: UIColor {
         return UIColor(named: Colors.chartSliderBackground.rawValue)!
+    }
+    
+    static var chartSelectionLine: UIColor {
+        return UIColor(named: Colors.chartSelectionLine.rawValue)!
     }
 }

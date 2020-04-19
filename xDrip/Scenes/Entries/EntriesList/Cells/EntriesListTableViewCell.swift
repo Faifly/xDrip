@@ -17,7 +17,7 @@ final class EntriesListTableViewCell: UITableViewCell, ViewModelConfigurable {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        detailTextLabel?.textColor = .detailTextColor
+        detailTextLabel?.textColor = .lowEmphasisText
     }
     
     func configure(withViewModel viewModel: ViewModel) {

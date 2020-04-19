@@ -12,17 +12,11 @@ final class GlucoseHistoryView: UIView {
     private let verticalLines: Int = 5
     private var forwardTimeOffset: TimeInterval = 600.0
     
-    private let scrollContainer: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.isScrollEnabled = false
-        return scrollView
-    }()
+    private let scrollContainer = GlucoseChartScrollContainer()
+    private let detailsView = ChartEntryDetailView()
     private let leftLabelsView = ChartVerticalLabelsView()
     private let chartView = GlucoseChartView()
-    private let chartScrollView = ChartScrollView()
+    private let chartSliderView = ChartSliderView()
     private weak var chartWidthConstraint: NSLayoutConstraint?
     
     private var glucoseEntries: [GlucoseChartGlucoseEntry] = []
@@ -30,6 +24,8 @@ final class GlucoseHistoryView: UIView {
     private var globalDateRange: DateInterval = DateInterval()
     private var localDateRange: DateInterval = DateInterval()
     private var localInterval: TimeInterval = .secondsPerHour
+    private var userRelativeSelection: CGFloat?
+    private var unit = GlucoseUnit.default.label
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -46,25 +42,31 @@ final class GlucoseHistoryView: UIView {
         isOpaque = false
         backgroundColor = .background1
         
+        addSubview(detailsView)
         addSubview(leftLabelsView)
         addSubview(scrollContainer)
-        scrollContainer.addSubview(chartView)
-        addSubview(chartScrollView)
+        scrollContainer.scrollView.addSubview(chartView)
+        addSubview(chartSliderView)
         
-        chartScrollView.heightAnchor.constraint(equalToConstant: 70.0).isActive = true
-        chartScrollView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        chartScrollView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        chartScrollView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        detailsView.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor).isActive = true
+        detailsView.trailingAnchor.constraint(equalTo: scrollContainer.trailingAnchor).isActive = true
+        detailsView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        detailsView.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
         
-        leftLabelsView.bottomAnchor.constraint(equalTo: chartScrollView.topAnchor).isActive = true
-        leftLabelsView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        chartSliderView.heightAnchor.constraint(equalToConstant: 70.0).isActive = true
+        chartSliderView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        chartSliderView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        chartSliderView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        
+        leftLabelsView.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor).isActive = true
+        leftLabelsView.topAnchor.constraint(equalTo: scrollContainer.topAnchor).isActive = true
         leftLabelsView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         leftLabelsView.trailingAnchor.constraint(equalTo: scrollContainer.leadingAnchor).isActive = true
         leftLabelsView.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
         
-        scrollContainer.bottomAnchor.constraint(equalTo: chartScrollView.topAnchor).isActive = true
+        scrollContainer.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor).isActive = true
         scrollContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0).isActive = true
-        scrollContainer.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        scrollContainer.topAnchor.constraint(equalTo: detailsView.bottomAnchor).isActive = true
         
         chartView.bindToSuperview()
         chartView.heightAnchor.constraint(equalTo: scrollContainer.heightAnchor, multiplier: 1.0).isActive = true
@@ -89,26 +91,45 @@ final class GlucoseHistoryView: UIView {
     }
     
     private func setupScrolling() {
-        chartScrollView.onRelativeOffsetChanged = { [weak self] offset in
+        chartSliderView.onRelativeOffsetChanged = { [weak self] offset in
             guard let self = self else { return }
-            let contentWidth = self.scrollContainer.contentSize.width
+            let contentWidth = self.scrollContainer.scrollView.contentSize.width
             let maxPossibleOffset = (contentWidth - self.scrollContainer.bounds.width) / contentWidth
-            self.scrollContainer.contentOffset = CGPoint(
+            self.scrollContainer.scrollView.contentOffset = CGPoint(
                 x: contentWidth * offset + 30.0 * offset / maxPossibleOffset,
                 y: 0.0
             )
+            self.updateDetailLabel()
+        }
+        
+        scrollContainer.onSelectionChanged = { [weak self] relativeOffset in
+            guard let self = self else { return }
+            self.userRelativeSelection = relativeOffset
+            self.updateDetailLabel()
+            self.detailsView.setHidden(false)
+            self.detailsView.setRelativeOffset(relativeOffset)
         }
     }
     
     func setTimeFrame(_ localInterval: TimeInterval) {
         self.localInterval = localInterval
         forwardTimeOffset = horizontalInterval(for: localInterval)
+        scrollContainer.hideDetailView()
+        detailsView.setHidden(true)
         updateIntervals()
         updateChart()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateChart()
+        scrollContainer.hideDetailView()
+        detailsView.setHidden(true)
+    }
+    
     /// Should be sorted by date ascending
-    func setup(with entries: [GlucoseChartGlucoseEntry]) {
+    func setup(with entries: [GlucoseChartGlucoseEntry], unit: String) {
+        self.unit = unit
         glucoseEntries = entries
         updateIntervals()
         updateChart()
@@ -136,15 +157,15 @@ final class GlucoseHistoryView: UIView {
         chartView.dateInterval = globalDateRange
         chartView.setNeedsDisplay()
         
-        chartScrollView.currentRelativeOffset = (scrollSegments - 1.0) / scrollSegments
-        chartScrollView.sliderRelativeWidth = 1.0 / scrollSegments
-        chartScrollView.entries = glucoseEntries
-        chartScrollView.dateInterval = globalDateRange
-        chartScrollView.yRange = chartView.yRange
-        chartScrollView.setNeedsDisplay()
+        chartSliderView.currentRelativeOffset = (scrollSegments - 1.0) / scrollSegments
+        chartSliderView.sliderRelativeWidth = 1.0 / scrollSegments
+        chartSliderView.entries = glucoseEntries
+        chartSliderView.dateInterval = globalDateRange
+        chartSliderView.yRange = chartView.yRange
+        chartSliderView.setNeedsDisplay()
         
         scrollContainer.layoutIfNeeded()
-        scrollContainer.contentOffset = CGPoint(x: chartWidth - scrollContainer.bounds.width, y: 0.0)
+        scrollContainer.scrollView.contentOffset = CGPoint(x: chartWidth - scrollContainer.bounds.width, y: 0.0)
     }
     
     private func calculateVerticalLeftLabels() {
@@ -214,5 +235,36 @@ final class GlucoseHistoryView: UIView {
         case 24: return .secondsPerHour * 4.0
         default: return TimeInterval(hours) / 4.0 * .secondsPerHour
         }
+    }
+    
+    private func updateDetailLabel() {
+        guard let userRelativeSelection = userRelativeSelection else { return }
+        let scrollView = scrollContainer.scrollView
+        let currentRelativeOffset = scrollView.contentOffset.x / scrollView.contentSize.width
+        let scrollSegments = TimeInterval(
+            (globalDateRange.duration - forwardTimeOffset) / (localDateRange.duration - forwardTimeOffset)
+        )
+        let globalDurationOffset = globalDateRange.duration * TimeInterval(currentRelativeOffset)
+        let localOffsettedInterval = localInterval + forwardTimeOffset / scrollSegments
+        let localDurationOffset = localOffsettedInterval * TimeInterval(userRelativeSelection)
+        let currentRelativeStartTime = globalDurationOffset + localDurationOffset
+        let selectedDate = globalDateRange.start + currentRelativeStartTime
+        if let entry = nearestEntry(forDate: selectedDate) {
+            detailsView.set(value: entry.value, unit: unit, date: entry.date)
+        }
+    }
+    
+    private func nearestEntry(forDate date: Date) -> GlucoseChartGlucoseEntry? {
+        for index in 0..<glucoseEntries.count - 1 {
+            let entry1 = glucoseEntries[index]
+            let entry2 = glucoseEntries[index + 1]
+            if entry1.date > date && entry2.date < date {
+                let diff1 = entry1.date.timeIntervalSince1970 - date.timeIntervalSince1970
+                let diff2 = date.timeIntervalSince1970 - entry2.date.timeIntervalSince1970
+                return diff1 < diff2 ? entry1 : entry2
+            }
+        }
+        
+        return nil
     }
 }

@@ -38,5 +38,5 @@
 
 
 // Settings Units
-"settings_units_mgdl" = "mg/Dl";
+"settings_units_mgdl" = "mg/dL";
 "settings_units_mmolL" = "mmol/L";
