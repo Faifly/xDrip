@@ -10,8 +10,8 @@ import UIKit
 
 extension UIColor {
     enum Colors: String {
-        case background1
-        case background2
+        case background1 = "background_1"
+        case background2 = "background_2"
         case tabBarBackground
         case tabBarBlue
         case tabBarGray
