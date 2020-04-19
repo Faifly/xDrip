@@ -48,20 +48,20 @@ final class GlucoseChartScrollContainer: UIView {
     }
     
     private func updateFrame(forTouchX touchX: CGFloat) {
-        let x: CGFloat
+        let finalX: CGFloat
         if touchX < 0.0 {
-            x = 0.0
+            finalX = 0.0
         } else if touchX > bounds.width {
-            x = bounds.width
+            finalX = bounds.width
         } else {
-            x = touchX
+            finalX = touchX
         }
         
-        let relative = x / bounds.width
+        let relative = finalX / bounds.width
         onSelectionChanged?(relative)
         
         selectionIndicator.frame = CGRect(
-            x: x - 1.0,
+            x: finalX - 1.0,
             y: 0.0,
             width: 2.0,
             height: bounds.size.height

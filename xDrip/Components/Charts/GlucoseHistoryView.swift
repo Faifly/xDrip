@@ -176,8 +176,8 @@ final class GlucoseHistoryView: UIView {
         let step = (adjustedMaxValue - adjustedMinValue) / Double(verticalLines - 1)
         
         var labels: [String] = []
-        for i in 0..<verticalLines {
-            labels.append(String(format: "%0.f", adjustedMinValue + step * Double(i)))
+        for index in 0..<verticalLines {
+            labels.append(String(format: "%0.f", adjustedMinValue + step * Double(index)))
         }
         
         leftLabelsView.labels = labels
