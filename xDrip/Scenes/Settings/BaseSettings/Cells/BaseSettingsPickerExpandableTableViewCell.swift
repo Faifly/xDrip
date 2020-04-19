@@ -27,7 +27,7 @@ final class BaseSettingsPickerExpandableTableViewCell: UITableViewCell {
     }
     
     func togglePickerVisivility() {
-        guard let picker = picker as? UIView else { return }
+        guard let picker = picker else { return }
         
         if verticalStackView.arrangedSubviews.contains(picker) {
             picker.removeFromSuperview()
