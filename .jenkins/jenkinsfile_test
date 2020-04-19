@@ -69,7 +69,7 @@ pipeline {
         }
     }
     post {
-        failure {
+        unsuccessful {
             sendStatusNotification("failure")
             sendFailNotification()
             deleteDir()

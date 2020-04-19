@@ -110,7 +110,7 @@ class EntriesListTableControllerTests: XCTestCase {
         XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 19)
     }
     
-    func test() {
+    func testTableViewConfiguration() {
         loadView()
         
         sut.reload(with: [])

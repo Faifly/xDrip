@@ -39,7 +39,7 @@ private enum InitialSetupG6Step: InitialSetupStep {
         switch self {
         case .deviceID: return InitialSetupG6DeviceIDViewController()
         case .sensorAge: return InitialSetupG6SensorAgeViewController()
-        case .connect: return InitialSetupG6ConnectViewController()
+        case .connect: return InitialSetupG6ConnectViewController(connectionWorker: InitialSetupDexcomG6ConnectionWorker())
         case .warmUp: return InitialSetupG6WarmUpViewController()
         }
     }
