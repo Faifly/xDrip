@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 #if !targetEnvironment(macCatalyst)
 import FirebaseCore
 #endif
@@ -16,6 +17,7 @@ final class ApplicationLaunchController {
         #if !targetEnvironment(macCatalyst)
         FirebaseApp.configure()
         #endif
+        setupRealm()
         setupDevice()
     }
     
@@ -24,6 +26,14 @@ final class ApplicationLaunchController {
         window.rootViewController = RootViewController()
         window.makeKeyAndVisible()
         return window
+    }
+    
+    private static func setupRealm() {
+        Realm.Configuration.defaultConfiguration = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { _, _ in },
+            deleteRealmIfMigrationNeeded: true
+        )
     }
     
     private static func setupDevice() {
