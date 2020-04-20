@@ -52,7 +52,7 @@ extension MockedBluetoothServiceConfiguration.Predefined {
         return MockedBluetoothServiceConfiguration(
             metadataReceiveDelay: 120.0,
             glucoseReadingsInterval: 300.0,
-            initialGlucose: 200.0,
+            initialGlucose: 100.0,
             failProbability: 0.01,
             glucoseMaximumEpsilon: 50.0,
             glucoseChangeMode: .normalDeviation
@@ -63,9 +63,9 @@ extension MockedBluetoothServiceConfiguration.Predefined {
         return MockedBluetoothServiceConfiguration(
             metadataReceiveDelay: 1.0,
             glucoseReadingsInterval: 5.0,
-            initialGlucose: 200.0,
+            initialGlucose: 100.0,
             failProbability: 0.0,
-            glucoseMaximumEpsilon: 20.0,
+            glucoseMaximumEpsilon: 30.0,
             glucoseChangeMode: .normalDeviation
         )
     }
@@ -74,7 +74,7 @@ extension MockedBluetoothServiceConfiguration.Predefined {
         return MockedBluetoothServiceConfiguration(
             metadataReceiveDelay: 1.0,
             glucoseReadingsInterval: 10.0,
-            initialGlucose: 200.0,
+            initialGlucose: 50.0,
             failProbability: 0.0,
             glucoseMaximumEpsilon: 10.0,
             glucoseChangeMode: .continuousChange(epsilon: 50.0)
@@ -85,7 +85,7 @@ extension MockedBluetoothServiceConfiguration.Predefined {
         return MockedBluetoothServiceConfiguration(
             metadataReceiveDelay: 1.0,
             glucoseReadingsInterval: 10.0,
-            initialGlucose: 400.0,
+            initialGlucose: 200.0,
             failProbability: 0.0,
             glucoseMaximumEpsilon: 10.0,
             glucoseChangeMode: .continuousChange(epsilon: -50.0)
@@ -96,7 +96,7 @@ extension MockedBluetoothServiceConfiguration.Predefined {
         return MockedBluetoothServiceConfiguration(
             metadataReceiveDelay: 1.0,
             glucoseReadingsInterval: 20.0,
-            initialGlucose: 200.0,
+            initialGlucose: 100.0,
             failProbability: 0.0,
             glucoseMaximumEpsilon: 1000.0,
             glucoseChangeMode: .abnormalDeviation
@@ -107,7 +107,7 @@ extension MockedBluetoothServiceConfiguration.Predefined {
         return MockedBluetoothServiceConfiguration(
             metadataReceiveDelay: 1.0,
             glucoseReadingsInterval: 60.0,
-            initialGlucose: 200.0,
+            initialGlucose:1200.0,
             failProbability: 0.5,
             glucoseMaximumEpsilon: 100.0,
             glucoseChangeMode: .normalDeviation

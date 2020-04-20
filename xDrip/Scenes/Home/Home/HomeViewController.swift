@@ -16,6 +16,7 @@ import AKUtils
 protocol HomeDisplayLogic: class {
     func displayLoad(viewModel: Home.Load.ViewModel)
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel)
+    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel)
 }
 
 class HomeViewController: NibViewController, HomeDisplayLogic {
@@ -51,15 +52,14 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     // MARK: IB
     
-    @IBOutlet weak var timeLineSegmentView: UISegmentedControl!
-    @IBOutlet weak var glucoseLabel: UILabel!
+    @IBOutlet private weak var timeLineSegmentView: UISegmentedControl!
+    @IBOutlet private weak var glucoseChart: GlucoseHistoryView!
     
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
-        
         setupUI()
     }
     
@@ -76,17 +76,33 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     }
     
     @IBAction private func onTimeFrameSegmentSelected() {
+        let hours: Int
+        switch timeLineSegmentView.selectedSegmentIndex {
+        case 0: hours = 1
+        case 1: hours = 3
+        case 2: hours = 6
+        case 3: hours = 12
+        case 4: hours = 24
+        default: hours = 0
+        }
         
+        let request = Home.ChangeGlucoseChartTimeFrame.Request(hours: hours)
+        interactor?.doChangeGlucoseChartTimeFrame(request: request)
     }
     
     // MARK: Display
     
     func displayLoad(viewModel: Home.Load.ViewModel) {
-        
     }
     
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel) {
-        glucoseLabel.text = viewModel.glucoseValue
+        DispatchQueue.main.async { [weak self] in
+            self?.glucoseChart.setup(with: viewModel.glucoseValues, unit: viewModel.unit)
+        }
+    }
+    
+    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel) {
+        glucoseChart.setTimeFrame(viewModel.timeInterval)
     }
     
     private func setupUI() {

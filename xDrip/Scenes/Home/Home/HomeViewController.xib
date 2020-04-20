@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="xDrip" customModuleProvider="target">
             <connections>
-                <outlet property="glucoseLabel" destination="fUm-x4-kiS" id="W2h-J6-V2Q"/>
+                <outlet property="glucoseChart" destination="dSe-Qa-bqu" id="leZ-tw-snL"/>
                 <outlet property="timeLineSegmentView" destination="kVg-zr-V5c" id="1OU-lX-GZs"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bzO-Wv-6Q2"/>
             </connections>
@@ -20,14 +20,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reading" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fUm-x4-kiS">
-                    <rect key="frame" x="16" y="438" width="382" height="20.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kVg-zr-V5c">
-                    <rect key="frame" x="16" y="60" width="382" height="32"/>
+                    <rect key="frame" x="16" y="59" width="382" height="32"/>
                     <segments>
                         <segment title="First"/>
                         <segment title="Second"/>
@@ -43,15 +37,22 @@
                         <action selector="toEntriesList" destination="-1" eventType="touchUpInside" id="1ad-Tu-NTA"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dSe-Qa-bqu" customClass="GlucoseHistoryView" customModule="xDrip" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="137" width="414" height="270"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="270" id="x0y-Ag-e9B"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="fUm-x4-kiS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="6NW-V1-RT1"/>
+                <constraint firstItem="dSe-Qa-bqu" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Krg-EG-wEs"/>
                 <constraint firstItem="Xzh-FR-4Nr" firstAttribute="top" secondItem="kVg-zr-V5c" secondAttribute="bottom" constant="8" id="T0o-h1-Eah"/>
                 <constraint firstItem="kVg-zr-V5c" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="Zbj-Td-dxa"/>
                 <constraint firstItem="kVg-zr-V5c" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="c1A-id-guO"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="fUm-x4-kiS" secondAttribute="trailing" constant="16" id="hWw-o5-89S"/>
-                <constraint firstItem="fUm-x4-kiS" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="mN5-aK-cJB"/>
+                <constraint firstItem="dSe-Qa-bqu" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="j5q-I5-9ae"/>
+                <constraint firstItem="dSe-Qa-bqu" firstAttribute="top" secondItem="Xzh-FR-4Nr" secondAttribute="bottom" constant="8" id="lXE-ck-Yi9"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="kVg-zr-V5c" secondAttribute="trailing" constant="16" id="rlk-6p-J2V"/>
                 <constraint firstItem="Xzh-FR-4Nr" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yuw-uo-bs9"/>
             </constraints>

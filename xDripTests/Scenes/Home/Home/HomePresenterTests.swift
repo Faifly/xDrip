@@ -45,7 +45,9 @@ final class HomePresenterTests: XCTestCase {
         }
         
         func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel) {
-            
+        }
+        
+        func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel) {
         }
     }
     

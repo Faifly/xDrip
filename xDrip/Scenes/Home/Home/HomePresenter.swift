@@ -15,10 +15,17 @@ import UIKit
 protocol HomePresentationLogic {
     func presentLoad(response: Home.Load.Response)
     func presentGlucoseData(response: Home.GlucoseDataUpdate.Response)
+    func presentGlucoseChartTimeFrameChange(response: Home.ChangeGlucoseChartTimeFrame.Response)
 }
 
 final class HomePresenter: HomePresentationLogic {
     weak var viewController: HomeDisplayLogic?
+    
+    private let glucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol
+    
+    init() {
+        glucoseFormattingWorker = HomeGlucoseFormattingWorker()
+    }
     
     // MARK: Do something
     
@@ -28,21 +35,14 @@ final class HomePresenter: HomePresentationLogic {
     }
     
     func presentGlucoseData(response: Home.GlucoseDataUpdate.Response) {
-        let valueString = "\(response.glucoseData.value)"
-        let dateString: String
-        if let date = response.glucoseData.date {
-            dateString = DateFormatter.localizedString(
-                from: date,
-                dateStyle: .short,
-                timeStyle: .medium
-            )
-        } else {
-            dateString = "Unknown"
-        }
-        
-        let viewModel = Home.GlucoseDataUpdate.ViewModel(
-            glucoseValue: "\(valueString), last updated: \(dateString)"
-        )
+        let values = glucoseFormattingWorker.formatEntries(response.glucoseData)
+        let unit = User.current.settings.unit.label
+        let viewModel = Home.GlucoseDataUpdate.ViewModel(glucoseValues: values, unit: unit)
         viewController?.displayGlucoseData(viewModel: viewModel)
+    }
+    
+    func presentGlucoseChartTimeFrameChange(response: Home.ChangeGlucoseChartTimeFrame.Response) {
+        let viewModel = Home.ChangeGlucoseChartTimeFrame.ViewModel(timeInterval: response.timeInterval)
+        viewController?.displayGlucoseChartTimeFrame(viewModel: viewModel)
     }
 }

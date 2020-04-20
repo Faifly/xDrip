@@ -17,7 +17,7 @@ final class HomeGlucoseDataWorkerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        sut.glucoseDataHandler = { _ in
+        sut.glucoseDataHandler = {
             self.calledDataHandler = true
         }
     }
