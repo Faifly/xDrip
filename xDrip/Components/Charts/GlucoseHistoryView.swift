@@ -255,6 +255,11 @@ final class GlucoseHistoryView: UIView {
     }
     
     private func nearestEntry(forDate date: Date) -> GlucoseChartGlucoseEntry? {
+        if glucoseEntries.count == 0 {
+            return nil
+        } else if glucoseEntries.count == 1 {
+            return glucoseEntries[0]
+        }
         for index in 0..<glucoseEntries.count - 1 {
             let entry1 = glucoseEntries[index]
             let entry2 = glucoseEntries[index + 1]
