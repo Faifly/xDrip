@@ -34,7 +34,7 @@
 		2C493C39244EFF0400F4A54B /* BaseSettingsPickerExpandableTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C38244EFF0400F4A54B /* BaseSettingsPickerExpandableTableViewCellTests.swift */; };
 		2C493C3B244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */; };
 		2C493C3D244F012600F4A54B /* Settings+Notifications_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */; };
-		2C493C3F244F04FB00F4A54B /* SettinngsSplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3E244F04FB00F4A54B /* SettinngsSplitViewControllerTests.swift */; };
+		2C493C3F244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3E244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift */; };
 		2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C87F045243E69C0002CF3D8 /* UView+Tests.swift */; };
 		2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */; };
 		2CBE1A86243204CC003BE14E /* ViewModelConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */; };
@@ -592,7 +592,7 @@
 		2C493C38244EFF0400F4A54B /* BaseSettingsPickerExpandableTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsPickerExpandableTableViewCellTests.swift; sourceTree = "<group>"; };
 		2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsTextInputTableViewCellTests.swift; sourceTree = "<group>"; };
 		2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Notifications_Tests.swift"; sourceTree = "<group>"; };
-		2C493C3E244F04FB00F4A54B /* SettinngsSplitViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettinngsSplitViewControllerTests.swift; sourceTree = "<group>"; };
+		2C493C3E244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewControllerTests.swift; sourceTree = "<group>"; };
 		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
 		2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableController.swift; sourceTree = "<group>"; };
 		2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConfigurable.swift; sourceTree = "<group>"; };
@@ -2877,7 +2877,7 @@
 				58B5FD802419286800DB857D /* Stats */,
 				58B5FD8A24192B9500DB857D /* History */,
 				58B5FD9424192E3E00DB857D /* Settings */,
-				2C493C3E244F04FB00F4A54B /* SettinngsSplitViewControllerTests.swift */,
+				2C493C3E244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift */,
 				5805CA2624389D55002AFA1B /* InitialSetup */,
 			);
 			path = Scenes;
@@ -3669,7 +3669,7 @@
 				5805CA402438A01D002AFA1B /* InitialSetupDeviceModeViewControllerTests.swift in Sources */,
 				5805CAA22438A707002AFA1B /* UIView+Effects_Tests.swift in Sources */,
 				58A8A42324251FC400CCFCAC /* GlucoseWarningLevelSettingTests.swift in Sources */,
-				2C493C3F244F04FB00F4A54B /* SettinngsSplitViewControllerTests.swift in Sources */,
+				2C493C3F244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift in Sources */,
 				580E4C4C243F773500565EDE /* SettingsAlertTypesRouterTests.swift in Sources */,
 				580EC7C92421525300C34948 /* EditCalibrationPresenterTests.swift in Sources */,
 				580E4CED243F805C00565EDE /* SettingsModeMasterPresenterTests.swift in Sources */,
