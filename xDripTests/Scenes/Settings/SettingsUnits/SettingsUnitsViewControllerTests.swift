@@ -73,6 +73,7 @@ final class SettingsUnitsViewControllerTests: XCTestCase {
         
         // When
         loadView()
+        
         sut.displayLoad(viewModel: viewModel)
         
         // Then

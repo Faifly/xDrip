@@ -43,8 +43,6 @@ final class SettingsUnitsPresenterTests: XCTestCase {
         func displayLoad(viewModel: SettingsUnits.Load.ViewModel) {
             displayLoadCalled = true
         }
-        
-        func displaySelect(viewModel: SettingsUnits.Select.ViewModel) { }
     }
     
     // MARK: Tests

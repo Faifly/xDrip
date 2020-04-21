@@ -25,7 +25,16 @@
 		2C493C2324489ABF00F4A54B /* Settings+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C2224489ABF00F4A54B /* Settings+Notifications.swift */; };
 		2C493C25244B164800F4A54B /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C24244B164800F4A54B /* CustomPickerView.swift */; };
 		2C493C28244B18CA00F4A54B /* BaseSettingsPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C27244B18CA00F4A54B /* BaseSettingsPickerView.swift */; };
-		2C493C2A244B205800F4A54B /* CustomDatePIcker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C29244B205800F4A54B /* CustomDatePIcker.swift */; };
+		2C493C2A244B205800F4A54B /* CustomDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C29244B205800F4A54B /* CustomDatePicker.swift */; };
+		2C493C2F244EFD4600F4A54B /* CustomDatePickerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C2E244EFD4600F4A54B /* CustomDatePickerTests.swift */; };
+		2C493C31244EFD5A00F4A54B /* CustomPickerViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C30244EFD5A00F4A54B /* CustomPickerViewTests.swift */; };
+		2C493C33244EFE8000F4A54B /* BaseSettingsRightSwitchTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C32244EFE8000F4A54B /* BaseSettingsRightSwitchTableViewCellTests.swift */; };
+		2C493C35244EFEAC00F4A54B /* BaseSettingsVolumeSliderTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C34244EFEAC00F4A54B /* BaseSettingsVolumeSliderTableViewCellTests.swift */; };
+		2C493C37244EFEF200F4A54B /* BaseSettingsSingleSelectionTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C36244EFEF200F4A54B /* BaseSettingsSingleSelectionTableViewCellTests.swift */; };
+		2C493C39244EFF0400F4A54B /* BaseSettingsPickerExpandableTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C38244EFF0400F4A54B /* BaseSettingsPickerExpandableTableViewCellTests.swift */; };
+		2C493C3B244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */; };
+		2C493C3D244F012600F4A54B /* Settings+Notifications_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */; };
+		2C493C3F244F04FB00F4A54B /* SettinngsSplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3E244F04FB00F4A54B /* SettinngsSplitViewControllerTests.swift */; };
 		2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C87F045243E69C0002CF3D8 /* UView+Tests.swift */; };
 		2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */; };
 		2CBE1A86243204CC003BE14E /* ViewModelConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */; };
@@ -574,7 +583,16 @@
 		2C493C2224489ABF00F4A54B /* Settings+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Notifications.swift"; sourceTree = "<group>"; };
 		2C493C24244B164800F4A54B /* CustomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
 		2C493C27244B18CA00F4A54B /* BaseSettingsPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsPickerView.swift; sourceTree = "<group>"; };
-		2C493C29244B205800F4A54B /* CustomDatePIcker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePIcker.swift; sourceTree = "<group>"; };
+		2C493C29244B205800F4A54B /* CustomDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePicker.swift; sourceTree = "<group>"; };
+		2C493C2E244EFD4600F4A54B /* CustomDatePickerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerTests.swift; sourceTree = "<group>"; };
+		2C493C30244EFD5A00F4A54B /* CustomPickerViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerViewTests.swift; sourceTree = "<group>"; };
+		2C493C32244EFE8000F4A54B /* BaseSettingsRightSwitchTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsRightSwitchTableViewCellTests.swift; sourceTree = "<group>"; };
+		2C493C34244EFEAC00F4A54B /* BaseSettingsVolumeSliderTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsVolumeSliderTableViewCellTests.swift; sourceTree = "<group>"; };
+		2C493C36244EFEF200F4A54B /* BaseSettingsSingleSelectionTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsSingleSelectionTableViewCellTests.swift; sourceTree = "<group>"; };
+		2C493C38244EFF0400F4A54B /* BaseSettingsPickerExpandableTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsPickerExpandableTableViewCellTests.swift; sourceTree = "<group>"; };
+		2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsTextInputTableViewCellTests.swift; sourceTree = "<group>"; };
+		2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Notifications_Tests.swift"; sourceTree = "<group>"; };
+		2C493C3E244F04FB00F4A54B /* SettinngsSplitViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettinngsSplitViewControllerTests.swift; sourceTree = "<group>"; };
 		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
 		2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableController.swift; sourceTree = "<group>"; };
 		2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConfigurable.swift; sourceTree = "<group>"; };
@@ -1152,11 +1170,20 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		2C493C2B244EFD1200F4A54B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2C493C2E244EFD4600F4A54B /* CustomDatePickerTests.swift */,
+				2C493C30244EFD5A00F4A54B /* CustomPickerViewTests.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		2C531F6F2445FE27006F4532 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				2C493C24244B164800F4A54B /* CustomPickerView.swift */,
-				2C493C29244B205800F4A54B /* CustomDatePIcker.swift */,
+				2C493C29244B205800F4A54B /* CustomDatePicker.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2003,10 +2030,12 @@
 		580E4C30243F766800565EDE /* BaseSettings */ = {
 			isa = PBXGroup;
 			children = (
+				2C493C2B244EFD1200F4A54B /* Helpers */,
 				580E4C38243F76BA00565EDE /* Cells */,
 				580E4C32243F768A00565EDE /* BaseSettingsModelsTests.swift */,
 				580E4C34243F769700565EDE /* BaseSettingsViewControllerTests.swift */,
 				580E4C36243F76A200565EDE /* BaseSettingsCellFactoryTests.swift */,
+				2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */,
 			);
 			path = BaseSettings;
 			sourceTree = "<group>";
@@ -2015,6 +2044,11 @@
 			isa = PBXGroup;
 			children = (
 				580E4C39243F76CA00565EDE /* BaseSettingsDisclosureCellTests.swift */,
+				2C493C32244EFE8000F4A54B /* BaseSettingsRightSwitchTableViewCellTests.swift */,
+				2C493C34244EFEAC00F4A54B /* BaseSettingsVolumeSliderTableViewCellTests.swift */,
+				2C493C36244EFEF200F4A54B /* BaseSettingsSingleSelectionTableViewCellTests.swift */,
+				2C493C38244EFF0400F4A54B /* BaseSettingsPickerExpandableTableViewCellTests.swift */,
+				2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2843,6 +2877,7 @@
 				58B5FD802419286800DB857D /* Stats */,
 				58B5FD8A24192B9500DB857D /* History */,
 				58B5FD9424192E3E00DB857D /* Settings */,
+				2C493C3E244F04FB00F4A54B /* SettinngsSplitViewControllerTests.swift */,
 				5805CA2624389D55002AFA1B /* InitialSetup */,
 			);
 			path = Scenes;
@@ -3326,7 +3361,7 @@
 				58DDC4602423C9EF008CB04D /* TrainingIntensity.swift in Sources */,
 				580E4C07243F746F00565EDE /* SettingsUserTypeRootInteractor.swift in Sources */,
 				580EC7AC242151BC00C34948 /* EditTrainingInteractor.swift in Sources */,
-				2C493C2A244B205800F4A54B /* CustomDatePIcker.swift in Sources */,
+				2C493C2A244B205800F4A54B /* CustomDatePicker.swift in Sources */,
 				58F4CC7B243BA0CB0053D17C /* DebugController.swift in Sources */,
 				580E4BF8243F73E200565EDE /* SettingsChartRangesViewController.swift in Sources */,
 				58B5FD3F24190E6700DB857D /* StatsRootViewController.swift in Sources */,
@@ -3621,6 +3656,7 @@
 				5805CA4D2438A0B8002AFA1B /* InitialSetupG6SensorAgeViewControllerTests.swift in Sources */,
 				580E4CA0243F783600565EDE /* SettingsTransmitterPresenterTests.swift in Sources */,
 				580E4C53243F774C00565EDE /* SettingsAlertSingleTypeViewControllerTests.swift in Sources */,
+				2C493C3D244F012600F4A54B /* Settings+Notifications_Tests.swift in Sources */,
 				58A8A416242505DD00CCFCAC /* GlucoseUnitTests.swift in Sources */,
 				5805CA882438A4EF002AFA1B /* DexcomG6TransmitterTimeRxMessageTests.swift in Sources */,
 				580E4C41243F771200565EDE /* SettingsAlertRootViewControllerTests.swift in Sources */,
@@ -3633,6 +3669,7 @@
 				5805CA402438A01D002AFA1B /* InitialSetupDeviceModeViewControllerTests.swift in Sources */,
 				5805CAA22438A707002AFA1B /* UIView+Effects_Tests.swift in Sources */,
 				58A8A42324251FC400CCFCAC /* GlucoseWarningLevelSettingTests.swift in Sources */,
+				2C493C3F244F04FB00F4A54B /* SettinngsSplitViewControllerTests.swift in Sources */,
 				580E4C4C243F773500565EDE /* SettingsAlertTypesRouterTests.swift in Sources */,
 				580EC7C92421525300C34948 /* EditCalibrationPresenterTests.swift in Sources */,
 				580E4CED243F805C00565EDE /* SettingsModeMasterPresenterTests.swift in Sources */,
@@ -3681,6 +3718,7 @@
 				5805CAA02438A6D1002AFA1B /* LogControllerTests.swift in Sources */,
 				5805CA432438A041002AFA1B /* InitialSetupInjectionTypeViewControllerTests.swift in Sources */,
 				580E4C56243F774C00565EDE /* SettingsAlertSingleTypePresenterTests.swift in Sources */,
+				2C493C39244EFF0400F4A54B /* BaseSettingsPickerExpandableTableViewCellTests.swift in Sources */,
 				580E4C6F243F77A800565EDE /* NightscoutCloudConfigurationViewControllerTests.swift in Sources */,
 				5805CA7D2438A40B002AFA1B /* DexcomG6TransmitterTimeTxMessageTests.swift in Sources */,
 				580EC7C62421525300C34948 /* EditCalibrationViewControllerTests.swift in Sources */,
@@ -3703,10 +3741,12 @@
 				5805CA2A24389D85002AFA1B /* InitialSetupDexcomG6IDSavingWorkerTests.swift in Sources */,
 				58A8A418242507D100CCFCAC /* GlucoseDataTests.swift in Sources */,
 				580E4C3A243F76CA00565EDE /* BaseSettingsDisclosureCellTests.swift in Sources */,
+				2C493C31244EFD5A00F4A54B /* CustomPickerViewTests.swift in Sources */,
 				5805CA582438A148002AFA1B /* InitialSetupInteractorTests.swift in Sources */,
 				5805CA7F2438A423002AFA1B /* DexcomG6FirmwareVersionTxMessageTests.swift in Sources */,
 				58788B8924265684000EB113 /* TrainingEntryTests.swift in Sources */,
 				58788B87242655B6000EB113 /* BolusEntryTests.swift in Sources */,
+				2C493C35244EFEAC00F4A54B /* BaseSettingsVolumeSliderTableViewCellTests.swift in Sources */,
 				58B5FD7D2419280100DB857D /* HomeInteractorTests.swift in Sources */,
 				58A8A4262425215500CCFCAC /* AbstractEntryTests.swift in Sources */,
 				5805CA602438A213002AFA1B /* CGMBluetoothServiceErrorTests.swift in Sources */,
@@ -3720,7 +3760,9 @@
 				580EC7B5242151EB00C34948 /* EditTrainingPresenterTests.swift in Sources */,
 				580E4C4D243F773500565EDE /* SettingsAlertTypesPresenterTests.swift in Sources */,
 				580E4C8C243F780200565EDE /* SettingsModeRootInteractorTests.swift in Sources */,
+				2C493C37244EFEF200F4A54B /* BaseSettingsSingleSelectionTableViewCellTests.swift in Sources */,
 				580E4C5F243F776700565EDE /* SettingsAlertSoundPresenterTests.swift in Sources */,
+				2C493C33244EFE8000F4A54B /* BaseSettingsRightSwitchTableViewCellTests.swift in Sources */,
 				580EC79A24214D1200C34948 /* EntriesListViewControllerTests.swift in Sources */,
 				58B5FD9324192BB200DB857D /* HistoryRootPresenterTests.swift in Sources */,
 				58788B812426503E000EB113 /* TrainingEntriesWorkerTests.swift in Sources */,
@@ -3770,6 +3812,7 @@
 				5805CA732438A35A002AFA1B /* DexcomG6TransmitterVersionTxMessageTests.swift in Sources */,
 				580E4C8E243F780200565EDE /* SettingsModeRootPresenterTests.swift in Sources */,
 				5805CA842438A480002AFA1B /* DexcomG6BatteryStatusRxMessageTests.swift in Sources */,
+				2C493C3B244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift in Sources */,
 				580E4C55243F774C00565EDE /* SettingsAlertSingleTypeRouterTests.swift in Sources */,
 				580EC7882421459400C34948 /* EditFoodEntryRouterTests.swift in Sources */,
 				580E4C9D243F783600565EDE /* SettingsTransmitterViewControllerTests.swift in Sources */,
@@ -3778,6 +3821,7 @@
 				580E4C44243F771200565EDE /* SettingsAlertRootPresenterTests.swift in Sources */,
 				5805CA3724389F8B002AFA1B /* InitialSetupIntroViewControllerTests.swift in Sources */,
 				580E4CA8243F784800565EDE /* SettingsSensorRouterTests.swift in Sources */,
+				2C493C2F244EFD4600F4A54B /* CustomDatePickerTests.swift in Sources */,
 				5805CA3024389EC9002AFA1B /* InitialSetupG6StepWorkerTests.swift in Sources */,
 				584432B9243CFE1900282A6C /* SettingsChartPresenterTests.swift in Sources */,
 				58443266243CF87500282A6C /* SettingsTests.swift in Sources */,

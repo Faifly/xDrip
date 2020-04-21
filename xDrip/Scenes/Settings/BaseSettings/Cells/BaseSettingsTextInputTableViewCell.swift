@@ -30,7 +30,6 @@ final class BaseSettingsTextInputTableViewCell: UITableViewCell {
     @IBAction private func editingChanged(_ sender: UITextField) {
         textChangeHandler?(sender.text)
     }
-    
 }
 
 extension BaseSettingsTextInputTableViewCell: UITextFieldDelegate {
