@@ -35,6 +35,8 @@
 		2C493C3B244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */; };
 		2C493C3D244F012600F4A54B /* Settings+Notifications_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */; };
 		2C493C3F244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3E244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift */; };
+		2C5B3F0A24533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */; };
+		2C5B3F0C2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */; };
 		2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C87F045243E69C0002CF3D8 /* UView+Tests.swift */; };
 		2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */; };
 		2CBE1A86243204CC003BE14E /* ViewModelConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */; };
@@ -593,6 +595,8 @@
 		2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsTextInputTableViewCellTests.swift; sourceTree = "<group>"; };
 		2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Notifications_Tests.swift"; sourceTree = "<group>"; };
 		2C493C3E244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewControllerTests.swift; sourceTree = "<group>"; };
+		2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BaseSettingsViewControllerCoderTest.storyboard; sourceTree = "<group>"; };
+		2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewControllerCoderTest.swift; sourceTree = "<group>"; };
 		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
 		2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableController.swift; sourceTree = "<group>"; };
 		2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConfigurable.swift; sourceTree = "<group>"; };
@@ -1170,22 +1174,31 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		2C493C2B244EFD1200F4A54B /* Helpers */ = {
+		2C493C2B244EFD1200F4A54B /* Pickers */ = {
 			isa = PBXGroup;
 			children = (
 				2C493C2E244EFD4600F4A54B /* CustomDatePickerTests.swift */,
 				2C493C30244EFD5A00F4A54B /* CustomPickerViewTests.swift */,
 			);
-			path = Helpers;
+			path = Pickers;
 			sourceTree = "<group>";
 		};
-		2C531F6F2445FE27006F4532 /* Helpers */ = {
+		2C531F6F2445FE27006F4532 /* Pickers */ = {
 			isa = PBXGroup;
 			children = (
 				2C493C24244B164800F4A54B /* CustomPickerView.swift */,
 				2C493C29244B205800F4A54B /* CustomDatePicker.swift */,
 			);
-			path = Helpers;
+			path = Pickers;
+			sourceTree = "<group>";
+		};
+		2C5B3F0824533E0B00A5BBDD /* Test Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */,
+				2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */,
+			);
+			path = "Test Helpers";
 			sourceTree = "<group>";
 		};
 		2CBE1A812430F6EC003BE14E /* Logic */ = {
@@ -2030,7 +2043,8 @@
 		580E4C30243F766800565EDE /* BaseSettings */ = {
 			isa = PBXGroup;
 			children = (
-				2C493C2B244EFD1200F4A54B /* Helpers */,
+				2C5B3F0824533E0B00A5BBDD /* Test Helpers */,
+				2C493C2B244EFD1200F4A54B /* Pickers */,
 				580E4C38243F76BA00565EDE /* Cells */,
 				580E4C32243F768A00565EDE /* BaseSettingsModelsTests.swift */,
 				580E4C34243F769700565EDE /* BaseSettingsViewControllerTests.swift */,
@@ -2586,7 +2600,7 @@
 			isa = PBXGroup;
 			children = (
 				2C493C26244B18B500F4A54B /* Protocols */,
-				2C531F6F2445FE27006F4532 /* Helpers */,
+				2C531F6F2445FE27006F4532 /* Pickers */,
 				580E4B40243E388600565EDE /* Cells */,
 				580E4B3A243E336000565EDE /* BaseSettingsModels.swift */,
 				580E4B3C243E360400565EDE /* BaseSettingsViewController.swift */,
@@ -3281,6 +3295,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C5B3F0A24533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3821,6 +3836,7 @@
 				580E4C44243F771200565EDE /* SettingsAlertRootPresenterTests.swift in Sources */,
 				5805CA3724389F8B002AFA1B /* InitialSetupIntroViewControllerTests.swift in Sources */,
 				580E4CA8243F784800565EDE /* SettingsSensorRouterTests.swift in Sources */,
+				2C5B3F0C2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift in Sources */,
 				2C493C2F244EFD4600F4A54B /* CustomDatePickerTests.swift in Sources */,
 				5805CA3024389EC9002AFA1B /* InitialSetupG6StepWorkerTests.swift in Sources */,
 				584432B9243CFE1900282A6C /* SettingsChartPresenterTests.swift in Sources */,

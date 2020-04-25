@@ -47,7 +47,14 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
     func routeToSettings() {
         let splitViewController = SettingsSplitViewController()
         splitViewController.viewControllers = [SettingsRootViewController().embedInNavigation(), SettingsChartViewController().embedInNavigation()]
+        
+        #if targetEnvironment(macCatalyst)
         splitViewController.modalPresentationStyle = .fullScreen
+        #else
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            splitViewController.modalPresentationStyle = .fullScreen
+        }
+        #endif
         
         viewController?.present(splitViewController, animated: true)
     }

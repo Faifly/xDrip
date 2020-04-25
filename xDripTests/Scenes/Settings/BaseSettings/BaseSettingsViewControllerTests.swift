@@ -57,6 +57,96 @@ final class BaseSettingsViewControllerTests: XCTestCase {
         XCTAssert(sut.tableViewStyle == tableViewStyle)
     }
     
+    func testEmptyViewModel() {
+        loadView()
+        
+        sut.update(with: BaseSettings.ViewModel(sections: []))
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssert(sut.numberOfSections(in: tableView) == 0)
+    }
+    
+    func testAnimatedUpdate() {
+        loadView()
+        
+        sut.update(with: BaseSettings.ViewModel(sections: []))
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssert(sut.numberOfSections(in: tableView) == 0)
+        
+        let normalCells: [BaseSettings.Cell] = [
+            .disclosure(mainText: "", detailText: nil, selectionHandler: {}),
+            .pickerExpandable(mainText: "", detailText: nil, picker: CustomDatePicker()),
+            .rightSwitch(text: "", isSwitchOn: false, switchHandler: { _ in }),
+            .textInput(mainText: "", detailText: nil, textChangedHandler: { _ in }),
+            .volumeSlider(value: 0.0, changeHandler: { _ in })
+        ]
+        
+        let normalSection = BaseSettings.Section.normal(
+            cells: normalCells,
+            header: "normal header",
+            footer: "normal footer"
+        )
+        
+        let viewModel = BaseSettings.ViewModel(sections: [normalSection])
+        
+        sut.update(with: viewModel, animated: true)
+        
+        XCTAssert(tableView.numberOfSections == 1)
+        XCTAssert(tableView.numberOfRows(inSection: 0) == 5)
+    }
+    
+    func testViewWillAppear() {
+        let normalCells: [BaseSettings.Cell] = [
+            .disclosure(mainText: "", detailText: nil, selectionHandler: {}),
+            .pickerExpandable(mainText: "", detailText: nil, picker: CustomDatePicker()),
+            .rightSwitch(text: "", isSwitchOn: false, switchHandler: { _ in }),
+            .textInput(mainText: "", detailText: nil, textChangedHandler: { _ in }),
+            .volumeSlider(value: 0.0, changeHandler: { _ in })
+        ]
+        
+        let normalSection = BaseSettings.Section.normal(
+            cells: normalCells,
+            header: "normal header",
+            footer: "normal footer"
+        )
+        
+        let viewModel = BaseSettings.ViewModel(sections: [normalSection])
+        
+        loadView()
+        
+        sut.update(with: viewModel)
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        // When
+        tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .top)
+        // Then
+        XCTAssert(tableView.indexPathForSelectedRow == IndexPath(row: 0, section: 0))
+        
+        // When
+        sut.viewWillAppear(true)
+        // Then
+        XCTAssert(tableView.indexPathForSelectedRow == nil)
+    }
+    
+    func testInitWithCoder() {
+        let sut = UIStoryboard(name: "BaseSettingsViewControllerCoderTest", bundle: Bundle(for: BaseSettingsViewControllerCoderTest.self)).instantiateViewController(withIdentifier: "BaseSettingsViewControllerCoderTest") as? BaseSettingsViewControllerCoderTest
+        
+        XCTAssertNotNil(sut)
+    }
+    
     func testUpdate() {
         let normalCells: [BaseSettings.Cell] = [
             .disclosure(mainText: "", detailText: nil, selectionHandler: {}),

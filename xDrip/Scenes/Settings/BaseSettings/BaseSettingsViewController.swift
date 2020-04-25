@@ -63,8 +63,10 @@ class BaseSettingsViewController: UIViewController {
     func update(with viewModel: BaseSettings.ViewModel, animated: Bool = false) {
         self.viewModel = viewModel
         if animated {
-            // TODO: Implement
-            tableView.reloadSections(IndexSet(integersIn: 0 ..< viewModel.sections.count), with: .automatic)
+            UIView.transition(with: tableView,
+                              duration: 0.35,
+                              options: .transitionCrossDissolve,
+                              animations: { self.tableView.reloadData() })
         } else {
             tableView.reloadData()
         }

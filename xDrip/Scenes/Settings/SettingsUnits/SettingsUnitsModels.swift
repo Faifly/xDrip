@@ -30,17 +30,4 @@ enum SettingsUnits {
             let tableViewModel: BaseSettings.ViewModel
         }
     }
-    
-    enum Select {
-        struct Request {
-        }
-        
-        struct Response {
-            let currentSelectedUnit: GlucoseUnit
-        }
-        
-        struct ViewModel {
-            let currentSelectedUnitIndex: Int
-        }
-    }
 }
