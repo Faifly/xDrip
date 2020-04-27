@@ -27,7 +27,18 @@ final class SettingsUnitsInteractor: SettingsUnitsBusinessLogic, SettingsUnitsDa
     // MARK: Do something
     
     func doLoad(request: SettingsUnits.Load.Request) {
-        let response = SettingsUnits.Load.Response()
+        let user = User.current
+        
+        let response = SettingsUnits.Load.Response(currentSelectedUnit: user.settings.unit) { [weak self] (index) in
+            self?.handleUnitSelection(index)
+        }
         presenter?.presentLoad(response: response)
+    }
+    
+    private func handleUnitSelection(_ index: Int) {
+        guard let unit = GlucoseUnit(rawValue: index) else { return }
+        
+        User.current.settings.updateUnit(unit)
+        NotificationCenter.default.postSettingsChangeNotification(setting: .unit)
     }
 }

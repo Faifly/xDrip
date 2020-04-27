@@ -45,9 +45,6 @@ final class EntriesListInteractorTests: XCTestCase {
         func presentLoad(response: EntriesList.Load.Response) {
             presentLoadCalled = true
         }
-        
-        func inject(formattingWorker: EntriesListFormattingWorker) {
-        }
     }
     
     final class EntriesListRoutingLogicSpy: EntriesListRoutingLogic {

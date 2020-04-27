@@ -10,7 +10,8 @@ import UIKit
 
 class BaseSettingsViewController: UIViewController {
     private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
+        var tableView = UITableView(frame: .zero, style: tableViewStyle)
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -18,9 +19,22 @@ class BaseSettingsViewController: UIViewController {
         tableView.bindToSuperview()
         
         tableView.registerNib(type: BaseSettingsDisclosureCell.self)
+        tableView.registerNib(type: BaseSettingsSingleSelectionTableViewCell.self)
+        tableView.registerNib(type: BaseSettingsRightSwitchTableViewCell.self)
+        tableView.registerNib(type: BaseSettingsVolumeSliderTableViewCell.self)
+        tableView.registerNib(type: BaseSettingsPickerExpandableTableViewCell.self)
+        tableView.registerNib(type: BaseSettingsTextInputTableViewCell.self)
         
         return tableView
     }()
+    
+    var tableViewStyle: UITableView.Style {
+        if #available(iOS 13.0, *) {
+            return .insetGrouped
+        } else {
+            return .grouped
+        }
+    }
     
     private var viewModel: BaseSettings.ViewModel?
     private let cellFactory = BaseSettingsCellFactory()
@@ -49,7 +63,10 @@ class BaseSettingsViewController: UIViewController {
     func update(with viewModel: BaseSettings.ViewModel, animated: Bool = false) {
         self.viewModel = viewModel
         if animated {
-            // TODO: Implement
+            UIView.transition(with: tableView,
+                              duration: 0.35,
+                              options: .transitionCrossDissolve,
+                              animations: { self.tableView.reloadData() })
         } else {
             tableView.reloadData()
         }
@@ -57,14 +74,40 @@ class BaseSettingsViewController: UIViewController {
     
     private func handleSelectionForNormalCell(_ cell: BaseSettings.Cell) {
         switch cell {
-        case .disclosure(_, _, let selectionHandler) :
+        case .disclosure(_, _, let selectionHandler):
             selectionHandler()
         default: break
         }
     }
     
     private func handleSingleSelection(indexPath: IndexPath, callback: (Int) -> Void) {
-        // TODO: Implement
+        guard let section = viewModel?.sections[indexPath.section] else { return }
+        
+        switch section {
+        case let .singleSelection(cells, selectedIndex, header, footer, selectionHandler):
+            
+            if let previousCell = tableView.cellForRow(at: IndexPath(row: selectedIndex, section: indexPath.section)) as? BaseSettingsSingleSelectionTableViewCell {
+                previousCell.updateSelectionState(false)
+            }
+            
+            if let nextCell = tableView.cellForRow(at: indexPath) as? BaseSettingsSingleSelectionTableViewCell {
+                nextCell.updateSelectionState(true)
+            }
+            
+            tableView.deselectRow(at: indexPath, animated: true)
+            
+            viewModel?.sections[indexPath.section] = .singleSelection(
+                cells: cells,
+                selectedIndex: indexPath.row,
+                header: header,
+                footer: footer,
+                selectionHandler: selectionHandler
+            )
+        default:
+            break
+        }
+        
+        callback(indexPath.row)
     }
 }
 
@@ -84,9 +127,17 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
         case .normal(let cells, _, _):
             return cellFactory.createCell(ofType: cells[indexPath.row], indexPath: indexPath)
             
-        case .singleSelection(let cells, _, _, _):
-            return cellFactory.createSingleSelectionCell(title: cells[indexPath.row], indexPath: indexPath)
+        case let .singleSelection(cells, selectedIndex, _, _, _):
+            return cellFactory.createSingleSelectionCell(title: cells[indexPath.row], selectedIndex: selectedIndex, indexPath: indexPath)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40.0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return viewModel?.sections[section].header == nil ? UIView() : nil
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -105,7 +156,23 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
         case .normal(let cells, _, _):
             handleSelectionForNormalCell(cells[indexPath.row])
             
-        case .singleSelection(_, _, _, let selectionHandler):
+            switch cells[indexPath.row] {
+            case .pickerExpandable:
+                guard let cell = tableView.cellForRow(at: indexPath) as? BaseSettingsPickerExpandableTableViewCell else {
+                    break
+                }
+                
+                cell.togglePickerVisivility()
+                
+                tableView.deselectRow(at: indexPath, animated: true)
+                
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            default:
+                break
+            }
+            
+        case .singleSelection(_, _, _, _, let selectionHandler):
             handleSingleSelection(indexPath: indexPath, callback: selectionHandler)
         }
     }

@@ -54,8 +54,8 @@ final class RootRouterTests: XCTestCase {
         sut.routeToHistory()
         
         // Then
-        let statsRoot = spy.lastPresentedViewController as! UINavigationController
-        XCTAssert(statsRoot.viewControllers[0] is HistoryRootViewController)
+        let historyRoot = spy.lastPresentedViewController as! UINavigationController
+        XCTAssert(historyRoot.viewControllers[0] is HistoryRootViewController)
     }
     
     func testRouteToSettings() {
@@ -67,7 +67,14 @@ final class RootRouterTests: XCTestCase {
         sut.routeToSettings()
         
         // Then
-        let statsRoot = spy.lastPresentedViewController as! UINavigationController
-        XCTAssert(statsRoot.viewControllers[0] is SettingsRootViewController)
+        guard let splitViewController = spy.lastPresentedViewController as? SettingsSplitViewController else {
+            XCTFail("Cannot obtain split view controller")
+            return
+        }
+        guard let settingsRoot = splitViewController.viewControllers[0] as? UINavigationController else {
+            XCTFail("Cannot obtain settings root navigation controller")
+            return
+        }
+        XCTAssert(settingsRoot.viewControllers[0] is SettingsRootViewController)
     }
 }

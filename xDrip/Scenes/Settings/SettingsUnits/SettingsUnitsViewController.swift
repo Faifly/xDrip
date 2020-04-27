@@ -47,6 +47,8 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
     
     // MARK: IB
     
+    private var tableViewModel = BaseSettings.ViewModel(sections: [])
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -57,13 +59,20 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
     // MARK: Do something
     
     private func doLoad() {
+        setupUI()
+        
         let request = SettingsUnits.Load.Request()
         interactor?.doLoad(request: request)
+    }
+    
+    private func setupUI() {
+        title = "settings_root_units_title".localized
     }
     
     // MARK: Display
     
     func displayLoad(viewModel: SettingsUnits.Load.ViewModel) {
-        
+        tableViewModel = viewModel.tableViewModel
+        update(with: viewModel.tableViewModel)
     }
 }

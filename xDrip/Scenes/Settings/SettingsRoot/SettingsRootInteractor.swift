@@ -45,6 +45,10 @@ final class SettingsRootInteractor: SettingsRootBusinessLogic, SettingsRootDataS
     // MARK: Logic
     
     private func handleFieldSelection(_ field: SettingsRoot.Field) {
-        
+        switch field {
+        case .units: router?.routeToUnits()
+        default:
+            break
+        }
     }
 }

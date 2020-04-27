@@ -20,26 +20,41 @@ final class BaseSettingsCellFactory {
             cell.configure(mainText: mainText, detailText: detailText)
             return cell
             
-        case .textInput(_, _, _):
-            // TODO: Implement
-            fatalError()
+        case let .textInput(mainText, detailText, textChangeHandler):
+            let cell = tableView.dequeueReusableCell(ofType: BaseSettingsTextInputTableViewCell.self, for: indexPath)
+            cell.configure(mainText: mainText, detailText: detailText, textChangeHandler: textChangeHandler)
             
-        case .rightSwitch(_, _, _):
-            // TODO: Implement
-            fatalError()
+            return cell
             
-        case .volumeSlider(_, _):
-            // TODO: Implement
-            fatalError()
+        case let .rightSwitch(mainText, isOn, handler):
+            let cell = tableView.dequeueReusableCell(ofType: BaseSettingsRightSwitchTableViewCell.self, for: indexPath)
+            cell.configure(mainText: mainText, isSwitchOn: isOn)
+            cell.valueChangedHandler = handler
             
-        case .pickerExpandable(_, _, _):
-            // TODO: Implement
-            fatalError()
+            return cell
+            
+        case let .volumeSlider(value, valueChangeHandler):
+            let cell = tableView.dequeueReusableCell(ofType: BaseSettingsVolumeSliderTableViewCell.self, for: indexPath)
+            cell.configure(value: value)
+            cell.onSliderValueChanged = valueChangeHandler
+            
+            return cell
+            
+        case let .pickerExpandable(mainText, detailText, picker):
+            let cell = tableView.dequeueReusableCell(ofType: BaseSettingsPickerExpandableTableViewCell.self, for: indexPath)
+            
+            cell.configure(mainText: mainText, detailText: detailText, pickerView: picker)
+            
+            return cell
         }
     }
     
-    func createSingleSelectionCell(title: String, indexPath: IndexPath) -> UITableViewCell {
-        // TODO: Implement
-        fatalError()
+    func createSingleSelectionCell(title: String, selectedIndex: Int, indexPath: IndexPath) -> UITableViewCell {
+        guard let tableView = tableView else { fatalError() }
+        
+        let cell = tableView.dequeueReusableCell(ofType: BaseSettingsSingleSelectionTableViewCell.self, for: indexPath)
+        cell.configure(mainText: title, selected: selectedIndex == indexPath.row)
+        
+        return cell
     }
 }

@@ -49,20 +49,30 @@ class SettingsRootViewController: BaseSettingsViewController, SettingsRootDispla
     
     // MARK: IB
     
+    override var tableViewStyle: UITableView.Style {
+        return UIDevice.current.userInterfaceIdiom == .pad ? .grouped : super.tableViewStyle
+    }
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         doLoad()
     }
     
     // MARK: Do something
     
     private func doLoad() {
+        setupUI()
         setupNavigationItems()
         
         let request = SettingsRoot.Load.Request()
         interactor?.doLoad(request: request)
+    }
+    
+    private func setupUI() {
+        title = "settings_root_title".localized
     }
     
     private func setupNavigationItems() {

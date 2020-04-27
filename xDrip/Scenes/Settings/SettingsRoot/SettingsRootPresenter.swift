@@ -64,23 +64,43 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
             selectionHandler(field)
         }
     }
+    
+    private func createRightSwitchCell(
+        _ field: SettingsRoot.Field,
+        isSwitchOn: Bool,
+        switchHandler: @escaping (Bool) -> Void) -> BaseSettings.Cell {
+        return .rightSwitch(text: field.title, isSwitchOn: isSwitchOn) { _ in }
+    }
+    
+    private func createVolumeSliderCell(
+        _ value: Float,
+        valueChangedHandler: @escaping (Float) -> Void) -> BaseSettings.Cell {
+        return .volumeSlider(value: value, changeHandler: valueChangedHandler)
+    }
+    
+    private func createTextInputCell(
+        _ field: SettingsRoot.Field,
+        detailText: String?,
+        textChangeHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
+        return .textInput(mainText: field.title, detailText: detailText, textChangedHandler: textChangeHandler)
+    }
 }
 
 private extension SettingsRoot.Field {
     var title: String {
         switch self {
-        case .chartSettings: return "Chart Settings"
-        case .alert: return "Alert"
-        case .cloudUpload: return "Cloud Upload"
-        case .modeSettings: return "Mode Settings"
-        case .sensor: return "Sensor"
-        case .transmitter: return "Transmitter"
-        case .rangeSelection: return "Range Selection"
-        case .userType: return "User Type"
-        case .units: return "Units"
-        case .carbsDurationTime: return "Carbs Duration Time"
-        case .insulinDurationTime: return "Insulin Duration Time"
-        case .nightscoutService: return "Nightscout (Pump)"
+        case .chartSettings: return "settings_root_chart_title".localized
+        case .alert: return "settings_root_alert_title".localized
+        case .cloudUpload: return "settings_root_cloud_upload_title".localized
+        case .modeSettings: return "settings_root_mode_title".localized
+        case .sensor: return "settings_root_sensor_title".localized
+        case .transmitter: return "settings_root_transmitter_title".localized
+        case .rangeSelection: return "settings_root_range_selection_title".localized
+        case .userType: return "settings_root_user_type_title".localized
+        case .units: return "settings_root_units_title".localized
+        case .carbsDurationTime: return "settings_root_carbs_duration_time_title".localized
+        case .insulinDurationTime: return "settings_root_insulin_duration_time_title".localized
+        case .nightscoutService: return "settings_root_nightscout_pump_title".localized
         }
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum GlucoseUnit: Int {
+enum GlucoseUnit: Int, CaseIterable {
     case mgDl
     case mmolL
     

@@ -69,12 +69,35 @@ final class SettingsUnitsViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsUnits.Load.ViewModel()
+        let viewModel = SettingsUnits.Load.ViewModel(tableViewModel: BaseSettings.ViewModel(sections: []))
         
         // When
         loadView()
+        
         sut.displayLoad(viewModel: viewModel)
         
         // Then
+    }
+    
+    func testDidSelect() {
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssert(tableView.numberOfSections == 1)
+        XCTAssert(tableView.numberOfRows(inSection: 0) == 2) // GlucoseUnit.allCases.count
+        
+        // when
+        sut.tableView(tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
+        // then
+        XCTAssert(User.current.settings.unit == .mmolL)
+        
+        // when
+        sut.tableView(tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
+        // then
+        XCTAssert(User.current.settings.unit == .mgDl)
     }
 }

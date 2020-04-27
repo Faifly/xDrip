@@ -22,7 +22,27 @@ final class SettingsUnitsPresenter: SettingsUnitsPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsUnits.Load.Response) {
-        let viewModel = SettingsUnits.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [
+            createUnitsSection(response: response)
+        ])
+        
+        let viewModel = SettingsUnits.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    private func createUnitsSection(response: SettingsUnits.Load.Response) -> BaseSettings.Section {
+        let titles = GlucoseUnit.allCases.map { $0.title }
+        let index = GlucoseUnit.allCases.firstIndex(of: response.currentSelectedUnit) ?? 0
+        
+        return BaseSettings.Section.singleSelection(cells: titles, selectedIndex: index, header: nil, footer: nil, selectionHandler: response.selectionHandler)
+    }
+}
+
+private extension GlucoseUnit {
+    var title: String {
+        switch self {
+        case .mgDl: return "settings_units_mgdl".localized
+        case .mmolL: return "settings_units_mmolL".localized
+        }
     }
 }

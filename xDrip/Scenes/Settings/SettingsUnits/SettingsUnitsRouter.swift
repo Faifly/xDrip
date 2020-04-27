@@ -13,7 +13,6 @@
 import UIKit
 
 @objc protocol SettingsUnitsRoutingLogic {
-    
 }
 
 protocol SettingsUnitsDataPassing {
@@ -25,5 +24,4 @@ final class SettingsUnitsRouter: NSObject, SettingsUnitsRoutingLogic, SettingsUn
     var dataStore: SettingsUnitsDataStore?
     
     // MARK: Routing
-    
 }

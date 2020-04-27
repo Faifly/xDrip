@@ -51,6 +51,8 @@ final class SettingsRootInteractorTests: XCTestCase {
         func dismissSelf() {
             dismissSelfCalled = true
         }
+        
+        func routeToUnits() { }
     }
     
     // MARK: Tests
