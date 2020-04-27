@@ -84,7 +84,18 @@ class BaseSettingsViewController: UIViewController {
         guard let section = viewModel?.sections[indexPath.section] else { return }
         
         switch section {
-        case let .singleSelection(cells, _, header, footer, selectionHandler):
+        case let .singleSelection(cells, selectedIndex, header, footer, selectionHandler):
+            
+            if let previousCell = tableView.cellForRow(at: IndexPath(row: selectedIndex, section: indexPath.section)) as? BaseSettingsSingleSelectionTableViewCell {
+                previousCell.updateSelectionState(false)
+            }
+            
+            if let nextCell = tableView.cellForRow(at: indexPath) as? BaseSettingsSingleSelectionTableViewCell {
+                nextCell.updateSelectionState(true)
+            }
+            
+            tableView.deselectRow(at: indexPath, animated: true)
+            
             viewModel?.sections[indexPath.section] = .singleSelection(
                 cells: cells,
                 selectedIndex: indexPath.row,
@@ -95,8 +106,6 @@ class BaseSettingsViewController: UIViewController {
         default:
             break
         }
-        
-        tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
         
         callback(indexPath.row)
     }

@@ -11,6 +11,10 @@ import UIKit
 final class BaseSettingsSingleSelectionTableViewCell: UITableViewCell {
     func configure(mainText: String, selected: Bool) {
         textLabel?.text = mainText
+        updateSelectionState(selected)
+    }
+    
+    func updateSelectionState(_ selected: Bool) {
         accessoryType = selected ? .checkmark : .none
     }
 }
