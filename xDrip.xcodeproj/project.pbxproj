@@ -137,7 +137,7 @@
 		5805CA4A2438A096002AFA1B /* InitialSetupG6ConnectViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805CA492438A096002AFA1B /* InitialSetupG6ConnectViewControllerTests.swift */; };
 		5805CA4D2438A0B8002AFA1B /* InitialSetupG6SensorAgeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805CA4C2438A0B8002AFA1B /* InitialSetupG6SensorAgeViewControllerTests.swift */; };
 		5805CA502438A0D5002AFA1B /* InitialSetupG6DeviceIDViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805CA4F2438A0D5002AFA1B /* InitialSetupG6DeviceIDViewControllerTests.swift */; };
-		5805CA522438A0F7002AFA1B /* InitialSetupAbstractStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805CA512438A0F7002AFA1B /* InitialSetupAbstractStepViewController.swift */; };
+		5805CA522438A0F7002AFA1B /* InitialSetupAbstractStepViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805CA512438A0F7002AFA1B /* InitialSetupAbstractStepViewControllerTests.swift */; };
 		5805CA572438A148002AFA1B /* InitialSetupViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805CA532438A148002AFA1B /* InitialSetupViewControllerTests.swift */; };
 		5805CA582438A148002AFA1B /* InitialSetupInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805CA542438A148002AFA1B /* InitialSetupInteractorTests.swift */; };
 		5805CA592438A148002AFA1B /* InitialSetupRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805CA552438A148002AFA1B /* InitialSetupRouterTests.swift */; };
@@ -697,7 +697,7 @@
 		5805CA492438A096002AFA1B /* InitialSetupG6ConnectViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupG6ConnectViewControllerTests.swift; sourceTree = "<group>"; };
 		5805CA4C2438A0B8002AFA1B /* InitialSetupG6SensorAgeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupG6SensorAgeViewControllerTests.swift; sourceTree = "<group>"; };
 		5805CA4F2438A0D5002AFA1B /* InitialSetupG6DeviceIDViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupG6DeviceIDViewControllerTests.swift; sourceTree = "<group>"; };
-		5805CA512438A0F7002AFA1B /* InitialSetupAbstractStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupAbstractStepViewController.swift; sourceTree = "<group>"; };
+		5805CA512438A0F7002AFA1B /* InitialSetupAbstractStepViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupAbstractStepViewControllerTests.swift; sourceTree = "<group>"; };
 		5805CA532438A148002AFA1B /* InitialSetupViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupViewControllerTests.swift; sourceTree = "<group>"; };
 		5805CA542438A148002AFA1B /* InitialSetupInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupInteractorTests.swift; sourceTree = "<group>"; };
 		5805CA552438A148002AFA1B /* InitialSetupRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupRouterTests.swift; sourceTree = "<group>"; };
@@ -1556,7 +1556,7 @@
 			children = (
 				5805CA3424389F3A002AFA1B /* Generic */,
 				5805CA442438A055002AFA1B /* G6 */,
-				5805CA512438A0F7002AFA1B /* InitialSetupAbstractStepViewController.swift */,
+				5805CA512438A0F7002AFA1B /* InitialSetupAbstractStepViewControllerTests.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3665,7 +3665,7 @@
 				58A8A41A242507F100CCFCAC /* GlucoseWarningLevelTests.swift in Sources */,
 				58B5FD9224192BB200DB857D /* HistoryRootRouterTests.swift in Sources */,
 				58443270243CF99E00282A6C /* NightscoutSyncSettingsTests.swift in Sources */,
-				5805CA522438A0F7002AFA1B /* InitialSetupAbstractStepViewController.swift in Sources */,
+				5805CA522438A0F7002AFA1B /* InitialSetupAbstractStepViewControllerTests.swift in Sources */,
 				58B5FD882419287900DB857D /* StatsRootRouterTests.swift in Sources */,
 				5805CAA62438A748002AFA1B /* NibViewControllerTests.swift in Sources */,
 				5805CA4D2438A0B8002AFA1B /* InitialSetupG6SensorAgeViewControllerTests.swift in Sources */,

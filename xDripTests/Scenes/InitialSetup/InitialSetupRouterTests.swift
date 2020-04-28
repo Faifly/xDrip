@@ -25,10 +25,68 @@ final class InitialSetupRouterTests: XCTestCase {
         sut = InitialSetupRouter()
     }
     
+    private func createSpy() -> ViewControllerSpy {
+        return ViewControllerSpy()
+    }
+    
     // MARK: Test doubles
     
     final class ViewControllerSpy: InitialSetupViewController {
+        var dismissCalled = false
+        var pushCalled = false
+        
+        override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+            dismissCalled = true
+        }
+        
+        override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+            super.pushViewController(viewController, animated: true)
+            pushCalled = true
+        }
     }
     
     // MARK: Tests
+    
+    func testDismissSelf() {
+        // Given
+        let spy = createSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.dismissScene()
+        
+        // Then
+        XCTAssertTrue(spy.dismissCalled)
+    }
+    
+    func testShowNextScene() {
+        // Given
+        let spy = createSpy()
+        sut.viewController = spy
+        
+        // When
+        let viewController = SettingsRootViewController()
+        sut.showNextScene(viewController)
+        
+        // Then
+//        guard let navigationController = sut.viewController else { return }
+        XCTAssert(spy.viewControllers.count == 1)
+        XCTAssert(spy.topViewController is SettingsRootViewController)
+        XCTAssertFalse(spy.pushCalled)
+        
+        // When
+        let anotherViewController = SettingsUnitsViewController()
+        let expect = expectation(description: "pushController")
+        
+        DispatchQueue.main.async {
+            self.sut.showNextScene(anotherViewController)
+            expect.fulfill()
+        }
+            
+        // Then
+        wait(for: [expect], timeout: 10)
+        XCTAssert(spy.viewControllers.count == 2)
+        XCTAssert(spy.topViewController is SettingsUnitsViewController)
+        XCTAssertTrue(spy.pushCalled)
+    }
 }
