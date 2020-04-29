@@ -35,7 +35,7 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupSettingsAlertSingleTypeViewController() {
-        sut = SettingsAlertSingleTypeViewController()
+        sut = SettingsAlertSingleTypeViewController(eventType: .default)
     }
     
     func loadView() {

@@ -21,7 +21,10 @@ final class SettingsSplitViewController: UISplitViewController, UISplitViewContr
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .clear
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            view.backgroundColor = .clear
+        }
+        
         delegate = self
         preferredDisplayMode = .allVisible
     }

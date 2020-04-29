@@ -35,7 +35,7 @@ final class SettingsAlertSoundViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupSettingsAlertSoundViewController() {
-        sut = SettingsAlertSoundViewController()
+        sut = SettingsAlertSoundViewController(configuration: AlertConfiguration())
     }
     
     func loadView() {
