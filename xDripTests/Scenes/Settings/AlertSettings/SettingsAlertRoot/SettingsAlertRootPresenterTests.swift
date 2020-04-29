@@ -43,6 +43,10 @@ final class SettingsAlertRootPresenterTests: XCTestCase {
         func displayLoad(viewModel: SettingsAlertRoot.Load.ViewModel) {
             displayLoadCalled = true
         }
+        
+        func displayUpdate(viewModel: SettingsAlertRoot.Load.ViewModel) {
+            
+        }
     }
     
     // MARK: Tests
@@ -51,7 +55,11 @@ final class SettingsAlertRootPresenterTests: XCTestCase {
         // Given
         let spy = SettingsAlertRootDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsAlertRoot.Load.Response()
+        let response = SettingsAlertRoot.Load.Response(
+            sliderValueChangeHandler: { _ in },
+            switchValueChangedHandler: { _, _ in},
+            selectionHandler: {}
+        )
         
         // When
         sut.presentLoad(response: response)

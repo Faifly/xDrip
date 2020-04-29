@@ -14,6 +14,7 @@ import UIKit
 
 protocol SettingsAlertSingleTypeDisplayLogic: class {
     func displayLoad(viewModel: SettingsAlertSingleType.Load.ViewModel)
+    func displayUpdate(viewModel: SettingsAlertSingleType.Load.ViewModel)
 }
 
 class SettingsAlertSingleTypeViewController: BaseSettingsViewController, SettingsAlertSingleTypeDisplayLogic {
@@ -21,11 +22,17 @@ class SettingsAlertSingleTypeViewController: BaseSettingsViewController, Setting
     
     // MARK: Object lifecycle
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Use regular init")
+    required init() {
+        fatalError("Use init(eventType:)")
     }
     
-    required init() {
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("Use init(eventType:)")
+    }
+    
+    init(eventType: AlertEventType) {
+        self.eventType = eventType
+        
         super.init()
         setup()
     }
@@ -47,6 +54,8 @@ class SettingsAlertSingleTypeViewController: BaseSettingsViewController, Setting
     
     // MARK: IB
     
+    private let eventType: AlertEventType
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -57,13 +66,18 @@ class SettingsAlertSingleTypeViewController: BaseSettingsViewController, Setting
     // MARK: Do something
     
     private func doLoad() {
-        let request = SettingsAlertSingleType.Load.Request()
+        let request = SettingsAlertSingleType.Load.Request(eventType: eventType)
         interactor?.doLoad(request: request)
     }
     
     // MARK: Display
     
     func displayLoad(viewModel: SettingsAlertSingleType.Load.ViewModel) {
-        
+        update(with: viewModel.tableViewModel)
+        title = viewModel.title
+    }
+    
+    func displayUpdate(viewModel: SettingsAlertSingleType.Load.ViewModel) {
+        update(with: viewModel.tableViewModel, animated: true)
     }
 }

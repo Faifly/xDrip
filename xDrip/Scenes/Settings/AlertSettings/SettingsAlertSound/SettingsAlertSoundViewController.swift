@@ -21,11 +21,17 @@ class SettingsAlertSoundViewController: BaseSettingsViewController, SettingsAler
     
     // MARK: Object lifecycle
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Use regular init")
+    required init() {
+        fatalError("Use init(configuration:)")
     }
     
-    required init() {
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("Use init(configuration:)t")
+    }
+    
+    init(configuration: AlertConfiguration) {
+        self.configuration = configuration
+        
         super.init()
         setup()
     }
@@ -46,6 +52,8 @@ class SettingsAlertSoundViewController: BaseSettingsViewController, SettingsAler
     }
     
     // MARK: IB
+    
+    var configuration: AlertConfiguration
     
     // MARK: View lifecycle
     

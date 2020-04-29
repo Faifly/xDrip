@@ -14,6 +14,7 @@ import UIKit
 
 protocol SettingsAlertRootDisplayLogic: class {
     func displayLoad(viewModel: SettingsAlertRoot.Load.ViewModel)
+    func displayUpdate(viewModel: SettingsAlertRoot.Load.ViewModel)
 }
 
 class SettingsAlertRootViewController: BaseSettingsViewController, SettingsAlertRootDisplayLogic {
@@ -57,13 +58,23 @@ class SettingsAlertRootViewController: BaseSettingsViewController, SettingsAlert
     // MARK: Do something
     
     private func doLoad() {
+        setupUI()
+        
         let request = SettingsAlertRoot.Load.Request()
         interactor?.doLoad(request: request)
+    }
+    
+    private func setupUI() {
+        title = "settings_root_alert_title".localized
     }
     
     // MARK: Display
     
     func displayLoad(viewModel: SettingsAlertRoot.Load.ViewModel) {
-        
+        update(with: viewModel.tableViewModel)
+    }
+    
+    func displayUpdate(viewModel: SettingsAlertRoot.Load.ViewModel) {
+        update(with: viewModel.tableViewModel, animated: true)
     }
 }

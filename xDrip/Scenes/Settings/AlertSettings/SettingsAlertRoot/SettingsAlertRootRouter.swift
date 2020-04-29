@@ -13,7 +13,7 @@
 import UIKit
 
 @objc protocol SettingsAlertRootRoutingLogic {
-    
+    func routeToAlertTypes()
 }
 
 protocol SettingsAlertRootDataPassing {
@@ -25,5 +25,11 @@ final class SettingsAlertRootRouter: NSObject, SettingsAlertRootRoutingLogic, Se
     var dataStore: SettingsAlertRootDataStore?
     
     // MARK: Routing
+    func routeToAlertTypes() {
+        present(SettingsAlertTypesViewController())
+    }
     
+    private func present(_ viewController: UIViewController) {
+        self.viewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
 }

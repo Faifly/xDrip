@@ -86,7 +86,7 @@ final class BaseSettingsViewControllerTests: XCTestCase {
             .disclosure(mainText: "", detailText: nil, selectionHandler: {}),
             .pickerExpandable(mainText: "", detailText: nil, picker: CustomDatePicker()),
             .rightSwitch(text: "", isSwitchOn: false, switchHandler: { _ in }),
-            .textInput(mainText: "", detailText: nil, textChangedHandler: { _ in }),
+            .textInput(mainText: "", detailText: nil, placeholder: nil, textChangedHandler: { _ in }),
             .volumeSlider(value: 0.0, changeHandler: { _ in })
         ]
         
@@ -109,7 +109,7 @@ final class BaseSettingsViewControllerTests: XCTestCase {
             .disclosure(mainText: "", detailText: nil, selectionHandler: {}),
             .pickerExpandable(mainText: "", detailText: nil, picker: CustomDatePicker()),
             .rightSwitch(text: "", isSwitchOn: false, switchHandler: { _ in }),
-            .textInput(mainText: "", detailText: nil, textChangedHandler: { _ in }),
+            .textInput(mainText: "", detailText: nil, placeholder: nil, textChangedHandler: { _ in }),
             .volumeSlider(value: 0.0, changeHandler: { _ in })
         ]
         
@@ -152,7 +152,7 @@ final class BaseSettingsViewControllerTests: XCTestCase {
             .disclosure(mainText: "", detailText: nil, selectionHandler: {}),
             .pickerExpandable(mainText: "", detailText: nil, picker: CustomDatePicker()),
             .rightSwitch(text: "", isSwitchOn: false, switchHandler: { _ in }),
-            .textInput(mainText: "", detailText: nil, textChangedHandler: { _ in }),
+            .textInput(mainText: "", detailText: nil, placeholder: nil, textChangedHandler: { _ in }),
             .volumeSlider(value: 0.0, changeHandler: { _ in })
         ]
         

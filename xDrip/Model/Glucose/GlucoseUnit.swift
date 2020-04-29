@@ -39,4 +39,11 @@ enum GlucoseUnit: Int, CaseIterable {
         case .mmolL: return "settings_units_mmolL".localized
         }
     }
+    
+    var rangeValues: Range<Float> {
+        switch self {
+        case .mgDl: return 0 ..< 400
+        case .mmolL: return 0 ..< 20
+        }
+    }
 }

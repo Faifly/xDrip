@@ -12,6 +12,8 @@ class BaseSettingsViewController: UIViewController {
     private lazy var tableView: UITableView = {
         var tableView = UITableView(frame: .zero, style: tableViewStyle)
         
+        tableView.backgroundColor = .clear
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -49,6 +51,8 @@ class BaseSettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addBlur()
         cellFactory.tableView = tableView
     }
     

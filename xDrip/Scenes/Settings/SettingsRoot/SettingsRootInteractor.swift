@@ -47,6 +47,8 @@ final class SettingsRootInteractor: SettingsRootBusinessLogic, SettingsRootDataS
     private func handleFieldSelection(_ field: SettingsRoot.Field) {
         switch field {
         case .units: router?.routeToUnits()
+        case .chartSettings: router?.routeToChartSettings()
+        case .alert: router?.routeToAlertRoot()
         default:
             break
         }

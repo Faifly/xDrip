@@ -27,7 +27,19 @@ final class SettingsChartInteractor: SettingsChartBusinessLogic, SettingsChartDa
     // MARK: Do something
     
     func doLoad(request: SettingsChart.Load.Request) {
-        let response = SettingsChart.Load.Response()
+        let settings = User.current.settings.chart
+        let response = SettingsChart.Load.Response(
+            switchValueChangedHandler: { (field, value) in
+                switch field {
+                case .activeInsulin: settings?.updateShowActiveInsulin(value)
+                case .activeCarbs: settings?.updateShowActiveCarbs(value)
+                case .data: settings?.updateShowData(value)
+                }
+        }, singleSelectionHandler: { value in
+            guard let mode = ChartSettings.BasalDisplayMode(rawValue: value) else { return }
+            settings?.updateBasalDispalyMode(mode)
+        })
+        
         presenter?.presentLoad(response: response)
     }
 }

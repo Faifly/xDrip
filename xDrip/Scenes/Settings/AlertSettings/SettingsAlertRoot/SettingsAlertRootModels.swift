@@ -15,6 +15,14 @@ import UIKit
 enum SettingsAlertRoot {
     // MARK: Models
     
+    enum Field {
+        case overrideSystemVolume
+        case volumeSlider
+        case overrideMute
+        case notificationsOn
+        case alertTypes
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -22,9 +30,13 @@ enum SettingsAlertRoot {
         }
         
         struct Response {
+            let sliderValueChangeHandler: (Float) -> Void
+            let switchValueChangedHandler: (Field, Bool) -> Void
+            let selectionHandler: () -> Void
         }
         
         struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
         }
     }
 }

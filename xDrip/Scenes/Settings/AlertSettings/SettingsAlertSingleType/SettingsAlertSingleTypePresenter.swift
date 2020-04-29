@@ -14,6 +14,7 @@ import UIKit
 
 protocol SettingsAlertSingleTypePresentationLogic {
     func presentLoad(response: SettingsAlertSingleType.Load.Response)
+    func presentUpdate(response: SettingsAlertSingleType.Load.Response)
 }
 
 final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentationLogic {
@@ -22,7 +23,201 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
     // MARK: Do something
     
     func presentLoad(response: SettingsAlertSingleType.Load.Response) {
-        let viewModel = SettingsAlertSingleType.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [
+            createSettingsSection(response: response),
+            createEventsSection(response: response)
+        ])
+        
+        let viewModel = SettingsAlertSingleType.Load.ViewModel(title: response.configuration.eventType.title, tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    func presentUpdate(response: SettingsAlertSingleType.Load.Response) {
+        let tableViewModel = BaseSettings.ViewModel(sections: [
+            createSettingsSection(response: response),
+            createEventsSection(response: response)
+        ])
+        
+        let viewModel = SettingsAlertSingleType.Load.ViewModel(title: response.configuration.eventType.title, tableViewModel: tableViewModel)
+        viewController?.displayUpdate(viewModel: viewModel)
+    }
+    
+    private func createSettingsSection(response: SettingsAlertSingleType.Load.Response) -> BaseSettings.Section {
+        let config = response.configuration
+        
+        let cells: [BaseSettings.Cell] = [
+            createRightSwitchCell(.overrideDefault, isSwitchOn: config.isEnabled, switchValueChangedHandler: response.switchValueChangedHandler)
+        ]
+        
+        return .normal(cells: cells, header: "settings_alert_single_type_setting_header".localized, footer: nil)
+    }
+    
+    private func createEventsSection(response: SettingsAlertSingleType.Load.Response) -> BaseSettings.Section {
+        let config = response.configuration
+        var cells: [BaseSettings.Cell] = []
+        
+        if config.isEnabled {
+            cells.append(contentsOf: [
+                createTextInputViewCell(.name, detailText: config.name, placeholder: config.eventType.title, editingChangedHandler: response.textEditingChangedHandler),
+                createRightSwitchCell(.snoozeFromNotification, isSwitchOn: config.snoozeFromNotification, switchValueChangedHandler: response.switchValueChangedHandler),
+                createCountDownPickerView(.defaultSnooze, detailText: "\(Int(config.defaultSnooze)) m", valueChangeHandler: response.timePickerValueChangedHandler),
+                createRightSwitchCell(.repeat, isSwitchOn: config.repeat, switchValueChangedHandler: response.switchValueChangedHandler),
+                createDisclosureCell(.sound, selectionHandler: response.selectionHandler),
+                createRightSwitchCell(.vibrate, isSwitchOn: config.isVibrating, switchValueChangedHandler: response.switchValueChangedHandler)
+            ])
+        }
+        
+        cells.append(
+            createRightSwitchCell(.entireDay, isSwitchOn: config.isEntireDay, switchValueChangedHandler: response.switchValueChangedHandler)
+        )
+        
+        if !config.isEntireDay {
+            let startTimeDate = Date(timeIntervalSince1970: config.startTime)
+            let endTimeDate = Date(timeIntervalSince1970: config.endTime)
+            let startTimeString = DateFormatter.localizedString(from: startTimeDate, dateStyle: .none, timeStyle: .short)
+            let endTimeString = DateFormatter.localizedString(from: endTimeDate, dateStyle: .none, timeStyle: .short)
+            
+            cells.append(contentsOf: [
+                createTimePickerView(.startTime, date: startTimeDate, detailText: startTimeString, valueChangeHandler: response.timePickerValueChangedHandler),
+                createTimePickerView(.endTime, date: endTimeDate, detailText: endTimeString, valueChangeHandler: response.timePickerValueChangedHandler)
+            ])
+        }
+        
+        let highTresholdString = User.current.settings.unit == .mmolL ? "\(config.highThreshold)" : "\(Int(config.highThreshold))"
+        let lowTresholdString = User.current.settings.unit == .mmolL ? "\(config.lowThreshold)" : "\(Int(config.lowThreshold))"
+        cells.append(contentsOf: [
+            createUnitsPickerView(.highTreshold, detailText: highTresholdString, valueChangeHandler: response.pickerViewValueChangedHandler),
+            createUnitsPickerView(.lowTreshold, detailText: lowTresholdString, valueChangeHandler: response.pickerViewValueChangedHandler)
+        ])
+        
+        return .normal(cells: cells, header: "settings_alert_single_type_events_header".localized, footer: nil)
+    }
+    
+    private func createTextInputViewCell(
+        _ field: SettingsAlertSingleType.Field,
+        detailText: String?,
+        placeholder: String?,
+        editingChangedHandler: @escaping (String) -> Void) -> BaseSettings.Cell {
+        
+        return .textInput(mainText: field.title, detailText: detailText, placeholder: placeholder) { (string) in
+            guard let string = string else { return }
+            editingChangedHandler(string)
+        }
+    }
+    
+    private func createRightSwitchCell(
+        _ field: SettingsAlertSingleType.Field,
+        isSwitchOn: Bool,
+        switchValueChangedHandler: @escaping (SettingsAlertSingleType.Field, Bool) -> Void) -> BaseSettings.Cell {
+        
+        return .rightSwitch(text: field.title, isSwitchOn: isSwitchOn) { (value) in
+            switchValueChangedHandler(field, value)
+        }
+    }
+    
+    private func createCountDownPickerView(
+        _ field: SettingsAlertSingleType.Field,
+        detailText: String?,
+        valueChangeHandler: @escaping (SettingsAlertSingleType.Field, TimeInterval) -> Void) -> BaseSettings.Cell {
+        
+        let picker = CustomDatePicker()
+        
+        DispatchQueue.main.async {
+            picker.datePickerMode = .countDownTimer
+            picker.countDownDuration = 0
+            picker.minuteInterval = 1
+        }
+        
+        picker.formatDate = { date in
+            let components = Calendar.current.dateComponents([.hour, .minute], from: date)
+            
+            guard let hour = components.hour, let minute = components.minute else { return " " }
+            
+            let time = minute + hour * 60
+            
+            valueChangeHandler(field, TimeInterval(time))
+            
+            return "\(time) m"
+        }
+        
+        return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)
+    }
+    
+    private func createTimePickerView(
+        _ field: SettingsAlertSingleType.Field,
+        date: Date?,
+        detailText: String?,
+        valueChangeHandler: @escaping (SettingsAlertSingleType.Field, TimeInterval) -> Void) -> BaseSettings.Cell {
+        
+        let picker = CustomDatePicker()
+        
+        picker.datePickerMode = .time
+        
+        if let date = date {
+            picker.date = date
+        }
+        
+        picker.formatDate = { date in
+            let components = Calendar.current.dateComponents([.hour, .minute], from: date)
+            guard let date = Calendar.current.date(from: components) else { return " " }
+            
+            valueChangeHandler(field, TimeInterval(date.timeIntervalSince1970))
+            
+            return DateFormatter.localizedString(from: date, dateStyle: .none, timeStyle: .short)
+        }
+        
+        return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)
+    }
+    
+    private func createUnitsPickerView(
+        _ field: SettingsAlertSingleType.Field,
+        detailText: String?,
+        valueChangeHandler: @escaping (SettingsAlertSingleType.Field, Float) -> Void) -> BaseSettings.Cell {
+        
+        let range = User.current.settings.unit.rangeValues
+        let step: Float = User.current.settings.unit == .mmolL ? 0.1 : 1.0
+        let array = stride(from: range.lowerBound, to: range.upperBound, by: step).map { $0 }
+        let strings = User.current.settings.unit == .mmolL ? array.map { String($0) } : array.map { String(Int($0)) }
+        
+        let picker = CustomPickerView(data: [strings])
+        
+        picker.formatValues = { strings in
+            
+            if let value = array.first(where: { $0 == Float(strings[0]) }) {
+                valueChangeHandler(field, value)
+            }
+            
+            return strings[0]
+        }
+        
+        return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)
+    }
+    
+    private func createDisclosureCell(
+        _ field: SettingsAlertSingleType.Field,
+        selectionHandler: @escaping () -> Void) -> BaseSettings.Cell {
+        
+        return .disclosure(mainText: field.title, detailText: nil) {
+            selectionHandler()
+        }
+    }
+}
+
+private extension SettingsAlertSingleType.Field {
+    var title: String {
+        switch self {
+        case .overrideDefault: return "settings_alert_single_type_override_default".localized
+        case .name: return "settings_alert_single_type_name".localized
+        case .snoozeFromNotification: return "settings_alert_single_type_snooze_from_notification".localized
+        case .defaultSnooze: return "settings_alert_single_type_snooze".localized
+        case .repeat: return "settings_alert_single_type_repeat".localized
+        case .sound: return "settings_alert_single_type_sound".localized
+        case .vibrate: return "settings_alert_single_type_vibrate".localized
+        case .entireDay: return "settings_alert_single_type_entire_day".localized
+        case .startTime: return "settings_alert_single_type_start_time".localized
+        case .endTime: return "settings_alert_single_type_end_time".localized
+        case .highTreshold: return "settings_alert_single_type_high_treshold".localized
+        case .lowTreshold: return "settings_alert_single_type_low_treshold".localized
+        }
     }
 }

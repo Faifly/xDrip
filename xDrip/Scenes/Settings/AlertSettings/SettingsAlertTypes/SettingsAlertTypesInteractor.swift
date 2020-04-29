@@ -17,17 +17,46 @@ protocol SettingsAlertTypesBusinessLogic {
 }
 
 protocol SettingsAlertTypesDataStore {
-    
+    var eventType: AlertEventType? { get set }
+    var defaultConfiguration: AlertConfiguration! { get set }
 }
 
 final class SettingsAlertTypesInteractor: SettingsAlertTypesBusinessLogic, SettingsAlertTypesDataStore {
     var presenter: SettingsAlertTypesPresentationLogic?
     var router: SettingsAlertTypesRoutingLogic?
     
+    var eventType: AlertEventType?
+    var defaultConfiguration: AlertConfiguration!
+    
     // MARK: Do something
     
     func doLoad(request: SettingsAlertTypes.Load.Request) {
-        let response = SettingsAlertTypes.Load.Response()
+        defaultConfiguration = User.current.settings.alert.defaultConfiguration
+        
+        let response = SettingsAlertTypes.Load.Response(
+            defaultSectionTextEditingChangedHandler: { name in
+                self.defaultConfiguration.updateName(name)
+        }, defaultSectionSwitchHandler: { field, value in
+                switch field {
+                case .snoozeFromNotification: self.defaultConfiguration.updateSnoozeFromNotification(value)
+                case .repeat: self.defaultConfiguration.updateRepeat(value)
+                case .vibrate: self.defaultConfiguration.updateIsVibrating(value)
+                default: break
+                }
+        }, defaultSectionPickerValueChangedHandler: { time in
+            self.defaultConfiguration.updateDefaultSnooze(time)
+        }, defaultSectionSelectionHandler: { _ in
+            self.router?.routeToAlertSounds()
+        }, eventsSectionSelectionHandler: { index in
+            self.handleEventSelection(index)
+        })
         presenter?.presentLoad(response: response)
+    }
+    
+    private func handleEventSelection(_ index: Int) {
+        guard let event = AlertEventType(rawValue: index) else { return }
+        eventType = event
+        
+        router?.routeToSingleEvent()
     }
 }

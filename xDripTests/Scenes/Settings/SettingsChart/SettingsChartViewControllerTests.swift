@@ -69,7 +69,7 @@ final class SettingsChartViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsChart.Load.ViewModel(tableViewModel: [])
+        let viewModel = SettingsChart.Load.ViewModel(tableViewModel: BaseSettings.ViewModel(sections: []))
         
         // When
         loadView()

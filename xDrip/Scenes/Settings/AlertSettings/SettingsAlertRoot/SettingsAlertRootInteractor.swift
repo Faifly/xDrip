@@ -27,7 +27,30 @@ final class SettingsAlertRootInteractor: SettingsAlertRootBusinessLogic, Setting
     // MARK: Do something
     
     func doLoad(request: SettingsAlertRoot.Load.Request) {
-        let response = SettingsAlertRoot.Load.Response()
+        let response = createResponse()
         presenter?.presentLoad(response: response)
+    }
+    
+    private func doUpdate() {
+        let response = createResponse()
+        presenter?.presentUpdate(response: response)
+    }
+    
+    private func createResponse() -> SettingsAlertRoot.Load.Response {
+        let settings = User.current.settings.alert
+        
+        return SettingsAlertRoot.Load.Response(
+            sliderValueChangeHandler: { (value) in
+                settings?.updateVolume(value)
+        }, switchValueChangedHandler: { (field, value) in
+            switch field {
+            case .overrideSystemVolume: settings?.updateSystemVolumeOverriden(value); self.doUpdate()
+            case .overrideMute: settings?.updateMuteOverriden(value)
+            case .notificationsOn: settings?.updateNotificationEnabled(value); self.doUpdate()
+            default: break
+            }
+        }, selectionHandler: {
+            self.router?.routeToAlertTypes()
+        })
     }
 }

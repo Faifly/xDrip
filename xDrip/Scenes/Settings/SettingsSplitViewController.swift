@@ -21,6 +21,7 @@ final class SettingsSplitViewController: UISplitViewController, UISplitViewContr
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .clear
         delegate = self
         preferredDisplayMode = .allVisible
     }

@@ -35,7 +35,7 @@ final class BaseSettingsCellFactoryTests: XCTestCase {
         XCTAssertTrue(disclosureCell is BaseSettingsDisclosureCell)
         
         // When
-        let textInput = BaseSettings.Cell.textInput(mainText: "", detailText: nil, textChangedHandler: { _ in })
+        let textInput = BaseSettings.Cell.textInput(mainText: "", detailText: nil, placeholder: nil, textChangedHandler: { _ in })
         let textInputCell = sut.createCell(ofType: textInput, indexPath: IndexPath(row: 0, section: 0))
         // Then
         XCTAssertTrue(textInputCell is BaseSettingsTextInputTableViewCell)

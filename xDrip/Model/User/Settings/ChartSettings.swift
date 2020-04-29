@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 final class ChartSettings: Object {
-    enum BasalDisplayMode: Int {
+    enum BasalDisplayMode: Int, CaseIterable {
         case onTop
         case onBottom
         case notShown
