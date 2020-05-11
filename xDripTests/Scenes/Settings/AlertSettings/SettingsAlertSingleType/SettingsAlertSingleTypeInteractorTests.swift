@@ -61,7 +61,7 @@ final class SettingsAlertSingleTypeInteractorTests: XCTestCase {
         // Given
         let spy = SettingsAlertSingleTypePresentationLogicSpy()
         sut.presenter = spy
-        let request = SettingsAlertSingleType.Load.Request(eventType: .default)
+        let request = SettingsAlertSingleType.Load.Request(animated: false)
         
         // When
         sut.doLoad(request: request)

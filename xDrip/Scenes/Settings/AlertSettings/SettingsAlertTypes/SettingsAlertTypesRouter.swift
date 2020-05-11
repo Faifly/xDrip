@@ -29,12 +29,18 @@ final class SettingsAlertTypesRouter: NSObject, SettingsAlertTypesRoutingLogic, 
     
     func routeToAlertSounds() {
         guard let configuration = dataStore?.defaultConfiguration else { return }
-        present(SettingsAlertSoundViewController(configuration: configuration))
+        let soundsViewController = SettingsAlertSoundViewController()
+        soundsViewController.dataStore?.configuration = configuration
+        
+        present(soundsViewController)
     }
     
     func routeToSingleEvent() {
         guard let eventType = dataStore?.eventType else { return }
-        present(SettingsAlertSingleTypeViewController(eventType: eventType))
+        let singleTypeAlertViewController = SettingsAlertSingleTypeViewController()
+        singleTypeAlertViewController.dataStore?.eventType = eventType
+        
+        present(singleTypeAlertViewController)
     }
     
     func present(_ viewController: UIViewController) {

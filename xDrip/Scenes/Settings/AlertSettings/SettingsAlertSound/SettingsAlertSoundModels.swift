@@ -22,9 +22,12 @@ enum SettingsAlertSound {
         }
         
         struct Response {
+            let selectedIndex: Int
+            let singleSelectionHandler: (Int) -> Void
         }
         
         struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
         }
     }
 }

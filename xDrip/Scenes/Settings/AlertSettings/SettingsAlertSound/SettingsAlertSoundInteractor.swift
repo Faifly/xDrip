@@ -11,23 +11,53 @@
 //
 
 import UIKit
+import AVFoundation
 
 protocol SettingsAlertSoundBusinessLogic {
     func doLoad(request: SettingsAlertSound.Load.Request)
 }
 
 protocol SettingsAlertSoundDataStore {
-    
+    var configuration: AlertConfiguration? { get set }
 }
 
 final class SettingsAlertSoundInteractor: SettingsAlertSoundBusinessLogic, SettingsAlertSoundDataStore {
     var presenter: SettingsAlertSoundPresentationLogic?
     var router: SettingsAlertSoundRoutingLogic?
     
+    var configuration: AlertConfiguration?
+    private var audioPlayer = AVAudioPlayer()
+    
+    deinit {
+        audioPlayer.stop()
+    }
+    
     // MARK: Do something
     
     func doLoad(request: SettingsAlertSound.Load.Request) {
-        let response = SettingsAlertSound.Load.Response()
+        let response = SettingsAlertSound.Load.Response(
+            selectedIndex: configuration?.soundID ?? 0,
+            singleSelectionHandler: handleSingleSelection
+        )
         presenter?.presentLoad(response: response)
+    }
+    
+    private func handleSingleSelection(_ index: Int) {
+        configuration?.updateSoundID(index)
+        
+        let sound = CustomSound.allCases[index]
+        let fileNameParts = sound.fileName.split(separator: ".").map({ String($0) })
+        let name = fileNameParts[0]
+        let type = fileNameParts[1]
+        
+        guard let soundFilePath = Bundle.main.path(forResource: name, ofType: type) else { return }
+        let url = URL(fileURLWithPath: "\(soundFilePath)")
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.play()
+        } catch {
+            debugPrint(error)
+        }
     }
 }

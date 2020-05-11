@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 protocol SettingsAlertSoundDisplayLogic: class {
     func displayLoad(viewModel: SettingsAlertSound.Load.ViewModel)
@@ -18,20 +19,15 @@ protocol SettingsAlertSoundDisplayLogic: class {
 
 class SettingsAlertSoundViewController: BaseSettingsViewController, SettingsAlertSoundDisplayLogic {
     var interactor: SettingsAlertSoundBusinessLogic?
+    var dataStore: SettingsAlertSoundDataStore?
     
     // MARK: Object lifecycle
     
-    required init() {
-        fatalError("Use init(configuration:)")
-    }
-    
     required init?(coder aDecoder: NSCoder) {
-        fatalError("Use init(configuration:)t")
+        fatalError("Use regular init")
     }
     
-    init(configuration: AlertConfiguration) {
-        self.configuration = configuration
-        
+    required init() {
         super.init()
         setup()
     }
@@ -44,6 +40,7 @@ class SettingsAlertSoundViewController: BaseSettingsViewController, SettingsAler
         let presenter = SettingsAlertSoundPresenter()
         let router = SettingsAlertSoundRouter()
         viewController.interactor = interactor
+        viewController.dataStore = interactor
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -53,13 +50,12 @@ class SettingsAlertSoundViewController: BaseSettingsViewController, SettingsAler
     
     // MARK: IB
     
-    var configuration: AlertConfiguration
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
+        setupUI()
     }
     
     // MARK: Do something
@@ -72,6 +68,10 @@ class SettingsAlertSoundViewController: BaseSettingsViewController, SettingsAler
     // MARK: Display
     
     func displayLoad(viewModel: SettingsAlertSound.Load.ViewModel) {
-        
+        update(with: viewModel.tableViewModel)
+    }
+    
+    private func setupUI() {
+        title = "settings_alert_sound_title".localized
     }
 }

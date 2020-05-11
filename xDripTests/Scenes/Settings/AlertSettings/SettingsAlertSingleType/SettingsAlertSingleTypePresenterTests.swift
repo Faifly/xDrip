@@ -56,6 +56,7 @@ final class SettingsAlertSingleTypePresenterTests: XCTestCase {
         let spy = SettingsAlertSingleTypeDisplayLogicSpy()
         sut.viewController = spy
         let response = SettingsAlertSingleType.Load.Response(
+            animated: false,
             configuration: AlertConfiguration(),
             switchValueChangedHandler: { _, _ in },
             textEditingChangedHandler: { _ in },

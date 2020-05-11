@@ -16,6 +16,12 @@ final class BaseSettingsPickerExpandableTableViewCell: UITableViewCell {
     
     private var picker: BaseSettingsPickerView?
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        verticalStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
+    }
+    
     func configure(mainText: String, detailText: String?, pickerView: BaseSettingsPickerView) {
         mainTextLabel.text = mainText
         detailLabel.text = detailText

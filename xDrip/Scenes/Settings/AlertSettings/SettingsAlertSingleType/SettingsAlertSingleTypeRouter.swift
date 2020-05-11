@@ -27,7 +27,10 @@ final class SettingsAlertSingleTypeRouter: NSObject, SettingsAlertSingleTypeRout
     // MARK: Routing
     func routeToSound() {
         guard let configuration = dataStore?.configuration else { return }
-        present(SettingsAlertSoundViewController(configuration: configuration))
+        let soundViewController = SettingsAlertSoundViewController()
+        soundViewController.dataStore?.configuration = configuration
+        
+        present(soundViewController)
     }
     
     private func present(_ viewController: UIViewController) {

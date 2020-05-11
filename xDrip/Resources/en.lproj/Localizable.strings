@@ -46,7 +46,7 @@
 
 "settings_chart_basal_display_mode_top" = "Display On Top";
 "settings_chart_basal_display_mode_bottom" = "Display On Bottom";
-"settings_chart_basal_display_mode_not_shown" = "Not Shown";
+"settings_chart_basal_display_mode_not_shown" = "Don't Show";
 
 // Settings Alert Root
 "settings_alert_root_override_system_volume" = "Override System Volume";
@@ -64,6 +64,15 @@
 "settings_alert_types_default_vibrate" = "Vibrate";
 "settings_alert_types_default_header" = "DEFAULT";
 "settings_alert_types_events_header" = "EVENTS";
+"settings_alert_types_event_type_title_default" = "Alert";
+"settings_alert_types_event_type_title_fast_rise" = "Fast Rise";
+"settings_alert_types_event_type_title_urgent_high" = "Urgent High";
+"settings_alert_types_event_type_title_high" = "High";
+"settings_alert_types_event_type_title_fast_drop" = "Fast Drop";
+"settings_alert_types_event_type_title_low" = "Low";
+"settings_alert_types_event_type_title_urgent_low" = "Urgent Low";
+"settings_alert_types_event_type_title_missed_readings" = "Missed Readings";
+"settings_alert_types_event_type_title_phone_muted" = "Phone Muted";
 
 // Settings Alert Root // Alert Types // Alert Single Type
 "settings_alert_single_type_override_default" = "Override Default";
@@ -80,17 +89,45 @@
 "settings_alert_single_type_low_treshold" = "Low Treshold";
 "settings_alert_single_type_setting_header" = "SETTING";
 "settings_alert_single_type_events_header" = "EVENTS";
+"settings_alert_single_type_event_type_title_default" = "Alert";
+"settings_alert_single_type_event_type_title_fast_rise" = "Fast Rise";
+"settings_alert_single_type_event_type_title_urgent_high" = "Urgent High";
+"settings_alert_single_type_event_type_title_high" = "High";
+"settings_alert_single_type_event_type_title_fast_drop" = "Fast Drop";
+"settings_alert_single_type_event_type_title_low" = "Low";
+"settings_alert_single_type_event_type_title_urgent_low" = "Urgent Low";
+"settings_alert_single_type_event_type_title_missed_readings" = "Missed Readings";
+"settings_alert_single_type_event_type_title_phone_muted" = "Phone Muted";
 
-// Settings Alert Root // Alert Event Types
-"settings_alert_event_type_title_default" = "Alert";
-"settings_alert_event_type_title_fast_rise" = "Fast Rise";
-"settings_alert_event_type_title_urgent_high" = "Urgent High";
-"settings_alert_event_type_title_high" = "High";
-"settings_alert_event_type_title_fast_drop" = "Fast Drop";
-"settings_alert_event_type_title_low" = "Low";
-"settings_alert_event_type_title_urgent_low" = "Urgent Low";
-"settings_alert_event_type_title_missed_readings" = "Missed Readings";
-"settings_alert_event_type_title_phone_muted" = "Phone Muted";
+// Settings Alert Root // Alert Sound
+"settings_alert_sound_title" = "Sounds";
+"settings_alert_sound_section_header" = "ALERT TONES";
+"settings_alert_sound_alarm" = "Alarm";
+"settings_alert_sound_anticipate" = "Anticipate";
+"settings_alert_sound_bell" = "Bell";
+"settings_alert_sound_bloom" = "Bloom";
+"settings_alert_sound_calypso" = "Calypso";
+"settings_alert_sound_chime" = "Chime";
+"settings_alert_sound_choo_choo" = "Choo Choo";
+"settings_alert_sound_descent" = "Descent";
+"settings_alert_sound_ding" = "Ding";
+"settings_alert_sound_electronic" = "Electronic";
+"settings_alert_sound_fanfare" = "Fanfare";
+"settings_alert_sound_glass" = "Glass";
+"settings_alert_sound_horn" = "Horn";
+"settings_alert_sound_ladder" = "Ladder";
+"settings_alert_sound_minuet" = "Minuet";
+"settings_alert_sound_news_flash" = "News Flash";
+"settings_alert_sound_noir" = "Noir";
+"settings_alert_sound_sheerwood_forrest" = "Sherwood Forrest";
+"settings_alert_sound_spell" = "Spell";
+"settings_alert_sound_swish" = "Suspense";
+"settings_alert_sound_swish" = "Swish";
+"settings_alert_sound_swoosh" = "Swoosh";
+"settings_alert_sound_telegraph" = "Telegraph";
+"settings_alert_sound_tiptoes" = "Tiptoes";
+"settings_alert_sound_tri-tone" = "Tri-tone";
+"settings_alert_sound_typewriters" = "Typewriters";
 
 // Settings Units
 "settings_units_mgdl" = "mg/dL";
@@ -102,3 +139,6 @@
 "edit_training_cell_intensity" = "Intensity";
 "edit_training_cell_dateTime" = "Date/Time";
 "edit_training_section_title" = "Enter the values ​​below";
+"edit_training_intensity_low" = "Low";
+"edit_training_intensity_normal" = "Normal";
+"edit_training_intensity_high" = "High";

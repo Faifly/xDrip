@@ -69,7 +69,7 @@ final class SettingsAlertRootViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsAlertRoot.Load.ViewModel(tableViewModel: BaseSettings.ViewModel(sections: []))
+        let viewModel = SettingsAlertRoot.Load.ViewModel(animated: false, tableViewModel: BaseSettings.ViewModel(sections: []))
         
         // When
         loadView()

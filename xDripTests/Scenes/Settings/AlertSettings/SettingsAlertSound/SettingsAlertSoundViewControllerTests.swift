@@ -35,7 +35,7 @@ final class SettingsAlertSoundViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupSettingsAlertSoundViewController() {
-        sut = SettingsAlertSoundViewController(configuration: AlertConfiguration())
+        sut = SettingsAlertSoundViewController()
     }
     
     func loadView() {
@@ -69,7 +69,7 @@ final class SettingsAlertSoundViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsAlertSound.Load.ViewModel()
+        let viewModel = SettingsAlertSound.Load.ViewModel(tableViewModel: BaseSettings.ViewModel(sections: []))
         
         // When
         loadView()

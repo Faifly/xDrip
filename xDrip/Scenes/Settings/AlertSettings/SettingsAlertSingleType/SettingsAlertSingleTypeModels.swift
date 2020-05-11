@@ -34,19 +34,21 @@ enum SettingsAlertSingleType {
     
     enum Load {
         struct Request {
-            let eventType: AlertEventType
+            let animated: Bool
         }
         
         struct Response {
+            let animated: Bool
             let configuration: AlertConfiguration
             let switchValueChangedHandler: (Field, Bool) -> Void
             let textEditingChangedHandler: (String?) -> Void
             let timePickerValueChangedHandler: (Field, TimeInterval) -> Void
-            let pickerViewValueChangedHandler: (Field, Float) -> Void
+            let pickerViewValueChangedHandler: (Field, Double) -> Void
             let selectionHandler: () -> Void
         }
         
         struct ViewModel {
+            let animated: Bool
             let title: String
             let tableViewModel: BaseSettings.ViewModel
         }

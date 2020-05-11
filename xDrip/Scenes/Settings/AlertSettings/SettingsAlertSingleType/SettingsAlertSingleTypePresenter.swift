@@ -14,7 +14,6 @@ import UIKit
 
 protocol SettingsAlertSingleTypePresentationLogic {
     func presentLoad(response: SettingsAlertSingleType.Load.Response)
-    func presentUpdate(response: SettingsAlertSingleType.Load.Response)
 }
 
 final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentationLogic {
@@ -28,18 +27,8 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
             createEventsSection(response: response)
         ])
         
-        let viewModel = SettingsAlertSingleType.Load.ViewModel(title: response.configuration.eventType.title, tableViewModel: tableViewModel)
+        let viewModel = SettingsAlertSingleType.Load.ViewModel(animated: response.animated, title: response.configuration.eventType.title, tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
-    }
-    
-    func presentUpdate(response: SettingsAlertSingleType.Load.Response) {
-        let tableViewModel = BaseSettings.ViewModel(sections: [
-            createSettingsSection(response: response),
-            createEventsSection(response: response)
-        ])
-        
-        let viewModel = SettingsAlertSingleType.Load.ViewModel(title: response.configuration.eventType.title, tableViewModel: tableViewModel)
-        viewController?.displayUpdate(viewModel: viewModel)
     }
     
     private func createSettingsSection(response: SettingsAlertSingleType.Load.Response) -> BaseSettings.Section {
@@ -60,7 +49,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
             cells.append(contentsOf: [
                 createTextInputViewCell(.name, detailText: config.name, placeholder: config.eventType.title, editingChangedHandler: response.textEditingChangedHandler),
                 createRightSwitchCell(.snoozeFromNotification, isSwitchOn: config.snoozeFromNotification, switchValueChangedHandler: response.switchValueChangedHandler),
-                createCountDownPickerView(.defaultSnooze, detailText: "\(Int(config.defaultSnooze)) m", valueChangeHandler: response.timePickerValueChangedHandler),
+                createCountDownPickerView(.defaultSnooze, detail: config.defaultSnooze, valueChangeHandler: response.timePickerValueChangedHandler),
                 createRightSwitchCell(.repeat, isSwitchOn: config.repeat, switchValueChangedHandler: response.switchValueChangedHandler),
                 createDisclosureCell(.sound, selectionHandler: response.selectionHandler),
                 createRightSwitchCell(.vibrate, isSwitchOn: config.isVibrating, switchValueChangedHandler: response.switchValueChangedHandler)
@@ -83,8 +72,10 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
             ])
         }
         
-        let highTresholdString = User.current.settings.unit == .mmolL ? "\(config.highThreshold)" : "\(Int(config.highThreshold))"
-        let lowTresholdString = User.current.settings.unit == .mmolL ? "\(config.lowThreshold)" : "\(Int(config.lowThreshold))"
+        let high = GlucoseUnit.convertFromDefault(Double(config.highThreshold))
+        let low = GlucoseUnit.convertFromDefault(Double(config.lowThreshold))
+        let highTresholdString = String(format: "%.1f", high)
+        let lowTresholdString = String(format: "%.1f", low)
         cells.append(contentsOf: [
             createUnitsPickerView(.highTreshold, detailText: highTresholdString, valueChangeHandler: response.pickerViewValueChangedHandler),
             createUnitsPickerView(.lowTreshold, detailText: lowTresholdString, valueChangeHandler: response.pickerViewValueChangedHandler)
@@ -97,10 +88,9 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         _ field: SettingsAlertSingleType.Field,
         detailText: String?,
         placeholder: String?,
-        editingChangedHandler: @escaping (String) -> Void) -> BaseSettings.Cell {
+        editingChangedHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
         
         return .textInput(mainText: field.title, detailText: detailText, placeholder: placeholder) { (string) in
-            guard let string = string else { return }
             editingChangedHandler(string)
         }
     }
@@ -117,27 +107,45 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
     
     private func createCountDownPickerView(
         _ field: SettingsAlertSingleType.Field,
-        detailText: String?,
+        detail: TimeInterval?,
         valueChangeHandler: @escaping (SettingsAlertSingleType.Field, TimeInterval) -> Void) -> BaseSettings.Cell {
         
-        let picker = CustomDatePicker()
+        let detailText = "\(Int((detail ?? 0.0) / TimeInterval.secondsPerMinute)) m"
         
-        DispatchQueue.main.async {
-            picker.datePickerMode = .countDownTimer
-            picker.countDownDuration = 0
-            picker.minuteInterval = 1
+        let hours = stride(from: 0, to: 23, by: 1).map({ String($0) })
+        let minutes = stride(from: 0, to: 59, by: 1).map({ String($0) })
+        
+        let data = [
+            hours,
+            ["hrs"],
+            minutes,
+            ["mins"]
+        ]
+        
+        let picker = CustomPickerView(data: data)
+        
+        if let detail = detail {
+            let hour = Int(detail / TimeInterval.secondsPerHour)
+            let minutes = Int((detail - (TimeInterval(hour) * TimeInterval.secondsPerHour)) / TimeInterval.secondsPerMinute)
+            
+            picker.selectRow(hour, inComponent: 0, animated: false)
+            picker.selectRow(minutes, inComponent: 2, animated: false)
         }
         
-        picker.formatDate = { date in
-            let components = Calendar.current.dateComponents([.hour, .minute], from: date)
+        picker.formatValues = { strings in
             
-            guard let hour = components.hour, let minute = components.minute else { return " " }
+            guard strings.count > 3 else { return "" }
             
-            let time = minute + hour * 60
+            let hourString = strings[0]
+            let minuteString = strings[2]
+            
+            guard let hour = Double(hourString), let minute = Double(minuteString) else { return "" }
+            
+            let time = minute * TimeInterval.secondsPerMinute + hour * TimeInterval.secondsPerHour
             
             valueChangeHandler(field, TimeInterval(time))
             
-            return "\(time) m"
+            return "\(Int(time / TimeInterval.secondsPerMinute)) m"
         }
         
         return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)
@@ -172,23 +180,35 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
     private func createUnitsPickerView(
         _ field: SettingsAlertSingleType.Field,
         detailText: String?,
-        valueChangeHandler: @escaping (SettingsAlertSingleType.Field, Float) -> Void) -> BaseSettings.Cell {
+        valueChangeHandler: @escaping (SettingsAlertSingleType.Field, Double) -> Void) -> BaseSettings.Cell {
         
-        let range = User.current.settings.unit.rangeValues
-        let step: Float = User.current.settings.unit == .mmolL ? 0.1 : 1.0
+        let range = User.current.settings.unit.minMax
+        let step = User.current.settings.unit.pickerStep
         let array = stride(from: range.lowerBound, to: range.upperBound, by: step).map { $0 }
-        let strings = User.current.settings.unit == .mmolL ? array.map { String($0) } : array.map { String(Int($0)) }
+        let strings = array.map { String(format: "%.1f", $0) }
         
         let picker = CustomPickerView(data: [strings])
         
+        let tolerance = step / 2
         picker.formatValues = { strings in
             
-            if let value = array.first(where: { $0 == Float(strings[0]) }) {
-                valueChangeHandler(field, value)
+            if let value = array.first(where: { val in
+                guard let num = Double(strings[0]) else { return false }
+                return fabs(val - num) < tolerance
+            }) {
+                let convertedValue = GlucoseUnit.convertToDefault(value)
+                valueChangeHandler(field, convertedValue)
             }
             
             return strings[0]
         }
+        
+        let index = array.firstIndex(where: { val in
+            guard let text = detailText, let num = Double(text) else { return false }
+            return fabs(val - num) < tolerance
+        })
+        
+        picker.selectRow(index ?? 0, inComponent: 0, animated: false)
         
         return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)
     }
@@ -218,6 +238,22 @@ private extension SettingsAlertSingleType.Field {
         case .endTime: return "settings_alert_single_type_end_time".localized
         case .highTreshold: return "settings_alert_single_type_high_treshold".localized
         case .lowTreshold: return "settings_alert_single_type_low_treshold".localized
+        }
+    }
+}
+
+private extension AlertEventType {
+    var title: String {
+        switch self {
+        case .default: return "settings_alert_single_type_event_type_title_default".localized
+        case .fastRise: return "settings_alert_single_type_event_type_title_fast_rise".localized
+        case .urgentHigh: return "settings_alert_single_type_event_type_title_urgent_high".localized
+        case .high: return "settings_alert_single_type_event_type_title_high".localized
+        case .fastDrop: return "settings_alert_single_type_event_type_title_fast_drop".localized
+        case .low: return "settings_alert_single_type_event_type_title_low".localized
+        case .urgentLow: return "settings_alert_single_type_event_type_title_urgent_low".localized
+        case .missedReadings: return "settings_alert_single_type_event_type_title_missed_readings".localized
+        case .phoneMuted: return "settings_alert_single_type_event_type_title_phone_muted".localized
         }
     }
 }

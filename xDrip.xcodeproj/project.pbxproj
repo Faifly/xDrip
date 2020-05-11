@@ -35,6 +35,33 @@
 		2C493C3B244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */; };
 		2C493C3D244F012600F4A54B /* Settings+Notifications_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */; };
 		2C493C3F244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3E244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift */; };
+		2C4E7ED4246940DC0062D403 /* CustomSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4E7ED3246940DC0062D403 /* CustomSounds.swift */; };
+		2C4E7EF024694F440062D403 /* News_Flash.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7ED624694F400062D403 /* News_Flash.caf */; };
+		2C4E7EF124694F440062D403 /* Minuet.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7ED724694F400062D403 /* Minuet.caf */; };
+		2C4E7EF224694F440062D403 /* Tiptoes.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7ED824694F400062D403 /* Tiptoes.caf */; };
+		2C4E7EF324694F440062D403 /* Sherwood_Forest.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7ED924694F410062D403 /* Sherwood_Forest.caf */; };
+		2C4E7EF424694F440062D403 /* Anticipate.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EDA24694F410062D403 /* Anticipate.caf */; };
+		2C4E7EF524694F440062D403 /* Typewriters.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EDB24694F410062D403 /* Typewriters.caf */; };
+		2C4E7EF624694F440062D403 /* Bloom.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EDC24694F410062D403 /* Bloom.caf */; };
+		2C4E7EF724694F440062D403 /* Horn.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EDD24694F410062D403 /* Horn.caf */; };
+		2C4E7EF824694F440062D403 /* Spell.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EDE24694F420062D403 /* Spell.caf */; };
+		2C4E7EF924694F440062D403 /* Bell.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EDF24694F420062D403 /* Bell.caf */; };
+		2C4E7EFA24694F440062D403 /* Alarm.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EE024694F420062D403 /* Alarm.caf */; };
+		2C4E7EFB24694F440062D403 /* Swish.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EE124694F420062D403 /* Swish.caf */; };
+		2C4E7EFC24694F440062D403 /* Suspense.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EE224694F420062D403 /* Suspense.caf */; };
+		2C4E7EFD24694F440062D403 /* Telegraph.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EE324694F420062D403 /* Telegraph.caf */; };
+		2C4E7EFE24694F440062D403 /* Fanfare.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EE424694F420062D403 /* Fanfare.caf */; };
+		2C4E7EFF24694F440062D403 /* Glass.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EE524694F430062D403 /* Glass.caf */; };
+		2C4E7F0024694F440062D403 /* Calypso.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EE624694F430062D403 /* Calypso.caf */; };
+		2C4E7F0124694F440062D403 /* Electronic.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EE724694F430062D403 /* Electronic.caf */; };
+		2C4E7F0224694F440062D403 /* Choo_Choo.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EE824694F430062D403 /* Choo_Choo.caf */; };
+		2C4E7F0324694F440062D403 /* Noir.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EE924694F430062D403 /* Noir.caf */; };
+		2C4E7F0424694F440062D403 /* Ladder.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EEA24694F430062D403 /* Ladder.caf */; };
+		2C4E7F0524694F440062D403 /* Descent.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EEB24694F430062D403 /* Descent.caf */; };
+		2C4E7F0624694F440062D403 /* Tri-tone.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EEC24694F440062D403 /* Tri-tone.caf */; };
+		2C4E7F0724694F440062D403 /* Chime.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EED24694F440062D403 /* Chime.caf */; };
+		2C4E7F0824694F440062D403 /* Ding.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EEE24694F440062D403 /* Ding.caf */; };
+		2C4E7F0924694F440062D403 /* Swoosh.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EEF24694F440062D403 /* Swoosh.caf */; };
 		2C5B3F0A24533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */; };
 		2C5B3F0C2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */; };
 		2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C87F045243E69C0002CF3D8 /* UView+Tests.swift */; };
@@ -595,6 +622,33 @@
 		2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsTextInputTableViewCellTests.swift; sourceTree = "<group>"; };
 		2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Notifications_Tests.swift"; sourceTree = "<group>"; };
 		2C493C3E244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewControllerTests.swift; sourceTree = "<group>"; };
+		2C4E7ED3246940DC0062D403 /* CustomSounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSounds.swift; sourceTree = "<group>"; };
+		2C4E7ED624694F400062D403 /* News_Flash.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = News_Flash.caf; sourceTree = "<group>"; };
+		2C4E7ED724694F400062D403 /* Minuet.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Minuet.caf; sourceTree = "<group>"; };
+		2C4E7ED824694F400062D403 /* Tiptoes.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tiptoes.caf; sourceTree = "<group>"; };
+		2C4E7ED924694F410062D403 /* Sherwood_Forest.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sherwood_Forest.caf; sourceTree = "<group>"; };
+		2C4E7EDA24694F410062D403 /* Anticipate.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Anticipate.caf; sourceTree = "<group>"; };
+		2C4E7EDB24694F410062D403 /* Typewriters.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Typewriters.caf; sourceTree = "<group>"; };
+		2C4E7EDC24694F410062D403 /* Bloom.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bloom.caf; sourceTree = "<group>"; };
+		2C4E7EDD24694F410062D403 /* Horn.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Horn.caf; sourceTree = "<group>"; };
+		2C4E7EDE24694F420062D403 /* Spell.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Spell.caf; sourceTree = "<group>"; };
+		2C4E7EDF24694F420062D403 /* Bell.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bell.caf; sourceTree = "<group>"; };
+		2C4E7EE024694F420062D403 /* Alarm.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Alarm.caf; sourceTree = "<group>"; };
+		2C4E7EE124694F420062D403 /* Swish.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Swish.caf; sourceTree = "<group>"; };
+		2C4E7EE224694F420062D403 /* Suspense.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Suspense.caf; sourceTree = "<group>"; };
+		2C4E7EE324694F420062D403 /* Telegraph.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Telegraph.caf; sourceTree = "<group>"; };
+		2C4E7EE424694F420062D403 /* Fanfare.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fanfare.caf; sourceTree = "<group>"; };
+		2C4E7EE524694F430062D403 /* Glass.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Glass.caf; sourceTree = "<group>"; };
+		2C4E7EE624694F430062D403 /* Calypso.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Calypso.caf; sourceTree = "<group>"; };
+		2C4E7EE724694F430062D403 /* Electronic.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Electronic.caf; sourceTree = "<group>"; };
+		2C4E7EE824694F430062D403 /* Choo_Choo.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Choo_Choo.caf; sourceTree = "<group>"; };
+		2C4E7EE924694F430062D403 /* Noir.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Noir.caf; sourceTree = "<group>"; };
+		2C4E7EEA24694F430062D403 /* Ladder.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ladder.caf; sourceTree = "<group>"; };
+		2C4E7EEB24694F430062D403 /* Descent.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Descent.caf; sourceTree = "<group>"; };
+		2C4E7EEC24694F440062D403 /* Tri-tone.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tri-tone.caf"; sourceTree = "<group>"; };
+		2C4E7EED24694F440062D403 /* Chime.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Chime.caf; sourceTree = "<group>"; };
+		2C4E7EEE24694F440062D403 /* Ding.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ding.caf; sourceTree = "<group>"; };
+		2C4E7EEF24694F440062D403 /* Swoosh.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Swoosh.caf; sourceTree = "<group>"; };
 		2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BaseSettingsViewControllerCoderTest.storyboard; sourceTree = "<group>"; };
 		2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewControllerCoderTest.swift; sourceTree = "<group>"; };
 		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
@@ -1181,6 +1235,39 @@
 				2C493C30244EFD5A00F4A54B /* CustomPickerViewTests.swift */,
 			);
 			path = Pickers;
+			sourceTree = "<group>";
+		};
+		2C4E7ED524694F1A0062D403 /* NotificationSounds */ = {
+			isa = PBXGroup;
+			children = (
+				2C4E7EE024694F420062D403 /* Alarm.caf */,
+				2C4E7EDA24694F410062D403 /* Anticipate.caf */,
+				2C4E7EDF24694F420062D403 /* Bell.caf */,
+				2C4E7EDC24694F410062D403 /* Bloom.caf */,
+				2C4E7EE624694F430062D403 /* Calypso.caf */,
+				2C4E7EED24694F440062D403 /* Chime.caf */,
+				2C4E7EE824694F430062D403 /* Choo_Choo.caf */,
+				2C4E7EEB24694F430062D403 /* Descent.caf */,
+				2C4E7EEE24694F440062D403 /* Ding.caf */,
+				2C4E7EE724694F430062D403 /* Electronic.caf */,
+				2C4E7EE424694F420062D403 /* Fanfare.caf */,
+				2C4E7EE524694F430062D403 /* Glass.caf */,
+				2C4E7EDD24694F410062D403 /* Horn.caf */,
+				2C4E7EEA24694F430062D403 /* Ladder.caf */,
+				2C4E7ED724694F400062D403 /* Minuet.caf */,
+				2C4E7ED624694F400062D403 /* News_Flash.caf */,
+				2C4E7EE924694F430062D403 /* Noir.caf */,
+				2C4E7ED924694F410062D403 /* Sherwood_Forest.caf */,
+				2C4E7EDE24694F420062D403 /* Spell.caf */,
+				2C4E7EE224694F420062D403 /* Suspense.caf */,
+				2C4E7EE124694F420062D403 /* Swish.caf */,
+				2C4E7EEF24694F440062D403 /* Swoosh.caf */,
+				2C4E7EE324694F420062D403 /* Telegraph.caf */,
+				2C4E7ED824694F400062D403 /* Tiptoes.caf */,
+				2C4E7EEC24694F440062D403 /* Tri-tone.caf */,
+				2C4E7EDB24694F410062D403 /* Typewriters.caf */,
+			);
+			path = NotificationSounds;
 			sourceTree = "<group>";
 		};
 		2C531F6F2445FE27006F4532 /* Pickers */ = {
@@ -2613,6 +2700,7 @@
 		58732F4C2402BD1C000F38C6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2C4E7ED524694F1A0062D403 /* NotificationSounds */,
 				58E5A6782402B8A8002C2BE3 /* Assets.xcassets */,
 				58E5A67A2402B8A8002C2BE3 /* LaunchScreen.storyboard */,
 				58B4F6CB24116394003C6D8F /* Localizable.strings */,
@@ -3028,6 +3116,7 @@
 				58D4FD3C2423B3D40044E687 /* User */,
 				58DDC4582423C816008CB04D /* Entries */,
 				5805C9BB2438925F002AFA1B /* Device */,
+				2C4E7ED3246940DC0062D403 /* CustomSounds.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3255,39 +3344,65 @@
 			files = (
 				580E4BFA243F73E200565EDE /* SettingsChartRangesViewController.xib in Resources */,
 				58B4F6C924116394003C6D8F /* Localizable.strings in Resources */,
+				2C4E7F0524694F440062D403 /* Descent.caf in Resources */,
+				2C4E7EF724694F440062D403 /* Horn.caf in Resources */,
 				2C09D21F2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.xib in Resources */,
+				2C4E7F0224694F440062D403 /* Choo_Choo.caf in Resources */,
 				58184A472438BE8E00E848C6 /* RootViewController.xib in Resources */,
+				2C4E7F0424694F440062D403 /* Ladder.caf in Resources */,
 				5805CA0E243892D6002AFA1B /* InitialSetupSettingsViewController.xib in Resources */,
+				2C4E7EF224694F440062D403 /* Tiptoes.caf in Resources */,
+				2C4E7F0724694F440062D403 /* Chime.caf in Resources */,
 				58184A4B2438C20D00E848C6 /* EntriesListViewController.xib in Resources */,
+				2C4E7EFD24694F440062D403 /* Telegraph.caf in Resources */,
 				58184A572438C64100E848C6 /* EntriesListTableViewCell.xib in Resources */,
 				58184A4D2438C30500E848C6 /* EditTrainingViewController.xib in Resources */,
 				5805CA0C243892D6002AFA1B /* InitialSetupIntroViewController.xib in Resources */,
 				58184A492438C1E800E848C6 /* EditFoodEntryViewController.xib in Resources */,
+				2C4E7EF124694F440062D403 /* Minuet.caf in Resources */,
+				2C4E7EF624694F440062D403 /* Bloom.caf in Resources */,
 				2C09D2272441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib in Resources */,
 				2C09D21324410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib in Resources */,
 				580E4C22243F74A300565EDE /* SettingsPumpUserViewController.xib in Resources */,
+				2C4E7EF824694F440062D403 /* Spell.caf in Resources */,
 				5805CA03243892D6002AFA1B /* InitialSetupG6WarmUpViewController.xib in Resources */,
 				5805CA06243892D6002AFA1B /* InitialSetupG6ConnectViewController.xib in Resources */,
 				5805CA08243892D6002AFA1B /* InitialSetupG6SensorAgeViewController.xib in Resources */,
+				2C4E7EF024694F440062D403 /* News_Flash.caf in Resources */,
 				5805CA14243892D6002AFA1B /* InitialSetupInjectionTypeViewController.xib in Resources */,
+				2C4E7F0124694F440062D403 /* Electronic.caf in Resources */,
 				58B4F67F24114938003C6D8F /* GoogleService-Info.plist in Resources */,
+				2C4E7EFA24694F440062D403 /* Alarm.caf in Resources */,
 				58184A532438C51100E848C6 /* HistoryRootViewController.xib in Resources */,
 				58E5A67C2402B8A8002C2BE3 /* LaunchScreen.storyboard in Resources */,
 				2C09D2232441D383008538E9 /* BaseSettingsPickerExpandableTableViewCell.xib in Resources */,
+				2C4E7F0824694F440062D403 /* Ding.caf in Resources */,
 				580E4C08243F746F00565EDE /* SettingsUserTypeRootViewController.xib in Resources */,
+				2C4E7EFE24694F440062D403 /* Fanfare.caf in Resources */,
+				2C4E7EFF24694F440062D403 /* Glass.caf in Resources */,
+				2C4E7F0624694F440062D403 /* Tri-tone.caf in Resources */,
 				5805CA0A243892D6002AFA1B /* InitialSetupG6DeviceIDViewController.xib in Resources */,
 				2C09D2172441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.xib in Resources */,
+				2C4E7EF524694F440062D403 /* Typewriters.caf in Resources */,
 				5805CA12243892D6002AFA1B /* InitialSetupDeviceModeViewController.xib in Resources */,
 				58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */,
+				2C4E7F0924694F440062D403 /* Swoosh.caf in Resources */,
 				58F4CC89243BA21D0053D17C /* DebugLogViewController.xib in Resources */,
+				2C4E7EF924694F440062D403 /* Bell.caf in Resources */,
 				58184A512438C36700E848C6 /* StatsRootViewController.xib in Resources */,
 				580E4BC5243F733100565EDE /* SettingsModeRootViewController.xib in Resources */,
+				2C4E7EF424694F440062D403 /* Anticipate.caf in Resources */,
 				580E4BED243F73B200565EDE /* SettingsSensorViewController.xib in Resources */,
+				2C4E7EFB24694F440062D403 /* Swish.caf in Resources */,
 				580E4B44243E38B300565EDE /* BaseSettingsDisclosureCell.xib in Resources */,
+				2C4E7EFC24694F440062D403 /* Suspense.caf in Resources */,
+				2C4E7F0024694F440062D403 /* Calypso.caf in Resources */,
+				2C4E7EF324694F440062D403 /* Sherwood_Forest.caf in Resources */,
 				5805CA10243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.xib in Resources */,
 				580E4BE0243F739C00565EDE /* SettingsTransmitterViewController.xib in Resources */,
 				5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */,
 				58184A4F2438C31C00E848C6 /* EditCalibrationViewController.xib in Resources */,
+				2C4E7F0324694F440062D403 /* Noir.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3482,6 +3597,7 @@
 				580E4B7E243F717E00565EDE /* SettingsAlertSoundPresenter.swift in Sources */,
 				580EC7BF2421521C00C34948 /* EditCalibrationViewController.swift in Sources */,
 				580E4B59243F711200565EDE /* SettingsAlertRootModels.swift in Sources */,
+				2C4E7ED4246940DC0062D403 /* CustomSounds.swift in Sources */,
 				2CBF32A4242E030700DE944A /* EntriesListTableViewCell.swift in Sources */,
 				58DDC45C2423C925008CB04D /* BolusEntry.swift in Sources */,
 				58B85356244A021B0045F30A /* HomeGlucoseFormattingWorker.swift in Sources */,

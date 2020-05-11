@@ -14,25 +14,19 @@ import UIKit
 
 protocol SettingsAlertSingleTypeDisplayLogic: class {
     func displayLoad(viewModel: SettingsAlertSingleType.Load.ViewModel)
-    func displayUpdate(viewModel: SettingsAlertSingleType.Load.ViewModel)
 }
 
 class SettingsAlertSingleTypeViewController: BaseSettingsViewController, SettingsAlertSingleTypeDisplayLogic {
     var interactor: SettingsAlertSingleTypeBusinessLogic?
+    var dataStore: SettingsAlertSingleTypeDataStore?
     
     // MARK: Object lifecycle
     
-    required init() {
-        fatalError("Use init(eventType:)")
-    }
-    
     required init?(coder aDecoder: NSCoder) {
-        fatalError("Use init(eventType:)")
+        fatalError("Use regular init")
     }
     
-    init(eventType: AlertEventType) {
-        self.eventType = eventType
-        
+    required init() {
         super.init()
         setup()
     }
@@ -45,6 +39,7 @@ class SettingsAlertSingleTypeViewController: BaseSettingsViewController, Setting
         let presenter = SettingsAlertSingleTypePresenter()
         let router = SettingsAlertSingleTypeRouter()
         viewController.interactor = interactor
+        viewController.dataStore = interactor
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -53,8 +48,6 @@ class SettingsAlertSingleTypeViewController: BaseSettingsViewController, Setting
     }
     
     // MARK: IB
-    
-    private let eventType: AlertEventType
     
     // MARK: View lifecycle
     
@@ -66,18 +59,14 @@ class SettingsAlertSingleTypeViewController: BaseSettingsViewController, Setting
     // MARK: Do something
     
     private func doLoad() {
-        let request = SettingsAlertSingleType.Load.Request(eventType: eventType)
+        let request = SettingsAlertSingleType.Load.Request(animated: false)
         interactor?.doLoad(request: request)
     }
     
     // MARK: Display
     
     func displayLoad(viewModel: SettingsAlertSingleType.Load.ViewModel) {
-        update(with: viewModel.tableViewModel)
+        update(with: viewModel.tableViewModel, animated: viewModel.animated)
         title = viewModel.title
-    }
-    
-    func displayUpdate(viewModel: SettingsAlertSingleType.Load.ViewModel) {
-        update(with: viewModel.tableViewModel, animated: true)
     }
 }

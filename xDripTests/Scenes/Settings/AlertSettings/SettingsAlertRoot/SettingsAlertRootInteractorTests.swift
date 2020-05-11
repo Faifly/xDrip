@@ -61,7 +61,7 @@ final class SettingsAlertRootInteractorTests: XCTestCase {
         // Given
         let spy = SettingsAlertRootPresentationLogicSpy()
         sut.presenter = spy
-        let request = SettingsAlertRoot.Load.Request()
+        let request = SettingsAlertRoot.Load.Request(animated: false)
         
         // When
         sut.doLoad(request: request)

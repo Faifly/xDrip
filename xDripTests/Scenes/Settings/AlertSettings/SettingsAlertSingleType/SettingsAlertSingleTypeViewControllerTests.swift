@@ -35,7 +35,7 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
     // MARK: Test setup
     
     func setupSettingsAlertSingleTypeViewController() {
-        sut = SettingsAlertSingleTypeViewController(eventType: .default)
+        sut = SettingsAlertSingleTypeViewController()
     }
     
     func loadView() {
@@ -69,7 +69,7 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsAlertSingleType.Load.ViewModel(title: "", tableViewModel: BaseSettings.ViewModel(sections: []))
+        let viewModel = SettingsAlertSingleType.Load.ViewModel(animated: false, title: "", tableViewModel: BaseSettings.ViewModel(sections: []))
         
         // When
         loadView()

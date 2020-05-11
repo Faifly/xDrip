@@ -47,8 +47,6 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
     
     // MARK: IB
     
-    private var tableViewModel = BaseSettings.ViewModel(sections: [])
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -72,7 +70,6 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
     // MARK: Display
     
     func displayLoad(viewModel: SettingsUnits.Load.ViewModel) {
-        tableViewModel = viewModel.tableViewModel
         update(with: viewModel.tableViewModel)
     }
 }

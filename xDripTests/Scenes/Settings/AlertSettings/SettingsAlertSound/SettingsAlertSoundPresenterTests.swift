@@ -51,7 +51,7 @@ final class SettingsAlertSoundPresenterTests: XCTestCase {
         // Given
         let spy = SettingsAlertSoundDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsAlertSound.Load.Response()
+        let response = SettingsAlertSound.Load.Response(selectedIndex: 0, singleSelectionHandler: { _ in })
         
         // When
         sut.presentLoad(response: response)

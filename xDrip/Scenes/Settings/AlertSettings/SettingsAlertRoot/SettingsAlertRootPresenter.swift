@@ -14,7 +14,6 @@ import UIKit
 
 protocol SettingsAlertRootPresentationLogic {
     func presentLoad(response: SettingsAlertRoot.Load.Response)
-    func presentUpdate(response: SettingsAlertRoot.Load.Response)
 }
 
 final class SettingsAlertRootPresenter: SettingsAlertRootPresentationLogic {
@@ -27,17 +26,8 @@ final class SettingsAlertRootPresenter: SettingsAlertRootPresentationLogic {
             createTableViewSection(response: response)
         ])
         
-        let viewModel = SettingsAlertRoot.Load.ViewModel(tableViewModel: tableViewModel)
+        let viewModel = SettingsAlertRoot.Load.ViewModel(animated: response.animated, tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
-    }
-    
-    func presentUpdate(response: SettingsAlertRoot.Load.Response) {
-        let tableViewModel = BaseSettings.ViewModel(sections: [
-            createTableViewSection(response: response)
-        ])
-        
-        let viewModel = SettingsAlertRoot.Load.ViewModel(tableViewModel: tableViewModel)
-        viewController?.displayUpdate(viewModel: viewModel)
     }
     
     private func createTableViewSection(response: SettingsAlertRoot.Load.Response) -> BaseSettings.Section {
@@ -100,7 +90,7 @@ private extension SettingsAlertRoot.Field {
         case .overrideMute: return "settings_alert_root_override_mute".localized
         case .notificationsOn: return "settings_alert_root_notifications_on".localized
         case .alertTypes: return "settings_alert_root_alert_types".localized
-        default: return ""
+        case .volumeSlider: return ""
         }
     }
 }

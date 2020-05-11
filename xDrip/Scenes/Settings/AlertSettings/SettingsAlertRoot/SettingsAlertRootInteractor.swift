@@ -25,32 +25,38 @@ final class SettingsAlertRootInteractor: SettingsAlertRootBusinessLogic, Setting
     var router: SettingsAlertRootRoutingLogic?
     
     // MARK: Do something
+    private let settings = User.current.settings.alert
+    
     
     func doLoad(request: SettingsAlertRoot.Load.Request) {
-        let response = createResponse()
+        let response = SettingsAlertRoot.Load.Response(
+            animated: request.animated,
+            sliderValueChangeHandler: handleSliderValueChanged(_:),
+            switchValueChangedHandler: handleSwitchValueChanged(_:_:),
+            selectionHandler: handleSelection
+        )
+        
         presenter?.presentLoad(response: response)
     }
     
     private func doUpdate() {
-        let response = createResponse()
-        presenter?.presentUpdate(response: response)
+        doLoad(request: SettingsAlertRoot.Load.Request(animated: true))
     }
     
-    private func createResponse() -> SettingsAlertRoot.Load.Response {
-        let settings = User.current.settings.alert
-        
-        return SettingsAlertRoot.Load.Response(
-            sliderValueChangeHandler: { (value) in
-                settings?.updateVolume(value)
-        }, switchValueChangedHandler: { (field, value) in
-            switch field {
-            case .overrideSystemVolume: settings?.updateSystemVolumeOverriden(value); self.doUpdate()
-            case .overrideMute: settings?.updateMuteOverriden(value)
-            case .notificationsOn: settings?.updateNotificationEnabled(value); self.doUpdate()
-            default: break
-            }
-        }, selectionHandler: {
-            self.router?.routeToAlertTypes()
-        })
+    private func handleSliderValueChanged(_ value: Float) {
+        settings?.updateVolume(value)
+    }
+    
+    private func handleSwitchValueChanged(_ field: SettingsAlertRoot.Field, _ value: Bool)  {
+        switch field {
+        case .overrideSystemVolume: settings?.updateSystemVolumeOverriden(value); doUpdate()
+        case .overrideMute: settings?.updateMuteOverriden(value)
+        case .notificationsOn: settings?.updateNotificationEnabled(value); doUpdate()
+        case .volumeSlider, .alertTypes: break
+        }
+    }
+    
+    private func handleSelection() {
+        router?.routeToAlertTypes()
     }
 }

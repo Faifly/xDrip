@@ -18,7 +18,7 @@ protocol SettingsAlertTypesBusinessLogic {
 
 protocol SettingsAlertTypesDataStore {
     var eventType: AlertEventType? { get set }
-    var defaultConfiguration: AlertConfiguration! { get set }
+    var defaultConfiguration: AlertConfiguration? { get set }
 }
 
 final class SettingsAlertTypesInteractor: SettingsAlertTypesBusinessLogic, SettingsAlertTypesDataStore {
@@ -26,7 +26,7 @@ final class SettingsAlertTypesInteractor: SettingsAlertTypesBusinessLogic, Setti
     var router: SettingsAlertTypesRoutingLogic?
     
     var eventType: AlertEventType?
-    var defaultConfiguration: AlertConfiguration!
+    var defaultConfiguration: AlertConfiguration?
     
     // MARK: Do something
     
@@ -34,22 +34,13 @@ final class SettingsAlertTypesInteractor: SettingsAlertTypesBusinessLogic, Setti
         defaultConfiguration = User.current.settings.alert.defaultConfiguration
         
         let response = SettingsAlertTypes.Load.Response(
-            defaultSectionTextEditingChangedHandler: { name in
-                self.defaultConfiguration.updateName(name)
-        }, defaultSectionSwitchHandler: { field, value in
-                switch field {
-                case .snoozeFromNotification: self.defaultConfiguration.updateSnoozeFromNotification(value)
-                case .repeat: self.defaultConfiguration.updateRepeat(value)
-                case .vibrate: self.defaultConfiguration.updateIsVibrating(value)
-                default: break
-                }
-        }, defaultSectionPickerValueChangedHandler: { time in
-            self.defaultConfiguration.updateDefaultSnooze(time)
-        }, defaultSectionSelectionHandler: { _ in
-            self.router?.routeToAlertSounds()
-        }, eventsSectionSelectionHandler: { index in
-            self.handleEventSelection(index)
-        })
+            defaultSectionTextEditingChangedHandler: handleTextEditingChanged(_:),
+            defaultSectionSwitchHandler: handleSwitchValueChanged(_:_:),
+            defaultSectionPickerValueChangedHandler: handleTimePickerValueChanged(_:),
+            defaultSectionSelectionHandler: handleSectionSelection(_:),
+            eventsSectionSelectionHandler: handleEventSelection(_:)
+        )
+        
         presenter?.presentLoad(response: response)
     }
     
@@ -58,5 +49,26 @@ final class SettingsAlertTypesInteractor: SettingsAlertTypesBusinessLogic, Setti
         eventType = event
         
         router?.routeToSingleEvent()
+    }
+    
+    private func handleSwitchValueChanged(_ field: SettingsAlertTypes.Field, _ value: Bool) {
+        switch field {
+        case .snoozeFromNotification: defaultConfiguration?.updateSnoozeFromNotification(value)
+        case .repeat: defaultConfiguration?.updateRepeat(value)
+        case .vibrate: defaultConfiguration?.updateIsVibrating(value)
+        case .sound, .name, .defaultSnooze: break
+        }
+    }
+    
+    private func handleSectionSelection(_ index: Int) {
+        router?.routeToAlertSounds()
+    }
+    
+    private func handleTimePickerValueChanged(_ time: TimeInterval) {
+        defaultConfiguration?.updateDefaultSnooze(time)
+    }
+    
+    private func handleTextEditingChanged(_ name: String?) {
+        defaultConfiguration?.updateName(name)
     }
 }

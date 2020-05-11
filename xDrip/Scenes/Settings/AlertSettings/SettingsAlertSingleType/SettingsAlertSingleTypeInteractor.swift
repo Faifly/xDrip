@@ -17,58 +17,70 @@ protocol SettingsAlertSingleTypeBusinessLogic {
 }
 
 protocol SettingsAlertSingleTypeDataStore {
-    var configuration: AlertConfiguration! { get set }
+    var eventType: AlertEventType? { get set }
+    var configuration: AlertConfiguration { get set }
 }
 
 final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLogic, SettingsAlertSingleTypeDataStore {
     var presenter: SettingsAlertSingleTypePresentationLogic?
     var router: SettingsAlertSingleTypeRoutingLogic?
     
-    var configuration: AlertConfiguration!
+    var eventType: AlertEventType?
+    var configuration: AlertConfiguration = User.current.settings.alert.defaultConfiguration
     
     // MARK: Do something
     
     func doLoad(request: SettingsAlertSingleType.Load.Request) {
-        configuration = User.current.settings.alert.customConfiguration(for: request.eventType)
+        configuration = User.current.settings.alert.customConfiguration(for: eventType ?? .default)
         
-        let response = createResponse(with: configuration)
+        let response = SettingsAlertSingleType.Load.Response(
+            animated: request.animated,
+            configuration: configuration,
+            switchValueChangedHandler: handleSwitchValueChanged(_:_:),
+            textEditingChangedHandler: handleTextEditingChanged(_:),
+            timePickerValueChangedHandler: handleTimePickerValueChanged(_:_:),
+            pickerViewValueChangedHandler: handlePickerViewValueChanged(_:_:),
+            selectionHandler: handleSelection)
         presenter?.presentLoad(response: response)
     }
     
     private func doUpdate() {
-        let response = createResponse(with: configuration)
-        presenter?.presentUpdate(response: response)
+        doLoad(request: SettingsAlertSingleType.Load.Request(animated: true))
     }
     
-    private func createResponse(with configuration: AlertConfiguration) -> SettingsAlertSingleType.Load.Response {
-        return SettingsAlertSingleType.Load.Response(
-            configuration: configuration,
-            switchValueChangedHandler: { field, value in
-                switch field {
-                case .overrideDefault: configuration.updateIsEnabled(value); self.doUpdate()
-                case .snoozeFromNotification: configuration.updateSnoozeFromNotification(value)
-                case .repeat: configuration.updateRepeat(value)
-                case .vibrate: configuration.updateIsVibrating(value)
-                case .entireDay: configuration.updateIsEntireDay(value); self.doUpdate()
-                default: break
-                }
-        }, textEditingChangedHandler: { string in
-            configuration.updateName(string)
-        }, timePickerValueChangedHandler: { field, value in
-            switch field {
-            case .defaultSnooze: configuration.updateDefaultSnooze(value)
-            case .startTime: configuration.updateStartTime(value)
-            case .endTime: configuration.updateEndTime(value)
-            default: break
-            }
-        }, pickerViewValueChangedHandler: { field, value in
-            switch field {
-            case .highTreshold: configuration.updateHighThreshold(value)
-            case .lowTreshold: configuration.updateLowThreshold(value)
-            default: break
-            }
-        }, selectionHandler: {
-            self.router?.routeToSound()
-        })
+    private func handleSwitchValueChanged(_ field: SettingsAlertSingleType.Field, _ value: Bool) {
+        switch field {
+        case .overrideDefault: configuration.updateIsEnabled(value); doUpdate()
+        case .snoozeFromNotification: configuration.updateSnoozeFromNotification(value)
+        case .repeat: configuration.updateRepeat(value)
+        case .vibrate: configuration.updateIsVibrating(value)
+        case .entireDay: configuration.updateIsEntireDay(value); doUpdate()
+        default: break
+        }
+    }
+    
+    private func handleTextEditingChanged(_ string: String?) {
+        configuration.updateName(string)
+    }
+    
+    private func handleTimePickerValueChanged(_ field: SettingsAlertSingleType.Field, _ value: TimeInterval) {
+        switch field {
+        case .defaultSnooze: configuration.updateDefaultSnooze(value)
+        case .startTime: configuration.updateStartTime(value)
+        case .endTime: configuration.updateEndTime(value)
+        default: break
+        }
+    }
+    
+    private func handlePickerViewValueChanged(_ field: SettingsAlertSingleType.Field, _ value: Double) {
+        switch field {
+        case .highTreshold: configuration.updateHighThreshold(Float(value))
+        case .lowTreshold: configuration.updateLowThreshold(Float(value))
+        default: break
+        }
+    }
+    
+    private func handleSelection() {
+        router?.routeToSound()
     }
 }

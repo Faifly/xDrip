@@ -14,7 +14,6 @@ import UIKit
 
 protocol SettingsAlertRootDisplayLogic: class {
     func displayLoad(viewModel: SettingsAlertRoot.Load.ViewModel)
-    func displayUpdate(viewModel: SettingsAlertRoot.Load.ViewModel)
 }
 
 class SettingsAlertRootViewController: BaseSettingsViewController, SettingsAlertRootDisplayLogic {
@@ -60,7 +59,7 @@ class SettingsAlertRootViewController: BaseSettingsViewController, SettingsAlert
     private func doLoad() {
         setupUI()
         
-        let request = SettingsAlertRoot.Load.Request()
+        let request = SettingsAlertRoot.Load.Request(animated: false)
         interactor?.doLoad(request: request)
     }
     
@@ -71,10 +70,6 @@ class SettingsAlertRootViewController: BaseSettingsViewController, SettingsAlert
     // MARK: Display
     
     func displayLoad(viewModel: SettingsAlertRoot.Load.ViewModel) {
-        update(with: viewModel.tableViewModel)
-    }
-    
-    func displayUpdate(viewModel: SettingsAlertRoot.Load.ViewModel) {
-        update(with: viewModel.tableViewModel, animated: true)
+        update(with: viewModel.tableViewModel, animated: viewModel.animated)
     }
 }
