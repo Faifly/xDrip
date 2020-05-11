@@ -412,6 +412,8 @@
 		58184A512438C36700E848C6 /* StatsRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A502438C36700E848C6 /* StatsRootViewController.xib */; };
 		58184A532438C51100E848C6 /* HistoryRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A522438C51100E848C6 /* HistoryRootViewController.xib */; };
 		58184A572438C64100E848C6 /* EntriesListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A562438C64100E848C6 /* EntriesListTableViewCell.xib */; };
+		5826A60424698369009684E4 /* CalibrationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5826A60324698369009684E4 /* CalibrationService.swift */; };
+		5826A60724698A12009684E4 /* RootCalibrationValidatorWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5826A60624698A12009684E4 /* RootCalibrationValidatorWorker.swift */; };
 		58443257243CD35600282A6C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58443256243CD35600282A6C /* Settings.swift */; };
 		58443259243CD3FB00282A6C /* ChartSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58443258243CD3FB00282A6C /* ChartSettings.swift */; };
 		5844325B243CD5EC00282A6C /* AlertSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5844325A243CD5EC00282A6C /* AlertSettings.swift */; };
@@ -977,6 +979,8 @@
 		58184A502438C36700E848C6 /* StatsRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsRootViewController.xib; sourceTree = "<group>"; };
 		58184A522438C51100E848C6 /* HistoryRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryRootViewController.xib; sourceTree = "<group>"; };
 		58184A562438C64100E848C6 /* EntriesListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntriesListTableViewCell.xib; sourceTree = "<group>"; };
+		5826A60324698369009684E4 /* CalibrationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationService.swift; sourceTree = "<group>"; };
+		5826A60624698A12009684E4 /* RootCalibrationValidatorWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCalibrationValidatorWorker.swift; sourceTree = "<group>"; };
 		582EC946240BE77A00ADF9B0 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		58443256243CD35600282A6C /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		58443258243CD3FB00282A6C /* ChartSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartSettings.swift; sourceTree = "<group>"; };
@@ -2525,6 +2529,7 @@
 		58160E0A2402E4B100C792F4 /* Root */ = {
 			isa = PBXGroup;
 			children = (
+				5826A605246984B9009684E4 /* Workers */,
 				58160E0B2402E4C600C792F4 /* Views */,
 				58160DED2402C7F600C792F4 /* RootPresenter.swift */,
 				58160DEE2402C7F600C792F4 /* RootRouter.swift */,
@@ -2542,6 +2547,14 @@
 				58160E0C2402E52000C792F4 /* TabBarView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5826A605246984B9009684E4 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				5826A60624698A12009684E4 /* RootCalibrationValidatorWorker.swift */,
+			);
+			path = Workers;
 			sourceTree = "<group>";
 		};
 		58443255243CD34900282A6C /* Settings */ = {
@@ -3030,6 +3043,7 @@
 			isa = PBXGroup;
 			children = (
 				5805C97E24389230002AFA1B /* Bluetooth */,
+				5826A60324698369009684E4 /* CalibrationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -3496,6 +3510,7 @@
 				580E4C1D243F74A300565EDE /* SettingsPumpUserPresenter.swift in Sources */,
 				580E4B7E243F717E00565EDE /* SettingsAlertSoundPresenter.swift in Sources */,
 				580EC7BF2421521C00C34948 /* EditCalibrationViewController.swift in Sources */,
+				5826A60724698A12009684E4 /* RootCalibrationValidatorWorker.swift in Sources */,
 				580E4B59243F711200565EDE /* SettingsAlertRootModels.swift in Sources */,
 				586F6BB1245C4B6A004FB4E6 /* SlopeParameters.swift in Sources */,
 				2CBF32A4242E030700DE944A /* EntriesListTableViewCell.swift in Sources */,
@@ -3508,6 +3523,7 @@
 				58B5FD4024190E6700DB857D /* StatsRootInteractor.swift in Sources */,
 				580EC7A9242151BC00C34948 /* EditTrainingRouter.swift in Sources */,
 				580E4B7F243F717E00565EDE /* SettingsAlertSoundRouter.swift in Sources */,
+				5826A60424698369009684E4 /* CalibrationService.swift in Sources */,
 				580E4C03243F746F00565EDE /* SettingsUserTypeRootPresenter.swift in Sources */,
 				58B5FD3524190E2F00DB857D /* HomeViewController.swift in Sources */,
 				5805C9AC24389230002AFA1B /* DexcomG6TransmitterTimeRxMessage.swift in Sources */,

@@ -35,6 +35,11 @@ final class GlucoseReadingTests: AbstractRealmTest {
     }
     
     func testLastReadings() {
+        CGMDevice.current.updateMetadata(
+            ofType: .sensorAge,
+            value: "0"
+        )
+        
         XCTAssertTrue(GlucoseReading.lastReadings(0).count == 0)
         XCTAssertTrue(GlucoseReading.lastReadings(1).count == 0)
         XCTAssertTrue(GlucoseReading.lastReadings(10).count == 0)
@@ -217,6 +222,11 @@ final class GlucoseReadingTests: AbstractRealmTest {
     }
     
     func testEstimatedRawGlucoseLevel() {
+        CGMDevice.current.updateMetadata(
+            ofType: .sensorAge,
+            value: "0"
+        )
+        
         XCTAssert(GlucoseReading.estimatedRawGlucoseLevel(date: Date()) ~ 160.0)
         
         let reading = GlucoseReading()
@@ -225,6 +235,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         reading.setValue(4.0, forKey: "rc")
         reading.setValue(1.0, forKey: "rawValue")
         reading.setValue(1.0, forKey: "calculatedValue")
+        reading.setValue(Date(), forKey: "date")
         realm.safeWrite {
             realm.add(reading)
         }
@@ -266,6 +277,11 @@ final class GlucoseReadingTests: AbstractRealmTest {
     }
     
     func testFindingNewCurve() {
+        CGMDevice.current.updateMetadata(
+            ofType: .sensorAge,
+            value: "0"
+        )
+        
         let reading1 = GlucoseReading()
         reading1.setValue(Date(timeIntervalSince1970: 2.0), forKey: "date")
         reading1.setValue(22.0, forKey: "calculatedValue")
@@ -310,6 +326,11 @@ final class GlucoseReadingTests: AbstractRealmTest {
     }
     
     func testFindingNewRawCurve() {
+        CGMDevice.current.updateMetadata(
+            ofType: .sensorAge,
+            value: "0"
+        )
+        
         let reading1 = GlucoseReading()
         reading1.setValue(Date(timeIntervalSince1970: 2.0), forKey: "date")
         reading1.setValue(22.0, forKey: "ageAdjustedRawValue")

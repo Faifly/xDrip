@@ -40,9 +40,9 @@ final class CenteredTitleButtonTests: XCTestCase {
         
         var titleRect = button.titleRect(forContentRect: rect)
         XCTAssertTrue(titleRect.origin.x ~ 0.0)
-        XCTAssertTrue(titleRect.origin.y ~~ 28.0)
+        XCTAssertTrue(titleRect.origin.y ~~ 28.5)
         XCTAssertTrue(titleRect.size.width ~ 100.0)
-        XCTAssertTrue(titleRect.size.height ~~ 22.0)
+        XCTAssertTrue(titleRect.size.height ~~ 21.5)
         
         button.setTitle("12345", for: .normal)
         button.setNeedsLayout()
@@ -50,9 +50,9 @@ final class CenteredTitleButtonTests: XCTestCase {
         
         titleRect = button.titleRect(forContentRect: rect)
         XCTAssertTrue(titleRect.origin.x ~ 0.0)
-        XCTAssertTrue(titleRect.origin.y ~~ 28.0)
+        XCTAssertTrue(titleRect.origin.y ~~ 28.5)
         XCTAssertTrue(titleRect.size.width ~ 100.0)
-        XCTAssertTrue(titleRect.size.height ~~ 22.0)
+        XCTAssertTrue(titleRect.size.height ~~ 21.5)
         
         let image1 = UIImage(named: "icon_calibration")
         button.setImage(image1, for: .normal)
@@ -61,9 +61,9 @@ final class CenteredTitleButtonTests: XCTestCase {
         
         titleRect = button.titleRect(forContentRect: rect)
         XCTAssertTrue(titleRect.origin.x ~ 0.0)
-        XCTAssertTrue(titleRect.origin.y ~~ 28.0)
+        XCTAssertTrue(titleRect.origin.y ~~ 28.5)
         XCTAssertTrue(titleRect.size.width ~ 100.0)
-        XCTAssertTrue(titleRect.size.height ~~ 22.0)
+        XCTAssertTrue(titleRect.size.height ~~ 21.5)
         
         let image2 = UIImage(named: "icon_history")
         button.setImage(image2, for: .normal)
@@ -72,9 +72,9 @@ final class CenteredTitleButtonTests: XCTestCase {
         
         titleRect = button.titleRect(forContentRect: rect)
         XCTAssertTrue(titleRect.origin.x ~ 0.0)
-        XCTAssertTrue(titleRect.origin.y ~~ 28.0)
+        XCTAssertTrue(titleRect.origin.y ~~ 28.5)
         XCTAssertTrue(titleRect.size.width ~ 100.0)
-        XCTAssertTrue(titleRect.size.height ~~ 22.0)
+        XCTAssertTrue(titleRect.size.height ~~ 21.5)
     }
     
     func testImageRect() {
@@ -122,7 +122,7 @@ final class CenteredTitleButtonTests: XCTestCase {
         
         var size = button.intrinsicContentSize
         XCTAssertTrue(size.width ~ 30.0)
-        XCTAssertTrue(size.height ~~ 34.0)
+        XCTAssertTrue(size.height ~~ 33.5)
         
         button.setImage(image1, for: .normal)
         button.setNeedsLayout()
@@ -146,6 +146,6 @@ final class CenteredTitleButtonTests: XCTestCase {
         
         size = button.intrinsicContentSize
         XCTAssertTrue(size.width ~ 25.0)
-        XCTAssertTrue(size.height ~ 48.5)
+        XCTAssertTrue(size.height ~~ 48.5)
     }
 }

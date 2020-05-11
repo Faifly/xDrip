@@ -45,10 +45,15 @@ final class Calibration: Object {
         return Array(Realm.shared.objects(Calibration.self).sorted(byKeyPath: "date", ascending: false))
     }
     
+    static var allForCurrentSensor: [Calibration] {
+        guard let sensorStartDate = CGMDevice.current.sensorStartDate else { return [] }
+        return all.filter { $0.date >? sensorStartDate }
+    }
+    
     static func lastCalibrations(_ amount: Int) -> [Calibration] {
         guard amount > 0 else { return [] }
         
-        let allCalibrations = all
+        let allCalibrations = allForCurrentSensor
         if allCalibrations.count > amount {
             return Array(allCalibrations[0..<amount])
         }
@@ -57,7 +62,7 @@ final class Calibration: Object {
     }
     
     static var lastValid: Calibration? {
-        return all.first {
+        return allForCurrentSensor.first {
             $0.slopeConfidence !~ 0 &&
             $0.sensorConfidence !~ 0 &&
             $0.slope !~ 0 &&
@@ -66,7 +71,7 @@ final class Calibration: Object {
     }
     
     static func calibration(for date: Date) -> Calibration? {
-        return all.first(where: {
+        return allForCurrentSensor.first(where: {
             $0.slopeConfidence !~ 0 &&
             $0.sensorConfidence !~ 0 &&
             $0.date <? date
@@ -315,7 +320,7 @@ final class Calibration: Object {
     }
     
     private func calculateWeight() -> Double {
-        let all = Calibration.all
+        let all = Calibration.allForCurrentSensor
         guard all.count > 1 else { return 1.0 }
         let lastTimeStarted = all[0].sensorAge
         let firstTimeStarted = all[all.count - 1].sensorAge

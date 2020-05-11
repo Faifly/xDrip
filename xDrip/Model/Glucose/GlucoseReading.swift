@@ -40,6 +40,11 @@ final class GlucoseReading: Object {
         return Array(Realm.shared.objects(GlucoseReading.self).sorted(byKeyPath: "date", ascending: false))
     }
     
+    static var allForCurrentSensor: [GlucoseReading] {
+        guard let sensorStartDate = CGMDevice.current.sensorStartDate else { return [] }
+        return all.filter { $0.date >? sensorStartDate }
+    }
+    
     static func lastReadings(_ amount: Int) -> [GlucoseReading] {
         return last(amount: amount, filter: { $0.calculatedValue !~ 0 && $0.rawValue !~ 0 })
     }
@@ -51,7 +56,7 @@ final class GlucoseReading: Object {
     static func last(amount: Int, filter: (GlucoseReading) -> Bool) -> [GlucoseReading] {
         guard amount > 0 else { return [] }
         
-        let allReadings = all.filter(filter)
+        let allReadings = allForCurrentSensor.filter(filter)
         if allReadings.count > amount {
             return Array(allReadings[0..<amount])
         }
@@ -60,7 +65,11 @@ final class GlucoseReading: Object {
     }
     
     @discardableResult static func create(filtered: Double, unfiltered: Double, date: Date = Date()) -> GlucoseReading? {
-        guard let sensorStarted = CGMDevice.current.sensorStartDate else { return nil }
+        LogController.log(message: "[Glucose] Trying to create reading...", type: .debug)
+        guard let sensorStarted = CGMDevice.current.sensorStartDate else {
+            LogController.log(message: "[Glucose] Can't create reading, sensor not started", type: .error)
+            return nil
+        }
         
         let reading = GlucoseReading()
         reading.calibration = Calibration.calibration(for: date)
@@ -79,6 +88,12 @@ final class GlucoseReading: Object {
         reading.findNewRawCurve()
         
         Calibration.adjustRecentReadings(1)
+        
+        LogController.log(
+            message: "[Glucose] Created reading with calculated value: %@",
+            type: .debug,
+            "\(reading.calculatedValue)"
+        )
         
         return reading
     }

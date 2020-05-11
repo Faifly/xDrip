@@ -142,3 +142,8 @@
 "edit_training_intensity_low" = "Low";
 "edit_training_intensity_normal" = "Normal";
 "edit_training_intensity_high" = "High";
+
+// Calibration
+"calibration_not_ready_error_title" = "Not ready for calibration";
+"calibration_not_ready_error_general_message" = "Not all conditions for calibration are met";
+"calibration_not_ready_error_no_initial_readings" = "Not enough readings for initial calibration";

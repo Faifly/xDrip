@@ -35,6 +35,11 @@ final class CalibrationTests: AbstractRealmTest {
     }
     
     func testLastCalibrations() {
+        CGMDevice.current.updateMetadata(
+            ofType: .sensorAge,
+            value: "0"
+        )
+        
         XCTAssertTrue(Calibration.lastCalibrations(0).count == 0)
         XCTAssertTrue(Calibration.lastCalibrations(1).count == 0)
         XCTAssertTrue(Calibration.lastCalibrations(10).count == 0)
@@ -84,9 +89,15 @@ final class CalibrationTests: AbstractRealmTest {
     }
     
     func testLastValid() {
+        CGMDevice.current.updateMetadata(
+            ofType: .sensorAge,
+            value: "0"
+        )
+        
         XCTAssertNil(Calibration.lastValid)
         
         let calibration = Calibration()
+        calibration.setValue(Date(), forKey: "date")
         realm.safeWrite {
             realm.add(calibration)
         }
@@ -132,6 +143,11 @@ final class CalibrationTests: AbstractRealmTest {
     }
     
     func testCalibrationForDate() {
+        CGMDevice.current.updateMetadata(
+            ofType: .sensorAge,
+            value: "0"
+        )
+        
         XCTAssertNil(Calibration.calibration(for: Date()))
         
         let calibration1 = Calibration()
@@ -177,6 +193,11 @@ final class CalibrationTests: AbstractRealmTest {
             XCTAssert((error as! CalibrationError) == .notEnoughReadings)
         }
         
+        CGMDevice.current.updateMetadata(
+            ofType: .sensorAge,
+            value: "0"
+        )
+        
         let reading1 = GlucoseReading()
         reading1.setValue(now - .secondsPerMinute * 5.0 - 1.0, forKey: "date")
         reading1.setValue(130.0, forKey: "rawValue")
@@ -187,15 +208,6 @@ final class CalibrationTests: AbstractRealmTest {
         
         realm.safeWrite {
             realm.add([reading1, reading2])
-        }
-        
-        XCTAssertThrowsError(
-            try Calibration.createInitialCalibration(
-                glucoseLevel1: 0.0,
-                glucoseLevel2: 0.0,
-                date1: now, date2: now
-        ), "") { error in
-            XCTAssert((error as! CalibrationError) == .sensorNotStarted)
         }
         
         CGMDevice.current.updateMetadata(
