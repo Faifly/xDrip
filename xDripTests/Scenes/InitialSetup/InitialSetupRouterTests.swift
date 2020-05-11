@@ -69,7 +69,6 @@ final class InitialSetupRouterTests: XCTestCase {
         sut.showNextScene(viewController)
         
         // Then
-//        guard let navigationController = sut.viewController else { return }
         XCTAssert(spy.viewControllers.count == 1)
         XCTAssert(spy.topViewController is SettingsRootViewController)
         XCTAssertFalse(spy.pushCalled)
@@ -88,5 +87,20 @@ final class InitialSetupRouterTests: XCTestCase {
         XCTAssert(spy.viewControllers.count == 2)
         XCTAssert(spy.topViewController is SettingsUnitsViewController)
         XCTAssertTrue(spy.pushCalled)
+        
+        // When
+        sut.viewController = nil
+        
+        let tmpViewController = SettingsAlertSoundViewController()
+        let tmpExpectation = expectation(description: "noViewControllerPush")
+        
+        DispatchQueue.main.async {
+            self.sut.showNextScene(tmpViewController)
+            tmpExpectation.fulfill()
+        }
+        
+        wait(for: [tmpExpectation], timeout: 10)
+        
+        // Then
     }
 }
