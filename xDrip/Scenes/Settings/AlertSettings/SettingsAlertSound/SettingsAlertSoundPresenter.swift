@@ -47,7 +47,7 @@ private extension CustomSound {
         case .bloom: return "settings_alert_sound_bloom".localized
         case .calypso: return "settings_alert_sound_calypso".localized
         case .chime: return "settings_alert_sound_chime".localized
-        case .choo_choo: return "settings_alert_sound_choo_choo".localized
+        case .chooChoo: return "settings_alert_sound_choo_choo".localized
         case .descent: return "settings_alert_sound_descent".localized
         case .ding: return "settings_alert_sound_ding".localized
         case .electronic: return "settings_alert_sound_electronic".localized
@@ -56,9 +56,9 @@ private extension CustomSound {
         case .horn: return "settings_alert_sound_horn".localized
         case .ladder: return "settings_alert_sound_ladder".localized
         case .minuet: return "settings_alert_sound_minuet".localized
-        case .news_flash: return "settings_alert_sound_news_flash".localized
+        case .newsFlash: return "settings_alert_sound_news_flash".localized
         case .noir: return "settings_alert_sound_noir".localized
-        case .sherwood_forest: return "settings_alert_sound_sheerwood_forrest".localized
+        case .sherwoodForrest: return "settings_alert_sound_sheerwood_forrest".localized
         case .spell: return "settings_alert_sound_spell".localized
         case .suspense: return "settings_alert_sound_suspense".localized
         case .swish: return "settings_alert_sound_swish".localized

@@ -15,7 +15,7 @@ enum CustomSound: CaseIterable {
     case bloom
     case calypso
     case chime
-    case choo_choo
+    case chooChoo
     case descent
     case ding
     case electronic
@@ -24,9 +24,9 @@ enum CustomSound: CaseIterable {
     case horn
     case ladder
     case minuet
-    case news_flash
+    case newsFlash
     case noir
-    case sherwood_forest
+    case sherwoodForrest
     case spell
     case suspense
     case swish
@@ -44,7 +44,7 @@ enum CustomSound: CaseIterable {
         case .bloom: return "Bloom.caf"
         case .calypso: return "Calypso.caf"
         case .chime: return "Chime.caf"
-        case .choo_choo: return "Choo_Choo.caf"
+        case .chooChoo: return "Choo_Choo.caf"
         case .descent: return "Descent.caf"
         case .ding: return "Ding.caf"
         case .electronic: return "Electronic.caf"
@@ -53,9 +53,9 @@ enum CustomSound: CaseIterable {
         case .horn: return "Horn.caf"
         case .ladder: return "Ladder.caf"
         case .minuet: return "Minuet.caf"
-        case .news_flash: return "News_Flash.caf"
+        case .newsFlash: return "News_Flash.caf"
         case .noir: return "Noir.caf"
-        case .sherwood_forest: return "Sherwood_Forrest.caf"
+        case .sherwoodForrest: return "Sherwood_Forrest.caf"
         case .spell: return "Spell.caf"
         case .suspense: return "Suspense.caf"
         case .swish: return "Swish.caf"
