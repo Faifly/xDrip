@@ -34,7 +34,13 @@ final class SettingsAlertSoundPresenter: SettingsAlertSoundPresentationLogic {
     private func createSoundsSection(response: SettingsAlertSound.Load.Response) -> BaseSettings.Section {
         let sounds = CustomSound.allCases.map({ $0.title })
         
-        return .singleSelection(cells: sounds, selectedIndex: response.selectedIndex, header: "settings_alert_sound_section_header".localized, footer: nil, selectionHandler: response.singleSelectionHandler)
+        return .singleSelection(
+            cells: sounds,
+            selectedIndex: response.selectedIndex,
+            header: "settings_alert_sound_section_header".localized,
+            footer: nil,
+            selectionHandler: response.singleSelectionHandler
+        )
     }
 }
 
