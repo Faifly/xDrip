@@ -36,7 +36,109 @@
 "settings_root_insulin_duration_time_title" = "Время инсулина";
 "settings_root_nightscout_pump_title" = "Nightscout (Помпа)";
 
+// Settings Chart
+"settings_chart_active_insulin" = "Активный инсулин";
+"settings_chart_active_carbs" = "Активные углеводы";
+"settings_chart_data" = "Данные";
+"settings_chart_render_section_header" = "";
+"settings_chart_render_section_footer" = "Эти настройки влияют на отображение гистограммы на главном экране.";
+"settings_chart_switch_section_footer" = "Эти настройки влияют на отображение графиков, которые находятся на главном экране";
+
+"settings_chart_basal_display_mode_top" = "Отображать сверху";
+"settings_chart_basal_display_mode_bottom" = "Отображать снизу";
+"settings_chart_basal_display_mode_not_shown" = "Не показывать";
+
+// Settings Alert Root
+"settings_alert_root_override_system_volume" = "Переопределить системную громкость";
+"settings_alert_root_override_mute" = "Переопределить без звука";
+"settings_alert_root_notifications_on" = "Включить уведомления";
+"settings_alert_root_alert_types" = "Типы оповещений";
+"settings_alert_root_tableview_footer" = "Если вы не включите функцию Override System Volume, громкость звука будет регулироваться в зависимости от настроек телефона";
+
+// Settings Alert Root // Alert Types
+"settings_alert_types_default_name" = "Название";
+"settings_alert_types_default_snooze_from_notification" = "Повторять оповещения";
+"settings_alert_types_default_snooze" = "Время повторного оповещения";
+"settings_alert_types_default_repeat" = "Повтор";
+"settings_alert_types_default_sound" = "Звук оповещения";
+"settings_alert_types_default_vibrate" = "Вибрация";
+"settings_alert_types_default_header" = "По умолчанию";
+"settings_alert_types_events_header" = "События";
+"settings_alert_types_event_type_title_default" = "Оповещение";
+"settings_alert_types_event_type_title_fast_rise" = "Быстрый рост";
+"settings_alert_types_event_type_title_urgent_high" = "Крайне высокий";
+"settings_alert_types_event_type_title_high" = "Высокий";
+"settings_alert_types_event_type_title_fast_drop" = "Быстрое снижение";
+"settings_alert_types_event_type_title_low" = "Низкий";
+"settings_alert_types_event_type_title_urgent_low" = "Крайне низкий";
+"settings_alert_types_event_type_title_missed_readings" = "Пропущенные уведомления";
+"settings_alert_types_event_type_title_phone_muted" = "Телефон без звука";
+
+// Settings Alert Root // Alert Types // Alert Single Type
+"settings_alert_single_type_override_default" = "Переопределить стандартное";
+"settings_alert_single_type_name" = "Название";
+"settings_alert_single_type_snooze_from_notification" = "Повторять оповещения";
+"settings_alert_single_type_snooze" = "Время повторного оповещения";
+"settings_alert_single_type_repeat" = "Повтор";
+"settings_alert_single_type_sound" = "Звук оповещения";
+"settings_alert_single_type_vibrate" = "Вибрация";
+"settings_alert_single_type_entire_day" = "Весь день";
+"settings_alert_single_type_start_time" = "Время начала";
+"settings_alert_single_type_end_time" = "Время конца";
+"settings_alert_single_type_high_treshold" = "Верхний порог";
+"settings_alert_single_type_low_treshold" = "Нижний порог";
+"settings_alert_single_type_setting_header" = "Настройки";
+"settings_alert_single_type_events_header" = "События";
+"settings_alert_single_type_event_type_title_default" = "Оповещение";
+"settings_alert_single_type_event_type_title_fast_rise" = "Быстрый рост";
+"settings_alert_single_type_event_type_title_urgent_high" = "Крайне высокий";
+"settings_alert_single_type_event_type_title_high" = "Высокий";
+"settings_alert_single_type_event_type_title_fast_drop" = "Быстрое снижение";
+"settings_alert_single_type_event_type_title_low" = "Низкий";
+"settings_alert_single_type_event_type_title_urgent_low" = "Крайне низкий";
+"settings_alert_single_type_event_type_title_missed_readings" = "Пропущенные уведомления";
+"settings_alert_single_type_event_type_title_phone_muted" = "Телефон без звука";
+
+// Settings Alert Root // Alert Sound
+"settings_alert_sound_title" = "Звуки оповещений";
+"settings_alert_sound_section_header" = "ЗВУКИ ПРЕДУПРЕЖДЕНИЙ";
+"settings_alert_sound_alarm" = "Тревога";
+"settings_alert_sound_anticipate" = "Предвосхищение";
+"settings_alert_sound_bell" = "Колокольчик";
+"settings_alert_sound_bloom" = "Цветение";
+"settings_alert_sound_calypso" = "Калипсо";
+"settings_alert_sound_chime" = "Металофон";
+"settings_alert_sound_choo_choo" = "Гудок паровоза";
+"settings_alert_sound_descent" = "Снижение";
+"settings_alert_sound_ding" = "Бряк";
+"settings_alert_sound_electronic" = "Электронный";
+"settings_alert_sound_fanfare" = "Фанфары";
+"settings_alert_sound_glass" = "Стекло";
+"settings_alert_sound_horn" = "Рожок";
+"settings_alert_sound_ladder" = "Лестница";
+"settings_alert_sound_minuet" = "Менуэт";
+"settings_alert_sound_news_flash" = "Выпуск новостей";
+"settings_alert_sound_noir" = "Нуар";
+"settings_alert_sound_sheerwood_forrest" = "Шервудский лес";
+"settings_alert_sound_spell" = "Чары";
+"settings_alert_sound_swish" = "Тревога ожидания";
+"settings_alert_sound_swish" = "Хлыст";
+"settings_alert_sound_swoosh" = "Со свистом";
+"settings_alert_sound_telegraph" = "Телеграф";
+"settings_alert_sound_tiptoes" = "На цыпочках";
+"settings_alert_sound_tri-tone" = "Трезвучие";
+"settings_alert_sound_typewriters" = "Пишущая машинка";
 
 // Settings Units
 "settings_units_mgdl" = "мг/дл";
 "settings_units_mmolL" = "ммоль/л";
+
+// Edit Training
+"edit_training_title" = "Тренировка";
+"edit_training_cell_duration" = "Продолжительность";
+"edit_training_cell_intensity" = "Интенсивность";
+"edit_training_cell_dateTime" = "Дата/Время";
+"edit_training_section_title" = "Введите значения ниже";
+"edit_training_intensity_low" = "Низкая";
+"edit_training_intensity_normal" = "Нормальная";
+"edit_training_intensity_high" = "Высокая";

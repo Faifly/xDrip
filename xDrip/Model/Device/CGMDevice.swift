@@ -98,4 +98,10 @@ final class CGMDevice: Object {
         guard let entryDate = metadata(ofType: metadataType)?.date else { return true }
         return Date().timeIntervalSince1970 - entryDate.timeIntervalSince1970 > metadataType.updateInterval
     }
+    
+    var sensorStartDate: Date? {
+        guard let sensorStartedString = CGMDevice.current.metadata(ofType: .sensorAge)?.value else { return nil }
+        guard let sensorStarted = TimeInterval(sensorStartedString) else { return nil }
+        return Date(timeIntervalSince1970: sensorStarted)
+    }
 }

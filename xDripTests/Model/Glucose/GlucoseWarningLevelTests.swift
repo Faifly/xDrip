@@ -11,9 +11,9 @@ import XCTest
 
 final class GlucoseWarningLevelTests: XCTestCase {
     func testDefaultValues() {
-        XCTAssertTrue(abs(GlucoseWarningLevel.urgentLow.defaultValue - 50.0) <= .ulpOfOne)
-        XCTAssertTrue(abs(GlucoseWarningLevel.low.defaultValue - 70.0) <= .ulpOfOne)
-        XCTAssertTrue(abs(GlucoseWarningLevel.high.defaultValue - 130.0) <= .ulpOfOne)
-        XCTAssertTrue(abs(GlucoseWarningLevel.urgentHigh.defaultValue - 170.0) <= .ulpOfOne)
+        XCTAssertTrue(GlucoseWarningLevel.urgentLow.defaultValue ~ 50.0)
+        XCTAssertTrue(GlucoseWarningLevel.low.defaultValue ~ 70.0)
+        XCTAssertTrue(GlucoseWarningLevel.high.defaultValue ~ 130.0)
+        XCTAssertTrue(GlucoseWarningLevel.urgentHigh.defaultValue ~ 170.0)
     }
 }

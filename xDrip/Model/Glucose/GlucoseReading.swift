@@ -1,5 +1,5 @@
 //
-//  GlucoseData.swift
+//  GlucoseReading.swift
 //  xDrip
 //
 //  Created by Artem Kalmykov on 11.03.2020.
@@ -11,8 +11,10 @@ import RealmSwift
 import AKUtils
 
 final class GlucoseReading: Object {
-    @objc private(set) dynamic var value: Double = 0.0
-    #warning("Check if saved")
+    private static let ageAdjustmentTime = TimeInterval.secondsPerDay * 1.9
+    private static let ageAdjustmentFactor = 0.45
+    
+    @objc private(set) dynamic var filteredValue: Double = 0.0
     @objc private(set) dynamic var rawValue: Double = 0.0
     @objc private(set) dynamic var date: Date?
     @objc private(set) dynamic var calculatedValue: Double = 0.0
@@ -27,37 +29,58 @@ final class GlucoseReading: Object {
     @objc private(set) dynamic var ageAdjustedRawValue: Double = 0.0
     @objc private(set) dynamic var calibration: Calibration?
     @objc private(set) dynamic var hideSlope: Bool = false
-    
-    init(value: Double, date: Date = Date()) {
-        super.init()
-        self.value = value
-        self.date = date
-    }
+    @objc private(set) dynamic var calculatedValueSlope: Double = 0.0
+    @objc private(set) dynamic var timeSinceSensorStarted: TimeInterval = 0.0
     
     required init() {
         super.init()
     }
     
     static var all: [GlucoseReading] {
-        return Array(Realm.shared.objects(GlucoseReading.self).sorted(byKeyPath: "date"))
+        return Array(Realm.shared.objects(GlucoseReading.self).sorted(byKeyPath: "date", ascending: false))
     }
     
     static func lastReadings(_ amount: Int) -> [GlucoseReading] {
-        let allReadings = all
-        if allReadings.count > amount {
-            return Array(allReadings[(allReadings.count - amount - 1)...(allReadings.count - 1)]).reversed()
-        }
-        
-        return Array(allReadings).reversed()
+        return last(amount: amount, filter: { $0.calculatedValue !~ 0 && $0.rawValue !~ 0 })
     }
     
-    static func lastUncalculated(_ amount: Int) -> [GlucoseReading] {
-        let allReadings = all.filter { abs($0.rawValue) > .ulpOfOne }
+    static func latestByCount(_ amount: Int) -> [GlucoseReading] {
+        return last(amount: amount, filter: { $0.rawValue !~ 0 })
+    }
+    
+    static func last(amount: Int, filter: (GlucoseReading) -> Bool) -> [GlucoseReading] {
+        guard amount > 0 else { return [] }
+        
+        let allReadings = all.filter(filter)
         if allReadings.count > amount {
-            return Array(allReadings[(allReadings.count - amount - 1)...(allReadings.count - 1)]).reversed()
+            return Array(allReadings[0..<amount])
         }
         
-        return Array(allReadings).reversed()
+        return Array(allReadings)
+    }
+    
+    @discardableResult static func create(filtered: Double, unfiltered: Double, date: Date = Date()) -> GlucoseReading? {
+        guard let sensorStarted = CGMDevice.current.sensorStartDate else { return nil }
+        
+        let reading = GlucoseReading()
+        reading.calibration = Calibration.calibration(for: date)
+        reading.rawValue = unfiltered
+        reading.filteredValue = filtered
+        reading.date = date
+        reading.timeSinceSensorStarted = date.timeIntervalSince1970 - sensorStarted.timeIntervalSince1970
+        reading.calculateAgeAdjustedRawValue()
+        reading.findSlope()
+        
+        Realm.shared.safeWrite {
+            Realm.shared.add(reading)
+        }
+        
+        reading.findNewCurve()
+        reading.findNewRawCurve()
+        
+        Calibration.adjustRecentReadings(1)
+        
+        return reading
     }
     
     static func reading(for date: Date) -> GlucoseReading? {
@@ -83,6 +106,11 @@ final class GlucoseReading: Object {
         return nil
     }
     
+    static func estimatedRawGlucoseLevel(date: Date) -> Double {
+        guard let last = lastReadings(1).first else { return 160.0 }
+        return last.ra * pow(date.timeIntervalSince1970, 2) + last.rb * date.timeIntervalSince1970 + last.rc
+    }
+    
     func updateCalculatedValue(_ value: Double) {
         Realm.shared.safeWrite {
             self.calculatedValue = value
@@ -102,7 +130,7 @@ final class GlucoseReading: Object {
     }
     
     func findNewCurve() {
-        let curve = findCurve(valueKey: "calculatedValue")
+        let curve = findCurve(valueKey: "calculatedValue", bKey: "b")
         
         Realm.shared.safeWrite {
             self.a = curve.a
@@ -112,7 +140,7 @@ final class GlucoseReading: Object {
     }
     
     func findNewRawCurve() {
-        let curve = findCurve(valueKey: "ageAdjustedRawValue")
+        let curve = findCurve(valueKey: "ageAdjustedRawValue", bKey: "rb")
         
         Realm.shared.safeWrite {
             self.ra = curve.a
@@ -127,7 +155,41 @@ final class GlucoseReading: Object {
         }
     }
     
-    private func findCurve(valueKey: String) -> (a: Double, b: Double, c: Double) {
+    func calculateSlope(lastReading: GlucoseReading) -> Double {
+        guard let selfDate = date?.timeIntervalSince1970 else { return 0.0 }
+        guard let lastDate = lastReading.date?.timeIntervalSince1970 else { return 0.0 }
+        
+        if selfDate ~~ lastDate || calculatedValue ~ lastReading.calculatedValue {
+            return 0.0
+        }
+        
+        return (lastReading.calculatedValue - calculatedValue) / (lastDate - selfDate)
+    }
+    
+    func findSlope() {
+        let last2Readings = GlucoseReading.lastReadings(2)
+        
+        Realm.shared.safeWrite {
+            if last2Readings.count == 2 {
+                calculatedValueSlope = calculateSlope(lastReading: last2Readings[1])
+            } else {
+                calculatedValueSlope = 0.0
+            }
+        }
+    }
+    
+    func calculateAgeAdjustedRawValue() {
+        let adjustFor = GlucoseReading.ageAdjustmentTime - timeSinceSensorStarted
+        Realm.shared.safeWrite {
+            if adjustFor > 0 {
+                ageAdjustedRawValue = ((GlucoseReading.ageAdjustmentFactor * (adjustFor / GlucoseReading.ageAdjustmentTime)) * rawValue) + rawValue
+            } else {
+                ageAdjustedRawValue = rawValue
+            }
+        }
+    }
+    
+    private func findCurve(valueKey: String, bKey: String) -> (a: Double, b: Double, c: Double) {
         let last3 = GlucoseReading.lastReadings(3)
         
         let a: Double
@@ -150,19 +212,19 @@ final class GlucoseReading: Object {
             let x2 = last3[0].date?.timeIntervalSince1970 ?? 1.0
             let y1 = last3[1].value(forKey: valueKey) as? Double ?? 1.0
             let x1 = last3[1].date?.timeIntervalSince1970 ?? 1.0
-            let lastB = last3[0].b
+            let lastB = last3[0].value(forKey: bKey) as? Double ?? 0.0
             
-            if abs(y1 - y2) <= .ulpOfOne {
-                b = 0
+            if y1 ~ y2 {
+                b = 0.0
             } else {
                 b = (y2 - y1) / (x2 - x1)
             }
-            a = 0
-            c = -1 * ((lastB * x1) - y1)
+            a = 0.0
+            c = -1.0 * ((lastB * x1) - y1)
         } else {
-            a = 0
-            b = 0
-            c = calculatedValue
+            a = 0.0
+            b = 0.0
+            c = value(forKey: valueKey) as? Double ?? 0.0
         }
         
         return (a, b, c)
@@ -175,6 +237,7 @@ final class GlucoseReading: Object {
                 hideSlope = true
             } else {
                 calculatedValue = min(400.0, max(39.0, calculatedValue))
+                hideSlope = false
             }
         }
     }

@@ -16,13 +16,13 @@ final class GlucoseUnitTests: XCTestCase {
     
     func testConvertion() {
         // mg/dl to mmol/l
-        XCTAssertTrue(abs(GlucoseUnit.mgDl.convertToAnother(0.0) - 0.0) <= .ulpOfOne)
-        XCTAssertTrue(abs(GlucoseUnit.mgDl.convertToAnother(1.0) - 0.0554994394556615) <= .ulpOfOne)
-        XCTAssertTrue(abs(GlucoseUnit.mgDl.convertToAnother(1.33) - 0.0738142544760298) <= .ulpOfOne)
+        XCTAssertTrue(GlucoseUnit.mgDl.convertToAnother(0.0) ~ 0.0)
+        XCTAssertTrue(GlucoseUnit.mgDl.convertToAnother(1.0) ~ 0.0554994394556615)
+        XCTAssertTrue(GlucoseUnit.mgDl.convertToAnother(1.33) ~ 0.0738142544760298)
         
         // mmol/l to mg/dl
-        XCTAssertTrue(abs(GlucoseUnit.mmolL.convertToAnother(0.0) - 0.0) <= .ulpOfOne)
-        XCTAssertTrue(abs(GlucoseUnit.mmolL.convertToAnother(1.0) - 18.0182) <= .ulpOfOne)
-        XCTAssertTrue(abs(GlucoseUnit.mmolL.convertToAnother(1.33) - 23.964206) <= .ulpOfOne)
+        XCTAssertTrue(GlucoseUnit.mmolL.convertToAnother(0.0) ~ 0.0)
+        XCTAssertTrue(GlucoseUnit.mmolL.convertToAnother(1.0) ~ 18.0182)
+        XCTAssertTrue(GlucoseUnit.mmolL.convertToAnother(1.33) ~ 23.964206)
     }
 }

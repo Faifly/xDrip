@@ -33,7 +33,7 @@ enum Home {
         }
         
         struct Response {
-            let glucoseData: [GlucoseData]
+            let glucoseData: [GlucoseReading]
         }
         
         struct ViewModel {
