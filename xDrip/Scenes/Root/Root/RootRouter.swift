@@ -18,7 +18,11 @@ import UIKit
     func routeToHistory()
     func routeToSettings()
     
-    func routeToAddEntry()
+    func routeToEditFood()
+    func routeToEditBolus()
+    func routeToEditCarbs()
+    func routeToEditTraining()
+    
     func routeToInitialSetup()
 }
 
@@ -59,8 +63,23 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
         viewController?.present(splitViewController, animated: true)
     }
     
-    func routeToAddEntry() {
+    func routeToEditFood() {
+        // TODO: Present Edit food view controller
+    }
+    
+    func routeToEditBolus() {
+        // TODO: Present Edit bolus view controller
+    }
+    
+    func routeToEditCarbs() {
+        // TODO: Present Edit carbs view controller
+    }
+    
+    func routeToEditTraining() {
+        let viewController = EditTrainingViewController()
+        viewController.dataStore?.mode = .create
         
+        presentViewController(viewController)
     }
     
     func routeToInitialSetup() {

@@ -554,6 +554,12 @@
 		58F4CC87243BA2110053D17C /* DebugLogInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC82243BA2110053D17C /* DebugLogInteractor.swift */; };
 		58F4CC89243BA21D0053D17C /* DebugLogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58F4CC88243BA21D0053D17C /* DebugLogViewController.xib */; };
 		58F72D882441BFF4007AB093 /* ChartSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F72D872441BFF4007AB093 /* ChartSliderView.swift */; };
+		7A52E3FD24506ACB00295EAE /* EditTrainingPickerExpandableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A52E3FC24506ACB00295EAE /* EditTrainingPickerExpandableCell.xib */; };
+		7A52E3FF24506BD300295EAE /* EditTrainingPickerExpandableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A52E3FE24506BD300295EAE /* EditTrainingPickerExpandableCell.swift */; };
+		7A52E40A2451DF4900295EAE /* EditTrainingFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A52E4092451DF4900295EAE /* EditTrainingFormattingWorker.swift */; };
+		7A52E41324533A5700295EAE /* EditTrainingPickerViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A52E41224533A5600295EAE /* EditTrainingPickerViewProtocol.swift */; };
+		7A52E41524533AA100295EAE /* EditTrainingCustomPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A52E41424533AA100295EAE /* EditTrainingCustomPicker.swift */; };
+		7A52E41724533AD400295EAE /* EditTrainingCustomDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A52E41624533AD400295EAE /* EditTrainingCustomDatePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1126,6 +1132,12 @@
 		58F4CC82243BA2110053D17C /* DebugLogInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogInteractor.swift; sourceTree = "<group>"; };
 		58F4CC88243BA21D0053D17C /* DebugLogViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugLogViewController.xib; sourceTree = "<group>"; };
 		58F72D872441BFF4007AB093 /* ChartSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartSliderView.swift; sourceTree = "<group>"; };
+		7A52E3FC24506ACB00295EAE /* EditTrainingPickerExpandableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditTrainingPickerExpandableCell.xib; sourceTree = "<group>"; };
+		7A52E3FE24506BD300295EAE /* EditTrainingPickerExpandableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingPickerExpandableCell.swift; sourceTree = "<group>"; };
+		7A52E4092451DF4900295EAE /* EditTrainingFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingFormattingWorker.swift; sourceTree = "<group>"; };
+		7A52E41224533A5600295EAE /* EditTrainingPickerViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingPickerViewProtocol.swift; sourceTree = "<group>"; };
+		7A52E41424533AA100295EAE /* EditTrainingCustomPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingCustomPicker.swift; sourceTree = "<group>"; };
+		7A52E41624533AD400295EAE /* EditTrainingCustomDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingCustomDatePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2392,6 +2404,10 @@
 		580EC7A2242151A900C34948 /* EditTraining */ = {
 			isa = PBXGroup;
 			children = (
+				7A52E41124533A3E00295EAE /* Protocols */,
+				7A52E410245338F300295EAE /* Pickers */,
+				7A52E4082451DF0E00295EAE /* Workers */,
+				7A52E3F9244F62D700295EAE /* Cells */,
 				580EC7A3242151BC00C34948 /* EditTrainingPresenter.swift */,
 				580EC7A4242151BC00C34948 /* EditTrainingRouter.swift */,
 				580EC7A5242151BC00C34948 /* EditTrainingModels.swift */,
@@ -3146,6 +3162,40 @@
 			path = DebugLog;
 			sourceTree = "<group>";
 		};
+		7A52E3F9244F62D700295EAE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				7A52E3FE24506BD300295EAE /* EditTrainingPickerExpandableCell.swift */,
+				7A52E3FC24506ACB00295EAE /* EditTrainingPickerExpandableCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		7A52E4082451DF0E00295EAE /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				7A52E4092451DF4900295EAE /* EditTrainingFormattingWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		7A52E410245338F300295EAE /* Pickers */ = {
+			isa = PBXGroup;
+			children = (
+				7A52E41424533AA100295EAE /* EditTrainingCustomPicker.swift */,
+				7A52E41624533AD400295EAE /* EditTrainingCustomDatePicker.swift */,
+			);
+			path = Pickers;
+			sourceTree = "<group>";
+		};
+		7A52E41124533A3E00295EAE /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				7A52E41224533A5600295EAE /* EditTrainingPickerViewProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -3257,6 +3307,7 @@
 				58B4F6C924116394003C6D8F /* Localizable.strings in Resources */,
 				2C09D21F2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.xib in Resources */,
 				58184A472438BE8E00E848C6 /* RootViewController.xib in Resources */,
+				7A52E3FD24506ACB00295EAE /* EditTrainingPickerExpandableCell.xib in Resources */,
 				5805CA0E243892D6002AFA1B /* InitialSetupSettingsViewController.xib in Resources */,
 				58184A4B2438C20D00E848C6 /* EntriesListViewController.xib in Resources */,
 				58184A572438C64100E848C6 /* EntriesListTableViewCell.xib in Resources */,
@@ -3400,6 +3451,7 @@
 				58B5FD56241910BD00DB857D /* SettingsRootInteractor.swift in Sources */,
 				58B5FD3D24190E6700DB857D /* StatsRootRouter.swift in Sources */,
 				580E4BC2243F733100565EDE /* SettingsModeRootModels.swift in Sources */,
+				7A52E40A2451DF4900295EAE /* EditTrainingFormattingWorker.swift in Sources */,
 				5805C9C22438925F002AFA1B /* CGMDevice.swift in Sources */,
 				580E4B8F243F71DC00565EDE /* SettingsCloudTypesViewController.swift in Sources */,
 				580E4B66243F713A00565EDE /* SettingsAlertTypesModels.swift in Sources */,
@@ -3488,6 +3540,7 @@
 				580E4B68243F713A00565EDE /* SettingsAlertTypesInteractor.swift in Sources */,
 				5844325F243CDAF800282A6C /* AlertEventType.swift in Sources */,
 				58B5FD4824190EB300DB857D /* HistoryRootRouter.swift in Sources */,
+				7A52E3FF24506BD300295EAE /* EditTrainingPickerExpandableCell.swift in Sources */,
 				5805CA02243892D6002AFA1B /* InitialSetupPresenter.swift in Sources */,
 				58B5FD4024190E6700DB857D /* StatsRootInteractor.swift in Sources */,
 				580EC7A9242151BC00C34948 /* EditTrainingRouter.swift in Sources */,
@@ -3571,6 +3624,7 @@
 				2C09D21E2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.swift in Sources */,
 				58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */,
 				58788B75242647C5000EB113 /* TrainingEntriesWorker.swift in Sources */,
+				7A52E41324533A5700295EAE /* EditTrainingPickerViewProtocol.swift in Sources */,
 				58DDC4622423CA58008CB04D /* AbstractEntry.swift in Sources */,
 				580E4C2E243F74F000565EDE /* SettingsUnitsInteractor.swift in Sources */,
 				58F72D882441BFF4007AB093 /* ChartSliderView.swift in Sources */,
@@ -3598,6 +3652,7 @@
 				580E4B99243F721500565EDE /* NightscoutCloudConfigurationPresenter.swift in Sources */,
 				580E4CE3243F802F00565EDE /* SettingsModeMasterInteractor.swift in Sources */,
 				58160E0D2402E52000C792F4 /* TabBarView.swift in Sources */,
+				7A52E41524533AA100295EAE /* EditTrainingCustomPicker.swift in Sources */,
 				580EC79424214CDD00C34948 /* EntriesListInteractor.swift in Sources */,
 				584432AA243CFD9B00282A6C /* SettingsChartPresenter.swift in Sources */,
 				58443259243CD3FB00282A6C /* ChartSettings.swift in Sources */,
@@ -3607,6 +3662,7 @@
 				5805C9C32438925F002AFA1B /* CGMDeviceType.swift in Sources */,
 				580E4BB7243F725600565EDE /* NightscoutCloudBackfillInteractor.swift in Sources */,
 				58788B7724264A36000EB113 /* CalibrationEntriesWorker.swift in Sources */,
+				7A52E41724533AD400295EAE /* EditTrainingCustomDatePicker.swift in Sources */,
 				580E4BDD243F739C00565EDE /* SettingsTransmitterModels.swift in Sources */,
 				580E4BB3243F725600565EDE /* NightscoutCloudBackfillPresenter.swift in Sources */,
 				580E4B5A243F711200565EDE /* SettingsAlertRootViewController.swift in Sources */,

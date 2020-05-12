@@ -14,20 +14,63 @@ import UIKit
 
 protocol EditTrainingBusinessLogic {
     func doLoad(request: EditTraining.Load.Request)
+    
+    func doCancel(request: EditTraining.Cancel.Request)
+    func doDone(request: EditTraining.Done.Request)
 }
 
 protocol EditTrainingDataStore {
-    
+    var mode: EditTraining.Mode? { get set }
 }
 
 final class EditTrainingInteractor: EditTrainingBusinessLogic, EditTrainingDataStore {
     var presenter: EditTrainingPresentationLogic?
     var router: EditTrainingRoutingLogic?
+    let formattingWorker = EditTrainingFormattingWorker()
+    var mode: EditTraining.Mode?
+    
+    var localEntry: EditTraining.LocalEntry?
     
     // MARK: Do something
     
     func doLoad(request: EditTraining.Load.Request) {
-        let response = EditTraining.Load.Response()
+        switch mode {
+        case .edit(let entry):
+            localEntry = formattingWorker.transformToLocalEntry(entry)
+        default:
+            localEntry = formattingWorker.transformToLocalEntry(nil)
+        }
+        
+        guard let localEntry = localEntry else { return }
+        
+        let response = EditTraining.Load.Response(localEntry: localEntry) {[weak self] (field, value) in
+            self?.handleFieldSelection(field, value: value)
+        }
         presenter?.presentLoad(response: response)
+    }
+    
+    func doDone(request: EditTraining.Done.Request) {
+        guard let trainingEntry = formattingWorker.transformToTrainingEntry(localEntry) else { return }
+        
+        switch mode {
+        case .edit(let entry):
+            entry.update(duration: trainingEntry.duration,
+                         intensity: trainingEntry.intensity,
+                         date: trainingEntry.date ?? Date())
+        default:
+            TrainingEntriesWorker.add(entry: trainingEntry)
+        }
+        
+        router?.dismissSelf()
+    }
+    
+    func doCancel(request: EditTraining.Cancel.Request) {
+        router?.dismissSelf()
+    }
+    
+    // MARK: Logic
+    
+    private func handleFieldSelection(_ field: EditTraining.Field, value: AnyObject) {
+        localEntry?[field] = value
     }
 }

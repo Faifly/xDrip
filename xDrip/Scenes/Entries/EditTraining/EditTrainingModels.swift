@@ -13,11 +13,63 @@
 import UIKit
 
 enum EditTraining {
+    
+    typealias LocalEntry = [EditTraining.Field : AnyObject]
+    
     // MARK: Models
+    
+    enum Field {
+        case duration
+        case intensity
+        case dateTime
+    }
+    
+    enum Mode {
+        case create
+        case edit(_ entry: TrainingEntry)
+    }
+    
+    struct PickerExpandableCell {
+        let field: Field
+        let mainText: String
+        let detailText: String
+        let picker: EditTrainingPickerViewProtocol
+    }
     
     // MARK: Use cases
     
     enum Load {
+        struct Request {
+        }
+        
+        struct Response {
+            let localEntry: LocalEntry
+            let selectionHandler: (Field, AnyObject) -> Void
+        }
+        
+        struct ViewModel {
+            let title: String
+            let headerTitle: String
+            let cells: [PickerExpandableCell]
+
+            var rowsCount: Int {
+                return cells.count
+            }
+        }
+    }
+    
+    enum Done {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum Cancel {
         struct Request {
         }
         

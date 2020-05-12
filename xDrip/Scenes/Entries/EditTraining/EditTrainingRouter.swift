@@ -13,7 +13,7 @@
 import UIKit
 
 @objc protocol EditTrainingRoutingLogic {
-    
+    func dismissSelf()
 }
 
 protocol EditTrainingDataPassing {
@@ -26,4 +26,7 @@ final class EditTrainingRouter: NSObject, EditTrainingRoutingLogic, EditTraining
     
     // MARK: Routing
     
+    func dismissSelf() {
+        viewController?.dismiss(animated: true, completion: nil)
+    }
 }
