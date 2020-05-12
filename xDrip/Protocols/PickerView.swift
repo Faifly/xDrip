@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol BaseSettingsPickerView: UIView {
+protocol PickerView: UIView {
     var onValueChanged: ((String?) -> Void)? { get set }
 }

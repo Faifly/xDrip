@@ -40,7 +40,7 @@
 "settings_chart_active_insulin" = "Активный инсулин";
 "settings_chart_active_carbs" = "Активные углеводы";
 "settings_chart_data" = "Данные";
-"settings_chart_render_section_header" = "";
+"settings_chart_render_section_header" = "Отображение графика";
 "settings_chart_render_section_footer" = "Эти настройки влияют на отображение гистограммы на главном экране.";
 "settings_chart_switch_section_footer" = "Эти настройки влияют на отображение графиков, которые находятся на главном экране";
 

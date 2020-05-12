@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CustomDatePicker: UIDatePicker, BaseSettingsPickerView {
+final class CustomDatePicker: UIDatePicker, PickerView {
     
     var onValueChanged: ((String?) -> Void)?
     var formatDate: ((Date) -> (String))?

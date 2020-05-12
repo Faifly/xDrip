@@ -112,8 +112,8 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         
         let detailText = "\(Int((detail ?? 0.0) / TimeInterval.secondsPerMinute)) m"
         
-        let hours = stride(from: 0, to: 23, by: 1).map({ String($0) })
-        let minutes = stride(from: 0, to: 59, by: 1).map({ String($0) })
+        let hours = stride(from: 0, to: 24, by: 1).map({ String($0) })
+        let minutes = stride(from: 0, to: 60, by: 1).map({ String($0) })
         
         let data = [
             hours,
@@ -184,7 +184,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         
         let range = User.current.settings.unit.minMax
         let step = User.current.settings.unit.pickerStep
-        let array = stride(from: range.lowerBound, to: range.upperBound, by: step).map { $0 }
+        let array = stride(from: range.lowerBound, to: range.upperBound + step, by: step).map { $0 }
         let strings = array.map { String(format: "%.1f", $0) }
         
         let picker = CustomPickerView(data: [strings])

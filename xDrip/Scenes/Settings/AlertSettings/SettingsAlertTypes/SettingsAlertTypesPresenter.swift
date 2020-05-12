@@ -37,7 +37,7 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
         let cells: [BaseSettings.Cell] = [
             createTextInputViewCell(.name, detailText: settings.name, placeholder: settings.eventType.title, editingChangedHandler: response.defaultSectionTextEditingChangedHandler),
             createRightSwitchCell(.snoozeFromNotification, isSwitchOn: settings.snoozeFromNotification, switchValueChangedHandler: response.defaultSectionSwitchHandler),
-            createTimePickerView(.defaultSnooze, detailText: "\(Int(settings.defaultSnooze)) m", valueChangeHandler: response.defaultSectionPickerValueChangedHandler),
+            createTimePickerView(.defaultSnooze, detail: settings.defaultSnooze, valueChangeHandler: response.defaultSectionPickerValueChangedHandler),
             createRightSwitchCell(.repeat, isSwitchOn: settings.repeat, switchValueChangedHandler: response.defaultSectionSwitchHandler),
             createDisclosureCell(mainText: SettingsAlertTypes.Field.sound.title, detailText: nil, index: 0, selectionHandler: response.defaultSectionSelectionHandler),
             createRightSwitchCell(.vibrate, isSwitchOn: settings.isVibrating, switchValueChangedHandler: response.defaultSectionSwitchHandler)
@@ -86,24 +86,45 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
     
     private func createTimePickerView(
         _ field: SettingsAlertTypes.Field,
-        detailText: String?,
+        detail: TimeInterval?,
         valueChangeHandler: @escaping (TimeInterval) -> Void) -> BaseSettings.Cell {
         
-        let picker = CustomDatePicker()
+        let detailText = "\(Int((detail ?? 0.0) / TimeInterval.secondsPerMinute)) m"
         
-        picker.datePickerMode = .countDownTimer
-        picker.minuteInterval = 1
+        let hours = stride(from: 0, to: 24, by: 1).map({ String($0) })
+        let minutes = stride(from: 0, to: 60, by: 1).map({ String($0) })
         
-        picker.formatDate = { date in
-            let components = Calendar.current.dateComponents([.hour, .minute], from: date)
+        let data = [
+            hours,
+            ["hrs"],
+            minutes,
+            ["mins"]
+        ]
+        
+        let picker = CustomPickerView(data: data)
+        
+        if let detail = detail {
+            let hour = Int(detail / TimeInterval.secondsPerHour)
+            let minutes = Int((detail - (TimeInterval(hour) * TimeInterval.secondsPerHour)) / TimeInterval.secondsPerMinute)
             
-            guard let hour = components.hour, let minute = components.minute else { return " " }
+            picker.selectRow(hour, inComponent: 0, animated: false)
+            picker.selectRow(minutes, inComponent: 2, animated: false)
+        }
+        
+        picker.formatValues = { strings in
             
-            let time = minute + hour * 60
+            guard strings.count > 3 else { return "" }
+            
+            let hourString = strings[0]
+            let minuteString = strings[2]
+            
+            guard let hour = Double(hourString), let minute = Double(minuteString) else { return "" }
+            
+            let time = minute * TimeInterval.secondsPerMinute + hour * TimeInterval.secondsPerHour
             
             valueChangeHandler(TimeInterval(time))
             
-            return "\(time) m"
+            return "\(Int(time / TimeInterval.secondsPerMinute)) m"
         }
         
         return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)

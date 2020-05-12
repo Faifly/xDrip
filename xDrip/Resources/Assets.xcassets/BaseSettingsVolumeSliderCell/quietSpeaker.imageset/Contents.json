@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "quieter icon-1.png",
+      "filename" : "quiet_black.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,12 +12,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "quieter icon.png",
+      "filename" : "quiet.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "quieter icon@2x-1.png",
+      "filename" : "quiet_black@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,12 +28,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "quieter icon@2x.png",
+      "filename" : "quiet@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "quieter icon@3x-1.png",
+      "filename" : "quiet_black@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "quieter icon@3x.png",
+      "filename" : "quiet@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

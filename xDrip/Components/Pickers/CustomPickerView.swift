@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CustomPickerView: UIPickerView, BaseSettingsPickerView {
+final class CustomPickerView: UIPickerView, PickerView {
     
     var onValueChanged: ((String?) -> Void)?
     var formatValues: (([String]) -> (String))?

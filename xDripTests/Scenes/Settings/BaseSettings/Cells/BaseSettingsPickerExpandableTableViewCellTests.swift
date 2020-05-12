@@ -16,11 +16,11 @@ final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        tableView.registerNib(type: BaseSettingsPickerExpandableTableViewCell.self)
+        tableView.registerNib(type: PickerExpandableTableViewCell.self)
     }
     
     func testConfigure() {
-        let sut = tableView.dequeueReusableCell(ofType: BaseSettingsPickerExpandableTableViewCell.self, for: IndexPath(row: 0, section: 0))
+        let sut = tableView.dequeueReusableCell(ofType: PickerExpandableTableViewCell.self, for: IndexPath(row: 0, section: 0))
         
         var date = Date()
         let picker = CustomDatePicker()
@@ -29,7 +29,7 @@ final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
             return DateFormatter.localizedString(from: pickedDate, dateStyle: .short, timeStyle: .short)
         }
         
-        sut.configure(mainText: "expandable cell", detailText: "test data", pickerView: picker)
+        sut.configure(mainText: "expandable cell", detailText: "test data", pickerView: picker, isExpanded: false)
         
         guard let mainTextLabel = sut.findView(with: "mainTextLabel") as? UILabel else {
             XCTFail("Cannot obtain main text label")
@@ -53,10 +53,10 @@ final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
     }
     
     func testTooglePicker() {
-        let sut = tableView.dequeueReusableCell(ofType: BaseSettingsPickerExpandableTableViewCell.self, for: IndexPath(row: 0, section: 0))
+        let sut = tableView.dequeueReusableCell(ofType: PickerExpandableTableViewCell.self, for: IndexPath(row: 0, section: 0))
         let picker = CustomDatePicker()
         
-        sut.configure(mainText: "", detailText: "", pickerView: picker)
+        sut.configure(mainText: "", detailText: "", pickerView: picker, isExpanded: false)
         
         guard let stackView = sut.contentView.subviews.compactMap({ $0 as? UIStackView }).first else {
             XCTFail("Cannot obtain stack view")

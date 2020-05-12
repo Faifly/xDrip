@@ -216,7 +216,7 @@ final class BaseSettingsViewControllerTests: XCTestCase {
         // When
         cell = sut.tableView(tableView, cellForRowAt:  IndexPath(row: 1, section: 0))
         // Then
-        XCTAssert(cell is BaseSettingsPickerExpandableTableViewCell)
+        XCTAssert(cell is PickerExpandableTableViewCell)
         
         // When
         cell = sut.tableView(tableView, cellForRowAt:  IndexPath(row: 2, section: 0))

@@ -16,19 +16,20 @@ final class PickerExpandableTableViewCell: UITableViewCell {
     
     private var picker: PickerView?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        verticalStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
-    }
-    
-    func configure(mainText: String, detailText: String?, pickerView: PickerView) {
+    func configure(mainText: String, detailText: String?, pickerView: PickerView, isExpanded: Bool) {
         mainTextLabel.text = mainText
         detailLabel.text = detailText
         picker = pickerView
         
         picker?.onValueChanged = { [weak self] detailString in
             self?.detailLabel.text = detailString
+        }
+        
+        verticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        if isExpanded {
+            guard let picker = picker else { return }
+            verticalStackView.addArrangedSubview(picker)
         }
     }
     
