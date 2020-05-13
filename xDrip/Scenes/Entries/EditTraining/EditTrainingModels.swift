@@ -14,7 +14,7 @@ import UIKit
 
 enum EditTraining {
     
-    typealias LocalEntry = [EditTraining.Field : AnyObject]
+    typealias LocalEntry = [EditTraining.Field: AnyObject]
     
     // MARK: Models
     

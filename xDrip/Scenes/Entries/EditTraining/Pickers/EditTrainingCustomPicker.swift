@@ -45,12 +45,11 @@ extension EditTrainingCustomPicker: UIPickerViewDelegate, UIPickerViewDataSource
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         var values = [String]()
         
-        for val in 0..<data.count {
-            values.append(data[val][pickerView.selectedRow(inComponent: val)])
+        for index in 0..<data.count {
+            values.append(data[index][pickerView.selectedRow(inComponent: index)])
         }
         
         let formattedString = formatValues?(values)
         onValueChanged?(formattedString)
     }
 }
-

@@ -74,7 +74,7 @@ class EditTrainingViewController: NibViewController, EditTrainingDisplayLogic {
         var rightItem = UIBarButtonItem.SystemItem.done
         
         switch dataStore?.mode {
-        case .edit( _ ):
+        case .edit:
             rightItem = .edit
         default:
             break
@@ -136,7 +136,9 @@ extension EditTrainingViewController: UITableViewDelegate, UITableViewDataSource
         let cellViewModel = viewModel.cells[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(ofType: EditTrainingPickerExpandableCell.self, for: indexPath)
-        cell.configure(mainText: cellViewModel.mainText, detailText: cellViewModel.detailText, pickerView: cellViewModel.picker)
+        cell.configure(mainText: cellViewModel.mainText,
+                       detailText: cellViewModel.detailText,
+                       pickerView: cellViewModel.picker)
         return cell
     }
     

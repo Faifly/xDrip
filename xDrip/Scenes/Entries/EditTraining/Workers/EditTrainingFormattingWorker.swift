@@ -12,15 +12,15 @@ final class EditTrainingFormattingWorker {
     func transformToLocalEntry(_ entry: TrainingEntry?) -> EditTraining.LocalEntry {
         if let entry = entry {
             return [
-                .duration : entry.duration as AnyObject,
-                .intensity : entry.intensity as AnyObject,
-                .dateTime : entry.date as AnyObject,
+                .duration: entry.duration as AnyObject,
+                .intensity: entry.intensity as AnyObject,
+                .dateTime: entry.date as AnyObject
             ]
         } else {
             return [
-                .duration : TimeInterval.secondsPerMinute as AnyObject,
-                .intensity : TrainingIntensity.default as AnyObject,
-                .dateTime : Calendar.current.date(bySetting: Calendar.Component.second, value: 0, of: Date()) as AnyObject,
+                .duration: TimeInterval.secondsPerMinute as AnyObject,
+                .intensity: TrainingIntensity.default as AnyObject,
+                .dateTime: Calendar.current.date(bySetting: Calendar.Component.second, value: 0, of: Date()) as AnyObject
             ]
         }
     }

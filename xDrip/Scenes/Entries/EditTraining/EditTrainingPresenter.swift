@@ -45,10 +45,13 @@ final class EditTrainingPresenter: EditTrainingPresentationLogic {
         var detailText = ""
         let field = EditTraining.Field.duration
         
+        let hours = stride(from: 0, to: 24, by: 1).map { String($0) }
+        let mins = stride(from: 0, to: 60, by: 1).map { String($0) }
+        
         let data = [
-            ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"],
+            hours,
             ["hours"],
-            ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"],
+            mins,
             ["min"]
         ]
         
@@ -110,7 +113,13 @@ final class EditTrainingPresenter: EditTrainingPresentationLogic {
         picker.formatValues = { values in
             guard let intensityString = values.first else { return "" }
             
-            if let intensity = [TrainingIntensity.low, TrainingIntensity.normal, TrainingIntensity.high].first(where: { $0.localizedTitle == intensityString }) {
+            let trainings = [
+                TrainingIntensity.low,
+                TrainingIntensity.normal,
+                TrainingIntensity.high
+            ]
+            
+            if let intensity = trainings.first(where: { $0.localizedTitle == intensityString }) {
                 selectionHandler(field, intensity as AnyObject)
             }
             return intensityString
