@@ -47,9 +47,19 @@ final class EditTrainingViewControllerTests: XCTestCase {
     
     final class EditTrainingBusinessLogicSpy: EditTrainingBusinessLogic {
         var doLoadCalled = false
+        var doDoneCalled = false
+        var doCencelCalled = false
         
         func doLoad(request: EditTraining.Load.Request) {
             doLoadCalled = true
+        }
+        
+        func doDone(request: EditTraining.Done.Request) {
+            doDoneCalled = true
+        }
+        
+        func doCancel(request: EditTraining.Cancel.Request) {
+            doCencelCalled = true
         }
     }
     
@@ -69,7 +79,7 @@ final class EditTrainingViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = EditTraining.Load.ViewModel()
+        let viewModel = EditTraining.Load.ViewModel(title: "", headerTitle: "", cells: [])
         
         // When
         loadView()

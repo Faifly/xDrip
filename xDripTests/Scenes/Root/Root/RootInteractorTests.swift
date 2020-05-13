@@ -53,6 +53,7 @@ final class RootInteractorTests: XCTestCase {
     }
     
     final class RootRoutingLogicSpy: RootRoutingLogic {
+
         var routeToCalibrationCalled = false
         var routeToStatsCalled = false
         var routeToHistoryCalled = false
@@ -74,8 +75,16 @@ final class RootInteractorTests: XCTestCase {
             routeToSettingsCalled = true
         }
         
-        func routeToAddEntry() {
-            
+        func routeToEditFood() {
+        }
+        
+        func routeToEditBolus() {
+        }
+        
+        func routeToEditCarbs() {
+        }
+        
+        func routeToEditTraining() {
         }
         
         func routeToInitialSetup() {

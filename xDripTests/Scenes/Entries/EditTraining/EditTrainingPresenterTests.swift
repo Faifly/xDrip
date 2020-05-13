@@ -51,7 +51,7 @@ final class EditTrainingPresenterTests: XCTestCase {
         // Given
         let spy = EditTrainingDisplayLogicSpy()
         sut.viewController = spy
-        let response = EditTraining.Load.Response()
+        let response = EditTraining.Load.Response(localEntry: [:], selectionHandler: { _, _ in })
         
         // When
         sut.presentLoad(response: response)

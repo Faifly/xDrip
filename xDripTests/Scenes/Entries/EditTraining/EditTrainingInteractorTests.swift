@@ -46,7 +46,11 @@ final class EditTrainingInteractorTests: XCTestCase {
     }
     
     final class EditTrainingRoutingLogicSpy: EditTrainingRoutingLogic {
+        var dismissSelfCalled = false
         
+        func dismissSelf() {
+            dismissSelfCalled = true
+        }
     }
     
     // MARK: Tests
