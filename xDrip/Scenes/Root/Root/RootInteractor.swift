@@ -29,7 +29,13 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
     
     private let entryTypes: [Root.EntryType] = [.food, .bolus, .carbs, .training]
     
+    private let calibrationWorker: RootCalibrationValidatorProtocol
+    
     // MARK: Do something
+    
+    init() {
+        calibrationWorker = RootCalibrationValidatorWorker()
+    }
     
     func doLoad(request: Root.Load.Request) {
         let response = Root.Load.Response()
@@ -38,7 +44,7 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
     
     func doTabSelection(request: Root.TabSelection.Request) {
         switch request.button {
-        case .calibration: router?.routeToCalibration()
+        case .calibration: startCalibrationFlow()
         case .chart: router?.routeToStats()
         case .history: router?.routeToHistory()
         case .settings: router?.routeToSettings()
@@ -57,6 +63,17 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
     func doShowInitialSetupIfNeeded(request: Root.InitialSetup.Request) {
         if !User.current.isInitialSetupDone {
             router?.routeToInitialSetup()
+        }
+    }
+    
+    // MARK: Logic
+    
+    private func startCalibrationFlow() {
+        switch calibrationWorker.isAllowedToCalibrate {
+        case .allowed:
+            router?.routeToCalibration()
+        case let .notAllowed(errorTitle, errorMessage):
+            router?.showCalibrationError(title: errorTitle, message: errorMessage)
         }
     }
 }

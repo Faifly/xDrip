@@ -15,10 +15,10 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
         
         let date = Date(timeIntervalSince1970: 6.0)
         let entry = FoodEntriesWorker.addCarbEntry(amount: 1.1, foodType: "2.2", assimilationDuration: 3.3, date: date)
-        XCTAssertTrue(abs(entry.amount - 1.1) <= .ulpOfOne)
+        XCTAssertTrue(entry.amount ~ 1.1)
         XCTAssertTrue(entry.foodType == "2.2")
-        XCTAssertTrue(abs(entry.assimilationDuration - 3.3) <= .ulpOfOne)
-        XCTAssertTrue(abs(entry.date!.timeIntervalSince1970.rounded() - 6.0) <= .ulpOfOne)
+        XCTAssertTrue(entry.assimilationDuration ~ 3.3)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 6.0)
         
         XCTAssertTrue(realm.objects(CarbEntry.self).count == 1)
     }
@@ -45,8 +45,8 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
         
         let date = Date(timeIntervalSince1970: 7.0)
         let entry = FoodEntriesWorker.addBolusEntry(amount: 2.2, date: date)
-        XCTAssertTrue(abs(entry.amount - 2.2) <= .ulpOfOne)
-        XCTAssertTrue(abs(entry.date!.timeIntervalSince1970.rounded() - 7.0) <= .ulpOfOne)
+        XCTAssertTrue(entry.amount ~ 2.2)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 7.0)
         
         XCTAssertTrue(realm.objects(BolusEntry.self).count == 1)
     }
@@ -64,7 +64,7 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
         
         let entries = FoodEntriesWorker.fetchAllBolusEntries()
         XCTAssertTrue(entries.count == 10)
-        XCTAssertTrue(abs(entries[0].amount - 10.0) <= .ulpOfOne)
-        XCTAssertTrue(abs(entries[9].amount - 1.0) <= .ulpOfOne)
+        XCTAssertTrue(entries[0].amount ~ 10.0)
+        XCTAssertTrue(entries[9].amount ~ 1.0)
     }
 }

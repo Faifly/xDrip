@@ -13,11 +13,11 @@ final class GlucoseWarningLevelSettingTests: XCTestCase {
     func testInit() {
         let obj1 = GlucoseWarningLevelSetting(level: .high, value: 1.1)
         XCTAssertTrue(obj1.warningLevel == .high)
-        XCTAssertTrue(abs(obj1.value - 1.1) <= .ulpOfOne)
+        XCTAssertTrue(obj1.value ~ 1.1)
         
         let obj2 = GlucoseWarningLevelSetting(level: .urgentLow, value: 2.2)
         XCTAssertTrue(obj2.warningLevel == .urgentLow)
-        XCTAssertTrue(abs(obj2.value - 2.2) <= .ulpOfOne)
+        XCTAssertTrue(obj2.value ~ 2.2)
     }
     
     func testWarningLevel() {
@@ -30,9 +30,9 @@ final class GlucoseWarningLevelSettingTests: XCTestCase {
     
     func testValue() {
         let obj = GlucoseWarningLevelSetting(level: .urgentLow, value: 1.1)
-        XCTAssertTrue(abs(obj.value - 1.1) <= .ulpOfOne)
+        XCTAssertTrue(obj.value ~ 1.1)
         
         obj.updateValue(2.2)
-        XCTAssertTrue(abs(obj.value - 2.2) <= .ulpOfOne)
+        XCTAssertTrue(obj.value ~ 2.2)
     }
 }

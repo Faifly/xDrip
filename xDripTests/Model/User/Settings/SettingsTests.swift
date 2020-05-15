@@ -23,39 +23,39 @@ final class SettingsTests: AbstractRealmTest {
         XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 0)
         
         settings.configureWarningLevel(.urgentLow, value: 1.1)
-        XCTAssertTrue(abs(settings.warningLevelValue(for: .urgentLow) - 1.1) <= .ulpOfOne)
+        XCTAssertTrue(settings.warningLevelValue(for: .urgentLow) ~ 1.1)
         XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 1)
         
         settings.configureWarningLevel(.low, value: 2.2)
-        XCTAssertTrue(abs(settings.warningLevelValue(for: .low) - 2.2) <= .ulpOfOne)
+        XCTAssertTrue(settings.warningLevelValue(for: .low) ~ 2.2)
         XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 2)
         
         settings.configureWarningLevel(.high, value: 3.3)
-        XCTAssertTrue(abs(settings.warningLevelValue(for: .high) - 3.3) <= .ulpOfOne)
+        XCTAssertTrue(settings.warningLevelValue(for: .high) ~ 3.3)
         XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 3)
         
         settings.configureWarningLevel(.urgentHigh, value: 4.4)
-        XCTAssertTrue(abs(settings.warningLevelValue(for: .urgentHigh) - 4.4) <= .ulpOfOne)
+        XCTAssertTrue(settings.warningLevelValue(for: .urgentHigh) ~ 4.4)
         XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 4)
         
         settings.configureWarningLevel(.urgentHigh, value: 5.5)
-        XCTAssertTrue(abs(settings.warningLevelValue(for: .urgentHigh) - 5.5) <= .ulpOfOne)
+        XCTAssertTrue(settings.warningLevelValue(for: .urgentHigh) ~ 5.5)
         XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 4)
     }
     
     func testAbsorptionRateSetting() {
         let settings = User.current.settings!
-        XCTAssertTrue(abs(settings.carbsAbsorptionRate - 1200.0) <= .ulpOfOne)
+        XCTAssertTrue(settings.carbsAbsorptionRate ~ 1200.0)
         
         settings.updateCarbsAbsorptionRate(1.1)
-        XCTAssertTrue(abs(settings.carbsAbsorptionRate - 1.1) <= .ulpOfOne)
+        XCTAssertTrue(settings.carbsAbsorptionRate ~ 1.1)
     }
     
     func testInsulinActionTime() {
         let settings = User.current.settings!
-        XCTAssertTrue(abs(settings.insulinActionTime - 21600.0) <= .ulpOfOne)
+        XCTAssertTrue(settings.insulinActionTime ~ 21600.0)
         
         settings.updateInsulinActionTime(1.1)
-        XCTAssertTrue(abs(settings.insulinActionTime - 1.1) <= .ulpOfOne)
+        XCTAssertTrue(settings.insulinActionTime ~ 1.1)
     }
 }

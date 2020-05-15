@@ -142,3 +142,10 @@
 "edit_training_intensity_low" = "Низкая";
 "edit_training_intensity_normal" = "Нормальная";
 "edit_training_intensity_high" = "Высокая";
+"edit_training_hours" = "ч";
+"edit_training_min" = "мин";
+
+// Calibration
+"calibration_not_ready_error_title" = "Калибровка не доступна";
+"calibration_not_ready_error_general_message" = "Не достигнуты все условия для калибровки";
+"calibration_not_ready_error_no_initial_readings" = "Недостаточно показаний для первичной калибровки";

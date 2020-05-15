@@ -80,6 +80,9 @@ final class RootInteractorTests: XCTestCase {
         
         func routeToInitialSetup() {
         }
+        
+        func showCalibrationError(title: String, message: String) {
+        }
     }
     
     // MARK: Tests
