@@ -42,7 +42,7 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
     
     private var viewModel: BaseSettings.ViewModel?
     private let cellFactory = BaseSettingsCellFactory()
-    var expandedCells: [IndexPath] = []
+    var expandedCell: IndexPath? = nil
     
     required init() {
         super.init(nibName: nil, bundle: nil)
@@ -138,7 +138,7 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
             return cellFactory.createCell(
                 ofType: cells[indexPath.row],
                 indexPath: indexPath,
-                expandedCells: expandedCells
+                expandedCell: expandedCell
             )
             
         case let .singleSelection(cells, selectedIndex, _, _, _):

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ExpandableTableContainer: UIViewController {
-    var expandedCells: [IndexPath] { get set }
+    var expandedCell: IndexPath? { get set }
     func toggleExpansion(indexPath: IndexPath, tableView: UITableView)
 }
 
@@ -20,12 +20,14 @@ extension ExpandableTableContainer {
         
         cell?.togglePickerVisivility()
         
-        if expandedCells.contains(indexPath) {
-            if let index = expandedCells.firstIndex(of: indexPath) {
-                expandedCells.remove(at: index)
-            }
+        if expandedCell == indexPath {
+            expandedCell = nil
         } else {
-            expandedCells.append(indexPath)
+            if let expandedIndexPath = expandedCell {
+                let cell = tableView.cellForRow(at: expandedIndexPath) as? PickerExpandableTableViewCell
+                cell?.togglePickerVisivility()
+            }
+            expandedCell = indexPath
         }
         
         tableView.deselectRow(at: indexPath, animated: true)

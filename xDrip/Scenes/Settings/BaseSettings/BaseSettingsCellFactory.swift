@@ -11,7 +11,7 @@ import UIKit
 final class BaseSettingsCellFactory {
     weak var tableView: UITableView?
     
-    func createCell(ofType type: BaseSettings.Cell, indexPath: IndexPath, expandedCells: [IndexPath]) -> UITableViewCell {
+    func createCell(ofType type: BaseSettings.Cell, indexPath: IndexPath, expandedCell: IndexPath?) -> UITableViewCell {
         guard let tableView = tableView else { fatalError() }
         
         switch type {
@@ -43,7 +43,7 @@ final class BaseSettingsCellFactory {
         case let .pickerExpandable(mainText, detailText, picker):
             let cell = tableView.dequeueReusableCell(ofType: PickerExpandableTableViewCell.self, for: indexPath)
             
-            cell.configure(mainText: mainText, detailText: detailText, pickerView: picker, isExpanded: expandedCells.contains(indexPath))
+            cell.configure(mainText: mainText, detailText: detailText, pickerView: picker, isExpanded: expandedCell == indexPath)
             
             return cell
         }
