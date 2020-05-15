@@ -30,31 +30,31 @@ final class BaseSettingsCellFactoryTests: XCTestCase {
     func testCreateCell() {
         // When
         let disclosure = BaseSettings.Cell.disclosure(mainText: "", detailText: nil, selectionHandler: {})
-        let disclosureCell = sut.createCell(ofType: disclosure, indexPath: IndexPath(row: 0, section: 0), expandedCells: [])
+        let disclosureCell = sut.createCell(ofType: disclosure, indexPath: IndexPath(row: 0, section: 0), expandedCell: nil)
         // Then
         XCTAssertTrue(disclosureCell is BaseSettingsDisclosureCell)
         
         // When
         let textInput = BaseSettings.Cell.textInput(mainText: "", detailText: nil, placeholder: nil, textChangedHandler: { _ in })
-        let textInputCell = sut.createCell(ofType: textInput, indexPath: IndexPath(row: 0, section: 0), expandedCells: [])
+        let textInputCell = sut.createCell(ofType: textInput, indexPath: IndexPath(row: 0, section: 0), expandedCell: nil)
         // Then
         XCTAssertTrue(textInputCell is BaseSettingsTextInputTableViewCell)
         
         // When
         let rightSwitch = BaseSettings.Cell.rightSwitch(text: "", isSwitchOn: true, switchHandler: { _ in })
-        let rightSwitchCell = sut.createCell(ofType: rightSwitch, indexPath: IndexPath(row: 0, section: 0), expandedCells: [])
+        let rightSwitchCell = sut.createCell(ofType: rightSwitch, indexPath: IndexPath(row: 0, section: 0), expandedCell: nil)
         // Then
         XCTAssertTrue(rightSwitchCell is BaseSettingsRightSwitchTableViewCell)
         
         // When
         let volumeSlider = BaseSettings.Cell.volumeSlider(value: 0.0, changeHandler: { _ in })
-        let volumeSliderCell = sut.createCell(ofType: volumeSlider, indexPath: IndexPath(row: 0, section: 0), expandedCells: [])
+        let volumeSliderCell = sut.createCell(ofType: volumeSlider, indexPath: IndexPath(row: 0, section: 0), expandedCell: nil)
         // Then
         XCTAssertTrue(volumeSliderCell is BaseSettingsVolumeSliderTableViewCell)
         
         // When
         let pickerExpandable = BaseSettings.Cell.pickerExpandable(mainText: "", detailText: nil, picker: CustomDatePicker())
-        let pickerExpandableCell = sut.createCell(ofType: pickerExpandable, indexPath: IndexPath(row: 0, section: 0), expandedCells: [])
+        let pickerExpandableCell = sut.createCell(ofType: pickerExpandable, indexPath: IndexPath(row: 0, section: 0), expandedCell: nil)
         // Then
         XCTAssertTrue(pickerExpandableCell is PickerExpandableTableViewCell)
         
