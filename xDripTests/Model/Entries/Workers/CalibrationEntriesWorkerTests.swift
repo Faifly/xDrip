@@ -15,9 +15,9 @@ final class CalibrationEntriesWorkerTests: AbstractRealmTest {
         
         let date = Date(timeIntervalSince1970: 7.0)
         let entry = CalibrationEntriesWorker.addCalibrationEntry(firstValue: 1.1, secondValue: 2.2, date: date)
-        XCTAssertTrue(abs(entry.firstValue - 1.1) <= .ulpOfOne)
-        XCTAssertTrue(abs(entry.secondValue - 2.2) <= .ulpOfOne)
-        XCTAssertTrue(abs(entry.date!.timeIntervalSince1970.rounded() - 7.0) <= .ulpOfOne)
+        XCTAssertTrue(entry.firstValue ~ 1.1)
+        XCTAssertTrue(entry.secondValue ~ 2.2)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~ 7.0)
         
         XCTAssertTrue(realm.objects(CalibrationEntry.self).count == 1)
     }
@@ -35,7 +35,7 @@ final class CalibrationEntriesWorkerTests: AbstractRealmTest {
         
         let entries = CalibrationEntriesWorker.fetchAllEntries()
         XCTAssertTrue(entries.count == 10)
-        XCTAssertTrue(abs(entries[0].firstValue - 10.0) <= .ulpOfOne)
-        XCTAssertTrue(abs(entries[9].firstValue - 1.0) <= .ulpOfOne)
+        XCTAssertTrue(entries[0].firstValue ~ 10.0)
+        XCTAssertTrue(entries[9].firstValue ~ 1.0)
     }
 }

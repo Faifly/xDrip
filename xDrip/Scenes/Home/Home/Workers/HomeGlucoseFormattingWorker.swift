@@ -19,17 +19,17 @@ fileprivate struct HomeGlucoseEntry: GlucoseChartGlucoseEntry {
 }
 
 protocol HomeGlucoseFormattingWorkerProtocol {
-    func formatEntries(_ entries: [GlucoseData]) -> [GlucoseChartGlucoseEntry]
+    func formatEntries(_ entries: [GlucoseReading]) -> [GlucoseChartGlucoseEntry]
 }
 
 final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
-    func formatEntries(_ entries: [GlucoseData]) -> [GlucoseChartGlucoseEntry] {
+    func formatEntries(_ entries: [GlucoseReading]) -> [GlucoseChartGlucoseEntry] {
         let settings = User.current.settings
         return entries.map {
             HomeGlucoseEntry(
-                value: GlucoseUnit.convertToUserDefined($0.value),
+                value: GlucoseUnit.convertToUserDefined($0.filteredCalculatedValue),
                 date: $0.date ?? Date(),
-                severity: GlucoseChartSeverityLevel(warningLevel: settings?.warningLevel(forValue: $0.value))
+                severity: GlucoseChartSeverityLevel(warningLevel: settings?.warningLevel(forValue: $0.filteredCalculatedValue))
             )
         }
     }

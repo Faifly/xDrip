@@ -41,18 +41,6 @@ final class User: Object {
     // MARK: Settings
     @objc private(set) dynamic var settings: Settings!
     
-    // MARK: Glucose data
-    
-    let glucoseData = List<GlucoseData>()
-    
-    @discardableResult func addGlucoseDataEntry(_ value: Double, date: Date = Date()) -> GlucoseData {
-        let entry = GlucoseData(value: value, date: date)
-        Realm.shared.safeWrite {
-            glucoseData.append(entry)
-        }
-        return entry
-    }
-    
     // MARK: Initial setup
     
     @objc private(set) dynamic var isInitialSetupDone = false

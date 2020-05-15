@@ -15,9 +15,9 @@ final class TrainingEntriesWorkerTests: AbstractRealmTest {
         
         let date = Date(timeIntervalSince1970: 7.0)
         let entry = TrainingEntriesWorker.addTraining(duration: 1.1, intensity: .high, date: date)
-        XCTAssertTrue(abs(entry.duration - 1.1) <= .ulpOfOne)
+        XCTAssertTrue(entry.duration ~ 1.1)
         XCTAssertTrue(entry.intensity == .high)
-        XCTAssertTrue(abs(entry.date!.timeIntervalSince1970.rounded() - 7.0) <= .ulpOfOne)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 7.0)
         
         XCTAssertTrue(realm.objects(TrainingEntry.self).count == 1)
     }
@@ -35,7 +35,7 @@ final class TrainingEntriesWorkerTests: AbstractRealmTest {
         
         let entries = TrainingEntriesWorker.fetchAllTrainings()
         XCTAssertTrue(entries.count == 10)
-        XCTAssertTrue(abs(entries[0].duration - 10.0) <= .ulpOfOne)
-        XCTAssertTrue(abs(entries[9].duration - 1.0) <= .ulpOfOne)
+        XCTAssertTrue(entries[0].duration ~ 10.0)
+        XCTAssertTrue(entries[9].duration ~ 1.0)
     }
 }

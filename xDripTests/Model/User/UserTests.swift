@@ -23,23 +23,4 @@ final class UserTests: AbstractRealmTest {
         user = User.current
         XCTAssertTrue(realm.objects(User.self).count == 1)
     }
-    
-    func testGlucoseData() {
-        let user = User.current
-        XCTAssertTrue(user.glucoseData.count == 0)
-        
-        let now = Date().timeIntervalSince1970
-        user.addGlucoseDataEntry(1.1)
-        
-        XCTAssertTrue(user.glucoseData.count == 1)
-        XCTAssertTrue(abs(user.glucoseData[0].value - 1.1) <= .ulpOfOne)
-        XCTAssertTrue(abs(user.glucoseData[0].date!.timeIntervalSince1970.rounded() - now.rounded()) <= .ulpOfOne)
-        
-        let past = Date(timeIntervalSince1970: 6.0)
-        user.addGlucoseDataEntry(2.2, date: past)
-        
-        XCTAssertTrue(user.glucoseData.count == 2)
-        XCTAssertTrue(abs(user.glucoseData[1].value - 2.2) <= .ulpOfOne)
-        XCTAssertTrue(abs(user.glucoseData[1].date!.timeIntervalSince1970 - 6.0) <= .ulpOfOne)
-    }
 }

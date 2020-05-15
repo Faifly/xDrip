@@ -16,12 +16,12 @@ final class AbstractEntryTests: XCTestCase {
         
         let date = Date(timeIntervalSince1970: 22.0)
         entry.updateDate(date)
-        XCTAssertTrue(abs(entry.date!.timeIntervalSince1970.rounded() - 22.0) <= .ulpOfOne)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 22.0)
     }
     
     func testInit() {
         let date = Date(timeIntervalSince1970: 9.0)
         let entry = AbstractEntry(date: date)
-        XCTAssertTrue(abs(entry.date!.timeIntervalSince1970.rounded() - 9.0) <= .ulpOfOne)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 9.0)
     }
 }

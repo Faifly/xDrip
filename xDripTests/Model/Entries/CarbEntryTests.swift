@@ -14,10 +14,10 @@ final class CarbEntryTests: AbstractRealmTest {
         let date = Date(timeIntervalSince1970: 5.0)
         let entry = CarbEntry(amount: 1.1, foodType: "2.2", assimilationDuration: 3.3, date: date)
         
-        XCTAssertTrue(abs(entry.amount - 1.1) <= .ulpOfOne)
+        XCTAssertTrue(entry.amount ~ 1.1)
         XCTAssertTrue(entry.foodType == "2.2")
-        XCTAssertTrue(abs(entry.assimilationDuration - 3.3) <= .ulpOfOne)
-        XCTAssertTrue(abs(entry.date!.timeIntervalSince1970.rounded() - 5.0) <= .ulpOfOne)
+        XCTAssertTrue(entry.assimilationDuration ~ 3.3)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 5.0)
     }
     
     func testUpdate() {
@@ -25,9 +25,9 @@ final class CarbEntryTests: AbstractRealmTest {
         let entry = CarbEntry(amount: 1.1, foodType: "1.1", assimilationDuration: 1.1, date: Date())
         entry.update(amount: 2.2, foodType: "2.2", assimilationDuration: 4.4, date: date)
         
-        XCTAssertTrue(abs(entry.amount - 2.2) <= .ulpOfOne)
+        XCTAssertTrue(entry.amount ~ 2.2)
         XCTAssertTrue(entry.foodType == "2.2")
-        XCTAssertTrue(abs(entry.assimilationDuration - 4.4) <= .ulpOfOne)
-        XCTAssertTrue(abs(entry.date!.timeIntervalSince1970.rounded() - 6.0) <= .ulpOfOne)
+        XCTAssertTrue(entry.assimilationDuration ~ 4.4)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 6.0)
     }
 }

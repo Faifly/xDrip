@@ -99,7 +99,10 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
             type: .debug,
             message.status, message.filtered, message.unfiltered
         )
-        delegate?.serviceDidReceiveGlucoseReading(raw: message.unfiltered, filtered: message.filtered)
+        delegate?.serviceDidReceiveGlucoseReading(
+            raw: message.unfiltered * 34.0,
+            filtered: message.filtered * 34.0
+        )
     }
     
     func workerDidReceiveTransmitterInfo(_ message: DexcomG6TransmitterVersionRxMessage) {
