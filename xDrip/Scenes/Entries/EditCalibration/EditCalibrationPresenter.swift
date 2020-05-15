@@ -22,7 +22,7 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: EditCalibration.Load.Response) {
-        let viewModel = EditCalibration.Load.ViewModel()
+        let viewModel = EditCalibration.Load.ViewModel(displaySecondEntrySet: !response.hasInitialCalibrations)
         viewController?.displayLoad(viewModel: viewModel)
     }
 }

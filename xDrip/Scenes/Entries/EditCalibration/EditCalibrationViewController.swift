@@ -49,11 +49,33 @@ class EditCalibrationViewController: NibViewController, EditCalibrationDisplayLo
     
     // MARK: IB
     
+    @IBOutlet private weak var glucoseLevel1TextField: UITextField!
+    @IBOutlet private weak var glucoseLevel2TextField: UITextField!
+    @IBOutlet private weak var datePicker1: UIDatePicker!
+    @IBOutlet private weak var datePicker2: UIDatePicker!
+    @IBOutlet private weak var entry2Label: UILabel!
+    
+    @IBAction private func onSaveButtonTap() {
+        let request = EditCalibration.Save.Request(
+            entry1: glucoseLevel1TextField.text,
+            entry2: glucoseLevel2TextField.text,
+            date1: datePicker1.date,
+            date2: datePicker2.date
+        )
+        interactor?.doSave(request: request)
+    }
+    
+    @objc private func onCancelButtonTap() {
+        let request = EditCalibration.Dismiss.Request()
+        interactor?.doDismiss(request: request)
+    }
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
+        setupNavigationItems()
     }
     
     // MARK: Do something
@@ -63,9 +85,22 @@ class EditCalibrationViewController: NibViewController, EditCalibrationDisplayLo
         interactor?.doLoad(request: request)
     }
     
+    private func setupNavigationItems() {
+        let cancelButton = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(onCancelButtonTap)
+        )
+        navigationItem.leftBarButtonItem = cancelButton
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: EditCalibration.Load.ViewModel) {
-        
+        if !viewModel.displaySecondEntrySet {
+            entry2Label.isHidden = true
+            datePicker2.isHidden = true
+            glucoseLevel2TextField.isHidden = true
+        }
     }
 }

@@ -14,6 +14,8 @@ import UIKit
 
 protocol EditCalibrationBusinessLogic {
     func doLoad(request: EditCalibration.Load.Request)
+    func doSave(request: EditCalibration.Save.Request)
+    func doDismiss(request: EditCalibration.Dismiss.Request)
 }
 
 protocol EditCalibrationDataStore {
@@ -24,10 +26,38 @@ final class EditCalibrationInteractor: EditCalibrationBusinessLogic, EditCalibra
     var presenter: EditCalibrationPresentationLogic?
     var router: EditCalibrationRoutingLogic?
     
+    private let statusWorker: EditCalibrationStatusWorkerLogic
+    private let savingWorker: EditCalibrationSavingWorkerLogic
+    
+    init() {
+        statusWorker = EditCalibrationStatusWorker()
+        savingWorker = EditCalibrationSavingWorker()
+    }
+    
     // MARK: Do something
     
     func doLoad(request: EditCalibration.Load.Request) {
-        let response = EditCalibration.Load.Response()
+        let response = EditCalibration.Load.Response(hasInitialCalibrations: statusWorker.hasInitialCalibrations)
         presenter?.presentLoad(response: response)
+    }
+    
+    func doDismiss(request: EditCalibration.Dismiss.Request) {
+        router?.dismissScene()
+    }
+    
+    func doSave(request: EditCalibration.Save.Request) {
+        do {
+            try savingWorker.saveInput(
+                entry1: request.entry1,
+                entry2: request.entry2,
+                date1: request.date1,
+                date2: request.date2
+            )
+        } catch {
+            router?.showError(error.localizedDescription)
+            return
+        }
+        
+        router?.showSuccessAndDismiss()
     }
 }

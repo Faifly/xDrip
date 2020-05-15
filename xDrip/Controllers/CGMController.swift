@@ -26,7 +26,7 @@ final class CGMController {
     }
     
     // MARK: Glucose data
-    typealias GlucoseDataCallback = (GlucoseReading) -> Void
+    typealias GlucoseDataCallback = (GlucoseReading?) -> Void
     private var glucoseDataListeners: [AnyHashable: GlucoseDataCallback] = [:]
     
     func subscribeForGlucoseDataEvents(listener: AnyHashable, callback: @escaping GlucoseDataCallback) {
@@ -64,6 +64,10 @@ final class CGMController {
     
     func injectBluetoothService(_ service: CGMBluetoothService) {
         self.service = service
+    }
+    
+    func notifyGlucoseChange() {
+        glucoseDataListeners.values.forEach { $0(nil) }
     }
 }
 

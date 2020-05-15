@@ -142,6 +142,8 @@
 "edit_training_intensity_low" = "Low";
 "edit_training_intensity_normal" = "Normal";
 "edit_training_intensity_high" = "High";
+"edit_training_hours" = "hours";
+"edit_training_min" = "min";
 
 // Calibration
 "calibration_not_ready_error_title" = "Not ready for calibration";

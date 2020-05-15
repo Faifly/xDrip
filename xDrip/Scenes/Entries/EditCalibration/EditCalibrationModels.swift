@@ -15,9 +15,46 @@ import UIKit
 enum EditCalibration {
     // MARK: Models
     
+    enum ValidationError: LocalizedError {
+        case noReadingsNearCalibration
+        case noGlucose1Input
+        case invalidGlucose1Input
+        case noGlucose2Input
+        case invalidGlucose2Input
+        case sensorNotStarted
+    }
+    
     // MARK: Use cases
     
     enum Load {
+        struct Request {
+        }
+        
+        struct Response {
+            let hasInitialCalibrations: Bool
+        }
+        
+        struct ViewModel {
+            let displaySecondEntrySet: Bool
+        }
+    }
+    
+    enum Save {
+        struct Request {
+            let entry1: String?
+            let entry2: String?
+            let date1: Date
+            let date2: Date
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum Dismiss {
         struct Request {
         }
         

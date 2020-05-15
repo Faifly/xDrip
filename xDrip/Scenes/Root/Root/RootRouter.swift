@@ -35,7 +35,7 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
     // MARK: Routing
     
     func routeToCalibration() {
-        
+        presentViewController(EditCalibrationViewController())
     }
     
     func routeToStats() {

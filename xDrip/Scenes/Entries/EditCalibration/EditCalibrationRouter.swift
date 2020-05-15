@@ -13,7 +13,9 @@
 import UIKit
 
 @objc protocol EditCalibrationRoutingLogic {
-    
+    func dismissScene()
+    func showError(_ error: String)
+    func showSuccessAndDismiss()
 }
 
 protocol EditCalibrationDataPassing {
@@ -26,4 +28,29 @@ final class EditCalibrationRouter: NSObject, EditCalibrationRoutingLogic, EditCa
     
     // MARK: Routing
     
+    func dismissScene() {
+        viewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    func showError(_ error: String) {
+        // TODO: Localize
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        viewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showSuccessAndDismiss() {
+        // TODO: Localize
+        let alert = UIAlertController(
+            title: "Success",
+            message: "Your input was successfully saved!",
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(title: "OK", style: .cancel) { [weak self] _ in
+            self?.dismissScene()
+        }
+        alert.addAction(okAction)
+        viewController?.present(alert, animated: true, completion: nil)
+    }
 }

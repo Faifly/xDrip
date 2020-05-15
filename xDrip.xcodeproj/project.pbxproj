@@ -561,6 +561,8 @@
 		58F4CC87243BA2110053D17C /* DebugLogInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC82243BA2110053D17C /* DebugLogInteractor.swift */; };
 		58F4CC89243BA21D0053D17C /* DebugLogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58F4CC88243BA21D0053D17C /* DebugLogViewController.xib */; };
 		58F72D882441BFF4007AB093 /* ChartSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F72D872441BFF4007AB093 /* ChartSliderView.swift */; };
+		58F818EB246EFC82004CD2FE /* EditCalibrationStatusWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F818EA246EFC82004CD2FE /* EditCalibrationStatusWorker.swift */; };
+		58F818ED246EFE44004CD2FE /* EditCalibrationSavingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F818EC246EFE44004CD2FE /* EditCalibrationSavingWorker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1140,6 +1142,8 @@
 		58F4CC82243BA2110053D17C /* DebugLogInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogInteractor.swift; sourceTree = "<group>"; };
 		58F4CC88243BA21D0053D17C /* DebugLogViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugLogViewController.xib; sourceTree = "<group>"; };
 		58F72D872441BFF4007AB093 /* ChartSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartSliderView.swift; sourceTree = "<group>"; };
+		58F818EA246EFC82004CD2FE /* EditCalibrationStatusWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCalibrationStatusWorker.swift; sourceTree = "<group>"; };
+		58F818EC246EFE44004CD2FE /* EditCalibrationSavingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCalibrationSavingWorker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2430,6 +2434,7 @@
 		580EC7B62421520900C34948 /* EditCalibration */ = {
 			isa = PBXGroup;
 			children = (
+				58F818E9246EFC6D004CD2FE /* Workers */,
 				580EC7B72421521C00C34948 /* EditCalibrationPresenter.swift */,
 				580EC7B82421521C00C34948 /* EditCalibrationRouter.swift */,
 				580EC7B92421521C00C34948 /* EditCalibrationModels.swift */,
@@ -3175,6 +3180,15 @@
 			path = DebugLog;
 			sourceTree = "<group>";
 		};
+		58F818E9246EFC6D004CD2FE /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				58F818EA246EFC82004CD2FE /* EditCalibrationStatusWorker.swift */,
+				58F818EC246EFE44004CD2FE /* EditCalibrationSavingWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -3442,6 +3456,7 @@
 				584432AE243CFD9B00282A6C /* SettingsChartInteractor.swift in Sources */,
 				5805C9AE24389230002AFA1B /* DexcomG6TransmitterVersionRxMessage.swift in Sources */,
 				2CBE1A98243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift in Sources */,
+				58F818ED246EFE44004CD2FE /* EditCalibrationSavingWorker.swift in Sources */,
 				580E4BD1243F736D00565EDE /* SettingsModeFollowerViewController.swift in Sources */,
 				580E4C2C243F74F000565EDE /* SettingsUnitsModels.swift in Sources */,
 				5805C9AA24389230002AFA1B /* DexcomG6BatteryStatusRxMessage.swift in Sources */,
@@ -3652,6 +3667,7 @@
 				580E4B8C243F71DC00565EDE /* SettingsCloudTypesPresenter.swift in Sources */,
 				58B5FD52241910BD00DB857D /* SettingsRootPresenter.swift in Sources */,
 				580E4BD2243F736D00565EDE /* SettingsModeFollowerInteractor.swift in Sources */,
+				58F818EB246EFC82004CD2FE /* EditCalibrationStatusWorker.swift in Sources */,
 				580E4C1E243F74A300565EDE /* SettingsPumpUserRouter.swift in Sources */,
 				2CBE1A8B24320F94003BE14E /* EntriesListFormattingWorker.swift in Sources */,
 				580E4BB5243F725600565EDE /* NightscoutCloudBackfillModels.swift in Sources */,
