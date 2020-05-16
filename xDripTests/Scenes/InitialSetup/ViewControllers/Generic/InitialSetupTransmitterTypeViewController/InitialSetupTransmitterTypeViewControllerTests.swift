@@ -9,13 +9,12 @@
 import XCTest
 @testable import xDrip
 
-final class InitialSetupTransmitterTypeViewControllerTests: XCTestCase {
-    
+final class InitialSetupTransmitterTypeViewControllerTests: XCTestCase {    
     let sut = InitialSetupTransmitterTypeViewController()
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
         var calledSelectDeviceType = false
-        var deviceType: CGMDeviceType? = nil
+        var deviceType: CGMDeviceType?
         
         func doLoad(request: InitialSetup.Load.Request) { }
         func doBeginSetup(request: InitialSetup.BeginSetup.Request) { }

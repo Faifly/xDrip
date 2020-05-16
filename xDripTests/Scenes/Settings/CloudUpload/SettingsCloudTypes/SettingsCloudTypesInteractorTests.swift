@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class SettingsCloudTypesInteractorTests: XCTestCase {
     // MARK: Subject under test
     
@@ -45,8 +47,7 @@ final class SettingsCloudTypesInteractorTests: XCTestCase {
         }
     }
     
-    final class SettingsCloudTypesRoutingLogicSpy: SettingsCloudTypesRoutingLogic {
-        
+    final class SettingsCloudTypesRoutingLogicSpy: SettingsCloudTypesRoutingLogic {        
     }
     
     // MARK: Tests

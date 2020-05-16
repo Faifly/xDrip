@@ -12,18 +12,20 @@
 
 import UIKit
 
-@objc protocol NightscoutCloudConfigurationRoutingLogic {
-    
+protocol NightscoutCloudConfigurationRoutingLogic {
 }
 
 protocol NightscoutCloudConfigurationDataPassing {
     var dataStore: NightscoutCloudConfigurationDataStore? { get }
 }
 
-final class NightscoutCloudConfigurationRouter: NSObject, NightscoutCloudConfigurationRoutingLogic, NightscoutCloudConfigurationDataPassing {
+final class NightscoutCloudConfigurationRouter: NightscoutCloudConfigurationDataPassing {
     weak var viewController: NightscoutCloudConfigurationViewController?
-    var dataStore: NightscoutCloudConfigurationDataStore?
+    weak var dataStore: NightscoutCloudConfigurationDataStore?
     
     // MARK: Routing
     
+}
+
+extension NightscoutCloudConfigurationRouter: NightscoutCloudConfigurationRoutingLogic {
 }

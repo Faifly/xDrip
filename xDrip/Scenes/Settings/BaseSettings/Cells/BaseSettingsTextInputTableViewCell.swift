@@ -9,9 +9,8 @@
 import UIKit
 
 final class BaseSettingsTextInputTableViewCell: UITableViewCell {
-
-    @IBOutlet weak private var mainTextLabel: UILabel!
-    @IBOutlet weak private var textField: UITextField!
+    @IBOutlet private weak var mainTextLabel: UILabel!
+    @IBOutlet private weak var textField: UITextField!
     
     private var textChangeHandler: ((String?) -> Void)?
     

@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol SettingsUserTypeRootRoutingLogic {
-    
+protocol SettingsUserTypeRootRoutingLogic {
 }
 
 protocol SettingsUserTypeRootDataPassing {
     var dataStore: SettingsUserTypeRootDataStore? { get }
 }
 
-final class SettingsUserTypeRootRouter: NSObject, SettingsUserTypeRootRoutingLogic, SettingsUserTypeRootDataPassing {
+final class SettingsUserTypeRootRouter: SettingsUserTypeRootRoutingLogic, SettingsUserTypeRootDataPassing {
     weak var viewController: SettingsUserTypeRootViewController?
-    var dataStore: SettingsUserTypeRootDataStore?
+    weak var dataStore: SettingsUserTypeRootDataStore?
     
     // MARK: Routing
     

@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol SettingsAlertTypesRoutingLogic {
-    
+protocol SettingsAlertTypesRoutingLogic {
 }
 
 protocol SettingsAlertTypesDataPassing {
     var dataStore: SettingsAlertTypesDataStore? { get }
 }
 
-final class SettingsAlertTypesRouter: NSObject, SettingsAlertTypesRoutingLogic, SettingsAlertTypesDataPassing {
+final class SettingsAlertTypesRouter: SettingsAlertTypesRoutingLogic, SettingsAlertTypesDataPassing {
     weak var viewController: SettingsAlertTypesViewController?
-    var dataStore: SettingsAlertTypesDataStore?
+    weak var dataStore: SettingsAlertTypesDataStore?
     
     // MARK: Routing
     

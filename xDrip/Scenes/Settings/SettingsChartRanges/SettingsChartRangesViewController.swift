@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsChartRangesDisplayLogic: class {
+protocol SettingsChartRangesDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsChartRanges.Load.ViewModel)
 }
 
 class SettingsChartRangesViewController: NibViewController, SettingsChartRangesDisplayLogic {
     var interactor: SettingsChartRangesBusinessLogic?
+    var router: SettingsChartRangesDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsChartRangesViewController: NibViewController, SettingsChartRangesD
         let presenter = SettingsChartRangesPresenter()
         let router = SettingsChartRangesRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -64,6 +67,5 @@ class SettingsChartRangesViewController: NibViewController, SettingsChartRangesD
     // MARK: Display
     
     func displayLoad(viewModel: SettingsChartRanges.Load.ViewModel) {
-        
     }
 }

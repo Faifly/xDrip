@@ -12,13 +12,13 @@
 
 import UIKit
 
-protocol SettingsRootDisplayLogic: class {
+protocol SettingsRootDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsRoot.Load.ViewModel)
 }
 
 class SettingsRootViewController: BaseSettingsViewController, SettingsRootDisplayLogic {
     var interactor: SettingsRootBusinessLogic?
-    var router: (NSObjectProtocol & SettingsRootRoutingLogic & SettingsRootDataPassing)?
+    var router: SettingsRootDataPassing?
     
     // MARK: Object lifecycle
     
@@ -27,6 +27,7 @@ class SettingsRootViewController: BaseSettingsViewController, SettingsRootDispla
         setup()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Use regular init")
     }

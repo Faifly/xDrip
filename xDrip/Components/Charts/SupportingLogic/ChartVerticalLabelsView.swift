@@ -41,6 +41,7 @@ final class ChartVerticalLabelsView: UIView {
         isOpaque = false
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) is not permitted")
     }

@@ -26,7 +26,7 @@ final class CalibrationService: CalibrationServiceInterface {
     func isReadyForCalibration() -> (Bool, CalibrationError?) {
         let all = Calibration.allForCurrentSensor
         
-        if all.count == 0 {
+        if all.isEmpty {
             let readings = GlucoseReading.allForCurrentSensor
             if readings.count < 2 {
                 return (false, .noInitialReadings)

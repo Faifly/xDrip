@@ -10,7 +10,6 @@ import XCTest
 @testable import xDrip
 
 final class Settings_Notifications_Tests: XCTestCase {
-    
     var notificationHandlerCalled = false
     
     override func setUp() {

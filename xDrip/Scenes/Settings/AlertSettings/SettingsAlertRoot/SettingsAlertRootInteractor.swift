@@ -16,8 +16,7 @@ protocol SettingsAlertRootBusinessLogic {
     func doLoad(request: SettingsAlertRoot.Load.Request)
 }
 
-protocol SettingsAlertRootDataStore {
-    
+protocol SettingsAlertRootDataStore: AnyObject {
 }
 
 final class SettingsAlertRootInteractor: SettingsAlertRootBusinessLogic, SettingsAlertRootDataStore {

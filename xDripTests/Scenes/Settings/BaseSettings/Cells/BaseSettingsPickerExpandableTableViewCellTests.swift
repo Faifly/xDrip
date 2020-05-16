@@ -10,7 +10,6 @@ import XCTest
 @testable import xDrip
 
 final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
-
     let tableView = UITableView()
     
     override func setUp() {
@@ -20,7 +19,10 @@ final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
     }
     
     func testConfigure() {
-        let sut = tableView.dequeueReusableCell(ofType: BaseSettingsPickerExpandableTableViewCell.self, for: IndexPath(row: 0, section: 0))
+        let sut = tableView.dequeueReusableCell(
+            ofType: BaseSettingsPickerExpandableTableViewCell.self,
+            for: IndexPath(row: 0, section: 0)
+        )
         
         var date = Date()
         let picker = CustomDatePicker()
@@ -53,7 +55,10 @@ final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
     }
     
     func testTooglePicker() {
-        let sut = tableView.dequeueReusableCell(ofType: BaseSettingsPickerExpandableTableViewCell.self, for: IndexPath(row: 0, section: 0))
+        let sut = tableView.dequeueReusableCell(
+            ofType: BaseSettingsPickerExpandableTableViewCell.self,
+            for: IndexPath(row: 0, section: 0)
+        )
         let picker = CustomDatePicker()
         
         sut.configure(mainText: "", detailText: "", pickerView: picker)

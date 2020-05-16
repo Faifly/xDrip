@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class HistoryRootViewControllerTests: XCTestCase {
     // MARK: Subject under test
     
@@ -89,8 +91,12 @@ final class HistoryRootViewControllerTests: XCTestCase {
         sut.interactor = spy
         loadView()
         
-        let target = sut.navigationItem.leftBarButtonItem!.target!
-        let action = sut.navigationItem.leftBarButtonItem!.action!
+        guard let target = sut.navigationItem.leftBarButtonItem?.target else {
+            fatalError()
+        }
+        guard let action = sut.navigationItem.leftBarButtonItem?.action else {
+            fatalError()
+        }
         
         // When
         _ = target.perform(action)

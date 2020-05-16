@@ -10,7 +10,6 @@ import XCTest
 @testable import xDrip
 
 final class InitialSetupGenericStepWorkerTests: XCTestCase {
-    
     let sut = InitialSetupGenericStepWorker()
     
     func testCompleteStepForMain() {

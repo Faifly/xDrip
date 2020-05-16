@@ -16,8 +16,7 @@ protocol DebugLogBusinessLogic {
     func doLoad(request: DebugLog.Load.Request)
 }
 
-protocol DebugLogDataStore {
-    
+protocol DebugLogDataStore: AnyObject {    
 }
 
 final class DebugLogInteractor: DebugLogBusinessLogic, DebugLogDataStore {

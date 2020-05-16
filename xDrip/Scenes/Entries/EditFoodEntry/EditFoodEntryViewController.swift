@@ -12,16 +12,17 @@
 
 import UIKit
 
-protocol EditFoodEntryDisplayLogic: class {
+protocol EditFoodEntryDisplayLogic: AnyObject {
     func displayLoad(viewModel: EditFoodEntry.Load.ViewModel)
 }
 
 class EditFoodEntryViewController: NibViewController, EditFoodEntryDisplayLogic {
     var interactor: EditFoodEntryBusinessLogic?
-    var router: (NSObjectProtocol & EditFoodEntryRoutingLogic & EditFoodEntryDataPassing)?
+    var router: EditFoodEntryDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -66,6 +67,5 @@ class EditFoodEntryViewController: NibViewController, EditFoodEntryDisplayLogic 
     // MARK: Display
     
     func displayLoad(viewModel: EditFoodEntry.Load.ViewModel) {
-        
     }
 }

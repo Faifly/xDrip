@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class EditCalibrationInteractorTests: XCTestCase {
     // MARK: Subject under test
     
@@ -46,7 +48,14 @@ final class EditCalibrationInteractorTests: XCTestCase {
     }
     
     final class EditCalibrationRoutingLogicSpy: EditCalibrationRoutingLogic {
+        func dismissScene() {
+        }
         
+        func showError(_ error: String) {
+        }
+        
+        func showSuccessAndDismiss() {
+        }
     }
     
     // MARK: Tests

@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol SettingsPumpUserRoutingLogic {
-    
+protocol SettingsPumpUserRoutingLogic {
 }
 
 protocol SettingsPumpUserDataPassing {
     var dataStore: SettingsPumpUserDataStore? { get }
 }
 
-final class SettingsPumpUserRouter: NSObject, SettingsPumpUserRoutingLogic, SettingsPumpUserDataPassing {
+final class SettingsPumpUserRouter: SettingsPumpUserRoutingLogic, SettingsPumpUserDataPassing {
     weak var viewController: SettingsPumpUserViewController?
-    var dataStore: SettingsPumpUserDataStore?
+    weak var dataStore: SettingsPumpUserDataStore?
     
     // MARK: Routing
     

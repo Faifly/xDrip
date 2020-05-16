@@ -10,7 +10,6 @@ import XCTest
 @testable import xDrip
 
 final class BaseSettingsTextInputTableViewCellTests: XCTestCase {
-
     let tableView = UITableView()
     
     override func setUp() {
@@ -20,7 +19,10 @@ final class BaseSettingsTextInputTableViewCellTests: XCTestCase {
     }
     
     func testConfigure() {
-        let sut = tableView.dequeueReusableCell(ofType: BaseSettingsTextInputTableViewCell.self, for: IndexPath(row: 0, section: 0))
+        let sut = tableView.dequeueReusableCell(
+            ofType: BaseSettingsTextInputTableViewCell.self,
+            for: IndexPath(row: 0, section: 0)
+        )
         
         var string = ""
         var textChangeHandlerCalled = false

@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol SettingsCloudTypesRoutingLogic {
-    
+protocol SettingsCloudTypesRoutingLogic {
 }
 
 protocol SettingsCloudTypesDataPassing {
     var dataStore: SettingsCloudTypesDataStore? { get }
 }
 
-final class SettingsCloudTypesRouter: NSObject, SettingsCloudTypesRoutingLogic, SettingsCloudTypesDataPassing {
+final class SettingsCloudTypesRouter: SettingsCloudTypesRoutingLogic, SettingsCloudTypesDataPassing {
     weak var viewController: SettingsCloudTypesViewController?
-    var dataStore: SettingsCloudTypesDataStore?
+    weak var dataStore: SettingsCloudTypesDataStore?
     
     // MARK: Routing
     

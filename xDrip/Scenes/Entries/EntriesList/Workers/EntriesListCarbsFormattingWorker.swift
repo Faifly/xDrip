@@ -9,7 +9,6 @@
 import Foundation
 
 final class EntriesListCarbsFormattingWorker: EntriesListAbstractFormattingWorker, EntriesListFormattingWorker {
-    
     func formatEntries(_ entries: [AbstractEntry]) -> [EntriesListTableViewCell.ViewModel] {
         let cellViewModels = entries.compactMap { transformToViewModel($0 as? CarbEntry) }
         

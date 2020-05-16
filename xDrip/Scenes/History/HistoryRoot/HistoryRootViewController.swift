@@ -12,16 +12,17 @@
 
 import UIKit
 
-protocol HistoryRootDisplayLogic: class {
+protocol HistoryRootDisplayLogic: AnyObject {
     func displayLoad(viewModel: HistoryRoot.Load.ViewModel)
 }
 
 class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
     var interactor: HistoryRootBusinessLogic?
-    var router: (NSObjectProtocol & HistoryRootRoutingLogic & HistoryRootDataPassing)?
+    var router: HistoryRootDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -81,6 +82,5 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
     // MARK: Display
     
     func displayLoad(viewModel: HistoryRoot.Load.ViewModel) {
-        
     }
 }

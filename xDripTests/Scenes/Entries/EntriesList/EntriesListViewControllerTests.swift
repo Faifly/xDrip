@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class EntriesListViewControllerTests: XCTestCase {
     // MARK: Subject under test
     
@@ -179,8 +181,12 @@ final class EntriesListViewControllerTests: XCTestCase {
         sut.interactor = spy
         loadView()
         
-        let target = sut.navigationItem.leftBarButtonItem!.target!
-        let action = sut.navigationItem.leftBarButtonItem!.action!
+        guard let target = sut.navigationItem.leftBarButtonItem?.target else {
+            fatalError()
+        }
+        guard let action = sut.navigationItem.leftBarButtonItem?.action else {
+            fatalError()
+        }
         
         // When
         _ = target.perform(action)
@@ -194,13 +200,13 @@ final class EntriesListViewControllerTests: XCTestCase {
     func generateDummyData(sectionCount: Int = 1, rowCount: Int = 20) -> [EntriesList.SectionViewModel] {
         var data = [EntriesList.SectionViewModel]()
         
-         for i in 0 ..< sectionCount {
-             let title = "title\(i)"
+         for index in 0 ..< sectionCount {
+             let title = "title\(index)"
              var cellViewModels = [EntriesListTableViewCell.ViewModel]()
              
-             for j in 0 ..< rowCount {
-                 let value = "value\(j)"
-                 let date = "date\(j)"
+             for jIndex in 0 ..< rowCount {
+                 let value = "value\(jIndex)"
+                 let date = "date\(jIndex)"
                  
                  let viewModel = EntriesListTableViewCell.ViewModel(value: value, date: date)
                  cellViewModels.append(viewModel)

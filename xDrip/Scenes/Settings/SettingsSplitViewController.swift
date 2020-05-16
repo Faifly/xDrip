@@ -9,7 +9,6 @@
 import UIKit
 
 final class SettingsSplitViewController: UISplitViewController, UISplitViewControllerDelegate {
-
     required init() {
         super.init(nibName: nil, bundle: nil)
     }

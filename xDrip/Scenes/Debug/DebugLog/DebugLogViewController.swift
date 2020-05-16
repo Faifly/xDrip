@@ -12,16 +12,18 @@
 
 import UIKit
 
-protocol DebugLogDisplayLogic: class {
+protocol DebugLogDisplayLogic: AnyObject {
     func displayLoad(viewModel: DebugLog.Load.ViewModel)
     func displayLogs(viewModel: DebugLog.UpdateLog.ViewModel)
 }
 
 class DebugLogViewController: NibViewController, DebugLogDisplayLogic {
     var interactor: DebugLogBusinessLogic?
+    var router: DebugLogDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -39,6 +41,7 @@ class DebugLogViewController: NibViewController, DebugLogDisplayLogic {
         let presenter = DebugLogPresenter()
         let router = DebugLogRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -66,8 +69,7 @@ class DebugLogViewController: NibViewController, DebugLogDisplayLogic {
     
     // MARK: Display
     
-    func displayLoad(viewModel: DebugLog.Load.ViewModel) {
-        
+    func displayLoad(viewModel: DebugLog.Load.ViewModel) {        
     }
     
     func displayLogs(viewModel: DebugLog.UpdateLog.ViewModel) {

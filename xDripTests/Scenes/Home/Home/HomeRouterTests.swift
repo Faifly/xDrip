@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class HomeRouterTests: XCTestCase {
     // MARK: Subject under test
     
@@ -30,7 +32,9 @@ final class HomeRouterTests: XCTestCase {
     final class ViewControllerSpy: HomeViewController {
         var lastPresentedViewController: UIViewController?
         
-        override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        override func present(_ viewControllerToPresent: UIViewController,
+                              animated flag: Bool,
+                              completion: (() -> Void)? = nil) {
             lastPresentedViewController = viewControllerToPresent
         }
     }
@@ -46,8 +50,8 @@ final class HomeRouterTests: XCTestCase {
         sut.routeToBolusEntriesList()
         
         // Then
-        let entriesListNavController = spy.lastPresentedViewController as! UINavigationController
-        XCTAssert(entriesListNavController.viewControllers[0] is EntriesListViewController)
+        let entriesListNavController = spy.lastPresentedViewController as? UINavigationController
+        XCTAssert(entriesListNavController?.viewControllers[0] is EntriesListViewController)
     }
     
     func testRootToCarbsEntriesList() {
@@ -59,7 +63,7 @@ final class HomeRouterTests: XCTestCase {
         sut.routeToCarbsEntriesList()
         
         // Then
-        let entriesListNavController = spy.lastPresentedViewController as! UINavigationController
-        XCTAssert(entriesListNavController.viewControllers[0] is EntriesListViewController)
+        let entriesListNavController = spy.lastPresentedViewController as? UINavigationController
+        XCTAssert(entriesListNavController?.viewControllers[0] is EntriesListViewController)
     }
 }

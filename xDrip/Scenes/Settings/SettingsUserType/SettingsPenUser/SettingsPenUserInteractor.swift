@@ -16,8 +16,7 @@ protocol SettingsPenUserBusinessLogic {
     func doLoad(request: SettingsPenUser.Load.Request)
 }
 
-protocol SettingsPenUserDataStore {
-    
+protocol SettingsPenUserDataStore: AnyObject {
 }
 
 final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPenUserDataStore {

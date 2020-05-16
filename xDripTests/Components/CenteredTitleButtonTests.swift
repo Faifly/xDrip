@@ -18,17 +18,19 @@ final class CenteredTitleButtonTests: XCTestCase {
         XCTAssertTrue(button.frame.origin.y ~ 2.2)
         XCTAssertTrue(button.frame.size.width ~ 3.3)
         XCTAssertTrue(button.frame.size.height ~ 4.4)
-        XCTAssertTrue(button.titleLabel!.textAlignment == .center)
+        XCTAssertTrue(button.titleLabel?.textAlignment == .center)
     }
     
     func testInitWithCoder() {
         let archiver = NSKeyedArchiver(requiringSecureCoding: false)
         archiver.finishEncoding()
         let data = archiver.encodedData
-        let unarchiver = try! NSKeyedUnarchiver(forReadingFrom: data)
+        guard let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data) else {
+            fatalError()
+        }
         
-        let button = CenteredTitleButton(coder: unarchiver)!
-        XCTAssertTrue(button.titleLabel!.textAlignment == .center)
+        let button = CenteredTitleButton(coder: unarchiver)
+        XCTAssertTrue(button?.titleLabel?.textAlignment == .center)
     }
     
     func testTitleRect() {

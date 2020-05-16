@@ -9,8 +9,10 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable discouraged_optional_boolean
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
-    
     var sut: InitialSetupG6ConnectViewController!
     
     override func setUp() {
@@ -25,7 +27,7 @@ final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
         var calledCompleteSetup = false
-        var moreStepsExpected: Bool? = nil
+        var moreStepsExpected: Bool?
         
         func doLoad(request: InitialSetup.Load.Request) { }
         func doBeginSetup(request: InitialSetup.BeginSetup.Request) { }
@@ -44,7 +46,7 @@ final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
     private class InitialSetupDexcomG6ConnectionWorkerSpy: InitialSetupDexcomG6ConnectionWorkerProtocol {
         var calledStartConnectionProcess = false
         
-        var onSuccessfulConnection: ((InitialSetupG6ConnectViewController.ViewModel) -> ())?
+        var onSuccessfulConnection: ((InitialSetupG6ConnectViewController.ViewModel) -> Void)?
         
         func startConnectionProcess() {
             calledStartConnectionProcess = true

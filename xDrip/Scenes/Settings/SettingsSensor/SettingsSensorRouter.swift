@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol SettingsSensorRoutingLogic {
-    
+protocol SettingsSensorRoutingLogic {    
 }
 
 protocol SettingsSensorDataPassing {
     var dataStore: SettingsSensorDataStore? { get }
 }
 
-final class SettingsSensorRouter: NSObject, SettingsSensorRoutingLogic, SettingsSensorDataPassing {
+final class SettingsSensorRouter: SettingsSensorRoutingLogic, SettingsSensorDataPassing {
     weak var viewController: SettingsSensorViewController?
-    var dataStore: SettingsSensorDataStore?
+    weak var dataStore: SettingsSensorDataStore?
     
     // MARK: Routing
     

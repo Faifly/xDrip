@@ -9,8 +9,9 @@
 import XCTest
 @testable import xDrip
 
-class EntriesListTableControllerTests: XCTestCase {
+// swiftlint:disable implicitly_unwrapped_optional
 
+class EntriesListTableControllerTests: XCTestCase {
     var window: UIWindow!
     var viewController: EntriesListViewController!
     var tableView: UITableView!
@@ -46,7 +47,9 @@ class EntriesListTableControllerTests: XCTestCase {
             formattingWorker: EntriesListCarbsFormattingWorker()
         )
         
-        guard let tableView = viewController.view.subviews.first(where: { $0 is UITableView }) as? UITableView else { return }
+        guard let tableView = viewController.view.subviews.first(
+            where: { $0 is UITableView }
+        ) as? UITableView else { return }
         
         tableView.delegate = sut
         tableView.dataSource = sut
@@ -150,13 +153,13 @@ class EntriesListTableControllerTests: XCTestCase {
     func generateDummyData(sectionCount: Int = 1, rowCount: Int = 20) -> [EntriesList.SectionViewModel] {
         var data = [EntriesList.SectionViewModel]()
         
-         for i in 0 ..< sectionCount {
-             let title = "title\(i)"
+         for index in 0 ..< sectionCount {
+             let title = "title\(index)"
              var cellViewModels = [EntriesListTableViewCell.ViewModel]()
              
-             for j in 0 ..< rowCount {
-                 let value = "value\(j)"
-                 let date = "date\(j)"
+             for jIndex in 0 ..< rowCount {
+                 let value = "value\(jIndex)"
+                 let date = "date\(jIndex)"
                  
                  let viewModel = EntriesListTableViewCell.ViewModel(value: value, date: date)
                  cellViewModels.append(viewModel)

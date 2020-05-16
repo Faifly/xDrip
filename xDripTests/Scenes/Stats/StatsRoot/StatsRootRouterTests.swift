@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class StatsRootRouterTests: XCTestCase {
     // MARK: Subject under test
     

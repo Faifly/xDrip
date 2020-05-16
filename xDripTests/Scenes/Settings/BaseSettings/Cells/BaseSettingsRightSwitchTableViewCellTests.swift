@@ -10,7 +10,6 @@ import XCTest
 @testable import xDrip
 
 final class BaseSettingsRightSwitchTableViewCellTests: XCTestCase {
-
     let tableView = UITableView()
     
     override func setUp() {
@@ -20,7 +19,10 @@ final class BaseSettingsRightSwitchTableViewCellTests: XCTestCase {
     }
     
     func testConfigure() {
-        let sut = tableView.dequeueReusableCell(ofType: BaseSettingsRightSwitchTableViewCell.self, for: IndexPath(row: 0, section: 0))
+        let sut = tableView.dequeueReusableCell(
+            ofType: BaseSettingsRightSwitchTableViewCell.self,
+            for: IndexPath(row: 0, section: 0)
+        )
         var valueChangeHandlerCalled = false
         
         sut.configure(mainText: "switch", isSwitchOn: true)

@@ -9,8 +9,9 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class CustomPickerViewTests: XCTestCase {
-    
     var sut: CustomPickerView!
     var valueChangedHandlerCalled = false
     var formattedString = ""
@@ -42,7 +43,6 @@ final class CustomPickerViewTests: XCTestCase {
         // When
         sut.selectRow(1, inComponent: 1, animated: false)
         sut.pickerView(sut, didSelectRow: 1, inComponent: 1)
-        
         
         // Then
         XCTAssertTrue(valueChangedHandlerCalled)

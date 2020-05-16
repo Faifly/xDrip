@@ -12,7 +12,7 @@
 
 import UIKit
 
-@objc protocol HistoryRootRoutingLogic {
+protocol HistoryRootRoutingLogic {
     func dismissSelf()
 }
 
@@ -20,9 +20,9 @@ protocol HistoryRootDataPassing {
     var dataStore: HistoryRootDataStore? { get }
 }
 
-final class HistoryRootRouter: NSObject, HistoryRootRoutingLogic, HistoryRootDataPassing {
+final class HistoryRootRouter: HistoryRootRoutingLogic, HistoryRootDataPassing {
     weak var viewController: HistoryRootViewController?
-    var dataStore: HistoryRootDataStore?
+    weak var dataStore: HistoryRootDataStore?
     
     // MARK: Routing
     

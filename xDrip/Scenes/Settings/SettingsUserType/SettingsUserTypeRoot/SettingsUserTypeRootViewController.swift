@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsUserTypeRootDisplayLogic: class {
+protocol SettingsUserTypeRootDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsUserTypeRoot.Load.ViewModel)
 }
 
 class SettingsUserTypeRootViewController: NibViewController, SettingsUserTypeRootDisplayLogic {
     var interactor: SettingsUserTypeRootBusinessLogic?
+    var router: SettingsUserTypeRootDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsUserTypeRootViewController: NibViewController, SettingsUserTypeRoo
         let presenter = SettingsUserTypeRootPresenter()
         let router = SettingsUserTypeRootRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -64,6 +67,5 @@ class SettingsUserTypeRootViewController: NibViewController, SettingsUserTypeRoo
     // MARK: Display
     
     func displayLoad(viewModel: SettingsUserTypeRoot.Load.ViewModel) {
-        
     }
 }

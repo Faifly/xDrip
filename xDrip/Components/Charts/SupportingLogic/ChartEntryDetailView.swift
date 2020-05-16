@@ -41,6 +41,7 @@ final class ChartEntryDetailView: UIView {
         label.bindToSuperview(inset: labelInsets)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) is not permitted")
     }
@@ -57,7 +58,7 @@ final class ChartEntryDetailView: UIView {
             string: String(format: "%g", value),
             attributes: [
                 .font: UIFont.systemFont(ofSize: 26.0, weight: .medium),
-                .foregroundColor: UIColor.highEmphasisText,
+                .foregroundColor: UIColor.highEmphasisText
             ]
         )
         finalString.append(valueSubstring)

@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class InitialSetupInteractorTests: XCTestCase {
     // MARK: Subject under test
     
@@ -47,11 +49,9 @@ final class InitialSetupInteractorTests: XCTestCase {
     
     final class InitialSetupRoutingLogicSpy: InitialSetupRoutingLogic {
         func dismissScene() {
-            
         }
         
         func showNextScene(_ viewController: UIViewController) {
-            
         }
     }
     

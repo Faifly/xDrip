@@ -24,6 +24,7 @@ final class GlucoseChartView: BaseChartView, GlucoseChartProvider {
         backgroundColor = .background1
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) is not permitted")
     }

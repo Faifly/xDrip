@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsPumpUserDisplayLogic: class {
+protocol SettingsPumpUserDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsPumpUser.Load.ViewModel)
 }
 
 class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplayLogic {
     var interactor: SettingsPumpUserBusinessLogic?
+    var router: SettingsPumpUserDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplay
         let presenter = SettingsPumpUserPresenter()
         let router = SettingsPumpUserRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -64,6 +67,5 @@ class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplay
     // MARK: Display
     
     func displayLoad(viewModel: SettingsPumpUser.Load.ViewModel) {
-        
     }
 }

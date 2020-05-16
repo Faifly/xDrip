@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DexcomG6MessageWorkerDelegate: class {
+protocol DexcomG6MessageWorkerDelegate: AnyObject {
     func workerRequiresSendingOutgoingMessage(_ message: DexcomG6OutgoingMessage)
     func workerDidSuccessfullyAuthorize()
     func workerDidReceiveReading(_ message: DexcomG6SensorDataRxMessage)

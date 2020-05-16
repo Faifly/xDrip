@@ -9,8 +9,7 @@
 import XCTest
 @testable import xDrip
 
-final class InitialSetupDexcomG6ConnectionWorkerTests: XCTestCase {
-    
+final class InitialSetupDexcomG6ConnectionWorkerTests: XCTestCase {    
     let sut = InitialSetupDexcomG6ConnectionWorker()
     var calledSuccessfulConnectionHandler = false
     

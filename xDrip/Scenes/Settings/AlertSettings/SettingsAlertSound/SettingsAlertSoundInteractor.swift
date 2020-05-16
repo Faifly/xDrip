@@ -16,8 +16,7 @@ protocol SettingsAlertSoundBusinessLogic {
     func doLoad(request: SettingsAlertSound.Load.Request)
 }
 
-protocol SettingsAlertSoundDataStore {
-    
+protocol SettingsAlertSoundDataStore: AnyObject {
 }
 
 final class SettingsAlertSoundInteractor: SettingsAlertSoundBusinessLogic, SettingsAlertSoundDataStore {

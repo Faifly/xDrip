@@ -16,8 +16,7 @@ protocol EditTrainingBusinessLogic {
     func doLoad(request: EditTraining.Load.Request)
 }
 
-protocol EditTrainingDataStore {
-    
+protocol EditTrainingDataStore: AnyObject {
 }
 
 final class EditTrainingInteractor: EditTrainingBusinessLogic, EditTrainingDataStore {

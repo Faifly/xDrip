@@ -9,6 +9,8 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable force_unwrapping
+
 final class CarbEntryTests: AbstractRealmTest {
     func testInit() {
         let date = Date(timeIntervalSince1970: 5.0)

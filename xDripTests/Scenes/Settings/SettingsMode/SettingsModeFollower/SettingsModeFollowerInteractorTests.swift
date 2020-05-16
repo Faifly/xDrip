@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class SettingsModeFollowerInteractorTests: XCTestCase {
     // MARK: Subject under test
     
@@ -45,8 +47,7 @@ final class SettingsModeFollowerInteractorTests: XCTestCase {
         }
     }
     
-    final class SettingsModeFollowerRoutingLogicSpy: SettingsModeFollowerRoutingLogic {
-        
+    final class SettingsModeFollowerRoutingLogicSpy: SettingsModeFollowerRoutingLogic {        
     }
     
     // MARK: Tests

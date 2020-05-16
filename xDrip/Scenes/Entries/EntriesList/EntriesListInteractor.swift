@@ -19,8 +19,7 @@ protocol EntriesListBusinessLogic {
     func doShowSelectedEntry(request: EntriesList.ShowSelectedEntry.Request)
 }
 
-protocol EntriesListDataStore {
-    
+protocol EntriesListDataStore: AnyObject {
 }
 
 final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStore {

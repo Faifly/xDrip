@@ -9,6 +9,8 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable force_unwrapping
+
 final class AbstractEntryTests: XCTestCase {
     func testDate() {
         let entry = AbstractEntry()

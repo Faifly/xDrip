@@ -8,6 +8,8 @@
 
 import UIKit
 
+// swiftlint:disable discouraged_optional_collection
+
 @UIApplicationMain final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     

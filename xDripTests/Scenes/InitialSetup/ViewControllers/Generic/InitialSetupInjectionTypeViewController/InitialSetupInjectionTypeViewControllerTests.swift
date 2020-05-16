@@ -9,13 +9,12 @@
 import XCTest
 @testable import xDrip
 
-final class InitialSetupInjectionTypeViewControllerTests: XCTestCase {
-    
+final class InitialSetupInjectionTypeViewControllerTests: XCTestCase {    
     let sut = InitialSetupInjectionTypeViewController()
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
         var calledSelectInjectionType = false
-        var injectionType: UserInjectionType? = nil
+        var injectionType: UserInjectionType?
         
         func doLoad(request: InitialSetup.Load.Request) { }
         func doBeginSetup(request: InitialSetup.BeginSetup.Request) { }

@@ -9,6 +9,8 @@
 import Foundation
 import CommonCrypto
 
+// swiftlint:disable closure_body_length
+
 struct DexcomG6AuthChallengeTxMessage: DexcomG6OutgoingMessage {
     let data: Data
     
@@ -67,7 +69,8 @@ private extension Data {
                         self.count,
                         cryptBytes,
                         cryptLength,
-                        &numBytesEncrypted)
+                        &numBytesEncrypted
+                    )
                 }
             }
             return cryptStatus

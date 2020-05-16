@@ -12,17 +12,18 @@
 
 import UIKit
 
-protocol RootDisplayLogic: class {
+protocol RootDisplayLogic: AnyObject {
     func displayLoad(viewModel: Root.Load.ViewModel)
     func displayAddEntry(viewModel: Root.ShowAddEntryOptionsList.ViewModel)
 }
 
 class RootViewController: NibViewController, RootDisplayLogic {
     var interactor: RootBusinessLogic?
-    var router: (NSObjectProtocol & RootRoutingLogic & RootDataPassing)?
+    var router: RootDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -91,7 +92,7 @@ class RootViewController: NibViewController, RootDisplayLogic {
     func displayAddEntry(viewModel: Root.ShowAddEntryOptionsList.ViewModel) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let action: ((Int) -> ()) = { [weak self] entryIndex in
+        let action: ((Int) -> Void) = { [weak self] entryIndex in
             guard let self = self else { return }
             let request = Root.ShowAddEntry.Request(index: entryIndex)
             self.interactor?.doShowAddEntry(request: request)

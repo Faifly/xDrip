@@ -12,7 +12,7 @@
 
 import UIKit
 
-@objc protocol RootRoutingLogic {
+protocol RootRoutingLogic {
     func routeToCalibration()
     func routeToStats()
     func routeToHistory()
@@ -28,9 +28,9 @@ protocol RootDataPassing {
     var dataStore: RootDataStore? { get }
 }
 
-final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
+final class RootRouter: RootRoutingLogic, RootDataPassing {
     weak var viewController: RootViewController?
-    var dataStore: RootDataStore?
+    weak var dataStore: RootDataStore?
     
     // MARK: Routing
     
@@ -48,7 +48,9 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
     
     func routeToSettings() {
         let splitViewController = SettingsSplitViewController()
-        splitViewController.viewControllers = [SettingsRootViewController().embedInNavigation(), SettingsChartViewController().embedInNavigation()]
+        splitViewController.viewControllers = [
+            SettingsRootViewController().embedInNavigation(), SettingsChartViewController().embedInNavigation()
+        ]
         
         #if targetEnvironment(macCatalyst)
         splitViewController.modalPresentationStyle = .fullScreen
@@ -61,8 +63,7 @@ final class RootRouter: NSObject, RootRoutingLogic, RootDataPassing {
         viewController?.present(splitViewController, animated: true)
     }
     
-    func routeToAddEntry() {
-        
+    func routeToAddEntry() {        
     }
     
     func routeToInitialSetup() {

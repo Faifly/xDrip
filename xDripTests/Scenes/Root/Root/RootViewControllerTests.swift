@@ -14,6 +14,8 @@
 import XCTest
 import AKUtils
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class RootViewControllerTests: XCTestCase {
     // MARK: Subject under test
     
@@ -167,8 +169,8 @@ final class RootViewControllerTests: XCTestCase {
         loadView()
         
         var titles: [String] = []
-        for (i, _) in spy.entries.enumerated() {
-            titles.append(String(i))
+        for index in spy.entries.indices {
+            titles.append(String(index))
         }
         
         let viewModel = Root.ShowAddEntryOptionsList.ViewModel(titles: titles)
@@ -180,19 +182,21 @@ final class RootViewControllerTests: XCTestCase {
         }
         
         guard alertController.actions.count == titles.count + 1 else {
-            XCTFail("Expected actions count: \(titles.count), found: \(alertController.actions.count)") // +1 because of cancel action
+            XCTFail(
+                "Expected actions count: \(titles.count), found: \(alertController.actions.count)"
+            ) // +1 because of cancel action
             return
         }
         
-        for i in 0 ..< alertController.actions.count - 1 {
-            let action = alertController.actions[i]
+        for index in 0 ..< alertController.actions.count - 1 {
+            let action = alertController.actions[index]
             
-            XCTAssertTrue(action.title == titles[i])
+            XCTAssertTrue(action.title == titles[index])
             
             // When
             alertController.sendAction(action: action)
             // Then
-            XCTAssertTrue(spy.selectedEntryType == spy.entries[i])
+            XCTAssertTrue(spy.selectedEntryType == spy.entries[index])
         }
     }
     

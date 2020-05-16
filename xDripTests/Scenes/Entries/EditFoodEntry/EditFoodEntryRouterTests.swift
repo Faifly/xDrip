@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class EditFoodEntryRouterTests: XCTestCase {
     // MARK: Subject under test
     
@@ -26,11 +28,7 @@ final class EditFoodEntryRouterTests: XCTestCase {
     }
     
     private func createSpy() -> ViewControllerSpy {
-        let archiver = NSKeyedArchiver(requiringSecureCoding: false)
-        archiver.finishEncoding()
-        let data = archiver.encodedData
-        let unarchiver = try! NSKeyedUnarchiver(forReadingFrom: data)
-        return ViewControllerSpy(coder: unarchiver)!
+        ViewControllerSpy()
     }
     
     // MARK: Test doubles

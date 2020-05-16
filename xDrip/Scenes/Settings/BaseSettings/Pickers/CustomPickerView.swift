@@ -9,7 +9,6 @@
 import UIKit
 
 final class CustomPickerView: UIPickerView, BaseSettingsPickerView {
-    
     var onValueChanged: ((String?) -> Void)?
     var formatValues: (([String]) -> (String))?
     
@@ -24,6 +23,7 @@ final class CustomPickerView: UIPickerView, BaseSettingsPickerView {
         dataSource = self
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) is not permitted")
     }

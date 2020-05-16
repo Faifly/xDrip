@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol DebugLogRoutingLogic {
-    
+protocol DebugLogRoutingLogic {
 }
 
 protocol DebugLogDataPassing {
     var dataStore: DebugLogDataStore? { get }
 }
 
-final class DebugLogRouter: NSObject, DebugLogRoutingLogic, DebugLogDataPassing {
+final class DebugLogRouter: DebugLogRoutingLogic, DebugLogDataPassing {
     weak var viewController: DebugLogViewController?
-    var dataStore: DebugLogDataStore?
+    weak var dataStore: DebugLogDataStore?
     
     // MARK: Routing
     
