@@ -8,7 +8,6 @@
 
 import Foundation
 import RealmSwift
-import AKRealmUtils
 
 // swiftlint:disable implicitly_unwrapped_optional
 
