@@ -107,7 +107,7 @@ extension MockedBluetoothServiceConfiguration.Predefined {
         return MockedBluetoothServiceConfiguration(
             metadataReceiveDelay: 1.0,
             glucoseReadingsInterval: 60.0,
-            initialGlucose:1200.0,
+            initialGlucose: 1200.0,
             failProbability: 0.5,
             glucoseMaximumEpsilon: 100.0,
             glucoseChangeMode: .normalDeviation

@@ -10,5 +10,4 @@ import XCTest
 @testable import xDrip
 
 final class ApplicationLaunchControllerTests: XCTestCase {
-    
 }

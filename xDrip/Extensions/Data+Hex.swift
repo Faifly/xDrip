@@ -9,13 +9,17 @@
 import Foundation
 
 extension Data {
-    private static let hexAlphabet = "0123456789abcdef".unicodeScalars.map { $0 }
+    private static let hexAlphabet = Array("0123456789abcdef".unicodeScalars)
     
     var hexEncodedString: String {
-        return String(reduce(into: "".unicodeScalars, { result, value in
-            result.append(Data.hexAlphabet[Int(value / 16)])
-            result.append(Data.hexAlphabet[Int(value % 16)])
-        }))
+        return String(
+            reduce(
+                into: "".unicodeScalars, { result, value in
+                    result.append(Data.hexAlphabet[Int(value / 16)])
+                    result.append(Data.hexAlphabet[Int(value % 16)])
+                }
+            )
+        )
     }
     
     func appendingCRC() -> Data {
@@ -54,7 +58,6 @@ fileprivate extension Collection where Element == UInt8 {
         return crcCCITTXModem
     }
 }
-
 
 fileprivate extension UInt8 {
     var crc16: UInt16 {

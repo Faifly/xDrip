@@ -13,7 +13,7 @@
 import UIKit
 import AKUtils
 
-protocol HomeDisplayLogic: class {
+protocol HomeDisplayLogic: AnyObject {
     func displayLoad(viewModel: Home.Load.ViewModel)
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel)
     func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel)
@@ -21,7 +21,7 @@ protocol HomeDisplayLogic: class {
 
 class HomeViewController: NibViewController, HomeDisplayLogic {
     var interactor: HomeBusinessLogic?
-    var router: (NSObjectProtocol & HomeRoutingLogic & HomeDataPassing)?
+    var router: HomeDataPassing?
     
     // MARK: Object lifecycle
     
@@ -30,6 +30,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         setup()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Use regular .init()")
     }

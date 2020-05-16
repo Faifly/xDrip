@@ -9,8 +9,7 @@
 import XCTest
 @testable import xDrip
 
-final class BaseSettingsSingleSelectionTableViewCellTests: XCTestCase {
-    
+final class BaseSettingsSingleSelectionTableViewCellTests: XCTestCase {    
     let tableView = UITableView()
     
     override func setUp() {
@@ -20,7 +19,10 @@ final class BaseSettingsSingleSelectionTableViewCellTests: XCTestCase {
     }
     
     func testConfigure() {
-        let sut = tableView.dequeueReusableCell(ofType: BaseSettingsSingleSelectionTableViewCell.self, for: IndexPath(row: 0, section: 0))
+        let sut = tableView.dequeueReusableCell(
+            ofType: BaseSettingsSingleSelectionTableViewCell.self,
+            for: IndexPath(row: 0, section: 0)
+        )
         
         // When
         sut.configure(mainText: "test", selected: true)

@@ -8,9 +8,8 @@
 
 import UIKit
 
-final class BaseSettingsVolumeSliderTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak private var slider: UISlider!
+final class BaseSettingsVolumeSliderTableViewCell: UITableViewCell {    
+    @IBOutlet private weak var slider: UISlider!
     
     var onSliderValueChanged: ((Float) -> Void)?
     

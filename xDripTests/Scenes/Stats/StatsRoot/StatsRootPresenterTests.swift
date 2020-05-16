@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class StatsRootPresenterTests: XCTestCase {
     // MARK: Subject under test
     
@@ -57,6 +59,9 @@ final class StatsRootPresenterTests: XCTestCase {
         sut.presentLoad(response: response)
         
         // Then
-        XCTAssertTrue(spy.displayLoadCalled, "presentLoad(response:) should ask the view controller to display the result")
+        XCTAssertTrue(
+            spy.displayLoadCalled,
+            "presentLoad(response:) should ask the view controller to display the result"
+        )
     }
 }

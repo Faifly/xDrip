@@ -9,8 +9,9 @@
 import XCTest
 @testable import xDrip
 
-final class CustomDatePickerTests: XCTestCase {
-    
+// swiftlint:disable implicitly_unwrapped_optional
+
+final class CustomDatePickerTests: XCTestCase {    
     var sut: CustomDatePicker!
     var valueChangedHandlerCalled = false
     var formattedString = ""

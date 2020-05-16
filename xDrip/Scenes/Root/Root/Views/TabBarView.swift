@@ -8,6 +8,8 @@
 
 import UIKit
 
+// swiftlint:disable private_outlet
+
 final class TabBarView: UIView {
     @IBOutlet private weak var calibrationButton: CenteredTitleButton!
     @IBOutlet private weak var chartButton: CenteredTitleButton!

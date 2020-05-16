@@ -12,12 +12,13 @@
 
 import UIKit
 
-protocol SettingsChartDisplayLogic: class {
+protocol SettingsChartDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsChart.Load.ViewModel)
 }
 
 class SettingsChartViewController: BaseSettingsViewController, SettingsChartDisplayLogic {
     var interactor: SettingsChartBusinessLogic?
+    var router: SettingsChartDataPassing?
     
     // MARK: Object lifecycle
     
@@ -39,6 +40,7 @@ class SettingsChartViewController: BaseSettingsViewController, SettingsChartDisp
         let presenter = SettingsChartPresenter()
         let router = SettingsChartRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController

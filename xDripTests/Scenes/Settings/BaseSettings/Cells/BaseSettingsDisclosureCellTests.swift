@@ -10,7 +10,6 @@
 import XCTest
 
 final class BaseSettingsDisclosureCellTests: XCTestCase {
-    
     let tableView = UITableView()
     
     override func setUp() {
@@ -20,7 +19,10 @@ final class BaseSettingsDisclosureCellTests: XCTestCase {
     }
     
     func testConfigure() {
-        let sut = tableView.dequeueReusableCell(ofType: BaseSettingsDisclosureCell.self, for: IndexPath(row: 0, section: 0))
+        let sut = tableView.dequeueReusableCell(
+            ofType: BaseSettingsDisclosureCell.self,
+            for: IndexPath(row: 0, section: 0)
+        )
         sut.configure(mainText: "hello", detailText: "world")
         
         XCTAssert(sut.textLabel?.text == "hello")

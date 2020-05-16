@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol SettingsModeFollowerRoutingLogic {
-    
+protocol SettingsModeFollowerRoutingLogic {
 }
 
 protocol SettingsModeFollowerDataPassing {
     var dataStore: SettingsModeFollowerDataStore? { get }
 }
 
-final class SettingsModeFollowerRouter: NSObject, SettingsModeFollowerRoutingLogic, SettingsModeFollowerDataPassing {
+final class SettingsModeFollowerRouter: SettingsModeFollowerRoutingLogic, SettingsModeFollowerDataPassing {
     weak var viewController: SettingsModeFollowerViewController?
-    var dataStore: SettingsModeFollowerDataStore?
+    weak var dataStore: SettingsModeFollowerDataStore?
     
     // MARK: Routing
     

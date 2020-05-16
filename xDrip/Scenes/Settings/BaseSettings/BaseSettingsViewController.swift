@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AKUtils
 
 class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
     private lazy var tableView: UITableView = {
@@ -73,10 +74,12 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
     func update(with viewModel: BaseSettings.ViewModel, animated: Bool = false) {
         self.viewModel = viewModel
         if animated {
-            UIView.transition(with: tableView,
-                              duration: 0.35,
-                              options: .transitionCrossDissolve,
-                              animations: { self.tableView.reloadData() })
+            UIView.transition(
+                with: tableView,
+                duration: 0.35,
+                options: .transitionCrossDissolve,
+                animations: { self.tableView.reloadData() }
+            )
         } else {
             tableView.reloadData()
         }
@@ -96,7 +99,9 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
         switch section {
         case let .singleSelection(cells, selectedIndex, header, footer, selectionHandler):
             
-            if let previousCell = tableView.cellForRow(at: IndexPath(row: selectedIndex, section: indexPath.section)) as? BaseSettingsSingleSelectionTableViewCell {
+            if let previousCell = tableView.cellForRow(
+                at: IndexPath(row: selectedIndex, section: indexPath.section)
+                ) as? BaseSettingsSingleSelectionTableViewCell {
                 previousCell.updateSelectionState(false)
             }
             

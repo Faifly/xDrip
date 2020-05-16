@@ -9,8 +9,7 @@
 import XCTest
 @testable import xDrip
 
-final class InitialSetupIntroViewControllerTests: XCTestCase {
-    
+final class InitialSetupIntroViewControllerTests: XCTestCase {    
     let sut = InitialSetupIntroViewController()
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {

@@ -9,6 +9,9 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable function_body_length
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class BaseSettingsViewControllerTests: XCTestCase {
     // MARK: Subject under test
     
@@ -142,7 +145,12 @@ final class BaseSettingsViewControllerTests: XCTestCase {
     }
     
     func testInitWithCoder() {
-        let sut = UIStoryboard(name: "BaseSettingsViewControllerCoderTest", bundle: Bundle(for: BaseSettingsViewControllerCoderTest.self)).instantiateViewController(withIdentifier: "BaseSettingsViewControllerCoderTest") as? BaseSettingsViewControllerCoderTest
+        let sut = UIStoryboard(
+            name: "BaseSettingsViewControllerCoderTest",
+            bundle: Bundle(for: BaseSettingsViewControllerCoderTest.self)
+        ).instantiateViewController(
+            withIdentifier: "BaseSettingsViewControllerCoderTest"
+        ) as? BaseSettingsViewControllerCoderTest
         
         XCTAssertNotNil(sut)
     }
@@ -214,27 +222,27 @@ final class BaseSettingsViewControllerTests: XCTestCase {
         XCTAssert(cell is BaseSettingsDisclosureCell)
         
         // When
-        cell = sut.tableView(tableView, cellForRowAt:  IndexPath(row: 1, section: 0))
+        cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0))
         // Then
         XCTAssert(cell is PickerExpandableTableViewCell)
         
         // When
-        cell = sut.tableView(tableView, cellForRowAt:  IndexPath(row: 2, section: 0))
+        cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 0))
         // Then
         XCTAssert(cell is BaseSettingsRightSwitchTableViewCell)
         
         // When
-        cell = sut.tableView(tableView, cellForRowAt:  IndexPath(row: 3, section: 0))
+        cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 3, section: 0))
         // Then
         XCTAssert(cell is BaseSettingsTextInputTableViewCell)
         
         // When
-        cell = sut.tableView(tableView, cellForRowAt:  IndexPath(row: 4, section: 0))
+        cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 4, section: 0))
         // Then
         XCTAssert(cell is BaseSettingsVolumeSliderTableViewCell)
         
         // When
-        cell = sut.tableView(tableView, cellForRowAt:  IndexPath(row: 0, section: 1))
+        cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 1))
         // Then
         XCTAssert(cell is BaseSettingsSingleSelectionTableViewCell)
         
@@ -256,22 +264,24 @@ final class BaseSettingsViewControllerTests: XCTestCase {
         
         let singleCells = ["1", "2"]
         
-        let viewModel = BaseSettings.ViewModel(sections: [
-            .normal(
-                cells: normalCells,
-                header: nil,
-                footer: nil
-            ),
-            .singleSelection(
-                cells: singleCells,
-                selectedIndex: 0,
-                header: nil,
-                footer: nil,
-                selectionHandler: { _ in
-                    singleSelectionHandlerCalled = true
-                }
-            )
-        ])
+        let viewModel = BaseSettings.ViewModel(
+            sections: [
+                .normal(
+                    cells: normalCells,
+                    header: nil,
+                    footer: nil
+                ),
+                .singleSelection(
+                    cells: singleCells,
+                    selectedIndex: 0,
+                    header: nil,
+                    footer: nil,
+                    selectionHandler: { _ in
+                        singleSelectionHandlerCalled = true
+                    }
+                )
+            ]
+        )
         
         loadView()
         

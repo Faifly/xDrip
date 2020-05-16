@@ -12,7 +12,7 @@
 
 import UIKit
 
-@objc protocol SettingsAlertTypesRoutingLogic {
+protocol SettingsAlertTypesRoutingLogic {
     func routeToAlertSounds()
     func routeToSingleEvent()
 }
@@ -21,16 +21,16 @@ protocol SettingsAlertTypesDataPassing {
     var dataStore: SettingsAlertTypesDataStore? { get }
 }
 
-final class SettingsAlertTypesRouter: NSObject, SettingsAlertTypesRoutingLogic, SettingsAlertTypesDataPassing {
+final class SettingsAlertTypesRouter: SettingsAlertTypesRoutingLogic, SettingsAlertTypesDataPassing {
     weak var viewController: SettingsAlertTypesViewController?
-    var dataStore: SettingsAlertTypesDataStore?
+    weak var dataStore: SettingsAlertTypesDataStore?
     
     // MARK: Routing
     
     func routeToAlertSounds() {
         guard let configuration = dataStore?.defaultConfiguration else { return }
         let soundsViewController = SettingsAlertSoundViewController()
-        soundsViewController.dataStore?.configuration = configuration
+        soundsViewController.router?.dataStore?.configuration = configuration
         
         present(soundsViewController)
     }
@@ -38,7 +38,7 @@ final class SettingsAlertTypesRouter: NSObject, SettingsAlertTypesRoutingLogic, 
     func routeToSingleEvent() {
         guard let eventType = dataStore?.eventType else { return }
         let singleTypeAlertViewController = SettingsAlertSingleTypeViewController()
-        singleTypeAlertViewController.dataStore?.eventType = eventType
+        singleTypeAlertViewController.router?.dataStore?.eventType = eventType
         
         present(singleTypeAlertViewController)
     }

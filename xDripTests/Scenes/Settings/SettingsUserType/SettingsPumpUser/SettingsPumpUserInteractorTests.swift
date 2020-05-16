@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class SettingsPumpUserInteractorTests: XCTestCase {
     // MARK: Subject under test
     
@@ -46,7 +48,6 @@ final class SettingsPumpUserInteractorTests: XCTestCase {
     }
     
     final class SettingsPumpUserRoutingLogicSpy: SettingsPumpUserRoutingLogic {
-        
     }
     
     // MARK: Tests

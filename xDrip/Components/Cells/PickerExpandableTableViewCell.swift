@@ -10,9 +10,9 @@ import UIKit
 
 final class PickerExpandableTableViewCell: UITableViewCell {
     
-    @IBOutlet weak private var verticalStackView: UIStackView!
-    @IBOutlet weak private var mainTextLabel: UILabel!
-    @IBOutlet weak private var detailLabel: UILabel!
+    @IBOutlet private weak var verticalStackView: UIStackView!
+    @IBOutlet private weak var mainTextLabel: UILabel!
+    @IBOutlet private weak var detailLabel: UILabel!
     
     private var picker: PickerView?
     

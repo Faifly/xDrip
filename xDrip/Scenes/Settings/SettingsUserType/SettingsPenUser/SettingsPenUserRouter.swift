@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol SettingsPenUserRoutingLogic {
-    
+protocol SettingsPenUserRoutingLogic {    
 }
 
 protocol SettingsPenUserDataPassing {
     var dataStore: SettingsPenUserDataStore? { get }
 }
 
-final class SettingsPenUserRouter: NSObject, SettingsPenUserRoutingLogic, SettingsPenUserDataPassing {
+final class SettingsPenUserRouter: SettingsPenUserRoutingLogic, SettingsPenUserDataPassing {
     weak var viewController: SettingsPenUserViewController?
-    var dataStore: SettingsPenUserDataStore?
+    weak var dataStore: SettingsPenUserDataStore?
     
     // MARK: Routing
     

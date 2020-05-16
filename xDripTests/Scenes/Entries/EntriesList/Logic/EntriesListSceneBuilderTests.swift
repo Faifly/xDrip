@@ -9,8 +9,9 @@
 import XCTest
 @testable import xDrip
 
-class EntriesListSceneBuilderTests: XCTestCase {
-    
+// swiftlint:disable implicitly_unwrapped_optional
+
+class EntriesListSceneBuilderTests: XCTestCase {    
     var window: UIWindow!
     var viewController: EntriesListViewController!
     let sut = EntriesListSceneBuilder()
@@ -70,21 +71,21 @@ class EntriesListSceneBuilderTests: XCTestCase {
         let builder = EntriesListSceneBuilder()
         let viewController = builder.createSceneForCarbs()
         
-        let interactor = viewController.interactor as! EntriesListInteractor
-        let presenter = interactor.presenter as! EntriesListPresenter
+        let interactor = viewController.interactor as? EntriesListInteractor
+        let presenter = interactor?.presenter as? EntriesListPresenter
         
-        XCTAssertTrue(interactor.entriesWorker is EntriesListCarbsPersistenceWorker)
-        XCTAssertTrue(presenter.formattingWorker is EntriesListCarbsFormattingWorker)
+        XCTAssertTrue(interactor?.entriesWorker is EntriesListCarbsPersistenceWorker)
+        XCTAssertTrue(presenter?.formattingWorker is EntriesListCarbsFormattingWorker)
     }
     
     func testConfigurateForBolus() {
         let builder = EntriesListSceneBuilder()
         let viewController = builder.createSceneForBolus()
         
-        let interactor = viewController.interactor as! EntriesListInteractor
-        let presenter = interactor.presenter as! EntriesListPresenter
+        let interactor = viewController.interactor as? EntriesListInteractor
+        let presenter = interactor?.presenter as? EntriesListPresenter
         
-        XCTAssertTrue(interactor.entriesWorker is EntriesListBolusPersistenceWorker)
-        XCTAssertTrue(presenter.formattingWorker is EntriesListBolusFormattingWorker)
+        XCTAssertTrue(interactor?.entriesWorker is EntriesListBolusPersistenceWorker)
+        XCTAssertTrue(presenter?.formattingWorker is EntriesListBolusFormattingWorker)
     }
 }

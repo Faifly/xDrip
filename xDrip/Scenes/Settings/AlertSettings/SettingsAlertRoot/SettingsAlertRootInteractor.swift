@@ -16,8 +16,7 @@ protocol SettingsAlertRootBusinessLogic {
     func doLoad(request: SettingsAlertRoot.Load.Request)
 }
 
-protocol SettingsAlertRootDataStore {
-    
+protocol SettingsAlertRootDataStore: AnyObject {
 }
 
 final class SettingsAlertRootInteractor: SettingsAlertRootBusinessLogic, SettingsAlertRootDataStore {
@@ -47,7 +46,7 @@ final class SettingsAlertRootInteractor: SettingsAlertRootBusinessLogic, Setting
         settings?.updateVolume(value)
     }
     
-    private func handleSwitchValueChanged(_ field: SettingsAlertRoot.Field, _ value: Bool)  {
+    private func handleSwitchValueChanged(_ field: SettingsAlertRoot.Field, _ value: Bool) {
         switch field {
         case .overrideSystemVolume: settings?.updateSystemVolumeOverriden(value); doUpdate()
         case .overrideMute: settings?.updateMuteOverriden(value)

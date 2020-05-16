@@ -9,10 +9,12 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable force_unwrapping
+
 final class SettingsTests: AbstractRealmTest {
     func testWarningLevels() {
         let settings = User.current.settings!
-        XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 0)
+        XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).isEmpty)
         
         XCTAssertTrue(settings.warningLevelValue(for: .urgentLow) == GlucoseWarningLevel.urgentLow.defaultValue)
         XCTAssertTrue(settings.warningLevelValue(for: .low) == GlucoseWarningLevel.low.defaultValue)
@@ -20,7 +22,7 @@ final class SettingsTests: AbstractRealmTest {
         XCTAssertTrue(settings.warningLevelValue(for: .urgentHigh) == GlucoseWarningLevel.urgentHigh.defaultValue)
         
         // When using getters, no objects should be created yet
-        XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).count == 0)
+        XCTAssertTrue(realm.objects(GlucoseWarningLevelSetting.self).isEmpty)
         
         settings.configureWarningLevel(.urgentLow, value: 1.1)
         XCTAssertTrue(settings.warningLevelValue(for: .urgentLow) ~ 1.1)

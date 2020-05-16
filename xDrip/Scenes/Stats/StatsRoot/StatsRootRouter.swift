@@ -12,7 +12,7 @@
 
 import UIKit
 
-@objc protocol StatsRootRoutingLogic {
+protocol StatsRootRoutingLogic {
     func dismissSelf()
 }
 
@@ -20,9 +20,9 @@ protocol StatsRootDataPassing {
     var dataStore: StatsRootDataStore? { get }
 }
 
-final class StatsRootRouter: NSObject, StatsRootRoutingLogic, StatsRootDataPassing {
+final class StatsRootRouter: StatsRootRoutingLogic, StatsRootDataPassing {
     weak var viewController: StatsRootViewController?
-    var dataStore: StatsRootDataStore?
+    weak var dataStore: StatsRootDataStore?
     
     // MARK: Routing
     

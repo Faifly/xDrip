@@ -8,11 +8,18 @@
 
 import UIKit
 
+<<<<<<< HEAD
 final class PickerExpandableTableViewCell: UITableViewCell {
     
     @IBOutlet weak private var verticalStackView: UIStackView!
     @IBOutlet weak private var mainTextLabel: UILabel!
     @IBOutlet weak private var detailLabel: UILabel!
+=======
+final class BaseSettingsPickerExpandableTableViewCell: UITableViewCell {
+    @IBOutlet private weak var verticalStackView: UIStackView!
+    @IBOutlet private weak var mainTextLabel: UILabel!
+    @IBOutlet private weak var detailLabel: UILabel!
+>>>>>>> develop
     
     private var picker: PickerView?
     

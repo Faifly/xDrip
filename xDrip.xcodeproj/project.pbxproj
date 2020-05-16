@@ -430,7 +430,6 @@
 		58160DFB2402C83900C792F4 /* RootViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160DF82402C83900C792F4 /* RootViewControllerTests.swift */; };
 		58160DFC2402C83900C792F4 /* RootInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160DF92402C83900C792F4 /* RootInteractorTests.swift */; };
 		58160DFD2402C83900C792F4 /* RootPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160DFA2402C83900C792F4 /* RootPresenterTests.swift */; };
-		58160E002402C88C00C792F4 /* AKUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 58160DFF2402C88C00C792F4 /* AKUtils */; };
 		58160E0D2402E52000C792F4 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160E0C2402E52000C792F4 /* TabBarView.swift */; };
 		58184A472438BE8E00E848C6 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A462438BE8E00E848C6 /* RootViewController.xib */; };
 		58184A492438C1E800E848C6 /* EditFoodEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A482438C1E800E848C6 /* EditFoodEntryViewController.xib */; };
@@ -484,7 +483,6 @@
 		58788B8D2426582B000EB113 /* CalibrationEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B8C2426582B000EB113 /* CalibrationEntryTests.swift */; };
 		58788B902426597F000EB113 /* CenteredTitleButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B8F2426597F000EB113 /* CenteredTitleButtonTests.swift */; };
 		587E8C212465BDFB00303AA5 /* CalibrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587E8C202465BDFB00303AA5 /* CalibrationTests.swift */; };
-		58A8A4122425040400CCFCAC /* AKRealmUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 58A8A4112425040400CCFCAC /* AKRealmUtils */; };
 		58A8A416242505DD00CCFCAC /* GlucoseUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A415242505DD00CCFCAC /* GlucoseUnitTests.swift */; };
 		58A8A418242507D100CCFCAC /* GlucoseReadingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A417242507D100CCFCAC /* GlucoseReadingTests.swift */; };
 		58A8A41A242507F100CCFCAC /* GlucoseWarningLevelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A419242507F100CCFCAC /* GlucoseWarningLevelTests.swift */; };
@@ -562,8 +560,6 @@
 		58B95B50244B13400005CA60 /* ChartEntryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B4F244B13400005CA60 /* ChartEntryDetailView.swift */; };
 		58B95B52244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B51244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift */; };
 		58B986DD2466B68200E38376 /* FloatingPoint+Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B986DC2466B68200E38376 /* FloatingPoint+Comparison.swift */; };
-		58D4FD362423B3300044E687 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 58D4FD352423B3300044E687 /* Realm */; };
-		58D4FD382423B3300044E687 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 58D4FD372423B3300044E687 /* RealmSwift */; };
 		58D4FD3B2423B39C0044E687 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D4FD3A2423B39C0044E687 /* User.swift */; };
 		58D4FD3E2423B4130044E687 /* UserDeviceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D4FD3D2423B4130044E687 /* UserDeviceMode.swift */; };
 		58DDC44F2423B5B1008CB04D /* UserInjectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DDC44E2423B5B1008CB04D /* UserInjectionType.swift */; };
@@ -576,6 +572,10 @@
 		58DDC4602423C9EF008CB04D /* TrainingIntensity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DDC45F2423C9EF008CB04D /* TrainingIntensity.swift */; };
 		58DDC4622423CA58008CB04D /* AbstractEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DDC4612423CA58008CB04D /* AbstractEntry.swift */; };
 		58DDC4642423CAA3008CB04D /* CalibrationEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DDC4632423CAA3008CB04D /* CalibrationEntry.swift */; };
+		58E4C457246FF2CF0082AB4A /* AKUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 58E4C456246FF2CF0082AB4A /* AKUtils */; };
+		58E4C45A246FF2E60082AB4A /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 58E4C459246FF2E60082AB4A /* RealmSwift */; };
+		58E4C45C246FF2E60082AB4A /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 58E4C45B246FF2E60082AB4A /* Realm */; };
+		58E4C45F246FF4E60082AB4A /* AKRealmUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 58E4C45E246FF4E60082AB4A /* AKRealmUtils */; };
 		58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A66F2402B8A7002C2BE3 /* AppDelegate.swift */; };
 		58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */; };
 		58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58E5A6782402B8A8002C2BE3 /* Assets.xcassets */; };
@@ -1207,21 +1207,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58D4FD382423B3300044E687 /* RealmSwift in Frameworks */,
+				58E4C45F246FF4E60082AB4A /* AKRealmUtils in Frameworks */,
+				58E4C45C246FF2E60082AB4A /* Realm in Frameworks */,
 				58B4F6C62411623F003C6D8F /* libc++.tbd in Frameworks */,
 				58B4F6BD24114E11003C6D8F /* libsqlite3.tbd in Frameworks */,
 				58B4F6BB24114E02003C6D8F /* StoreKit.framework in Frameworks */,
-				58160E002402C88C00C792F4 /* AKUtils in Frameworks */,
 				58B4F6C4241161E6003C6D8F /* FirebaseCrashlytics.framework in Frameworks */,
 				58B4F6B324114D2D003C6D8F /* FirebaseInstallations.framework in Frameworks */,
-				58D4FD362423B3300044E687 /* Realm in Frameworks */,
 				58B4F6AE24114D2D003C6D8F /* FirebaseCore.framework in Frameworks */,
 				58B4F6B124114D2D003C6D8F /* PromisesObjC.framework in Frameworks */,
-				58A8A4122425040400CCFCAC /* AKRealmUtils in Frameworks */,
+				58E4C45A246FF2E60082AB4A /* RealmSwift in Frameworks */,
 				58B4F6B424114D2D003C6D8F /* FIRAnalyticsConnector.framework in Frameworks */,
 				58B4F6AF24114D2D003C6D8F /* FirebaseAnalytics.framework in Frameworks */,
 				58B4F6B224114D2D003C6D8F /* nanopb.framework in Frameworks */,
 				58B4F6AC24114D2D003C6D8F /* GoogleDataTransportCCTSupport.framework in Frameworks */,
+				58E4C457246FF2CF0082AB4A /* AKUtils in Frameworks */,
 				58B4F6C3241158AD003C6D8F /* FirebaseInstanceID.framework in Frameworks */,
 				58B4F6AD24114D2D003C6D8F /* GoogleAppMeasurement.framework in Frameworks */,
 				58B4F6B524114D2D003C6D8F /* FirebaseCoreDiagnostics.framework in Frameworks */,
@@ -3300,6 +3300,7 @@
 			buildConfigurationList = 58E5A68B2402B8A9002C2BE3 /* Build configuration list for PBXNativeTarget "xDrip" */;
 			buildPhases = (
 				58B4F6CE241164E4003C6D8F /* Localization */,
+				58E4C460246FF5030082AB4A /* Swiftlint */,
 				58B4F6A024114CE6003C6D8F /* Headers */,
 				58E5A6682402B8A7002C2BE3 /* Sources */,
 				58E5A6692402B8A7002C2BE3 /* Frameworks */,
@@ -3312,10 +3313,10 @@
 			);
 			name = xDrip;
 			packageProductDependencies = (
-				58160DFF2402C88C00C792F4 /* AKUtils */,
-				58D4FD352423B3300044E687 /* Realm */,
-				58D4FD372423B3300044E687 /* RealmSwift */,
-				58A8A4112425040400CCFCAC /* AKRealmUtils */,
+				58E4C456246FF2CF0082AB4A /* AKUtils */,
+				58E4C459246FF2E60082AB4A /* RealmSwift */,
+				58E4C45B246FF2E60082AB4A /* Realm */,
+				58E4C45E246FF4E60082AB4A /* AKRealmUtils */,
 			);
 			productName = xDrip;
 			productReference = 58E5A66C2402B8A7002C2BE3 /* xDrip.app */;
@@ -3369,9 +3370,9 @@
 			);
 			mainGroup = 58E5A6632402B8A7002C2BE3;
 			packageReferences = (
-				58160DFE2402C88C00C792F4 /* XCRemoteSwiftPackageReference "AKUtils" */,
-				58D4FD342423B3300044E687 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
-				58A8A4102425040400CCFCAC /* XCRemoteSwiftPackageReference "AKRealmUtils" */,
+				58E4C455246FF2CF0082AB4A /* XCRemoteSwiftPackageReference "AKUtils" */,
+				58E4C458246FF2E60082AB4A /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				58E4C45D246FF4E60082AB4A /* XCRemoteSwiftPackageReference "AKRealmUtils" */,
 			);
 			productRefGroup = 58E5A66D2402B8A7002C2BE3 /* Products */;
 			projectDirPath = "";
@@ -3500,6 +3501,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "node localization/update_localization.js\n";
+		};
+		58E4C460246FF5030082AB4A /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "swiftlint\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -4324,7 +4343,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		58160DFE2402C88C00C792F4 /* XCRemoteSwiftPackageReference "AKUtils" */ = {
+		58E4C455246FF2CF0082AB4A /* XCRemoteSwiftPackageReference "AKUtils" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Artem-Kalmykov/AKUtils.git";
 			requirement = {
@@ -4332,17 +4351,17 @@
 				kind = branch;
 			};
 		};
-		58A8A4102425040400CCFCAC /* XCRemoteSwiftPackageReference "AKRealmUtils" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Artem-Kalmykov/AKRealmUtils.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-		58D4FD342423B3300044E687 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+		58E4C458246FF2E60082AB4A /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		58E4C45D246FF4E60082AB4A /* XCRemoteSwiftPackageReference "AKRealmUtils" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Artem-Kalmykov/AKRealmUtils.git";
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -4351,25 +4370,25 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		58160DFF2402C88C00C792F4 /* AKUtils */ = {
+		58E4C456246FF2CF0082AB4A /* AKUtils */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 58160DFE2402C88C00C792F4 /* XCRemoteSwiftPackageReference "AKUtils" */;
+			package = 58E4C455246FF2CF0082AB4A /* XCRemoteSwiftPackageReference "AKUtils" */;
 			productName = AKUtils;
 		};
-		58A8A4112425040400CCFCAC /* AKRealmUtils */ = {
+		58E4C459246FF2E60082AB4A /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 58A8A4102425040400CCFCAC /* XCRemoteSwiftPackageReference "AKRealmUtils" */;
-			productName = AKRealmUtils;
+			package = 58E4C458246FF2E60082AB4A /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
 		};
-		58D4FD352423B3300044E687 /* Realm */ = {
+		58E4C45B246FF2E60082AB4A /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 58D4FD342423B3300044E687 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			package = 58E4C458246FF2E60082AB4A /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = Realm;
 		};
-		58D4FD372423B3300044E687 /* RealmSwift */ = {
+		58E4C45E246FF4E60082AB4A /* AKRealmUtils */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 58D4FD342423B3300044E687 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = RealmSwift;
+			package = 58E4C45D246FF4E60082AB4A /* XCRemoteSwiftPackageReference "AKRealmUtils" */;
+			productName = AKRealmUtils;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

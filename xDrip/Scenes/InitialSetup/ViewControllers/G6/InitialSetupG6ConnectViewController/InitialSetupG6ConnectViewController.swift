@@ -21,10 +21,12 @@ final class InitialSetupG6ConnectViewController: InitialSetupAbstractStepViewCon
         super.init()
     }
     
+    @available(*, unavailable)
     required init() {
         fatalError("Use DI init")
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use DI init")
     }

@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol SettingsAlertSoundRoutingLogic {
-    
+protocol SettingsAlertSoundRoutingLogic {    
 }
 
 protocol SettingsAlertSoundDataPassing {
     var dataStore: SettingsAlertSoundDataStore? { get }
 }
 
-final class SettingsAlertSoundRouter: NSObject, SettingsAlertSoundRoutingLogic, SettingsAlertSoundDataPassing {
+final class SettingsAlertSoundRouter: SettingsAlertSoundRoutingLogic, SettingsAlertSoundDataPassing {
     weak var viewController: SettingsAlertSoundViewController?
-    var dataStore: SettingsAlertSoundDataStore?
+    weak var dataStore: SettingsAlertSoundDataStore?
     
     // MARK: Routing
     

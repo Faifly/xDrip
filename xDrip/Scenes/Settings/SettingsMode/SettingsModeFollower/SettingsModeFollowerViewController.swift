@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsModeFollowerDisplayLogic: class {
+protocol SettingsModeFollowerDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsModeFollower.Load.ViewModel)
 }
 
 class SettingsModeFollowerViewController: BaseSettingsViewController, SettingsModeFollowerDisplayLogic {
     var interactor: SettingsModeFollowerBusinessLogic?
+    var router: SettingsModeFollowerDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsModeFollowerViewController: BaseSettingsViewController, SettingsMo
         let presenter = SettingsModeFollowerPresenter()
         let router = SettingsModeFollowerRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -63,7 +66,6 @@ class SettingsModeFollowerViewController: BaseSettingsViewController, SettingsMo
     
     // MARK: Display
     
-    func displayLoad(viewModel: SettingsModeFollower.Load.ViewModel) {
-        
+    func displayLoad(viewModel: SettingsModeFollower.Load.ViewModel) {        
     }
 }

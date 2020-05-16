@@ -32,7 +32,7 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
     }
     
     private func createDefaultConfigurationSection(response: SettingsAlertTypes.Load.Response) -> BaseSettings.Section {
-        let settings = User.current.settings.alert.defaultConfiguration!
+        let settings = User.current.settings.alert?.defaultConfiguration ?? AlertConfiguration()
         
         let cells: [BaseSettings.Cell] = [
             createTextInputViewCell(.name, detailText: settings.name, placeholder: settings.eventType.title, editingChangedHandler: response.defaultSectionTextEditingChangedHandler),

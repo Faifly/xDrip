@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class EditFoodEntryInteractorTests: XCTestCase {
     // MARK: Subject under test
     
@@ -45,8 +47,7 @@ final class EditFoodEntryInteractorTests: XCTestCase {
         }
     }
     
-    final class EditFoodEntryRoutingLogicSpy: EditFoodEntryRoutingLogic {
-        
+    final class EditFoodEntryRoutingLogicSpy: EditFoodEntryRoutingLogic {        
     }
     
     // MARK: Tests

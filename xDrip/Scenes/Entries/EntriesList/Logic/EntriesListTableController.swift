@@ -9,10 +9,9 @@
 import Foundation
 import UIKit
 
-typealias EntriesListTableViewCallback = ((IndexPath) -> ())
+typealias EntriesListTableViewCallback = ((IndexPath) -> Void)
 
-final class EntriesListTableController: NSObject, UITableViewDelegate, UITableViewDataSource {
-    
+final class EntriesListTableController: NSObject, UITableViewDelegate, UITableViewDataSource {    
     weak var tableView: UITableView? {
         didSet {
             tableView?.delegate = self
@@ -59,7 +58,9 @@ final class EntriesListTableController: NSObject, UITableViewDelegate, UITableVi
         return data[section].title
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         
         didDeleteEntry?(indexPath)

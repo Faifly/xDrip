@@ -9,6 +9,11 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
+// swiftlint:disable function_body_length
+// swiftlint:disable force_unwrapping
+
 final class GlucoseReadingTests: AbstractRealmTest {
     func testFetchingAll() {
         let reading1 = GlucoseReading()
@@ -40,9 +45,9 @@ final class GlucoseReadingTests: AbstractRealmTest {
             value: "0"
         )
         
-        XCTAssertTrue(GlucoseReading.lastReadings(0).count == 0)
-        XCTAssertTrue(GlucoseReading.lastReadings(1).count == 0)
-        XCTAssertTrue(GlucoseReading.lastReadings(10).count == 0)
+        XCTAssertTrue(GlucoseReading.lastReadings(0).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastReadings(1).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastReadings(10).isEmpty)
         
         let reading1 = GlucoseReading()
         reading1.setValue(Date(timeIntervalSince1970: 1.0), forKey: "date")
@@ -52,19 +57,19 @@ final class GlucoseReadingTests: AbstractRealmTest {
             realm.add(reading1)
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(1).count == 0)
+        XCTAssertTrue(GlucoseReading.lastReadings(1).isEmpty)
         
         realm.safeWrite {
             reading1.setValue(1.0, forKey: "rawValue")
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(1).count == 0)
+        XCTAssertTrue(GlucoseReading.lastReadings(1).isEmpty)
         
         realm.safeWrite {
             reading1.setValue(1.0, forKey: "calculatedValue")
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(0).count == 0)
+        XCTAssertTrue(GlucoseReading.lastReadings(0).isEmpty)
         XCTAssertTrue(GlucoseReading.lastReadings(1).count == 1)
         XCTAssertTrue(GlucoseReading.lastReadings(2).count == 1)
         
@@ -109,7 +114,10 @@ final class GlucoseReadingTests: AbstractRealmTest {
         XCTAssertNil(GlucoseReading.create(filtered: 0.0, unfiltered: 0.0))
         
         let now = Date()
-        CGMDevice.current.updateMetadata(ofType: .sensorAge, value: "\((Date() - .secondsPerDay).timeIntervalSince1970)")
+        CGMDevice.current.updateMetadata(
+            ofType: .sensorAge,
+            value: "\((Date() - .secondsPerDay).timeIntervalSince1970)"
+        )
         
         let reading1 = GlucoseReading.create(filtered: 140.0, unfiltered: 135.0)!
         XCTAssertNotNil(reading1)
@@ -173,7 +181,10 @@ final class GlucoseReadingTests: AbstractRealmTest {
     }
     
     func testReadingCreationWithCalibration() {
-        CGMDevice.current.updateMetadata(ofType: .sensorAge, value: "\((Date() - .secondsPerDay).timeIntervalSince1970)")
+        CGMDevice.current.updateMetadata(
+            ofType: .sensorAge,
+            value: "\((Date() - .secondsPerDay).timeIntervalSince1970)"
+        )
         let calibration = Calibration()
         calibration.setValue(Date(), forKey: "date")
         calibration.setValue(1.0, forKey: "slopeConfidence")

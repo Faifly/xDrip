@@ -12,16 +12,17 @@
 
 import UIKit
 
-protocol StatsRootDisplayLogic: class {
+protocol StatsRootDisplayLogic: AnyObject {
     func displayLoad(viewModel: StatsRoot.Load.ViewModel)
 }
 
 class StatsRootViewController: NibViewController, StatsRootDisplayLogic {
     var interactor: StatsRootBusinessLogic?
-    var router: (NSObjectProtocol & StatsRootRoutingLogic & StatsRootDataPassing)?
+    var router: StatsRootDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -80,7 +81,6 @@ class StatsRootViewController: NibViewController, StatsRootDisplayLogic {
     
     // MARK: Display
     
-    func displayLoad(viewModel: StatsRoot.Load.ViewModel) {
-        
+    func displayLoad(viewModel: StatsRoot.Load.ViewModel) {        
     }
 }

@@ -13,10 +13,10 @@ final class CGMDevice: Object {
     // MARK: Access
     
     private static let singleDeviceID: Int = 1
-    @objc private dynamic var id: Int = CGMDevice.singleDeviceID
+    @objc private dynamic var identifier: Int = CGMDevice.singleDeviceID
     
     override class func primaryKey() -> String? {
-        return "id"
+        return "identifier"
     }
     
     static var current: CGMDevice {
@@ -65,9 +65,9 @@ final class CGMDevice: Object {
     
     @objc private(set) dynamic var bluetoothID: String?
     
-    func updateBluetoothID(_ id: String?) {
+    func updateBluetoothID(_ identifier: String?) {
         Realm.shared.safeWrite {
-            self.bluetoothID = id
+            self.bluetoothID = identifier
         }
     }
     
@@ -79,7 +79,7 @@ final class CGMDevice: Object {
         return metatadaEntries.first(where: { $0.type == type })
     }
     
-    func updateMetadata(ofType type: CGMDeviceMetadataType, withDate date: Date = Date(), value: String?) {
+    func updateMetadata(ofType type: CGMDeviceMetadataType, value: String?, withDate date: Date = Date()) {
         let metadataEntry: CGMDeviceMetadata
         if let entry = metadata(ofType: type) {
             metadataEntry = entry

@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol NightscoutCloudBackfillDisplayLogic: class {
+protocol NightscoutCloudBackfillDisplayLogic: AnyObject {
     func displayLoad(viewModel: NightscoutCloudBackfill.Load.ViewModel)
 }
 
 class NightscoutCloudBackfillViewController: BaseSettingsViewController, NightscoutCloudBackfillDisplayLogic {
     var interactor: NightscoutCloudBackfillBusinessLogic?
+    var router: NightscoutCloudBackfillDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -64,6 +66,5 @@ class NightscoutCloudBackfillViewController: BaseSettingsViewController, Nightsc
     // MARK: Display
     
     func displayLoad(viewModel: NightscoutCloudBackfill.Load.ViewModel) {
-        
     }
 }

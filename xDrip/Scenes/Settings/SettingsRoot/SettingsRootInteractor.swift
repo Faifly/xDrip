@@ -17,8 +17,7 @@ protocol SettingsRootBusinessLogic {
     func doCancel(request: SettingsRoot.Cancel.Request)
 }
 
-protocol SettingsRootDataStore {
-    
+protocol SettingsRootDataStore: AnyObject {
 }
 
 final class SettingsRootInteractor: SettingsRootBusinessLogic, SettingsRootDataStore {

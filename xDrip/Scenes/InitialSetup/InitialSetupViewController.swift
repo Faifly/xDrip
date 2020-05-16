@@ -12,12 +12,13 @@
 
 import UIKit
 
-protocol InitialSetupDisplayLogic: class {
+protocol InitialSetupDisplayLogic: AnyObject {
     func displayLoad(viewModel: InitialSetup.Load.ViewModel)
 }
 
 class InitialSetupViewController: UINavigationController, InitialSetupDisplayLogic {
     var interactor: InitialSetupBusinessLogic?
+    var router: InitialSetupDataPassing?
     
     // MARK: Object lifecycle
     
@@ -39,6 +40,7 @@ class InitialSetupViewController: UINavigationController, InitialSetupDisplayLog
         let presenter = InitialSetupPresenter()
         let router = InitialSetupRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -65,6 +67,5 @@ class InitialSetupViewController: UINavigationController, InitialSetupDisplayLog
     // MARK: Display
     
     func displayLoad(viewModel: InitialSetup.Load.ViewModel) {
-        
     }
 }

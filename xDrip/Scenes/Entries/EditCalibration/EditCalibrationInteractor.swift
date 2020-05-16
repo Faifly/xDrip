@@ -18,8 +18,7 @@ protocol EditCalibrationBusinessLogic {
     func doDismiss(request: EditCalibration.Dismiss.Request)
 }
 
-protocol EditCalibrationDataStore {
-    
+protocol EditCalibrationDataStore: AnyObject {
 }
 
 final class EditCalibrationInteractor: EditCalibrationBusinessLogic, EditCalibrationDataStore {

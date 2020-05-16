@@ -9,6 +9,8 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class RootRouterTests: XCTestCase {
     var sut: RootRouter!
     
@@ -25,7 +27,9 @@ final class RootRouterTests: XCTestCase {
     final class ViewControllerSpy: RootViewController {
         var lastPresentedViewController: UIViewController?
         
-        override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        override func present(_ viewControllerToPresent: UIViewController,
+                              animated flag: Bool,
+                              completion: (() -> Void)? = nil) {
             lastPresentedViewController = viewControllerToPresent
         }
     }
@@ -41,8 +45,8 @@ final class RootRouterTests: XCTestCase {
         sut.routeToStats()
         
         // Then
-        let statsRoot = spy.lastPresentedViewController as! UINavigationController
-        XCTAssert(statsRoot.viewControllers[0] is StatsRootViewController)
+        let statsRoot = spy.lastPresentedViewController as? UINavigationController
+        XCTAssert(statsRoot?.viewControllers[0] is StatsRootViewController)
     }
     
     func testRouteToHistory() {
@@ -54,8 +58,8 @@ final class RootRouterTests: XCTestCase {
         sut.routeToHistory()
         
         // Then
-        let historyRoot = spy.lastPresentedViewController as! UINavigationController
-        XCTAssert(historyRoot.viewControllers[0] is HistoryRootViewController)
+        let historyRoot = spy.lastPresentedViewController as? UINavigationController
+        XCTAssert(historyRoot?.viewControllers[0] is HistoryRootViewController)
     }
     
     func testRouteToSettings() {

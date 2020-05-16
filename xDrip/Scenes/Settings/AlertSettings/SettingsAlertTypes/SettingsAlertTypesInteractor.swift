@@ -16,7 +16,7 @@ protocol SettingsAlertTypesBusinessLogic {
     func doLoad(request: SettingsAlertTypes.Load.Request)
 }
 
-protocol SettingsAlertTypesDataStore {
+protocol SettingsAlertTypesDataStore: AnyObject {
     var eventType: AlertEventType? { get set }
     var defaultConfiguration: AlertConfiguration? { get set }
 }
@@ -31,7 +31,7 @@ final class SettingsAlertTypesInteractor: SettingsAlertTypesBusinessLogic, Setti
     // MARK: Do something
     
     func doLoad(request: SettingsAlertTypes.Load.Request) {
-        defaultConfiguration = User.current.settings.alert.defaultConfiguration
+        defaultConfiguration = User.current.settings.alert?.defaultConfiguration
         
         let response = SettingsAlertTypes.Load.Response(
             defaultSectionTextEditingChangedHandler: handleTextEditingChanged(_:),

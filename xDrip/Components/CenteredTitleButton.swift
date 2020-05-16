@@ -8,8 +8,7 @@
 
 import UIKit
 
-final class CenteredTitleButton: UIButton {
-    
+final class CenteredTitleButton: UIButton {    
     let padding: CGFloat = 5.0
     
     override func titleRect(forContentRect contentRect: CGRect) -> CGRect {
@@ -71,5 +70,4 @@ final class CenteredTitleButton: UIButton {
     private func centerTitleLabel() {
         self.titleLabel?.textAlignment = .center
     }
-    
 }

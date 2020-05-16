@@ -11,14 +11,14 @@ import Foundation
 final class InitialSetupDexcomG6IDSavingWorker {
     private let allowedCharacters = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
     
-    func validate(_ id: String?) -> Bool {
-        guard let id = id else { return false }
-        guard id.count == 6 else { return false }
-        guard id.satisfies(characterSet: allowedCharacters) else { return false }
+    func validate(_ identifier: String?) -> Bool {
+        guard let identifier = identifier else { return false }
+        guard identifier.count == 6 else { return false }
+        guard identifier.satisfies(characterSet: allowedCharacters) else { return false }
         return true
     }
     
-    func saveID(_ id: String?) {
-        CGMDevice.current.updateMetadata(ofType: .serialNumber, value: id)
+    func saveID(_ identifier: String?) {
+        CGMDevice.current.updateMetadata(ofType: .serialNumber, value: identifier)
     }
 }

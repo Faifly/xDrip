@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsModeRootDisplayLogic: class {
+protocol SettingsModeRootDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsModeRoot.Load.ViewModel)
 }
 
 class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplayLogic {
     var interactor: SettingsModeRootBusinessLogic?
+    var router: SettingsModeRootDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
         let presenter = SettingsModeRootPresenter()
         let router = SettingsModeRootRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -63,7 +66,6 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
     
     // MARK: Display
     
-    func displayLoad(viewModel: SettingsModeRoot.Load.ViewModel) {
-        
+    func displayLoad(viewModel: SettingsModeRoot.Load.ViewModel) {        
     }
 }

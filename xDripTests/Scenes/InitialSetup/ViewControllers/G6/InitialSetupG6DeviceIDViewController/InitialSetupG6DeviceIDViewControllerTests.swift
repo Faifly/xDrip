@@ -9,13 +9,14 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable discouraged_optional_boolean
+
 final class InitialSetupG6DeviceIDViewControllerTests: XCTestCase {
-    
     let sut = InitialSetupG6DeviceIDViewController()
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
         var calledCompleteSetup = false
-        var moreStepsExpected: Bool? = nil
+        var moreStepsExpected: Bool?
         
         func doLoad(request: InitialSetup.Load.Request) { }
         func doBeginSetup(request: InitialSetup.BeginSetup.Request) { }

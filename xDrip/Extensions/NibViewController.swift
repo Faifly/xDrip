@@ -20,7 +20,7 @@ class NibViewController: UIViewController, NibLoadable {
 
 extension UIViewController {
     func embed<T: NibViewController>(_ type: T.Type, in view: UIView) {
-        let viewController = T.init()
+        let viewController = T()
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
         
         viewController.willMove(toParent: self)

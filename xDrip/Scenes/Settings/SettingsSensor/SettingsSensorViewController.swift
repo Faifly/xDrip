@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsSensorDisplayLogic: class {
+protocol SettingsSensorDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsSensor.Load.ViewModel)
 }
 
 class SettingsSensorViewController: NibViewController, SettingsSensorDisplayLogic {
     var interactor: SettingsSensorBusinessLogic?
+    var router: SettingsSensorDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsSensorViewController: NibViewController, SettingsSensorDisplayLogi
         let presenter = SettingsSensorPresenter()
         let router = SettingsSensorRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -64,6 +67,5 @@ class SettingsSensorViewController: NibViewController, SettingsSensorDisplayLogi
     // MARK: Display
     
     func displayLoad(viewModel: SettingsSensor.Load.ViewModel) {
-        
     }
 }

@@ -181,17 +181,15 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         _ field: SettingsAlertSingleType.Field,
         detailText: String?,
         valueChangeHandler: @escaping (SettingsAlertSingleType.Field, Double) -> Void) -> BaseSettings.Cell {
-        
         let range = User.current.settings.unit.minMax
         let step = User.current.settings.unit.pickerStep
-        let array = stride(from: range.lowerBound, to: range.upperBound + step, by: step).map { $0 }
+        let array = Array(stride(from: range.lowerBound, to: range.upperBound + step, by: step))
         let strings = array.map { String(format: "%.1f", $0) }
         
         let picker = CustomPickerView(data: [strings])
         
         let tolerance = step / 2
         picker.formatValues = { strings in
-            
             if let value = array.first(where: { val in
                 guard let num = Double(strings[0]) else { return false }
                 return fabs(val - num) < tolerance
@@ -216,7 +214,6 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
     private func createDisclosureCell(
         _ field: SettingsAlertSingleType.Field,
         selectionHandler: @escaping () -> Void) -> BaseSettings.Cell {
-        
         return .disclosure(mainText: field.title, detailText: nil) {
             selectionHandler()
         }

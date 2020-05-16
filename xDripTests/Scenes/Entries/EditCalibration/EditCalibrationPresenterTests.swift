@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class EditCalibrationPresenterTests: XCTestCase {
     // MARK: Subject under test
     
@@ -51,12 +53,15 @@ final class EditCalibrationPresenterTests: XCTestCase {
         // Given
         let spy = EditCalibrationDisplayLogicSpy()
         sut.viewController = spy
-        let response = EditCalibration.Load.Response()
+        let response = EditCalibration.Load.Response(hasInitialCalibrations: false)
         
         // When
         sut.presentLoad(response: response)
         
         // Then
-        XCTAssertTrue(spy.displayLoadCalled, "presentLoad(response:) should ask the view controller to display the result")
+        XCTAssertTrue(
+            spy.displayLoadCalled,
+            "presentLoad(response:) should ask the view controller to display the result"
+        )
     }
 }

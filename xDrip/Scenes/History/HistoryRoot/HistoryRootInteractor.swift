@@ -17,8 +17,7 @@ protocol HistoryRootBusinessLogic {
     func doCancel(request: HistoryRoot.Cancel.Request)
 }
 
-protocol HistoryRootDataStore {
-    
+protocol HistoryRootDataStore: AnyObject {
 }
 
 final class HistoryRootInteractor: HistoryRootBusinessLogic, HistoryRootDataStore {

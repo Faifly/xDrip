@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsTransmitterDisplayLogic: class {
+protocol SettingsTransmitterDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsTransmitter.Load.ViewModel)
 }
 
 class SettingsTransmitterViewController: NibViewController, SettingsTransmitterDisplayLogic {
     var interactor: SettingsTransmitterBusinessLogic?
+    var router: SettingsTransmitterDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsTransmitterViewController: NibViewController, SettingsTransmitterD
         let presenter = SettingsTransmitterPresenter()
         let router = SettingsTransmitterRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -63,7 +66,6 @@ class SettingsTransmitterViewController: NibViewController, SettingsTransmitterD
     
     // MARK: Display
     
-    func displayLoad(viewModel: SettingsTransmitter.Load.ViewModel) {
-        
+    func displayLoad(viewModel: SettingsTransmitter.Load.ViewModel) {        
     }
 }

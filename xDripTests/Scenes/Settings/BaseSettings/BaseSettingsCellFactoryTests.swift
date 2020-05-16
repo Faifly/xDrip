@@ -10,7 +10,6 @@ import XCTest
 @testable import xDrip
 
 final class BaseSettingsCellFactoryTests: XCTestCase {
-    
     let tableView = UITableView()
     let sut = BaseSettingsCellFactory()
     
@@ -53,13 +52,27 @@ final class BaseSettingsCellFactoryTests: XCTestCase {
         XCTAssertTrue(volumeSliderCell is BaseSettingsVolumeSliderTableViewCell)
         
         // When
-        let pickerExpandable = BaseSettings.Cell.pickerExpandable(mainText: "", detailText: nil, picker: CustomDatePicker())
-        let pickerExpandableCell = sut.createCell(ofType: pickerExpandable, indexPath: IndexPath(row: 0, section: 0), expandedCell: nil)
+        let pickerExpandable = BaseSettings.Cell.pickerExpandable(
+            mainText: "",
+            detailText: nil,
+            picker: CustomDatePicker()
+        )
+        
+        let pickerExpandableCell = sut.createCell(
+            ofType: pickerExpandable,
+            indexPath: IndexPath(row: 0, section: 0),
+            expandedCell: nil
+        )
+        
         // Then
         XCTAssertTrue(pickerExpandableCell is PickerExpandableTableViewCell)
         
         // When
-        let singleSelectionCell = sut.createSingleSelectionCell(title: "", selectedIndex: 0, indexPath: IndexPath(row: 0, section: 0))
+        let singleSelectionCell = sut.createSingleSelectionCell(
+            title: "",
+            selectedIndex: 0,
+            indexPath: IndexPath(row: 0, section: 0)
+        )
         // Then
         XCTAssertTrue(singleSelectionCell is BaseSettingsSingleSelectionTableViewCell)
     }

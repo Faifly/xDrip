@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsAlertTypesDisplayLogic: class {
+protocol SettingsAlertTypesDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsAlertTypes.Load.ViewModel)
 }
 
 class SettingsAlertTypesViewController: BaseSettingsViewController, SettingsAlertTypesDisplayLogic {
     var interactor: SettingsAlertTypesBusinessLogic?
+    var router: SettingsAlertTypesDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsAlertTypesViewController: BaseSettingsViewController, SettingsAler
         let presenter = SettingsAlertTypesPresenter()
         let router = SettingsAlertTypesRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController

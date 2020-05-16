@@ -10,8 +10,7 @@ import XCTest
 @testable import xDrip
 
 final class InitialSetupAbstractStepViewControllerTests: XCTestCase {
-    
-    var sut =  InitialSetupAbstractStepViewController()
+    var sut = InitialSetupAbstractStepViewController()
     
     func testInteractor() {
         XCTAssert(type(of: sut.interactor) == InitialSetupBusinessLogic?.self)

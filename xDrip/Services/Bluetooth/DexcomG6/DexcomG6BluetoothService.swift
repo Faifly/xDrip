@@ -13,7 +13,7 @@ final class DexcomG6BluetoothService: NSObject {
     private weak var delegate: CGMBluetoothServiceDelegate?
     private let centralManager = CBCentralManager()
     private var isConnectionRequested = false
-    private var messageWorker: DexcomG6MessageWorker!
+    private var messageWorker: DexcomG6MessageWorker?
     
     private var characteristics: [DexcomG6CharacteristicType: CBCharacteristic] = [:]
     private var peripheral: CBPeripheral? {
@@ -97,7 +97,9 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
         LogController.log(
             message: "[Dexcom G6] Did receive reading with status: %u, filtered: %f, unfiltered: %f",
             type: .debug,
-            message.status, message.filtered, message.unfiltered
+            message.status,
+            message.filtered,
+            message.unfiltered
         )
         delegate?.serviceDidReceiveGlucoseReading(
             raw: message.unfiltered * 34.0,
@@ -116,7 +118,7 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
     
     func workerDidReceiveBatteryInfo(_ message: DexcomG6BatteryStatusRxMessage) {
         LogController.log(
-            message: "[Dexcom G6] Did receive battery info with voltage A: %d, voltage B: %d, resist: %d, runtime: %d, temperature: %d",
+            message: "[Dexcom G6] Received battery info voltage A: %d, B: %d, resist: %d, runtime: %d, temp: %d",
             type: .debug,
             message.voltageA,
             message.voltageB,
@@ -150,7 +152,10 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
         }
     }
     
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+    func centralManager(_ central: CBCentralManager,
+                        didDiscover peripheral: CBPeripheral,
+                        advertisementData: [String: Any],
+                        rssi RSSI: NSNumber) {
         LogController.log(
             message: "[Dexcom G6] Did discover a peripheral: %@, trying to connect...",
             type: .debug,
@@ -237,16 +242,18 @@ extension DexcomG6BluetoothService: CBPeripheralDelegate {
         }
     }
     
-    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+    func peripheral(_ peripheral: CBPeripheral,
+                    didUpdateNotificationStateFor characteristic: CBCharacteristic,
+                    error: Error?) {
         LogController.log(
             message: "[Dexcom G6] Did update notification state with error: %@",
             type: .debug,
             error: error
         )
         if characteristic.uuid.uuidString == DexcomG6Constants.notifyCharacteristicID {
-            messageWorker.createDataRequest(ofType: .authRequestTx)
+            messageWorker?.createDataRequest(ofType: .authRequestTx)
         } else {
-            messageWorker.requestRequiredData()
+            messageWorker?.requestRequiredData()
         }
     }
     
@@ -257,7 +264,7 @@ extension DexcomG6BluetoothService: CBPeripheralDelegate {
             error: error
         )
         do {
-            try messageWorker.handleIncomingMessage(characteristic.value)
+            try messageWorker?.handleIncomingMessage(characteristic.value)
         } catch {
             delegate?.serviceDidFail(withError: .deviceSpecific(error: error))
         }
@@ -278,6 +285,5 @@ extension DexcomG6BluetoothService: CGMBluetoothService {
     }
     
     func disconnect() {
-        
     }
 }

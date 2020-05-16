@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsUnitsDisplayLogic: class {
+protocol SettingsUnitsDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsUnits.Load.ViewModel)
 }
 
 class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisplayLogic {
     var interactor: SettingsUnitsBusinessLogic?
+    var router: SettingsUnitsDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsUnitsViewController: BaseSettingsViewController, SettingsUnitsDisp
         let presenter = SettingsUnitsPresenter()
         let router = SettingsUnitsRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController

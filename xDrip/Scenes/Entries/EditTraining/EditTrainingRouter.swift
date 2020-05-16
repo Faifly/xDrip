@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol EditTrainingRoutingLogic {
-    
+protocol EditTrainingRoutingLogic {
 }
 
 protocol EditTrainingDataPassing {
     var dataStore: EditTrainingDataStore? { get }
 }
 
-final class EditTrainingRouter: NSObject, EditTrainingRoutingLogic, EditTrainingDataPassing {
+final class EditTrainingRouter: EditTrainingRoutingLogic, EditTrainingDataPassing {
     weak var viewController: EditTrainingViewController?
-    var dataStore: EditTrainingDataStore?
+    weak var dataStore: EditTrainingDataStore?
     
     // MARK: Routing
     

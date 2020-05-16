@@ -16,7 +16,7 @@ protocol SettingsAlertSingleTypeBusinessLogic {
     func doLoad(request: SettingsAlertSingleType.Load.Request)
 }
 
-protocol SettingsAlertSingleTypeDataStore {
+protocol SettingsAlertSingleTypeDataStore: AnyObject {
     var eventType: AlertEventType? { get set }
     var configuration: AlertConfiguration { get set }
 }
@@ -26,12 +26,12 @@ final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLo
     var router: SettingsAlertSingleTypeRoutingLogic?
     
     var eventType: AlertEventType?
-    var configuration: AlertConfiguration = User.current.settings.alert.defaultConfiguration
+    var configuration = AlertConfiguration()
     
     // MARK: Do something
     
     func doLoad(request: SettingsAlertSingleType.Load.Request) {
-        configuration = User.current.settings.alert.customConfiguration(for: eventType ?? .default)
+        configuration = User.current.settings.alert?.customConfiguration(for: eventType ?? .default) ?? AlertConfiguration()
         
         let response = SettingsAlertSingleType.Load.Response(
             animated: request.animated,
@@ -40,7 +40,9 @@ final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLo
             textEditingChangedHandler: handleTextEditingChanged(_:),
             timePickerValueChangedHandler: handleTimePickerValueChanged(_:_:),
             pickerViewValueChangedHandler: handlePickerViewValueChanged(_:_:),
-            selectionHandler: handleSelection)
+            selectionHandler: handleSelection
+        )
+        
         presenter?.presentLoad(response: response)
     }
     

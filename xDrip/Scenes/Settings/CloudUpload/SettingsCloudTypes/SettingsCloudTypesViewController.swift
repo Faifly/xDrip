@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsCloudTypesDisplayLogic: class {
+protocol SettingsCloudTypesDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsCloudTypes.Load.ViewModel)
 }
 
 class SettingsCloudTypesViewController: BaseSettingsViewController, SettingsCloudTypesDisplayLogic {
     var interactor: SettingsCloudTypesBusinessLogic?
+    var router: SettingsCloudTypesDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsCloudTypesViewController: BaseSettingsViewController, SettingsClou
         let presenter = SettingsCloudTypesPresenter()
         let router = SettingsCloudTypesRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -64,6 +67,5 @@ class SettingsCloudTypesViewController: BaseSettingsViewController, SettingsClou
     // MARK: Display
     
     func displayLoad(viewModel: SettingsCloudTypes.Load.ViewModel) {
-        
     }
 }

@@ -12,7 +12,7 @@
 
 import UIKit
 
-@objc protocol EntriesListRoutingLogic {
+protocol EntriesListRoutingLogic {
     func dismissScene()
 }
 
@@ -20,9 +20,9 @@ protocol EntriesListDataPassing {
     var dataStore: EntriesListDataStore? { get }
 }
 
-final class EntriesListRouter: NSObject, EntriesListRoutingLogic, EntriesListDataPassing {
+final class EntriesListRouter: EntriesListRoutingLogic, EntriesListDataPassing {
     weak var viewController: EntriesListViewController?
-    var dataStore: EntriesListDataStore?
+    weak var dataStore: EntriesListDataStore?
     
     // MARK: Routing
     

@@ -12,7 +12,7 @@
 
 import UIKit
 
-@objc protocol SettingsAlertSingleTypeRoutingLogic {
+protocol SettingsAlertSingleTypeRoutingLogic {
     func routeToSound()
 }
 
@@ -20,15 +20,15 @@ protocol SettingsAlertSingleTypeDataPassing {
     var dataStore: SettingsAlertSingleTypeDataStore? { get }
 }
 
-final class SettingsAlertSingleTypeRouter: NSObject, SettingsAlertSingleTypeRoutingLogic, SettingsAlertSingleTypeDataPassing {
+final class SettingsAlertSingleTypeRouter: SettingsAlertSingleTypeRoutingLogic, SettingsAlertSingleTypeDataPassing {
     weak var viewController: SettingsAlertSingleTypeViewController?
-    var dataStore: SettingsAlertSingleTypeDataStore?
+    weak var dataStore: SettingsAlertSingleTypeDataStore?
     
     // MARK: Routing
     func routeToSound() {
         guard let configuration = dataStore?.configuration else { return }
         let soundViewController = SettingsAlertSoundViewController()
-        soundViewController.dataStore?.configuration = configuration
+        soundViewController.router?.dataStore?.configuration = configuration
         
         present(soundViewController)
     }

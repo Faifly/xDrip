@@ -40,7 +40,7 @@ final class MockedBluetoothService {
             }
         }
         
-        let failed = Double(arc4random_uniform(100)) < config.failProbability
+        let failed = Double.random(in: 0...100) < config.failProbability
         guard !failed else {
             delegate?.serviceDidFail(withError: .unknown)
             return

@@ -15,7 +15,8 @@ extension NotificationCenter {
         case chart
     }
     
-    func subscribe(forSettingsChange settings: [Setting], notificationHandler: @escaping () -> Void) -> [NSObjectProtocol] {
+    func subscribe(forSettingsChange settings: [Setting],
+                   notificationHandler: @escaping () -> Void) -> [NSObjectProtocol] {
         let handler: (Notification) -> Void = { _ in
             notificationHandler()
         }

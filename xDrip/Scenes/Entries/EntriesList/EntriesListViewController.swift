@@ -12,13 +12,13 @@
 
 import UIKit
 
-protocol EntriesListDisplayLogic: class {
+protocol EntriesListDisplayLogic: AnyObject {
     func displayLoad(viewModel: EntriesList.Load.ViewModel)
 }
 
 class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
     var interactor: EntriesListBusinessLogic?
-    var router: (NSObjectProtocol & EntriesListRoutingLogic & EntriesListDataPassing)?
+    var router: EntriesListDataPassing?
     
     // MARK: Object lifecycle
     
@@ -28,10 +28,12 @@ class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
         setup(persistenceWorker: persistenceWorker, formattingWorker: formattingWorker)
     }
     
+    @available(*, unavailable)
     required init() {
         fatalError("Use DI init")
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use DI init")
     }

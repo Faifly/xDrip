@@ -16,8 +16,7 @@ protocol SettingsSensorBusinessLogic {
     func doLoad(request: SettingsSensor.Load.Request)
 }
 
-protocol SettingsSensorDataStore {
-    
+protocol SettingsSensorDataStore: AnyObject {
 }
 
 final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSensorDataStore {

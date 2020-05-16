@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class SettingsPenUserInteractorTests: XCTestCase {
     // MARK: Subject under test
     
@@ -46,7 +48,6 @@ final class SettingsPenUserInteractorTests: XCTestCase {
     }
     
     final class SettingsPenUserRoutingLogicSpy: SettingsPenUserRoutingLogic {
-        
     }
     
     // MARK: Tests

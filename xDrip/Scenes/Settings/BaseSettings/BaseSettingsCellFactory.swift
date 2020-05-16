@@ -41,9 +41,17 @@ final class BaseSettingsCellFactory {
             return cell
             
         case let .pickerExpandable(mainText, detailText, picker):
-            let cell = tableView.dequeueReusableCell(ofType: PickerExpandableTableViewCell.self, for: indexPath)
+            let cell = tableView.dequeueReusableCell(
+                ofType: PickerExpandableTableViewCell.self,
+                for: indexPath
+            )
             
-            cell.configure(mainText: mainText, detailText: detailText, pickerView: picker, isExpanded: expandedCell == indexPath)
+            cell.configure(
+                mainText: mainText,
+                detailText: detailText,
+                pickerView: picker,
+                isExpanded: expandedCell == indexPath
+            )
             
             return cell
         }

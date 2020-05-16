@@ -17,7 +17,7 @@ protocol SettingsAlertSoundBusinessLogic {
     func doLoad(request: SettingsAlertSound.Load.Request)
 }
 
-protocol SettingsAlertSoundDataStore {
+protocol SettingsAlertSoundDataStore: AnyObject {
     var configuration: AlertConfiguration? { get set }
 }
 
@@ -27,10 +27,6 @@ final class SettingsAlertSoundInteractor: SettingsAlertSoundBusinessLogic, Setti
     
     var configuration: AlertConfiguration?
     private var audioPlayer = AVAudioPlayer()
-    
-    deinit {
-        audioPlayer.stop()
-    }
     
     // MARK: Do something
     
