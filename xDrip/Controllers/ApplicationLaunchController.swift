@@ -12,7 +12,7 @@ import RealmSwift
 import FirebaseCore
 #endif
 
-final class ApplicationLaunchController {
+enum ApplicationLaunchController {
     static func runAppLaunchSequence() {
         #if !targetEnvironment(macCatalyst)
         FirebaseApp.configure()

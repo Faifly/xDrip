@@ -8,6 +8,25 @@
 
 import Foundation
 
+private enum InitialSetupG6Step: InitialSetupStep {
+    case deviceID
+    case sensorAge
+    case connect
+    case warmUp
+    
+    func createViewController() -> InitialSetupAbstractStepViewController {
+        switch self {
+        case .deviceID: return InitialSetupG6DeviceIDViewController()
+        case .sensorAge: return InitialSetupG6SensorAgeViewController()
+        case .connect:
+            return InitialSetupG6ConnectViewController(
+                connectionWorker: InitialSetupDexcomG6ConnectionWorker()
+            )
+        case .warmUp: return InitialSetupG6WarmUpViewController()
+        }
+    }
+}
+
 final class InitialSetupG6StepWorker: InitialSetupStepProvidingWorker {
     private var currentStep: InitialSetupG6Step = .deviceID
     
@@ -26,21 +45,5 @@ final class InitialSetupG6StepWorker: InitialSetupStepProvidingWorker {
     
     var nextStep: InitialSetupStep? {
         return currentStep
-    }
-}
-
-private enum InitialSetupG6Step: InitialSetupStep {
-    case deviceID
-    case sensorAge
-    case connect
-    case warmUp
-    
-    func createViewController() -> InitialSetupAbstractStepViewController {
-        switch self {
-        case .deviceID: return InitialSetupG6DeviceIDViewController()
-        case .sensorAge: return InitialSetupG6SensorAgeViewController()
-        case .connect: return InitialSetupG6ConnectViewController(connectionWorker: InitialSetupDexcomG6ConnectionWorker())
-        case .warmUp: return InitialSetupG6WarmUpViewController()
-        }
     }
 }

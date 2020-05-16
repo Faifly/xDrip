@@ -10,7 +10,6 @@ import XCTest
 @testable import xDrip
 
 final class InitialSetupDexcomG6SensorAgeWorkerTests: XCTestCase {
-    
     let sut = InitialSetupDexcomG6SensorAgeWorker()
     
     func testValidate() {

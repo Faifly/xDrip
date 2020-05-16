@@ -62,6 +62,7 @@ final class ChartSliderView: UIView, GlucoseChartProvider {
         setupSlider()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) is not permitted")
     }
@@ -73,8 +74,11 @@ final class ChartSliderView: UIView, GlucoseChartProvider {
     }
     
     private func updateSliderPosition() {
+        let realWidth = bounds.width - chartInsets.right - chartInsets.left
         slider.frame = CGRect(
-            x: min((bounds.width - chartInsets.right - chartInsets.left) * currentRelativeOffset + chartInsets.left, rightLimit),
+            x: min(
+                realWidth * currentRelativeOffset + chartInsets.left, rightLimit
+            ),
             y: yMargin,
             width: sliderWidth,
             height: bounds.height - yMargin * 2.0

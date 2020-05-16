@@ -16,8 +16,7 @@ protocol EditFoodEntryBusinessLogic {
     func doLoad(request: EditFoodEntry.Load.Request)
 }
 
-protocol EditFoodEntryDataStore {
-    
+protocol EditFoodEntryDataStore: AnyObject {    
 }
 
 final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDataStore {

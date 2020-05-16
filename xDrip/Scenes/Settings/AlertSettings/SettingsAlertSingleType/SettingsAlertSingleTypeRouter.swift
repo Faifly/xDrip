@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol SettingsAlertSingleTypeRoutingLogic {
-    
+protocol SettingsAlertSingleTypeRoutingLogic {    
 }
 
 protocol SettingsAlertSingleTypeDataPassing {
     var dataStore: SettingsAlertSingleTypeDataStore? { get }
 }
 
-final class SettingsAlertSingleTypeRouter: NSObject, SettingsAlertSingleTypeRoutingLogic, SettingsAlertSingleTypeDataPassing {
+final class SettingsAlertSingleTypeRouter: SettingsAlertSingleTypeRoutingLogic, SettingsAlertSingleTypeDataPassing {
     weak var viewController: SettingsAlertSingleTypeViewController?
-    var dataStore: SettingsAlertSingleTypeDataStore?
+    weak var dataStore: SettingsAlertSingleTypeDataStore?
     
     // MARK: Routing
     

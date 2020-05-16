@@ -16,11 +16,11 @@ protocol NightscoutCloudExtraOptionsBusinessLogic {
     func doLoad(request: NightscoutCloudExtraOptions.Load.Request)
 }
 
-protocol NightscoutCloudExtraOptionsDataStore {
-    
+protocol NightscoutCloudExtraOptionsDataStore: AnyObject {    
 }
 
-final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBusinessLogic, NightscoutCloudExtraOptionsDataStore {
+final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBusinessLogic,
+    NightscoutCloudExtraOptionsDataStore {
     var presenter: NightscoutCloudExtraOptionsPresentationLogic?
     var router: NightscoutCloudExtraOptionsRoutingLogic?
     

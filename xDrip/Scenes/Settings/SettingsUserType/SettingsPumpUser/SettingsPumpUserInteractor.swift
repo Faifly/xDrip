@@ -16,8 +16,7 @@ protocol SettingsPumpUserBusinessLogic {
     func doLoad(request: SettingsPumpUser.Load.Request)
 }
 
-protocol SettingsPumpUserDataStore {
-    
+protocol SettingsPumpUserDataStore: AnyObject {    
 }
 
 final class SettingsPumpUserInteractor: SettingsPumpUserBusinessLogic, SettingsPumpUserDataStore {

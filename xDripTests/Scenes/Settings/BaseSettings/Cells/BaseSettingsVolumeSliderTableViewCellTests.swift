@@ -10,7 +10,6 @@ import XCTest
 @testable import xDrip
 
 final class BaseSettingsVolumeSliderTableViewCellTests: XCTestCase {
-
     let tableView = UITableView()
     
     override func setUp() {
@@ -20,7 +19,10 @@ final class BaseSettingsVolumeSliderTableViewCellTests: XCTestCase {
     }
     
     func testConfigure() {
-        let sut = tableView.dequeueReusableCell(ofType: BaseSettingsVolumeSliderTableViewCell.self, for: IndexPath(row: 0, section: 0))
+        let sut = tableView.dequeueReusableCell(
+            ofType: BaseSettingsVolumeSliderTableViewCell.self,
+            for: IndexPath(row: 0, section: 0)
+        )
         var valueChangedHandlerCalled = false
         
         sut.configure(value: 0.5)

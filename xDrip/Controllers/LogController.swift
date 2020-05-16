@@ -9,7 +9,7 @@
 import Foundation
 import os
 
-struct LogController {
+enum LogController {
     static func log(message: StaticString, type: OSLogType, _ args: CVarArg...) {
         switch args.count {
         case 0: os_log(message, log: .default, type: type)

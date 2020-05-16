@@ -16,8 +16,7 @@ protocol SettingsChartRangesBusinessLogic {
     func doLoad(request: SettingsChartRanges.Load.Request)
 }
 
-protocol SettingsChartRangesDataStore {
-    
+protocol SettingsChartRangesDataStore: AnyObject {    
 }
 
 final class SettingsChartRangesInteractor: SettingsChartRangesBusinessLogic, SettingsChartRangesDataStore {

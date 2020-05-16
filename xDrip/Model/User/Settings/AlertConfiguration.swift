@@ -72,9 +72,9 @@ final class AlertConfiguration: Object {
         }
     }
     
-    func updateSoundID(_ id: Int) {
+    func updateSoundID(_ identifier: Int) {
         Realm.shared.safeWrite {
-            self.soundID = id
+            self.soundID = identifier
         }
     }
     

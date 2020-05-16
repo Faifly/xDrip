@@ -10,6 +10,8 @@ import Foundation
 import RealmSwift
 import AKRealmUtils
 
+// swiftlint:disable convenience_type
+
 class AbstractEntriesWorker {
     @discardableResult static func add<T: AbstractEntry>(entry: T) -> T {
         let realm = Realm.shared

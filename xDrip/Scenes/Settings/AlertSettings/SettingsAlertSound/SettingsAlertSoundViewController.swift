@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsAlertSoundDisplayLogic: class {
+protocol SettingsAlertSoundDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsAlertSound.Load.ViewModel)
 }
 
 class SettingsAlertSoundViewController: BaseSettingsViewController, SettingsAlertSoundDisplayLogic {
     var interactor: SettingsAlertSoundBusinessLogic?
+    var router: SettingsAlertSoundDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsAlertSoundViewController: BaseSettingsViewController, SettingsAler
         let presenter = SettingsAlertSoundPresenter()
         let router = SettingsAlertSoundRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -64,6 +67,5 @@ class SettingsAlertSoundViewController: BaseSettingsViewController, SettingsAler
     // MARK: Display
     
     func displayLoad(viewModel: SettingsAlertSound.Load.ViewModel) {
-        
     }
 }

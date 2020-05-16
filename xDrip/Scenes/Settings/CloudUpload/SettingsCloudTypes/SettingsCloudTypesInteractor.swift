@@ -16,8 +16,7 @@ protocol SettingsCloudTypesBusinessLogic {
     func doLoad(request: SettingsCloudTypes.Load.Request)
 }
 
-protocol SettingsCloudTypesDataStore {
-    
+protocol SettingsCloudTypesDataStore: AnyObject {
 }
 
 final class SettingsCloudTypesInteractor: SettingsCloudTypesBusinessLogic, SettingsCloudTypesDataStore {

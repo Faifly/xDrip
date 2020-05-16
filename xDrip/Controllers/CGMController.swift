@@ -77,7 +77,7 @@ extension CGMController: CGMBluetoothServiceDelegate {
     }
     
     func serviceDidUpdateMetadata(_ metadata: CGMDeviceMetadataType, value: String) {
-        CGMDevice.current.updateMetadata(ofType: metadata, withDate: Date(), value: value)
+        CGMDevice.current.updateMetadata(ofType: metadata, value: value, withDate: Date())
         metadataListeners.values.forEach { $0(metadata) }
     }
     
@@ -88,6 +88,5 @@ extension CGMController: CGMBluetoothServiceDelegate {
     }
     
     func serviceDidFail(withError error: CGMBluetoothServiceError) {
-        
     }
 }

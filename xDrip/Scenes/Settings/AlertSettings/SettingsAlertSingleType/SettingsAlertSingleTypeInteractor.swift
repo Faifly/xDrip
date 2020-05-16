@@ -16,8 +16,7 @@ protocol SettingsAlertSingleTypeBusinessLogic {
     func doLoad(request: SettingsAlertSingleType.Load.Request)
 }
 
-protocol SettingsAlertSingleTypeDataStore {
-    
+protocol SettingsAlertSingleTypeDataStore: AnyObject {    
 }
 
 final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLogic, SettingsAlertSingleTypeDataStore {

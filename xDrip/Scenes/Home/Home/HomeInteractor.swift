@@ -18,8 +18,7 @@ protocol HomeBusinessLogic {
     func doChangeGlucoseChartTimeFrame(request: Home.ChangeGlucoseChartTimeFrame.Request)
 }
 
-protocol HomeDataStore {
-    
+protocol HomeDataStore: AnyObject {
 }
 
 final class HomeInteractor: HomeBusinessLogic, HomeDataStore {

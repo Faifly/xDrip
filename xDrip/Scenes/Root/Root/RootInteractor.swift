@@ -19,8 +19,7 @@ protocol RootBusinessLogic {
     func doShowInitialSetupIfNeeded(request: Root.InitialSetup.Request)
 }
 
-protocol RootDataStore {
-    
+protocol RootDataStore: AnyObject {
 }
 
 final class RootInteractor: RootBusinessLogic, RootDataStore {

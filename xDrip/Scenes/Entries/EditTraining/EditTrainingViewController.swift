@@ -12,16 +12,17 @@
 
 import UIKit
 
-protocol EditTrainingDisplayLogic: class {
+protocol EditTrainingDisplayLogic: AnyObject {
     func displayLoad(viewModel: EditTraining.Load.ViewModel)
 }
 
 class EditTrainingViewController: NibViewController, EditTrainingDisplayLogic {
     var interactor: EditTrainingBusinessLogic?
-    var router: (NSObjectProtocol & EditTrainingRoutingLogic & EditTrainingDataPassing)?
+    var router: EditTrainingDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -66,6 +67,5 @@ class EditTrainingViewController: NibViewController, EditTrainingDisplayLogic {
     // MARK: Display
     
     func displayLoad(viewModel: EditTraining.Load.ViewModel) {
-        
     }
 }

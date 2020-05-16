@@ -109,7 +109,7 @@ final class DexcomG6MessageWorker {
     
     private func trySendingMessageFromQueue() {
         guard !isQueueAwaitingForResponse else { return }
-        guard messageQueue.count > 0 else { return }
+        guard !messageQueue.isEmpty else { return }
         
         isQueueAwaitingForResponse = true
         let message = messageQueue.removeFirst()

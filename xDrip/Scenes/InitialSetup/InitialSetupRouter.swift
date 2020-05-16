@@ -12,7 +12,7 @@
 
 import UIKit
 
-@objc protocol InitialSetupRoutingLogic {
+protocol InitialSetupRoutingLogic {
     func dismissScene()
     func showNextScene(_ viewController: UIViewController)
 }
@@ -21,9 +21,9 @@ protocol InitialSetupDataPassing {
     var dataStore: InitialSetupDataStore? { get }
 }
 
-final class InitialSetupRouter: NSObject, InitialSetupRoutingLogic, InitialSetupDataPassing {
+final class InitialSetupRouter: InitialSetupRoutingLogic, InitialSetupDataPassing {
     weak var viewController: InitialSetupViewController?
-    var dataStore: InitialSetupDataStore?
+    weak var dataStore: InitialSetupDataStore?
     
     // MARK: Routing
     
@@ -33,7 +33,7 @@ final class InitialSetupRouter: NSObject, InitialSetupRoutingLogic, InitialSetup
     
     func showNextScene(_ viewController: UIViewController) {
         guard let navigationController = self.viewController else { return }
-        if navigationController.viewControllers.count == 0 {
+        if navigationController.viewControllers.isEmpty {
             navigationController.viewControllers = [viewController]
         } else {
             navigationController.pushViewController(viewController, animated: true)

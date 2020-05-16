@@ -12,7 +12,7 @@
 
 import UIKit
 
-fileprivate struct HomeGlucoseEntry: GlucoseChartGlucoseEntry {
+private struct HomeGlucoseEntry: GlucoseChartGlucoseEntry {
     let value: Double
     let date: Date
     let severity: GlucoseChartSeverityLevel
@@ -29,7 +29,9 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
             HomeGlucoseEntry(
                 value: GlucoseUnit.convertToUserDefined($0.filteredCalculatedValue),
                 date: $0.date ?? Date(),
-                severity: GlucoseChartSeverityLevel(warningLevel: settings?.warningLevel(forValue: $0.filteredCalculatedValue))
+                severity: GlucoseChartSeverityLevel(
+                    warningLevel: settings?.warningLevel(forValue: $0.filteredCalculatedValue)
+                )
             )
         }
     }

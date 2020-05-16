@@ -32,7 +32,9 @@ final class EntriesListPresenter: EntriesListPresentationLogic {
         
         let title = "entries_list_data_section_title".localized
         
-        let viewModel = EntriesList.Load.ViewModel(items: [EntriesList.SectionViewModel(title: title, items: cellViewModel)])
+        let viewModel = EntriesList.Load.ViewModel(
+            items: [EntriesList.SectionViewModel(title: title, items: cellViewModel)]
+        )
         viewController?.displayLoad(viewModel: viewModel)
     }
 }

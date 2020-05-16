@@ -10,6 +10,8 @@ import Foundation
 import RealmSwift
 import AKUtils
 
+// swiftlint:disable identifier_name
+// swiftlint:disable large_tuple
 final class GlucoseReading: Object {
     private static let ageAdjustmentTime = TimeInterval.secondsPerDay * 1.9
     private static let ageAdjustmentFactor = 0.45
@@ -64,7 +66,9 @@ final class GlucoseReading: Object {
         return Array(allReadings)
     }
     
-    @discardableResult static func create(filtered: Double, unfiltered: Double, date: Date = Date()) -> GlucoseReading? {
+    @discardableResult static func create(filtered: Double,
+                                          unfiltered: Double,
+                                          date: Date = Date()) -> GlucoseReading? {
         LogController.log(message: "[Glucose] Trying to create reading...", type: .debug)
         guard let sensorStarted = CGMDevice.current.sensorStartDate else {
             LogController.log(message: "[Glucose] Can't create reading, sensor not started", type: .error)
@@ -103,15 +107,15 @@ final class GlucoseReading: Object {
         let minOffset = date - allowedOffset
         let maxOffset = date + allowedOffset
         let matching = all.filter { $0.date >? minOffset && $0.date <? maxOffset }
-        let offsets = matching.map { abs(($0.date?.timeIntervalSince1970 ?? .greatestFiniteMagnitude) - date.timeIntervalSince1970) }
+        let offsets = matching.map {
+            abs(($0.date?.timeIntervalSince1970 ?? .greatestFiniteMagnitude) - date.timeIntervalSince1970)
+        }
         
         var min = TimeInterval.greatestFiniteMagnitude
         var minIndex: Int?
-        for (i, offset) in offsets.enumerated() {
-            if offset < min {
-                min = offset
-                minIndex = i
-            }
+        for (i, offset) in offsets.enumerated() where offset < min {
+            min = offset
+            minIndex = i
         }
         
         if let minIndex = minIndex {
@@ -197,7 +201,9 @@ final class GlucoseReading: Object {
         let adjustFor = GlucoseReading.ageAdjustmentTime - timeSinceSensorStarted
         Realm.shared.safeWrite {
             if adjustFor > 0 {
-                ageAdjustedRawValue = ((GlucoseReading.ageAdjustmentFactor * (adjustFor / GlucoseReading.ageAdjustmentTime)) * rawValue) + rawValue
+                let factor = GlucoseReading.ageAdjustmentFactor
+                let time = GlucoseReading.ageAdjustmentTime
+                ageAdjustedRawValue = ((factor * (adjustFor / time)) * rawValue) + rawValue
             } else {
                 ageAdjustedRawValue = rawValue
             }
@@ -220,8 +226,12 @@ final class GlucoseReading: Object {
             let x1 = last3[2].date?.timeIntervalSince1970 ?? 1.0
             
             a = y1 / ((x1 - x2) * (x1 - x3)) + y2 / ((x2 - x1) * (x2 - x3)) + y3 / ((x3 - x1) * (x3 - x2))
-            b = (-y1 * (x2 + x3) / ((x1 - x2) * (x1 - x3)) - y2 * (x1 + x3) / ((x2 - x1) * (x2 - x3)) - y3 * (x1 + x2) / ((x3 - x1) * (x3 - x2)))
-            c = (y1 * x2 * x3 / ((x1 - x2) * (x1 - x3)) + y2 * x1 * x3 / ((x2 - x1) * (x2 - x3)) + y3 * x1 * x2 / ((x3 - x1) * (x3 - x2)))
+            b = -y1 * (x2 + x3) / ((x1 - x2) * (x1 - x3))
+                - y2 * (x1 + x3) / ((x2 - x1) * (x2 - x3))
+                - y3 * (x1 + x2) / ((x3 - x1) * (x3 - x2))
+            c = y1 * x2 * x3 / ((x1 - x2) * (x1 - x3))
+                + y2 * x1 * x3 / ((x2 - x1) * (x2 - x3))
+                + y3 * x1 * x2 / ((x3 - x1) * (x3 - x2))
         } else if last3.count == 2 {
             let y2 = last3[0].value(forKey: valueKey) as? Double ?? 1.0
             let x2 = last3[0].date?.timeIntervalSince1970 ?? 1.0

@@ -10,6 +10,11 @@ import Foundation
 import RealmSwift
 import AKUtils
 
+// swiftlint:disable identifier_name
+// swiftlint:disable type_body_length
+// swiftlint:disable function_body_length
+// swiftlint:disable closure_body_length
+
 enum CalibrationError: Error {
     case notEnoughReadings
     case sensorNotStarted
@@ -71,11 +76,13 @@ final class Calibration: Object {
     }
     
     static func calibration(for date: Date) -> Calibration? {
-        return allForCurrentSensor.first(where: {
-            $0.slopeConfidence !~ 0 &&
-            $0.sensorConfidence !~ 0 &&
-            $0.date <? date
-        })
+        return allForCurrentSensor.first(
+            where: {
+                $0.slopeConfidence !~ 0 &&
+                $0.sensorConfidence !~ 0 &&
+                $0.date <? date
+            }
+        )
     }
     
     static func createInitialCalibration(
@@ -147,7 +154,9 @@ final class Calibration: Object {
             Realm.shared.safeWrite {
                 calibration.slopeConfidence = 0.5
                 calibration.distanceFromEstimate = 0.0
-                calibration.sensorConfidence = ((-0.0018 * pow(glucoseLevel1, 2)) + (0.6657 * glucoseLevel1) + 36.7505) / 100.0
+                calibration.sensorConfidence = ((-0.0018 * pow(glucoseLevel1, 2))
+                    + (0.6657 * glucoseLevel1)
+                    + 36.7505) / 100.0
                 Realm.shared.add(calibration)
             }
             Calibration.calculateWLS()
@@ -175,7 +184,10 @@ final class Calibration: Object {
             calibration.estimatedRawAtTimeOfCalibration = estimatedRawGlucoseLevel
         }
         calibration.distanceFromEstimate = abs(calibration.glucoseLevel - reading.calculatedValue)
-        calibration.sensorConfidence = max(((-0.0018 * pow(glucoseLevel, 2)) + (0.6657 * glucoseLevel) + 36.7505) / 100.0, 0.0)
+        calibration.sensorConfidence = max(
+            ((-0.0018 * pow(glucoseLevel, 2)) + (0.6657 * glucoseLevel) + 36.7505) / 100.0,
+            0.0
+        )
         calibration.sensorAge = date.timeIntervalSince1970 - sensorStarted.timeIntervalSince1970
         
         Realm.shared.safeWrite {
@@ -242,7 +254,7 @@ final class Calibration: Object {
             $0.sensorConfidence !~ 0 &&
             $0.slopeConfidence !~ 0
         }
-        guard calibrations.count > 0 else { return }
+        guard !calibrations.isEmpty else { return }
         
         guard calibrations.count > 1 else {
             let calibration = calibrations[0]
@@ -289,7 +301,8 @@ final class Calibration: Object {
                 if calibrations.count > 2 {
                     lastCalibration.isPossibleBad = true
                 }
-                lastCalibration.intercept = lastCalibration.glucoseLevel - (lastCalibration.estimatedRawAtTimeOfCalibration * lastCalibration.slope)
+                lastCalibration.intercept = lastCalibration.glucoseLevel -
+                    (lastCalibration.estimatedRawAtTimeOfCalibration * lastCalibration.slope)
             }
             
             if (calibrations.count == 2 && lastCalibration.slope > slopeParameters.highSlope1)
@@ -298,7 +311,8 @@ final class Calibration: Object {
                 if calibrations.count > 2 {
                     lastCalibration.isPossibleBad = true
                 }
-                lastCalibration.intercept = lastCalibration.glucoseLevel - (lastCalibration.estimatedRawAtTimeOfCalibration * lastCalibration.slope)
+                lastCalibration.intercept = lastCalibration.glucoseLevel -
+                    (lastCalibration.estimatedRawAtTimeOfCalibration * lastCalibration.slope)
             }
             
             if lastCalibration.slope.isNaN
@@ -332,7 +346,7 @@ final class Calibration: Object {
         let slopeParameters = SlopeParameters.dex
         
         let calibrations = Calibration.lastCalibrations(3)
-        guard calibrations.count > 0 else { return 1.0 }
+        guard !calibrations.isEmpty else { return 1.0 }
         let thisCalibration = calibrations[0]
         if status == 0 {
             if calibrations.count == 3 {
@@ -341,10 +355,16 @@ final class Calibration: Object {
                     && calibrations[1].isPossibleBad {
                     return calibrations[1].slope
                 } else {
-                    return max((-0.048 * (thisCalibration.sensorAge / (TimeInterval.secondsPerDay))) + 1.1, slopeParameters.defaultLowSlopeLow)
+                    return max(
+                        (-0.048 * (thisCalibration.sensorAge / (TimeInterval.secondsPerDay))) + 1.1,
+                        slopeParameters.defaultLowSlopeLow
+                    )
                 }
             } else if calibrations.count == 2 {
-                return max((-0.048 * (thisCalibration.sensorAge / (TimeInterval.secondsPerDay))) + 1.1, slopeParameters.defaultLowSlopeHigh)
+                return max(
+                    (-0.048 * (thisCalibration.sensorAge / (TimeInterval.secondsPerDay))) + 1.1,
+                    slopeParameters.defaultLowSlopeHigh
+                )
             }
             return slopeParameters.defaultSlope
         } else {

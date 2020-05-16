@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol CGMBluetoothServiceDelegate: class {
+protocol CGMBluetoothServiceDelegate: AnyObject {
     func serviceDidConnect()
     func serviceDidUpdateMetadata(_ metadata: CGMDeviceMetadataType, value: String)
     func serviceDidReceiveGlucoseReading(raw: Double, filtered: Double)

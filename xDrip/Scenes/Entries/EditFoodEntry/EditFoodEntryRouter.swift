@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol EditFoodEntryRoutingLogic {
-    
+protocol EditFoodEntryRoutingLogic {
 }
 
 protocol EditFoodEntryDataPassing {
     var dataStore: EditFoodEntryDataStore? { get }
 }
 
-final class EditFoodEntryRouter: NSObject, EditFoodEntryRoutingLogic, EditFoodEntryDataPassing {
+final class EditFoodEntryRouter: EditFoodEntryRoutingLogic, EditFoodEntryDataPassing {
     weak var viewController: EditFoodEntryViewController?
-    var dataStore: EditFoodEntryDataStore?
+    weak var dataStore: EditFoodEntryDataStore?
     
     // MARK: Routing
     

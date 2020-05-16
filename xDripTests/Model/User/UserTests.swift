@@ -12,12 +12,12 @@ import XCTest
 final class UserTests: AbstractRealmTest {
     func testUserSingleton() {
         // Test initial condition
-        XCTAssertTrue(realm.objects(User.self).count == 0)
+        XCTAssertTrue(realm.objects(User.self).isEmpty)
         
         // Test user is correctly created
         var user = User.current
         XCTAssertTrue(realm.objects(User.self).count == 1)
-        XCTAssertTrue((user.value(forKey: "id")! as! Int) == 1)
+        XCTAssertTrue((user.value(forKey: "identifier") as? Int) == 1)
         
         // Test users are not duplicated upon sequential calls
         user = User.current

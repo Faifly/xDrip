@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol NightscoutCloudBackfillRoutingLogic {
-    
+protocol NightscoutCloudBackfillRoutingLogic {    
 }
 
 protocol NightscoutCloudBackfillDataPassing {
     var dataStore: NightscoutCloudBackfillDataStore? { get }
 }
 
-final class NightscoutCloudBackfillRouter: NSObject, NightscoutCloudBackfillRoutingLogic, NightscoutCloudBackfillDataPassing {
+final class NightscoutCloudBackfillRouter: NightscoutCloudBackfillRoutingLogic, NightscoutCloudBackfillDataPassing {
     weak var viewController: NightscoutCloudBackfillViewController?
-    var dataStore: NightscoutCloudBackfillDataStore?
+    weak var dataStore: NightscoutCloudBackfillDataStore?
     
     // MARK: Routing
     

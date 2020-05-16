@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class InitialSetupViewControllerTests: XCTestCase {
     // MARK: Subject under test
     
@@ -47,31 +49,24 @@ final class InitialSetupViewControllerTests: XCTestCase {
     
     final class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
         func doBeginSetup(request: InitialSetup.BeginSetup.Request) {
-            
         }
         
         func doSkipSetup(request: InitialSetup.SkipSetup.Request) {
-            
         }
         
         func doSelectDeviceMode(request: InitialSetup.SelectDeviceMode.Request) {
-            
         }
         
         func doSelectInjectionType(request: InitialSetup.SelectInjectionType.Request) {
-            
         }
         
         func doSaveSettings(request: InitialSetup.SaveSettings.Request) {
-            
         }
         
         func doSelectDeviceType(request: InitialSetup.SelectDevice.Request) {
-            
         }
         
-        func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) {
-            
+        func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) {            
         }
         
         var doLoadCalled = false

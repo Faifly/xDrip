@@ -12,7 +12,7 @@
 
 import UIKit
 
-@objc protocol HomeRoutingLogic {
+protocol HomeRoutingLogic {
     func routeToCarbsEntriesList()
     func routeToBolusEntriesList()
 }
@@ -21,9 +21,9 @@ protocol HomeDataPassing {
     var dataStore: HomeDataStore? { get }
 }
 
-final class HomeRouter: NSObject, HomeRoutingLogic, HomeDataPassing {
+final class HomeRouter: HomeRoutingLogic, HomeDataPassing {
     weak var viewController: HomeViewController?
-    var dataStore: HomeDataStore?
+    weak var dataStore: HomeDataStore?
     
     // MARK: Routing
     

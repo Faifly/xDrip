@@ -23,8 +23,7 @@ protocol InitialSetupBusinessLogic {
     func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request)
 }
 
-protocol InitialSetupDataStore {
-    
+protocol InitialSetupDataStore: AnyObject {
 }
 
 final class InitialSetupInteractor: InitialSetupBusinessLogic, InitialSetupDataStore {

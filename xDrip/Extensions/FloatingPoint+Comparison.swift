@@ -14,49 +14,49 @@ infix operator ~~ : ComparisonPrecedence
 infix operator !~~ : ComparisonPrecedence
 
 extension Double {
-    static func ~(lhs: Double, rhs: Double) -> Bool {
+    static func ~ (lhs: Double, rhs: Double) -> Bool {
         return abs(lhs - rhs) <= Double(Float32.ulpOfOne)
     }
 }
 
 extension Double {
-    static func !~(lhs: Double, rhs: Double) -> Bool {
+    static func !~ (lhs: Double, rhs: Double) -> Bool {
         return abs(lhs - rhs) > Double(Float32.ulpOfOne)
     }
 }
 
 extension Double {
-    static func ~~(lhs: Double, rhs: Double) -> Bool {
+    static func ~~ (lhs: Double, rhs: Double) -> Bool {
         return abs(lhs - rhs) < 1.0
     }
 }
 
 extension Double {
-    static func !~~(lhs: Double, rhs: Double) -> Bool {
+    static func !~~ (lhs: Double, rhs: Double) -> Bool {
         return abs(lhs - rhs) > 1.0
     }
 }
 
-extension CGFloat{
-    static func ~(lhs: CGFloat, rhs: CGFloat) -> Bool {
+extension CGFloat {
+    static func ~ (lhs: CGFloat, rhs: CGFloat) -> Bool {
         return abs(lhs - rhs) <= .ulpOfOne * 1000.0
     }
 }
 
 extension CGFloat {
-    static func !~(lhs: CGFloat, rhs: CGFloat) -> Bool {
+    static func !~ (lhs: CGFloat, rhs: CGFloat) -> Bool {
         return abs(lhs - rhs) > .ulpOfOne * 1000.0
     }
 }
 
 extension CGFloat {
-    static func ~~(lhs: CGFloat, rhs: CGFloat) -> Bool {
+    static func ~~ (lhs: CGFloat, rhs: CGFloat) -> Bool {
         return abs(lhs - rhs) < 1.0
     }
 }
 
 extension CGFloat {
-    static func !~~(lhs: CGFloat, rhs: CGFloat) -> Bool {
+    static func !~~ (lhs: CGFloat, rhs: CGFloat) -> Bool {
         return abs(lhs - rhs) > 1.0
     }
 }

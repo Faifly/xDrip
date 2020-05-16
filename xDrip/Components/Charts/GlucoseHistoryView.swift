@@ -21,8 +21,8 @@ final class GlucoseHistoryView: UIView {
     
     private var glucoseEntries: [GlucoseChartGlucoseEntry] = []
     
-    private var globalDateRange: DateInterval = DateInterval()
-    private var localDateRange: DateInterval = DateInterval()
+    private var globalDateRange = DateInterval()
+    private var localDateRange = DateInterval()
     private var localInterval: TimeInterval = .secondsPerHour
     private var userRelativeSelection: CGFloat?
     private var unit = GlucoseUnit.default.label
@@ -255,7 +255,7 @@ final class GlucoseHistoryView: UIView {
     }
     
     private func nearestEntry(forDate date: Date) -> GlucoseChartGlucoseEntry? {
-        if glucoseEntries.count == 0 {
+        if glucoseEntries.isEmpty {
             return nil
         } else if glucoseEntries.count == 1 {
             return glucoseEntries[0]

@@ -12,7 +12,7 @@
 
 import UIKit
 
-@objc protocol EditCalibrationRoutingLogic {
+protocol EditCalibrationRoutingLogic {
     func dismissScene()
     func showError(_ error: String)
     func showSuccessAndDismiss()
@@ -22,9 +22,11 @@ protocol EditCalibrationDataPassing {
     var dataStore: EditCalibrationDataStore? { get }
 }
 
-final class EditCalibrationRouter: NSObject, EditCalibrationRoutingLogic, EditCalibrationDataPassing {
+// swiftlint:disable todo
+
+final class EditCalibrationRouter: EditCalibrationRoutingLogic, EditCalibrationDataPassing {
     weak var viewController: EditCalibrationViewController?
-    var dataStore: EditCalibrationDataStore?
+    weak var dataStore: EditCalibrationDataStore?
     
     // MARK: Routing
     

@@ -16,8 +16,7 @@ protocol SettingsUnitsBusinessLogic {
     func doLoad(request: SettingsUnits.Load.Request)
 }
 
-protocol SettingsUnitsDataStore {
-    
+protocol SettingsUnitsDataStore: AnyObject {    
 }
 
 final class SettingsUnitsInteractor: SettingsUnitsBusinessLogic, SettingsUnitsDataStore {
@@ -29,7 +28,7 @@ final class SettingsUnitsInteractor: SettingsUnitsBusinessLogic, SettingsUnitsDa
     func doLoad(request: SettingsUnits.Load.Request) {
         let user = User.current
         
-        let response = SettingsUnits.Load.Response(currentSelectedUnit: user.settings.unit) { [weak self] (index) in
+        let response = SettingsUnits.Load.Response(currentSelectedUnit: user.settings.unit) { [weak self] index in
             self?.handleUnitSelection(index)
         }
         presenter?.presentLoad(response: response)

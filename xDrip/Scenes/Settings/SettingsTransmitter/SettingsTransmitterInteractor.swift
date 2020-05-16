@@ -16,8 +16,7 @@ protocol SettingsTransmitterBusinessLogic {
     func doLoad(request: SettingsTransmitter.Load.Request)
 }
 
-protocol SettingsTransmitterDataStore {
-    
+protocol SettingsTransmitterDataStore: AnyObject {    
 }
 
 final class SettingsTransmitterInteractor: SettingsTransmitterBusinessLogic, SettingsTransmitterDataStore {

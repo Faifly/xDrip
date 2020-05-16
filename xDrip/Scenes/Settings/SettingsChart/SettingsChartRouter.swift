@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol SettingsChartRoutingLogic {
-    
+protocol SettingsChartRoutingLogic {    
 }
 
 protocol SettingsChartDataPassing {
     var dataStore: SettingsChartDataStore? { get }
 }
 
-final class SettingsChartRouter: NSObject, SettingsChartRoutingLogic, SettingsChartDataPassing {
+final class SettingsChartRouter: SettingsChartRoutingLogic, SettingsChartDataPassing {
     weak var viewController: SettingsChartViewController?
-    var dataStore: SettingsChartDataStore?
+    weak var dataStore: SettingsChartDataStore?
     
     // MARK: Routing
     

@@ -16,8 +16,7 @@ protocol NightscoutCloudBackfillBusinessLogic {
     func doLoad(request: NightscoutCloudBackfill.Load.Request)
 }
 
-protocol NightscoutCloudBackfillDataStore {
-    
+protocol NightscoutCloudBackfillDataStore: AnyObject {    
 }
 
 final class NightscoutCloudBackfillInteractor: NightscoutCloudBackfillBusinessLogic, NightscoutCloudBackfillDataStore {

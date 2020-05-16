@@ -10,14 +10,16 @@ import Foundation
 import RealmSwift
 import AKRealmUtils
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class User: Object {
     // MARK: Access
     
     private static let singleUserID: Int = 1
-    @objc private dynamic var id: Int = User.singleUserID
+    @objc private dynamic var identifier: Int = User.singleUserID
     
     override class func primaryKey() -> String? {
-        return "id"
+        return "identifier"
     }
     
     required init() {

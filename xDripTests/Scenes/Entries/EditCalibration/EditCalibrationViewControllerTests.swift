@@ -13,6 +13,8 @@
 @testable import xDrip
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class EditCalibrationViewControllerTests: XCTestCase {
     // MARK: Subject under test
     
@@ -51,6 +53,12 @@ final class EditCalibrationViewControllerTests: XCTestCase {
         func doLoad(request: EditCalibration.Load.Request) {
             doLoadCalled = true
         }
+        
+        func doSave(request: EditCalibration.Save.Request) {
+        }
+        
+        func doDismiss(request: EditCalibration.Dismiss.Request) {
+        }
     }
     
     // MARK: Tests
@@ -69,7 +77,7 @@ final class EditCalibrationViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = EditCalibration.Load.ViewModel()
+        let viewModel = EditCalibration.Load.ViewModel(displaySecondEntrySet: false)
         
         // When
         loadView()

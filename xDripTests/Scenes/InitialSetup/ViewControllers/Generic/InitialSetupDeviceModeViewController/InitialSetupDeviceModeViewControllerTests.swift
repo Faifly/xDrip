@@ -9,13 +9,12 @@
 import XCTest
 @testable import xDrip
 
-final class InitialSetupDeviceModeViewControllerTests: XCTestCase {
-    
+final class InitialSetupDeviceModeViewControllerTests: XCTestCase {    
     let sut = InitialSetupDeviceModeViewController()
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
         var calledSelectDeviceMode = false
-        var deviceMode: UserDeviceMode? = nil
+        var deviceMode: UserDeviceMode?
         
         func doLoad(request: InitialSetup.Load.Request) { }
         func doBeginSetup(request: InitialSetup.BeginSetup.Request) { }

@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsModeMasterDisplayLogic: class {
+protocol SettingsModeMasterDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsModeMaster.Load.ViewModel)
 }
 
 class SettingsModeMasterViewController: BaseSettingsViewController, SettingsModeMasterDisplayLogic {
     var interactor: SettingsModeMasterBusinessLogic?
+    var router: SettingsModeMasterDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsModeMasterViewController: BaseSettingsViewController, SettingsMode
         let presenter = SettingsModeMasterPresenter()
         let router = SettingsModeMasterRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -64,6 +67,5 @@ class SettingsModeMasterViewController: BaseSettingsViewController, SettingsMode
     // MARK: Display
     
     func displayLoad(viewModel: SettingsModeMaster.Load.ViewModel) {
-        
     }
 }

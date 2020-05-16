@@ -17,8 +17,7 @@ protocol StatsRootBusinessLogic {
     func doCancel(request: StatsRoot.Cancel.Request)
 }
 
-protocol StatsRootDataStore {
-    
+protocol StatsRootDataStore: AnyObject {    
 }
 
 final class StatsRootInteractor: StatsRootBusinessLogic, StatsRootDataStore {

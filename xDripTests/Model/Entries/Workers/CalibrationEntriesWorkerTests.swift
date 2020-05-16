@@ -9,9 +9,11 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable force_unwrapping
+
 final class CalibrationEntriesWorkerTests: AbstractRealmTest {
     func testAddingEntry() {
-        XCTAssertTrue(realm.objects(CalibrationEntry.self).count == 0)
+        XCTAssertTrue(realm.objects(CalibrationEntry.self).isEmpty)
         
         let date = Date(timeIntervalSince1970: 7.0)
         let entry = CalibrationEntriesWorker.addCalibrationEntry(firstValue: 1.1, secondValue: 2.2, date: date)
@@ -23,11 +25,11 @@ final class CalibrationEntriesWorkerTests: AbstractRealmTest {
     }
     
     func testFetchingEntries() {
-        XCTAssertTrue(realm.objects(CalibrationEntry.self).count == 0)
+        XCTAssertTrue(realm.objects(CalibrationEntry.self).isEmpty)
         
-        for i in 1...10 {
-            let date = Date(timeIntervalSince1970: 1000.0 - Double(i) * 10.0)
-            let entry = CalibrationEntry(firstValue: Double(i), secondValue: 0.0, date: date)
+        for index in 1...10 {
+            let date = Date(timeIntervalSince1970: 1000.0 - Double(index) * 10.0)
+            let entry = CalibrationEntry(firstValue: Double(index), secondValue: 0.0, date: date)
             realm.safeWrite {
                 realm.add(entry)
             }

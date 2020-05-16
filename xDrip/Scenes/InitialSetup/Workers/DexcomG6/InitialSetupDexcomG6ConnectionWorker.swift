@@ -8,14 +8,13 @@
 
 import Foundation
 
-
-protocol InitialSetupDexcomG6ConnectionWorkerProtocol: class {
-    var onSuccessfulConnection: ((InitialSetupG6ConnectViewController.ViewModel) -> ())? { get set }
+protocol InitialSetupDexcomG6ConnectionWorkerProtocol: AnyObject {
+    var onSuccessfulConnection: ((InitialSetupG6ConnectViewController.ViewModel) -> Void)? { get set }
     func startConnectionProcess()
 }
 
 final class InitialSetupDexcomG6ConnectionWorker: NSObject, InitialSetupDexcomG6ConnectionWorkerProtocol {
-    var onSuccessfulConnection: ((InitialSetupG6ConnectViewController.ViewModel) -> ())?
+    var onSuccessfulConnection: ((InitialSetupG6ConnectViewController.ViewModel) -> Void)?
     private var requiredFields: Set<CGMDeviceMetadataType> = [
         .firmwareVersion,
         .batteryVoltageA,
@@ -35,7 +34,7 @@ final class InitialSetupDexcomG6ConnectionWorker: NSObject, InitialSetupDexcomG6
     }
     
     private func handleSuccessfulConnection() {
-        guard requiredFields.count == 0 else { return }
+        guard requiredFields.isEmpty else { return }
         
         CGMController.shared.unsubscribeFromMetadataEvents(listener: self)
         let device = CGMDevice.current

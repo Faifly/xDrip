@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AKUtils
 
 class BaseSettingsViewController: UIViewController {
     private lazy var tableView: UITableView = {
@@ -63,10 +64,12 @@ class BaseSettingsViewController: UIViewController {
     func update(with viewModel: BaseSettings.ViewModel, animated: Bool = false) {
         self.viewModel = viewModel
         if animated {
-            UIView.transition(with: tableView,
-                              duration: 0.35,
-                              options: .transitionCrossDissolve,
-                              animations: { self.tableView.reloadData() })
+            UIView.transition(
+                with: tableView,
+                duration: 0.35,
+                options: .transitionCrossDissolve,
+                animations: { self.tableView.reloadData() }
+            )
         } else {
             tableView.reloadData()
         }
@@ -86,7 +89,9 @@ class BaseSettingsViewController: UIViewController {
         switch section {
         case let .singleSelection(cells, selectedIndex, header, footer, selectionHandler):
             
-            if let previousCell = tableView.cellForRow(at: IndexPath(row: selectedIndex, section: indexPath.section)) as? BaseSettingsSingleSelectionTableViewCell {
+            if let previousCell = tableView.cellForRow(
+                at: IndexPath(row: selectedIndex, section: indexPath.section)
+                ) as? BaseSettingsSingleSelectionTableViewCell {
                 previousCell.updateSelectionState(false)
             }
             
@@ -128,7 +133,11 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
             return cellFactory.createCell(ofType: cells[indexPath.row], indexPath: indexPath)
             
         case let .singleSelection(cells, selectedIndex, _, _, _):
-            return cellFactory.createSingleSelectionCell(title: cells[indexPath.row], selectedIndex: selectedIndex, indexPath: indexPath)
+            return cellFactory.createSingleSelectionCell(
+                title: cells[indexPath.row],
+                selectedIndex: selectedIndex,
+                indexPath: indexPath
+            )
         }
     }
     
@@ -158,11 +167,12 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
             
             switch cells[indexPath.row] {
             case .pickerExpandable:
-                guard let cell = tableView.cellForRow(at: indexPath) as? BaseSettingsPickerExpandableTableViewCell else {
+                let cell = tableView.cellForRow(at: indexPath)
+                guard let settingsCell = cell as? BaseSettingsPickerExpandableTableViewCell else {
                     break
                 }
                 
-                cell.togglePickerVisivility()
+                settingsCell.togglePickerVisivility()
                 
                 tableView.deselectRow(at: indexPath, animated: true)
                 

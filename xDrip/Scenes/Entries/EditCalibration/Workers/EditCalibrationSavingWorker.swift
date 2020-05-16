@@ -12,13 +12,14 @@ protocol EditCalibrationSavingWorkerLogic {
     func saveInput(entry1: String?, entry2: String?, date1: Date, date2: Date) throws
 }
 
+// swiftlint:disable todo
 final class EditCalibrationSavingWorker: EditCalibrationSavingWorkerLogic {
     func saveInput(entry1: String?, entry2: String?, date1: Date, date2: Date) throws {
         // TODO: Add entry sanity check
         guard let entry1 = entry1 else { throw EditCalibration.ValidationError.noGlucose1Input }
         guard let value1 = Double(entry1) else { throw EditCalibration.ValidationError.noGlucose1Input }
         
-        let requiresInitialCalibration = Calibration.allForCurrentSensor.count == 0
+        let requiresInitialCalibration = Calibration.allForCurrentSensor.isEmpty
         do {
             if requiresInitialCalibration {
                 guard let entry2 = entry2 else { throw EditCalibration.ValidationError.noGlucose2Input }

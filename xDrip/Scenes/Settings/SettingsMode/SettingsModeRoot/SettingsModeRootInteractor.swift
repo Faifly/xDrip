@@ -16,8 +16,7 @@ protocol SettingsModeRootBusinessLogic {
     func doLoad(request: SettingsModeRoot.Load.Request)
 }
 
-protocol SettingsModeRootDataStore {
-    
+protocol SettingsModeRootDataStore: AnyObject {    
 }
 
 final class SettingsModeRootInteractor: SettingsModeRootBusinessLogic, SettingsModeRootDataStore {

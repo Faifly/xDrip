@@ -12,7 +12,7 @@
 
 import UIKit
 
-@objc protocol SettingsRootRoutingLogic {
+protocol SettingsRootRoutingLogic {
     func dismissSelf()
     func routeToUnits()
 }
@@ -21,9 +21,9 @@ protocol SettingsRootDataPassing {
     var dataStore: SettingsRootDataStore? { get }
 }
 
-final class SettingsRootRouter: NSObject, SettingsRootRoutingLogic, SettingsRootDataPassing {
+final class SettingsRootRouter: SettingsRootRoutingLogic, SettingsRootDataPassing {
     weak var viewController: SettingsRootViewController?
-    var dataStore: SettingsRootDataStore?
+    weak var dataStore: SettingsRootDataStore?
     
     // MARK: Routing
     
@@ -36,6 +36,9 @@ final class SettingsRootRouter: NSObject, SettingsRootRoutingLogic, SettingsRoot
     }
     
     private func present(_ viewController: UIViewController) {
-        self.viewController?.splitViewController?.showDetailViewController(viewController.embedInNavigation(), sender: nil)
+        self.viewController?.splitViewController?.showDetailViewController(
+            viewController.embedInNavigation(),
+            sender: nil
+        )
     }
 }

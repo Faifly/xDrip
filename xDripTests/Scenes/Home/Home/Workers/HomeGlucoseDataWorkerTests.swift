@@ -9,8 +9,7 @@
 import XCTest
 @testable import xDrip
 
-final class HomeGlucoseDataWorkerTests: XCTestCase {
-    
+final class HomeGlucoseDataWorkerTests: XCTestCase {    
     let sut = HomeGlucoseDataWorker()
     var calledDataHandler = false
     

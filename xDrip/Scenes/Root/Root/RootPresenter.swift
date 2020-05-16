@@ -37,7 +37,6 @@ private extension Root.EntryType {
 }
 
 final class RootPresenter: RootPresentationLogic {
-    
     weak var viewController: RootDisplayLogic?
     
     // MARK: Do something

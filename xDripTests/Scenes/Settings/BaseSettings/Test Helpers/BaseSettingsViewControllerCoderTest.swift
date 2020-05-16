@@ -10,8 +10,7 @@ import UIKit
 @testable import xDrip
 
 final class BaseSettingsViewControllerCoderTest: BaseSettingsViewController {
-    
-    @IBOutlet weak var testLabel: UILabel!
+    @IBOutlet private weak var testLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()

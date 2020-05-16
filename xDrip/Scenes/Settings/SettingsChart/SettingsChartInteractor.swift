@@ -16,8 +16,7 @@ protocol SettingsChartBusinessLogic {
     func doLoad(request: SettingsChart.Load.Request)
 }
 
-protocol SettingsChartDataStore {
-    
+protocol SettingsChartDataStore: AnyObject {
 }
 
 final class SettingsChartInteractor: SettingsChartBusinessLogic, SettingsChartDataStore {

@@ -10,7 +10,6 @@ import XCTest
 @testable import xDrip
 
 final class InitialSetupG6StepWorkerTests: XCTestCase {
-    
     let sut = InitialSetupG6StepWorker()
     
     func testInitConnectionStep() {

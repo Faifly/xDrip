@@ -22,9 +22,11 @@ final class SettingsUnitsPresenter: SettingsUnitsPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsUnits.Load.Response) {
-        let tableViewModel = BaseSettings.ViewModel(sections: [
-            createUnitsSection(response: response)
-        ])
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createUnitsSection(response: response)
+            ]
+        )
         
         let viewModel = SettingsUnits.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
@@ -34,7 +36,13 @@ final class SettingsUnitsPresenter: SettingsUnitsPresentationLogic {
         let titles = GlucoseUnit.allCases.map { $0.title }
         let index = GlucoseUnit.allCases.firstIndex(of: response.currentSelectedUnit) ?? 0
         
-        return BaseSettings.Section.singleSelection(cells: titles, selectedIndex: index, header: nil, footer: nil, selectionHandler: response.selectionHandler)
+        return BaseSettings.Section.singleSelection(
+            cells: titles,
+            selectedIndex: index,
+            header: nil,
+            footer: nil,
+            selectionHandler: response.selectionHandler
+        )
     }
 }
 

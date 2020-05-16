@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol NightscoutCloudConfigurationDisplayLogic: class {
+protocol NightscoutCloudConfigurationDisplayLogic: AnyObject {
     func displayLoad(viewModel: NightscoutCloudConfiguration.Load.ViewModel)
 }
 
 class NightscoutCloudConfigurationViewController: BaseSettingsViewController, NightscoutCloudConfigurationDisplayLogic {
     var interactor: NightscoutCloudConfigurationBusinessLogic?
+    var router: NightscoutCloudConfigurationDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class NightscoutCloudConfigurationViewController: BaseSettingsViewController, Ni
         let presenter = NightscoutCloudConfigurationPresenter()
         let router = NightscoutCloudConfigurationRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -64,6 +67,5 @@ class NightscoutCloudConfigurationViewController: BaseSettingsViewController, Ni
     // MARK: Display
     
     func displayLoad(viewModel: NightscoutCloudConfiguration.Load.ViewModel) {
-        
     }
 }

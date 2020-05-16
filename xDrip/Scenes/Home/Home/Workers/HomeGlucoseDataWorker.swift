@@ -13,7 +13,7 @@
 import UIKit
 import AKUtils
 
-protocol HomeGlucoseDataWorkerProtocol: class {
+protocol HomeGlucoseDataWorkerProtocol: AnyObject {
     var glucoseDataHandler: (() -> Void)? { get set }
     func fetchGlucoseData() -> [GlucoseReading]
 }

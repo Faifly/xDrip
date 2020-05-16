@@ -9,9 +9,11 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable force_unwrapping
+
 final class AbstractEntriesWorkerTests: AbstractRealmTest {
     func testAddingEntry() {
-        XCTAssertTrue(realm.objects(CustomEntry.self).count == 0)
+        XCTAssertTrue(realm.objects(CustomEntry.self).isEmpty)
         
         let entry = CustomEntry()
         entry.customField = "123"
@@ -23,12 +25,12 @@ final class AbstractEntriesWorkerTests: AbstractRealmTest {
     }
     
     func testFetching() {
-        XCTAssertTrue(realm.objects(CustomEntry.self).count == 0)
+        XCTAssertTrue(realm.objects(CustomEntry.self).isEmpty)
         
-        for i in 1...10 {
-            let date = Date(timeIntervalSince1970: 1000.0 - Double(i) * 10.0)
+        for index in 1...10 {
+            let date = Date(timeIntervalSince1970: 1000.0 - Double(index) * 10.0)
             let entry = CustomEntry(date: date)
-            entry.customField = "\(i)"
+            entry.customField = "\(index)"
             realm.safeWrite {
                 realm.add(entry)
             }
@@ -41,7 +43,7 @@ final class AbstractEntriesWorkerTests: AbstractRealmTest {
     }
     
     func testDeletingEntry() {
-        XCTAssertTrue(realm.objects(CustomEntry.self).count == 0)
+        XCTAssertTrue(realm.objects(CustomEntry.self).isEmpty)
         
         let obj1 = CustomEntry()
         obj1.customField = "1"
@@ -58,7 +60,7 @@ final class AbstractEntriesWorkerTests: AbstractRealmTest {
         XCTAssertTrue(realm.objects(CustomEntry.self).first!.customField == "2")
         
         AbstractEntriesWorker.deleteEntry(obj2)
-        XCTAssertTrue(realm.objects(CustomEntry.self).count == 0)
+        XCTAssertTrue(realm.objects(CustomEntry.self).isEmpty)
     }
 }
 

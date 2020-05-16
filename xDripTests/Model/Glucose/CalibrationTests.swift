@@ -9,6 +9,11 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
+// swiftlint:disable function_body_length
+// swiftlint:disable force_unwrapping
+
 final class CalibrationTests: AbstractRealmTest {
     func testFetchAll() {
         let calibration1 = Calibration()
@@ -40,9 +45,9 @@ final class CalibrationTests: AbstractRealmTest {
             value: "0"
         )
         
-        XCTAssertTrue(Calibration.lastCalibrations(0).count == 0)
-        XCTAssertTrue(Calibration.lastCalibrations(1).count == 0)
-        XCTAssertTrue(Calibration.lastCalibrations(10).count == 0)
+        XCTAssertTrue(Calibration.lastCalibrations(0).isEmpty)
+        XCTAssertTrue(Calibration.lastCalibrations(1).isEmpty)
+        XCTAssertTrue(Calibration.lastCalibrations(10).isEmpty)
         
         let calibration1 = Calibration()
         calibration1.setValue(Date(timeIntervalSince1970: 1.0), forKey: "date")
@@ -52,7 +57,7 @@ final class CalibrationTests: AbstractRealmTest {
             realm.add(calibration1)
         }
         
-        XCTAssertTrue(Calibration.lastCalibrations(0).count == 0)
+        XCTAssertTrue(Calibration.lastCalibrations(0).isEmpty)
         XCTAssertTrue(Calibration.lastCalibrations(1).count == 1)
         XCTAssertTrue(Calibration.lastCalibrations(2).count == 1)
         
@@ -188,9 +193,10 @@ final class CalibrationTests: AbstractRealmTest {
             try Calibration.createInitialCalibration(
                 glucoseLevel1: 0.0,
                 glucoseLevel2: 0.0,
-                date1: now, date2: now
+                date1: now,
+                date2: now
         ), "") { error in
-            XCTAssert((error as! CalibrationError) == .notEnoughReadings)
+            XCTAssert((error as? CalibrationError) == .notEnoughReadings)
         }
         
         CGMDevice.current.updateMetadata(
@@ -223,7 +229,7 @@ final class CalibrationTests: AbstractRealmTest {
             reading2.calculateAgeAdjustedRawValue()
         }
         
-        try! Calibration.createInitialCalibration(
+        try? Calibration.createInitialCalibration(
             glucoseLevel1: 120.0,
             glucoseLevel2: 140.0,
             date1: now - .secondsPerMinute * 5.0,
@@ -295,7 +301,7 @@ final class CalibrationTests: AbstractRealmTest {
         XCTAssertFalse(calibration2.checkIn)
         
         now = Date()
-        try! Calibration.createInitialCalibration(
+        try? Calibration.createInitialCalibration(
             glucoseLevel1: 140.0,
             glucoseLevel2: 120.0,
             date1: now,
@@ -321,7 +327,7 @@ final class CalibrationTests: AbstractRealmTest {
         let now = Date()
         XCTAssertThrowsError(
         try Calibration.createRegularCalibration(glucoseLevel: 0.0, date: now), "") { error in
-            XCTAssert((error as! CalibrationError) == .noReadingsNearDate)
+            XCTAssert((error as? CalibrationError) == .noReadingsNearDate)
         }
         
         let reading1 = GlucoseReading()
@@ -332,7 +338,7 @@ final class CalibrationTests: AbstractRealmTest {
         
         XCTAssertThrowsError(
         try Calibration.createRegularCalibration(glucoseLevel: 0.0, date: now), "") { error in
-            XCTAssert((error as! CalibrationError) == .sensorNotStarted)
+            XCTAssert((error as? CalibrationError) == .sensorNotStarted)
         }
         
         CGMDevice.current.updateMetadata(
@@ -344,21 +350,21 @@ final class CalibrationTests: AbstractRealmTest {
             realm.delete(reading1)
         }
         
-        for i in 0..<30 {
-            let filtered = 100.0 + Double(i) * 10.0
+        for index in 0..<30 {
+            let filtered = 100.0 + Double(index) * 10.0
             let unfiltered = filtered - 5.0
-            let date = now - TimeInterval(i) * .secondsPerMinute * 5.0 - 1.0
+            let date = now - TimeInterval(index) * .secondsPerMinute * 5.0 - 1.0
             GlucoseReading.create(filtered: filtered, unfiltered: unfiltered, date: date)
         }
         
-        try! Calibration.createInitialCalibration(
+        try? Calibration.createInitialCalibration(
             glucoseLevel1: 105.0,
             glucoseLevel2: 115.0,
             date1: now - TimeInterval(28) * .secondsPerMinute * 5.0,
             date2: now - TimeInterval(27) * .secondsPerMinute * 5.0
         )
         
-        try! Calibration.createRegularCalibration(glucoseLevel: 160.0, date: now)
+        try? Calibration.createRegularCalibration(glucoseLevel: 160.0, date: now)
         
         let readings = GlucoseReading.lastReadings(30)
         let calibrations = Calibration.lastCalibrations(30)
@@ -382,7 +388,7 @@ final class CalibrationTests: AbstractRealmTest {
         addMockReading(rawData: 130.0, minutes: 6.0)
         addMockReading(rawData: 135.0, minutes: 1.0)
         
-        try! Calibration.createInitialCalibration(
+        try? Calibration.createInitialCalibration(
             glucoseLevel1: 140.0,
             glucoseLevel2: 145.0,
             date1: Date() - 0.005,
@@ -413,7 +419,7 @@ final class CalibrationTests: AbstractRealmTest {
         addMockReading(rawData: 130.0, minutes: 6.0)
         addMockReading(rawData: 125.0, minutes: 1.0)
         
-        try! Calibration.createInitialCalibration(
+        try? Calibration.createInitialCalibration(
             glucoseLevel1: 145.0,
             glucoseLevel2: 140.0,
             date1: Date(),

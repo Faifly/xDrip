@@ -9,8 +9,9 @@
 import XCTest
 @testable import xDrip
 
-final class SettingsSplitViewControllerTests: XCTestCase {
+// swiftlint:disable implicitly_unwrapped_optional
 
+final class SettingsSplitViewControllerTests: XCTestCase {
     var sut: SettingsSplitViewController!
     var window: UIWindow!
     

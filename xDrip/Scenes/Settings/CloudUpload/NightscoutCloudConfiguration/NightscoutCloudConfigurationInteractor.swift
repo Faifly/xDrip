@@ -16,11 +16,11 @@ protocol NightscoutCloudConfigurationBusinessLogic {
     func doLoad(request: NightscoutCloudConfiguration.Load.Request)
 }
 
-protocol NightscoutCloudConfigurationDataStore {
-    
+protocol NightscoutCloudConfigurationDataStore: AnyObject {    
 }
 
-final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfigurationBusinessLogic, NightscoutCloudConfigurationDataStore {
+final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfigurationBusinessLogic,
+    NightscoutCloudConfigurationDataStore {
     var presenter: NightscoutCloudConfigurationPresentationLogic?
     var router: NightscoutCloudConfigurationRoutingLogic?
     

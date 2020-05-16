@@ -22,10 +22,12 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsRoot.Load.Response) {
-        let tableViewModel = BaseSettings.ViewModel(sections: [
-            createApplicationSetupSection(response: response),
-            createProfileSetupSection(response: response)
-        ])
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createApplicationSetupSection(response: response),
+                createProfileSetupSection(response: response)
+            ]
+        )
         
         let viewModel = SettingsRoot.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
@@ -36,7 +38,11 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
             createDisclosureCell(.chartSettings, detailText: nil, selectionHandler: response.selectionHandler),
             createDisclosureCell(.alert, detailText: nil, selectionHandler: response.selectionHandler),
             createDisclosureCell(.cloudUpload, detailText: nil, selectionHandler: response.selectionHandler),
-            createDisclosureCell(.modeSettings, detailText: "Master/Follower", selectionHandler: response.selectionHandler),
+            createDisclosureCell(
+                .modeSettings,
+                detailText: "Master/Follower",
+                selectionHandler: response.selectionHandler
+            ),
             createDisclosureCell(.sensor, detailText: nil, selectionHandler: response.selectionHandler),
             createDisclosureCell(.transmitter, detailText: nil, selectionHandler: response.selectionHandler)
         ]

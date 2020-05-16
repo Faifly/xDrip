@@ -9,28 +9,9 @@
 import UIKit
 
 #if targetEnvironment(macCatalyst)
-final class MacMenuController {
+enum MacMenuController {
     static func buildMenu(_ builder: UIMenuBuilder) {
-        let injectChildren = [
-            UIAction(title: "Dexcom G6 simulation", handler: { _ in
-                self.injectMockedCGM(with: .dexcomG6Immitation)
-            }),
-            UIAction(title: "Quick updates", handler: { _ in
-                self.injectMockedCGM(with: .quickUpdate)
-            }),
-            UIAction(title: "Fast rise", handler: { _ in
-                self.injectMockedCGM(with: .fastRise)
-            }),
-            UIAction(title: "Fast fall", handler: { _ in
-                self.injectMockedCGM(with: .fastFall)
-            }),
-            UIAction(title: "Abnormal", handler: { _ in
-                self.injectMockedCGM(with: .abnormal)
-            }),
-            UIAction(title: "Faily", handler: { _ in
-                self.injectMockedCGM(with: .faily)
-            })
-        ] as [UIMenuElement]
+        let injectChildren = createInjectChildrenMenu()
         
         let injectMenu = UIMenu(
             title: "Inject mocked CGM service",
@@ -41,12 +22,18 @@ final class MacMenuController {
         )
         
         let developElements = [
-            UIAction(title: "Show debug log", handler: { _ in
-                DebugController.shared.showLogWindow()
-            }),
-            UIAction(title: "Purge database & exit", handler: { _ in
-                DebugController.shared.purgeDatabase()
-            }),
+            UIAction(
+                title: "Show debug log",
+                handler: { _ in
+                    DebugController.shared.showLogWindow()
+                }
+            ),
+            UIAction(
+                title: "Purge database & exit",
+                handler: { _ in
+                    DebugController.shared.purgeDatabase()
+                }
+            ),
             injectMenu
         ] as [UIMenuElement]
         
@@ -59,6 +46,47 @@ final class MacMenuController {
         )
         
         builder.insertSibling(developMenu, beforeMenu: .help)
+    }
+    
+    private static func createInjectChildrenMenu() -> [UIMenuElement] {
+        return [
+            UIAction(
+                title: "Dexcom G6 simulation",
+                handler: { _ in
+                    self.injectMockedCGM(with: .dexcomG6Immitation)
+                }
+            ),
+            UIAction(
+                title: "Quick updates",
+                handler: { _ in
+                    self.injectMockedCGM(with: .quickUpdate)
+                }
+            ),
+            UIAction(
+                title: "Fast rise",
+                handler: { _ in
+                    self.injectMockedCGM(with: .fastRise)
+                }
+            ),
+            UIAction(
+                title: "Fast fall",
+                handler: { _ in
+                    self.injectMockedCGM(with: .fastFall)
+                }
+            ),
+            UIAction(
+                title: "Abnormal",
+                handler: { _ in
+                    self.injectMockedCGM(with: .abnormal)
+                }
+            ),
+            UIAction(
+                title: "Faily",
+                handler: { _ in
+                    self.injectMockedCGM(with: .faily)
+                }
+            )
+        ] as [UIMenuElement]
     }
     
     private static func injectMockedCGM(with mode: MockedBluetoothServiceConfiguration.Predefined) {

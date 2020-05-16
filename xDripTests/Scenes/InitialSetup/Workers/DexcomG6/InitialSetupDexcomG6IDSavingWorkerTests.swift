@@ -10,56 +10,55 @@ import XCTest
 @testable import xDrip
 
 final class InitialSetupDexcomG6IDSavingWorkerTests: XCTestCase {
-    
     let sut = InitialSetupDexcomG6IDSavingWorker()
     
     func testValidate() {
         // When
-        var id: String? = nil
+        var identifier: String?
         // Then
-        XCTAssert(sut.validate(id) == false)
+        XCTAssert(sut.validate(identifier) == false)
         
         // When
-        id = "abcdef"
+        identifier = "abcdef"
         // Then
-        XCTAssert(sut.validate(id) == false)
+        XCTAssert(sut.validate(identifier) == false)
         
         // When
-        id = "123456"
+        identifier = "123456"
         // Then
-        XCTAssert(sut.validate(id) == true)
+        XCTAssert(sut.validate(identifier) == true)
         
         // When
-        id = "ABC123"
+        identifier = "ABC123"
         // Then
-        XCTAssert(sut.validate(id) == true)
+        XCTAssert(sut.validate(identifier) == true)
         
         // When
-        id = "ABCDEF"
+        identifier = "ABCDEF"
         // Then
-        XCTAssert(sut.validate(id) == true)
+        XCTAssert(sut.validate(identifier) == true)
         
         // When
-        id = "1234567"
+        identifier = "1234567"
         // Then
-        XCTAssert(sut.validate(id) == false)
+        XCTAssert(sut.validate(identifier) == false)
         
         // When
-        id = "12345"
+        identifier = "12345"
         // Then
-        XCTAssert(sut.validate(id) == false)
+        XCTAssert(sut.validate(identifier) == false)
     }
     
     func testSave() {
-        let id = "123456"
+        let identifier = "123456"
         
-        guard sut.validate(id) else {
+        guard sut.validate(identifier) else {
             XCTFail("ID not valid")
             return
         }
         
         // When
-        sut.saveID(id)
+        sut.saveID(identifier)
         
         // Then
         XCTAssert(CGMDevice.current.metadata(ofType: .serialNumber) != nil)

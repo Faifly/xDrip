@@ -32,78 +32,85 @@ extension UIColor {
     }
     
     static var background1: UIColor {
-        return UIColor(named: Colors.background1.rawValue)!
+        return color(withName: Colors.background1.rawValue)
     }
     
     static var background2: UIColor {
-        return UIColor(named: Colors.background2.rawValue)!
+        return color(withName: Colors.background2.rawValue)
     }
     
     static var tabBarBackgroundColor: UIColor {
-        return UIColor(named: Colors.tabBarBackground.rawValue)!
+        return color(withName: Colors.tabBarBackground.rawValue)
     }
     
     static var tabBarBlueColor: UIColor {
-        return UIColor(named: Colors.tabBarBlue.rawValue)!
+        return color(withName: Colors.tabBarBlue.rawValue)
     }
     
     static var tabBarGrayColor: UIColor {
-        return UIColor(named: Colors.tabBarGray.rawValue)!
+        return color(withName: Colors.tabBarGray.rawValue)
     }
     
     static var tabBarGreenColor: UIColor {
-        return UIColor(named: Colors.tabBarGreen.rawValue)!
+        return color(withName: Colors.tabBarGreen.rawValue)
     }
     
     static var tabBarOrangeColor: UIColor {
-        return UIColor(named: Colors.tabBarOrange.rawValue)!
+        return color(withName: Colors.tabBarOrange.rawValue)
     }
     
     static var tabBarRedColor: UIColor {
-        return UIColor(named: Colors.tabBarRed.rawValue)!
+        return color(withName: Colors.tabBarRed.rawValue)
     }
     
     static var borderColor: UIColor {
-        return UIColor(named: Colors.borderColor.rawValue)!
+        return color(withName: Colors.borderColor.rawValue)
     }
     
     static var chartGridLineColor: UIColor {
-        return UIColor(named: Colors.chartGridLineColor.rawValue)!
+        return color(withName: Colors.chartGridLineColor.rawValue)
     }
     
     static var chartTextColor: UIColor {
-        return UIColor(named: Colors.chartTextColor.rawValue)!
+        return color(withName: Colors.chartTextColor.rawValue)
     }
     
     static var lowEmphasisText: UIColor {
-        return UIColor(named: Colors.lowEmphasisText.rawValue)!
+        return color(withName: Colors.lowEmphasisText.rawValue)
     }
     
     static var mediumEmphasisText: UIColor {
-        return UIColor(named: Colors.mediumEmphasisText.rawValue)!
+        return color(withName: Colors.mediumEmphasisText.rawValue)
     }
     
     static var highEmphasisText: UIColor {
-        return UIColor(named: Colors.highEmphasisText.rawValue)!
+        return color(withName: Colors.highEmphasisText.rawValue)
     }
     
     static var chartValueNormal: UIColor {
-        return UIColor(named: Colors.chartValueNormal.rawValue)!
+        return color(withName: Colors.chartValueNormal.rawValue)
     }
     
     static var chartValueAbnormal: UIColor {
-        return UIColor(named: Colors.chartValueAbnormal.rawValue)!
+        return color(withName: Colors.chartValueAbnormal.rawValue)
     }
     
     static var chartValueCritical: UIColor {
-        return UIColor(named: Colors.chartValueCritical.rawValue)!
+        return color(withName: Colors.chartValueCritical.rawValue)
     }
     
     static var chartSliderBackground: UIColor {
-        return UIColor(named: Colors.chartSliderBackground.rawValue)!
+        return color(withName: Colors.chartSliderBackground.rawValue)
     }
     
     static var chartSelectionLine: UIColor {
-        return UIColor(named: Colors.chartSelectionLine.rawValue)!
+        return color(withName: Colors.chartSelectionLine.rawValue)
+    }
+    
+    private static func color(withName name: String) -> UIColor {
+        guard let color = UIColor(named: name) else {
+            fatalError("No color with name: \(name)")
+        }
+        return color
     }
 }

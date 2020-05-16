@@ -12,16 +12,17 @@
 
 import UIKit
 
-protocol EditCalibrationDisplayLogic: class {
+protocol EditCalibrationDisplayLogic: AnyObject {
     func displayLoad(viewModel: EditCalibration.Load.ViewModel)
 }
 
 class EditCalibrationViewController: NibViewController, EditCalibrationDisplayLogic {
     var interactor: EditCalibrationBusinessLogic?
-    var router: (NSObjectProtocol & EditCalibrationRoutingLogic & EditCalibrationDataPassing)?
+    var router: EditCalibrationDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }

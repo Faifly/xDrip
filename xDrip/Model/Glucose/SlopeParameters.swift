@@ -21,7 +21,7 @@ struct SlopeParameters {
     let defaultHighSlopeHigh: Double
     let defaultHighSlopeLow: Double
     
-    static let dex: SlopeParameters = SlopeParameters(
+    static let dex = SlopeParameters(
         lowSlope1: 0.75,
         lowSlope2: 0.70,
         highSlope1: 1.5,

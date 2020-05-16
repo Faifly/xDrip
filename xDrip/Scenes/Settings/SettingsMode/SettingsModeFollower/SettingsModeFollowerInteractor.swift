@@ -16,8 +16,7 @@ protocol SettingsModeFollowerBusinessLogic {
     func doLoad(request: SettingsModeFollower.Load.Request)
 }
 
-protocol SettingsModeFollowerDataStore {
-    
+protocol SettingsModeFollowerDataStore: AnyObject {    
 }
 
 final class SettingsModeFollowerInteractor: SettingsModeFollowerBusinessLogic, SettingsModeFollowerDataStore {

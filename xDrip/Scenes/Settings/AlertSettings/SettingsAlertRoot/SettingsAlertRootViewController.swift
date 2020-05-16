@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsAlertRootDisplayLogic: class {
+protocol SettingsAlertRootDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsAlertRoot.Load.ViewModel)
 }
 
 class SettingsAlertRootViewController: BaseSettingsViewController, SettingsAlertRootDisplayLogic {
     var interactor: SettingsAlertRootBusinessLogic?
+    var router: SettingsAlertRootDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsAlertRootViewController: BaseSettingsViewController, SettingsAlert
         let presenter = SettingsAlertRootPresenter()
         let router = SettingsAlertRootRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -64,6 +67,5 @@ class SettingsAlertRootViewController: BaseSettingsViewController, SettingsAlert
     // MARK: Display
     
     func displayLoad(viewModel: SettingsAlertRoot.Load.ViewModel) {
-        
     }
 }

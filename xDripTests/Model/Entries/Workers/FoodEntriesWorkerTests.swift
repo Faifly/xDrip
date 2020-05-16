@@ -9,9 +9,11 @@
 import XCTest
 @testable import xDrip
 
+// swiftlint:disable force_unwrapping
+
 final class FoodEntriesWorkerTests: AbstractRealmTest {
     func testAddingCarbEntry() {
-        XCTAssertTrue(realm.objects(CarbEntry.self).count == 0)
+        XCTAssertTrue(realm.objects(CarbEntry.self).isEmpty)
         
         let date = Date(timeIntervalSince1970: 6.0)
         let entry = FoodEntriesWorker.addCarbEntry(amount: 1.1, foodType: "2.2", assimilationDuration: 3.3, date: date)
@@ -24,11 +26,11 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
     }
     
     func testFetchingCarbEntries() {
-        XCTAssertTrue(realm.objects(CarbEntry.self).count == 0)
+        XCTAssertTrue(realm.objects(CarbEntry.self).isEmpty)
         
-        for i in 1...10 {
-            let date = Date(timeIntervalSince1970: 1000.0 - Double(i) * 10.0)
-            let entry = CarbEntry(amount: 1.0, foodType: "\(i)", assimilationDuration: 1.0, date: date)
+        for index in 1...10 {
+            let date = Date(timeIntervalSince1970: 1000.0 - Double(index) * 10.0)
+            let entry = CarbEntry(amount: 1.0, foodType: "\(index)", assimilationDuration: 1.0, date: date)
             realm.safeWrite {
                 realm.add(entry)
             }
@@ -41,7 +43,7 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
     }
     
     func testAddingBolusEntry() {
-        XCTAssertTrue(realm.objects(BolusEntry.self).count == 0)
+        XCTAssertTrue(realm.objects(BolusEntry.self).isEmpty)
         
         let date = Date(timeIntervalSince1970: 7.0)
         let entry = FoodEntriesWorker.addBolusEntry(amount: 2.2, date: date)
@@ -52,11 +54,11 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
     }
     
     func testFetchingBolusEntries() {
-        XCTAssertTrue(realm.objects(BolusEntry.self).count == 0)
+        XCTAssertTrue(realm.objects(BolusEntry.self).isEmpty)
         
-        for i in 1...10 {
-            let date = Date(timeIntervalSince1970: 1000.0 - Double(i) * 10.0)
-            let entry = BolusEntry(amount: Double(i), date: date)
+        for index in 1...10 {
+            let date = Date(timeIntervalSince1970: 1000.0 - Double(index) * 10.0)
+            let entry = BolusEntry(amount: Double(index), date: date)
             realm.safeWrite {
                 realm.add(entry)
             }

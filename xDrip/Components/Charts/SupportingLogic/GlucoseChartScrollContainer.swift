@@ -39,6 +39,7 @@ final class GlucoseChartScrollContainer: UIView {
         addSubview(selectionIndicator)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) is not permitted")
     }

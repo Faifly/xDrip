@@ -12,17 +12,16 @@
 
 import UIKit
 
-@objc protocol SettingsModeMasterRoutingLogic {
-    
+protocol SettingsModeMasterRoutingLogic {    
 }
 
 protocol SettingsModeMasterDataPassing {
     var dataStore: SettingsModeMasterDataStore? { get }
 }
 
-final class SettingsModeMasterRouter: NSObject, SettingsModeMasterRoutingLogic, SettingsModeMasterDataPassing {
+final class SettingsModeMasterRouter: SettingsModeMasterRoutingLogic, SettingsModeMasterDataPassing {
     weak var viewController: SettingsModeMasterViewController?
-    var dataStore: SettingsModeMasterDataStore?
+    weak var dataStore: SettingsModeMasterDataStore?
     
     // MARK: Routing
     

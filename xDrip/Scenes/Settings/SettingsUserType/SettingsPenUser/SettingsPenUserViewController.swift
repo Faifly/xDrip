@@ -12,15 +12,17 @@
 
 import UIKit
 
-protocol SettingsPenUserDisplayLogic: class {
+protocol SettingsPenUserDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsPenUser.Load.ViewModel)
 }
 
 class SettingsPenUserViewController: BaseSettingsViewController, SettingsPenUserDisplayLogic {
     var interactor: SettingsPenUserBusinessLogic?
+    var router: SettingsPenUserDataPassing?
     
     // MARK: Object lifecycle
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Use regular init")
     }
@@ -38,6 +40,7 @@ class SettingsPenUserViewController: BaseSettingsViewController, SettingsPenUser
         let presenter = SettingsPenUserPresenter()
         let router = SettingsPenUserRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         interactor.router = router
         presenter.viewController = viewController
@@ -64,6 +67,5 @@ class SettingsPenUserViewController: BaseSettingsViewController, SettingsPenUser
     // MARK: Display
     
     func displayLoad(viewModel: SettingsPenUser.Load.ViewModel) {
-        
     }
 }

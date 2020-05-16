@@ -19,11 +19,13 @@ final class EntriesListCarbsPersistenceWorker: EntriesListEntryPersistenceWorker
             let randomTimeInterval = TimeInterval.random(in: 0 ... 1_000_000_000)
             let date = Date(timeIntervalSince1970: randomTimeInterval)
             
-            let entry = CarbEntry(amount: randValue,
-                                  foodType: nil,
-                                  assimilationDuration: 0.0,
-                                  date: date)
-                carbs.append(entry)
+            let entry = CarbEntry(
+                amount: randValue,
+                foodType: nil,
+                assimilationDuration: 0.0,
+                date: date
+            )
+            carbs.append(entry)
         }
         
         return carbs
