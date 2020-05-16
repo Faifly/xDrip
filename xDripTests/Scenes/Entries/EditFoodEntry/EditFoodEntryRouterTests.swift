@@ -28,16 +28,7 @@ final class EditFoodEntryRouterTests: XCTestCase {
     }
     
     private func createSpy() -> ViewControllerSpy {
-        let archiver = NSKeyedArchiver(requiringSecureCoding: false)
-        archiver.finishEncoding()
-        let data = archiver.encodedData
-        guard let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data) else {
-            fatalError()
-        }
-        guard let spy = ViewControllerSpy(coder: unarchiver) else {
-            fatalError()
-        }
-        return spy
+        ViewControllerSpy()
     }
     
     // MARK: Test doubles

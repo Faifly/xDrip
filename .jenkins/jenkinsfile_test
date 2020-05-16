@@ -34,12 +34,6 @@ pipeline {
             }
         }
         
-        stage('Swiftlint') {
-            steps {
-                sh "swiftlint"
-            }
-        }
-        
         stage('Test Catalyst') {
             steps {
                 sh "rm -rd ~/Library/Containers/maccatalyst.${bundle_id} || true"
