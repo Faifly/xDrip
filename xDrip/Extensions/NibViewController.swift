@@ -10,7 +10,7 @@ import UIKit
 
 class NibViewController: UIViewController, NibLoadable {
     required init() {
-        super.init(nibName: type(of: self).nibName, bundle: nil)
+        super.init(nibName: Self.nibName, bundle: nil)
     }
     
     required init?(coder: NSCoder) {

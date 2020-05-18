@@ -8,6 +8,8 @@
 
 import UIKit
 
+// swiftlint:disable enum_case_associated_values_count
+
 enum BaseSettings {
     enum Cell {
         case disclosure(mainText: String, detailText: String?, selectionHandler: () -> Void)
