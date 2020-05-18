@@ -8,7 +8,6 @@
 
 import XCTest
 import RealmSwift
-import AKRealmUtils
 @testable import xDrip
 
 class AbstractRealmTest: XCTestCase {
