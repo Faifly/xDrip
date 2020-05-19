@@ -35,6 +35,8 @@
 "settings_root_carbs_duration_time_title" = "Время углеводов";
 "settings_root_insulin_duration_time_title" = "Время инсулина";
 "settings_root_nightscout_pump_title" = "Nightscout (Помпа)";
+"settings_root_application_setup_header" = "Настройки приложения";
+"settings_root_profile_setup_header" = "Настройки профиля";
 
 // Settings Chart
 "settings_chart_active_insulin" = "Активный инсулин";
@@ -73,6 +75,7 @@
 "settings_alert_types_event_type_title_urgent_low" = "Крайне низкий";
 "settings_alert_types_event_type_title_missed_readings" = "Пропущенные уведомления";
 "settings_alert_types_event_type_title_phone_muted" = "Телефон без звука";
+"settings_alert_types_minutes" = "мин";
 
 // Settings Alert Root // Alert Types // Alert Single Type
 "settings_alert_single_type_override_default" = "Переопределить стандартное";
@@ -98,6 +101,7 @@
 "settings_alert_single_type_event_type_title_urgent_low" = "Крайне низкий";
 "settings_alert_single_type_event_type_title_missed_readings" = "Пропущенные уведомления";
 "settings_alert_single_type_event_type_title_phone_muted" = "Телефон без звука";
+"settings_alert_single_type_minutes" = "мин";
 
 // Settings Alert Root // Alert Sound
 "settings_alert_sound_title" = "Звуки оповещений";
@@ -119,9 +123,9 @@
 "settings_alert_sound_minuet" = "Менуэт";
 "settings_alert_sound_news_flash" = "Выпуск новостей";
 "settings_alert_sound_noir" = "Нуар";
-"settings_alert_sound_sheerwood_forrest" = "Шервудский лес";
+"settings_alert_sound_sheerwood_forest" = "Шервудский лес";
 "settings_alert_sound_spell" = "Чары";
-"settings_alert_sound_swish" = "Тревога ожидания";
+"settings_alert_sound_suspense" = "Тревога ожидания";
 "settings_alert_sound_swish" = "Хлыст";
 "settings_alert_sound_swoosh" = "Со свистом";
 "settings_alert_sound_telegraph" = "Телеграф";
@@ -149,3 +153,7 @@
 "calibration_not_ready_error_title" = "Калибровка не доступна";
 "calibration_not_ready_error_general_message" = "Не достигнуты все условия для калибровки";
 "calibration_not_ready_error_no_initial_readings" = "Недостаточно показаний для первичной калибровки";
+
+// Custom Picker
+"custom_picker_hours" = "ч";
+"custom_picker_minutes" = "мин";

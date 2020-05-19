@@ -22,7 +22,12 @@ final class BaseSettingsCellFactory {
             
         case let .textInput(mainText, detailText, placeholder, textChangeHandler):
             let cell = tableView.dequeueReusableCell(ofType: BaseSettingsTextInputTableViewCell.self, for: indexPath)
-            cell.configure(mainText: mainText, detailText: detailText, placeholder: placeholder, textChangeHandler: textChangeHandler)
+            cell.configure(
+                mainText: mainText,
+                detailText: detailText,
+                placeholder: placeholder,
+                textChangeHandler: textChangeHandler
+            )
             
             return cell
             

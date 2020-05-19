@@ -9,6 +9,10 @@
 import UIKit
 
 final class CustomPickerView: UIPickerView, PickerView {
+    enum Mode {
+        case countDown
+    }
+    
     var onValueChanged: ((String?) -> Void)?
     var formatValues: (([String]) -> (String))?
     
@@ -18,7 +22,32 @@ final class CustomPickerView: UIPickerView, PickerView {
         self.data = data
         
         super.init(frame: .zero)
+        commonInit()
+    }
+    
+    init(mode: Mode) {
+        var data: [[String]] = []
         
+        switch mode {
+        case .countDown:
+            let hours = stride(from: 0, to: 24, by: 1).map({ String($0) })
+            let minutes = stride(from: 0, to: 60, by: 1).map({ String($0) })
+            
+            data = [
+                hours,
+                ["custom_picker_hours".localized],
+                minutes,
+                ["custom_picker_minutes".localized]
+            ]
+        }
+        
+        self.data = data
+        
+        super.init(frame: .zero)
+        commonInit()
+    }
+    
+    private func commonInit() {
         delegate = self
         dataSource = self
     }
@@ -51,5 +80,21 @@ extension CustomPickerView: UIPickerViewDelegate, UIPickerViewDataSource {
         
         let formattedString = formatValues?(values)
         onValueChanged?(formattedString)
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        let font = UIFont.systemFont(ofSize: 24)
+        var maxWidth: CGFloat = 0.0
+        
+        for value in data[component] {
+            let val = value as NSString
+            let width = val.size(withAttributes: [NSAttributedString.Key.font: font]).width
+            
+            if width > maxWidth {
+                maxWidth = width
+            }
+        }
+        
+        return maxWidth + 16.0
     }
 }

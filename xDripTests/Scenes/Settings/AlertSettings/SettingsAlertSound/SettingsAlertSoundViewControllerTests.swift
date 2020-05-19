@@ -79,4 +79,21 @@ final class SettingsAlertSoundViewControllerTests: XCTestCase {
         
         // Then
     }
+    
+    func testSingleSelectionHandler() {
+        loadView()
+        
+        let configuration = AlertConfiguration()
+        sut.router?.dataStore?.configuration = configuration
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        let delegate = tableView.delegate
+        delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 4, section: 0))
+        
+        XCTAssertTrue(configuration.soundID == 4)
+    }
 }

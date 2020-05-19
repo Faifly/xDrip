@@ -11,7 +11,6 @@
 //
 
 import UIKit
-import AudioToolbox
 
 protocol SettingsAlertSoundDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsAlertSound.Load.ViewModel)

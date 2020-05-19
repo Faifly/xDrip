@@ -35,6 +35,8 @@
 "settings_root_carbs_duration_time_title" = "Carbs Duration Time";
 "settings_root_insulin_duration_time_title" = "Insulin Duration Time";
 "settings_root_nightscout_pump_title" = "Nightscout (Pump)";
+"settings_root_application_setup_header" = "Application setup";
+"settings_root_profile_setup_header" = "Profile setup";
 
 // Settings Chart
 "settings_chart_active_insulin" = "Active Insulin";
@@ -73,6 +75,7 @@
 "settings_alert_types_event_type_title_urgent_low" = "Urgent Low";
 "settings_alert_types_event_type_title_missed_readings" = "Missed Readings";
 "settings_alert_types_event_type_title_phone_muted" = "Phone Muted";
+"settings_alert_types_minutes" = "m";
 
 // Settings Alert Root // Alert Types // Alert Single Type
 "settings_alert_single_type_override_default" = "Override Default";
@@ -98,6 +101,7 @@
 "settings_alert_single_type_event_type_title_urgent_low" = "Urgent Low";
 "settings_alert_single_type_event_type_title_missed_readings" = "Missed Readings";
 "settings_alert_single_type_event_type_title_phone_muted" = "Phone Muted";
+"settings_alert_single_type_minutes" = "m";
 
 // Settings Alert Root // Alert Sound
 "settings_alert_sound_title" = "Sounds";
@@ -119,9 +123,9 @@
 "settings_alert_sound_minuet" = "Minuet";
 "settings_alert_sound_news_flash" = "News Flash";
 "settings_alert_sound_noir" = "Noir";
-"settings_alert_sound_sheerwood_forrest" = "Sherwood Forrest";
+"settings_alert_sound_sheerwood_forest" = "Sherwood Forest";
 "settings_alert_sound_spell" = "Spell";
-"settings_alert_sound_swish" = "Suspense";
+"settings_alert_sound_suspense" = "Suspense";
 "settings_alert_sound_swish" = "Swish";
 "settings_alert_sound_swoosh" = "Swoosh";
 "settings_alert_sound_telegraph" = "Telegraph";
@@ -149,3 +153,7 @@
 "calibration_not_ready_error_title" = "Not ready for calibration";
 "calibration_not_ready_error_general_message" = "Not all conditions for calibration are met";
 "calibration_not_ready_error_no_initial_readings" = "Not enough readings for initial calibration";
+
+// Custom Picker
+"custom_picker_hours" = "hours";
+"custom_picker_minutes" = "min";

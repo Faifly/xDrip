@@ -35,19 +35,45 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
         let settings = User.current.settings.alert?.defaultConfiguration ?? AlertConfiguration()
         
         let cells: [BaseSettings.Cell] = [
-            createTextInputViewCell(.name, detailText: settings.name, placeholder: settings.eventType.title, editingChangedHandler: response.defaultSectionTextEditingChangedHandler),
-            createRightSwitchCell(.snoozeFromNotification, isSwitchOn: settings.snoozeFromNotification, switchValueChangedHandler: response.defaultSectionSwitchHandler),
-            createTimePickerView(.defaultSnooze, detail: settings.defaultSnooze, valueChangeHandler: response.defaultSectionPickerValueChangedHandler),
-            createRightSwitchCell(.repeat, isSwitchOn: settings.repeat, switchValueChangedHandler: response.defaultSectionSwitchHandler),
-            createDisclosureCell(mainText: SettingsAlertTypes.Field.sound.title, detailText: nil, index: 0, selectionHandler: response.defaultSectionSelectionHandler),
-            createRightSwitchCell(.vibrate, isSwitchOn: settings.isVibrating, switchValueChangedHandler: response.defaultSectionSwitchHandler)
+            createTextInputViewCell(
+                .name,
+                detailText: settings.name,
+                placeholder: settings.eventType.title,
+                editingChangedHandler: response.defaultSectionTextEditingChangedHandler
+            ),
+            createRightSwitchCell(
+                .snoozeFromNotification,
+                isSwitchOn: settings.snoozeFromNotification,
+                switchValueChangedHandler: response.defaultSectionSwitchHandler
+            ),
+            createTimePickerView(
+                .defaultSnooze,
+                detail: settings.defaultSnooze,
+                valueChangeHandler: response.defaultSectionPickerValueChangedHandler
+            ),
+            createRightSwitchCell(
+                .repeat,
+                isSwitchOn: settings.repeat,
+                switchValueChangedHandler: response.defaultSectionSwitchHandler
+            ),
+            createDisclosureCell(
+                mainText: SettingsAlertTypes.Field.sound.title,
+                detailText: nil,
+                index: 0,
+                selectionHandler: response.defaultSectionSelectionHandler
+            ),
+            createRightSwitchCell(
+                .vibrate,
+                isSwitchOn: settings.isVibrating,
+                switchValueChangedHandler: response.defaultSectionSwitchHandler
+            )
         ]
         
         return .normal(cells: cells, header: "settings_alert_types_default_header".localized, footer: nil)
     }
     
     private func createEventsSection(response: SettingsAlertTypes.Load.Response) -> BaseSettings.Section {
-        let settings = User.current.settings.alert!
+        let settings = User.current.settings.alert ?? AlertSettings()
         var cells: [BaseSettings.Cell] = []
         
         var alertTypes = AlertEventType.allCases
@@ -56,7 +82,14 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
         for (index, alertType) in alertTypes.enumerated() {
             let config = settings.customConfiguration(for: alertType)
             
-            cells.append(createDisclosureCell(mainText: config.name ?? alertType.title, detailText: nil, index: index, selectionHandler: response.eventsSectionSelectionHandler))
+            cells.append(
+                createDisclosureCell(
+                    mainText: config.name ?? alertType.title,
+                    detailText: nil,
+                    index: index,
+                    selectionHandler: response.eventsSectionSelectionHandler
+                )
+            )
         }
         
         return .normal(cells: cells, header: "settings_alert_types_events_header".localized, footer: nil)
@@ -67,8 +100,7 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
         detailText: String?,
         placeholder: String?,
         editingChangedHandler: @escaping (String) -> Void) -> BaseSettings.Cell {
-        
-        return .textInput(mainText: field.title, detailText: detailText, placeholder: placeholder) { (string) in
+        return .textInput(mainText: field.title, detailText: detailText, placeholder: placeholder) { string in
             guard let string = string else { return }
             editingChangedHandler(string)
         }
@@ -78,8 +110,7 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
         _ field: SettingsAlertTypes.Field,
         isSwitchOn: Bool,
         switchValueChangedHandler: @escaping (SettingsAlertTypes.Field, Bool) -> Void) -> BaseSettings.Cell {
-        
-        return .rightSwitch(text: field.title, isSwitchOn: isSwitchOn) { (value) in
+        return .rightSwitch(text: field.title, isSwitchOn: isSwitchOn) { value in
             switchValueChangedHandler(field, value)
         }
     }
@@ -88,20 +119,9 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
         _ field: SettingsAlertTypes.Field,
         detail: TimeInterval?,
         valueChangeHandler: @escaping (TimeInterval) -> Void) -> BaseSettings.Cell {
+        let detailText = "\(Int((detail ?? 0.0) / TimeInterval.secondsPerMinute)) " + "settings_alert_types_minutes".localized
         
-        let detailText = "\(Int((detail ?? 0.0) / TimeInterval.secondsPerMinute)) m"
-        
-        let hours = stride(from: 0, to: 24, by: 1).map({ String($0) })
-        let minutes = stride(from: 0, to: 60, by: 1).map({ String($0) })
-        
-        let data = [
-            hours,
-            ["hrs"],
-            minutes,
-            ["mins"]
-        ]
-        
-        let picker = CustomPickerView(data: data)
+        let picker = CustomPickerView(mode: .countDown)
         
         if let detail = detail {
             let hour = Int(detail / TimeInterval.secondsPerHour)
@@ -112,7 +132,6 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
         }
         
         picker.formatValues = { strings in
-            
             guard strings.count > 3 else { return "" }
             
             let hourString = strings[0]
@@ -124,7 +143,7 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
             
             valueChangeHandler(TimeInterval(time))
             
-            return "\(Int(time / TimeInterval.secondsPerMinute)) m"
+            return "\(Int(time / TimeInterval.secondsPerMinute)) " + "settings_alert_types_minutes".localized
         }
         
         return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)
@@ -135,7 +154,6 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
         detailText: String?,
         index: Int,
         selectionHandler: @escaping (Int) -> Void) -> BaseSettings.Cell {
-        
         return .disclosure(mainText: mainText, detailText: detailText) {
             selectionHandler(index + 1)
         }

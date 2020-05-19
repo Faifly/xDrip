@@ -55,6 +55,14 @@ final class SettingsAlertRootViewControllerTests: XCTestCase {
         }
     }
     
+    final class SettingsAlertRootRoutingLogicSpy: SettingsAlertRootRoutingLogic {
+        var toAlertTypesCalled = false
+        
+        func routeToAlertTypes() {
+            toAlertTypesCalled = true
+        }
+    }
+    
     // MARK: Tests
     
     func testShouldDoLoadWhenViewIsLoaded() {
@@ -71,12 +79,98 @@ final class SettingsAlertRootViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsAlertRoot.Load.ViewModel(animated: false, tableViewModel: BaseSettings.ViewModel(sections: []))
+        let viewModel = SettingsAlertRoot.Load.ViewModel(
+            animated: false,
+            tableViewModel: BaseSettings.ViewModel(sections: [])
+        )
         
         // When
         loadView()
         sut.displayLoad(viewModel: viewModel)
         
         // Then
+    }
+    
+    func testHandlers() {
+        loadView()
+        
+        let settings = User.current.settings.alert
+        let routerSpy = SettingsAlertRootRoutingLogicSpy()
+        
+        if let interactor = sut.interactor as? SettingsAlertRootInteractor {
+            interactor.router = routerSpy
+        }
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        // Default
+        XCTAssertTrue(tableView.numberOfSections == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 3)
+        
+        let dataSource = tableView.dataSource
+        let delegate = tableView.delegate
+        
+        guard let overrideSystemVolumeCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
+            let overrideMuteCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
+            let notificationsOnCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 0)) as? BaseSettingsRightSwitchTableViewCell else {
+            XCTFail("Cannot obtain cell")
+            return
+        }
+        
+        guard let volumeSwitch = overrideSystemVolumeCell.accessoryView as? UISwitch,
+            let muteSwith = overrideMuteCell.accessoryView as? UISwitch,
+            let notificationsSwitch = notificationsOnCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        
+        // Default
+        XCTAssertTrue(settings?.isSystemVolumeOverriden == false)
+        XCTAssertTrue(settings?.isMuteOverriden == false)
+        XCTAssertTrue(settings?.isNotificationsEnabled == false)
+        
+        // When
+        volumeSwitch.isOn = true
+        volumeSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 4)
+        XCTAssertTrue(settings?.isSystemVolumeOverriden == true)
+        
+        // When
+        muteSwith.isOn = true
+        muteSwith.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(settings?.isMuteOverriden == true)
+        
+        // When
+        notificationsSwitch.isOn = true
+        notificationsSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 5)
+        XCTAssertTrue(settings?.isNotificationsEnabled == true)
+        
+        guard let volumeSliderCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? BaseSettingsVolumeSliderTableViewCell else {
+            XCTFail("Cannot obtain volume slider cell")
+            return
+        }
+        
+        guard let volumeSlider = volumeSliderCell.findView(with: "volumeSlider") as? UISlider else {
+            XCTFail("Cannot obtain volume slider")
+            return
+        }
+        
+        // When
+        volumeSlider.setValue(0.8, animated: false)
+        volumeSlider.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(settings?.volume == 0.8)
+        
+        // When
+        delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 4, section: 0))
+        // Then
+        XCTAssertTrue(routerSpy.toAlertTypesCalled)
     }
 }

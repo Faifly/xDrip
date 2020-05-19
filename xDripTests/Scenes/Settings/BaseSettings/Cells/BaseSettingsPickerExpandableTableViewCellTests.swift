@@ -72,12 +72,12 @@ final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
         XCTAssertFalse(stackView.arrangedSubviews.contains(picker))
         
         // When
-        sut.togglePickerVisivility()
+        sut.togglePickerVisibility()
         // Then
         XCTAssertTrue(stackView.arrangedSubviews.contains(picker))
         
         // When
-        sut.togglePickerVisivility()
+        sut.togglePickerVisibility()
         // Then
         XCTAssertFalse(stackView.arrangedSubviews.contains(picker))
     }

@@ -22,10 +22,11 @@ final class SettingsAlertSoundPresenter: SettingsAlertSoundPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsAlertSound.Load.Response) {
-        let tableViewModel = BaseSettings.ViewModel(sections: [
-            createSoundsSection(response: response)
-        ])
-        
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createSoundsSection(response: response)
+            ]
+        )
         
         let viewModel = SettingsAlertSound.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
@@ -64,7 +65,7 @@ private extension CustomSound {
         case .minuet: return "settings_alert_sound_minuet".localized
         case .newsFlash: return "settings_alert_sound_news_flash".localized
         case .noir: return "settings_alert_sound_noir".localized
-        case .sherwoodForrest: return "settings_alert_sound_sheerwood_forrest".localized
+        case .sherwoodForest: return "settings_alert_sound_sheerwood_forest".localized
         case .spell: return "settings_alert_sound_spell".localized
         case .suspense: return "settings_alert_sound_suspense".localized
         case .swish: return "settings_alert_sound_swish".localized

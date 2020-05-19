@@ -17,6 +17,8 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
             tableView.backgroundColor = .clear
         }
         
+        tableView.keyboardDismissMode = .onDrag
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -43,7 +45,7 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
     
     private var viewModel: BaseSettings.ViewModel?
     private let cellFactory = BaseSettingsCellFactory()
-    var expandedCell: IndexPath? = nil
+    var expandedCell: IndexPath?
     
     required init() {
         super.init(nibName: nil, bundle: nil)

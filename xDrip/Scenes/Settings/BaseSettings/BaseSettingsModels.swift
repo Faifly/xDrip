@@ -19,13 +19,7 @@ enum BaseSettings {
     
     enum Section {
         case normal(cells: [Cell], header: String?, footer: String?)
-        case singleSelection(
-            cells: [String],
-            selectedIndex: Int,
-            header: String?,
-            footer: String?,
-            selectionHandler: (Int) -> Void
-        )
+        case singleSelection(cells: [String], selectedIndex: Int,header: String?, footer: String?, selectionHandler: (Int) -> Void)
         
         var rowsCount: Int {
             switch self {

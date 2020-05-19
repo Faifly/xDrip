@@ -41,12 +41,12 @@
                 <constraints>
                     <constraint firstItem="qCj-Ye-u3f" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="8RZ-ZE-kwE"/>
                     <constraint firstItem="imx-Og-Hri" firstAttribute="top" secondItem="qCj-Ye-u3f" secondAttribute="top" id="FKH-3N-yPB"/>
+                    <constraint firstItem="qCj-Ye-u3f" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="M74-jh-SgR"/>
                     <constraint firstItem="Tng-e1-xNk" firstAttribute="top" secondItem="qCj-Ye-u3f" secondAttribute="bottom" id="PYa-o5-cFZ"/>
                     <constraint firstAttribute="bottom" secondItem="Tng-e1-xNk" secondAttribute="bottom" constant="8" id="dHe-yd-giR"/>
-                    <constraint firstAttribute="trailing" secondItem="imx-Og-Hri" secondAttribute="trailing" constant="16" id="eIU-qd-ecu"/>
                     <constraint firstItem="Tng-e1-xNk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="jzM-Iy-34t"/>
+                    <constraint firstItem="imx-Og-Hri" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="pH5-si-S8H"/>
                     <constraint firstAttribute="trailing" secondItem="Tng-e1-xNk" secondAttribute="trailing" id="wO4-zO-GTT"/>
-                    <constraint firstItem="qCj-Ye-u3f" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="xak-HC-uUe"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

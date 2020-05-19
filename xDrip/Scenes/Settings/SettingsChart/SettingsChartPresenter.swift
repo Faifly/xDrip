@@ -35,9 +35,21 @@ final class SettingsChartPresenter: SettingsChartPresentationLogic {
         let settings = User.current.settings.chart!
         
         let cells: [BaseSettings.Cell] = [
-            createRightSwitchCell(.activeInsulin, isSwitchOn: settings.showActiveInsulin, switchHandler: response.switchValueChangedHandler),
-            createRightSwitchCell(.activeCarbs, isSwitchOn: settings.showActiveInsulin, switchHandler: response.switchValueChangedHandler),
-            createRightSwitchCell(.data, isSwitchOn: settings.showActiveInsulin, switchHandler: response.switchValueChangedHandler)
+            createRightSwitchCell(
+                .activeInsulin,
+                isSwitchOn: settings.showActiveInsulin,
+                switchHandler: response.switchValueChangedHandler
+            ),
+            createRightSwitchCell(
+                .activeCarbs,
+                isSwitchOn: settings.showActiveInsulin,
+                switchHandler: response.switchValueChangedHandler
+            ),
+            createRightSwitchCell(
+                .data,
+                isSwitchOn: settings.showActiveInsulin,
+                switchHandler: response.switchValueChangedHandler
+            )
         ]
         
         return BaseSettings.Section.normal(
@@ -64,7 +76,6 @@ final class SettingsChartPresenter: SettingsChartPresentationLogic {
         _ field: SettingsChart.Field,
         isSwitchOn: Bool,
         switchHandler: @escaping (SettingsChart.Field, Bool) -> Void) -> BaseSettings.Cell {
-        
         return .rightSwitch(text: field.title, isSwitchOn: isSwitchOn) { value in
             switchHandler(field, value)
         }

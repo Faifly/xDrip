@@ -55,6 +55,19 @@ final class SettingsAlertTypesViewControllerTests: XCTestCase {
         }
     }
     
+    final class SettingsAlertTypesRoutingLogicSpy: SettingsAlertTypesRoutingLogic {
+        var routeToAlertSoundsCalled = false
+        var routeToSingleEventCalled = false
+        
+        func routeToAlertSounds() {
+            routeToAlertSoundsCalled = true
+        }
+        
+        func routeToSingleEvent() {
+            routeToSingleEventCalled = true
+        }
+    }
+    
     // MARK: Tests
     
     func testShouldDoLoadWhenViewIsLoaded() {
@@ -78,5 +91,160 @@ final class SettingsAlertTypesViewControllerTests: XCTestCase {
         sut.displayLoad(viewModel: viewModel)
         
         // Then
+    }
+    
+    func testTableView() {
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssert(tableView.numberOfSections == 2)
+        XCTAssert(tableView.numberOfRows(inSection: 0) == 6)
+        XCTAssert(tableView.numberOfRows(inSection: 1) == 8)
+    }
+    
+    func testSwitchValueChangedHandlers() {
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        let dataSource = tableView.dataSource
+        
+        guard let snoozeOnCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
+            let repeatCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 3, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
+            let vibrateCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 5, section: 0)) as? BaseSettingsRightSwitchTableViewCell else {
+            XCTFail("Cannot obtain cells")
+            return
+        }
+        
+        guard let snoozeSwitch = snoozeOnCell.accessoryView as? UISwitch,
+            let repeatSwitch = repeatCell.accessoryView as? UISwitch,
+            let vibrateSwitch = vibrateCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        let settings = User.current.settings.alert?.defaultConfiguration
+        
+        // When
+        snoozeSwitch.isOn = true
+        snoozeSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(settings?.snoozeFromNotification == true)
+        
+        // When
+        snoozeSwitch.isOn = false
+        snoozeSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(settings?.snoozeFromNotification == false)
+        
+        // When
+        repeatSwitch.isOn = true
+        repeatSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(settings?.repeat == true)
+        
+        // When
+        repeatSwitch.isOn = false
+        repeatSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(settings?.snoozeFromNotification == false)
+        
+        // When
+        vibrateSwitch.isOn = true
+        vibrateSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(settings?.isVibrating == true)
+        
+        // When
+        vibrateSwitch.isOn = false
+        vibrateSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(settings?.snoozeFromNotification == false)
+    }
+    
+    func testTimePickerValueChangedHandler() {
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        let dataSource = tableView.dataSource
+        
+        guard let snoozeCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 0)) as? PickerExpandableTableViewCell else {
+            XCTFail("Cannot obtain picker expandable cell")
+            return
+        }
+        
+        // When
+        snoozeCell.togglePickerVisibility()
+        guard let stackView = snoozeCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let pickerView = stackView.arrangedSubviews.first as? CustomPickerView else {
+            XCTFail("Cannot obtain pickerView")
+            return
+        }
+        // When
+        pickerView.selectRow(12, inComponent: 2, animated: false)
+        pickerView.pickerView(pickerView, didSelectRow: 12, inComponent: 2)
+        // Then
+        XCTAssertTrue(User.current.settings.alert?.defaultConfiguration?.defaultSnooze == 12.0 * TimeInterval.secondsPerMinute)
+    }
+    
+    func testTextEditingChangedHandler() {
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        let dataSource = tableView.dataSource
+        
+        guard let nameCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsTextInputTableViewCell else {
+            XCTFail("Cannot obtain text input cell")
+            return
+        }
+        
+        // Text field editing changed handler
+        guard let nameTextField = nameCell.findView(with: "textField") as? UITextField else {
+            XCTFail("Cannot obtaion textField")
+            return
+        }
+        // When
+        nameTextField.text = "Test Name"
+        nameTextField.sendActions(for: .editingChanged)
+        // Then
+        XCTAssertTrue(User.current.settings.alert?.defaultConfiguration?.name == "Test Name")
+    }
+    
+    func testSingleSelectionHandlers() {
+        loadView()
+        
+        let routerSpy = SettingsAlertTypesRoutingLogicSpy()
+        if let interactor = sut.interactor as? SettingsAlertTypesInteractor {
+            interactor.router = routerSpy
+        }
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        let delegate = tableView.delegate
+        
+        // Single selection handler test
+        // When
+        delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 4, section: 0))
+        // Then
+        XCTAssertTrue(routerSpy.routeToAlertSoundsCalled)
+        
+        // Event type selection handler
+        // When
+        delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 0, section: 1))
+        // Then
+        XCTAssertTrue(routerSpy.routeToSingleEventCalled)
     }
 }

@@ -20,7 +20,11 @@ final class BaseSettingsTextInputTableViewCell: UITableViewCell {
         textField.delegate = self
     }
     
-    func configure(mainText: String, detailText: String?, placeholder: String?, textChangeHandler: ((String?) -> Void)?) {
+    func configure(
+        mainText: String,
+        detailText: String?,
+        placeholder: String?,
+        textChangeHandler: ((String?) -> Void)?) {
         mainTextLabel.text = mainText
         textField.text = detailText
         textField.placeholder = placeholder

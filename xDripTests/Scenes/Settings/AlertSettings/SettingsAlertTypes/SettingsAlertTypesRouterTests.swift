@@ -33,8 +33,63 @@ final class SettingsAlertTypesRouterTests: XCTestCase {
     
     // MARK: Test doubles
     
-    final class ViewControllerSpy: SettingsAlertTypesViewController {
+    final class ViewControllerSpy: UINavigationController {
+        var lastPushedViewController: UIViewController?
+        
+        override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+            lastPushedViewController = viewController
+        }
     }
     
     // MARK: Tests
+    
+    func testRouteToAlertSounds() {
+        let viewController = SettingsAlertTypesViewController()
+        let spy = createSpy()
+        spy.viewControllers = [viewController]
+        sut.viewController = viewController
+        
+        viewController.viewDidLoad()
+        
+        // When
+        sut.routeToAlertSounds()
+        // Then
+        XCTAssertNil(spy.lastPushedViewController)
+        
+        // When
+        if let interactor = viewController.interactor as? SettingsAlertTypesInteractor {
+            sut.dataStore = interactor
+        }
+        sut.routeToAlertSounds()
+        // Then
+        XCTAssert(spy.lastPushedViewController is SettingsAlertSoundViewController)
+    }
+    
+    func testRouteToSingleEvent() {
+        let viewController = SettingsAlertTypesViewController()
+        let spy = createSpy()
+        spy.viewControllers = [viewController]
+        sut.viewController = viewController
+        
+        viewController.viewDidLoad()
+        
+        // When
+        sut.routeToSingleEvent()
+        // Then
+        XCTAssertNil(spy.lastPushedViewController)
+        
+        guard let tableView = viewController.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        // When
+        if let interactor = viewController.interactor as? SettingsAlertTypesInteractor {
+            sut.dataStore = interactor
+            interactor.router = sut
+        }
+        tableView.delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 0, section: 1))
+        // Then
+        XCTAssertTrue(sut.dataStore?.eventType == .fastRise)
+        XCTAssertTrue(spy.lastPushedViewController is SettingsAlertSingleTypeViewController)
+    }
 }

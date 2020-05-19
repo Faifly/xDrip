@@ -15,17 +15,16 @@ protocol ExpandableTableContainer: UIViewController {
 
 extension ExpandableTableContainer {
     func toggleExpansion(indexPath: IndexPath, tableView: UITableView) {
-        
         let cell = tableView.cellForRow(at: indexPath) as? PickerExpandableTableViewCell
         
-        cell?.togglePickerVisivility()
+        cell?.togglePickerVisibility()
         
         if expandedCell == indexPath {
             expandedCell = nil
         } else {
             if let expandedIndexPath = expandedCell {
                 let cell = tableView.cellForRow(at: expandedIndexPath) as? PickerExpandableTableViewCell
-                cell?.togglePickerVisivility()
+                cell?.togglePickerVisibility()
             }
             expandedCell = indexPath
         }

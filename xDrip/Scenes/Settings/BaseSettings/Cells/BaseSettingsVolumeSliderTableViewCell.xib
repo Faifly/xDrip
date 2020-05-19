@@ -25,6 +25,7 @@
                     </imageView>
                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="IYC-AQ-sdj">
                         <rect key="frame" x="33" y="7" width="239" height="31"/>
+                        <accessibility key="accessibilityConfiguration" identifier="volumeSlider"/>
                         <connections>
                             <action selector="onValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="HgC-3i-XvU"/>
                         </connections>
@@ -33,11 +34,11 @@
                 <constraints>
                     <constraint firstItem="Z6q-A3-EXr" firstAttribute="centerY" secondItem="IYC-AQ-sdj" secondAttribute="centerY" id="4r5-MT-rbP"/>
                     <constraint firstItem="V1t-0O-QpZ" firstAttribute="leading" secondItem="IYC-AQ-sdj" secondAttribute="trailing" constant="8" id="6n3-en-mX8"/>
-                    <constraint firstItem="Z6q-A3-EXr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="9im-Yu-FYu"/>
                     <constraint firstItem="IYC-AQ-sdj" firstAttribute="leading" secondItem="Z6q-A3-EXr" secondAttribute="trailing" constant="8" id="Pgy-7N-eAD"/>
+                    <constraint firstItem="Z6q-A3-EXr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="SpX-qf-F6a"/>
                     <constraint firstItem="IYC-AQ-sdj" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="V80-1q-rZ3"/>
+                    <constraint firstItem="V1t-0O-QpZ" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="lnF-Io-TDB"/>
                     <constraint firstItem="V1t-0O-QpZ" firstAttribute="centerY" secondItem="IYC-AQ-sdj" secondAttribute="centerY" id="r6F-HB-kgk"/>
-                    <constraint firstAttribute="trailing" secondItem="V1t-0O-QpZ" secondAttribute="trailing" constant="16" id="veq-fy-MDl"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

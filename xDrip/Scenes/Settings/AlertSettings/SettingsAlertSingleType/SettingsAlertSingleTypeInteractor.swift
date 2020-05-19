@@ -31,7 +31,8 @@ final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLo
     // MARK: Do something
     
     func doLoad(request: SettingsAlertSingleType.Load.Request) {
-        configuration = User.current.settings.alert?.customConfiguration(for: eventType ?? .default) ?? AlertConfiguration()
+        let alertSettings = User.current.settings.alert
+        configuration = alertSettings?.customConfiguration(for: eventType ?? .default) ?? AlertConfiguration()
         
         let response = SettingsAlertSingleType.Load.Response(
             animated: request.animated,

@@ -26,7 +26,7 @@ enum CustomSound: CaseIterable {
     case minuet
     case newsFlash
     case noir
-    case sherwoodForrest
+    case sherwoodForest
     case spell
     case suspense
     case swish
@@ -55,7 +55,7 @@ enum CustomSound: CaseIterable {
         case .minuet: return "Minuet.caf"
         case .newsFlash: return "News_Flash.caf"
         case .noir: return "Noir.caf"
-        case .sherwoodForrest: return "Sherwood_Forrest.caf"
+        case .sherwoodForest: return "Sherwood_Forest.caf"
         case .spell: return "Spell.caf"
         case .suspense: return "Suspense.caf"
         case .swish: return "Swish.caf"

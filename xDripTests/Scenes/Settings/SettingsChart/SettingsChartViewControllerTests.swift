@@ -79,4 +79,80 @@ final class SettingsChartViewControllerTests: XCTestCase {
         
         // Then
     }
+    
+    func testSwitchHandler() {
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssert(tableView.numberOfSections == 2)
+        XCTAssert(tableView.numberOfRows(inSection: 0) == 3)
+        XCTAssert(tableView.numberOfRows(inSection: 1) == 3)
+        
+        let dataSource = tableView.dataSource
+        
+        guard let activeInsulinCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
+            let activeCarbsCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
+            let dataCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 0)) as? BaseSettingsRightSwitchTableViewCell else {
+            XCTFail("Cannot obtain cell")
+            return
+        }
+        
+        guard let insulinSwitch = activeInsulinCell.accessoryView as? UISwitch,
+            let carbsSwitch = activeCarbsCell.accessoryView as? UISwitch,
+            let dataSwitch = dataCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain right switch")
+            return
+        }
+        
+        // Default
+        XCTAssertTrue(User.current.settings.chart?.showActiveInsulin == true)
+        XCTAssertTrue(User.current.settings.chart?.showActiveCarbs == true)
+        XCTAssertTrue(User.current.settings.chart?.showData == true)
+        
+        // When
+        insulinSwitch.setOn(false, animated: true)
+        insulinSwitch.sendActions(for: .valueChanged)
+        carbsSwitch.setOn(false, animated: true)
+        carbsSwitch.sendActions(for: .valueChanged)
+        dataSwitch.setOn(false, animated: true)
+        dataSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(User.current.settings.chart?.showActiveInsulin == false)
+        XCTAssertTrue(User.current.settings.chart?.showActiveCarbs == false)
+        XCTAssertTrue(User.current.settings.chart?.showData == false)
+    }
+    
+    func testSingleSelectionHandler() {
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssert(tableView.numberOfSections == 2)
+        XCTAssert(tableView.numberOfRows(inSection: 0) == 3)
+        XCTAssert(tableView.numberOfRows(inSection: 1) == 3)
+        
+        let delegate = tableView.delegate
+        
+        // When
+        delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 0, section: 1))
+        // Then
+        XCTAssertTrue(User.current.settings.chart?.basalDisplayMode == .onTop)
+        
+        // When
+        delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 1, section: 1))
+        // Then
+        XCTAssertTrue(User.current.settings.chart?.basalDisplayMode == .onBottom)
+        
+        // When
+        delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 2, section: 1))
+        // Then
+        XCTAssertTrue(User.current.settings.chart?.basalDisplayMode == .notShown)
+    }
 }

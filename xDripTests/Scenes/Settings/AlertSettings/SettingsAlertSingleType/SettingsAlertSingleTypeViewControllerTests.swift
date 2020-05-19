@@ -55,6 +55,14 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         }
     }
     
+    final class SettingsAlertSingleTypeRoutingLogicSpy: SettingsAlertSingleTypeRoutingLogic {
+        var routeToSoundCalled = false
+        
+        func routeToSound() {
+            routeToSoundCalled = true
+        }
+    }
+    
     // MARK: Tests
     
     func testShouldDoLoadWhenViewIsLoaded() {
@@ -71,12 +79,375 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsAlertSingleType.Load.ViewModel(animated: false, title: "", tableViewModel: BaseSettings.ViewModel(sections: []))
+        let viewModel = SettingsAlertSingleType.Load.ViewModel(
+            animated: false,
+            title: "",
+            tableViewModel: BaseSettings.ViewModel(sections: [])
+        )
         
         // When
         loadView()
         sut.displayLoad(viewModel: viewModel)
         
         // Then
+    }
+    
+    func testTableView() {
+        setupSettingsAlertSingleTypeViewController()
+        loadView()
+        
+        let configuration = sut.router?.dataStore?.configuration
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        let dataSource = tableView.dataSource
+        
+        XCTAssertTrue(tableView.numberOfSections == 2)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 1)
+        
+        guard let overrideDefaultCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsRightSwitchTableViewCell else {
+            XCTFail("Cannot obtain switch cell")
+            return
+        }
+        
+        guard let switchDefault = overrideDefaultCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        // When
+        switchDefault.isOn = false
+        switchDefault.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(configuration?.isEnabled == false)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 5)
+        
+        // When
+        switchDefault.isOn = true
+        switchDefault.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(configuration?.isEnabled == true)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 11)
+        
+        guard let entireDayCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 6, section: 1)) as? BaseSettingsRightSwitchTableViewCell else {
+            XCTFail("Cannot obtain entire day cell")
+            return
+        }
+        
+        guard let entireDaySwitch = entireDayCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        
+        // When
+        entireDaySwitch.isOn = true
+        entireDaySwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(configuration?.isEntireDay == true)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 9)
+        
+        // When
+        entireDaySwitch.isOn = false
+        entireDaySwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(configuration?.isEntireDay == false)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 11)
+    }
+    
+    func testSwitchValueChangedHandler() {
+        loadView()
+        
+        let configuration = sut.router?.dataStore?.configuration
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        let dataSource = tableView.dataSource
+        
+        guard let overrideDefaultCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
+            let switchDefault = overrideDefaultCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        
+        switchDefault.isOn = true
+        switchDefault.sendActions(for: .valueChanged)
+        
+        guard let snoozeOnCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 1)) as? BaseSettingsRightSwitchTableViewCell,
+            let repeatCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 3, section: 1)) as? BaseSettingsRightSwitchTableViewCell,
+            let vibrateCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 5, section: 1)) as? BaseSettingsRightSwitchTableViewCell else {
+            XCTFail("Cannot obtain switch cells")
+            return
+        }
+        
+        guard let snoozeSwitch = snoozeOnCell.accessoryView as? UISwitch,
+            let repeatSwitch = repeatCell.accessoryView as? UISwitch,
+            let vibrateSwitch = vibrateCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        
+        // When
+        snoozeSwitch.isOn = false
+        snoozeSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(configuration?.snoozeFromNotification == false)
+        
+        // When
+        snoozeSwitch.isOn = true
+        snoozeSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(configuration?.snoozeFromNotification == true)
+        
+        // When
+        repeatSwitch.isOn = false
+        repeatSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(configuration?.repeat == false)
+        
+        // When
+        repeatSwitch.isOn = true
+        repeatSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(configuration?.repeat == true)
+        
+        // When
+        vibrateSwitch.isOn = false
+        vibrateSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(configuration?.isVibrating == false)
+        
+        // When
+        vibrateSwitch.isOn = true
+        vibrateSwitch.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(configuration?.isVibrating == true)
+    }
+    
+    func testTextEditingChangedHandler() {
+        setupSettingsAlertSingleTypeViewController()
+        loadView()
+        
+        let configuration = sut.router?.dataStore?.configuration
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        let dataSource = tableView.dataSource
+        
+        guard let overrideDefaultCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
+            let switchDefault = overrideDefaultCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        
+        switchDefault.isOn = true
+        switchDefault.sendActions(for: .valueChanged)
+        
+        guard let textFieldCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 1)) as? BaseSettingsTextInputTableViewCell,
+            let textField = textFieldCell.findView(with: "textField") as? UITextField else {
+            XCTFail("Cannot obtain textField")
+            return
+        }
+        // When
+        textField.text = "Test Name"
+        textField.sendActions(for: .editingChanged)
+        // Then
+        XCTAssertTrue(configuration?.name == "Test Name")
+    }
+    
+    func testSnoozePickerValueChanged() {
+        loadView()
+        
+        let configuration = sut.router?.dataStore?.configuration
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        let dataSource = tableView.dataSource
+        
+        guard let overrideDefaultCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
+            let switchDefault = overrideDefaultCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        switchDefault.isOn = true
+        switchDefault.sendActions(for: .valueChanged)
+        
+        guard let snoozeCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 1)) as? PickerExpandableTableViewCell else {
+            XCTFail("Cannot obtain picker expandable cell")
+            return
+        }
+        
+        // When
+        snoozeCell.togglePickerVisibility()
+        guard let stackView = snoozeCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let pickerView = stackView.arrangedSubviews.first as? CustomPickerView else {
+            XCTFail("Cannot obtain pickerView")
+            return
+        }
+        // When
+        pickerView.selectRow(12, inComponent: 2, animated: false)
+        pickerView.pickerView(pickerView, didSelectRow: 12, inComponent: 2)
+        // Then
+        XCTAssertTrue(configuration?.defaultSnooze == 12.0 * TimeInterval.secondsPerMinute)
+    }
+    
+    func testTimePickerValueChanged() {
+        loadView()
+        
+        let configuration = sut.router?.dataStore?.configuration
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        let dataSource = tableView.dataSource
+        
+        guard let overrideDefaultCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
+            let switchDefault = overrideDefaultCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        switchDefault.isOn = false
+        switchDefault.sendActions(for: .valueChanged)
+        
+        guard let entireDayCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 1)) as? BaseSettingsRightSwitchTableViewCell else {
+            XCTFail("Cannot obtain entire day cell")
+            return
+        }
+        
+        guard let entireDaySwitch = entireDayCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        entireDaySwitch.isOn = false
+        entireDaySwitch.sendActions(for: .valueChanged)
+        
+        guard let startTimeCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 1)) as? PickerExpandableTableViewCell,
+            let endTimeCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 1)) as? PickerExpandableTableViewCell else {
+            XCTFail("Cannot obtain picker expandable cell")
+            return
+        }
+        
+        startTimeCell.togglePickerVisibility()
+        endTimeCell.togglePickerVisibility()
+        
+        let startTime = Date(timeIntervalSince1970: 3600.0)
+        let endTime = Date(timeIntervalSince1970: 7200.0)
+        
+        guard let startStackView = startTimeCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let endStackView = endTimeCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let startPickerView = startStackView.arrangedSubviews.first as? CustomDatePicker,
+            let endPickerView = endStackView.arrangedSubviews.first as? CustomDatePicker else {
+            XCTFail("Cannot obtain pickerView")
+            return
+        }
+        // When
+        startPickerView.setDate(startTime, animated: false)
+        startPickerView.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(configuration?.startTime == startTime.timeIntervalSince1970)
+        
+        // When
+        endPickerView.setDate(endTime, animated: false)
+        endPickerView.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(configuration?.endTime == endTime.timeIntervalSince1970)
+    }
+    
+    func testPickerValueChangedHandler() {
+        loadView()
+        
+        let configuration = sut.router?.dataStore?.configuration
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        let dataSource = tableView.dataSource
+        
+        guard let overrideDefaultCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
+            let switchDefault = overrideDefaultCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        switchDefault.isOn = false
+        switchDefault.sendActions(for: .valueChanged)
+        
+        guard let entireDayCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 1)) as? BaseSettingsRightSwitchTableViewCell else {
+            XCTFail("Cannot obtain entire day cell")
+            return
+        }
+        
+        guard let entireDaySwitch = entireDayCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        entireDaySwitch.isOn = false
+        entireDaySwitch.sendActions(for: .valueChanged)
+        
+        guard let highTresholdCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 3, section: 1)) as? PickerExpandableTableViewCell,
+            let lowTresholdCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 4, section: 1)) as? PickerExpandableTableViewCell else {
+            XCTFail("Cannot obtain picker expandable cells")
+            return
+        }
+        
+        highTresholdCell.togglePickerVisibility()
+        lowTresholdCell.togglePickerVisibility()
+        
+        guard let highStackView = highTresholdCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let lowStackView = lowTresholdCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let highPickerView = highStackView.arrangedSubviews.first as? CustomPickerView,
+            let lowPickerView = lowStackView.arrangedSubviews.first as? CustomPickerView else {
+                XCTFail("Cannot obtain pickerView")
+                return
+        }
+        // When
+        highPickerView.selectRow(12, inComponent: 0, animated: false)
+        highPickerView.pickerView(highPickerView, didSelectRow: 12, inComponent: 0)
+        // Then
+        XCTAssertTrue(configuration?.highThreshold == 12.0)
+        
+        // When
+        lowPickerView.selectRow(12, inComponent: 0, animated: false)
+        lowPickerView.pickerView(lowPickerView, didSelectRow: 12, inComponent: 0)
+        // Then
+        XCTAssertTrue(configuration?.lowThreshold == 12.0)
+    }
+    
+    func testSingleSelectionHandler() {
+        loadView()
+        
+        let routerSpy = SettingsAlertSingleTypeRoutingLogicSpy()
+        if let interactor = sut.interactor as? SettingsAlertSingleTypeInteractor {
+            interactor.router = routerSpy
+        }
+        
+        let configuration = sut.router?.dataStore?.configuration
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        let dataSource = tableView.dataSource
+        let delegate = tableView.delegate
+        
+        guard let overrideDefaultCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
+            let switchDefault = overrideDefaultCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        switchDefault.isOn = true
+        switchDefault.sendActions(for: .valueChanged)
+        
+        // When
+        delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 4, section: 1))
+        // Then
+        XCTAssertTrue(routerSpy.routeToSoundCalled)
     }
 }

@@ -22,19 +22,25 @@ final class SettingsAlertRootPresenter: SettingsAlertRootPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsAlertRoot.Load.Response) {
-        let tableViewModel = BaseSettings.ViewModel(sections: [
-            createTableViewSection(response: response)
-        ])
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createTableViewSection(response: response)
+            ]
+        )
         
         let viewModel = SettingsAlertRoot.Load.ViewModel(animated: response.animated, tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
     }
     
     private func createTableViewSection(response: SettingsAlertRoot.Load.Response) -> BaseSettings.Section {
-        let settings = User.current.settings.alert!
+        let settings = User.current.settings.alert ?? AlertSettings()
         
         var cells: [BaseSettings.Cell] = [
-            createRightSwitch(.overrideSystemVolume, isSwitchOn: settings.isSystemVolumeOverriden, switchHandler: response.switchValueChangedHandler)
+            createRightSwitch(
+                .overrideSystemVolume,
+                isSwitchOn: settings.isSystemVolumeOverriden,
+                switchHandler: response.switchValueChangedHandler
+            )
         ]
         
         if settings.isSystemVolumeOverriden {
@@ -43,10 +49,20 @@ final class SettingsAlertRootPresenter: SettingsAlertRootPresentationLogic {
             )
         }
         
-        cells.append(contentsOf: [
-            createRightSwitch(.overrideMute, isSwitchOn: settings.isMuteOverriden, switchHandler: response.switchValueChangedHandler),
-            createRightSwitch(.notificationsOn, isSwitchOn: settings.isNotificationsEnabled, switchHandler: response.switchValueChangedHandler)
-        ])
+        cells.append(
+            contentsOf: [
+                createRightSwitch(
+                    .overrideMute,
+                    isSwitchOn: settings.isMuteOverriden,
+                    switchHandler: response.switchValueChangedHandler
+                ),
+                createRightSwitch(
+                    .notificationsOn,
+                    isSwitchOn: settings.isNotificationsEnabled,
+                    switchHandler: response.switchValueChangedHandler
+                )
+            ]
+        )
         
         if settings.isNotificationsEnabled {
             cells.append(
@@ -61,8 +77,7 @@ final class SettingsAlertRootPresenter: SettingsAlertRootPresentationLogic {
         _ field: SettingsAlertRoot.Field,
         isSwitchOn: Bool,
         switchHandler: @escaping (SettingsAlertRoot.Field, Bool) -> Void) -> BaseSettings.Cell {
-        
-        return .rightSwitch(text: field.title, isSwitchOn: isSwitchOn) { (value) in
+        return .rightSwitch(text: field.title, isSwitchOn: isSwitchOn) { value in
             switchHandler(field, value)
         }
     }

@@ -14,17 +14,15 @@ final class CustomDatePicker: UIDatePicker, PickerView {
     
     init() {
         super.init(frame: .zero)
-        addTarget(self, action: #selector(handleValueChanged), for: .valueChanged)
-        
-        #if targetEnvironment(macCatalyst)
-        if #available(macCatalyst 13.4, *) {
-            preferredDatePickerStyle = .wheels
-        }
-        #endif
+        commonInit()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
         addTarget(self, action: #selector(handleValueChanged), for: .valueChanged)
         
         #if targetEnvironment(macCatalyst)

@@ -22,12 +22,18 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
     // MARK: Do something
     
     func presentLoad(response: SettingsAlertSingleType.Load.Response) {
-        let tableViewModel = BaseSettings.ViewModel(sections: [
-            createSettingsSection(response: response),
-            createEventsSection(response: response)
-        ])
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createSettingsSection(response: response),
+                createEventsSection(response: response)
+            ]
+        )
         
-        let viewModel = SettingsAlertSingleType.Load.ViewModel(animated: response.animated, title: response.configuration.eventType.title, tableViewModel: tableViewModel)
+        let viewModel = SettingsAlertSingleType.Load.ViewModel(
+            animated: response.animated,
+            title: response.configuration.eventType.title,
+            tableViewModel: tableViewModel
+        )
         viewController?.displayLoad(viewModel: viewModel)
     }
     
@@ -35,7 +41,11 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         let config = response.configuration
         
         let cells: [BaseSettings.Cell] = [
-            createRightSwitchCell(.overrideDefault, isSwitchOn: config.isEnabled, switchValueChangedHandler: response.switchValueChangedHandler)
+            createRightSwitchCell(
+                .overrideDefault,
+                isSwitchOn: config.isEnabled,
+                switchValueChangedHandler: response.switchValueChangedHandler
+            )
         ]
         
         return .normal(cells: cells, header: "settings_alert_single_type_setting_header".localized, footer: nil)
@@ -46,40 +56,100 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         var cells: [BaseSettings.Cell] = []
         
         if config.isEnabled {
-            cells.append(contentsOf: [
-                createTextInputViewCell(.name, detailText: config.name, placeholder: config.eventType.title, editingChangedHandler: response.textEditingChangedHandler),
-                createRightSwitchCell(.snoozeFromNotification, isSwitchOn: config.snoozeFromNotification, switchValueChangedHandler: response.switchValueChangedHandler),
-                createCountDownPickerView(.defaultSnooze, detail: config.defaultSnooze, valueChangeHandler: response.timePickerValueChangedHandler),
-                createRightSwitchCell(.repeat, isSwitchOn: config.repeat, switchValueChangedHandler: response.switchValueChangedHandler),
-                createDisclosureCell(.sound, selectionHandler: response.selectionHandler),
-                createRightSwitchCell(.vibrate, isSwitchOn: config.isVibrating, switchValueChangedHandler: response.switchValueChangedHandler)
-            ])
+            cells.append(
+                contentsOf: [
+                    createTextInputViewCell(
+                        .name,
+                        detailText: config.name,
+                        placeholder: config.eventType.title,
+                        editingChangedHandler: response.textEditingChangedHandler
+                    ),
+                    createRightSwitchCell(
+                        .snoozeFromNotification,
+                        isSwitchOn: config.snoozeFromNotification,
+                        switchValueChangedHandler: response.switchValueChangedHandler
+                    ),
+                    createCountDownPickerView(
+                        .defaultSnooze,
+                        detail: config.defaultSnooze,
+                        valueChangeHandler: response.timePickerValueChangedHandler
+                    ),
+                    createRightSwitchCell(
+                        .repeat,
+                        isSwitchOn: config.repeat,
+                        switchValueChangedHandler: response.switchValueChangedHandler
+                    ),
+                    createDisclosureCell(
+                        .sound,
+                        selectionHandler: response.selectionHandler
+                    ),
+                    createRightSwitchCell(
+                        .vibrate,
+                        isSwitchOn: config.isVibrating,
+                        switchValueChangedHandler: response.switchValueChangedHandler
+                    )
+                ]
+            )
         }
         
         cells.append(
-            createRightSwitchCell(.entireDay, isSwitchOn: config.isEntireDay, switchValueChangedHandler: response.switchValueChangedHandler)
+            createRightSwitchCell(
+                .entireDay,
+                isSwitchOn: config.isEntireDay,
+                switchValueChangedHandler: response.switchValueChangedHandler
+            )
         )
         
         if !config.isEntireDay {
             let startTimeDate = Date(timeIntervalSince1970: config.startTime)
             let endTimeDate = Date(timeIntervalSince1970: config.endTime)
-            let startTimeString = DateFormatter.localizedString(from: startTimeDate, dateStyle: .none, timeStyle: .short)
-            let endTimeString = DateFormatter.localizedString(from: endTimeDate, dateStyle: .none, timeStyle: .short)
+            let startTimeString = DateFormatter.localizedString(
+                from: startTimeDate,
+                dateStyle: .none,
+                timeStyle: .short
+            )
+            let endTimeString = DateFormatter.localizedString(
+                from: endTimeDate,
+                dateStyle: .none,
+                timeStyle: .short
+            )
             
-            cells.append(contentsOf: [
-                createTimePickerView(.startTime, date: startTimeDate, detailText: startTimeString, valueChangeHandler: response.timePickerValueChangedHandler),
-                createTimePickerView(.endTime, date: endTimeDate, detailText: endTimeString, valueChangeHandler: response.timePickerValueChangedHandler)
-            ])
+            cells.append(
+                contentsOf: [
+                    createTimePickerView(
+                        .startTime,
+                        date: startTimeDate,
+                        detailText: startTimeString,
+                        valueChangeHandler: response.timePickerValueChangedHandler
+                    ),
+                    createTimePickerView(
+                        .endTime,
+                        date: endTimeDate,
+                        detailText: endTimeString,
+                        valueChangeHandler: response.timePickerValueChangedHandler
+                    )
+                ]
+            )
         }
         
         let high = GlucoseUnit.convertFromDefault(Double(config.highThreshold))
         let low = GlucoseUnit.convertFromDefault(Double(config.lowThreshold))
         let highTresholdString = String(format: "%.1f", high)
         let lowTresholdString = String(format: "%.1f", low)
-        cells.append(contentsOf: [
-            createUnitsPickerView(.highTreshold, detailText: highTresholdString, valueChangeHandler: response.pickerViewValueChangedHandler),
-            createUnitsPickerView(.lowTreshold, detailText: lowTresholdString, valueChangeHandler: response.pickerViewValueChangedHandler)
-        ])
+        cells.append(
+            contentsOf: [
+                createUnitsPickerView(
+                    .highTreshold,
+                    detailText: highTresholdString,
+                    valueChangeHandler: response.pickerViewValueChangedHandler
+                ),
+                createUnitsPickerView(
+                    .lowTreshold,
+                    detailText: lowTresholdString,
+                    valueChangeHandler: response.pickerViewValueChangedHandler
+                )
+            ]
+        )
         
         return .normal(cells: cells, header: "settings_alert_single_type_events_header".localized, footer: nil)
     }
@@ -89,8 +159,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         detailText: String?,
         placeholder: String?,
         editingChangedHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
-        
-        return .textInput(mainText: field.title, detailText: detailText, placeholder: placeholder) { (string) in
+        return .textInput(mainText: field.title, detailText: detailText, placeholder: placeholder) { string in
             editingChangedHandler(string)
         }
     }
@@ -99,8 +168,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         _ field: SettingsAlertSingleType.Field,
         isSwitchOn: Bool,
         switchValueChangedHandler: @escaping (SettingsAlertSingleType.Field, Bool) -> Void) -> BaseSettings.Cell {
-        
-        return .rightSwitch(text: field.title, isSwitchOn: isSwitchOn) { (value) in
+        return .rightSwitch(text: field.title, isSwitchOn: isSwitchOn) { value in
             switchValueChangedHandler(field, value)
         }
     }
@@ -109,20 +177,9 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         _ field: SettingsAlertSingleType.Field,
         detail: TimeInterval?,
         valueChangeHandler: @escaping (SettingsAlertSingleType.Field, TimeInterval) -> Void) -> BaseSettings.Cell {
+        let detailText = "\(Int((detail ?? 0.0) / TimeInterval.secondsPerMinute)) " + "settings_alert_single_type_minutes".localized
         
-        let detailText = "\(Int((detail ?? 0.0) / TimeInterval.secondsPerMinute)) m"
-        
-        let hours = stride(from: 0, to: 24, by: 1).map({ String($0) })
-        let minutes = stride(from: 0, to: 60, by: 1).map({ String($0) })
-        
-        let data = [
-            hours,
-            ["hrs"],
-            minutes,
-            ["mins"]
-        ]
-        
-        let picker = CustomPickerView(data: data)
+        let picker = CustomPickerView(mode: .countDown)
         
         if let detail = detail {
             let hour = Int(detail / TimeInterval.secondsPerHour)
@@ -133,7 +190,6 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         }
         
         picker.formatValues = { strings in
-            
             guard strings.count > 3 else { return "" }
             
             let hourString = strings[0]
@@ -143,9 +199,9 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
             
             let time = minute * TimeInterval.secondsPerMinute + hour * TimeInterval.secondsPerHour
             
-            valueChangeHandler(field, TimeInterval(time))
+            valueChangeHandler(field, time)
             
-            return "\(Int(time / TimeInterval.secondsPerMinute)) m"
+            return "\(Int(time / TimeInterval.secondsPerMinute)) " + "settings_alert_single_type_minutes".localized
         }
         
         return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)
@@ -156,7 +212,6 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         date: Date?,
         detailText: String?,
         valueChangeHandler: @escaping (SettingsAlertSingleType.Field, TimeInterval) -> Void) -> BaseSettings.Cell {
-        
         let picker = CustomDatePicker()
         
         picker.datePickerMode = .time
@@ -167,11 +222,20 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         
         picker.formatDate = { date in
             let components = Calendar.current.dateComponents([.hour, .minute], from: date)
-            guard let date = Calendar.current.date(from: components) else { return " " }
+            guard let hour = components.hour,
+                let minutes = components.minute else { return " " }
             
-            valueChangeHandler(field, TimeInterval(date.timeIntervalSince1970))
+            var time = TimeInterval(hour) * TimeInterval.secondsPerHour
+            time += TimeInterval(minutes) * TimeInterval.secondsPerMinute
+            time -= TimeInterval(TimeZone.current.secondsFromGMT())
             
-            return DateFormatter.localizedString(from: date, dateStyle: .none, timeStyle: .short)
+            valueChangeHandler(field, time)
+            
+            return DateFormatter.localizedString(
+                from: date,
+                dateStyle: .none,
+                timeStyle: .short
+            )
         }
         
         return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)
@@ -190,10 +254,12 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         
         let tolerance = step / 2
         picker.formatValues = { strings in
-            if let value = array.first(where: { val in
-                guard let num = Double(strings[0]) else { return false }
-                return fabs(val - num) < tolerance
-            }) {
+            if let value = array.first(
+                where: { val in
+                    guard let num = Double(strings[0]) else { return false }
+                    return fabs(val - num) < tolerance
+                }
+            ) {
                 let convertedValue = GlucoseUnit.convertToDefault(value)
                 valueChangeHandler(field, convertedValue)
             }
@@ -201,10 +267,12 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
             return strings[0]
         }
         
-        let index = array.firstIndex(where: { val in
-            guard let text = detailText, let num = Double(text) else { return false }
-            return fabs(val - num) < tolerance
-        })
+        let index = array.firstIndex(
+            where: { val in
+                guard let text = detailText, let num = Double(text) else { return false }
+                return fabs(val - num) < tolerance
+            }
+        )
         
         picker.selectRow(index ?? 0, inComponent: 0, animated: false)
         

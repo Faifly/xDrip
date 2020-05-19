@@ -26,7 +26,6 @@ final class SettingsAlertRootInteractor: SettingsAlertRootBusinessLogic, Setting
     // MARK: Do something
     private let settings = User.current.settings.alert
     
-    
     func doLoad(request: SettingsAlertRoot.Load.Request) {
         let response = SettingsAlertRoot.Load.Response(
             animated: request.animated,

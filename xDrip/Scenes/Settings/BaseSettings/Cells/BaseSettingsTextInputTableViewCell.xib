@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xrm-Sy-Bkz">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xrm-Sy-Bkz">
                         <rect key="frame" x="16" y="12" width="42" height="21"/>
                         <accessibility key="accessibilityConfiguration" identifier="mainTextLabel"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -35,11 +35,11 @@
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="pEO-a1-BPZ" secondAttribute="trailing" constant="16" id="ADo-BU-emV"/>
                     <constraint firstAttribute="bottom" secondItem="pEO-a1-BPZ" secondAttribute="bottom" constant="5" id="Fz5-0l-Yht"/>
                     <constraint firstItem="pEO-a1-BPZ" firstAttribute="leading" secondItem="Xrm-Sy-Bkz" secondAttribute="trailing" constant="8" id="Jt9-xl-nnk"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="pEO-a1-BPZ" secondAttribute="trailing" id="bvA-1w-C04"/>
                     <constraint firstItem="pEO-a1-BPZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="dCw-0L-YLO"/>
-                    <constraint firstItem="Xrm-Sy-Bkz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="hIo-Qf-AgS"/>
+                    <constraint firstItem="Xrm-Sy-Bkz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="iA3-U5-ZHA"/>
                     <constraint firstItem="Xrm-Sy-Bkz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="j3j-ig-VDf"/>
                     <constraint firstAttribute="bottom" secondItem="Xrm-Sy-Bkz" secondAttribute="bottom" constant="11" id="pVU-bd-7by"/>
                 </constraints>

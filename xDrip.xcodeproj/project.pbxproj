@@ -63,6 +63,7 @@
 		2C4E7F0824694F440062D403 /* Ding.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EEE24694F440062D403 /* Ding.caf */; };
 		2C4E7F0924694F440062D403 /* Swoosh.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EEF24694F440062D403 /* Swoosh.caf */; };
 		2C4E7F0C246ABF830062D403 /* ExpandableTableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4E7F0B246ABF830062D403 /* ExpandableTableContainer.swift */; };
+		2C5A615C2473E02C00C6BD3D /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5A615B2473E02C00C6BD3D /* AudioController.swift */; };
 		2C5B3F0A24533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */; };
 		2C5B3F0C2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */; };
 		2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C87F045243E69C0002CF3D8 /* UView+Tests.swift */; };
@@ -659,6 +660,7 @@
 		2C4E7EEE24694F440062D403 /* Ding.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ding.caf; sourceTree = "<group>"; };
 		2C4E7EEF24694F440062D403 /* Swoosh.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Swoosh.caf; sourceTree = "<group>"; };
 		2C4E7F0B246ABF830062D403 /* ExpandableTableContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableContainer.swift; sourceTree = "<group>"; };
+		2C5A615B2473E02C00C6BD3D /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 		2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BaseSettingsViewControllerCoderTest.storyboard; sourceTree = "<group>"; };
 		2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewControllerCoderTest.swift; sourceTree = "<group>"; };
 		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
@@ -2893,6 +2895,7 @@
 				5805C9C524389275002AFA1B /* LogController.swift */,
 				58F4CC78243B9F470053D17C /* MacMenuController.swift */,
 				58F4CC7A243BA0CB0053D17C /* DebugController.swift */,
+				2C5A615B2473E02C00C6BD3D /* AudioController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3755,6 +3758,7 @@
 				2C09D21E2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.swift in Sources */,
 				58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */,
 				58788B75242647C5000EB113 /* TrainingEntriesWorker.swift in Sources */,
+				2C5A615C2473E02C00C6BD3D /* AudioController.swift in Sources */,
 				58B986DD2466B68200E38376 /* FloatingPoint+Comparison.swift in Sources */,
 				58DDC4622423CA58008CB04D /* AbstractEntry.swift in Sources */,
 				580E4C2E243F74F000565EDE /* SettingsUnitsInteractor.swift in Sources */,

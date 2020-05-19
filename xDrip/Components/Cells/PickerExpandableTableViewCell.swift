@@ -33,7 +33,7 @@ final class PickerExpandableTableViewCell: UITableViewCell {
         }
     }
     
-    func togglePickerVisivility() {
+    func togglePickerVisibility() {
         guard let picker = picker else { return }
         
         if verticalStackView.arrangedSubviews.contains(picker) {
