@@ -95,11 +95,6 @@ final class SettingsAlertRootViewControllerTests: XCTestCase {
         loadView()
         
         let settings = User.current.settings.alert
-        let routerSpy = SettingsAlertRootRoutingLogicSpy()
-        
-        if let interactor = sut.interactor as? SettingsAlertRootInteractor {
-            interactor.router = routerSpy
-        }
         
         guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
             XCTFail("Cannot obtain tableView")
@@ -110,12 +105,17 @@ final class SettingsAlertRootViewControllerTests: XCTestCase {
         XCTAssertTrue(tableView.numberOfSections == 1)
         XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 3)
         
-        let dataSource = tableView.dataSource
-        let delegate = tableView.delegate
+        let cellType = BaseSettingsRightSwitchTableViewCell.self
+        let indexPaths = [
+            IndexPath(row: 0, section: 0),
+            IndexPath(row: 1, section: 0),
+            IndexPath(row: 2, section: 0)
+        ]
         
-        guard let overrideSystemVolumeCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
-            let overrideMuteCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
-            let notificationsOnCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 0)) as? BaseSettingsRightSwitchTableViewCell else {
+        guard
+            let overrideSystemVolumeCell = tableView.getCell(of: cellType, at: indexPaths[0]),
+            let overrideMuteCell = tableView.getCell(of: cellType, at: indexPaths[1]),
+            let notificationsOnCell = tableView.getCell(of: cellType, at: indexPaths[2]) else {
             XCTFail("Cannot obtain cell")
             return
         }
@@ -151,8 +151,56 @@ final class SettingsAlertRootViewControllerTests: XCTestCase {
         // Then
         XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 5)
         XCTAssertTrue(settings?.isNotificationsEnabled == true)
+    }
+    
+    func testSingleSelectionHandler() {
+        loadView()
         
-        guard let volumeSliderCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? BaseSettingsVolumeSliderTableViewCell else {
+        let routerSpy = SettingsAlertRootRoutingLogicSpy()
+        if let interactor = sut.interactor as? SettingsAlertRootInteractor {
+            interactor.router = routerSpy
+        }
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 4, section: 0))
+        // Then
+        XCTAssertTrue(routerSpy.toAlertTypesCalled)
+    }
+    
+    func testVolumeSliderHandler() {
+        loadView()
+        
+        let settings = User.current.settings.alert
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        var cellType: UITableViewCell.Type = BaseSettingsRightSwitchTableViewCell.self
+        var indexPath = IndexPath(row: 0, section: 0)
+        guard
+            let overrideSystemVolumeCell = tableView.getCell(of: cellType, at: indexPath) else {
+            XCTFail("Cannot obtain cell")
+            return
+        }
+        
+        guard let volumeSwitch = overrideSystemVolumeCell.accessoryView as? UISwitch else {
+            XCTFail("Cannot obtain switch")
+            return
+        }
+        volumeSwitch.isOn = true
+        volumeSwitch.sendActions(for: .valueChanged)
+        
+        cellType = BaseSettingsVolumeSliderTableViewCell.self
+        indexPath = IndexPath(row: 1, section: 0)
+        guard
+            let volumeSliderCell = tableView.getCell(of: cellType, at: indexPath) else {
             XCTFail("Cannot obtain volume slider cell")
             return
         }
@@ -167,10 +215,5 @@ final class SettingsAlertRootViewControllerTests: XCTestCase {
         volumeSlider.sendActions(for: .valueChanged)
         // Then
         XCTAssertTrue(settings?.volume == 0.8)
-        
-        // When
-        delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 4, section: 0))
-        // Then
-        XCTAssertTrue(routerSpy.toAlertTypesCalled)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  BaseSettingsPickerExpandableTableViewCellTests.swift
+//  PickerExpandableTableViewCellTests.swift
 //  xDripTests
 //
 //  Created by Ivan Skoryk on 21.04.2020.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import xDrip
 
-final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
+final class PickerExpandableTableViewCellTests: XCTestCase {
     let tableView = UITableView()
     
     override func setUp() {
@@ -62,6 +62,9 @@ final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
         
         let picker = CustomDatePicker()
         
+        // test toggle before configurate
+        sut.togglePickerVisibility()
+        
         sut.configure(mainText: "", detailText: "", pickerView: picker, isExpanded: false)
         
         guard let stackView = sut.contentView.subviews.compactMap({ $0 as? UIStackView }).first else {
@@ -78,6 +81,30 @@ final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
         
         // When
         sut.togglePickerVisibility()
+        // Then
+        XCTAssertFalse(stackView.arrangedSubviews.contains(picker))
+    }
+    
+    func testReconfigure() {
+        let sut = tableView.dequeueReusableCell(
+            ofType: PickerExpandableTableViewCell.self,
+            for: IndexPath(row: 0, section: 0)
+        )
+        
+        let picker = CustomDatePicker()
+        
+        // When
+        sut.configure(mainText: "", detailText: "", pickerView: picker, isExpanded: true)
+        
+        guard let stackView = sut.contentView.subviews.compactMap({ $0 as? UIStackView }).first else {
+            XCTFail("Cannot obtain stack view")
+            return
+        }
+        // Then
+        XCTAssertTrue(stackView.arrangedSubviews.contains(picker))
+        
+        // When
+        sut.configure(mainText: "", detailText: "", pickerView: picker, isExpanded: false)
         // Then
         XCTAssertFalse(stackView.arrangedSubviews.contains(picker))
     }

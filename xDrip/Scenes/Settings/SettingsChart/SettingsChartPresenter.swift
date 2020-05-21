@@ -22,32 +22,34 @@ final class SettingsChartPresenter: SettingsChartPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsChart.Load.Response) {
-        let tableViewModel = BaseSettings.ViewModel(sections: [
-            createNormalSection(response: response),
-            createSingleSelectionSection(response: response)
-        ])
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createNormalSection(response: response),
+                createSingleSelectionSection(response: response)
+            ]
+        )
         
         let viewModel = SettingsChart.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
     }
     
     private func createNormalSection(response: SettingsChart.Load.Response) -> BaseSettings.Section {
-        let settings = User.current.settings.chart!
+        let settings = User.current.settings.chart
         
         let cells: [BaseSettings.Cell] = [
             createRightSwitchCell(
                 .activeInsulin,
-                isSwitchOn: settings.showActiveInsulin,
+                isSwitchOn: settings?.showActiveInsulin ?? false,
                 switchHandler: response.switchValueChangedHandler
             ),
             createRightSwitchCell(
                 .activeCarbs,
-                isSwitchOn: settings.showActiveInsulin,
+                isSwitchOn: settings?.showActiveCarbs ?? false,
                 switchHandler: response.switchValueChangedHandler
             ),
             createRightSwitchCell(
                 .data,
-                isSwitchOn: settings.showActiveInsulin,
+                isSwitchOn: settings?.showData ?? false,
                 switchHandler: response.switchValueChangedHandler
             )
         ]
@@ -60,12 +62,12 @@ final class SettingsChartPresenter: SettingsChartPresentationLogic {
     }
     
     private func createSingleSelectionSection(response: SettingsChart.Load.Response) -> BaseSettings.Section {
-        let settings = User.current.settings.chart!
+        let settings = User.current.settings.chart
         let cells = ChartSettings.BasalDisplayMode.allCases.map { $0.title }
         
         return BaseSettings.Section.singleSelection(
             cells: cells,
-            selectedIndex: settings.basalDisplayMode.rawValue,
+            selectedIndex: settings?.basalDisplayMode.rawValue ?? 0,
             header: "settings_chart_render_section_header".localized,
             footer: "settings_chart_render_section_footer".localized,
             selectionHandler: response.singleSelectionHandler

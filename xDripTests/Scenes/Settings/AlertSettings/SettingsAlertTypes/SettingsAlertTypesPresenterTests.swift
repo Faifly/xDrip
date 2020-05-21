@@ -55,7 +55,7 @@ final class SettingsAlertTypesPresenterTests: XCTestCase {
         sut.viewController = spy
         let response = SettingsAlertTypes.Load.Response(
             defaultSectionTextEditingChangedHandler: { _ in },
-            defaultSectionSwitchHandler: { _, _ in},
+            defaultSectionSwitchHandler: { _, _ in },
             defaultSectionPickerValueChangedHandler: { _ in },
             defaultSectionSelectionHandler: { _ in },
             eventsSectionSelectionHandler: { _ in }

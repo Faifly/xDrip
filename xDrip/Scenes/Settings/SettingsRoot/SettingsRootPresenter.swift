@@ -97,7 +97,12 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
         detailText: String?,
         placeholder: String?,
         textChangeHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
-        return .textInput(mainText: field.title, detailText: detailText, placeholder: placeholder, textChangedHandler: textChangeHandler)
+        return .textInput(
+            mainText: field.title,
+            detailText: detailText,
+            placeholder: placeholder,
+            textChangedHandler: textChangeHandler
+        )
     }
 }
 

@@ -45,10 +45,6 @@ final class SettingsAlertRootPresenterTests: XCTestCase {
         func displayLoad(viewModel: SettingsAlertRoot.Load.ViewModel) {
             displayLoadCalled = true
         }
-        
-        func displayUpdate(viewModel: SettingsAlertRoot.Load.ViewModel) {
-            
-        }
     }
     
     // MARK: Tests
@@ -60,8 +56,8 @@ final class SettingsAlertRootPresenterTests: XCTestCase {
         let response = SettingsAlertRoot.Load.Response(
             animated: false,
             sliderValueChangeHandler: { _ in },
-            switchValueChangedHandler: { _, _ in},
-            selectionHandler: {}
+            switchValueChangedHandler: { _, _ in },
+            selectionHandler: { }
         )
         
         // When

@@ -22,10 +22,12 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsAlertTypes.Load.Response) {
-        let tableViewModel = BaseSettings.ViewModel(sections: [
-            createDefaultConfigurationSection(response: response),
-            createEventsSection(response: response)
-        ])
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createDefaultConfigurationSection(response: response),
+                createEventsSection(response: response)
+            ]
+        )
         
         let viewModel = SettingsAlertTypes.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
@@ -119,16 +121,18 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
         _ field: SettingsAlertTypes.Field,
         detail: TimeInterval?,
         valueChangeHandler: @escaping (TimeInterval) -> Void) -> BaseSettings.Cell {
-        let detailText = "\(Int((detail ?? 0.0) / TimeInterval.secondsPerMinute)) " + "settings_alert_types_minutes".localized
+        var detailText = "\(Int((detail ?? 0.0) / TimeInterval.secondsPerMinute)) "
+        detailText += "settings_alert_types_minutes".localized
         
         let picker = CustomPickerView(mode: .countDown)
         
         if let detail = detail {
             let hour = Int(detail / TimeInterval.secondsPerHour)
-            let minutes = Int((detail - (TimeInterval(hour) * TimeInterval.secondsPerHour)) / TimeInterval.secondsPerMinute)
+            var minutes = detail - (TimeInterval(hour) * TimeInterval.secondsPerHour)
+            minutes /= TimeInterval.secondsPerMinute
             
             picker.selectRow(hour, inComponent: 0, animated: false)
-            picker.selectRow(minutes, inComponent: 2, animated: false)
+            picker.selectRow(Int(minutes), inComponent: 2, animated: false)
         }
         
         picker.formatValues = { strings in

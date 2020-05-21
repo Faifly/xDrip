@@ -113,11 +113,17 @@ final class SettingsAlertTypesViewControllerTests: XCTestCase {
             XCTFail("Cannot obtain tableView")
             return
         }
-        let dataSource = tableView.dataSource
         
-        guard let snoozeOnCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
-            let repeatCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 3, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
-            let vibrateCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 5, section: 0)) as? BaseSettingsRightSwitchTableViewCell else {
+        let cellType = BaseSettingsRightSwitchTableViewCell.self
+        let indexPaths = [
+            IndexPath(row: 1, section: 0),
+            IndexPath(row: 3, section: 0),
+            IndexPath(row: 5, section: 0)
+        ]
+        
+        guard let snoozeOnCell = tableView.getCell(of: cellType, at: indexPaths[0]),
+            let repeatCell = tableView.getCell(of: cellType, at: indexPaths[1]),
+            let vibrateCell = tableView.getCell(of: cellType, at: indexPaths[2]) else {
             XCTFail("Cannot obtain cells")
             return
         }
@@ -174,9 +180,11 @@ final class SettingsAlertTypesViewControllerTests: XCTestCase {
             XCTFail("Cannot obtain tableView")
             return
         }
-        let dataSource = tableView.dataSource
         
-        guard let snoozeCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 0)) as? PickerExpandableTableViewCell else {
+        let cellType = PickerExpandableTableViewCell.self
+        let indexPath = IndexPath(row: 2, section: 0)
+        
+        guard let snoozeCell = tableView.getCell(of: cellType, at: indexPath) else {
             XCTFail("Cannot obtain picker expandable cell")
             return
         }
@@ -192,7 +200,8 @@ final class SettingsAlertTypesViewControllerTests: XCTestCase {
         pickerView.selectRow(12, inComponent: 2, animated: false)
         pickerView.pickerView(pickerView, didSelectRow: 12, inComponent: 2)
         // Then
-        XCTAssertTrue(User.current.settings.alert?.defaultConfiguration?.defaultSnooze == 12.0 * TimeInterval.secondsPerMinute)
+        let defaultSnooze = User.current.settings.alert?.defaultConfiguration?.defaultSnooze
+        XCTAssertTrue(defaultSnooze == 12.0 * TimeInterval.secondsPerMinute)
     }
     
     func testTextEditingChangedHandler() {
@@ -202,9 +211,11 @@ final class SettingsAlertTypesViewControllerTests: XCTestCase {
             XCTFail("Cannot obtain tableView")
             return
         }
-        let dataSource = tableView.dataSource
         
-        guard let nameCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsTextInputTableViewCell else {
+        let cellType = BaseSettingsTextInputTableViewCell.self
+        let indexPath = IndexPath(row: 0, section: 0)
+        
+        guard let nameCell = tableView.getCell(of: cellType, at: indexPath) else {
             XCTFail("Cannot obtain text input cell")
             return
         }

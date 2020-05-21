@@ -45,16 +45,10 @@ final class SettingsAlertSingleTypeInteractorTests: XCTestCase {
         func presentLoad(response: SettingsAlertSingleType.Load.Response) {
             presentLoadCalled = true
         }
-        
-        func presentUpdate(response: SettingsAlertSingleType.Load.Response) {
-            
-        }
     }
     
     final class SettingsAlertSingleTypeRoutingLogicSpy: SettingsAlertSingleTypeRoutingLogic {
-        func routeToSound() {
-            
-        }
+        func routeToSound() { }
     }
     
     // MARK: Tests

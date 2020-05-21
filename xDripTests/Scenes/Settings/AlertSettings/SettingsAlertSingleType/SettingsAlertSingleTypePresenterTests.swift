@@ -45,10 +45,6 @@ final class SettingsAlertSingleTypePresenterTests: XCTestCase {
         func displayLoad(viewModel: SettingsAlertSingleType.Load.ViewModel) {
             displayLoadCalled = true
         }
-        
-        func displayUpdate(viewModel: SettingsAlertSingleType.Load.ViewModel) {
-            
-        }
     }
     
     // MARK: Tests
@@ -63,8 +59,8 @@ final class SettingsAlertSingleTypePresenterTests: XCTestCase {
             switchValueChangedHandler: { _, _ in },
             textEditingChangedHandler: { _ in },
             timePickerValueChangedHandler: { _, _ in },
-            pickerViewValueChangedHandler: { _, _ in},
-            selectionHandler: {}
+            pickerViewValueChangedHandler: { _, _ in },
+            selectionHandler: { }
         )
         
         // When

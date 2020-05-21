@@ -18,7 +18,7 @@ protocol SettingsAlertSingleTypeBusinessLogic {
 
 protocol SettingsAlertSingleTypeDataStore: AnyObject {
     var eventType: AlertEventType? { get set }
-    var configuration: AlertConfiguration { get set }
+    var configuration: AlertConfiguration { get }
 }
 
 final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLogic, SettingsAlertSingleTypeDataStore {
@@ -26,14 +26,14 @@ final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLo
     var router: SettingsAlertSingleTypeRoutingLogic?
     
     var eventType: AlertEventType?
-    var configuration = AlertConfiguration()
+    private(set) lazy var configuration: AlertConfiguration = {
+        let alertSettings = User.current.settings.alert
+        return alertSettings?.customConfiguration(for: eventType ?? .default) ?? AlertConfiguration()
+    }()
     
     // MARK: Do something
     
     func doLoad(request: SettingsAlertSingleType.Load.Request) {
-        let alertSettings = User.current.settings.alert
-        configuration = alertSettings?.customConfiguration(for: eventType ?? .default) ?? AlertConfiguration()
-        
         let response = SettingsAlertSingleType.Load.Response(
             animated: request.animated,
             configuration: configuration,
@@ -76,9 +76,10 @@ final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLo
     }
     
     private func handlePickerViewValueChanged(_ field: SettingsAlertSingleType.Field, _ value: Double) {
+        let convertedValue = Float(GlucoseUnit.convertToDefault(value))
         switch field {
-        case .highTreshold: configuration.updateHighThreshold(Float(value))
-        case .lowTreshold: configuration.updateLowThreshold(Float(value))
+        case .highTreshold: configuration.updateHighThreshold(convertedValue)
+        case .lowTreshold: configuration.updateLowThreshold(convertedValue)
         default: break
         }
     }

@@ -16,6 +16,11 @@ final class AudioController {
     
     func playSoundFile(_ fileName: String) {
         let fileNameParts = fileName.split(separator: ".").map({ String($0) })
+        
+        guard fileNameParts.count > 1 else {
+            return
+        }
+        
         let name = fileNameParts[0]
         let type = fileNameParts[1]
         

@@ -92,16 +92,12 @@ final class SettingsChartViewControllerTests: XCTestCase {
         XCTAssert(tableView.numberOfRows(inSection: 0) == 3)
         XCTAssert(tableView.numberOfRows(inSection: 1) == 3)
         
-        let dataSource = tableView.dataSource
+        let cellType = BaseSettingsRightSwitchTableViewCell.self
         
-        guard let activeInsulinCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
-            let activeCarbsCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? BaseSettingsRightSwitchTableViewCell,
-            let dataCell = dataSource?.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 0)) as? BaseSettingsRightSwitchTableViewCell else {
-            XCTFail("Cannot obtain cell")
-            return
-        }
-        
-        guard let insulinSwitch = activeInsulinCell.accessoryView as? UISwitch,
+        guard let activeInsulinCell = tableView.getCell(of: cellType, at: IndexPath(row: 0, section: 0)),
+            let activeCarbsCell = tableView.getCell(of: cellType, at: IndexPath(row: 1, section: 0)),
+            let dataCell = tableView.getCell(of: cellType, at: IndexPath(row: 2, section: 0)),
+            let insulinSwitch = activeInsulinCell.accessoryView as? UISwitch,
             let carbsSwitch = activeCarbsCell.accessoryView as? UISwitch,
             let dataSwitch = dataCell.accessoryView as? UISwitch else {
             XCTFail("Cannot obtain right switch")
@@ -138,20 +134,18 @@ final class SettingsChartViewControllerTests: XCTestCase {
         XCTAssert(tableView.numberOfRows(inSection: 0) == 3)
         XCTAssert(tableView.numberOfRows(inSection: 1) == 3)
         
-        let delegate = tableView.delegate
-        
         // When
-        delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 0, section: 1))
+        tableView.callDidSelect(at: IndexPath(row: 0, section: 1))
         // Then
         XCTAssertTrue(User.current.settings.chart?.basalDisplayMode == .onTop)
         
         // When
-        delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 1, section: 1))
+        tableView.callDidSelect(at: IndexPath(row: 1, section: 1))
         // Then
         XCTAssertTrue(User.current.settings.chart?.basalDisplayMode == .onBottom)
         
         // When
-        delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 2, section: 1))
+        tableView.callDidSelect(at: IndexPath(row: 2, section: 1))
         // Then
         XCTAssertTrue(User.current.settings.chart?.basalDisplayMode == .notShown)
     }

@@ -56,40 +56,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         var cells: [BaseSettings.Cell] = []
         
         if config.isEnabled {
-            cells.append(
-                contentsOf: [
-                    createTextInputViewCell(
-                        .name,
-                        detailText: config.name,
-                        placeholder: config.eventType.title,
-                        editingChangedHandler: response.textEditingChangedHandler
-                    ),
-                    createRightSwitchCell(
-                        .snoozeFromNotification,
-                        isSwitchOn: config.snoozeFromNotification,
-                        switchValueChangedHandler: response.switchValueChangedHandler
-                    ),
-                    createCountDownPickerView(
-                        .defaultSnooze,
-                        detail: config.defaultSnooze,
-                        valueChangeHandler: response.timePickerValueChangedHandler
-                    ),
-                    createRightSwitchCell(
-                        .repeat,
-                        isSwitchOn: config.repeat,
-                        switchValueChangedHandler: response.switchValueChangedHandler
-                    ),
-                    createDisclosureCell(
-                        .sound,
-                        selectionHandler: response.selectionHandler
-                    ),
-                    createRightSwitchCell(
-                        .vibrate,
-                        isSwitchOn: config.isVibrating,
-                        switchValueChangedHandler: response.switchValueChangedHandler
-                    )
-                ]
-            )
+            cells.append(contentsOf: createCellsForActiveConfig(config, response: response))
         }
         
         cells.append(
@@ -101,35 +68,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         )
         
         if !config.isEntireDay {
-            let startTimeDate = Date(timeIntervalSince1970: config.startTime)
-            let endTimeDate = Date(timeIntervalSince1970: config.endTime)
-            let startTimeString = DateFormatter.localizedString(
-                from: startTimeDate,
-                dateStyle: .none,
-                timeStyle: .short
-            )
-            let endTimeString = DateFormatter.localizedString(
-                from: endTimeDate,
-                dateStyle: .none,
-                timeStyle: .short
-            )
-            
-            cells.append(
-                contentsOf: [
-                    createTimePickerView(
-                        .startTime,
-                        date: startTimeDate,
-                        detailText: startTimeString,
-                        valueChangeHandler: response.timePickerValueChangedHandler
-                    ),
-                    createTimePickerView(
-                        .endTime,
-                        date: endTimeDate,
-                        detailText: endTimeString,
-                        valueChangeHandler: response.timePickerValueChangedHandler
-                    )
-                ]
-            )
+            cells.append(contentsOf: createCellsForEntireDayConfig(config, response: response))
         }
         
         let high = GlucoseUnit.convertFromDefault(Double(config.highThreshold))
@@ -152,6 +91,87 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         )
         
         return .normal(cells: cells, header: "settings_alert_single_type_events_header".localized, footer: nil)
+    }
+    
+    private func createCellsForActiveConfig(
+        _ config: AlertConfiguration,
+        response: SettingsAlertSingleType.Load.Response) -> [BaseSettings.Cell] {
+        var cells: [BaseSettings.Cell] = []
+        
+        cells.append(
+            contentsOf: [
+                createTextInputViewCell(
+                    .name,
+                    detailText: config.name,
+                    placeholder: config.eventType.title,
+                    editingChangedHandler: response.textEditingChangedHandler
+                ),
+                createRightSwitchCell(
+                    .snoozeFromNotification,
+                    isSwitchOn: config.snoozeFromNotification,
+                    switchValueChangedHandler: response.switchValueChangedHandler
+                ),
+                createCountDownPickerView(
+                    .defaultSnooze,
+                    detail: config.defaultSnooze,
+                    valueChangeHandler: response.timePickerValueChangedHandler
+                ),
+                createRightSwitchCell(
+                    .repeat,
+                    isSwitchOn: config.repeat,
+                    switchValueChangedHandler: response.switchValueChangedHandler
+                ),
+                createDisclosureCell(
+                    .sound,
+                    selectionHandler: response.selectionHandler
+                ),
+                createRightSwitchCell(
+                    .vibrate,
+                    isSwitchOn: config.isVibrating,
+                    switchValueChangedHandler: response.switchValueChangedHandler
+                )
+            ]
+        )
+        
+        return cells
+    }
+    
+    private func createCellsForEntireDayConfig(
+        _ config: AlertConfiguration,
+        response: SettingsAlertSingleType.Load.Response) -> [BaseSettings.Cell] {
+        var cells: [BaseSettings.Cell] = []
+        
+        let startTimeDate = Date(timeIntervalSince1970: config.startTime)
+        let endTimeDate = Date(timeIntervalSince1970: config.endTime)
+        let startTimeString = DateFormatter.localizedString(
+            from: startTimeDate,
+            dateStyle: .none,
+            timeStyle: .short
+        )
+        let endTimeString = DateFormatter.localizedString(
+            from: endTimeDate,
+            dateStyle: .none,
+            timeStyle: .short
+        )
+        
+        cells.append(
+            contentsOf: [
+                createTimePickerView(
+                    .startTime,
+                    date: startTimeDate,
+                    detailText: startTimeString,
+                    valueChangeHandler: response.timePickerValueChangedHandler
+                ),
+                createTimePickerView(
+                    .endTime,
+                    date: endTimeDate,
+                    detailText: endTimeString,
+                    valueChangeHandler: response.timePickerValueChangedHandler
+                )
+            ]
+        )
+        
+        return cells
     }
     
     private func createTextInputViewCell(
@@ -177,16 +197,18 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         _ field: SettingsAlertSingleType.Field,
         detail: TimeInterval?,
         valueChangeHandler: @escaping (SettingsAlertSingleType.Field, TimeInterval) -> Void) -> BaseSettings.Cell {
-        let detailText = "\(Int((detail ?? 0.0) / TimeInterval.secondsPerMinute)) " + "settings_alert_single_type_minutes".localized
+        var detailText = "\(Int((detail ?? 0.0) / TimeInterval.secondsPerMinute)) "
+        detailText += "settings_alert_single_type_minutes".localized
         
         let picker = CustomPickerView(mode: .countDown)
         
         if let detail = detail {
             let hour = Int(detail / TimeInterval.secondsPerHour)
-            let minutes = Int((detail - (TimeInterval(hour) * TimeInterval.secondsPerHour)) / TimeInterval.secondsPerMinute)
+            var minutes = (detail - (TimeInterval(hour) * TimeInterval.secondsPerHour))
+            minutes /= TimeInterval.secondsPerMinute
             
             picker.selectRow(hour, inComponent: 0, animated: false)
-            picker.selectRow(minutes, inComponent: 2, animated: false)
+            picker.selectRow(Int(minutes), inComponent: 2, animated: false)
         }
         
         picker.formatValues = { strings in
@@ -260,8 +282,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
                     return fabs(val - num) < tolerance
                 }
             ) {
-                let convertedValue = GlucoseUnit.convertToDefault(value)
-                valueChangeHandler(field, convertedValue)
+                valueChangeHandler(field, value)
             }
             
             return strings[0]

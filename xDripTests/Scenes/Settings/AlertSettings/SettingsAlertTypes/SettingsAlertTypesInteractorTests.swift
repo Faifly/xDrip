@@ -48,13 +48,9 @@ final class SettingsAlertTypesInteractorTests: XCTestCase {
     }
     
     final class SettingsAlertTypesRoutingLogicSpy: SettingsAlertTypesRoutingLogic {
-        func routeToAlertSounds() {
-            
-        }
+        func routeToAlertSounds() { }
         
-        func routeToSingleEvent() {
-            
-        }
+        func routeToSingleEvent() { }
     }
     
     // MARK: Tests

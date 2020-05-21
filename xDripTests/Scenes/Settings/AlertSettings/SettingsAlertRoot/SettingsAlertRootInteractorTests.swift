@@ -45,16 +45,10 @@ final class SettingsAlertRootInteractorTests: XCTestCase {
         func presentLoad(response: SettingsAlertRoot.Load.Response) {
             presentLoadCalled = true
         }
-        
-        func presentUpdate(response: SettingsAlertRoot.Load.Response) {
-            
-        }
     }
     
     final class SettingsAlertRootRoutingLogicSpy: SettingsAlertRootRoutingLogic {
-        func routeToAlertTypes() {
-            
-        }
+        func routeToAlertTypes() { }
     }
     
     // MARK: Tests
