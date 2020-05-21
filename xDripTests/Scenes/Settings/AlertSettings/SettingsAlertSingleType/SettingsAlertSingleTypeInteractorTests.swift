@@ -47,7 +47,8 @@ final class SettingsAlertSingleTypeInteractorTests: XCTestCase {
         }
     }
     
-    final class SettingsAlertSingleTypeRoutingLogicSpy: SettingsAlertSingleTypeRoutingLogic {        
+    final class SettingsAlertSingleTypeRoutingLogicSpy: SettingsAlertSingleTypeRoutingLogic {
+        func routeToSound() { }
     }
     
     // MARK: Tests
@@ -56,7 +57,7 @@ final class SettingsAlertSingleTypeInteractorTests: XCTestCase {
         // Given
         let spy = SettingsAlertSingleTypePresentationLogicSpy()
         sut.presenter = spy
-        let request = SettingsAlertSingleType.Load.Request()
+        let request = SettingsAlertSingleType.Load.Request(animated: false)
         
         // When
         sut.doLoad(request: request)

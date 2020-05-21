@@ -1,5 +1,5 @@
 //
-//  BaseSettingsPickerExpandableTableViewCellTests.swift
+//  PickerExpandableTableViewCellTests.swift
 //  xDripTests
 //
 //  Created by Ivan Skoryk on 21.04.2020.
@@ -9,18 +9,18 @@
 import XCTest
 @testable import xDrip
 
-final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
+final class PickerExpandableTableViewCellTests: XCTestCase {
     let tableView = UITableView()
     
     override func setUp() {
         super.setUp()
         
-        tableView.registerNib(type: BaseSettingsPickerExpandableTableViewCell.self)
+        tableView.registerNib(type: PickerExpandableTableViewCell.self)
     }
     
     func testConfigure() {
         let sut = tableView.dequeueReusableCell(
-            ofType: BaseSettingsPickerExpandableTableViewCell.self,
+            ofType: PickerExpandableTableViewCell.self,
             for: IndexPath(row: 0, section: 0)
         )
         
@@ -31,7 +31,7 @@ final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
             return DateFormatter.localizedString(from: pickedDate, dateStyle: .short, timeStyle: .short)
         }
         
-        sut.configure(mainText: "expandable cell", detailText: "test data", pickerView: picker)
+        sut.configure(mainText: "expandable cell", detailText: "test data", pickerView: picker, isExpanded: false)
         
         guard let mainTextLabel = sut.findView(with: "mainTextLabel") as? UILabel else {
             XCTFail("Cannot obtain main text label")
@@ -56,12 +56,16 @@ final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
     
     func testTooglePicker() {
         let sut = tableView.dequeueReusableCell(
-            ofType: BaseSettingsPickerExpandableTableViewCell.self,
+            ofType: PickerExpandableTableViewCell.self,
             for: IndexPath(row: 0, section: 0)
         )
+        
         let picker = CustomDatePicker()
         
-        sut.configure(mainText: "", detailText: "", pickerView: picker)
+        // test toggle before configurate
+        sut.togglePickerVisibility()
+        
+        sut.configure(mainText: "", detailText: "", pickerView: picker, isExpanded: false)
         
         guard let stackView = sut.contentView.subviews.compactMap({ $0 as? UIStackView }).first else {
             XCTFail("Cannot obtain stack view")
@@ -71,12 +75,36 @@ final class BaseSettingsPickerExpandableTableViewCellTests: XCTestCase {
         XCTAssertFalse(stackView.arrangedSubviews.contains(picker))
         
         // When
-        sut.togglePickerVisivility()
+        sut.togglePickerVisibility()
         // Then
         XCTAssertTrue(stackView.arrangedSubviews.contains(picker))
         
         // When
-        sut.togglePickerVisivility()
+        sut.togglePickerVisibility()
+        // Then
+        XCTAssertFalse(stackView.arrangedSubviews.contains(picker))
+    }
+    
+    func testReconfigure() {
+        let sut = tableView.dequeueReusableCell(
+            ofType: PickerExpandableTableViewCell.self,
+            for: IndexPath(row: 0, section: 0)
+        )
+        
+        let picker = CustomDatePicker()
+        
+        // When
+        sut.configure(mainText: "", detailText: "", pickerView: picker, isExpanded: true)
+        
+        guard let stackView = sut.contentView.subviews.compactMap({ $0 as? UIStackView }).first else {
+            XCTFail("Cannot obtain stack view")
+            return
+        }
+        // Then
+        XCTAssertTrue(stackView.arrangedSubviews.contains(picker))
+        
+        // When
+        sut.configure(mainText: "", detailText: "", pickerView: picker, isExpanded: false)
         // Then
         XCTAssertFalse(stackView.arrangedSubviews.contains(picker))
     }

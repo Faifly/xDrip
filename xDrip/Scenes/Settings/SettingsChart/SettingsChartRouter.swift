@@ -12,7 +12,7 @@
 
 import UIKit
 
-protocol SettingsChartRoutingLogic {    
+protocol SettingsChartRoutingLogic {
 }
 
 protocol SettingsChartDataPassing {
@@ -24,5 +24,4 @@ final class SettingsChartRouter: SettingsChartRoutingLogic, SettingsChartDataPas
     weak var dataStore: SettingsChartDataStore?
     
     // MARK: Routing
-    
 }

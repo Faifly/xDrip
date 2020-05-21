@@ -1,17 +1,50 @@
 {
   "images" : [
     {
-      "filename" : "quietSpeaker.png",
+      "filename" : "quiet_black.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "quietSpeaker@2x.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "quiet.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "quiet_black@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "quietSpeaker@3x.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "quiet@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "quiet_black@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "quiet@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -16,17 +16,59 @@ protocol SettingsAlertTypesBusinessLogic {
     func doLoad(request: SettingsAlertTypes.Load.Request)
 }
 
-protocol SettingsAlertTypesDataStore: AnyObject {    
+protocol SettingsAlertTypesDataStore: AnyObject {
+    var eventType: AlertEventType? { get set }
+    var defaultConfiguration: AlertConfiguration? { get set }
 }
 
 final class SettingsAlertTypesInteractor: SettingsAlertTypesBusinessLogic, SettingsAlertTypesDataStore {
     var presenter: SettingsAlertTypesPresentationLogic?
     var router: SettingsAlertTypesRoutingLogic?
     
+    var eventType: AlertEventType?
+    var defaultConfiguration: AlertConfiguration?
+    
     // MARK: Do something
     
     func doLoad(request: SettingsAlertTypes.Load.Request) {
-        let response = SettingsAlertTypes.Load.Response()
+        defaultConfiguration = User.current.settings.alert?.defaultConfiguration
+        
+        let response = SettingsAlertTypes.Load.Response(
+            defaultSectionTextEditingChangedHandler: handleTextEditingChanged(_:),
+            defaultSectionSwitchHandler: handleSwitchValueChanged(_:_:),
+            defaultSectionPickerValueChangedHandler: handleTimePickerValueChanged(_:),
+            defaultSectionSelectionHandler: handleSectionSelection(_:),
+            eventsSectionSelectionHandler: handleEventSelection(_:)
+        )
+        
         presenter?.presentLoad(response: response)
+    }
+    
+    private func handleEventSelection(_ index: Int) {
+        guard let event = AlertEventType(rawValue: index) else { return }
+        eventType = event
+        
+        router?.routeToSingleEvent()
+    }
+    
+    private func handleSwitchValueChanged(_ field: SettingsAlertTypes.Field, _ value: Bool) {
+        switch field {
+        case .snoozeFromNotification: defaultConfiguration?.updateSnoozeFromNotification(value)
+        case .repeat: defaultConfiguration?.updateRepeat(value)
+        case .vibrate: defaultConfiguration?.updateIsVibrating(value)
+        case .sound, .name, .defaultSnooze: break
+        }
+    }
+    
+    private func handleSectionSelection(_ index: Int) {
+        router?.routeToAlertSounds()
+    }
+    
+    private func handleTimePickerValueChanged(_ time: TimeInterval) {
+        defaultConfiguration?.updateDefaultSnooze(time)
+    }
+    
+    private func handleTextEditingChanged(_ name: String?) {
+        defaultConfiguration?.updateName(name)
     }
 }

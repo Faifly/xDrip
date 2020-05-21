@@ -8,14 +8,14 @@
 
 import UIKit
 
-final class BaseSettingsPickerExpandableTableViewCell: UITableViewCell {
+final class PickerExpandableTableViewCell: UITableViewCell {
     @IBOutlet private weak var verticalStackView: UIStackView!
     @IBOutlet private weak var mainTextLabel: UILabel!
     @IBOutlet private weak var detailLabel: UILabel!
     
-    private var picker: BaseSettingsPickerView?
+    private var picker: PickerView?
     
-    func configure(mainText: String, detailText: String?, pickerView: BaseSettingsPickerView) {
+    func configure(mainText: String, detailText: String?, pickerView: PickerView, isExpanded: Bool) {
         mainTextLabel.text = mainText
         detailLabel.text = detailText
         picker = pickerView
@@ -23,9 +23,16 @@ final class BaseSettingsPickerExpandableTableViewCell: UITableViewCell {
         picker?.onValueChanged = { [weak self] detailString in
             self?.detailLabel.text = detailString
         }
+        
+        verticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        if isExpanded {
+            guard let picker = picker else { return }
+            verticalStackView.addArrangedSubview(picker)
+        }
     }
     
-    func togglePickerVisivility() {
+    func togglePickerVisibility() {
         guard let picker = picker else { return }
         
         if verticalStackView.arrangedSubviews.contains(picker) {

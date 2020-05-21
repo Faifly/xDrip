@@ -15,16 +15,42 @@ import UIKit
 enum SettingsAlertSingleType {
     // MARK: Models
     
+    enum Field {
+        case overrideDefault
+        case name
+        case snoozeFromNotification
+        case defaultSnooze
+        case `repeat`
+        case sound
+        case vibrate
+        case entireDay
+        case startTime
+        case endTime
+        case highTreshold
+        case lowTreshold
+    }
+    
     // MARK: Use cases
     
     enum Load {
         struct Request {
+            let animated: Bool
         }
         
         struct Response {
+            let animated: Bool
+            let configuration: AlertConfiguration
+            let switchValueChangedHandler: (Field, Bool) -> Void
+            let textEditingChangedHandler: (String?) -> Void
+            let timePickerValueChangedHandler: (Field, TimeInterval) -> Void
+            let pickerViewValueChangedHandler: (Field, Double) -> Void
+            let selectionHandler: () -> Void
         }
         
         struct ViewModel {
+            let animated: Bool
+            let title: String
+            let tableViewModel: BaseSettings.ViewModel
         }
     }
 }

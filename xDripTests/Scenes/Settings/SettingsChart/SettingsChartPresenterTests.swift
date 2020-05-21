@@ -53,7 +53,10 @@ final class SettingsChartPresenterTests: XCTestCase {
         // Given
         let spy = SettingsChartDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsChart.Load.Response()
+        let response = SettingsChart.Load.Response(
+            switchValueChangedHandler: { _, _ in },
+            singleSelectionHandler: { _ in }
+        )
         
         // When
         sut.presentLoad(response: response)

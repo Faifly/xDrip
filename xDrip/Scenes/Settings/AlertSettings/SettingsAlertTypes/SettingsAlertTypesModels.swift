@@ -15,6 +15,15 @@ import UIKit
 enum SettingsAlertTypes {
     // MARK: Models
     
+    enum Field {
+        case name
+        case snoozeFromNotification
+        case defaultSnooze
+        case `repeat`
+        case sound
+        case vibrate
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -22,9 +31,15 @@ enum SettingsAlertTypes {
         }
         
         struct Response {
+            let defaultSectionTextEditingChangedHandler: (String?) -> Void
+            let defaultSectionSwitchHandler: (Field, Bool) -> Void
+            let defaultSectionPickerValueChangedHandler: (TimeInterval) -> Void
+            let defaultSectionSelectionHandler: (Int) -> Void
+            let eventsSectionSelectionHandler: (Int) -> Void
         }
         
         struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
         }
     }
 }

@@ -8,18 +8,28 @@
 
 import UIKit
 
-final class CustomDatePicker: UIDatePicker, BaseSettingsPickerView {
+final class CustomDatePicker: UIDatePicker, PickerView {
     var onValueChanged: ((String?) -> Void)?
     var formatDate: ((Date) -> (String))?
     
     init() {
         super.init(frame: .zero)
-        addTarget(self, action: #selector(handleValueChanged), for: .valueChanged)
+        commonInit()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
         addTarget(self, action: #selector(handleValueChanged), for: .valueChanged)
+        
+        #if targetEnvironment(macCatalyst)
+        if #available(macCatalyst 13.4, *) {
+            preferredDatePickerStyle = .wheels
+        }
+        #endif
     }
     
     @objc private func handleValueChanged() {

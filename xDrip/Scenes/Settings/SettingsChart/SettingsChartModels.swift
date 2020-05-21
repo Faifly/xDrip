@@ -14,6 +14,11 @@ import UIKit
 
 enum SettingsChart {
     // MARK: Models
+    enum Field {
+        case activeInsulin
+        case activeCarbs
+        case data
+    }
     
     // MARK: Use cases
     
@@ -22,10 +27,12 @@ enum SettingsChart {
         }
         
         struct Response {
+            let switchValueChangedHandler: (Field, Bool) -> Void
+            let singleSelectionHandler: (Int) -> Void
         }
         
         struct ViewModel {
-            let tableViewModel: [BaseSettings.ViewModel]
+            let tableViewModel: BaseSettings.ViewModel
         }
     }
 }

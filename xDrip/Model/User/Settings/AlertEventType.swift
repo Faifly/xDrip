@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AlertEventType: Int {
+enum AlertEventType: Int, CaseIterable {
     case `default`
     case fastRise
     case urgentHigh

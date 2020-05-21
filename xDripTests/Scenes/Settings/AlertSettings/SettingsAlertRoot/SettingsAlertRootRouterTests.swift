@@ -33,8 +33,27 @@ final class SettingsAlertRootRouterTests: XCTestCase {
     
     // MARK: Test doubles
     
-    final class ViewControllerSpy: SettingsAlertRootViewController {
+    final class ViewControllerSpy: UINavigationController {
+        var lastPushedViewController = UIViewController()
+        
+        override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+            lastPushedViewController = viewController
+        }
     }
     
     // MARK: Tests
+    
+    func testRouteToAlertTypes() {
+        // Given
+        let viewController = SettingsAlertRootViewController()
+        let spy = createSpy()
+        spy.viewControllers = [viewController]
+        sut.viewController = viewController
+        
+        // When
+        sut.routeToAlertTypes()
+        
+        // Then
+        XCTAssert(spy.lastPushedViewController is SettingsAlertTypesViewController)
+    }
 }

@@ -24,9 +24,37 @@ final class SettingsAlertRootInteractor: SettingsAlertRootBusinessLogic, Setting
     var router: SettingsAlertRootRoutingLogic?
     
     // MARK: Do something
+    private let settings = User.current.settings.alert
     
     func doLoad(request: SettingsAlertRoot.Load.Request) {
-        let response = SettingsAlertRoot.Load.Response()
+        let response = SettingsAlertRoot.Load.Response(
+            animated: request.animated,
+            sliderValueChangeHandler: handleSliderValueChanged(_:),
+            switchValueChangedHandler: handleSwitchValueChanged(_:_:),
+            selectionHandler: handleSelection
+        )
+        
         presenter?.presentLoad(response: response)
+    }
+    
+    private func doUpdate() {
+        doLoad(request: SettingsAlertRoot.Load.Request(animated: true))
+    }
+    
+    private func handleSliderValueChanged(_ value: Float) {
+        settings?.updateVolume(value)
+    }
+    
+    private func handleSwitchValueChanged(_ field: SettingsAlertRoot.Field, _ value: Bool) {
+        switch field {
+        case .overrideSystemVolume: settings?.updateSystemVolumeOverriden(value); doUpdate()
+        case .overrideMute: settings?.updateMuteOverriden(value)
+        case .notificationsOn: settings?.updateNotificationEnabled(value); doUpdate()
+        case .volumeSlider, .alertTypes: break
+        }
+    }
+    
+    private func handleSelection() {
+        router?.routeToAlertTypes()
     }
 }

@@ -73,5 +73,6 @@ class SettingsChartViewController: BaseSettingsViewController, SettingsChartDisp
     // MARK: Display
     
     func displayLoad(viewModel: SettingsChart.Load.ViewModel) {
+        update(with: viewModel.tableViewModel)
     }
 }

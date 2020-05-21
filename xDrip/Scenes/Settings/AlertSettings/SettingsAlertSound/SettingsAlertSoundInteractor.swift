@@ -17,16 +17,29 @@ protocol SettingsAlertSoundBusinessLogic {
 }
 
 protocol SettingsAlertSoundDataStore: AnyObject {
+    var configuration: AlertConfiguration? { get set }
 }
 
 final class SettingsAlertSoundInteractor: SettingsAlertSoundBusinessLogic, SettingsAlertSoundDataStore {
     var presenter: SettingsAlertSoundPresentationLogic?
     var router: SettingsAlertSoundRoutingLogic?
     
+    var configuration: AlertConfiguration?
+    
     // MARK: Do something
     
     func doLoad(request: SettingsAlertSound.Load.Request) {
-        let response = SettingsAlertSound.Load.Response()
+        let response = SettingsAlertSound.Load.Response(
+            selectedIndex: configuration?.soundID ?? 0,
+            singleSelectionHandler: handleSingleSelection
+        )
         presenter?.presentLoad(response: response)
+    }
+    
+    private func handleSingleSelection(_ index: Int) {
+        configuration?.updateSoundID(index)
+        
+        let sound = CustomSound.allCases[index]
+        AudioController.shared.playSoundFile(sound.fileName)
     }
 }

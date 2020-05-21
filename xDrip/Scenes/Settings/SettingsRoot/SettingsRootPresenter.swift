@@ -47,7 +47,11 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
             createDisclosureCell(.transmitter, detailText: nil, selectionHandler: response.selectionHandler)
         ]
         
-        return BaseSettings.Section.normal(cells: cells, header: "APPLICATION SETUP", footer: nil)
+        return BaseSettings.Section.normal(
+            cells: cells,
+            header: "settings_root_application_setup_header".localized,
+            footer: nil
+        )
     }
     
     private func createProfileSetupSection(response: SettingsRoot.Load.Response) -> BaseSettings.Section {
@@ -59,7 +63,11 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
             createDisclosureCell(.insulinDurationTime, detailText: nil, selectionHandler: response.selectionHandler)
         ]
         
-        return BaseSettings.Section.normal(cells: cells, header: "PROFILE SETUP", footer: nil)
+        return BaseSettings.Section.normal(
+            cells: cells,
+            header: "settings_root_profile_setup_header".localized,
+            footer: nil
+        )
     }
     
     private func createDisclosureCell(
@@ -87,8 +95,14 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
     private func createTextInputCell(
         _ field: SettingsRoot.Field,
         detailText: String?,
+        placeholder: String?,
         textChangeHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
-        return .textInput(mainText: field.title, detailText: detailText, textChangedHandler: textChangeHandler)
+        return .textInput(
+            mainText: field.title,
+            detailText: detailText,
+            placeholder: placeholder,
+            textChangedHandler: textChangeHandler
+        )
     }
 }
 

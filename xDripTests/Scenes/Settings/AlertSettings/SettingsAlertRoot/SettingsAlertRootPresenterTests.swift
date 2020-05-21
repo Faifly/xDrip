@@ -53,7 +53,12 @@ final class SettingsAlertRootPresenterTests: XCTestCase {
         // Given
         let spy = SettingsAlertRootDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsAlertRoot.Load.Response()
+        let response = SettingsAlertRoot.Load.Response(
+            animated: false,
+            sliderValueChangeHandler: { _ in },
+            switchValueChangedHandler: { _, _ in },
+            selectionHandler: { }
+        )
         
         // When
         sut.presentLoad(response: response)

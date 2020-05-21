@@ -34,4 +34,28 @@ final class AlertSettings: Object {
             return configuration
         }
     }
+    
+    func updateVolume(_ volume: Float) {
+        Realm.shared.safeWrite {
+            self.volume = volume
+        }
+    }
+    
+    func updateSystemVolumeOverriden(_ overriden: Bool) {
+        Realm.shared.safeWrite {
+            self.isSystemVolumeOverriden = overriden
+        }
+    }
+    
+    func updateMuteOverriden(_ overriden: Bool) {
+        Realm.shared.safeWrite {
+            self.isMuteOverriden = overriden
+        }
+    }
+    
+    func updateNotificationEnabled(_ enabled: Bool) {
+        Realm.shared.safeWrite {
+            self.isNotificationsEnabled = enabled
+        }
+    }
 }

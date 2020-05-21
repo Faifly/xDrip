@@ -60,12 +60,14 @@ class SettingsAlertSingleTypeViewController: BaseSettingsViewController, Setting
     // MARK: Do something
     
     private func doLoad() {
-        let request = SettingsAlertSingleType.Load.Request()
+        let request = SettingsAlertSingleType.Load.Request(animated: false)
         interactor?.doLoad(request: request)
     }
     
     // MARK: Display
     
     func displayLoad(viewModel: SettingsAlertSingleType.Load.ViewModel) {
+        update(with: viewModel.tableViewModel, animated: viewModel.animated)
+        title = viewModel.title
     }
 }

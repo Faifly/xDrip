@@ -89,7 +89,7 @@ final class BaseSettingsViewControllerTests: XCTestCase {
             .disclosure(mainText: "", detailText: nil, selectionHandler: {}),
             .pickerExpandable(mainText: "", detailText: nil, picker: CustomDatePicker()),
             .rightSwitch(text: "", isSwitchOn: false, switchHandler: { _ in }),
-            .textInput(mainText: "", detailText: nil, textChangedHandler: { _ in }),
+            .textInput(mainText: "", detailText: nil, placeholder: nil, textChangedHandler: { _ in }),
             .volumeSlider(value: 0.0, changeHandler: { _ in })
         ]
         
@@ -112,7 +112,7 @@ final class BaseSettingsViewControllerTests: XCTestCase {
             .disclosure(mainText: "", detailText: nil, selectionHandler: {}),
             .pickerExpandable(mainText: "", detailText: nil, picker: CustomDatePicker()),
             .rightSwitch(text: "", isSwitchOn: false, switchHandler: { _ in }),
-            .textInput(mainText: "", detailText: nil, textChangedHandler: { _ in }),
+            .textInput(mainText: "", detailText: nil, placeholder: nil, textChangedHandler: { _ in }),
             .volumeSlider(value: 0.0, changeHandler: { _ in })
         ]
         
@@ -160,7 +160,7 @@ final class BaseSettingsViewControllerTests: XCTestCase {
             .disclosure(mainText: "", detailText: nil, selectionHandler: {}),
             .pickerExpandable(mainText: "", detailText: nil, picker: CustomDatePicker()),
             .rightSwitch(text: "", isSwitchOn: false, switchHandler: { _ in }),
-            .textInput(mainText: "", detailText: nil, textChangedHandler: { _ in }),
+            .textInput(mainText: "", detailText: nil, placeholder: nil, textChangedHandler: { _ in }),
             .volumeSlider(value: 0.0, changeHandler: { _ in })
         ]
         
@@ -224,7 +224,7 @@ final class BaseSettingsViewControllerTests: XCTestCase {
         // When
         cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0))
         // Then
-        XCTAssert(cell is BaseSettingsPickerExpandableTableViewCell)
+        XCTAssert(cell is PickerExpandableTableViewCell)
         
         // When
         cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 2, section: 0))
@@ -301,5 +301,38 @@ final class BaseSettingsViewControllerTests: XCTestCase {
         sut.tableView(tableView, didSelectRowAt: IndexPath(row: 1, section: 1))
         // Then
         XCTAssertTrue(singleSelectionHandlerCalled)
+    }
+    
+    func testToggleExpanded() {
+        let normalCells: [BaseSettings.Cell] = [
+            .pickerExpandable(mainText: "", detailText: nil, picker: CustomDatePicker()),
+            .pickerExpandable(mainText: "", detailText: nil, picker: CustomDatePicker())
+        ]
+        
+        let normalSection = BaseSettings.Section.normal(cells: normalCells, header: nil, footer: nil)
+        let viewModel = BaseSettings.ViewModel(sections: [normalSection])
+        
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        // When
+        sut.update(with: viewModel)
+        sut.tableView(tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
+        // Then
+        XCTAssertTrue(sut.expandedCell == IndexPath(row: 1, section: 0))
+        
+        // When
+        sut.tableView(tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
+        // Then
+        XCTAssertTrue(sut.expandedCell == IndexPath(row: 0, section: 0))
+        
+        // When
+        sut.tableView(tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
+        // Then
+        XCTAssertNil(sut.expandedCell)
     }
 }

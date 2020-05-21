@@ -60,12 +60,19 @@ class SettingsAlertTypesViewController: BaseSettingsViewController, SettingsAler
     // MARK: Do something
     
     private func doLoad() {
+        setupUI()
+        
         let request = SettingsAlertTypes.Load.Request()
         interactor?.doLoad(request: request)
+    }
+    
+    private func setupUI() {
+        title = "settings_alert_root_alert_types".localized
     }
     
     // MARK: Display
     
     func displayLoad(viewModel: SettingsAlertTypes.Load.ViewModel) {
+        update(with: viewModel.tableViewModel)
     }
 }

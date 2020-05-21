@@ -55,6 +55,7 @@ class SettingsAlertSoundViewController: BaseSettingsViewController, SettingsAler
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
+        setupUI()
     }
     
     // MARK: Do something
@@ -67,5 +68,10 @@ class SettingsAlertSoundViewController: BaseSettingsViewController, SettingsAler
     // MARK: Display
     
     func displayLoad(viewModel: SettingsAlertSound.Load.ViewModel) {
+        update(with: viewModel.tableViewModel)
+    }
+    
+    private func setupUI() {
+        title = "settings_alert_sound_title".localized
     }
 }

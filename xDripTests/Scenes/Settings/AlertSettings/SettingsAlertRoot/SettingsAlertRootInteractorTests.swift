@@ -48,6 +48,7 @@ final class SettingsAlertRootInteractorTests: XCTestCase {
     }
     
     final class SettingsAlertRootRoutingLogicSpy: SettingsAlertRootRoutingLogic {
+        func routeToAlertTypes() { }
     }
     
     // MARK: Tests
@@ -56,7 +57,7 @@ final class SettingsAlertRootInteractorTests: XCTestCase {
         // Given
         let spy = SettingsAlertRootPresentationLogicSpy()
         sut.presenter = spy
-        let request = SettingsAlertRoot.Load.Request()
+        let request = SettingsAlertRoot.Load.Request(animated: false)
         
         // When
         sut.doLoad(request: request)

@@ -33,10 +33,40 @@ enum GlucoseUnit: Int, CaseIterable {
         }
     }
     
+    static func convertToDefault(_ value: Double) -> Double {
+        let current = User.current.settings.unit
+        switch current {
+        case .mgDl: return value
+        case .mmolL: return current.convertToAnother(value)
+        }
+    }
+    
+    static func convertFromDefault(_ value: Double) -> Double {
+        let current = User.current.settings.unit
+        switch current {
+        case .mgDl: return value
+        case .mmolL: return GlucoseUnit.mgDl.convertToAnother(value)
+        }
+    }
+    
     var label: String {
         switch self {
         case .mgDl: return "settings_units_mgdl".localized
         case .mmolL: return "settings_units_mmolL".localized
+        }
+    }
+    
+    var minMax: Range<Double> {
+        switch self {
+        case .mgDl: return 0.0 ..< 400.0
+        case .mmolL: return 0.0 ..< 20.0
+        }
+    }
+    
+    var pickerStep: Double {
+        switch self {
+        case .mgDl: return 1.0
+        case .mmolL: return 0.1
         }
     }
 }

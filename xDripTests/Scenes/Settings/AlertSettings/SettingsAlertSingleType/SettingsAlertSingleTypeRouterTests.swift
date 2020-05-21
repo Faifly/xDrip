@@ -33,8 +33,34 @@ final class SettingsAlertSingleTypeRouterTests: XCTestCase {
     
     // MARK: Test doubles
     
-    final class ViewControllerSpy: SettingsAlertSingleTypeViewController {
+    final class ViewControllerSpy: UINavigationController {
+        var lastPushedViewController: UIViewController?
+        
+        override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+            lastPushedViewController = viewController
+        }
     }
     
     // MARK: Tests
+    func testRouteToSound() {
+        let viewController = SettingsAlertSingleTypeViewController()
+        let spy = createSpy()
+        spy.viewControllers = [viewController]
+        sut.viewController = viewController
+        
+        viewController.viewDidLoad()
+        
+        // When
+        sut.routeToSound()
+        // Then
+        XCTAssertNil(spy.lastPushedViewController)
+        
+        // When
+        if let interactor = viewController.interactor as? SettingsAlertSingleTypeInteractor {
+            sut.dataStore = interactor
+        }
+        sut.routeToSound()
+        // Then
+        XCTAssertTrue(spy.lastPushedViewController is SettingsAlertSoundViewController)
+    }
 }

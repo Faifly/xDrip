@@ -11,7 +11,7 @@ import UIKit
 final class BaseSettingsCellFactory {
     weak var tableView: UITableView?
     
-    func createCell(ofType type: BaseSettings.Cell, indexPath: IndexPath) -> UITableViewCell {
+    func createCell(ofType type: BaseSettings.Cell, indexPath: IndexPath, expandedCell: IndexPath?) -> UITableViewCell {
         guard let tableView = tableView else { fatalError() }
         
         switch type {
@@ -20,9 +20,14 @@ final class BaseSettingsCellFactory {
             cell.configure(mainText: mainText, detailText: detailText)
             return cell
             
-        case let .textInput(mainText, detailText, textChangeHandler):
+        case let .textInput(mainText, detailText, placeholder, textChangeHandler):
             let cell = tableView.dequeueReusableCell(ofType: BaseSettingsTextInputTableViewCell.self, for: indexPath)
-            cell.configure(mainText: mainText, detailText: detailText, textChangeHandler: textChangeHandler)
+            cell.configure(
+                mainText: mainText,
+                detailText: detailText,
+                placeholder: placeholder,
+                textChangeHandler: textChangeHandler
+            )
             
             return cell
             
@@ -42,11 +47,16 @@ final class BaseSettingsCellFactory {
             
         case let .pickerExpandable(mainText, detailText, picker):
             let cell = tableView.dequeueReusableCell(
-                ofType: BaseSettingsPickerExpandableTableViewCell.self,
+                ofType: PickerExpandableTableViewCell.self,
                 for: indexPath
             )
             
-            cell.configure(mainText: mainText, detailText: detailText, pickerView: picker)
+            cell.configure(
+                mainText: mainText,
+                detailText: detailText,
+                pickerView: picker,
+                isExpanded: expandedCell == indexPath
+            )
             
             return cell
         }

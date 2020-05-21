@@ -12,6 +12,7 @@ import UIKit
 extension NotificationCenter {
     enum Setting {
         case unit
+        case chart
     }
     
     func subscribe(forSettingsChange settings: [Setting],
@@ -33,6 +34,7 @@ fileprivate extension NotificationCenter.Setting {
         let name: String
         switch self {
         case .unit: name = "settingsUnit"
+        case .chart: name = "settingsChart"
         }
         return Notification.Name(name)
     }
