@@ -144,7 +144,7 @@
 "settings_nightscout_cloud_configuration_enabled_section_footer" = "REST API - это стандартный способ подключения к Nightscout";
 "settings_nightscout_cloud_configuration_use_cellular_data_title" = "Использовать сотовое подключение";
 "settings_nightscout_cloud_configuration_use_cellular_data_section_footer" = "Загружать даже если установленно сотовое подключение";
-"settings_nightscout_cloud_configuration_send_display_glucose_title" = "";
+"settings_nightscout_cloud_configuration_send_display_glucose_title" = "Отправлять Отображаемую Глюкозу";
 "settings_nightscout_cloud_configuration_send_display_glucose_section_footer" = "Используйте сглаживание шума и плагины и т.д. (если включено) для транслируемого значения";
 "settings_nightscout_cloud_configuration_base_url_title" = "Базовый URL";
 "settings_nightscout_cloud_configuration_base_url_placeholder" = "https://google.com";

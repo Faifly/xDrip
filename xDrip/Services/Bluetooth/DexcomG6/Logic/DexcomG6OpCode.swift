@@ -54,7 +54,8 @@ enum DexcomG6OpCode: UInt8 {
              .authChallengeTx,
              .authChallengeRx,
              .pairRequestTx,
-             .pairRequestRx:
+             .pairRequestRx,
+             .keepAliveTx:
             return false
         default: return true
         }

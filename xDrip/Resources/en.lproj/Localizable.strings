@@ -143,7 +143,7 @@
 "settings_nightscout_cloud_configuration_enabled_title" = "Enabled";
 "settings_nightscout_cloud_configuration_enabled_section_footer" = "The REST API is the standard way to connect to Nightscout";
 "settings_nightscout_cloud_configuration_use_cellular_data_title" = "Use cellular data";
-"settings_nightscout_cloud_configuration_use_cellular_data_section_footer" = "Upload even when using mobile data";
+"settings_nightscout_cloud_configuration_use_cellular_data_section_footer" = "Upload even when using cellular data";
 "settings_nightscout_cloud_configuration_send_display_glucose_title" = "Send Display Glucose";
 "settings_nightscout_cloud_configuration_send_display_glucose_section_footer" = "Use noise smoothing and plugins etc (if enabled) for broadcasted value";
 "settings_nightscout_cloud_configuration_base_url_title" = "Base URL";

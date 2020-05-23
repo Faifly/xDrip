@@ -97,6 +97,7 @@ class SettingsTransmitterViewController: UIViewController, SettingsTransmitterDi
         let statusLabel = UILabel()
         statusLabel.font = .systemFont(ofSize: 13.0, weight: .regular)
         statusLabel.textColor = .mediumEmphasisText
+        statusLabel.numberOfLines = 0
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.textAlignment = .center
         view.addSubview(statusLabel)

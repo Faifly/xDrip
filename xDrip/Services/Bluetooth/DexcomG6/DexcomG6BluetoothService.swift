@@ -140,6 +140,10 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
         LogController.log(message: "[Dexcom G6] Did receive transmitter time info: %f", type: .debug, message.age)
         delegate?.serviceDidUpdateMetadata(.transmitterTime, value: "\(message.age)")
     }
+    
+    func workerDidRequestPairing() {
+        NotificationController.shared.sendNotification(ofType: .pairingRequest)
+    }
 }
 
 extension DexcomG6BluetoothService: CBCentralManagerDelegate {
