@@ -13,7 +13,7 @@ final class CustomAlertController: UIAlertController {
     private(set) var originalTitle: String?
     private var spaceAdjustedTitle: String = ""
     private weak var imageView: UIImageView?
-    private var previousImgViewSize: CGSize = .zero
+    private var previousImageViewSize: CGSize = .zero
     
     override var title: String? {
         didSet {
@@ -42,8 +42,8 @@ final class CustomAlertController: UIAlertController {
             return
         }
         // Adjust title if image size has changed
-        if previousImgViewSize != imageView.bounds.size {
-            previousImgViewSize = imageView.bounds.size
+        if previousImageViewSize != imageView.bounds.size {
+            previousImageViewSize = imageView.bounds.size
             adjustTitle(for: imageView)
         }
         // Position `imageView`

@@ -25,7 +25,7 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         let tableViewModel = BaseSettings.ViewModel(
             sections: [
                 createEnabledSection(response: response),
-                createMobileDataSection(response: response),
+                createCellularSection(response: response),
                 createGlucoseSection(response: response),
                 createBaseURLSection(response: response),
                 createDownloadSection(response: response),
@@ -53,10 +53,10 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         )
     }
     
-    private func createMobileDataSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+    private func createCellularSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
         let cells: [BaseSettings.Cell] = [
             createRightSwitchCell(
-                .useMobileData,
+                .useCellularData,
                 isOn: response.settings.useCellularData,
                 switchValueChangedHandler: response.switchValueChangedHandler
             )
@@ -65,7 +65,7 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         return .normal(
             cells: cells,
             header: nil,
-            footer: "settings_nightscout_cloud_configuration_use_mobile_data_section_footer".localized
+            footer: "settings_nightscout_cloud_configuration_use_cellular_data_section_footer".localized
         )
     }
     
@@ -160,7 +160,7 @@ private extension NightscoutCloudConfiguration.Field {
     var title: String {
         switch self {
         case .enabled: return "settings_nightscout_cloud_configuration_enabled_title".localized
-        case .useMobileData: return "settings_nightscout_cloud_configuration_use_mobile_data_title".localized
+        case .useCellularData: return "settings_nightscout_cloud_configuration_use_cellular_data_title".localized
         case .sendDisplayGlucose: return "settings_nightscout_cloud_configuration_send_display_glucose_title".localized
         case .baseURL: return "settings_nightscout_cloud_configuration_base_url_title".localized
         case .downloadData: return "settings_nightscout_cloud_configuration_download_data_title".localized

@@ -44,7 +44,7 @@ final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfiguration
     private func handleSwitchValueChanged(_ field: NightscoutCloudConfiguration.Field, _ value: Bool) {
         switch field {
         case .enabled: settings.updateIsEnabled(value)
-        case .useMobileData: settings.updateUseCellularData(value)
+        case .useCellularData: settings.updateUseCellularData(value)
         case .sendDisplayGlucose: settings.updateSendDisplayGlucose(value)
         case .downloadData: settings.updateDownloadData(value)
         default: break

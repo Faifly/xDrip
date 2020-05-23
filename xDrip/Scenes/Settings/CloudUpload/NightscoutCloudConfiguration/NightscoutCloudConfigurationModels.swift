@@ -17,7 +17,7 @@ enum NightscoutCloudConfiguration {
     
     enum Field {
         case enabled
-        case useMobileData
+        case useCellularData
         case sendDisplayGlucose
         case baseURL
         case downloadData

@@ -34,7 +34,25 @@ final class NightscoutCloudBackfillRouterTests: XCTestCase {
     // MARK: Test doubles
     
     final class ViewControllerSpy: NightscoutCloudBackfillViewController {
+        var lastPresentedViewController: UIViewController?
+        
+        override func present(
+            _ viewControllerToPresent: UIViewController,
+            animated flag: Bool,
+            completion: (() -> Void)? = nil) {
+            lastPresentedViewController = viewControllerToPresent
+        }
     }
     
     // MARK: Tests
+    
+    func testPresentPopUp() {
+        let spy = createSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.presentPopUp()
+        // Then
+        XCTAssertTrue(spy.lastPresentedViewController is PopUpViewController)
+    }
 }

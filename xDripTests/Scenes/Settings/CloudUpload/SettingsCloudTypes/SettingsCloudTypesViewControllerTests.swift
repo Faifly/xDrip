@@ -55,6 +55,14 @@ final class SettingsCloudTypesViewControllerTests: XCTestCase {
         }
     }
     
+    final class SettingsCloudTypesRoutingLogicSpy: SettingsCloudTypesRoutingLogic {
+        var routeToConfigurationCalled = false
+        
+        func routeToNightscoutCloudConfiguration() {
+            routeToConfigurationCalled = true
+        }
+    }
+    
     // MARK: Tests
     
     func testShouldDoLoadWhenViewIsLoaded() {
@@ -79,5 +87,24 @@ final class SettingsCloudTypesViewControllerTests: XCTestCase {
         sut.displayLoad(viewModel: viewModel)
         
         // Then
+    }
+    
+    func testSelectionHandler() {
+        loadView()
+        
+        let routerSpy = SettingsCloudTypesRoutingLogicSpy()
+        
+        if let interactor = sut.interactor as? SettingsCloudTypesInteractor {
+            interactor.router = routerSpy
+        }
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 0, section: 0))
+        // Then
+        XCTAssertTrue(routerSpy.routeToConfigurationCalled)
     }
 }

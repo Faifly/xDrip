@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PopUpViewController" customModule="xDrip" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="Tbz-kc-s2E" id="Zlr-z5-z11"/>
                 <outlet property="activityIndicatorContainerView" destination="8NW-y7-wE4" id="7c4-QC-jgU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,10 +21,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8NW-y7-wE4">
-                    <rect key="frame" x="48" y="427" width="318" height="52"/>
+                    <rect key="frame" x="57" y="427" width="300" height="52"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wXH-kl-e1T">
-                            <rect key="frame" x="87" y="0.0" width="144" height="52"/>
+                            <rect key="frame" x="78" y="0.0" width="144" height="52"/>
                             <subviews>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Tbz-kc-s2E">
                                     <rect key="frame" x="8" y="16" width="20" height="20"/>
@@ -52,6 +53,7 @@
                         <constraint firstItem="wXH-kl-e1T" firstAttribute="centerX" secondItem="8NW-y7-wE4" secondAttribute="centerX" id="1ZP-T3-F5n"/>
                         <constraint firstAttribute="bottom" secondItem="wXH-kl-e1T" secondAttribute="bottom" id="6vZ-gN-Bm7"/>
                         <constraint firstItem="wXH-kl-e1T" firstAttribute="centerY" secondItem="8NW-y7-wE4" secondAttribute="centerY" id="Jvf-wm-d3s"/>
+                        <constraint firstAttribute="width" constant="300" id="emu-0l-ncz"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -63,9 +65,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="8NW-y7-wE4" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="P2h-0w-SKT"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8NW-y7-wE4" secondAttribute="trailing" constant="48" id="Qbp-ug-bST"/>
                 <constraint firstItem="8NW-y7-wE4" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="Y1U-OO-Y1t"/>
-                <constraint firstItem="8NW-y7-wE4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="48" id="Zk6-WW-fLn"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="139" y="134"/>
