@@ -256,3 +256,7 @@
 // Custom Picker
 "custom_picker_hours" = "hours";
 "custom_picker_minutes" = "min";
+
+// Notifications
+"notification_pairing_request_title" = "Pairing Request";
+"notification_pairing_request_body" = "Please unlock your phone and confirm pairing request from your transmitter during the next 30 seconds";

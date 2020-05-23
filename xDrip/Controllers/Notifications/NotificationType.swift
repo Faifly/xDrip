@@ -13,13 +13,13 @@ enum NotificationType {
     
     var title: String {
         switch self {
-        case .pairingRequest: return "Pairing request".localized
+        case .pairingRequest: return "notification_pairing_request_title".localized
         }
     }
     
     var body: String {
         switch self {
-        case .pairingRequest: return "Please open your phone and confirm pairing request from your transmitter".localized
+        case .pairingRequest: return "notification_pairing_request_body".localized
         }
     }
     

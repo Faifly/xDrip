@@ -256,3 +256,7 @@
 // Custom Picker
 "custom_picker_hours" = "ч";
 "custom_picker_minutes" = "мин";
+
+// Notifications
+"notification_pairing_request_title" = "Запрос Соединения";
+"notification_pairing_request_body" = "Пожалуйста, разблокируйте свой телефон и примите запрос на подключение от вашего датчика в течении 30ти секунд";
