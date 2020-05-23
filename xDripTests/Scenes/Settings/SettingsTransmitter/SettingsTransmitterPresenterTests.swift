@@ -45,6 +45,12 @@ final class SettingsTransmitterPresenterTests: XCTestCase {
         func displayLoad(viewModel: SettingsTransmitter.Load.ViewModel) {
             displayLoadCalled = true
         }
+        
+        func displayData(viewModel: SettingsTransmitter.UpdateData.ViewModel) {
+        }
+        
+        func displayStatus(viewModel: SettingsTransmitter.ChangeStatus.ViewModel) {
+        }
     }
     
     // MARK: Tests

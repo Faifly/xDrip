@@ -23,7 +23,7 @@ final class BaseSettingsDisclosureCellTests: XCTestCase {
             ofType: BaseSettingsDisclosureCell.self,
             for: IndexPath(row: 0, section: 0)
         )
-        sut.configure(mainText: "hello", detailText: "world")
+        sut.configure(mainText: "hello", detailText: "world", showDisclosureIndicator: true, detailTextColor: nil)
         
         XCTAssert(sut.textLabel?.text == "hello")
         XCTAssert(sut.detailTextLabel?.text == "world")
