@@ -71,7 +71,8 @@ final class SettingsCloudTypesViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsCloudTypes.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [])
+        let viewModel = SettingsCloudTypes.Load.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()

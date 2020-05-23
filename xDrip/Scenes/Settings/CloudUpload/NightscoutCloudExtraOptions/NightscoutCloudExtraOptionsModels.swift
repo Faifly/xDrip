@@ -15,6 +15,15 @@ import UIKit
 enum NightscoutCloudExtraOptions {
     // MARK: Models
     
+    enum Field {
+        case skipLANUploads
+        case uploadBattery
+        case uploadTreatments
+        case alertOnFailures
+        case appendSourceInfo
+        case backFillData
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -22,9 +31,13 @@ enum NightscoutCloudExtraOptions {
         }
         
         struct Response {
+            let settings: NightscoutSyncSettings
+            let switchValueChangedHandler: (Field, Bool) -> Void
+            let singleSelectionHandler: () -> Void
         }
         
         struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
         }
     }
 }

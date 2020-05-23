@@ -47,7 +47,9 @@ final class NightscoutCloudExtraOptionsInteractorTests: XCTestCase {
         }
     }
     
-    final class NightscoutCloudExtraOptionsRoutingLogicSpy: NightscoutCloudExtraOptionsRoutingLogic {        
+    final class NightscoutCloudExtraOptionsRoutingLogicSpy: NightscoutCloudExtraOptionsRoutingLogic {
+        func routeToBackfillData() {
+        }
     }
     
     // MARK: Tests

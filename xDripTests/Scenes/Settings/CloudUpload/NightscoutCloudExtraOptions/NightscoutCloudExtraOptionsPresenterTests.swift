@@ -53,7 +53,11 @@ final class NightscoutCloudExtraOptionsPresenterTests: XCTestCase {
         // Given
         let spy = NightscoutCloudExtraOptionsDisplayLogicSpy()
         sut.viewController = spy
-        let response = NightscoutCloudExtraOptions.Load.Response()
+        let response = NightscoutCloudExtraOptions.Load.Response(
+            settings: NightscoutSyncSettings(),
+            switchValueChangedHandler: { _, _ in },
+            singleSelectionHandler: { }
+        )
         
         // When
         sut.presentLoad(response: response)

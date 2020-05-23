@@ -53,7 +53,7 @@ final class SettingsCloudTypesPresenterTests: XCTestCase {
         // Given
         let spy = SettingsCloudTypesDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsCloudTypes.Load.Response()
+        let response = SettingsCloudTypes.Load.Response(singleSelectionHandler: { })
         
         // When
         sut.presentLoad(response: response)

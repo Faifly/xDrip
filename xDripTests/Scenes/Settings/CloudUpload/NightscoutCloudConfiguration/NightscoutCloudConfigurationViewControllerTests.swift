@@ -71,7 +71,8 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = NightscoutCloudConfiguration.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [])
+        let viewModel = NightscoutCloudConfiguration.Load.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()

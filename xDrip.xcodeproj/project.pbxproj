@@ -18,6 +18,9 @@
 		2C09D2262441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2242441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift */; };
 		2C09D2272441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D2252441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib */; };
 		2C09D22B24447D3D008538E9 /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D22A24447D3D008538E9 /* SettingsSplitViewController.swift */; };
+		2C1DE8A524792DEF0023B512 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1DE8A324792DEF0023B512 /* PopUpViewController.swift */; };
+		2C1DE8A624792DEF0023B512 /* PopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C1DE8A424792DEF0023B512 /* PopUpViewController.xib */; };
+		2C1DE8A8247938780023B512 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1DE8A7247938780023B512 /* CustomAlertController.swift */; };
 		2C48E6E42428AA78006B63B0 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */; };
 		2C48E6EA2428F592006B63B0 /* UIColor+Colors_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */; };
 		2C48E6EC24290537006B63B0 /* UIView+Bindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */; };
@@ -81,7 +84,6 @@
 		2CBE1A98243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A97243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift */; };
 		2CBE1A9B24323A58003BE14E /* EntriesListTableControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A9A24323A58003BE14E /* EntriesListTableControllerTests.swift */; };
 		2CBE1A9D2433718C003BE14E /* EntriesListSceneBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A9C2433718C003BE14E /* EntriesListSceneBuilderTests.swift */; };
-		2CBF32A1242CEB6500DE944A /* UIView+Effects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBF32A0242CEB6500DE944A /* UIView+Effects.swift */; };
 		2CBF32A4242E030700DE944A /* EntriesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */; };
 		5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C97C243891CA002AFA1B /* HomeViewController.xib */; };
 		5805C9A024389230002AFA1B /* DexcomG6OutgoingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C98324389230002AFA1B /* DexcomG6OutgoingMessage.swift */; };
@@ -617,6 +619,9 @@
 		2C09D2242441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsTextInputTableViewCell.swift; sourceTree = "<group>"; };
 		2C09D2252441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsTextInputTableViewCell.xib; sourceTree = "<group>"; };
 		2C09D22A24447D3D008538E9 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
+		2C1DE8A324792DEF0023B512 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
+		2C1DE8A424792DEF0023B512 /* PopUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopUpViewController.xib; sourceTree = "<group>"; };
+		2C1DE8A7247938780023B512 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 		2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors_Tests.swift"; sourceTree = "<group>"; };
 		2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Bindings.swift"; sourceTree = "<group>"; };
@@ -680,7 +685,6 @@
 		2CBE1A97243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListAbstractFormattingWorker.swift; sourceTree = "<group>"; };
 		2CBE1A9A24323A58003BE14E /* EntriesListTableControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableControllerTests.swift; sourceTree = "<group>"; };
 		2CBE1A9C2433718C003BE14E /* EntriesListSceneBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListSceneBuilderTests.swift; sourceTree = "<group>"; };
-		2CBF32A0242CEB6500DE944A /* UIView+Effects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Effects.swift"; sourceTree = "<group>"; };
 		2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableViewCell.swift; sourceTree = "<group>"; };
 		5805C97C243891CA002AFA1B /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		5805C98324389230002AFA1B /* DexcomG6OutgoingMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DexcomG6OutgoingMessage.swift; sourceTree = "<group>"; };
@@ -1244,6 +1248,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C1DE8A224792DDA0023B512 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2C1DE8A324792DEF0023B512 /* PopUpViewController.swift */,
+				2C1DE8A424792DEF0023B512 /* PopUpViewController.xib */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		2C493C2B244EFD1200F4A54B /* Pickers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2010,6 +2023,7 @@
 		580E4BAC243F724300565EDE /* NightscoutCloudBackfill */ = {
 			isa = PBXGroup;
 			children = (
+				2C1DE8A224792DDA0023B512 /* Helpers */,
 				580E4BAD243F725600565EDE /* NightscoutCloudBackfillPresenter.swift */,
 				580E4BAE243F725600565EDE /* NightscoutCloudBackfillRouter.swift */,
 				580E4BAF243F725600565EDE /* NightscoutCloudBackfillModels.swift */,
@@ -2590,7 +2604,6 @@
 				589FD947247065EB004C01A4 /* RealmUtils.swift */,
 				2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */,
 				2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */,
-				2CBF32A0242CEB6500DE944A /* UIView+Effects.swift */,
 				5805C9CC243892A8002AFA1B /* Data+Hex.swift */,
 				5805C9CE243892AE002AFA1B /* NibViewController.swift */,
 				5805C9D0243892B3002AFA1B /* String+Validation.swift */,
@@ -2624,6 +2637,7 @@
 				2C531F6F2445FE27006F4532 /* Pickers */,
 				580E4CFA2441BF2100565EDE /* Charts */,
 				5805C9C92438929E002AFA1B /* CenteredTitleButton.swift */,
+				2C1DE8A7247938780023B512 /* CustomAlertController.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -3405,6 +3419,7 @@
 				5805CA0E243892D6002AFA1B /* InitialSetupSettingsViewController.xib in Resources */,
 				2C4E7EF224694F440062D403 /* Tiptoes.caf in Resources */,
 				2C4E7F0724694F440062D403 /* Chime.caf in Resources */,
+				2C1DE8A624792DEF0023B512 /* PopUpViewController.xib in Resources */,
 				58184A4B2438C20D00E848C6 /* EntriesListViewController.xib in Resources */,
 				2C4E7EFD24694F440062D403 /* Telegraph.caf in Resources */,
 				58184A572438C64100E848C6 /* EntriesListTableViewCell.xib in Resources */,
@@ -3589,7 +3604,6 @@
 				5805C9C22438925F002AFA1B /* CGMDevice.swift in Sources */,
 				580E4B8F243F71DC00565EDE /* SettingsCloudTypesViewController.swift in Sources */,
 				580E4B66243F713A00565EDE /* SettingsAlertTypesModels.swift in Sources */,
-				2CBF32A1242CEB6500DE944A /* UIView+Effects.swift in Sources */,
 				580E4B3B243E336000565EDE /* BaseSettingsModels.swift in Sources */,
 				580E4B71243F716000565EDE /* SettingsAlertSingleTypePresenter.swift in Sources */,
 				580E4B73243F716000565EDE /* SettingsAlertSingleTypeModels.swift in Sources */,
@@ -3640,6 +3654,7 @@
 				580E4CE2243F802F00565EDE /* SettingsModeMasterViewController.swift in Sources */,
 				58F4CC85243BA2110053D17C /* DebugLogModels.swift in Sources */,
 				58443257243CD35600282A6C /* Settings.swift in Sources */,
+				2C1DE8A8247938780023B512 /* CustomAlertController.swift in Sources */,
 				580EC7BD2421521C00C34948 /* EditCalibrationRouter.swift in Sources */,
 				58B5FD3624190E2F00DB857D /* HomeInteractor.swift in Sources */,
 				2CBE1A96243212D7003BE14E /* EntriesListBolusFormattingWorker.swift in Sources */,
@@ -3747,6 +3762,7 @@
 				580EC7A8242151BC00C34948 /* EditTrainingPresenter.swift in Sources */,
 				5805CA13243892D6002AFA1B /* InitialSetupDeviceModeViewController.swift in Sources */,
 				580E4BC3243F733100565EDE /* SettingsModeRootViewController.swift in Sources */,
+				2C1DE8A524792DEF0023B512 /* PopUpViewController.swift in Sources */,
 				5805C9B224389230002AFA1B /* DexcomG6MessageWorker.swift in Sources */,
 				2CBE1A8924320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift in Sources */,
 				584432AC243CFD9B00282A6C /* SettingsChartModels.swift in Sources */,

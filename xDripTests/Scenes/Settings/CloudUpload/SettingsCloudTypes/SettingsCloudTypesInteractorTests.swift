@@ -47,7 +47,9 @@ final class SettingsCloudTypesInteractorTests: XCTestCase {
         }
     }
     
-    final class SettingsCloudTypesRoutingLogicSpy: SettingsCloudTypesRoutingLogic {        
+    final class SettingsCloudTypesRoutingLogicSpy: SettingsCloudTypesRoutingLogic {
+        func routeToNightscoutCloudConfiguration() {
+        }
     }
     
     // MARK: Tests

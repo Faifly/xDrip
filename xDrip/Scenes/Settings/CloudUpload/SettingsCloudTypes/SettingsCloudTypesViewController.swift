@@ -54,6 +54,7 @@ class SettingsCloudTypesViewController: BaseSettingsViewController, SettingsClou
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         doLoad()
     }
     
@@ -64,8 +65,13 @@ class SettingsCloudTypesViewController: BaseSettingsViewController, SettingsClou
         interactor?.doLoad(request: request)
     }
     
+    private func setupUI() {
+        title = "settings_cloud_types_title".localized
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: SettingsCloudTypes.Load.ViewModel) {
+        update(with: viewModel.tableViewModel)
     }
 }

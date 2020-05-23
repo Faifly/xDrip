@@ -53,6 +53,9 @@ final class NightscoutCloudBackfillViewControllerTests: XCTestCase {
         func doLoad(request: NightscoutCloudBackfill.Load.Request) {
             doLoadCalled = true
         }
+        
+        func doSend(request: NightscoutCloudBackfill.Send.Request) {
+        }
     }
     
     // MARK: Tests
@@ -71,7 +74,8 @@ final class NightscoutCloudBackfillViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = NightscoutCloudBackfill.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [])
+        let viewModel = NightscoutCloudBackfill.Load.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()

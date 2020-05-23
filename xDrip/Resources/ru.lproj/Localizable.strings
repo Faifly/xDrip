@@ -133,6 +133,47 @@
 "settings_alert_sound_tri-tone" = "Трезвучие";
 "settings_alert_sound_typewriters" = "Пишущая машинка";
 
+// Settings Cloud Types
+"settings_cloud_types_title" = "Загрузки в облако";
+"settings_cloud_types_nightscout_sync" = "Синхронизация Nightscout (Rest-Api)";
+"settings_cloud_types_section_footer" = "REST API - это стандартный способ подключения к Nightscout";
+
+// Settings Nightscout Cloud Configuration
+"settings_nightscout_cloud_configuration_title" = "Синхронизация Nightscout (Rest-Api)";
+"settings_nightscout_cloud_configuration_enabled_title" = "Включено";
+"settings_nightscout_cloud_configuration_enabled_section_footer" = "REST API - это стандартный способ подключения к Nightscout";
+"settings_nightscout_cloud_configuration_use_mobile_data_title" = "Использовать мобильное подключение";
+"settings_nightscout_cloud_configuration_use_mobile_data_section_footer" = "Загружать даже если установленно мобильное подключение";
+"settings_nightscout_cloud_configuration_send_display_glucose_title" = "";
+"settings_nightscout_cloud_configuration_send_display_glucose_section_footer" = "Используйте сглаживание шума и плагины и т.д. (если включено) для транслируемого значения";
+"settings_nightscout_cloud_configuration_base_url_title" = "Базовый URL";
+"settings_nightscout_cloud_configuration_base_url_placeholder" = "https://google.com";
+"settings_nightscout_cloud_configuration_base_url_section_footer" = "Это только базовый URL, загрузчик автоматически добавит / записи для поста. API SECRET на сервере должен соответствовать вашей фразе в настройках";
+"settings_nightscout_cloud_configuration_download_data_title" = "Загружать данные";
+"settings_nightscout_cloud_configuration_download_data_section_footer" = "Также попробовать скачать данные с Nightscout";
+"settings_nightscout_cloud_configuration_extra_options_title" = "Дополнительные настройки";
+
+// Settings Nightscout Cloud Extra Options
+"settings_nightscout_cloud_extra_options_title" = "Дополнительные настройки";
+"settings_nightscout_cloud_extra_options_skip_lan_uploads_title" = "Пропустить загрузку по локальной сети";
+"settings_nightscout_cloud_extra_options_skip_lan_uploads_section_footer" = "Для локальных серверов с адресами 192.168.x.x пропустите загрузку, когда нет подключения к локальной сети";
+"settings_nightscout_cloud_extra_options_upload_battery_title" = "Загрузить мостовую батарею";
+"settings_nightscout_cloud_extra_options_upload_battery_section_footer" = "Отправьте уровень заряда вашего моста в Nightscout. Снимите флажок, если ваш датчик батареи сломан";
+"settings_nightscout_cloud_extra_options_upload_treatments_title" = "Загружать лекарства";
+"settings_nightscout_cloud_extra_options_upload_treatments_section_footer" = "Отправьте данные лечения в Nightscout. Снимите флажок загрузки, если ваш портал обслуживания не работает";
+"settings_nightscout_cloud_extra_options_alert_on_failures_title" = "Оповещать о сбоях";
+"settings_nightscout_cloud_extra_options_alert_on_failures_section_footer" = "Отображать и уведомлять звуком, если загрузка Nightscout не удалась";
+"settings_nightscout_cloud_extra_options_append_source_info_title" = "Добавить информацию об источнике на устройства";
+"settings_nightscout_cloud_extra_options_append_source_info_section_footer" = "Для G5 отправляет тип коллектора (например, OB1) и читает состояние обратной засыпки (для собственного) в Nightscout";
+"settings_nightscout_cloud_extra_options_backfill_data_title" = "Заполнить данные";
+"settings_nightscout_cloud_extra_options_backfill_data_section_footer" = "Нажмите, чтобы отправить исторические данные в Nightscout";
+
+// Settings Nightscout Cloud Backfill
+"setttings_nightscout_cloud_backfill_title" = "Заполнить данные";
+"settings_nightscout_cloud_backfill_send" = "Отправить";
+"settings_nightscout_cloud_backfill_date_title" = "Дата";
+"settings_nightscout_cloud_backfill_section_footer" = "Выберите дату самой старой записи для отправки на Nightscout. Используйте с осторожностью";
+
 // Settings Units
 "settings_units_mgdl" = "мг/дл";
 "settings_units_mmolL" = "ммоль/л";

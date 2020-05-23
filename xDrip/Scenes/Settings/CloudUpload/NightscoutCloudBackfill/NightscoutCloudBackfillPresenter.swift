@@ -22,7 +22,57 @@ final class NightscoutCloudBackfillPresenter: NightscoutCloudBackfillPresentatio
     // MARK: Do something
     
     func presentLoad(response: NightscoutCloudBackfill.Load.Response) {
-        let viewModel = NightscoutCloudBackfill.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createSection(response: response)
+            ]
+        )
+        
+        let viewModel = NightscoutCloudBackfill.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    private func createSection(response: NightscoutCloudBackfill.Load.Response) -> BaseSettings.Section {
+        let date = Date()
+        
+        let cells: [BaseSettings.Cell] = [
+            createDatePickerCell(
+                mainText: "settings_nightscout_cloud_backfill_date_title".localized,
+                date: date,
+                dateChangedHandler: response.dateChangedHandler
+            )
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_backfill_section_footer".localized
+        )
+    }
+    
+    private func createDatePickerCell(
+        mainText: String,
+        date: Date,
+        dateChangedHandler: @escaping (Date) -> Void) -> BaseSettings.Cell {
+        let detailText = DateFormatter.localizedString(
+            from: date,
+            dateStyle: .short,
+            timeStyle: .short
+        )
+        
+        let picker = CustomDatePicker()
+        picker.datePickerMode = .dateAndTime
+        picker.date = date
+        
+        picker.formatDate = { date in
+            dateChangedHandler(date)
+            return DateFormatter.localizedString(
+                from: date,
+                dateStyle: .short,
+                timeStyle: .short
+            )
+        }
+        
+        return .pickerExpandable(mainText: mainText, detailText: detailText, picker: picker)
     }
 }

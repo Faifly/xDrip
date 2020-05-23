@@ -53,7 +53,12 @@ final class NightscoutCloudConfigurationPresenterTests: XCTestCase {
         // Given
         let spy = NightscoutCloudConfigurationDisplayLogicSpy()
         sut.viewController = spy
-        let response = NightscoutCloudConfiguration.Load.Response()
+        let response = NightscoutCloudConfiguration.Load.Response(
+            settings: NightscoutSyncSettings(),
+            switchValueChangedHandler: { _, _ in },
+            textEditingChangedHandler: { _ in },
+            singleSelectionHandler: {}
+        )
         
         // When
         sut.presentLoad(response: response)

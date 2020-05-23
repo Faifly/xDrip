@@ -53,7 +53,7 @@ final class NightscoutCloudBackfillPresenterTests: XCTestCase {
         // Given
         let spy = NightscoutCloudBackfillDisplayLogicSpy()
         sut.viewController = spy
-        let response = NightscoutCloudBackfill.Load.Response()
+        let response = NightscoutCloudBackfill.Load.Response(dateChangedHandler: { _ in })
         
         // When
         sut.presentLoad(response: response)

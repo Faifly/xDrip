@@ -15,6 +15,15 @@ import UIKit
 enum NightscoutCloudConfiguration {
     // MARK: Models
     
+    enum Field {
+        case enabled
+        case useMobileData
+        case sendDisplayGlucose
+        case baseURL
+        case downloadData
+        case extraOptions
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -22,9 +31,14 @@ enum NightscoutCloudConfiguration {
         }
         
         struct Response {
+            let settings: NightscoutSyncSettings
+            let switchValueChangedHandler: (Field, Bool) -> Void
+            let textEditingChangedHandler: (String?) -> Void
+            let singleSelectionHandler: () -> Void
         }
         
         struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
         }
     }
 }

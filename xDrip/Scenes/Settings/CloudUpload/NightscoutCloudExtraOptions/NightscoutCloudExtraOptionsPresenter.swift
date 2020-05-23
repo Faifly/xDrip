@@ -22,7 +22,139 @@ final class NightscoutCloudExtraOptionsPresenter: NightscoutCloudExtraOptionsPre
     // MARK: Do something
     
     func presentLoad(response: NightscoutCloudExtraOptions.Load.Response) {
-        let viewModel = NightscoutCloudExtraOptions.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createSkipLANSection(response: response),
+                createBatterySection(response: response),
+                createTreatmentsSection(response: response),
+                createAlertSection(response: response),
+                createSourceInfoSection(response: response),
+                createBackfillSection(response: response)
+            ]
+        )
+        
+        let viewModel = NightscoutCloudExtraOptions.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    private func createSkipLANSection(response: NightscoutCloudExtraOptions.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createRightSwitchCell(
+                .skipLANUploads,
+                isOn: response.settings.skipLANUploads,
+                switchValueChangedHandler: response.switchValueChangedHandler
+            )
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_extra_options_skip_lan_uploads_section_footer".localized
+        )
+    }
+    
+    private func createBatterySection(response: NightscoutCloudExtraOptions.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createRightSwitchCell(
+                .uploadBattery,
+                isOn: response.settings.uploadBridgeBattery,
+                switchValueChangedHandler: response.switchValueChangedHandler
+            )
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_extra_options_upload_battery_section_footer".localized
+        )
+    }
+    
+    private func createTreatmentsSection(response: NightscoutCloudExtraOptions.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createRightSwitchCell(
+                .uploadTreatments,
+                isOn: response.settings.uploadTreatments,
+                switchValueChangedHandler: response.switchValueChangedHandler
+            )
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_extra_options_upload_treatments_section_footer".localized
+        )
+    }
+    
+    private func createAlertSection(response: NightscoutCloudExtraOptions.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createRightSwitchCell(
+                .alertOnFailures,
+                isOn: response.settings.alertOnFailures,
+                switchValueChangedHandler: response.switchValueChangedHandler
+            )
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_extra_options_alert_on_failures_section_footer".localized
+        )
+    }
+    
+    private func createSourceInfoSection(response: NightscoutCloudExtraOptions.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createRightSwitchCell(
+                .appendSourceInfo,
+                isOn: response.settings.appendSourceInfoToDevices,
+                switchValueChangedHandler: response.switchValueChangedHandler
+            )
+        ]
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_extra_options_append_source_info_section_footer".localized
+        )
+    }
+    
+    private func createBackfillSection(response: NightscoutCloudExtraOptions.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createDisclosureCell(.backFillData, selectionHandler: response.singleSelectionHandler)
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_extra_options_backfill_data_section_footer".localized
+        )
+    }
+    
+    private func createRightSwitchCell(
+        _ field: NightscoutCloudExtraOptions.Field,
+        isOn: Bool,
+        switchValueChangedHandler: @escaping (NightscoutCloudExtraOptions.Field, Bool) -> Void) -> BaseSettings.Cell {
+        return .rightSwitch(text: field.title, isSwitchOn: isOn, switchHandler: { value in
+            switchValueChangedHandler(field, value)
+        })
+    }
+    
+    private func createDisclosureCell(
+        _ field: NightscoutCloudExtraOptions.Field,
+        selectionHandler: @escaping () -> Void) -> BaseSettings.Cell {
+        return .disclosure(mainText: field.title, detailText: nil, selectionHandler: {
+            selectionHandler()
+        })
+    }
+}
+
+private extension NightscoutCloudExtraOptions.Field {
+    var title: String {
+        switch self {
+        case .skipLANUploads: return "settings_nightscout_cloud_extra_options_skip_lan_uploads_title".localized
+        case .uploadBattery: return "settings_nightscout_cloud_extra_options_upload_battery_title".localized
+        case .uploadTreatments: return "settings_nightscout_cloud_extra_options_upload_treatments_title".localized
+        case .alertOnFailures: return "settings_nightscout_cloud_extra_options_alert_on_failures_title".localized
+        case .appendSourceInfo: return "settings_nightscout_cloud_extra_options_append_source_info_title".localized
+        case .backFillData: return "settings_nightscout_cloud_extra_options_backfill_data_title".localized
+        }
     }
 }

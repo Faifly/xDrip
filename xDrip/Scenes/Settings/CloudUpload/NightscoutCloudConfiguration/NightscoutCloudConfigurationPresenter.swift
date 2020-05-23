@@ -22,7 +22,149 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
     // MARK: Do something
     
     func presentLoad(response: NightscoutCloudConfiguration.Load.Response) {
-        let viewModel = NightscoutCloudConfiguration.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createEnabledSection(response: response),
+                createMobileDataSection(response: response),
+                createGlucoseSection(response: response),
+                createBaseURLSection(response: response),
+                createDownloadSection(response: response),
+                createExtraSection(response: response)
+            ]
+        )
+        
+        let viewModel = NightscoutCloudConfiguration.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    private func createEnabledSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createRightSwitchCell(
+                .enabled,
+                isOn: response.settings.isEnabled,
+                switchValueChangedHandler: response.switchValueChangedHandler
+            )
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_configuration_enabled_section_footer".localized
+        )
+    }
+    
+    private func createMobileDataSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createRightSwitchCell(
+                .useMobileData,
+                isOn: response.settings.useCellularData,
+                switchValueChangedHandler: response.switchValueChangedHandler
+            )
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_configuration_use_mobile_data_section_footer".localized
+        )
+    }
+    
+    private func createGlucoseSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createRightSwitchCell(
+                .sendDisplayGlucose,
+                isOn: response.settings.sendDisplayGlucose,
+                switchValueChangedHandler: response.switchValueChangedHandler
+            )
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_configuration_send_display_glucose_section_footer".localized
+        )
+    }
+    
+    private func createBaseURLSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createTextInputCell(
+                .baseURL,
+                detailText: response.settings.baseURL,
+                placeholder: "settings_nightscout_cloud_configuration_base_url_placeholder".localized,
+                textEditingChangedHandler: response.textEditingChangedHandler
+            )
+        ]
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_configuration_base_url_section_footer".localized
+        )
+    }
+    
+    private func createDownloadSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createRightSwitchCell(
+                .downloadData,
+                isOn: response.settings.downloadData,
+                switchValueChangedHandler: response.switchValueChangedHandler
+            )
+        ]
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_configuration_download_data_section_footer".localized
+        )
+    }
+    
+    private func createExtraSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createDisclosureCell(.extraOptions, selectionHandler: response.singleSelectionHandler)
+        ]
+        return .normal(cells: cells, header: nil, footer: nil)
+    }
+    
+    private func createRightSwitchCell(
+        _ field: NightscoutCloudConfiguration.Field,
+        isOn: Bool,
+        switchValueChangedHandler: @escaping (NightscoutCloudConfiguration.Field, Bool) -> Void) -> BaseSettings.Cell {
+        return .rightSwitch(text: field.title, isSwitchOn: isOn, switchHandler: { value in
+            switchValueChangedHandler(field, value)
+        })
+    }
+    
+    private func createTextInputCell(
+        _ field: NightscoutCloudConfiguration.Field,
+        detailText: String?,
+        placeholder: String?,
+        textEditingChangedHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
+        return .textInput(
+            mainText: field.title,
+            detailText: detailText,
+            placeholder: placeholder,
+            textChangedHandler: { text in
+                textEditingChangedHandler(text)
+            }
+        )
+    }
+    
+    private func createDisclosureCell(
+        _ field: NightscoutCloudConfiguration.Field,
+        selectionHandler: @escaping () -> Void) -> BaseSettings.Cell {
+        return .disclosure(mainText: field.title, detailText: nil, selectionHandler: {
+            selectionHandler()
+        })
+    }
+}
+
+private extension NightscoutCloudConfiguration.Field {
+    var title: String {
+        switch self {
+        case .enabled: return "settings_nightscout_cloud_configuration_enabled_title".localized
+        case .useMobileData: return "settings_nightscout_cloud_configuration_use_mobile_data_title".localized
+        case .sendDisplayGlucose: return "settings_nightscout_cloud_configuration_send_display_glucose_title".localized
+        case .baseURL: return "settings_nightscout_cloud_configuration_base_url_title".localized
+        case .downloadData: return "settings_nightscout_cloud_configuration_download_data_title".localized
+        case .extraOptions: return "settings_nightscout_cloud_configuration_extra_options_title".localized
+        }
     }
 }

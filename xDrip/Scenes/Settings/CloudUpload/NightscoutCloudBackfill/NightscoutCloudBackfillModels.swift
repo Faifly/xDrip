@@ -22,6 +22,19 @@ enum NightscoutCloudBackfill {
         }
         
         struct Response {
+            let dateChangedHandler: (Date) -> Void
+        }
+        
+        struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
+        }
+    }
+    
+    enum Send {
+        struct Request {
+        }
+        
+        struct Response {
         }
         
         struct ViewModel {

@@ -133,6 +133,47 @@
 "settings_alert_sound_tri-tone" = "Tri-tone";
 "settings_alert_sound_typewriters" = "Typewriters";
 
+// Settings Cloud Types
+"settings_cloud_types_title" = "Cloud Upload";
+"settings_cloud_types_nightscout_sync" = "Nightscout Sync (Rest-Api)";
+"settings_cloud_types_section_footer" = "The REST API is the standard way to connect to Nightscout";
+
+// Settings Nightscout Cloud Configuration
+"settings_nightscout_cloud_configuration_title" = "Nightscout Sync (Rest-Api)";
+"settings_nightscout_cloud_configuration_enabled_title" = "Enabled";
+"settings_nightscout_cloud_configuration_enabled_section_footer" = "The REST API is the standard way to connect to Nightscout";
+"settings_nightscout_cloud_configuration_use_mobile_data_title" = "Use mobile data";
+"settings_nightscout_cloud_configuration_use_mobile_data_section_footer" = "Upload even when using mobile data";
+"settings_nightscout_cloud_configuration_send_display_glucose_title" = "Send Display Glucose";
+"settings_nightscout_cloud_configuration_send_display_glucose_section_footer" = "Use noise smoothing and plugins etc (if enabled) for broadcasted value";
+"settings_nightscout_cloud_configuration_base_url_title" = "Base URL";
+"settings_nightscout_cloud_configuration_base_url_placeholder" = "https://google.com";
+"settings_nightscout_cloud_configuration_base_url_section_footer" = "This is only the base URL, the uploader will automatically append / entries for the post. API SECRET on the server should match your pathphrase in the settings";
+"settings_nightscout_cloud_configuration_download_data_title" = "Download data";
+"settings_nightscout_cloud_configuration_download_data_section_footer" = "Also try to download data from Nightscout";
+"settings_nightscout_cloud_configuration_extra_options_title" = "Extra Options";
+
+// Settings Nightscout Cloud Extra Options
+"settings_nightscout_cloud_extra_options_title" = "Extra Options";
+"settings_nightscout_cloud_extra_options_skip_lan_uploads_title" = "Skip LAN uploads";
+"settings_nightscout_cloud_extra_options_skip_lan_uploads_section_footer" = "For local servers with 192.168.x.x addresses, skip upload when there is no local network connectivity";
+"settings_nightscout_cloud_extra_options_upload_battery_title" = "Upload bridge battery";
+"settings_nightscout_cloud_extra_options_upload_battery_section_footer" = "Send your bridge battery level to Nightscout. Uncheck if your battery sensor is broken";
+"settings_nightscout_cloud_extra_options_upload_treatments_title" = "Upload treatments";
+"settings_nightscout_cloud_extra_options_upload_treatments_section_footer" = "Send treatment data to Nightscout. Uncheck upload if your care portal is broken";
+"settings_nightscout_cloud_extra_options_alert_on_failures_title" = "Alert on failures";
+"settings_nightscout_cloud_extra_options_alert_on_failures_section_footer" = "Display and sound notification if Nightscout upload is failing";
+"settings_nightscout_cloud_extra_options_append_source_info_title" = "Append source info to devices";
+"settings_nightscout_cloud_extra_options_append_source_info_section_footer" = "For G5, sends collector type (e.g. OB1) and reading backfill status (for native) to Nightscout";
+"settings_nightscout_cloud_extra_options_backfill_data_title" = "Back-fill data";
+"settings_nightscout_cloud_extra_options_backfill_data_section_footer" = "Tap to send historical data to Nightscout";
+
+// Settings Nightscout Cloud Backfill
+"setttings_nightscout_cloud_backfill_title" = "Back-fill data";
+"settings_nightscout_cloud_backfill_send" = "Send";
+"settings_nightscout_cloud_backfill_date_title" = "Date";
+"settings_nightscout_cloud_backfill_section_footer" = "Choose the date for the oldest record to send to Nightscout. Use with care";
+
 // Settings Units
 "settings_units_mgdl" = "mg/dL";
 "settings_units_mmolL" = "mmol/L";
