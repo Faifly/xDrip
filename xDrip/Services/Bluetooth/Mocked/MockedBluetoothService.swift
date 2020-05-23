@@ -28,6 +28,7 @@ final class MockedBluetoothService {
         delegate?.serviceDidUpdateMetadata(.firmwareVersion, value: "01010101")
         delegate?.serviceDidUpdateMetadata(.transmitterTime, value: "22")
         delegate?.serviceDidUpdateMetadata(.transmitterVersion, value: "02020202")
+        delegate?.serviceDidUpdateMetadata(.deviceName, value: "Dexcom LK")
     }
     
     private func generateGlucoseReading() {

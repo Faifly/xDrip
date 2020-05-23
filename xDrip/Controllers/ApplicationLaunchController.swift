@@ -39,7 +39,6 @@ enum ApplicationLaunchController {
     private static func setupDevice() {
         if let deviceType = CGMDevice.current.deviceType, !CGMDevice.current.isSetupInProgress {
             CGMController.shared.setupService(for: deviceType)
-            CGMController.shared.service?.connect()
         }
     }
 }

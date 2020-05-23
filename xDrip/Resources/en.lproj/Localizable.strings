@@ -133,9 +133,108 @@
 "settings_alert_sound_tri-tone" = "Tri-tone";
 "settings_alert_sound_typewriters" = "Typewriters";
 
+// Settings Cloud Types
+"settings_cloud_types_title" = "Cloud Upload";
+"settings_cloud_types_nightscout_sync" = "Nightscout Sync (Rest-Api)";
+"settings_cloud_types_section_footer" = "The REST API is the standard way to connect to Nightscout";
+
+// Settings Nightscout Cloud Configuration
+"settings_nightscout_cloud_configuration_title" = "Nightscout Sync (Rest-Api)";
+"settings_nightscout_cloud_configuration_enabled_title" = "Enabled";
+"settings_nightscout_cloud_configuration_enabled_section_footer" = "The REST API is the standard way to connect to Nightscout";
+"settings_nightscout_cloud_configuration_use_cellular_data_title" = "Use cellular data";
+"settings_nightscout_cloud_configuration_use_cellular_data_section_footer" = "Upload even when using mobile data";
+"settings_nightscout_cloud_configuration_send_display_glucose_title" = "Send Display Glucose";
+"settings_nightscout_cloud_configuration_send_display_glucose_section_footer" = "Use noise smoothing and plugins etc (if enabled) for broadcasted value";
+"settings_nightscout_cloud_configuration_base_url_title" = "Base URL";
+"settings_nightscout_cloud_configuration_base_url_placeholder" = "https://google.com";
+"settings_nightscout_cloud_configuration_base_url_section_footer" = "This is only the base URL, the uploader will automatically append / entries for the post. API SECRET on the server should match your pathphrase in the settings";
+"settings_nightscout_cloud_configuration_download_data_title" = "Download data";
+"settings_nightscout_cloud_configuration_download_data_section_footer" = "Also try to download data from Nightscout";
+"settings_nightscout_cloud_configuration_extra_options_title" = "Extra Options";
+
+// Settings Nightscout Cloud Extra Options
+"settings_nightscout_cloud_extra_options_title" = "Extra Options";
+"settings_nightscout_cloud_extra_options_skip_lan_uploads_title" = "Skip LAN uploads";
+"settings_nightscout_cloud_extra_options_skip_lan_uploads_section_footer" = "For local servers with 192.168.x.x addresses, skip upload when there is no local network connectivity";
+"settings_nightscout_cloud_extra_options_upload_battery_title" = "Upload bridge battery";
+"settings_nightscout_cloud_extra_options_upload_battery_section_footer" = "Send your bridge battery level to Nightscout. Uncheck if your battery sensor is broken";
+"settings_nightscout_cloud_extra_options_upload_treatments_title" = "Upload treatments";
+"settings_nightscout_cloud_extra_options_upload_treatments_section_footer" = "Send treatment data to Nightscout. Uncheck upload if your care portal is broken";
+"settings_nightscout_cloud_extra_options_alert_on_failures_title" = "Alert on failures";
+"settings_nightscout_cloud_extra_options_alert_on_failures_section_footer" = "Display and sound notification if Nightscout upload is failing";
+"settings_nightscout_cloud_extra_options_append_source_info_title" = "Append source info to devices";
+"settings_nightscout_cloud_extra_options_append_source_info_section_footer" = "For G5, sends collector type (e.g. OB1) and reading backfill status (for native) to Nightscout";
+"settings_nightscout_cloud_extra_options_backfill_data_title" = "Back-fill data";
+"settings_nightscout_cloud_extra_options_backfill_data_section_footer" = "Tap to send historical data to Nightscout";
+
+// Settings Nightscout Cloud Backfill
+"setttings_nightscout_cloud_backfill_title" = "Back-fill data";
+"settings_nightscout_cloud_backfill_send" = "Send";
+"settings_nightscout_cloud_backfill_date_title" = "Date";
+"settings_nightscout_cloud_backfill_section_footer" = "Choose the date for the oldest record to send to Nightscout. Use with care";
+
 // Settings Units
 "settings_units_mgdl" = "mg/dL";
 "settings_units_mmolL" = "mmol/L";
+
+// Settings Transmitter
+"settings_transmitter_screen_title" = "Transmitter";
+"settings_transmitter_info_section_header" = "INFO";
+"settings_transmitter_battery_section_header" = "BATTERY";
+"settings_transmitter_scan_button" = "Scan";
+"settings_transmitter_stop_scan_button" = "Stop scanning";
+"settings_transmitter_updating_scan_button" = "Updating...";
+"settings_transmitter_stop_transmitter_button" = "Unpair transmitter";
+"settings_transmitter_start_scanning_hint" = "Tap to start scanning for your Dexcom G6 device";
+"settings_transmitter_stop_scanning_hint" = "Tap to stop scanning";
+"settings_transmitter_updating_hint" = "Connection is established, data update in progress...";
+"settings_transmitter_unpair_hint" = "Tap to unpair current transmitter";
+"settings_transmitter_age_days" = "days";
+"settings_transmitter_no_value" = "Unknown";
+"settings_transmitter_device_type_field" = "Device Type";
+"settings_transmitter_device_name_field" = "Device Name";
+"settings_transmitter_firmware_field" = "Firmware";
+"settings_transmitter_device_age_field" = "Transmitter Age";
+"settings_transmitter_reset_button" = "Reset Transmitter";
+"settings_transmitter_cancel_reset_button" = "Reset is scheduled, tap to cancel";
+"settings_transmitter_serial_number_field" = "Serial Number";
+"settings_transmitter_serial_number_placeholder" = "XXXXXX";
+"settings_transmitter_voltage_a_field" = "Voltage A";
+"settings_transmitter_voltage_b_field" = "Voltage B";
+"settings_transmitter_resistance_field" = "Resistance";
+"settings_transmitter_temperature_field" = "Temperature";
+"settings_transmitter_runtime_field" = "Runtime";
+"settings_transmitter_type_dexcom_g6" = "Dexcom G6";
+"settings_transmitter_invalid_serial_alert_title" = "Can't proceed";
+"settings_transmitter_invalid_serial_alert_message" = "Invalid serial number";
+"settings_transmitter_stop_transmitter_alert_title" = "Confirmation";
+"settings_transmitter_stop_transmitter_alert_message" = "Are you sure you want to unpair the transmitter?";
+"settings_transmitter_stop_transmitter_confirm_button" = "Unpair transmitter";
+"settings_transmitter_reset_transmitter_alert_title" = "Confirmation";
+"settings_transmitter_reset_transmitter_alert_message" = "Are you sure you want to reset the transmitter? This action cannot be undone";
+"settings_transmitter_reset_transmitter_confirm_button" = "Reset transmitter";
+"settings_transmitter_reset_unsupported_alert_title" = "Can't proceed";
+"settings_transmitter_reset_unsupported_alert_message" = "Resetting transmitter with your firmware version is unsupported";
+
+// Bluetooth Errors
+"bluetooth_error_title" = "Transmitter Service Error";
+"bluetooth_error_unknown" = "Unknown bluetooth error happened";
+"bluetooth_error_powered_off" = "Bluetooth is powerered off";
+"bluetooth_error_unauthorized" = "No Bluetooth access permissions";
+"bluetooth_error_unsupported" = "Bluetooth is not supported on this device";
+
+// Dexcom Errors
+"dexcom_error_invalid_serial" = "Serial number is invalid";
+"dexcom_error_invalid_auth_request_response" = "Couldn't authorize with the transmitter";
+"dexcom_error_invalid_auth_challenge_response" = "Couldn't get through authentication challenge. Please verify your transmitter's serial number";
+"dexcom_error_not_authed" = "Couldn't authenticate with the transmitter";
+"dexcom_error_not_paired" = "Couldn't pair with the transmitter";
+"dexcom_error_invalid_pair_request_response" = "Invalid pairing response";
+"dexcom_error_invalid_sensor_data_response" = "Received invalid sensor data";
+"dexcom_error_invalid_transmitter_version_response" = "Received invalid transmitter version response";
+"dexcom_error_invalid_battery_status_response" = "Received invalid battery status response";
+"dexcom_error_invalid_transmitter_time_response" = "Received invalid transmitter time response";
 
 // Edit Training
 "edit_training_title" = "Training";

@@ -14,9 +14,11 @@ import UIKit
 
 protocol SettingsTransmitterDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsTransmitter.Load.ViewModel)
+    func displayData(viewModel: SettingsTransmitter.UpdateData.ViewModel)
+    func displayStatus(viewModel: SettingsTransmitter.ChangeStatus.ViewModel)
 }
 
-class SettingsTransmitterViewController: NibViewController, SettingsTransmitterDisplayLogic {
+class SettingsTransmitterViewController: UIViewController, SettingsTransmitterDisplayLogic {
     var interactor: SettingsTransmitterBusinessLogic?
     var router: SettingsTransmitterDataPassing?
     
@@ -28,7 +30,7 @@ class SettingsTransmitterViewController: NibViewController, SettingsTransmitterD
     }
     
     required init() {
-        super.init()
+        super.init(nibName: nil, bundle: nil)
         setup()
     }
     
@@ -50,10 +52,21 @@ class SettingsTransmitterViewController: NibViewController, SettingsTransmitterD
     
     // MARK: IB
     
+    private weak var settingsViewController: BaseSettingsViewController?
+    private weak var scanButton: UIButton?
+    private weak var statusLabel: UILabel?
+    
+    @objc private func onScanButtonTap() {
+        let request = SettingsTransmitter.BottomAction.Request()
+        interactor?.doBottomAction(request: request)
+    }
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        setupConstraints()
         doLoad()
     }
     
@@ -64,8 +77,68 @@ class SettingsTransmitterViewController: NibViewController, SettingsTransmitterD
         interactor?.doLoad(request: request)
     }
     
+    private func setupUI() {
+        view.backgroundColor = .tabBarBackgroundColor
+        title = "settings_transmitter_screen_title".localized
+        
+        let settingsViewController = BaseSettingsViewController()
+        settingsViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        addChild(settingsViewController)
+        view.addSubview(settingsViewController.view)
+        self.settingsViewController = settingsViewController
+        
+        let scanButton = UIButton()
+        scanButton.translatesAutoresizingMaskIntoConstraints = false
+        scanButton.setTitleColor(.white, for: .normal)
+        scanButton.addTarget(self, action: #selector(onScanButtonTap), for: .touchUpInside)
+        view.addSubview(scanButton)
+        self.scanButton = scanButton
+        
+        let statusLabel = UILabel()
+        statusLabel.font = .systemFont(ofSize: 13.0, weight: .regular)
+        statusLabel.textColor = .mediumEmphasisText
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        statusLabel.textAlignment = .center
+        view.addSubview(statusLabel)
+        self.statusLabel = statusLabel
+    }
+    
+    private func setupConstraints() {
+        guard let statusLabel = statusLabel else { return }
+        guard let scanButton = scanButton else { return }
+        guard let settingsViewController = settingsViewController else { return }
+        
+        let constraints = [
+            statusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0),
+            statusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0),
+            statusLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8.0),
+            scanButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16.0),
+            scanButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16.0),
+            scanButton.bottomAnchor.constraint(equalTo: statusLabel.topAnchor, constant: -8.0),
+            scanButton.heightAnchor.constraint(equalToConstant: 48.0),
+            settingsViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            settingsViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            settingsViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            settingsViewController.view.bottomAnchor.constraint(equalTo: scanButton.topAnchor, constant: -8.0)
+        ]
+        
+        NSLayoutConstraint.activate(constraints)
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: SettingsTransmitter.Load.ViewModel) {        
+    }
+    
+    func displayData(viewModel: SettingsTransmitter.UpdateData.ViewModel) {
+        settingsViewController?.update(with: viewModel.viewModel)
+    }
+    
+    func displayStatus(viewModel: SettingsTransmitter.ChangeStatus.ViewModel) {
+        scanButton?.setTitle(viewModel.title, for: .normal)
+        scanButton?.backgroundColor = viewModel.backgroundColor
+        scanButton?.isEnabled = viewModel.isEnabled
+        
+        statusLabel?.text = viewModel.statusText
     }
 }

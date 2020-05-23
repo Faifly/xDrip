@@ -23,6 +23,12 @@ final class CGMDeviceMetadata: Object {
         }
     }
     
+    func resetDate() {
+        Realm.shared.safeWrite {
+            self.date = nil
+        }
+    }
+    
     func update(withDate date: Date?, value: String?, type: CGMDeviceMetadataType) {
         Realm.shared.safeWrite {
             self.date = date

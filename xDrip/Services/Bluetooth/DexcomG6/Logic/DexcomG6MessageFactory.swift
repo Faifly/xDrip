@@ -18,6 +18,7 @@ final class DexcomG6MessageFactory {
         case .sensorDataTx: return DexcomG6SensorDataTxMessage()
         case .batteryStatusTx: return DexcomG6BatteryStatusTxMessage()
         case .transmitterTimeTx: return DexcomG6TransmitterTimeTxMessage()
+        case .resetTx: return DexcomG6ResetTxMessage()
         default: return nil
         }
     }

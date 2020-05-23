@@ -93,7 +93,6 @@ enum MacMenuController {
         MockedBluetoothServiceConfiguration.current = mode.configuration
         let service = MockedBluetoothService(delegate: CGMController.shared)
         CGMController.shared.injectBluetoothService(service)
-        service.connect()
     }
 }
 #endif

@@ -48,8 +48,8 @@ final class SettingsRootInteractor: SettingsRootBusinessLogic, SettingsRootDataS
         case .units: router?.routeToUnits()
         case .chartSettings: router?.routeToChartSettings()
         case .alert: router?.routeToAlertRoot()
-        default:
-            break
+        case .transmitter: router?.routeToTransmitter()
+        default: break
         }
     }
 }

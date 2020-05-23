@@ -13,6 +13,10 @@
 import UIKit
 
 protocol SettingsTransmitterRoutingLogic {
+    func showInvalidSerialError()
+    func showStopTransmitterConfirmation(callback: @escaping () -> Void)
+    func showTransmitterResetConfirmation(callback: @escaping () -> Void)
+    func showResetUnsupportedWarning()
 }
 
 protocol SettingsTransmitterDataPassing {
@@ -25,4 +29,57 @@ final class SettingsTransmitterRouter: SettingsTransmitterRoutingLogic, Settings
     
     // MARK: Routing
     
+    func showInvalidSerialError() {
+        UIAlertController.showOKAlert(
+            title: "settings_transmitter_invalid_serial_alert_title".localized,
+            message: "settings_transmitter_invalid_serial_alert_message".localized
+        )
+    }
+    
+    func showStopTransmitterConfirmation(callback: @escaping () -> Void) {
+        let alert = UIAlertController(
+            title: "settings_transmitter_stop_transmitter_alert_title".localized,
+            message: "settings_transmitter_stop_transmitter_alert_message".localized,
+            preferredStyle: .alert
+        )
+        
+        let confirmAction = UIAlertAction(
+            title: "settings_transmitter_stop_transmitter_confirm_button".localized,
+            style: .destructive) { _ in
+                callback()
+        }
+        alert.addAction(confirmAction)
+        
+        let cancelAction = UIAlertAction(title: "cancel".localized, style: .default, handler: nil)
+        alert.addAction(cancelAction)
+        
+        viewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showTransmitterResetConfirmation(callback: @escaping () -> Void) {
+        let alert = UIAlertController(
+            title: "settings_transmitter_reset_transmitter_alert_title".localized,
+            message: "settings_transmitter_reset_transmitter_alert_message".localized,
+            preferredStyle: .alert
+        )
+        
+        let confirmAction = UIAlertAction(
+            title: "settings_transmitter_reset_transmitter_confirm_button".localized,
+            style: .destructive) { _ in
+                callback()
+        }
+        alert.addAction(confirmAction)
+        
+        let cancelAction = UIAlertAction(title: "cancel".localized, style: .default, handler: nil)
+        alert.addAction(cancelAction)
+        
+        viewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showResetUnsupportedWarning() {
+        UIAlertController.showOKAlert(
+            title: "settings_transmitter_reset_unsupported_alert_title".localized,
+            message: "settings_transmitter_reset_unsupported_alert_message".localized
+        )
+    }
 }

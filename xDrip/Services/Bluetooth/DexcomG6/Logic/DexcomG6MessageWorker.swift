@@ -75,6 +75,11 @@ final class DexcomG6MessageWorker {
     }
     
     func requestRequiredData() {
+        guard !CGMDevice.current.isResetScheduled else {
+            requestReset()
+            return
+        }
+        
         createDataRequest(ofType: .sensorDataTx)
         if CGMDevice.current.requiresUpdate(for: .firmwareVersion) {
             LogController.log(message: "[Dexcom G6] Firmware version update required", type: .debug)
@@ -88,6 +93,12 @@ final class DexcomG6MessageWorker {
             LogController.log(message: "[Dexcom G6] Transmitter time update required", type: .debug)
             createDataRequest(ofType: .transmitterTimeTx)
         }
+    }
+    
+    func requestReset() {
+        CGMDevice.current.requireAllMetadataUpdate()
+        CGMDevice.current.scheduleReset(false)
+        createDataRequest(ofType: .resetTx)
     }
     
     private func sendChallengeRequest(authResponse: DexcomG6AuthRequestRxMessage) throws {
