@@ -27,6 +27,7 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
         tableView.registerNib(type: BaseSettingsVolumeSliderTableViewCell.self)
         tableView.registerNib(type: PickerExpandableTableViewCell.self)
         tableView.registerNib(type: BaseSettingsTextInputTableViewCell.self)
+        tableView.registerNib(type: BaseSettingsButtonCell.self)
         
         return tableView
     }()

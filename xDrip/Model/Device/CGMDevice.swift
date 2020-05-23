@@ -99,9 +99,30 @@ final class CGMDevice: Object {
         return Date().timeIntervalSince1970 - entryDate.timeIntervalSince1970 > metadataType.updateInterval
     }
     
+    func requireAllMetadataUpdate() {
+        metatadaEntries.forEach { $0.resetDate() }
+    }
+    
+    func resetAllMetadata() {
+        Realm.shared.safeWrite {
+            Realm.shared.delete(self.metatadaEntries)
+            self.metatadaEntries.removeAll()
+        }
+    }
+    
     var sensorStartDate: Date? {
         guard let sensorStartedString = CGMDevice.current.metadata(ofType: .sensorAge)?.value else { return nil }
         guard let sensorStarted = TimeInterval(sensorStartedString) else { return nil }
         return Date(timeIntervalSince1970: sensorStarted)
+    }
+    
+    // MARK: Reset
+    
+    @objc private(set) dynamic var isResetScheduled: Bool = false
+    
+    func scheduleReset(_ isScheduled: Bool) {
+        Realm.shared.safeWrite {
+            self.isResetScheduled = isScheduled
+        }
     }
 }

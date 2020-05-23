@@ -6,7 +6,7 @@
 //  Copyright © 2020 Faifly. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 final class DexcomG6MessageWorker {
     private weak var delegate: DexcomG6MessageWorkerDelegate?
@@ -21,6 +21,8 @@ final class DexcomG6MessageWorker {
             }
         }
     }
+    
+    private var applicationStateObserver: NSObjectProtocol?
     
     init(delegate: DexcomG6MessageWorkerDelegate) {
         self.delegate = delegate
@@ -75,6 +77,11 @@ final class DexcomG6MessageWorker {
     }
     
     func requestRequiredData() {
+        guard !CGMDevice.current.isResetScheduled else {
+            requestReset()
+            return
+        }
+        
         createDataRequest(ofType: .sensorDataTx)
         if CGMDevice.current.requiresUpdate(for: .firmwareVersion) {
             LogController.log(message: "[Dexcom G6] Firmware version update required", type: .debug)
@@ -90,6 +97,12 @@ final class DexcomG6MessageWorker {
         }
     }
     
+    func requestReset() {
+        CGMDevice.current.requireAllMetadataUpdate()
+        CGMDevice.current.scheduleReset(false)
+        createDataRequest(ofType: .resetTx)
+    }
+    
     private func sendChallengeRequest(authResponse: DexcomG6AuthRequestRxMessage) throws {
         isPaired = false
         guard let serial = CGMDevice.current.metadata(ofType: .serialNumber)?.value else { return }
@@ -99,7 +112,33 @@ final class DexcomG6MessageWorker {
     
     private func handleAuthResponse(_ response: DexcomG6AuthChallengeRxMessage) throws {
         guard response.authenticated else { throw DexcomG6Error.notAuthenticated }
-        isPaired = true
+        if response.paired {
+            isPaired = true
+        } else {
+            LogController.log(
+                message: "[Dexcom G6] Not paired, requesting user and keeping alive...",
+                type: .debug
+            )
+            createDataRequest(ofType: .keepAliveTx)
+            delegate?.workerDidRequestPairing()
+            subscribeForPairingApplicationState()
+        }
+    }
+    
+    private func subscribeForPairingApplicationState() {
+        guard applicationStateObserver == nil else { return }
+        
+        applicationStateObserver = NotificationCenter.default.addObserver(
+            forName: UIApplication.didBecomeActiveNotification,
+            object: nil,
+            queue: nil) { [weak self] _ in
+                guard let self = self else { return }
+                guard !self.isPaired else { return }
+                self.createDataRequest(ofType: .pairRequestTx)
+                
+                guard let observer = self.applicationStateObserver else { return }
+                NotificationCenter.default.removeObserver(observer)
+        }
     }
     
     private func handlePairResponse(_ response: DexcomG6PairRequestRxMessage) throws {

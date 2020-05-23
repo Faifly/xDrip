@@ -6,7 +6,7 @@
 //  Copyright © 2020 Faifly. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 final class CGMController {
     // MARK: Access
@@ -14,7 +14,7 @@ final class CGMController {
     private init() {}
     
     // MARK: Connection
-    typealias ConnectionCallback = () -> Void
+    typealias ConnectionCallback = (Bool) -> Void
     private var connectionListeners: [AnyHashable: ConnectionCallback] = [:]
     
     func subscribeForConnectionEvents(listener: AnyHashable, callback: @escaping ConnectionCallback) {
@@ -64,6 +64,12 @@ final class CGMController {
     
     func injectBluetoothService(_ service: CGMBluetoothService) {
         self.service = service
+        service.connect()
+    }
+    
+    func stopService() {
+        self.service?.disconnect()
+        self.service = nil
     }
     
     func notifyGlucoseChange() {
@@ -73,7 +79,11 @@ final class CGMController {
 
 extension CGMController: CGMBluetoothServiceDelegate {
     func serviceDidConnect() {
-        connectionListeners.values.forEach { $0() }
+        connectionListeners.values.forEach { $0(true) }
+    }
+    
+    func serviceDidDisconnect() {
+        connectionListeners.values.forEach { $0(false) }
     }
     
     func serviceDidUpdateMetadata(_ metadata: CGMDeviceMetadataType, value: String) {
@@ -88,5 +98,9 @@ extension CGMController: CGMBluetoothServiceDelegate {
     }
     
     func serviceDidFail(withError error: CGMBluetoothServiceError) {
+        UIAlertController.showOKAlert(
+            title: "bluetooth_error_title".localized,
+            message: error.localizedDescription
+        )
     }
 }

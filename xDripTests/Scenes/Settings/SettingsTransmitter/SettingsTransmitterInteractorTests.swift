@@ -45,9 +45,26 @@ final class SettingsTransmitterInteractorTests: XCTestCase {
         func presentLoad(response: SettingsTransmitter.Load.Response) {
             presentLoadCalled = true
         }
+        
+        func presentData(response: SettingsTransmitter.UpdateData.Response) {
+        }
+        
+        func presentStatus(response: SettingsTransmitter.ChangeStatus.Response) {
+        }
     }
     
-    final class SettingsTransmitterRoutingLogicSpy: SettingsTransmitterRoutingLogic {        
+    final class SettingsTransmitterRoutingLogicSpy: SettingsTransmitterRoutingLogic {
+        func showInvalidSerialError() {
+        }
+        
+        func showResetUnsupportedWarning() {
+        }
+        
+        func showStopTransmitterConfirmation(callback: @escaping () -> Void) {
+        }
+        
+        func showTransmitterResetConfirmation(callback: @escaping () -> Void) {
+        }
     }
     
     // MARK: Tests

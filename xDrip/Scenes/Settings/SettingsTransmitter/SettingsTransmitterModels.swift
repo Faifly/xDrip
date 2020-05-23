@@ -15,6 +15,12 @@ import UIKit
 enum SettingsTransmitter {
     // MARK: Models
     
+    enum State {
+        case notSetup
+        case initialSearch
+        case running(isConnectionActive: Bool)
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -25,6 +31,37 @@ enum SettingsTransmitter {
         }
         
         struct ViewModel {
+        }
+    }
+    
+    enum UpdateData {
+        struct Response {
+            let device: CGMDevice
+            let allowSerialNumberChange: Bool
+            let serialNumberChangeHandler: (String?) -> Void
+            let resetHandler: () -> Void
+        }
+        
+        struct ViewModel {
+            let viewModel: BaseSettings.ViewModel
+        }
+    }
+    
+    enum ChangeStatus {
+        struct Response {
+            let status: State
+        }
+        
+        struct ViewModel {
+            let title: String?
+            let backgroundColor: UIColor?
+            let isEnabled: Bool
+            let statusText: String?
+        }
+    }
+    
+    enum BottomAction {
+        struct Request {
         }
     }
 }

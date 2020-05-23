@@ -18,6 +18,7 @@ protocol SettingsRootRoutingLogic {
     func routeToChartSettings()
     func routeToAlertRoot()
     func routeToCloudUploads()
+    func routeToTransmitter()
 }
 
 protocol SettingsRootDataPassing {
@@ -48,6 +49,10 @@ final class SettingsRootRouter: SettingsRootRoutingLogic, SettingsRootDataPassin
     
     func routeToCloudUploads() {
         present(SettingsCloudTypesViewController())
+    }
+  
+    func routeToTransmitter() {
+        present(SettingsTransmitterViewController())
     }
     
     private func present(_ viewController: UIViewController) {

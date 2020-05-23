@@ -49,8 +49,8 @@ final class SettingsRootInteractor: SettingsRootBusinessLogic, SettingsRootDataS
         case .chartSettings: router?.routeToChartSettings()
         case .alert: router?.routeToAlertRoot()
         case .cloudUpload: router?.routeToCloudUploads()
-        default:
-            break
+        case .transmitter: router?.routeToTransmitter()
+        default: break
         }
     }
 }

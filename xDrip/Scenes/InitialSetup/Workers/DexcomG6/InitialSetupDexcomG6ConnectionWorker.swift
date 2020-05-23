@@ -30,7 +30,6 @@ final class InitialSetupDexcomG6ConnectionWorker: NSObject, InitialSetupDexcomG6
             self.requiredFields.remove(metadataType)
             self.handleSuccessfulConnection()
         }
-        CGMController.shared.service?.connect()
     }
     
     private func handleSuccessfulConnection() {

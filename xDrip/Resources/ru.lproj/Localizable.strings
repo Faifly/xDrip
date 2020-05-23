@@ -178,6 +178,64 @@
 "settings_units_mgdl" = "мг/дл";
 "settings_units_mmolL" = "ммоль/л";
 
+// Settings Transmitter
+"settings_transmitter_screen_title" = "Датчик";
+"settings_transmitter_info_section_header" = "ИНФОРМАЦИЯ";
+"settings_transmitter_battery_section_header" = "БАТАРЕЯ";
+"settings_transmitter_scan_button" = "Сканировать";
+"settings_transmitter_stop_scan_button" = "Остановить сканирование";
+"settings_transmitter_updating_scan_button" = "Обновление...";
+"settings_transmitter_stop_transmitter_button" = "Отключиться от датчика";
+"settings_transmitter_start_scanning_hint" = "Нажмите, чтобы начать поиск вашего Dexcom G6 датчика";
+"settings_transmitter_stop_scanning_hint" = "Нажмите, чтобы прекратить поиск датчика";
+"settings_transmitter_updating_hint" = "Подключение активно, идёт обновление...";
+"settings_transmitter_unpair_hint" = "Нажмите, чтобы разорвать связь с текущим датчиком";
+"settings_transmitter_age_days" = "дней";
+"settings_transmitter_no_value" = "Нет данных";
+"settings_transmitter_device_type_field" = "Тип Устройства";
+"settings_transmitter_device_name_field" = "Имя Устройства";
+"settings_transmitter_firmware_field" = "Прошивка";
+"settings_transmitter_device_age_field" = "Возраст Датчика";
+"settings_transmitter_reset_button" = "Сбросить Датчик";
+"settings_transmitter_cancel_reset_button" = "Сброс запланирован, нажмите для отмены";
+"settings_transmitter_serial_number_field" = "Серийный Номер";
+"settings_transmitter_serial_number_placeholder" = "XXXXXX";
+"settings_transmitter_voltage_a_field" = "Напряжение А";
+"settings_transmitter_voltage_b_field" = "Напряжение Б";
+"settings_transmitter_resistance_field" = "Сопротивление";
+"settings_transmitter_temperature_field" = "Температура";
+"settings_transmitter_runtime_field" = "Время";
+"settings_transmitter_type_dexcom_g6" = "Dexcom G6";
+"settings_transmitter_invalid_serial_alert_title" = "Невозможно продолжить";
+"settings_transmitter_invalid_serial_alert_message" = "Неправильный серийный номер";
+"settings_transmitter_stop_transmitter_alert_title" = "Подтвердите";
+"settings_transmitter_stop_transmitter_alert_message" = "Вы уверены, что хотите отвязать датчик?";
+"settings_transmitter_stop_transmitter_confirm_button" = "Отвязать датчик";
+"settings_transmitter_reset_transmitter_alert_title" = "Подтвердите";
+"settings_transmitter_reset_transmitter_alert_message" = "Вы уверены, что хотите сбросить датчик? Это действие нельзя обратить";
+"settings_transmitter_reset_transmitter_confirm_button" = "Сбросить датчик";
+"settings_transmitter_reset_unsupported_alert_title" = "Невозможно продолжить";
+"settings_transmitter_reset_unsupported_alert_message" = "Сброс датчика с такой версии прошивки не поддерживается";
+
+// Bluetooth Errors
+"bluetooth_error_title" = "Ошибка Сервиса Датчиков";
+"bluetooth_error_unknown" = "Случилась неизвестная ошибка Bluetooth";
+"bluetooth_error_powered_off" = "Bluetooth выключен";
+"bluetooth_error_unauthorized" = "Доступ к Bluetooth запрещён";
+"bluetooth_error_unsupported" = "Bluetooth не поддерживается этим устройством";
+
+// Dexcom Errors
+"dexcom_error_invalid_serial" = "Неправильный серийный номер";
+"dexcom_error_invalid_auth_request_response" = "Не удалось авторизироваться с датчиком";
+"dexcom_error_invalid_auth_challenge_response" = "Не удалось пройти авторизацию. Пожалуйста, проверьте сериный номер датчика";
+"dexcom_error_not_authed" = "Не удалось авторизироваться с датчиком";
+"dexcom_error_not_paired" = "Не удалось создать пару с датчиком";
+"dexcom_error_invalid_pair_request_response" = "Получен неправильный ответ о создании пары";
+"dexcom_error_invalid_sensor_data_response" = "Получен неправильный ответ о данных сенсора";
+"dexcom_error_invalid_transmitter_version_response" = "Получен неправильный ответ о версии датчика";
+"dexcom_error_invalid_battery_status_response" = "Получен неправильный ответ о статусе батареи";
+"dexcom_error_invalid_transmitter_time_response" = "Получен неправильный ответ о времени датчика";
+
 // Edit Training
 "edit_training_title" = "Тренировка";
 "edit_training_cell_duration" = "Продолжительность";
@@ -198,3 +256,7 @@
 // Custom Picker
 "custom_picker_hours" = "ч";
 "custom_picker_minutes" = "мин";
+
+// Notifications
+"notification_pairing_request_title" = "Запрос Соединения";
+"notification_pairing_request_body" = "Пожалуйста, разблокируйте свой телефон и примите запрос на подключение от вашего датчика в течении 30ти секунд";

@@ -9,7 +9,7 @@
 import UIKit
 
 final class InitialSetupG6DeviceIDViewController: InitialSetupAbstractStepViewController {
-    private let worker = InitialSetupDexcomG6IDSavingWorker()
+    private let worker = DexcomG6SerialSavingWorker()
     
     @IBOutlet private weak var deviceIDTextField: UITextField!
     

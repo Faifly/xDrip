@@ -1,5 +1,5 @@
 //
-//  InitialSetupDexcomG6IDSavingWorker.swift
+//  DexcomG6SerialSavingWorker.swift
 //  xDrip
 //
 //  Created by Artem Kalmykov on 28.03.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class InitialSetupDexcomG6IDSavingWorker {
+final class DexcomG6SerialSavingWorker {
     private let allowedCharacters = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
     
     func validate(_ identifier: String?) -> Bool {
