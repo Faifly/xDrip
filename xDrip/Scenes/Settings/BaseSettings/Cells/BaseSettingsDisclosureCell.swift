@@ -9,8 +9,11 @@
 import UIKit
 
 final class BaseSettingsDisclosureCell: UITableViewCell {
-    func configure(mainText: String, detailText: String?) {
+    func configure(mainText: String, detailText: String?, showDisclosureIndicator: Bool, detailTextColor: UIColor?) {
         textLabel?.text = mainText
         detailTextLabel?.text = detailText
+        accessoryType = showDisclosureIndicator ? .disclosureIndicator : .none
+        selectionStyle = showDisclosureIndicator ? .default : .none
+        detailTextLabel?.textColor = detailTextColor ?? .mediumEmphasisText
     }
 }

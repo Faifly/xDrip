@@ -14,6 +14,6 @@ struct DexcomG6PairRequestRxMessage {
     init(data: Data) throws {
         guard data.count >= 2 else { throw DexcomG6Error.invalidPairRequestRx }
         guard data[0] == DexcomG6OpCode.pairRequestRx.rawValue else { throw DexcomG6Error.invalidPairRequestRx }
-        paired = data[1] == 2
+        paired = data[1] == 1
     }
 }

@@ -57,6 +57,7 @@ final class SettingsRootInteractorTests: XCTestCase {
         func routeToUnits() { }
         func routeToChartSettings() { }
         func routeToAlertRoot() { }
+        func routeToTransmitter() { }
     }
     
     // MARK: Tests

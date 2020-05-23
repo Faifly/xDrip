@@ -14,19 +14,168 @@ import UIKit
 
 protocol SettingsTransmitterBusinessLogic {
     func doLoad(request: SettingsTransmitter.Load.Request)
+    func doBottomAction(request: SettingsTransmitter.BottomAction.Request)
 }
 
 protocol SettingsTransmitterDataStore: AnyObject {    
 }
 
 final class SettingsTransmitterInteractor: SettingsTransmitterBusinessLogic, SettingsTransmitterDataStore {
+    private let listenerID = "SettingsTransmitterInteractor"
+    
     var presenter: SettingsTransmitterPresentationLogic?
     var router: SettingsTransmitterRoutingLogic?
     
+    private var state: SettingsTransmitter.State = .notSetup {
+        didSet {
+            let response = SettingsTransmitter.ChangeStatus.Response(status: state)
+            presenter?.presentStatus(response: response)
+        }
+    }
+    
     // MARK: Do something
+    
+    init() {
+        subscribeForCGMEvents()
+    }
+    
+    deinit {
+        unsubscribeFromCGMEvents()
+    }
     
     func doLoad(request: SettingsTransmitter.Load.Request) {
         let response = SettingsTransmitter.Load.Response()
         presenter?.presentLoad(response: response)
+        
+        determineState()
+        updateData()
+    }
+    
+    func doBottomAction(request: SettingsTransmitter.BottomAction.Request) {
+        switch state {
+        case .notSetup: startScanning()
+        case .initialSearch: stopScanning()
+        case .running: stopTransmitter()
+        }
+    }
+    
+    // MARK: Logic
+    
+    private func subscribeForCGMEvents() {
+        CGMController.shared.subscribeForConnectionEvents(listener: listenerID) { [weak self] connected in
+            self?.onConnectionStateChanged(connected)
+        }
+        CGMController.shared.subscribeForMetadataEvents(listener: listenerID) { [weak self] _ in
+            self?.onMetadataUpdated()
+        }
+    }
+    
+    private func unsubscribeFromCGMEvents() {
+        CGMController.shared.unsubscribeFromConnectionEvents(listener: listenerID)
+        CGMController.shared.unsubscribeFromMetadataEvents(listener: listenerID)
+    }
+    
+    private func determineState() {
+        let device = CGMDevice.current
+        if device.deviceType == nil {
+            state = .notSetup
+        } else if device.bluetoothID == nil {
+            state = .initialSearch
+        } else {
+            state = .running(isConnectionActive: false)
+        }
+    }
+    
+    private func updateData() {
+        let allowSerialChange: Bool
+        switch state {
+        case .notSetup: allowSerialChange = true
+        default: allowSerialChange = false
+        }
+        
+        let response = SettingsTransmitter.UpdateData.Response(
+            device: CGMDevice.current,
+            allowSerialNumberChange: allowSerialChange,
+            serialNumberChangeHandler: { [weak self] text in
+                self?.handleSerialNumberChange(text)
+            },
+            resetHandler: { [weak self] in
+                self?.handleReset()
+            }
+        )
+        presenter?.presentData(response: response)
+    }
+    
+    private func handleSerialNumberChange(_ text: String?) {
+        CGMDevice.current.updateMetadata(ofType: .serialNumber, value: text)
+    }
+    
+    private func handleReset() {
+        let device = CGMDevice.current
+        
+        if device.isResetScheduled {
+            device.scheduleReset(false)
+            updateData()
+        } else {
+            let firmware = CGMDevice.current.metadata(ofType: .firmwareVersion)?.value
+            if DexcomG6Firmware.isResetSupported(firmware) {
+                router?.showTransmitterResetConfirmation { [weak self] in
+                    device.scheduleReset(true)
+                    self?.updateData()
+                }
+            } else {
+                router?.showResetUnsupportedWarning()
+            }
+        }
+    }
+    
+    private func onConnectionStateChanged(_ connected: Bool) {
+        state = .running(isConnectionActive: connected)
+    }
+    
+    private func onMetadataUpdated() {
+        updateData()
+    }
+    
+    private func startScanning() {
+        let worker = DexcomG6SerialSavingWorker()
+        let serial = CGMDevice.current.metadata(ofType: .serialNumber)?.value
+        guard worker.validate(serial) else {
+            router?.showInvalidSerialError()
+            return
+        }
+        
+        CGMDevice.current.updateDeviceType(.dexcomG6)
+        CGMController.shared.setupService(for: .dexcomG6)
+        
+        determineState()
+        updateData()
+    }
+    
+    private func stopScanning() {
+        CGMDevice.current.updateDeviceType(nil)
+        CGMController.shared.stopService()
+        determineState()
+        updateData()
+    }
+    
+    private func stopTransmitter() {
+        router?.showStopTransmitterConfirmation { [weak self] in
+            self?.stopScanning()
+            CGMDevice.current.updateBluetoothID(nil)
+            CGMDevice.current.resetAllMetadata()
+            self?.determineState()
+            self?.updateData()
+        }
+    }
+}
+
+extension SettingsTransmitterInteractor: Hashable {
+    static func == (lhs: SettingsTransmitterInteractor, rhs: SettingsTransmitterInteractor) -> Bool {
+        return true
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(1)
     }
 }

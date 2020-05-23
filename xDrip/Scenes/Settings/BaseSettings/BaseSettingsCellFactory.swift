@@ -8,6 +8,8 @@
 
 import UIKit
 
+// swiftlint:disable function_body_length
+
 final class BaseSettingsCellFactory {
     weak var tableView: UITableView?
     
@@ -17,7 +19,22 @@ final class BaseSettingsCellFactory {
         switch type {
         case let .disclosure(mainText, detailText, _):
             let cell = tableView.dequeueReusableCell(ofType: BaseSettingsDisclosureCell.self, for: indexPath)
-            cell.configure(mainText: mainText, detailText: detailText)
+            cell.configure(
+                mainText: mainText,
+                detailText: detailText,
+                showDisclosureIndicator: true,
+                detailTextColor: nil
+            )
+            return cell
+            
+        case let .info(mainText, detailText, detailTextColor):
+            let cell = tableView.dequeueReusableCell(ofType: BaseSettingsDisclosureCell.self, for: indexPath)
+            cell.configure(
+                mainText: mainText,
+                detailText: detailText,
+                showDisclosureIndicator: false,
+                detailTextColor: detailTextColor
+            )
             return cell
             
         case let .textInput(mainText, detailText, placeholder, textChangeHandler):
@@ -58,6 +75,11 @@ final class BaseSettingsCellFactory {
                 isExpanded: expandedCell == indexPath
             )
             
+            return cell
+            
+        case let .button(title, color, handler):
+            let cell = tableView.dequeueReusableCell(ofType: BaseSettingsButtonCell.self, for: indexPath)
+            cell.configure(title: title, titleColor: color, tapHandler: handler)
             return cell
         }
     }

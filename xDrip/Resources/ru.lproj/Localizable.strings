@@ -133,9 +133,108 @@
 "settings_alert_sound_tri-tone" = "Трезвучие";
 "settings_alert_sound_typewriters" = "Пишущая машинка";
 
+// Settings Cloud Types
+"settings_cloud_types_title" = "Загрузки в облако";
+"settings_cloud_types_nightscout_sync" = "Синхронизация Nightscout (Rest-Api)";
+"settings_cloud_types_section_footer" = "REST API - это стандартный способ подключения к Nightscout";
+
+// Settings Nightscout Cloud Configuration
+"settings_nightscout_cloud_configuration_title" = "Синхронизация Nightscout (Rest-Api)";
+"settings_nightscout_cloud_configuration_enabled_title" = "Включено";
+"settings_nightscout_cloud_configuration_enabled_section_footer" = "REST API - это стандартный способ подключения к Nightscout";
+"settings_nightscout_cloud_configuration_use_cellular_data_title" = "Использовать сотовое подключение";
+"settings_nightscout_cloud_configuration_use_cellular_data_section_footer" = "Загружать даже если установленно сотовое подключение";
+"settings_nightscout_cloud_configuration_send_display_glucose_title" = "Отправлять Отображаемую Глюкозу";
+"settings_nightscout_cloud_configuration_send_display_glucose_section_footer" = "Используйте сглаживание шума и плагины и т.д. (если включено) для транслируемого значения";
+"settings_nightscout_cloud_configuration_base_url_title" = "Базовый URL";
+"settings_nightscout_cloud_configuration_base_url_placeholder" = "https://google.com";
+"settings_nightscout_cloud_configuration_base_url_section_footer" = "Это только базовый URL, загрузчик автоматически добавит / записи для поста. API SECRET на сервере должен соответствовать вашей фразе в настройках";
+"settings_nightscout_cloud_configuration_download_data_title" = "Загружать данные";
+"settings_nightscout_cloud_configuration_download_data_section_footer" = "Также попробовать скачать данные с Nightscout";
+"settings_nightscout_cloud_configuration_extra_options_title" = "Дополнительные настройки";
+
+// Settings Nightscout Cloud Extra Options
+"settings_nightscout_cloud_extra_options_title" = "Дополнительные настройки";
+"settings_nightscout_cloud_extra_options_skip_lan_uploads_title" = "Пропустить загрузку по локальной сети";
+"settings_nightscout_cloud_extra_options_skip_lan_uploads_section_footer" = "Для локальных серверов с адресами 192.168.x.x пропустите загрузку, когда нет подключения к локальной сети";
+"settings_nightscout_cloud_extra_options_upload_battery_title" = "Загрузить данные батареи";
+"settings_nightscout_cloud_extra_options_upload_battery_section_footer" = "Отправьте уровень заряда вашего моста в Nightscout. Снимите флажок, если ваш датчик батареи сломан";
+"settings_nightscout_cloud_extra_options_upload_treatments_title" = "Загружать лекарства";
+"settings_nightscout_cloud_extra_options_upload_treatments_section_footer" = "Отправьте данные лечения в Nightscout. Снимите флажок загрузки, если ваш портал обслуживания не работает";
+"settings_nightscout_cloud_extra_options_alert_on_failures_title" = "Оповещать о сбоях";
+"settings_nightscout_cloud_extra_options_alert_on_failures_section_footer" = "Отображать и уведомлять звуком, если загрузка Nightscout не удалась";
+"settings_nightscout_cloud_extra_options_append_source_info_title" = "Добавить информацию об источнике на устройства";
+"settings_nightscout_cloud_extra_options_append_source_info_section_footer" = "Для G5 отправляет тип коллектора (например, OB1) и читает состояние обратной засыпки (для собственного) в Nightscout";
+"settings_nightscout_cloud_extra_options_backfill_data_title" = "Заполнить данные";
+"settings_nightscout_cloud_extra_options_backfill_data_section_footer" = "Нажмите, чтобы отправить исторические данные в Nightscout";
+
+// Settings Nightscout Cloud Backfill
+"setttings_nightscout_cloud_backfill_title" = "Заполнить данные";
+"settings_nightscout_cloud_backfill_send" = "Отправить";
+"settings_nightscout_cloud_backfill_date_title" = "Дата";
+"settings_nightscout_cloud_backfill_section_footer" = "Выберите дату самой старой записи для отправки на Nightscout. Используйте с осторожностью";
+
 // Settings Units
 "settings_units_mgdl" = "мг/дл";
 "settings_units_mmolL" = "ммоль/л";
+
+// Settings Transmitter
+"settings_transmitter_screen_title" = "Датчик";
+"settings_transmitter_info_section_header" = "ИНФОРМАЦИЯ";
+"settings_transmitter_battery_section_header" = "БАТАРЕЯ";
+"settings_transmitter_scan_button" = "Сканировать";
+"settings_transmitter_stop_scan_button" = "Остановить сканирование";
+"settings_transmitter_updating_scan_button" = "Обновление...";
+"settings_transmitter_stop_transmitter_button" = "Отключиться от датчика";
+"settings_transmitter_start_scanning_hint" = "Нажмите, чтобы начать поиск вашего Dexcom G6 датчика";
+"settings_transmitter_stop_scanning_hint" = "Нажмите, чтобы прекратить поиск датчика";
+"settings_transmitter_updating_hint" = "Подключение активно, идёт обновление...";
+"settings_transmitter_unpair_hint" = "Нажмите, чтобы разорвать связь с текущим датчиком";
+"settings_transmitter_age_days" = "дней";
+"settings_transmitter_no_value" = "Нет данных";
+"settings_transmitter_device_type_field" = "Тип Устройства";
+"settings_transmitter_device_name_field" = "Имя Устройства";
+"settings_transmitter_firmware_field" = "Прошивка";
+"settings_transmitter_device_age_field" = "Возраст Датчика";
+"settings_transmitter_reset_button" = "Сбросить Датчик";
+"settings_transmitter_cancel_reset_button" = "Сброс запланирован, нажмите для отмены";
+"settings_transmitter_serial_number_field" = "Серийный Номер";
+"settings_transmitter_serial_number_placeholder" = "XXXXXX";
+"settings_transmitter_voltage_a_field" = "Напряжение А";
+"settings_transmitter_voltage_b_field" = "Напряжение Б";
+"settings_transmitter_resistance_field" = "Сопротивление";
+"settings_transmitter_temperature_field" = "Температура";
+"settings_transmitter_runtime_field" = "Время";
+"settings_transmitter_type_dexcom_g6" = "Dexcom G6";
+"settings_transmitter_invalid_serial_alert_title" = "Невозможно продолжить";
+"settings_transmitter_invalid_serial_alert_message" = "Неправильный серийный номер";
+"settings_transmitter_stop_transmitter_alert_title" = "Подтвердите";
+"settings_transmitter_stop_transmitter_alert_message" = "Вы уверены, что хотите отвязать датчик?";
+"settings_transmitter_stop_transmitter_confirm_button" = "Отвязать датчик";
+"settings_transmitter_reset_transmitter_alert_title" = "Подтвердите";
+"settings_transmitter_reset_transmitter_alert_message" = "Вы уверены, что хотите сбросить датчик? Это действие нельзя обратить";
+"settings_transmitter_reset_transmitter_confirm_button" = "Сбросить датчик";
+"settings_transmitter_reset_unsupported_alert_title" = "Невозможно продолжить";
+"settings_transmitter_reset_unsupported_alert_message" = "Сброс датчика с такой версии прошивки не поддерживается";
+
+// Bluetooth Errors
+"bluetooth_error_title" = "Ошибка Сервиса Датчиков";
+"bluetooth_error_unknown" = "Случилась неизвестная ошибка Bluetooth";
+"bluetooth_error_powered_off" = "Bluetooth выключен";
+"bluetooth_error_unauthorized" = "Доступ к Bluetooth запрещён";
+"bluetooth_error_unsupported" = "Bluetooth не поддерживается этим устройством";
+
+// Dexcom Errors
+"dexcom_error_invalid_serial" = "Неправильный серийный номер";
+"dexcom_error_invalid_auth_request_response" = "Не удалось авторизироваться с датчиком";
+"dexcom_error_invalid_auth_challenge_response" = "Не удалось пройти авторизацию. Пожалуйста, проверьте сериный номер датчика";
+"dexcom_error_not_authed" = "Не удалось авторизироваться с датчиком";
+"dexcom_error_not_paired" = "Не удалось создать пару с датчиком";
+"dexcom_error_invalid_pair_request_response" = "Получен неправильный ответ о создании пары";
+"dexcom_error_invalid_sensor_data_response" = "Получен неправильный ответ о данных сенсора";
+"dexcom_error_invalid_transmitter_version_response" = "Получен неправильный ответ о версии датчика";
+"dexcom_error_invalid_battery_status_response" = "Получен неправильный ответ о статусе батареи";
+"dexcom_error_invalid_transmitter_time_response" = "Получен неправильный ответ о времени датчика";
 
 // Edit Training
 "edit_training_title" = "Тренировка";
@@ -157,3 +256,7 @@
 // Custom Picker
 "custom_picker_hours" = "ч";
 "custom_picker_minutes" = "мин";
+
+// Notifications
+"notification_pairing_request_title" = "Запрос Соединения";
+"notification_pairing_request_body" = "Пожалуйста, разблокируйте свой телефон и примите запрос на подключение от вашего датчика в течении 30ти секунд";

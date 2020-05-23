@@ -53,6 +53,9 @@ final class SettingsTransmitterViewControllerTests: XCTestCase {
         func doLoad(request: SettingsTransmitter.Load.Request) {
             doLoadCalled = true
         }
+        
+        func doBottomAction(request: SettingsTransmitter.BottomAction.Request) {
+        }
     }
     
     // MARK: Tests

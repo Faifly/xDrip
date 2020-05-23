@@ -19,6 +19,7 @@ enum CGMDeviceMetadataType: Int {
     case transmitterTime
     case sensorAge
     case serialNumber
+    case deviceName
     
     var updateInterval: TimeInterval {
         return 3600.0

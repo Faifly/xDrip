@@ -17,6 +17,7 @@ protocol SettingsRootRoutingLogic {
     func routeToUnits()
     func routeToChartSettings()
     func routeToAlertRoot()
+    func routeToTransmitter()
 }
 
 protocol SettingsRootDataPassing {
@@ -43,6 +44,10 @@ final class SettingsRootRouter: SettingsRootRoutingLogic, SettingsRootDataPassin
     
     func routeToAlertRoot() {
         present(SettingsAlertRootViewController())
+    }
+    
+    func routeToTransmitter() {
+        present(SettingsTransmitterViewController())
     }
     
     private func present(_ viewController: UIViewController) {

@@ -10,6 +10,7 @@ import Foundation
 
 protocol CGMBluetoothServiceDelegate: AnyObject {
     func serviceDidConnect()
+    func serviceDidDisconnect()
     func serviceDidUpdateMetadata(_ metadata: CGMDeviceMetadataType, value: String)
     func serviceDidReceiveGlucoseReading(raw: Double, filtered: Double)
     func serviceDidFail(withError error: CGMBluetoothServiceError)

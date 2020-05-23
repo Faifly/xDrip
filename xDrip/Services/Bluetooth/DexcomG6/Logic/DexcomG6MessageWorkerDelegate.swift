@@ -15,4 +15,5 @@ protocol DexcomG6MessageWorkerDelegate: AnyObject {
     func workerDidReceiveTransmitterInfo(_ message: DexcomG6TransmitterVersionRxMessage)
     func workerDidReceiveBatteryInfo(_ message: DexcomG6BatteryStatusRxMessage)
     func workerDidReceiveTransmitterTimeInfo(_ message: DexcomG6TransmitterTimeRxMessage)
+    func workerDidRequestPairing()
 }

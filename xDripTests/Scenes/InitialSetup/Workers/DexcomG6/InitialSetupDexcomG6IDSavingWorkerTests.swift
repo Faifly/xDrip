@@ -10,7 +10,7 @@ import XCTest
 @testable import xDrip
 
 final class InitialSetupDexcomG6IDSavingWorkerTests: XCTestCase {
-    let sut = InitialSetupDexcomG6IDSavingWorker()
+    let sut = DexcomG6SerialSavingWorker()
     
     func testValidate() {
         // When

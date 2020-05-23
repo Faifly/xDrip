@@ -101,19 +101,21 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
             message.filtered,
             message.unfiltered
         )
+        let firmware = CGMDevice.current.metadata(ofType: .firmwareVersion)?.value
         delegate?.serviceDidReceiveGlucoseReading(
-            raw: message.unfiltered * 34.0,
-            filtered: message.filtered * 34.0
+            raw: DexcomG6Firmware.scaleRawValue(message.unfiltered, firmware: firmware),
+            filtered: DexcomG6Firmware.scaleRawValue(message.filtered, firmware: firmware)
         )
     }
     
     func workerDidReceiveTransmitterInfo(_ message: DexcomG6TransmitterVersionRxMessage) {
+        let firmwareVersion = message.firmwareVersion.map { "\(Int($0))" }.joined(separator: ".")
         LogController.log(
-            message: "[Dexcom G6] Did receive transmitter info with firmware: %d",
+            message: "[Dexcom G6] Did receive transmitter info with firmware: %@",
             type: .debug,
-            message.firmwareVersion.hexEncodedString
+            firmwareVersion
         )
-        delegate?.serviceDidUpdateMetadata(.firmwareVersion, value: message.firmwareVersion.hexEncodedString)
+        delegate?.serviceDidUpdateMetadata(.firmwareVersion, value: firmwareVersion)
     }
     
     func workerDidReceiveBatteryInfo(_ message: DexcomG6BatteryStatusRxMessage) {
@@ -137,6 +139,10 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
     func workerDidReceiveTransmitterTimeInfo(_ message: DexcomG6TransmitterTimeRxMessage) {
         LogController.log(message: "[Dexcom G6] Did receive transmitter time info: %f", type: .debug, message.age)
         delegate?.serviceDidUpdateMetadata(.transmitterTime, value: "\(message.age)")
+    }
+    
+    func workerDidRequestPairing() {
+        NotificationController.shared.sendNotification(ofType: .pairingRequest)
     }
 }
 
@@ -172,6 +178,8 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
             type: .debug
         )
         CGMDevice.current.updateBluetoothID(peripheral.identifier.uuidString)
+        delegate?.serviceDidConnect()
+        delegate?.serviceDidUpdateMetadata(.deviceName, value: peripheral.name ?? "")
         self.peripheral = peripheral
         let serviceUUID = CBUUID(string: DexcomG6Constants.serviceID)
         peripheral.discoverServices([serviceUUID])
@@ -201,6 +209,7 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
             type: .debug,
             error: error
         )
+        delegate?.serviceDidDisconnect()
         if hasRecentlyConnected {
             LogController.log(
                 message: "[Dexcom G6] Has connected recently, retrying in 10 seconds",
@@ -266,7 +275,9 @@ extension DexcomG6BluetoothService: CBPeripheralDelegate {
         do {
             try messageWorker?.handleIncomingMessage(characteristic.value)
         } catch {
-            delegate?.serviceDidFail(withError: .deviceSpecific(error: error))
+            delegate?.serviceDidFail(
+                withError: .deviceSpecific(error: error as? LocalizedError ?? CGMBluetoothServiceError.unknown)
+            )
         }
     }
 }
