@@ -26,7 +26,14 @@ final class SettingsModeMasterInteractor: SettingsModeMasterBusinessLogic, Setti
     // MARK: Do something
     
     func doLoad(request: SettingsModeMaster.Load.Request) {
-        let response = SettingsModeMaster.Load.Response()
+        let response = SettingsModeMaster.Load.Response(singleSelectionHandler: handleSingleSelection(_:))
         presenter?.presentLoad(response: response)
+    }
+    
+    func handleSingleSelection(_ field: SettingsModeMaster.Field) {
+        switch field {
+        case .sensor: router?.routeToSensor()
+        case .transmitter: router?.routeToTransmitter()
+        }
     }
 }

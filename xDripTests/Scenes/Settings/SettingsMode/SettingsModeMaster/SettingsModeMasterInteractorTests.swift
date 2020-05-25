@@ -48,6 +48,10 @@ final class SettingsModeMasterInteractorTests: XCTestCase {
     }
     
     final class SettingsModeMasterRoutingLogicSpy: SettingsModeMasterRoutingLogic {
+        func routeToSensor() {
+        }
+        func routeToTransmitter() {
+        }
     }
     
     // MARK: Tests

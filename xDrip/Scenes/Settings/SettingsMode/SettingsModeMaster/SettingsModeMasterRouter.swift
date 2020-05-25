@@ -12,7 +12,9 @@
 
 import UIKit
 
-protocol SettingsModeMasterRoutingLogic {    
+protocol SettingsModeMasterRoutingLogic {
+    func routeToSensor()
+    func routeToTransmitter()
 }
 
 protocol SettingsModeMasterDataPassing {
@@ -24,5 +26,15 @@ final class SettingsModeMasterRouter: SettingsModeMasterRoutingLogic, SettingsMo
     weak var dataStore: SettingsModeMasterDataStore?
     
     // MARK: Routing
+    func routeToSensor() {
+        present(SettingsSensorViewController())
+    }
     
+    func routeToTransmitter() {
+        present(SettingsTransmitterViewController())
+    }
+    
+    private func present(_ viewController: UIViewController) {
+        self.viewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
 }

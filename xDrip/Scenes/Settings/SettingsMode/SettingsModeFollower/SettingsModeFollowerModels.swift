@@ -15,6 +15,13 @@ import UIKit
 enum SettingsModeFollower {
     // MARK: Models
     
+    enum Field {
+        case service
+        case nightscoutUrl
+        case offset
+        case apiSecret
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -22,9 +29,37 @@ enum SettingsModeFollower {
         }
         
         struct Response {
+            let textEditingChangedHandler: (String?) -> Void
+            let timePickerValueChangedHandler: (TimeInterval) -> Void
+            let singleSelectionHandler: () -> Void
         }
         
         struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
+        }
+    }
+    
+    enum Login {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum Update {
+        struct Request {
+        }
+        
+        struct Response {
+            let loginButtonEnabled: Bool
+        }
+        
+        struct ViewModel {
+            let loginButtonEnabled: Bool
         }
     }
 }

@@ -49,11 +49,17 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
     }
     
     // MARK: IB
+    @IBOutlet private weak var segmentedControl: UISegmentedControl!
+    @IBOutlet private weak var containerView: UIView!
+    
+    private var masterViewController: SettingsModeMasterViewController?
+    private var followerViewController: SettingsModeFollowerViewController?
     
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         doLoad()
     }
     
@@ -64,8 +70,83 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
         interactor?.doLoad(request: request)
     }
     
+    private func setupUI() {
+        title = "settings_mode_settings_title".localized
+        
+        let masterViewController = SettingsModeMasterViewController()
+        let followerViewController = SettingsModeFollowerViewController()
+        
+        addChild(masterViewController)
+        addChild(followerViewController)
+        
+        self.masterViewController = masterViewController
+        self.followerViewController = followerViewController
+        
+        let titles = UserDeviceMode.allCases.map({ $0.title })
+        segmentedControl.removeAllSegments()
+        titles.forEach {
+            segmentedControl.insertSegment(
+                withTitle: $0,
+                at: segmentedControl.numberOfSegments,
+                animated: false
+            )
+        }
+        
+        segmentedControl.selectedSegmentIndex = User.current.settings.deviceMode.rawValue
+        onSegmentedControlValueChanged(segmentedControl)
+    }
+    
+    private func setMasterController() {
+        guard let view = masterViewController?.view else {
+            return
+        }
+        
+        containerView.subviews.forEach {
+            $0.removeFromSuperview()
+        }
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(view)
+        view.bindToSuperview()
+    }
+    
+    private func setFollowerController() {
+        guard let view = followerViewController?.view else {
+            return
+        }
+        
+        containerView.subviews.forEach {
+            $0.removeFromSuperview()
+        }
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(view)
+        view.bindToSuperview()
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: SettingsModeRoot.Load.ViewModel) {        
+    }
+    
+    // MARK: Handlers
+    @IBAction private func onSegmentedControlValueChanged(_ sender: UISegmentedControl) {
+        guard let deviceMode = UserDeviceMode(rawValue: sender.selectedSegmentIndex) else {
+            return
+        }
+        
+        switch deviceMode {
+        case .main: setMasterController()
+        case .follower: setFollowerController()
+        }
+    }
+}
+
+private extension UserDeviceMode {
+    var title: String {
+        switch self {
+        case .follower: return "settings_mode_settings_follower".localized
+        case .main: return "settings_mode_settings_master".localized
+        }
     }
 }

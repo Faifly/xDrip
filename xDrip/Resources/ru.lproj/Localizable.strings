@@ -26,7 +26,7 @@
 "settings_root_units_title" = "Единицы измерения";
 "settings_root_chart_title" = "Настройки диаграммы";
 "settings_root_alert_title" = "Оповещение";
-"settings_root_mode_title" = "Mode Settings";
+"settings_root_mode_title" = "Настройки режима";
 "settings_root_cloud_upload_title" = "Загрузки в облако";
 "settings_root_sensor_title" = "Детектор";
 "settings_root_transmitter_title" = "Передатчик";
@@ -177,6 +177,21 @@
 // Settings Units
 "settings_units_mgdl" = "мг/дл";
 "settings_units_mmolL" = "ммоль/л";
+
+// Settings Mode Settings
+"settings_mode_settings_title" = "Настройки режима";
+"settings_mode_settings_master" = "Мастер";
+"settings_mode_settings_follower" = "Подписчик";
+"settings_mode_settings_sensor" = "Детектор";
+"settings_mode_settings_transmitter" = "Передатчик";
+"settings_mode_settings_nightscout" = "Nightscout";
+"settings_mode_settings_service" = "Сервис";
+"settings_mode_settings_nightscout_url" = "Nightscout URL";
+"settings_mode_settings_offset" = "Смещение";
+"settings_mode_settings_api_secret" = "API Secret";
+"settings_mode_settings_login_button" = "Авторизоваться";
+"settings_mode_settings_follower_section_footer" = "Если подписчик хочет добавить лекарства к мастеру, его API Secret необходимо задать в поле выше. Если сайт мастера защищен переменной AUTH_DEFAULT_ROLES и не позволяет получать данные, то задав API Secret мастера проблема должна устранится. Если ни одна из этих функций не нужна, вы можете оставить это поле пустым";
+"settings_mode_settings_follower_time_minutes" = "мин";
 
 // Settings Transmitter
 "settings_transmitter_screen_title" = "Датчик";

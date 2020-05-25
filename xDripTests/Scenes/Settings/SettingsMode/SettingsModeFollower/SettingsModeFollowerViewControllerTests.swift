@@ -53,6 +53,9 @@ final class SettingsModeFollowerViewControllerTests: XCTestCase {
         func doLoad(request: SettingsModeFollower.Load.Request) {
             doLoadCalled = true
         }
+        
+        func doLogin(request: SettingsModeFollower.Login.Request) {
+        }
     }
     
     // MARK: Tests
@@ -71,7 +74,8 @@ final class SettingsModeFollowerViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsModeFollower.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [])
+        let viewModel = SettingsModeFollower.Load.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()

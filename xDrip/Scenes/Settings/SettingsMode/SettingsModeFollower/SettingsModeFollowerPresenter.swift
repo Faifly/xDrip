@@ -14,6 +14,7 @@ import UIKit
 
 protocol SettingsModeFollowerPresentationLogic {
     func presentLoad(response: SettingsModeFollower.Load.Response)
+    func presentUpdate(response: SettingsModeFollower.Update.Response)
 }
 
 final class SettingsModeFollowerPresenter: SettingsModeFollowerPresentationLogic {
@@ -22,7 +23,109 @@ final class SettingsModeFollowerPresenter: SettingsModeFollowerPresentationLogic
     // MARK: Do something
     
     func presentLoad(response: SettingsModeFollower.Load.Response) {
-        let viewModel = SettingsModeFollower.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createSection(response: response)
+            ]
+        )
+        let viewModel = SettingsModeFollower.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    func presentUpdate(response: SettingsModeFollower.Update.Response) {
+        let viewModel = SettingsModeFollower.Update.ViewModel(loginButtonEnabled: response.loginButtonEnabled)
+        viewController?.displayUpdate(viewModel: viewModel)
+    }
+    
+    private func createSection(response: SettingsModeFollower.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createInfoCell(
+                .service,
+                detailText: "settings_mode_settings_nightscout".localized
+            ),
+            createTextInputCell(
+                .nightscoutUrl,
+                detailText: nil,
+                placeholder: nil,
+                textEditingChangedHandler: response.textEditingChangedHandler
+            ),
+            createTimePickerCell(
+                .offset,
+                detailText: 0.0,
+                timePickerValueChanged: response.timePickerValueChangedHandler
+            ),
+            createDisclosureCell(
+                .apiSecret,
+                selectionHandler: response.singleSelectionHandler
+            )
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_mode_settings_follower_section_footer".localized
+        )
+    }
+    
+    private func createInfoCell(_ field: SettingsModeFollower.Field, detailText: String?) -> BaseSettings.Cell {
+        return .info(mainText: field.title, detailText: detailText, detailTextColor: nil)
+    }
+    
+    private func createTextInputCell(
+        _ field: SettingsModeFollower.Field,
+        detailText: String?,
+        placeholder: String?,
+        textEditingChangedHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
+        return .textInput(
+            mainText: field.title,
+            detailText: detailText,
+            placeholder: placeholder,
+            textChangedHandler: textEditingChangedHandler
+        )
+    }
+    
+    private func createTimePickerCell(
+        _ field: SettingsModeFollower.Field,
+        detailText: TimeInterval,
+        timePickerValueChanged: @escaping (TimeInterval) -> Void) -> BaseSettings.Cell {
+        let detailText = "\(Int(detailText)) " + "settings_mode_settings_follower_time_minutes".localized
+        let picker = CustomPickerView(mode: .countDown)
+        
+        picker.formatValues = { strings in
+            guard strings.count > 3 else { return "" }
+           
+            let hourString = strings[0]
+            let minuteString = strings[2]
+           
+            guard let hour = Double(hourString), let minute = Double(minuteString) else { return "" }
+           
+            let time = minute * TimeInterval.secondsPerMinute + hour * TimeInterval.secondsPerHour
+           
+            timePickerValueChanged(TimeInterval(time))
+            
+            var timeString = "\(Int(time / TimeInterval.secondsPerMinute)) "
+            timeString += "settings_mode_settings_follower_time_minutes".localized
+            
+            return timeString
+        }
+        
+        return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)
+    }
+    
+    private func createDisclosureCell(
+        _ field: SettingsModeFollower.Field,
+        selectionHandler: @escaping () -> Void) -> BaseSettings.Cell {
+        return .disclosure(mainText: field.title, detailText: nil, selectionHandler: selectionHandler)
+    }
+}
+
+private extension SettingsModeFollower.Field {
+    var title: String {
+        switch self {
+        case .service: return "settings_mode_settings_service".localized
+        case .nightscoutUrl: return "settings_mode_settings_nightscout_url".localized
+        case .offset: return "settings_mode_settings_offset".localized
+        case .apiSecret: return "settings_mode_settings_api_secret".localized
+        }
     }
 }

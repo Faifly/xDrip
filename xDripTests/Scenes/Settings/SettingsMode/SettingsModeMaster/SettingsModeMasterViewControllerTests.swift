@@ -71,7 +71,8 @@ final class SettingsModeMasterViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsModeMaster.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [])
+        let viewModel = SettingsModeMaster.Load.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()
