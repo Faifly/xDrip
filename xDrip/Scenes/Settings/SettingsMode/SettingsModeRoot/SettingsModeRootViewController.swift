@@ -52,8 +52,7 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var containerView: UIView!
     
-    private var masterViewController: SettingsModeMasterViewController?
-    private var followerViewController: SettingsModeFollowerViewController?
+    private var tabBar: UITabBarController?
     
     // MARK: View lifecycle
     
@@ -76,13 +75,18 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
         let masterViewController = SettingsModeMasterViewController()
         let followerViewController = SettingsModeFollowerViewController()
         
-        addChild(masterViewController)
-        addChild(followerViewController)
+        let tabBar = UITabBarController()
+        tabBar.viewControllers = [masterViewController, followerViewController]
+        tabBar.tabBar.isHidden = true
         
-        self.masterViewController = masterViewController
-        self.followerViewController = followerViewController
+        tabBar.view.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(tabBar.view)
+        tabBar.view.bindToSuperview()
+        addChild(tabBar)
         
-        let titles = UserDeviceMode.allCases.map({ $0.title })
+        self.tabBar = tabBar
+        
+        let titles = UserDeviceMode.allCases.map { $0.title }
         segmentedControl.removeAllSegments()
         titles.forEach {
             segmentedControl.insertSegment(
@@ -93,33 +97,7 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
         }
         
         segmentedControl.selectedSegmentIndex = User.current.settings.deviceMode.rawValue
-        onSegmentedControlValueChanged(segmentedControl)
-    }
-    
-    private func setMasterController() {
-        guard let view = masterViewController?.view else {
-            return
-        }
-        
-        addViewToContainer(view)
-    }
-    
-    private func setFollowerController() {
-        guard let view = followerViewController?.view else {
-            return
-        }
-        
-        addViewToContainer(view)
-    }
-    
-    private func addViewToContainer(_ view: UIView) {
-        containerView.subviews.forEach {
-            $0.removeFromSuperview()
-        }
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(view)
-        view.bindToSuperview()
+        tabBar.selectedIndex = 0
     }
     
     // MARK: Display
@@ -129,14 +107,7 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
     
     // MARK: Handlers
     @IBAction private func onSegmentedControlValueChanged(_ sender: UISegmentedControl) {
-        guard let deviceMode = UserDeviceMode(rawValue: sender.selectedSegmentIndex) else {
-            return
-        }
-        
-        switch deviceMode {
-        case .main: setMasterController()
-        case .follower: setFollowerController()
-        }
+        tabBar?.selectedIndex = sender.selectedSegmentIndex
     }
 }
 

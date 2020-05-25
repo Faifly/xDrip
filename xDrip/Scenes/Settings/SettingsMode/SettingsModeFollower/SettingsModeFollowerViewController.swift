@@ -62,7 +62,7 @@ class SettingsModeFollowerViewController: BaseSettingsViewController, SettingsMo
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        parent?.navigationItem.rightBarButtonItem = loginBarButtonItem
+        showLoginButton()
     }
     
     // MARK: Do something
@@ -80,9 +80,11 @@ class SettingsModeFollowerViewController: BaseSettingsViewController, SettingsMo
             action: #selector(onLogin)
         )
         barButtonItem.isEnabled = false
-        
-        parent?.navigationItem.rightBarButtonItem = barButtonItem
         loginBarButtonItem = barButtonItem
+    }
+    
+    private func showLoginButton() {
+        parent?.navigationItem.rightBarButtonItem = loginBarButtonItem
     }
     
     @objc private func onLogin() {
