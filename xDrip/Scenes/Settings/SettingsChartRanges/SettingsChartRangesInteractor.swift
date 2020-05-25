@@ -26,7 +26,38 @@ final class SettingsChartRangesInteractor: SettingsChartRangesBusinessLogic, Set
     // MARK: Do something
     
     func doLoad(request: SettingsChartRanges.Load.Request) {
-        let response = SettingsChartRanges.Load.Response()
+        let response = SettingsChartRanges.Load.Response(pickerValueChanged: handlePickerValueChanged(_:_:))
         presenter?.presentLoad(response: response)
+    }
+    
+    private func handlePickerValueChanged(_ field: SettingsChartRanges.Field, _ values: [Double]) {
+        let settings = User.current.settings
+        let unit = settings?.unit ?? .default
+        let step = unit.pickerStep
+        let convertedValues = values.map { GlucoseUnit.convertToDefault($0) }
+        switch field {
+        case .notHigherLess:
+            settings?.configureWarningLevel(.high, value: convertedValues[0])
+            settings?.configureWarningLevel(.low, value: convertedValues[1])
+            
+            if let urgentHigh = settings?.warningLevelValue(for: .urgentHigh),
+                urgentHigh <= values[0] {
+                let value = GlucoseUnit.convertToDefault(values[0] + 2 * step)
+                settings?.configureWarningLevel(.urgentHigh, value: value)
+            }
+            
+            if let urgentLow = settings?.warningLevelValue(for: .urgentLow),
+                urgentLow >= values[1] {
+                let value = GlucoseUnit.convertToDefault((values[1] - 2 * step))
+                settings?.configureWarningLevel(.urgentLow, value: value)
+            }
+        case .urgent:
+            settings?.configureWarningLevel(.urgentHigh, value: convertedValues[0])
+            settings?.configureWarningLevel(.urgentLow, value: convertedValues[1])
+        default:
+            break
+        }
+        
+        doLoad(request: SettingsChartRanges.Load.Request())
     }
 }

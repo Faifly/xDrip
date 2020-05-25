@@ -28,6 +28,7 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
         tableView.registerNib(type: PickerExpandableTableViewCell.self)
         tableView.registerNib(type: BaseSettingsTextInputTableViewCell.self)
         tableView.registerNib(type: BaseSettingsButtonCell.self)
+        tableView.registerHeaderFooterView(type: BaseSettingsCustomTableViewHeaderFooterView.self)
         
         return tableView
     }()
@@ -92,7 +93,7 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
         guard let section = viewModel?.sections[indexPath.section] else { return }
         
         switch section {
-        case let .singleSelection(cells, selectedIndex, header, footer, selectionHandler):
+        case let .singleSelection(cells, selectedIndex, header, footer, selectionHandler, attrHeader, attrFooter):
             
             if let previousCell = tableView.cellForRow(
                 at: IndexPath(row: selectedIndex, section: indexPath.section)
@@ -111,7 +112,9 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
                 selectedIndex: indexPath.row,
                 header: header,
                 footer: footer,
-                selectionHandler: selectionHandler
+                selectionHandler: selectionHandler,
+                attributedHeader: attrHeader,
+                attributedFooter: attrFooter
             )
         default:
             break
@@ -134,14 +137,14 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
         guard let viewModel = viewModel else { fatalError() }
         
         switch viewModel.sections[indexPath.section] {
-        case .normal(let cells, _, _):
+        case .normal(let cells, _, _, _, _):
             return cellFactory.createCell(
                 ofType: cells[indexPath.row],
                 indexPath: indexPath,
                 expandedCell: expandedCell
             )
             
-        case let .singleSelection(cells, selectedIndex, _, _, _):
+        case let .singleSelection(cells, selectedIndex, _, _, _, _, _):
             return cellFactory.createSingleSelectionCell(
                 title: cells[indexPath.row],
                 selectedIndex: selectedIndex,
@@ -159,6 +162,12 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if let header = viewModel?.sections[section].attributedHeader {
+            let view = tableView.dequeReusableHeaderFooterView(ofType: BaseSettingsCustomTableViewHeaderFooterView.self)
+            view?.configure(with: header)
+            return view
+        }
+        
         if section == 0 {
             return viewModel?.sections[section].header == nil ? UIView() : nil
         } else {
@@ -179,7 +188,7 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
         
         let section = viewModel.sections[indexPath.section]
         switch section {
-        case .normal(let cells, _, _):
+        case .normal(let cells, _, _, _, _):
             handleSelectionForNormalCell(cells[indexPath.row])
             
             switch cells[indexPath.row] {
@@ -189,8 +198,18 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
                 break
             }
             
-        case .singleSelection(_, _, _, _, let selectionHandler):
+        case .singleSelection(_, _, _, _, let selectionHandler, _, _):
             handleSingleSelection(indexPath: indexPath, callback: selectionHandler)
         }
+    }
+}
+
+private extension UITableView {
+    func registerHeaderFooterView<T: UITableViewHeaderFooterView>(type: T.Type) {
+        register(type.self, forHeaderFooterViewReuseIdentifier: type.className)
+    }
+    
+    func dequeReusableHeaderFooterView<T: UITableViewHeaderFooterView>(ofType type: T.Type) -> T? {
+        return dequeueReusableHeaderFooterView(withIdentifier: T.className) as? T
     }
 }

@@ -53,7 +53,7 @@ final class SettingsChartRangesPresenterTests: XCTestCase {
         // Given
         let spy = SettingsChartRangesDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsChartRanges.Load.Response()
+        let response = SettingsChartRanges.Load.Response(pickerValueChanged: { _, _ in })
         
         // When
         sut.presentLoad(response: response)

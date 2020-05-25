@@ -71,7 +71,8 @@ final class SettingsChartRangesViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsChartRanges.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [])
+        let viewModel = SettingsChartRanges.Load.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()
