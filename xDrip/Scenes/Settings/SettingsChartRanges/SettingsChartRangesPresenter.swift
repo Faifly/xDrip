@@ -76,8 +76,9 @@ final class SettingsChartRangesPresenter: SettingsChartRangesPresentationLogic {
         lowValue = GlucoseUnit.convertFromDefault(lowValue) + step
         
         let detailText = String(format: "%.1f/%.1f", highValue, lowValue)
+        let title = SettingsChartRanges.Field.highLow.title
         let cells: [BaseSettings.Cell] = [
-            .info(mainText: "High/Low", detailText: detailText, detailTextColor: nil)
+            .info(mainText: title, detailText: detailText, detailTextColor: nil)
         ]
         
         let attrHeader = NSMutableAttributedString()
