@@ -32,10 +32,10 @@
                 </segmentedControl>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wwn-zE-l4h">
                     <rect key="frame" x="0.0" y="91" width="414" height="805"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
                 <constraint firstItem="2es-cL-ch9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="IGS-PE-utg"/>
                 <constraint firstItem="2es-cL-ch9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Jcf-WK-CGn"/>

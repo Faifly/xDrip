@@ -101,13 +101,7 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
             return
         }
         
-        containerView.subviews.forEach {
-            $0.removeFromSuperview()
-        }
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(view)
-        view.bindToSuperview()
+        addViewToContainer(view)
     }
     
     private func setFollowerController() {
@@ -115,6 +109,10 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
             return
         }
         
+        addViewToContainer(view)
+    }
+    
+    private func addViewToContainer(_ view: UIView) {
         containerView.subviews.forEach {
             $0.removeFromSuperview()
         }
