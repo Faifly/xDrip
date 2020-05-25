@@ -13,10 +13,6 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
     private lazy var tableView: UITableView = {
         var tableView = UITableView(frame: .zero, style: tableViewStyle)
         
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            tableView.backgroundColor = .clear
-        }
-        
         tableView.keyboardDismissMode = .onDrag
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -58,10 +54,6 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            view.addBlur()
-        }
         
         cellFactory.tableView = tableView
     }
@@ -159,11 +151,19 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40.0
+        if section == 0 {
+            return 40.0
+        } else {
+            return UITableView.automaticDimension
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return viewModel?.sections[section].header == nil ? UIView() : nil
+        if section == 0 {
+            return viewModel?.sections[section].header == nil ? UIView() : nil
+        } else {
+            return nil
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

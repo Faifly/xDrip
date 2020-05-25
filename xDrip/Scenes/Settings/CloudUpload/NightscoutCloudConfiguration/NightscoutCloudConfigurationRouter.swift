@@ -13,6 +13,7 @@
 import UIKit
 
 protocol NightscoutCloudConfigurationRoutingLogic {
+    func routeToExtraOptions()
 }
 
 protocol NightscoutCloudConfigurationDataPassing {
@@ -24,7 +25,10 @@ final class NightscoutCloudConfigurationRouter: NightscoutCloudConfigurationData
     weak var dataStore: NightscoutCloudConfigurationDataStore?
     
     // MARK: Routing
-    
+    func routeToExtraOptions() {
+        let extraOptionsViewController = NightscoutCloudExtraOptionsViewController()
+        viewController?.navigationController?.pushViewController(extraOptionsViewController, animated: true)
+    }
 }
 
 extension NightscoutCloudConfigurationRouter: NightscoutCloudConfigurationRoutingLogic {

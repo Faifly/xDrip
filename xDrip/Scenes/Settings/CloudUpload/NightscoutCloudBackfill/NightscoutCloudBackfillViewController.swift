@@ -53,6 +53,7 @@ class NightscoutCloudBackfillViewController: BaseSettingsViewController, Nightsc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         doLoad()
     }
     
@@ -63,8 +64,27 @@ class NightscoutCloudBackfillViewController: BaseSettingsViewController, Nightsc
         interactor?.doLoad(request: request)
     }
     
+    private func setupUI() {
+        title = "setttings_nightscout_cloud_backfill_title".localized
+        
+        let barButton = UIBarButtonItem(
+            title: "settings_nightscout_cloud_backfill_send".localized,
+            style: .done,
+            target: self,
+            action: #selector(doSend)
+        )
+        
+        navigationItem.rightBarButtonItem = barButton
+    }
+    
+    @objc private func doSend() {
+        let request = NightscoutCloudBackfill.Send.Request()
+        interactor?.doSend(request: request)
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: NightscoutCloudBackfill.Load.ViewModel) {
+        update(with: viewModel.tableViewModel)
     }
 }

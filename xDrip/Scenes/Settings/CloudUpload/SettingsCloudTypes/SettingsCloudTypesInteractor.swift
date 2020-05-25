@@ -26,7 +26,11 @@ final class SettingsCloudTypesInteractor: SettingsCloudTypesBusinessLogic, Setti
     // MARK: Do something
     
     func doLoad(request: SettingsCloudTypes.Load.Request) {
-        let response = SettingsCloudTypes.Load.Response()
+        let response = SettingsCloudTypes.Load.Response(singleSelectionHandler: handleSingleSelection)
         presenter?.presentLoad(response: response)
+    }
+    
+    private func handleSingleSelection() {
+        router?.routeToNightscoutCloudConfiguration()
     }
 }

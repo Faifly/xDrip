@@ -22,9 +22,11 @@ enum SettingsCloudTypes {
         }
         
         struct Response {
+            let singleSelectionHandler: () -> Void
         }
         
         struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
         }
     }
 }

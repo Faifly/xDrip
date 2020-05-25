@@ -13,6 +13,7 @@
 import UIKit
 
 protocol NightscoutCloudExtraOptionsRoutingLogic {
+    func routeToBackfillData()
 }
 
 protocol NightscoutCloudExtraOptionsDataPassing {
@@ -24,7 +25,10 @@ final class NightscoutCloudExtraOptionsRouter: NightscoutCloudExtraOptionsDataPa
     weak var dataStore: NightscoutCloudExtraOptionsDataStore?
     
     // MARK: Routing
-    
+    func routeToBackfillData() {
+        let controller = NightscoutCloudBackfillViewController()
+        viewController?.navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 extension NightscoutCloudExtraOptionsRouter: NightscoutCloudExtraOptionsRoutingLogic {

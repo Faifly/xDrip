@@ -16,7 +16,7 @@ protocol NightscoutCloudExtraOptionsBusinessLogic {
     func doLoad(request: NightscoutCloudExtraOptions.Load.Request)
 }
 
-protocol NightscoutCloudExtraOptionsDataStore: AnyObject {    
+protocol NightscoutCloudExtraOptionsDataStore: AnyObject {
 }
 
 final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBusinessLogic,
@@ -24,10 +24,33 @@ final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBu
     var presenter: NightscoutCloudExtraOptionsPresentationLogic?
     var router: NightscoutCloudExtraOptionsRoutingLogic?
     
+    private lazy var settings: NightscoutSyncSettings = {
+        return User.current.settings.nightscoutSync ?? NightscoutSyncSettings()
+    }()
+    
     // MARK: Do something
     
     func doLoad(request: NightscoutCloudExtraOptions.Load.Request) {
-        let response = NightscoutCloudExtraOptions.Load.Response()
+        let response = NightscoutCloudExtraOptions.Load.Response(
+            settings: settings,
+            switchValueChangedHandler: handleSwitchValueChanged(_:_:),
+            singleSelectionHandler: handleSingleSelection
+        )
         presenter?.presentLoad(response: response)
+    }
+    
+    private func handleSwitchValueChanged(_ field: NightscoutCloudExtraOptions.Field, _ value: Bool) {
+        switch field {
+        case .skipLANUploads: settings.updateSkipLANUploads(value)
+        case .uploadBattery: settings.updateUploadBridgeBattery(value)
+        case .uploadTreatments: settings.updateUploadTreatments(value)
+        case .alertOnFailures: settings.updateAlertOnFailures(value)
+        case .appendSourceInfo: settings.updateAppendSourceInfoToDevices(value)
+        default: break
+        }
+    }
+    
+    private func handleSingleSelection() {
+        router?.routeToBackfillData()
     }
 }

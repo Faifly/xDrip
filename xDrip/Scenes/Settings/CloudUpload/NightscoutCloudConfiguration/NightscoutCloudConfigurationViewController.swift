@@ -54,6 +54,7 @@ class NightscoutCloudConfigurationViewController: BaseSettingsViewController, Ni
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         doLoad()
     }
     
@@ -64,8 +65,13 @@ class NightscoutCloudConfigurationViewController: BaseSettingsViewController, Ni
         interactor?.doLoad(request: request)
     }
     
+    private func setupUI() {
+        title = "settings_nightscout_cloud_configuration_title".localized
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: NightscoutCloudConfiguration.Load.ViewModel) {
+        update(with: viewModel.tableViewModel)
     }
 }

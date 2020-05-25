@@ -22,7 +22,38 @@ final class SettingsCloudTypesPresenter: SettingsCloudTypesPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsCloudTypes.Load.Response) {
-        let viewModel = SettingsCloudTypes.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createSection(response: response)
+            ]
+        )
+        
+        let viewModel = SettingsCloudTypes.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    private func createSection(response: SettingsCloudTypes.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createDisclosureCell(
+                mainText: "settings_cloud_types_nightscout_sync".localized,
+                detailText: nil,
+                selectionHandler: response.singleSelectionHandler
+            )
+        ]
+        
+        return .normal(cells: cells, header: nil, footer: "settings_cloud_types_section_footer".localized)
+    }
+    
+    private func createDisclosureCell(
+        mainText: String,
+        detailText: String?,
+        selectionHandler: @escaping () -> Void) -> BaseSettings.Cell {
+        return .disclosure(
+            mainText: mainText,
+            detailText: detailText,
+            selectionHandler: {
+                selectionHandler()
+            }
+        )
     }
 }

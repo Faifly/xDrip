@@ -14,6 +14,7 @@ import UIKit
 
 protocol NightscoutCloudBackfillBusinessLogic {
     func doLoad(request: NightscoutCloudBackfill.Load.Request)
+    func doSend(request: NightscoutCloudBackfill.Send.Request)
 }
 
 protocol NightscoutCloudBackfillDataStore: AnyObject {    
@@ -23,10 +24,22 @@ final class NightscoutCloudBackfillInteractor: NightscoutCloudBackfillBusinessLo
     var presenter: NightscoutCloudBackfillPresentationLogic?
     var router: NightscoutCloudBackfillRoutingLogic?
     
+    private var date = Date()
+    
     // MARK: Do something
     
     func doLoad(request: NightscoutCloudBackfill.Load.Request) {
-        let response = NightscoutCloudBackfill.Load.Response()
+        let response = NightscoutCloudBackfill.Load.Response(dateChangedHandler: handleDateChanged(_:))
         presenter?.presentLoad(response: response)
+    }
+    
+    func doSend(request: NightscoutCloudBackfill.Send.Request) {
+        // TO DO: - add API works
+        
+        router?.presentPopUp()
+    }
+    
+    private func handleDateChanged(_ date: Date) {
+        self.date = date
     }
 }

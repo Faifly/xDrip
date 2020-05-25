@@ -212,10 +212,6 @@ final class BaseSettingsViewControllerTests: XCTestCase {
         XCTAssert(sut.tableView(tableView, titleForFooterInSection: 1) == "single footer")
         XCTAssertNil(sut.tableView(tableView, titleForFooterInSection: 2))
         
-        XCTAssertNil(sut.tableView(tableView, viewForHeaderInSection: 0))
-        XCTAssertNil(sut.tableView(tableView, viewForHeaderInSection: 1))
-        XCTAssertNotNil(sut.tableView(tableView, viewForHeaderInSection: 2))
-        
         // When
         var cell = sut.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0))
         // Then

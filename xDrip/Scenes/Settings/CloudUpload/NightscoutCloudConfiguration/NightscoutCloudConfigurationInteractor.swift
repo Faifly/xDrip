@@ -16,7 +16,7 @@ protocol NightscoutCloudConfigurationBusinessLogic {
     func doLoad(request: NightscoutCloudConfiguration.Load.Request)
 }
 
-protocol NightscoutCloudConfigurationDataStore: AnyObject {    
+protocol NightscoutCloudConfigurationDataStore: AnyObject {
 }
 
 final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfigurationBusinessLogic,
@@ -24,10 +24,38 @@ final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfiguration
     var presenter: NightscoutCloudConfigurationPresentationLogic?
     var router: NightscoutCloudConfigurationRoutingLogic?
     
+    private lazy var settings: NightscoutSyncSettings = {
+        return User.current.settings.nightscoutSync ?? NightscoutSyncSettings()
+    }()
+    
     // MARK: Do something
     
     func doLoad(request: NightscoutCloudConfiguration.Load.Request) {
-        let response = NightscoutCloudConfiguration.Load.Response()
+        let response = NightscoutCloudConfiguration.Load.Response(
+            settings: settings,
+            switchValueChangedHandler: handleSwitchValueChanged(_:_:),
+            textEditingChangedHandler: handleTextEditingChanged(_:),
+            singleSelectionHandler: handleSingleSelection
+        )
+        
         presenter?.presentLoad(response: response)
+    }
+    
+    private func handleSwitchValueChanged(_ field: NightscoutCloudConfiguration.Field, _ value: Bool) {
+        switch field {
+        case .enabled: settings.updateIsEnabled(value)
+        case .useCellularData: settings.updateUseCellularData(value)
+        case .sendDisplayGlucose: settings.updateSendDisplayGlucose(value)
+        case .downloadData: settings.updateDownloadData(value)
+        default: break
+        }
+    }
+    
+    private func handleTextEditingChanged(_ string: String?) {
+        settings.updateBaseURL(string)
+    }
+    
+    private func handleSingleSelection() {
+        router?.routeToExtraOptions()
     }
 }

@@ -13,6 +13,7 @@
 import UIKit
 
 protocol SettingsCloudTypesRoutingLogic {
+    func routeToNightscoutCloudConfiguration()
 }
 
 protocol SettingsCloudTypesDataPassing {
@@ -25,4 +26,8 @@ final class SettingsCloudTypesRouter: SettingsCloudTypesRoutingLogic, SettingsCl
     
     // MARK: Routing
     
+    func routeToNightscoutCloudConfiguration() {
+        let configurationViewController = NightscoutCloudConfigurationViewController()
+        viewController?.navigationController?.pushViewController(configurationViewController, animated: true)
+    }
 }

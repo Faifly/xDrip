@@ -48,6 +48,8 @@ final class NightscoutCloudConfigurationInteractorTests: XCTestCase {
     }
     
     final class NightscoutCloudConfigurationRoutingLogicSpy: NightscoutCloudConfigurationRoutingLogic {
+        func routeToExtraOptions() {
+        }
     }
     
     // MARK: Tests

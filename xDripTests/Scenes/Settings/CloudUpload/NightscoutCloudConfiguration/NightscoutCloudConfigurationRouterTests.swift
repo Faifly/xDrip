@@ -33,8 +33,25 @@ final class NightscoutCloudConfigurationRouterTests: XCTestCase {
     
     // MARK: Test doubles
     
-    final class ViewControllerSpy: NightscoutCloudConfigurationViewController {
+    final class ViewControllerSpy: UINavigationController {
+        var lastPushedViewController: UIViewController?
+        
+        override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+            lastPushedViewController = viewController
+        }
     }
     
     // MARK: Tests
+    
+    func testRouteToExtraOptions() {
+        let viewController = NightscoutCloudConfigurationViewController()
+        let spy = createSpy()
+        spy.viewControllers = [viewController]
+        sut.viewController = viewController
+        
+        // When
+        sut.routeToExtraOptions()
+        // Then
+        XCTAssertTrue(spy.lastPushedViewController is NightscoutCloudExtraOptionsViewController)
+    }
 }

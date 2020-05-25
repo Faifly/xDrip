@@ -12,7 +12,8 @@
 
 import UIKit
 
-protocol NightscoutCloudBackfillRoutingLogic {    
+protocol NightscoutCloudBackfillRoutingLogic {
+    func presentPopUp()
 }
 
 protocol NightscoutCloudBackfillDataPassing {
@@ -24,5 +25,17 @@ final class NightscoutCloudBackfillRouter: NightscoutCloudBackfillRoutingLogic, 
     weak var dataStore: NightscoutCloudBackfillDataStore?
     
     // MARK: Routing
+    func presentPopUp() {
+        let popUp = PopUpViewController()
+        popUp.modalPresentationStyle = .overFullScreen
+        popUp.okActionHandler = { [weak self] in
+            self?.dismissScene()
+        }
+        
+        viewController?.present(popUp, animated: true, completion: nil)
+    }
     
+    private func dismissScene() {
+        viewController?.navigationController?.popViewController(animated: true)
+    }
 }

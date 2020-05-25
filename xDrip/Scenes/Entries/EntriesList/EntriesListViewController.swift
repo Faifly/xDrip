@@ -107,8 +107,6 @@ class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
             target: self,
             action: #selector(onCancelButtonTap)
         )
-        
-        view.addBlur()
     }
     
     private func setupRightBarButtonItem() {
