@@ -49,12 +49,22 @@ final class SettingsModeFollowerViewControllerTests: XCTestCase {
     
     final class SettingsModeFollowerBusinessLogicSpy: SettingsModeFollowerBusinessLogic {
         var doLoadCalled = false
+        var doLoginCalled = false
         
         func doLoad(request: SettingsModeFollower.Load.Request) {
             doLoadCalled = true
         }
         
         func doLogin(request: SettingsModeFollower.Login.Request) {
+            doLoginCalled = true
+        }
+    }
+    
+    final class SettingsModeFollowerRoutingLogicSpy: SettingsModeFollowerRoutingLogic {
+        var routeToApiSecretCalled = false
+        
+        func routeToApiSecret() {
+            routeToApiSecretCalled = true
         }
     }
     
@@ -81,6 +91,133 @@ final class SettingsModeFollowerViewControllerTests: XCTestCase {
         loadView()
         sut.displayLoad(viewModel: viewModel)
         
+        // Then
+    }
+    
+    func testDoLogin() {
+        let navController = UINavigationController(rootViewController: sut)
+        let spy = SettingsModeFollowerBusinessLogicSpy()
+        sut.interactor = spy
+        
+        loadView()
+        sut.viewWillAppear(false)
+        
+        guard let loginButton = navController.navigationItem.rightBarButtonItem else {
+            XCTFail("Cannot obtain loginButton")
+            return
+        }
+        
+        // When
+        _ = loginButton.target?.perform(loginButton.action, with: nil)
+        // Then
+        XCTAssertTrue(spy.doLoginCalled)
+    }
+    
+    func testDisplayLogin() {
+        let navController = UINavigationController(rootViewController: sut)
+        
+        loadView()
+        sut.viewWillAppear(false)
+        
+        guard let loginButton = navController.navigationItem.rightBarButtonItem else {
+            XCTFail("Cannot obtain loginButton")
+            return
+        }
+        
+        // When
+        _ = loginButton.target?.perform(loginButton.action, with: nil)
+        // Then
+    }
+    
+    func testTableView() {
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssertTrue(tableView.numberOfSections == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 4)
+    }
+    
+    func testSingleSelectionHandler() {
+        let spy = SettingsModeFollowerRoutingLogicSpy()
+        if let interactor = sut.interactor as? SettingsModeFollowerInteractor {
+            interactor.router = spy
+        }
+        
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 3, section: 0))
+        // Then
+        XCTAssertTrue(spy.routeToApiSecretCalled)
+    }
+    
+    func testTextEditingChangedHandler() {
+        let navController = UINavigationController(rootViewController: sut)
+        
+        loadView()
+        sut.viewWillAppear(false)
+        
+        guard let loginButton = navController.navigationItem.rightBarButtonItem else {
+            XCTFail("Cannot obtain loginButton")
+            return
+        }
+        
+        XCTAssertFalse(loginButton.isEnabled)
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        let cellType = BaseSettingsTextInputTableViewCell.self
+        guard let textCell = tableView.getCell(of: cellType, at: IndexPath(row: 1, section: 0)),
+            let textField = textCell.findView(with: "textField") as? UITextField else {
+            XCTFail("Cannot obtain textField")
+            return
+        }
+        
+        // When
+        textField.text = "random url"
+        textField.sendActions(for: .editingChanged)
+        // Then
+        XCTAssertTrue(loginButton.isEnabled)
+    }
+    
+    func testPickerValueChangedHandler() {
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        let cellType = PickerExpandableTableViewCell.self
+        guard let pickerCell = tableView.getCell(of: cellType, at: IndexPath(row: 2, section: 0)) else {
+            XCTFail("Cannot obtain picker cell")
+            return
+        }
+        
+        pickerCell.togglePickerVisibility()
+        
+        guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let picker = stackView.arrangedSubviews.first as? CustomPickerView else {
+            XCTFail("Cannot obtain picker")
+            return
+        }
+        
+        // When
+        picker.selectRow(1, inComponent: 0, animated: false)
+        picker.selectRow(15, inComponent: 2, animated: false)
+        picker.pickerView(picker, didSelectRow: 1, inComponent: 0)
         // Then
     }
 }
