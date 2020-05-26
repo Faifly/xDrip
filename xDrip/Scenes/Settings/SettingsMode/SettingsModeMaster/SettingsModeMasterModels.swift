@@ -14,6 +14,10 @@ import UIKit
 
 enum SettingsModeMaster {
     // MARK: Models
+    enum Field {
+        case sensor
+        case transmitter
+    }
     
     // MARK: Use cases
     
@@ -22,9 +26,11 @@ enum SettingsModeMaster {
         }
         
         struct Response {
+            let singleSelectionHandler: (Field) -> Void
         }
         
         struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
         }
     }
 }

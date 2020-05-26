@@ -53,7 +53,7 @@ final class SettingsModeMasterPresenterTests: XCTestCase {
         // Given
         let spy = SettingsModeMasterDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsModeMaster.Load.Response()
+        let response = SettingsModeMaster.Load.Response(singleSelectionHandler: { _ in })
         
         // When
         sut.presentLoad(response: response)

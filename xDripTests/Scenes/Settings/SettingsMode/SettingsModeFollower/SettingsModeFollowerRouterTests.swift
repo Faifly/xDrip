@@ -37,4 +37,13 @@ final class SettingsModeFollowerRouterTests: XCTestCase {
     }
     
     // MARK: Tests
+    
+    func testRouteToApiSecret() {
+        let spy = createSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.routeToApiSecret()
+        // Then
+    }
 }

@@ -55,6 +55,19 @@ final class SettingsModeMasterViewControllerTests: XCTestCase {
         }
     }
     
+    final class SettingsModeMasterRoutingLogicSpy: SettingsModeMasterRoutingLogic {
+        var routeToSensorCalled = false
+        var routeToTransmitterCalled = false
+        
+        func routeToSensor() {
+            routeToSensorCalled = true
+        }
+        
+        func routeToTransmitter() {
+            routeToTransmitterCalled = true
+        }
+    }
+    
     // MARK: Tests
     
     func testShouldDoLoadWhenViewIsLoaded() {
@@ -71,12 +84,49 @@ final class SettingsModeMasterViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsModeMaster.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [])
+        let viewModel = SettingsModeMaster.Load.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()
         sut.displayLoad(viewModel: viewModel)
         
         // Then
+    }
+    
+    func testTableView() {
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssertTrue(tableView.numberOfSections == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 2)
+    }
+    
+    func testSingleSelectionHandler() {
+        let spy = SettingsModeMasterRoutingLogicSpy()
+        if let interactor = sut.interactor as? SettingsModeMasterInteractor {
+            interactor.router = spy
+        }
+        
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 0, section: 0))
+        // Then
+        XCTAssertTrue(spy.routeToSensorCalled)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 1, section: 0))
+        // Then
+        XCTAssertTrue(spy.routeToTransmitterCalled)
     }
 }

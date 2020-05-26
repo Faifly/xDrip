@@ -45,9 +45,14 @@ final class SettingsModeFollowerInteractorTests: XCTestCase {
         func presentLoad(response: SettingsModeFollower.Load.Response) {
             presentLoadCalled = true
         }
+        
+        func presentUpdate(response: SettingsModeFollower.Update.Response) {
+        }
     }
     
-    final class SettingsModeFollowerRoutingLogicSpy: SettingsModeFollowerRoutingLogic {        
+    final class SettingsModeFollowerRoutingLogicSpy: SettingsModeFollowerRoutingLogic {
+        func routeToApiSecret() {
+        }
     }
     
     // MARK: Tests

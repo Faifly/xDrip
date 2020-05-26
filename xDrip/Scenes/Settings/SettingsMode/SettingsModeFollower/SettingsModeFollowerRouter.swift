@@ -13,6 +13,7 @@
 import UIKit
 
 protocol SettingsModeFollowerRoutingLogic {
+    func routeToApiSecret()
 }
 
 protocol SettingsModeFollowerDataPassing {
@@ -24,5 +25,7 @@ final class SettingsModeFollowerRouter: SettingsModeFollowerRoutingLogic, Settin
     weak var dataStore: SettingsModeFollowerDataStore?
     
     // MARK: Routing
-    
+    func routeToApiSecret() {
+        // TO DO: - add route to api secret
+    }
 }

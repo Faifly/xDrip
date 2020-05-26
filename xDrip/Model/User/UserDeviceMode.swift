@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum UserDeviceMode: Int {
+enum UserDeviceMode: Int, CaseIterable {
     case main
     case follower
     

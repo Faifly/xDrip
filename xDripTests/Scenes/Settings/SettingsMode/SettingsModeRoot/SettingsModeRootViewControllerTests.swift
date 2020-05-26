@@ -79,4 +79,36 @@ final class SettingsModeRootViewControllerTests: XCTestCase {
         
         // Then
     }
+    
+    func testTabBar() {
+        loadView()
+        
+        guard let tabBar = sut.children.compactMap({ $0 as? UITabBarController }).first else {
+            XCTFail("Cannot obtain tabbar")
+            return
+        }
+        
+        XCTAssertTrue(tabBar.viewControllers?.count == 2)
+        XCTAssertTrue(tabBar.viewControllers?[0] is  SettingsModeMasterViewController)
+        XCTAssertTrue(tabBar.viewControllers?[1] is SettingsModeFollowerViewController)
+        
+        guard let segmentedControl = sut.view.subviews.compactMap({ $0 as? UISegmentedControl }).first else {
+            XCTFail("Cannot obtain segmented control")
+            return
+        }
+        
+        XCTAssertTrue(segmentedControl.numberOfSegments == 2)
+        
+        // When
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(tabBar.selectedIndex == 0)
+        
+        // When
+        segmentedControl.selectedSegmentIndex = 1
+        segmentedControl.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(tabBar.selectedIndex == 1)
+    }
 }

@@ -14,6 +14,7 @@ import UIKit
 
 protocol SettingsModeFollowerBusinessLogic {
     func doLoad(request: SettingsModeFollower.Load.Request)
+    func doLogin(request: SettingsModeFollower.Login.Request)
 }
 
 protocol SettingsModeFollowerDataStore: AnyObject {    
@@ -26,7 +27,35 @@ final class SettingsModeFollowerInteractor: SettingsModeFollowerBusinessLogic, S
     // MARK: Do something
     
     func doLoad(request: SettingsModeFollower.Load.Request) {
-        let response = SettingsModeFollower.Load.Response()
+        let response = SettingsModeFollower.Load.Response(
+            textEditingChangedHandler: handleTextEditingChanged(_:),
+            timePickerValueChangedHandler: handleTimePickerValueChanged(_:),
+            singleSelectionHandler: handleSingleSelection
+        )
+        
         presenter?.presentLoad(response: response)
+    }
+    
+    func doLogin(request: SettingsModeFollower.Login.Request) {
+    }
+    
+    private func handleTextEditingChanged(_ string: String?) {
+        // TO DO: - add text editing changed handler logic
+        
+        var enabled = false
+        if let str = string {
+            enabled = !str.isEmpty
+        }
+        
+        let response = SettingsModeFollower.Update.Response(loginButtonEnabled: enabled)
+        presenter?.presentUpdate(response: response)
+    }
+    
+    private func handleTimePickerValueChanged(_ time: TimeInterval) {
+        // TO DO: - add time picker value changed handler logic
+    }
+    
+    private func handleSingleSelection() {
+        router?.routeToApiSecret()
     }
 }
