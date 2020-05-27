@@ -35,10 +35,13 @@ final class SettingsChartRangesInteractor: SettingsChartRangesBusinessLogic, Set
     }
     
     private func handlePickerValueChanged(_ field: SettingsChartRanges.Field, _ values: [Double]) {
+        guard values.count > 1 else { return }
+        
         let settings = User.current.settings
         let unit = settings?.unit ?? .default
         let step = unit.pickerStep
         let convertedValues = values.map { GlucoseUnit.convertToDefault($0) }
+        
         switch field {
         case .notHigherLess:
             settings?.configureWarningLevel(.high, value: convertedValues[0])
