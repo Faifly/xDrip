@@ -49,11 +49,16 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
     }
     
     // MARK: IB
+    @IBOutlet private weak var segmentedControl: UISegmentedControl!
+    @IBOutlet private weak var containerView: UIView!
+    
+    private var tabBar: UITabBarController?
     
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         doLoad()
     }
     
@@ -64,8 +69,53 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
         interactor?.doLoad(request: request)
     }
     
+    private func setupUI() {
+        title = "settings_mode_settings_title".localized
+        
+        let masterViewController = SettingsModeMasterViewController()
+        let followerViewController = SettingsModeFollowerViewController()
+        
+        let tabBar = UITabBarController()
+        tabBar.viewControllers = [masterViewController, followerViewController]
+        tabBar.tabBar.isHidden = true
+        
+        tabBar.view.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(tabBar.view)
+        tabBar.view.bindToSuperview()
+        addChild(tabBar)
+        
+        self.tabBar = tabBar
+        
+        let titles = UserDeviceMode.allCases.map { $0.title }
+        segmentedControl.removeAllSegments()
+        titles.forEach {
+            segmentedControl.insertSegment(
+                withTitle: $0,
+                at: segmentedControl.numberOfSegments,
+                animated: false
+            )
+        }
+        
+        segmentedControl.selectedSegmentIndex = User.current.settings.deviceMode.rawValue
+        tabBar.selectedIndex = 0
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: SettingsModeRoot.Load.ViewModel) {        
+    }
+    
+    // MARK: Handlers
+    @IBAction private func onSegmentedControlValueChanged(_ sender: UISegmentedControl) {
+        tabBar?.selectedIndex = sender.selectedSegmentIndex
+    }
+}
+
+private extension UserDeviceMode {
+    var title: String {
+        switch self {
+        case .follower: return "settings_mode_settings_follower".localized
+        case .main: return "settings_mode_settings_master".localized
+        }
     }
 }

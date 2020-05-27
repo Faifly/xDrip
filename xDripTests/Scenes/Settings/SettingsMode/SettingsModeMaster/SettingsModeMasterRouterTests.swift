@@ -33,8 +33,37 @@ final class SettingsModeMasterRouterTests: XCTestCase {
     
     // MARK: Test doubles
     
-    final class ViewControllerSpy: SettingsModeMasterViewController {
+    final class ViewControllerSpy: UINavigationController {
+        var lastPushedViewController: UIViewController?
+        
+        override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+            lastPushedViewController = viewController
+        }
     }
     
     // MARK: Tests
+    
+    func testRouteToSensor() {
+        let viewController = SettingsModeMasterViewController()
+        let spy = createSpy()
+        spy.viewControllers = [viewController]
+        sut.viewController = viewController
+        
+        // When
+        sut.routeToSensor()
+        // Then
+        XCTAssertTrue(spy.lastPushedViewController is SettingsSensorViewController)
+    }
+    
+    func testRouteToTransmitter() {
+        let viewController = SettingsModeMasterViewController()
+        let spy = createSpy()
+        spy.viewControllers = [viewController]
+        sut.viewController = viewController
+        
+        // When
+        sut.routeToTransmitter()
+        // Then
+        XCTAssertTrue(spy.lastPushedViewController is SettingsTransmitterViewController)
+    }
 }

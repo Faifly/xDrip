@@ -19,6 +19,7 @@ protocol SettingsRootRoutingLogic {
     func routeToAlertRoot()
     func routeToCloudUploads()
     func routeToTransmitter()
+    func routeToModeSettings()
     func routeToRangeSelection()
 }
 
@@ -58,6 +59,10 @@ final class SettingsRootRouter: SettingsRootRoutingLogic, SettingsRootDataPassin
     
     func routeToRangeSelection() {
         present(SettingsChartRangesViewController())
+    }
+  
+    func routeToModeSettings() {
+        present(SettingsModeRootViewController())
     }
     
     private func present(_ viewController: UIViewController) {

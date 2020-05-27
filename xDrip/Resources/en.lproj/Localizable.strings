@@ -178,6 +178,21 @@
 "settings_units_mgdl" = "mg/dL";
 "settings_units_mmolL" = "mmol/L";
 
+// Settings Mode Settings
+"settings_mode_settings_title" = "Mode Settings";
+"settings_mode_settings_master" = "Master";
+"settings_mode_settings_follower" = "Follower";
+"settings_mode_settings_sensor" = "Sensor";
+"settings_mode_settings_transmitter" = "Transmitter";
+"settings_mode_settings_nightscout" = "Nightscout";
+"settings_mode_settings_service" = "Service";
+"settings_mode_settings_nightscout_url" = "Nightscout URL";
+"settings_mode_settings_offset" = "Offset";
+"settings_mode_settings_api_secret" = "API Secret";
+"settings_mode_settings_login_button" = "Login";
+"settings_mode_settings_follower_section_footer" = "If a follower wants to add treatments to the master, the master’s API Secret needs to be set in the field above. If the master’s site is protected with the AUTH_DEFAULT_ROLES variable and is preventing from fetching data, setting the master’s API secret should solve the issue. If none of these features are needed you can leave this field blank";
+"settings_mode_settings_follower_time_minutes" = "m";
+
 // Settings Transmitter
 "settings_transmitter_screen_title" = "Transmitter";
 "settings_transmitter_info_section_header" = "INFO";

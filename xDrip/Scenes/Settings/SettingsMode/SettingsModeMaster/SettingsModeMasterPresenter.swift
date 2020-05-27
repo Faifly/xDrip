@@ -22,7 +22,39 @@ final class SettingsModeMasterPresenter: SettingsModeMasterPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsModeMaster.Load.Response) {
-        let viewModel = SettingsModeMaster.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createSection(response: response)
+            ]
+        )
+        
+        let viewModel = SettingsModeMaster.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    func createSection(response: SettingsModeMaster.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createDisclosureCell(.sensor, selectionHandler: response.singleSelectionHandler),
+            createDisclosureCell(.transmitter, selectionHandler: response.singleSelectionHandler)
+        ]
+        
+        return .normal(cells: cells, header: nil, footer: nil)
+    }
+    
+    func createDisclosureCell(
+        _ field: SettingsModeMaster.Field,
+        selectionHandler: @escaping (SettingsModeMaster.Field) -> Void) -> BaseSettings.Cell {
+        return .disclosure(mainText: field.title, detailText: nil) {
+            selectionHandler(field)
+        }
+    }
+}
+
+private extension SettingsModeMaster.Field {
+    var title: String {
+        switch self {
+        case .sensor: return "settings_mode_settings_sensor".localized
+        case .transmitter: return "settings_mode_settings_transmitter".localized
+        }
     }
 }

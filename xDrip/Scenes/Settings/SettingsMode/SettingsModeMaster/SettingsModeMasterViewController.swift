@@ -57,6 +57,12 @@ class SettingsModeMasterViewController: BaseSettingsViewController, SettingsMode
         doLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        parent?.navigationItem.rightBarButtonItem = nil
+    }
+    
     // MARK: Do something
     
     private func doLoad() {
@@ -67,5 +73,6 @@ class SettingsModeMasterViewController: BaseSettingsViewController, SettingsMode
     // MARK: Display
     
     func displayLoad(viewModel: SettingsModeMaster.Load.ViewModel) {
+        update(with: viewModel.tableViewModel)
     }
 }
