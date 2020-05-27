@@ -22,11 +22,12 @@ enum SettingsChartRanges {
     
     // MARK: Use cases
     
-    enum Load {
+    enum UpdateData {
         struct Request {
         }
         
         struct Response {
+            let settings: Settings
             let pickerValueChanged: (Field, [Double]) -> Void
         }
         

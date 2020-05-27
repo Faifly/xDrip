@@ -31,8 +31,8 @@ enum BaseSettings {
             cells: [Cell],
             header: String?,
             footer: String?,
-            attributedHeader: NSAttributedString? = nil,
-            attributedFooter: NSAttributedString? = nil
+            headerView: UIView? = nil,
+            footerView: UIView? = nil
         )
         case singleSelection(
             cells: [String],
@@ -40,8 +40,8 @@ enum BaseSettings {
             header: String?,
             footer: String?,
             selectionHandler: (Int) -> Void,
-            attributedHeader: NSAttributedString? = nil,
-            attributedFooter: NSAttributedString? = nil
+            headerView: UIView? = nil,
+            footerView: UIView? = nil
         )
         
         var rowsCount: Int {
@@ -65,14 +65,14 @@ enum BaseSettings {
             }
         }
         
-        var attributedHeader: NSAttributedString? {
+        var headerView: UIView? {
             switch self {
             case .normal(_, _, _, let header, _): return header
             case .singleSelection(_, _, _, _, _, let header, _): return header
             }
         }
         
-        var attributedFooter: NSAttributedString? {
+        var footerView: UIView? {
             switch self {
             case .normal(_, _, _, _, let footer): return footer
             case .singleSelection(_, _, _, _, _, _, let footer): return footer

@@ -221,12 +221,10 @@
 "settings_range_selection_scene_title" = "Range Selection";
 "settings_range_selection_not_higher_less" = "Not Higher/Less";
 "settings_range_selection_normal_section_header" = "INDICATORS ARE NORMAL";
-"settings_range_selection_high_low" = "High/Less";
+"settings_range_selection_high_low" = "High/Low";
 "setttings_range_selection_above_normal_section_header" = "ABOVE/BELOW NORMAL";
-"settings_range_selection_urgent_high_low" = "Urgent High/Less";
+"settings_range_selection_urgent_high_low" = "Urgent High/Low";
 "settings_range_selection_urgent_section_header" = "CRITICAL LEVELS";
-"settings_range_selection_mgdl" = "mg/dL";
-"settings_range_selection_mmolL" = "mmol/L";
 
 // Bluetooth Errors
 "bluetooth_error_title" = "Transmitter Service Error";

@@ -225,8 +225,6 @@
 "setttings_range_selection_above_normal_section_header" = "ВЫШЕ/НИЖЕ НОРМЫ";
 "settings_range_selection_urgent_high_low" = "Критически выше/ниже";
 "settings_range_selection_urgent_section_header" = "КРИТИЧЕСКИЕ ПОКАЗАТЕЛИ";
-"settings_range_selection_mgdl" = "мг/дл";
-"settings_range_selection_mmolL" = "ммоль/л";
 
 // Bluetooth Errors
 "bluetooth_error_title" = "Ошибка Сервиса Датчиков";

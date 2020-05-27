@@ -13,7 +13,7 @@
 import UIKit
 
 protocol SettingsChartRangesDisplayLogic: AnyObject {
-    func displayLoad(viewModel: SettingsChartRanges.Load.ViewModel)
+    func displayUpdateData(viewModel: SettingsChartRanges.UpdateData.ViewModel)
 }
 
 class SettingsChartRangesViewController: BaseSettingsViewController, SettingsChartRangesDisplayLogic {
@@ -61,8 +61,8 @@ class SettingsChartRangesViewController: BaseSettingsViewController, SettingsCha
     // MARK: Do something
     
     private func doLoad() {
-        let request = SettingsChartRanges.Load.Request()
-        interactor?.doLoad(request: request)
+        let request = SettingsChartRanges.UpdateData.Request()
+        interactor?.doUpdateData(request: request)
     }
     
     private func setupUI() {
@@ -71,7 +71,7 @@ class SettingsChartRangesViewController: BaseSettingsViewController, SettingsCha
     
     // MARK: Display
     
-    func displayLoad(viewModel: SettingsChartRanges.Load.ViewModel) {
+    func displayUpdateData(viewModel: SettingsChartRanges.UpdateData.ViewModel) {
         update(with: viewModel.tableViewModel)
     }
 }

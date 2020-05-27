@@ -13,7 +13,7 @@
 import UIKit
 
 protocol SettingsChartRangesBusinessLogic {
-    func doLoad(request: SettingsChartRanges.Load.Request)
+    func doUpdateData(request: SettingsChartRanges.UpdateData.Request)
 }
 
 protocol SettingsChartRangesDataStore: AnyObject {    
@@ -25,9 +25,13 @@ final class SettingsChartRangesInteractor: SettingsChartRangesBusinessLogic, Set
     
     // MARK: Do something
     
-    func doLoad(request: SettingsChartRanges.Load.Request) {
-        let response = SettingsChartRanges.Load.Response(pickerValueChanged: handlePickerValueChanged(_:_:))
-        presenter?.presentLoad(response: response)
+    func doUpdateData(request: SettingsChartRanges.UpdateData.Request) {
+        let settings = User.current.settings
+        let response = SettingsChartRanges.UpdateData.Response(
+            settings: settings ?? Settings(),
+            pickerValueChanged: handlePickerValueChanged(_:_:)
+        )
+        presenter?.presentUpdateData(response: response)
     }
     
     private func handlePickerValueChanged(_ field: SettingsChartRanges.Field, _ values: [Double]) {
@@ -58,6 +62,6 @@ final class SettingsChartRangesInteractor: SettingsChartRangesBusinessLogic, Set
             break
         }
         
-        doLoad(request: SettingsChartRanges.Load.Request())
+        doUpdateData(request: SettingsChartRanges.UpdateData.Request())
     }
 }

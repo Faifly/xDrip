@@ -28,7 +28,6 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
         tableView.registerNib(type: PickerExpandableTableViewCell.self)
         tableView.registerNib(type: BaseSettingsTextInputTableViewCell.self)
         tableView.registerNib(type: BaseSettingsButtonCell.self)
-        tableView.registerHeaderFooterView(type: BaseSettingsCustomTableViewHeaderFooterView.self)
         
         return tableView
     }()
@@ -93,7 +92,7 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
         guard let section = viewModel?.sections[indexPath.section] else { return }
         
         switch section {
-        case let .singleSelection(cells, selectedIndex, header, footer, selectionHandler, attrHeader, attrFooter):
+        case let .singleSelection(cells, selectedIndex, header, footer, selectionHandler, headerView, footerView):
             
             if let previousCell = tableView.cellForRow(
                 at: IndexPath(row: selectedIndex, section: indexPath.section)
@@ -113,8 +112,8 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
                 header: header,
                 footer: footer,
                 selectionHandler: selectionHandler,
-                attributedHeader: attrHeader,
-                attributedFooter: attrFooter
+                headerView: headerView,
+                footerView: footerView
             )
         default:
             break
@@ -162,10 +161,8 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let header = viewModel?.sections[section].attributedHeader {
-            let view = tableView.dequeReusableHeaderFooterView(ofType: BaseSettingsCustomTableViewHeaderFooterView.self)
-            view?.configure(with: header)
-            return view
+        if let header = viewModel?.sections[section].headerView {
+            return header
         }
         
         if section == 0 {
