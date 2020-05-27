@@ -84,7 +84,7 @@ class SettingsModeFollowerViewController: BaseSettingsViewController, SettingsMo
     }
     
     private func showLoginButton() {
-        parent?.navigationItem.rightBarButtonItem = loginBarButtonItem
+        parent?.parent?.navigationItem.rightBarButtonItem = loginBarButtonItem
     }
     
     @objc private func onLogin() {

@@ -42,7 +42,7 @@ final class SettingsPenUserPresenterTests: XCTestCase {
     final class SettingsPenUserDisplayLogicSpy: SettingsPenUserDisplayLogic {
         var displayLoadCalled = false
         
-        func displayLoad(viewModel: SettingsPenUser.Load.ViewModel) {
+        func displayLoad(viewModel: SettingsPenUser.UpdateData.ViewModel) {
             displayLoadCalled = true
         }
     }
@@ -53,10 +53,10 @@ final class SettingsPenUserPresenterTests: XCTestCase {
         // Given
         let spy = SettingsPenUserDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsPenUser.Load.Response()
+        let response = SettingsPenUser.UpdateData.Response()
         
         // When
-        sut.presentLoad(response: response)
+        sut.presentUpdateData(response: response)
         
         // Then
         XCTAssertTrue(

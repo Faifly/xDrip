@@ -13,7 +13,9 @@
 import UIKit
 
 protocol SettingsPenUserBusinessLogic {
-    func doLoad(request: SettingsPenUser.Load.Request)
+    func doUpdateData(request: SettingsPenUser.UpdateData.Request)
+    func doAdd(request: SettingsPenUser.Add.Request)
+    func doDelete(request: SettingsPenUser.Delete.Request)
 }
 
 protocol SettingsPenUserDataStore: AnyObject {
@@ -25,8 +27,42 @@ final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPen
     
     // MARK: Do something
     
-    func doLoad(request: SettingsPenUser.Load.Request) {
-        let response = SettingsPenUser.Load.Response()
-        presenter?.presentLoad(response: response)
+    func doUpdateData(request: SettingsPenUser.UpdateData.Request) {
+        let basalRates = Array(User.current.settings.basalRates)
+        
+        let response = SettingsPenUser.UpdateData.Response(
+            animated: request.animated,
+            basalRates: basalRates,
+            pickerValueChangedHandler: handlePickerValueChanged(_:_:_:)
+        )
+        presenter?.presentUpdateData(response: response)
+    }
+    
+    func doAdd(request: SettingsPenUser.Add.Request) {
+        let settings = User.current.settings
+        
+        settings?.addBasalRate(startTime: 0.0, units: 0.0)
+        
+        updateData(animated: true)
+    }
+    
+    func doDelete(request: SettingsPenUser.Delete.Request) {
+        let settings = User.current.settings
+        settings?.deleteBasalRate(at: request.index)
+    }
+    
+    private func handlePickerValueChanged(_ index: Int, _ startTime: TimeInterval, _ units: Float) {
+        let basalRates = User.current.settings.basalRates
+        guard basalRates.count > index else { return }
+        let basalRate = basalRates[index]
+        
+        basalRate.update(withStartTime: startTime, units: units)
+        
+        updateData(animated: false)
+    }
+    
+    private func updateData(animated: Bool) {
+        let request = SettingsPenUser.UpdateData.Request(animated: animated)
+        doUpdateData(request: request)
     }
 }

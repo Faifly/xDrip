@@ -50,7 +50,7 @@ final class SettingsPenUserViewControllerTests: XCTestCase {
     final class SettingsPenUserBusinessLogicSpy: SettingsPenUserBusinessLogic {
         var doLoadCalled = false
         
-        func doLoad(request: SettingsPenUser.Load.Request) {
+        func doLoad(request: SettingsPenUser.UpdateData.Request) {
             doLoadCalled = true
         }
     }
@@ -71,7 +71,7 @@ final class SettingsPenUserViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsPenUser.Load.ViewModel()
+        let viewModel = SettingsPenUser.UpdateData.ViewModel()
         
         // When
         loadView()

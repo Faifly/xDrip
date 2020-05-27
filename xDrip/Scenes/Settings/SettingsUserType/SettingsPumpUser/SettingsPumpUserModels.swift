@@ -27,4 +27,15 @@ enum SettingsPumpUser {
         struct ViewModel {
         }
     }
+    
+    enum Sync {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
 }

@@ -13,7 +13,7 @@
 import UIKit
 
 protocol SettingsPenUserPresentationLogic {
-    func presentLoad(response: SettingsPenUser.Load.Response)
+    func presentUpdateData(response: SettingsPenUser.UpdateData.Response)
 }
 
 final class SettingsPenUserPresenter: SettingsPenUserPresentationLogic {
@@ -21,8 +21,119 @@ final class SettingsPenUserPresenter: SettingsPenUserPresentationLogic {
     
     // MARK: Do something
     
-    func presentLoad(response: SettingsPenUser.Load.Response) {
-        let viewModel = SettingsPenUser.Load.ViewModel()
-        viewController?.displayLoad(viewModel: viewModel)
+    func presentUpdateData(response: SettingsPenUser.UpdateData.Response) {
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createBasalRatesSection(response: response),
+                createTotalsSection(response: response)
+            ]
+        )
+        
+        let viewModel = SettingsPenUser.UpdateData.ViewModel(
+            animated: response.animated,
+            tableViewModel: tableViewModel
+        )
+        viewController?.displayUpdateData(viewModel: viewModel)
+    }
+    
+    private func createBasalRatesSection(response: SettingsPenUser.UpdateData.Response) -> BaseSettings.Section {
+        var cells = [BaseSettings.Cell]()
+        
+        for (index, rate) in response.basalRates.enumerated() {
+            cells.append(
+                createPickerCell(
+                    for: rate,
+                    index: index,
+                    pickerValueChangeHandler: response.pickerValueChangedHandler
+                )
+            )
+        }
+        
+        return .normal(
+            cells: cells,
+            header: "settings_pen_user_basal_rates_section_header".localized,
+            footer: nil
+        )
+    }
+    
+    private func createTotalsSection(response: SettingsPenUser.UpdateData.Response) -> BaseSettings.Section {
+        let totalValue = response.basalRates.reduce(0, { $0 + $1.units })
+        let totalValueString = String(
+            format: "%.2f" + "settings_pen_user_u".localized,
+            totalValue
+        )
+        
+        let cells: [BaseSettings.Cell] = [
+            .info(
+                mainText: "settings_pen_user_total_daily".localized,
+                detailText: totalValueString,
+                detailTextColor: .tabBarBlueColor
+            )
+        ]
+        
+        return .normal(cells: cells, header: nil, footer: nil)
+    }
+    
+    private func createPickerCell(
+        for basalRate: BasalRate,
+        index: Int,
+        pickerValueChangeHandler: @escaping (Int, TimeInterval, Float) -> Void) -> BaseSettings.Cell {
+        let time = basalRate.startTime
+        let hours = Int(time / TimeInterval.secondsPerHour)
+        let minutes = Int((time - Double(hours) * TimeInterval.secondsPerHour) / TimeInterval.secondsPerMinute)
+        let unitsString = String(
+            format: "/%.2f" + "settings_pen_user_u".localized,
+            basalRate.units
+        )
+        
+        let detailText = "\(hours)" + "custom_picker_h".localized +
+            " " + "\(minutes)" + "custom_picker_m".localized + unitsString
+        
+        let hoursStrings = stride(from: 0, to: 24, by: 1).map { String($0) }
+        let minutesStrings = stride(from: 0, to: 60, by: 1).map { String($0) }
+        
+        let minMax = BasalRate.minMax
+        let step = BasalRate.unitStep
+        let unitsArray = Array(stride(from: minMax.lowerBound, to: minMax.upperBound + step, by: step))
+        let unitsStrings = unitsArray.map { String(format: "%.2f", $0) }
+        
+        let data = [
+            hoursStrings, ["custom_picker_h".localized],
+            minutesStrings, ["custom_picker_m".localized],
+            unitsStrings, ["settings_pen_user_units".localized]
+        ]
+        
+        let picker = CustomPickerView(data: data)
+        
+        picker.selectRow(hours, inComponent: 0, animated: false)
+        picker.selectRow(minutes, inComponent: 2, animated: false)
+        
+        let tolerance = step / 2
+        let idx = unitsArray.firstIndex(
+            where: { val in
+                return abs(val - basalRate.units) < tolerance
+            }
+        )
+        picker.selectRow(idx ?? 0, inComponent: 4, animated: false)
+        
+        picker.formatValues = { strings in
+            guard strings.count > 5 else { return "" }
+            
+            if let hour = Double(strings[0]),
+                let minutes = Double(strings[2]),
+                let units = Float(strings[4]) {
+                let time = hour * TimeInterval.secondsPerHour + minutes * TimeInterval.secondsPerMinute
+                pickerValueChangeHandler(index, time, units)
+            }
+            
+            return "\(strings[0])\(strings[1]) \(strings[2])\(strings[3])/\(strings[4])" +
+                "settings_pen_user_u".localized
+        }
+        
+        return .pickerExpandable(
+            mainText: "settings_pen_user_start_time_rate".localized,
+            detailText: detailText,
+            picker: picker
+        )
     }
 }

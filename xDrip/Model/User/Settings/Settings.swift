@@ -128,4 +128,13 @@ final class Settings: Object {
         }
         return rate
     }
+    
+    func deleteBasalRate(at index: Int) {
+        let rate = basalRates[index]
+        
+        Realm.shared.safeWrite {
+            basalRates.remove(at: index)
+            rate.deleteFromRealm()
+        }
+    }
 }

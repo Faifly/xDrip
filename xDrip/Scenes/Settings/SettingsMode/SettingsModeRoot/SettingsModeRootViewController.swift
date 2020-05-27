@@ -106,6 +106,7 @@ class SettingsModeRootViewController: NibViewController, SettingsModeRootDisplay
     }
     
     // MARK: Handlers
+    
     @IBAction private func onSegmentedControlValueChanged(_ sender: UISegmentedControl) {
         tabBar?.selectedIndex = sender.selectedSegmentIndex
     }

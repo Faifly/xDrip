@@ -42,7 +42,7 @@ final class SettingsPenUserInteractorTests: XCTestCase {
     final class SettingsPenUserPresentationLogicSpy: SettingsPenUserPresentationLogic {
         var presentLoadCalled = false
         
-        func presentLoad(response: SettingsPenUser.Load.Response) {
+        func presentUpdateData(response: SettingsPenUser.UpdateData.Response) {
             presentLoadCalled = true
         }
     }
@@ -56,7 +56,7 @@ final class SettingsPenUserInteractorTests: XCTestCase {
         // Given
         let spy = SettingsPenUserPresentationLogicSpy()
         sut.presenter = spy
-        let request = SettingsPenUser.Load.Request()
+        let request = SettingsPenUser.UpdateData.Request()
         
         // When
         sut.doLoad(request: request)

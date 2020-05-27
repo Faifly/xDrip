@@ -60,7 +60,7 @@ class SettingsModeMasterViewController: BaseSettingsViewController, SettingsMode
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        parent?.navigationItem.rightBarButtonItem = nil
+        parent?.parent?.navigationItem.rightBarButtonItem = nil
     }
     
     // MARK: Do something

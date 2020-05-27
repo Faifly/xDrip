@@ -31,7 +31,7 @@
                     </connections>
                 </segmentedControl>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wwn-zE-l4h">
-                    <rect key="frame" x="0.0" y="91" width="414" height="805"/>
+                    <rect key="frame" x="0.0" y="99" width="414" height="797"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 </view>
             </subviews>
@@ -43,7 +43,7 @@
                 <constraint firstAttribute="bottom" secondItem="Wwn-zE-l4h" secondAttribute="bottom" id="Mou-93-mAA"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Wwn-zE-l4h" secondAttribute="trailing" id="bjo-PX-cEe"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2es-cL-ch9" secondAttribute="trailing" constant="16" id="hpj-GW-XiS"/>
-                <constraint firstItem="Wwn-zE-l4h" firstAttribute="top" secondItem="2es-cL-ch9" secondAttribute="bottom" id="y96-FC-bbV"/>
+                <constraint firstItem="Wwn-zE-l4h" firstAttribute="top" secondItem="2es-cL-ch9" secondAttribute="bottom" constant="8" id="y96-FC-bbV"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="139" y="134"/>

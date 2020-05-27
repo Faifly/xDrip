@@ -13,10 +13,10 @@
 import UIKit
 
 protocol SettingsPenUserDisplayLogic: AnyObject {
-    func displayLoad(viewModel: SettingsPenUser.Load.ViewModel)
+    func displayUpdateData(viewModel: SettingsPenUser.UpdateData.ViewModel)
 }
 
-class SettingsPenUserViewController: BaseSettingsViewController, SettingsPenUserDisplayLogic {
+class SettingsPenUserViewController: UIViewController, ExpandableTableContainer, SettingsPenUserDisplayLogic {
     var interactor: SettingsPenUserBusinessLogic?
     var router: SettingsPenUserDataPassing?
     
@@ -28,7 +28,7 @@ class SettingsPenUserViewController: BaseSettingsViewController, SettingsPenUser
     }
     
     required init() {
-        super.init()
+        super.init(nibName: nil, bundle: nil)
         setup()
     }
     
@@ -49,23 +49,223 @@ class SettingsPenUserViewController: BaseSettingsViewController, SettingsPenUser
     }
     
     // MARK: IB
+    private lazy var tableView: UITableView = {
+        var tableView = UITableView(frame: .zero, style: tableViewStyle)
+        
+        tableView.keyboardDismissMode = .onDrag
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(tableView)
+        tableView.bindToSuperview()
+        
+        tableView.registerNib(type: BaseSettingsDisclosureCell.self)
+        tableView.registerNib(type: PickerExpandableTableViewCell.self)
+        
+        return tableView
+    }()
+    
+    private var tableViewStyle: UITableView.Style {
+        if #available(iOS 13.0, *) {
+            return .insetGrouped
+        } else {
+            return .grouped
+        }
+    }
+    
+    private var addBarButton: UIBarButtonItem?
+    private var viewModel: BaseSettings.ViewModel?
+    internal var expandedCell: IndexPath?
     
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        createAddButton()
         doLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        showAddButton()
     }
     
     // MARK: Do something
     
     private func doLoad() {
-        let request = SettingsPenUser.Load.Request()
-        interactor?.doLoad(request: request)
+        let request = SettingsPenUser.UpdateData.Request(animated: false)
+        interactor?.doUpdateData(request: request)
+    }
+    
+    private func createAddButton() {
+        let barButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onAdd))
+        addBarButton = barButton
+    }
+    
+    private func showAddButton() {
+        parent?.parent?.navigationItem.rightBarButtonItem = addBarButton
     }
     
     // MARK: Display
     
-    func displayLoad(viewModel: SettingsPenUser.Load.ViewModel) {
+    func displayUpdateData(viewModel: SettingsPenUser.UpdateData.ViewModel) {
+        update(with: viewModel.tableViewModel, animated: viewModel.animated)
+    }
+    
+    // MARK: Handlers
+    
+    @objc private func onAdd() {
+        let request = SettingsPenUser.Add.Request()
+        interactor?.doAdd(request: request)
+    }
+    
+    private func update(with tableViewModel: BaseSettings.ViewModel, animated: Bool) {
+        self.viewModel = tableViewModel
+        if animated {
+            UIView.transition(
+                with: tableView,
+                duration: 0.35,
+                options: .transitionCrossDissolve,
+                animations: { self.tableView.reloadData() }
+            )
+        } else {
+            tableView.reloadData()
+        }
+    }
+}
+
+extension SettingsPenUserViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel?.sections.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel?.sections[section].rowsCount ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let viewModel = viewModel else { fatalError() }
+        
+        switch viewModel.sections[indexPath.section] {
+        case .normal(let cells, _, _):
+            switch cells[indexPath.row] {
+            case let .pickerExpandable(mainText, detailText, picker):
+                let cell = tableView.dequeueReusableCell(ofType: PickerExpandableTableViewCell.self, for: indexPath)
+                cell.configure(
+                    mainText: mainText,
+                    detailText: detailText,
+                    pickerView: picker,
+                    isExpanded: expandedCell == indexPath
+                )
+                
+                return cell
+                
+            case let .info(mainText, detailText, detailTextColor):
+                let cell = tableView.dequeueReusableCell(ofType: BaseSettingsDisclosureCell.self, for: indexPath)
+                cell.configure(
+                    mainText: mainText,
+                    detailText: detailText,
+                    showDisclosureIndicator: false,
+                    detailTextColor: detailTextColor
+                )
+                
+                return cell
+            default:
+                break
+            }
+        default:
+            break
+        }
+        
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel?.sections[section].header
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section == 0 ? expandedCell != indexPath : false
+    }
+}
+
+extension SettingsPenUserViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let viewModel = viewModel else { return }
+        
+        let section = viewModel.sections[indexPath.section]
+        switch section {
+        case .normal(let cells, _, _):
+            switch cells[indexPath.row] {
+            case .pickerExpandable:
+                toggleExpansion(indexPath: indexPath, tableView: tableView)
+            default:
+                break
+            }
+        default:
+            break
+        }
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(
+            style: .destructive,
+            title: "settings_pen_user_delete".localized
+        ) { [weak self] _, _, _ in
+            let alertController = UIAlertController(
+                title: "settings_pen_user_delete_alert_title".localized,
+                message: "settings_pen_user_delete_alert_message".localized,
+                preferredStyle: .alert
+            )
+            let yesAction = UIAlertAction(
+                title: "settings_pen_user_yes".localized,
+                style: .destructive
+            ) { [weak self] _ in
+                self?.removeCell(tableView, at: indexPath)
+                
+                let request = SettingsPenUser.Delete.Request(index: indexPath.row)
+                self?.interactor?.doDelete(request: request)
+            }
+            
+            alertController.addAction(yesAction)
+            alertController.addAction(
+                UIAlertAction(
+                    title: "settings_pen_user_no".localized,
+                    style: .cancel,
+                    handler: nil
+                )
+            )
+            
+            self?.present(alertController, animated: true)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+    
+    private func removeCell(_ tableView: UITableView, at indexPath: IndexPath) {
+        guard let section = viewModel?.sections[indexPath.section] else {
+            return
+        }
+        
+        switch section {
+        case let .normal(cells, header, footer):
+            var cells = cells
+            cells.remove(at: indexPath.row)
+            
+            viewModel?.sections[indexPath.section] = .normal(
+                cells: cells,
+                header: header,
+                footer: footer
+            )
+        default:
+            break
+        }
+        
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 }

@@ -49,11 +49,15 @@ class SettingsUserTypeRootViewController: NibViewController, SettingsUserTypeRoo
     }
     
     // MARK: IB
+    @IBOutlet private weak var segmentedControl: UISegmentedControl!
+    @IBOutlet private weak var containerView: UIView!
     
+    private var tabBar: UITabBarController?
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         doLoad()
     }
     
@@ -64,8 +68,54 @@ class SettingsUserTypeRootViewController: NibViewController, SettingsUserTypeRoo
         interactor?.doLoad(request: request)
     }
     
+    private func setupUI() {
+        title = "settings_user_type_scene_title".localized
+        
+        let penViewController = SettingsPenUserViewController()
+        let pumpViewController = SettingsPumpUserViewController()
+        
+        let tabBar = UITabBarController()
+        tabBar.viewControllers = [penViewController, pumpViewController]
+        tabBar.tabBar.isHidden = true
+        
+        tabBar.view.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(tabBar.view)
+        tabBar.view.bindToSuperview()
+        addChild(tabBar)
+        
+        self.tabBar = tabBar
+        
+        let titles = UserInjectionType.allCases.map { $0.title }
+        segmentedControl.removeAllSegments()
+        titles.forEach {
+            segmentedControl.insertSegment(
+                withTitle: $0,
+                at: segmentedControl.numberOfSegments,
+                animated: false
+            )
+        }
+        
+        segmentedControl.selectedSegmentIndex = User.current.settings.deviceMode.rawValue
+        tabBar.selectedIndex = 0
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: SettingsUserTypeRoot.Load.ViewModel) {
+    }
+    
+    // MARK: Handlers
+    
+    @IBAction private func onSegmentedControlValueChanged(_ sender: UISegmentedControl) {
+        tabBar?.selectedIndex = sender.selectedSegmentIndex
+    }
+}
+
+private extension UserInjectionType {
+    var title: String {
+        switch self {
+        case .pen: return "settings_user_type_pen_user".localized
+        case .pump: return "settings_user_type_pump_user".localized
+        }
     }
 }

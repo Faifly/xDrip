@@ -232,6 +232,27 @@
 "settings_transmitter_reset_unsupported_alert_title" = "Невозможно продолжить";
 "settings_transmitter_reset_unsupported_alert_message" = "Сброс датчика с такой версии прошивки не поддерживается";
 
+// Settings User Type Root
+"settings_user_type_scene_title" = "Типы пользователя";
+"settings_user_type_pen_user" = "Ручка";
+"settings_user_type_pump_user" = "Помпа";
+
+// Settings Pen User
+"settings_pen_user_basal_rates_section_header" = "БАЗАЛЬНЫЕ ПОКАЗАТЕЛИ";
+"settings_pen_user_units" = "ед";
+"settings_pen_user_u" = "Ед";
+"settings_pen_user_total_daily" = "Всего в день";
+"settings_pen_user_start_time_rate" = "Время/Показатель";
+"settings_pen_user_delete" = "Удалить";
+"settings_pen_user_delete_alert_title" = "Внимание";
+"settings_pen_user_delete_alert_message" = "Вы уверенны, что хотите удалить эту запись?";
+"settings_pen_user_yes" = "Да";
+"settings_pen_user_no" = "Нет";
+
+// Settings Pump User
+"settings_pump_user_info_label_text" = "Система Nightscout позволяет подключить (или присоединить) устройство к приемнику Dexcom, который передает показания глюкозы в Интернет, где любое подключенное к сети устройство может просматривать цифры. Это так просто";
+"settings_pump_user_sync_button_title" = "Синхронизировать с NightScout";
+
 // Bluetooth Errors
 "bluetooth_error_title" = "Ошибка Сервиса Датчиков";
 "bluetooth_error_unknown" = "Случилась неизвестная ошибка Bluetooth";
@@ -271,6 +292,8 @@
 // Custom Picker
 "custom_picker_hours" = "ч";
 "custom_picker_minutes" = "мин";
+"custom_picker_h" = "ч";
+"custom_picker_m" = "мин";
 
 // Notifications
 "notification_pairing_request_title" = "Запрос Соединения";

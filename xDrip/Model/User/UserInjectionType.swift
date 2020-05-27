@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum UserInjectionType: Int {
+enum UserInjectionType: Int, CaseIterable {
     case pen
     case pump
     
