@@ -21,6 +21,7 @@ protocol SettingsRootRoutingLogic {
     func routeToTransmitter()
     func routeToModeSettings()
     func routeToUserType()
+    func routeToRangeSelection()
 }
 
 protocol SettingsRootDataPassing {
@@ -57,6 +58,10 @@ final class SettingsRootRouter: SettingsRootRoutingLogic, SettingsRootDataPassin
         present(SettingsTransmitterViewController())
     }
     
+    func routeToRangeSelection() {
+        present(SettingsChartRangesViewController())
+    }
+  
     func routeToModeSettings() {
         present(SettingsModeRootViewController())
     }

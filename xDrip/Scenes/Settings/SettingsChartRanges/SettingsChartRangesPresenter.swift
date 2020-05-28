@@ -13,7 +13,7 @@
 import UIKit
 
 protocol SettingsChartRangesPresentationLogic {
-    func presentLoad(response: SettingsChartRanges.Load.Response)
+    func presentUpdateData(response: SettingsChartRanges.UpdateData.Response)
 }
 
 final class SettingsChartRangesPresenter: SettingsChartRangesPresentationLogic {
@@ -21,8 +21,174 @@ final class SettingsChartRangesPresenter: SettingsChartRangesPresentationLogic {
     
     // MARK: Do something
     
-    func presentLoad(response: SettingsChartRanges.Load.Response) {
-        let viewModel = SettingsChartRanges.Load.ViewModel()
-        viewController?.displayLoad(viewModel: viewModel)
+    func presentUpdateData(response: SettingsChartRanges.UpdateData.Response) {
+        let tableViewModel = BaseSettings.ViewModel(
+            sections: [
+                createNormalSection(response: response),
+                createAboveNormalSection(response: response),
+                createUrgentSection(response: response)
+            ]
+        )
+        
+        let viewModel = SettingsChartRanges.UpdateData.ViewModel(tableViewModel: tableViewModel)
+        viewController?.displayUpdateData(viewModel: viewModel)
+    }
+    
+    private func createNormalSection(response: SettingsChartRanges.UpdateData.Response) -> BaseSettings.Section {
+        var highValue = response.settings.warningLevelValue(for: .high)
+        var lowValue = response.settings.warningLevelValue(for: .low)
+        highValue = GlucoseUnit.convertFromDefault(highValue)
+        lowValue = GlucoseUnit.convertFromDefault(lowValue)
+        
+        let cells: [BaseSettings.Cell] = [
+            createPickerCell(
+                .notHigherLess,
+                detailValues: [highValue, lowValue],
+                settings: response.settings,
+                pickerValueChanged: response.pickerValueChanged
+            )
+        ]
+        
+        let headerView = createHeaderForSection(.notHigherLess)
+        
+        return .normal(cells: cells, header: nil, footer: nil, headerView: headerView, footerView: nil)
+    }
+    
+    private func createAboveNormalSection(response: SettingsChartRanges.UpdateData.Response) -> BaseSettings.Section {
+        let step = response.settings.unit.pickerStep
+        var highValue = response.settings.warningLevelValue(for: .urgentHigh)
+        var lowValue = response.settings.warningLevelValue(for: .urgentLow)
+        highValue = GlucoseUnit.convertFromDefault(highValue) - step
+        lowValue = GlucoseUnit.convertFromDefault(lowValue) + step
+        
+        let detailText = String(format: "%.1f/%.1f", highValue, lowValue)
+        let title = SettingsChartRanges.Field.highLow.title
+        let cells: [BaseSettings.Cell] = [
+            .info(mainText: title, detailText: detailText, detailTextColor: nil)
+        ]
+        
+        let headerView = createHeaderForSection(.highLow)
+        
+        return .normal(cells: cells, header: nil, footer: nil, headerView: headerView, footerView: nil)
+    }
+    
+    private func createUrgentSection(response: SettingsChartRanges.UpdateData.Response) -> BaseSettings.Section {
+        var highValue = response.settings.warningLevelValue(for: .urgentHigh)
+        var lowValue = response.settings.warningLevelValue(for: .urgentLow)
+        highValue = GlucoseUnit.convertFromDefault(highValue)
+        lowValue = GlucoseUnit.convertFromDefault(lowValue)
+        
+        let cells: [BaseSettings.Cell] = [
+            createPickerCell(
+                .urgent,
+                detailValues: [highValue, lowValue],
+                settings: response.settings,
+                pickerValueChanged: response.pickerValueChanged
+            )
+        ]
+        
+        let headerView = createHeaderForSection(.urgent)
+        
+        return .normal(cells: cells, header: nil, footer: nil, headerView: headerView, footerView: nil)
+    }
+    
+    private func createPickerCell(
+        _ field: SettingsChartRanges.Field,
+        detailValues: [Double],
+        settings: Settings,
+        pickerValueChanged: @escaping (SettingsChartRanges.Field, [Double]) -> Void) -> BaseSettings.Cell {
+        let range = settings.unit.minMax
+        let step = settings.unit.pickerStep
+        var highArray = [Double]()
+        var lowArray = [Double]()
+        
+        if field == .notHigherLess {
+            highArray = Array(stride(from: range.lowerBound, to: range.upperBound + step - 2 * step, by: step))
+            lowArray = Array(stride(from: range.lowerBound + 2 * step, to: range.upperBound + step, by: step))
+        } else if field == .urgent {
+            let minHighRaw = settings.warningLevelValue(for: .high)
+            let maxLowRaw = settings.warningLevelValue(for: .low)
+            var minHigh = GlucoseUnit.convertFromDefault(minHighRaw)
+            var maxLow = GlucoseUnit.convertFromDefault(maxLowRaw)
+            
+            if settings.unit == .mgDl {
+                minHigh = minHigh.rounded(.up)
+                maxLow = maxLow.rounded(.down)
+            }
+            
+            highArray = Array(stride(from: minHigh + 2 * step, to: range.upperBound + step, by: step))
+            lowArray = Array(stride(from: range.lowerBound, to: maxLow + step - 2 * step, by: step))
+        }
+        
+        let highColumns = highArray.map { String(format: "%.1f", $0) }
+        let lowColumns = lowArray.map { String(format: "%.1f", $0) }
+        
+        let data = [highColumns, lowColumns, [settings.unit.title]]
+        
+        let picker = CustomPickerView(data: data)
+        
+        let tolerance = step / 2
+        picker.formatValues = { strings in
+            guard strings.count > 1 else { return " " }
+            
+            if let high = highArray.first(
+                where: { val in
+                    guard let num = Double(strings[0]) else { return false }
+                    return fabs(val - num) < tolerance
+                }
+            ), let low = lowArray.first(
+                where: { val in
+                    guard let num = Double(strings[1]) else { return false }
+                    return fabs(val - num) < tolerance
+                }
+            ) {
+                pickerValueChanged(field, [high, low])
+            }
+            
+            return strings[0] + "/" + strings[1]
+        }
+        
+        let first = highArray.firstIndex(where: { fabs($0 - detailValues[0]) < tolerance })
+        let second = lowArray.firstIndex(where: { fabs($0 - detailValues[1]) < tolerance })
+        
+        picker.selectRow(first ?? 0, inComponent: 0, animated: false)
+        picker.selectRow(second ?? 0, inComponent: 1, animated: false)
+        
+        let detailText = String(format: "%.1f/%.1f", detailValues[0], detailValues[1])
+        
+        return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)
+    }
+    
+    private func createHeaderForSection(_ field: SettingsChartRanges.Field) -> UIView? {
+        let view = UINib(
+            nibName: ChartRangesHeaderView.className,
+            bundle: nil
+        ).instantiate(
+            withOwner: nil,
+            options: [:]
+        ).first as? ChartRangesHeaderView
+        
+        view?.configure(with: field)
+        
+        return view
+    }
+}
+
+private extension SettingsChartRanges.Field {
+    var title: String {
+        switch self {
+        case .notHigherLess: return "settings_range_selection_not_higher_less".localized
+        case .highLow: return "settings_range_selection_high_low".localized
+        case .urgent: return "settings_range_selection_urgent_high_low".localized
+        }
+    }
+}
+
+private extension GlucoseUnit {
+    var title: String {
+        switch self {
+        case .mgDl: return "settings_units_mgdl".localized
+        case .mmolL: return "settings_units_mmolL".localized
+        }
     }
 }

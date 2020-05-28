@@ -13,10 +13,10 @@
 import UIKit
 
 protocol SettingsChartRangesDisplayLogic: AnyObject {
-    func displayLoad(viewModel: SettingsChartRanges.Load.ViewModel)
+    func displayUpdateData(viewModel: SettingsChartRanges.UpdateData.ViewModel)
 }
 
-class SettingsChartRangesViewController: NibViewController, SettingsChartRangesDisplayLogic {
+class SettingsChartRangesViewController: BaseSettingsViewController, SettingsChartRangesDisplayLogic {
     var interactor: SettingsChartRangesBusinessLogic?
     var router: SettingsChartRangesDataPassing?
     
@@ -54,18 +54,24 @@ class SettingsChartRangesViewController: NibViewController, SettingsChartRangesD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         doLoad()
     }
     
     // MARK: Do something
     
     private func doLoad() {
-        let request = SettingsChartRanges.Load.Request()
-        interactor?.doLoad(request: request)
+        let request = SettingsChartRanges.UpdateData.Request()
+        interactor?.doUpdateData(request: request)
+    }
+    
+    private func setupUI() {
+        title = "settings_range_selection_scene_title".localized
     }
     
     // MARK: Display
     
-    func displayLoad(viewModel: SettingsChartRanges.Load.ViewModel) {
+    func displayUpdateData(viewModel: SettingsChartRanges.UpdateData.ViewModel) {
+        update(with: viewModel.tableViewModel)
     }
 }

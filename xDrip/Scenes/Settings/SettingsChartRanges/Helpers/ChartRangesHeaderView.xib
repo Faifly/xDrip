@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ChartRangesHeaderView" customModule="xDrip" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Ue-vL-Bga">
+                    <rect key="frame" x="16" y="18" width="12" height="12"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="1Ue-vL-Bga" secondAttribute="height" multiplier="1:1" id="lDo-pz-Ke1"/>
+                        <constraint firstAttribute="height" constant="12" id="y1r-LD-Qdn"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eea-Fx-v3g">
+                    <rect key="frame" x="36" y="16" width="362" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="1Ue-vL-Bga" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="18" id="0vB-om-drf"/>
+                <constraint firstItem="1Ue-vL-Bga" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="0x3-7D-NSS"/>
+                <constraint firstAttribute="bottom" secondItem="1Ue-vL-Bga" secondAttribute="bottom" constant="10" id="RWe-Lx-GU4"/>
+                <constraint firstItem="Eea-Fx-v3g" firstAttribute="centerY" secondItem="1Ue-vL-Bga" secondAttribute="centerY" id="W9f-7i-Td7"/>
+                <constraint firstItem="Eea-Fx-v3g" firstAttribute="leading" secondItem="1Ue-vL-Bga" secondAttribute="trailing" constant="8" id="ZDV-Cp-fAf"/>
+                <constraint firstAttribute="trailing" secondItem="Eea-Fx-v3g" secondAttribute="trailing" constant="16" id="nh7-C0-VXd"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="headerLabel" destination="Eea-Fx-v3g" id="JOq-XQ-spT"/>
+                <outlet property="ovalImageView" destination="1Ue-vL-Bga" id="8Pq-W0-zXT"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="-133.92857142857142"/>
+        </view>
+    </objects>
+</document>

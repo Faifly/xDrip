@@ -48,10 +48,10 @@ final class SettingsChartRangesViewControllerTests: XCTestCase {
     // MARK: Test doubles
     
     final class SettingsChartRangesBusinessLogicSpy: SettingsChartRangesBusinessLogic {
-        var doLoadCalled = false
+        var doUpdateDataCalled = false
         
-        func doLoad(request: SettingsChartRanges.Load.Request) {
-            doLoadCalled = true
+        func doUpdateData(request: SettingsChartRanges.UpdateData.Request) {
+            doUpdateDataCalled = true
         }
     }
     
@@ -66,17 +66,103 @@ final class SettingsChartRangesViewControllerTests: XCTestCase {
         loadView()
         
         // Then
-        XCTAssertTrue(spy.doLoadCalled, "viewDidLoad() should ask the interactor to do load")
+        XCTAssertTrue(spy.doUpdateDataCalled, "viewDidLoad() should ask the interactor to do load")
     }
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsChartRanges.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [])
+        let viewModel = SettingsChartRanges.UpdateData.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()
-        sut.displayLoad(viewModel: viewModel)
+        sut.displayUpdateData(viewModel: viewModel)
         
         // Then
+    }
+    
+    func testPickerValueChanged() {
+        guard let settings = User.current.settings else {
+            XCTFail("Cannot obtain settings")
+            return
+        }
+        settings.updateUnit(.mgDl)
+        
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        let cellType = PickerExpandableTableViewCell.self
+        guard let pickerCell = tableView.getCell(of: cellType, at: IndexPath(row: 0, section: 0)) else {
+            XCTFail("Cannot obtain picker cell")
+            return
+        }
+        
+        pickerCell.togglePickerVisibility()
+        
+        guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let picker = stackView.arrangedSubviews.first as? CustomPickerView else {
+            XCTFail("Cannot obtain picker")
+            return
+        }
+        
+        // When
+        // high values range 0..<(minMax.upperBound - 2 * step)
+        picker.selectRow(300, inComponent: 0, animated: false)
+        // low values range (minMax.lowerBound + 2 * step)..<400
+        picker.selectRow(10, inComponent: 1, animated: false)
+        picker.pickerView(picker, didSelectRow: 0, inComponent: 2)
+        // Then
+        XCTAssertTrue(settings.warningLevelValue(for: .high) ~~ 300.0)
+        XCTAssertTrue(settings.warningLevelValue(for: .low) ~~ 12.0)
+        XCTAssertTrue(settings.warningLevelValue(for: .urgentLow) ~~ 10.0)
+        XCTAssertTrue(settings.warningLevelValue(for: .urgentHigh) ~~ 302.0)
+    }
+    
+    func testUrgentPickerValueChanged() {
+        guard let settings = User.current.settings else {
+            XCTFail("Cannot obtain settings")
+            return
+        }
+        settings.updateUnit(.mmolL)
+        
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        let cellType = PickerExpandableTableViewCell.self
+        guard let pickerCell = tableView.getCell(of: cellType, at: IndexPath(row: 0, section: 2)) else {
+            XCTFail("Cannot obtain picker cell")
+            return
+        }
+        
+        pickerCell.togglePickerVisibility()
+        
+        guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let picker = stackView.arrangedSubviews.first as? CustomPickerView else {
+            XCTFail("Cannot obtain picker")
+            return
+        }
+        
+        let rowsToSelect = picker.numberOfRows(inComponent: 1) - 1
+        // When
+        // high values range (normal + 2 * step)..<miMax.upperBound
+        picker.selectRow(0, inComponent: 0, animated: false)
+        // low values range minMax.lowerBound..<(normal - 2*step)
+        picker.selectRow(rowsToSelect, inComponent: 1, animated: false)
+        picker.pickerView(picker, didSelectRow: 0, inComponent: 2)
+        // Then
+        let urgentHighConverted = GlucoseUnit.convertFromDefault(settings.warningLevelValue(for: .urgentHigh))
+        let highConverted = GlucoseUnit.convertFromDefault(settings.warningLevelValue(for: .high))
+        let urgentLowConverted = GlucoseUnit.convertFromDefault(settings.warningLevelValue(for: .urgentLow))
+        let lowConverted = GlucoseUnit.convertFromDefault(settings.warningLevelValue(for: .low))
+        XCTAssertTrue(urgentHighConverted ~~ (highConverted + 2 * settings.unit.pickerStep))
+        XCTAssertTrue(urgentLowConverted ~~ (lowConverted - 2 * settings.unit.pickerStep))
     }
 }

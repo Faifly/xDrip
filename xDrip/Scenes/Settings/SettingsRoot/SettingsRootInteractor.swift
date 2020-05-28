@@ -52,6 +52,7 @@ final class SettingsRootInteractor: SettingsRootBusinessLogic, SettingsRootDataS
         case .transmitter: router?.routeToTransmitter()
         case .modeSettings: router?.routeToModeSettings()
         case .userType: router?.routeToUserType()
+        case .rangeSelection: router?.routeToRangeSelection()
         default: break
         }
     }

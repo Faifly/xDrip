@@ -253,6 +253,15 @@
 "settings_pump_user_info_label_text" = "Система Nightscout позволяет подключить (или присоединить) устройство к приемнику Dexcom, который передает показания глюкозы в Интернет, где любое подключенное к сети устройство может просматривать цифры. Это так просто";
 "settings_pump_user_sync_button_title" = "Синхронизировать с NightScout";
 
+// Settings Range Selection
+"settings_range_selection_scene_title" = "Выбор диапазона";
+"settings_range_selection_not_higher_less" = "Не выше/ниже";
+"settings_range_selection_normal_section_header" = "НОРМАЛЬНЫЕ ИНДИКАТОРЫ";
+"settings_range_selection_high_low" = "Выше/Ниже";
+"setttings_range_selection_above_normal_section_header" = "ВЫШЕ/НИЖЕ НОРМЫ";
+"settings_range_selection_urgent_high_low" = "Критически выше/ниже";
+"settings_range_selection_urgent_section_header" = "КРИТИЧЕСКИЕ ПОКАЗАТЕЛИ";
+
 // Bluetooth Errors
 "bluetooth_error_title" = "Ошибка Сервиса Датчиков";
 "bluetooth_error_unknown" = "Случилась неизвестная ошибка Bluetooth";
