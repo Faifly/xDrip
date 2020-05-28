@@ -40,10 +40,10 @@ final class SettingsChartRangesInteractorTests: XCTestCase {
     // MARK: Test doubles
     
     final class SettingsChartRangesPresentationLogicSpy: SettingsChartRangesPresentationLogic {
-        var presentLoadCalled = false
+        var presentUpdateDataCalled = false
         
-        func presentLoad(response: SettingsChartRanges.Load.Response) {
-            presentLoadCalled = true
+        func presentUpdateData(response: SettingsChartRanges.UpdateData.Response) {
+            presentUpdateDataCalled = true
         }
     }
     
@@ -56,12 +56,12 @@ final class SettingsChartRangesInteractorTests: XCTestCase {
         // Given
         let spy = SettingsChartRangesPresentationLogicSpy()
         sut.presenter = spy
-        let request = SettingsChartRanges.Load.Request()
+        let request = SettingsChartRanges.UpdateData.Request()
         
         // When
-        sut.doLoad(request: request)
+        sut.doUpdateData(request: request)
         
         // Then
-        XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+        XCTAssertTrue(spy.presentUpdateDataCalled, "doLoad(request:) should ask the presenter to format the result")
     }
 }

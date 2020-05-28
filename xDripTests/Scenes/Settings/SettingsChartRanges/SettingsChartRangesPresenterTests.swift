@@ -40,10 +40,10 @@ final class SettingsChartRangesPresenterTests: XCTestCase {
     // MARK: Test doubles
     
     final class SettingsChartRangesDisplayLogicSpy: SettingsChartRangesDisplayLogic {
-        var displayLoadCalled = false
+        var displayUpdateDataCalled = false
         
-        func displayLoad(viewModel: SettingsChartRanges.Load.ViewModel) {
-            displayLoadCalled = true
+        func displayUpdateData(viewModel: SettingsChartRanges.UpdateData.ViewModel) {
+            displayUpdateDataCalled = true
         }
     }
     
@@ -53,14 +53,14 @@ final class SettingsChartRangesPresenterTests: XCTestCase {
         // Given
         let spy = SettingsChartRangesDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsChartRanges.Load.Response()
+        let response = SettingsChartRanges.UpdateData.Response(settings: Settings(), pickerValueChanged: { _, _ in })
         
         // When
-        sut.presentLoad(response: response)
+        sut.presentUpdateData(response: response)
         
         // Then
         XCTAssertTrue(
-            spy.displayLoadCalled,
+            spy.displayUpdateDataCalled,
             "presentLoad(response:) should ask the view controller to display the result"
         )
     }

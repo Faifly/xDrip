@@ -232,6 +232,15 @@
 "settings_transmitter_reset_unsupported_alert_title" = "Can't proceed";
 "settings_transmitter_reset_unsupported_alert_message" = "Resetting transmitter with your firmware version is unsupported";
 
+// Settings Range Selection
+"settings_range_selection_scene_title" = "Range Selection";
+"settings_range_selection_not_higher_less" = "Not Higher/Less";
+"settings_range_selection_normal_section_header" = "INDICATORS ARE NORMAL";
+"settings_range_selection_high_low" = "High/Low";
+"setttings_range_selection_above_normal_section_header" = "ABOVE/BELOW NORMAL";
+"settings_range_selection_urgent_high_low" = "Urgent High/Low";
+"settings_range_selection_urgent_section_header" = "CRITICAL LEVELS";
+
 // Bluetooth Errors
 "bluetooth_error_title" = "Transmitter Service Error";
 "bluetooth_error_unknown" = "Unknown bluetooth error happened";

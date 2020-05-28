@@ -14,17 +14,25 @@ import UIKit
 
 enum SettingsChartRanges {
     // MARK: Models
+    enum Field {
+        case notHigherLess
+        case highLow
+        case urgent
+    }
     
     // MARK: Use cases
     
-    enum Load {
+    enum UpdateData {
         struct Request {
         }
         
         struct Response {
+            let settings: Settings
+            let pickerValueChanged: (Field, [Double]) -> Void
         }
         
         struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
         }
     }
 }

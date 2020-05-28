@@ -51,6 +51,7 @@ final class SettingsRootInteractor: SettingsRootBusinessLogic, SettingsRootDataS
         case .cloudUpload: router?.routeToCloudUploads()
         case .transmitter: router?.routeToTransmitter()
         case .modeSettings: router?.routeToModeSettings()
+        case .rangeSelection: router?.routeToRangeSelection()
         default: break
         }
     }

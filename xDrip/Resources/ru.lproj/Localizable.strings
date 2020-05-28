@@ -232,6 +232,15 @@
 "settings_transmitter_reset_unsupported_alert_title" = "Невозможно продолжить";
 "settings_transmitter_reset_unsupported_alert_message" = "Сброс датчика с такой версии прошивки не поддерживается";
 
+// Settings Range Selection
+"settings_range_selection_scene_title" = "Выбор диапазона";
+"settings_range_selection_not_higher_less" = "Не выше/ниже";
+"settings_range_selection_normal_section_header" = "НОРМАЛЬНЫЕ ИНДИКАТОРЫ";
+"settings_range_selection_high_low" = "Выше/Ниже";
+"setttings_range_selection_above_normal_section_header" = "ВЫШЕ/НИЖЕ НОРМЫ";
+"settings_range_selection_urgent_high_low" = "Критически выше/ниже";
+"settings_range_selection_urgent_section_header" = "КРИТИЧЕСКИЕ ПОКАЗАТЕЛИ";
+
 // Bluetooth Errors
 "bluetooth_error_title" = "Ошибка Сервиса Датчиков";
 "bluetooth_error_unknown" = "Случилась неизвестная ошибка Bluetooth";
