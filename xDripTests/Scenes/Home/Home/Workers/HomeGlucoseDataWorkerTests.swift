@@ -24,6 +24,7 @@ final class HomeGlucoseDataWorkerTests: XCTestCase {
     func testCallback() {
         // When
         CGMDevice.current.updateMetadata(ofType: .sensorAge, value: "\(Date().timeIntervalSince1970)")
+        CGMDevice.current.updateSensorIsStarted(true)
         CGMController.shared.serviceDidReceiveGlucoseReading(raw: 0.0, filtered: 0.0)
         
         // Then

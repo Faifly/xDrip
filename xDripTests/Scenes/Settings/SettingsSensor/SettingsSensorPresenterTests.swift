@@ -45,6 +45,9 @@ final class SettingsSensorPresenterTests: XCTestCase {
         func displayLoad(viewModel: SettingsSensor.Load.ViewModel) {
             displayLoadCalled = true
         }
+        
+        func displayData(viewModel: SettingsSensor.UpdateData.ViewModel) {
+        }
     }
     
     // MARK: Tests

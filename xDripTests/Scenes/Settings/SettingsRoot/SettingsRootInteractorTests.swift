@@ -62,6 +62,7 @@ final class SettingsRootInteractorTests: XCTestCase {
         func routeToRangeSelection() { }
         func routeToModeSettings() { }
         func routeToUserType() { }
+        func routeToSensor() { }
     }
     
     // MARK: Tests

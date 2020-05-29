@@ -44,6 +44,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "0"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         
         XCTAssertTrue(GlucoseReading.lastReadings(0).isEmpty)
         XCTAssertTrue(GlucoseReading.lastReadings(1).isEmpty)
@@ -118,6 +119,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "\((Date() - .secondsPerDay).timeIntervalSince1970)"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         
         let reading1 = GlucoseReading.create(filtered: 140.0, unfiltered: 135.0)!
         XCTAssertNotNil(reading1)
@@ -185,6 +187,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "\((Date() - .secondsPerDay).timeIntervalSince1970)"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         let calibration = Calibration()
         calibration.setValue(Date(), forKey: "date")
         calibration.setValue(1.0, forKey: "slopeConfidence")
@@ -237,6 +240,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "0"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         
         XCTAssert(GlucoseReading.estimatedRawGlucoseLevel(date: Date()) ~ 160.0)
         
@@ -292,6 +296,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "0"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         
         let reading1 = GlucoseReading()
         reading1.setValue(Date(timeIntervalSince1970: 2.0), forKey: "date")
@@ -341,6 +346,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "0"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         
         let reading1 = GlucoseReading()
         reading1.setValue(Date(timeIntervalSince1970: 2.0), forKey: "date")

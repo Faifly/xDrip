@@ -44,6 +44,7 @@ final class CalibrationTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "0"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         
         XCTAssertTrue(Calibration.lastCalibrations(0).isEmpty)
         XCTAssertTrue(Calibration.lastCalibrations(1).isEmpty)
@@ -98,6 +99,7 @@ final class CalibrationTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "0"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         
         XCTAssertNil(Calibration.lastValid)
         
@@ -152,6 +154,7 @@ final class CalibrationTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "0"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         
         XCTAssertNil(Calibration.calibration(for: Date()))
         
@@ -203,6 +206,7 @@ final class CalibrationTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "0"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         
         let reading1 = GlucoseReading()
         reading1.setValue(now - .secondsPerMinute * 5.0 - 1.0, forKey: "date")
@@ -345,6 +349,7 @@ final class CalibrationTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "\((now - .secondsPerDay).timeIntervalSince1970)"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         
         realm.safeWrite {
             realm.delete(reading1)
@@ -383,6 +388,7 @@ final class CalibrationTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "\((Date() - .secondsPerMinute * 20.0).timeIntervalSince1970)"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         
         addMockReading(rawData: 125.0, minutes: 11.0)
         addMockReading(rawData: 130.0, minutes: 6.0)
@@ -414,6 +420,7 @@ final class CalibrationTests: AbstractRealmTest {
             ofType: .sensorAge,
             value: "\((Date() - .secondsPerMinute * 20.0).timeIntervalSince1970)"
         )
+        CGMDevice.current.updateSensorIsStarted(true)
         
         addMockReading(rawData: 135.0, minutes: 11.0)
         addMockReading(rawData: 130.0, minutes: 6.0)
