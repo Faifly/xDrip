@@ -20,6 +20,7 @@ protocol SettingsRootRoutingLogic {
     func routeToCloudUploads()
     func routeToTransmitter()
     func routeToModeSettings()
+    func routeToUserType()
     func routeToRangeSelection()
 }
 
@@ -63,6 +64,10 @@ final class SettingsRootRouter: SettingsRootRoutingLogic, SettingsRootDataPassin
   
     func routeToModeSettings() {
         present(SettingsModeRootViewController())
+    }
+    
+    func routeToUserType() {
+        present(SettingsUserTypeRootViewController())
     }
     
     private func present(_ viewController: UIViewController) {

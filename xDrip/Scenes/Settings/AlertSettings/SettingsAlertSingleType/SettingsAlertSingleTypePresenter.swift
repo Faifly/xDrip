@@ -276,12 +276,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         
         let tolerance = step / 2
         picker.formatValues = { strings in
-            if let value = array.first(
-                where: { val in
-                    guard let num = Double(strings[0]) else { return false }
-                    return fabs(val - num) < tolerance
-                }
-            ) {
+            if let value = Double(strings[0]) {
                 valueChangeHandler(field, value)
             }
             

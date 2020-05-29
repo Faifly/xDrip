@@ -14,6 +14,7 @@ import UIKit
 
 protocol SettingsPumpUserBusinessLogic {
     func doLoad(request: SettingsPumpUser.Load.Request)
+    func doSync(request: SettingsPumpUser.Sync.Request)
 }
 
 protocol SettingsPumpUserDataStore: AnyObject {    
@@ -28,5 +29,8 @@ final class SettingsPumpUserInteractor: SettingsPumpUserBusinessLogic, SettingsP
     func doLoad(request: SettingsPumpUser.Load.Request) {
         let response = SettingsPumpUser.Load.Response()
         presenter?.presentLoad(response: response)
+    }
+    
+    func doSync(request: SettingsPumpUser.Sync.Request) {
     }
 }

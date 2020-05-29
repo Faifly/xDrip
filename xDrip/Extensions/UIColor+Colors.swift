@@ -29,6 +29,7 @@ extension UIColor {
         case chartValueCritical
         case chartSliderBackground
         case chartSelectionLine
+        case customBlue
     }
     
     static var background1: UIColor {
@@ -105,6 +106,10 @@ extension UIColor {
     
     static var chartSelectionLine: UIColor {
         return color(withName: Colors.chartSelectionLine.rawValue)
+    }
+    
+    static var customBlue: UIColor {
+        return color(withName: Colors.customBlue.rawValue)
     }
     
     private static func color(withName name: String) -> UIColor {

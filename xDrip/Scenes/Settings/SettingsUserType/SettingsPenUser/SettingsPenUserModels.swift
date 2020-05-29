@@ -17,8 +17,37 @@ enum SettingsPenUser {
     
     // MARK: Use cases
     
-    enum Load {
+    enum UpdateData {
         struct Request {
+            let animated: Bool
+        }
+        
+        struct Response {
+            let animated: Bool
+            let basalRates: [BasalRate]
+            let pickerValueChangedHandler: (Int, TimeInterval, Float) -> Void
+        }
+        
+        struct ViewModel {
+            let animated: Bool
+            let tableViewModel: BaseSettings.ViewModel
+        }
+    }
+    
+    enum Add {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum Delete {
+        struct Request {
+            let index: Int
         }
         
         struct Response {

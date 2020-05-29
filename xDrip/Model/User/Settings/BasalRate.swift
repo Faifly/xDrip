@@ -25,4 +25,12 @@ final class BasalRate: Object {
             self.units = units
         }
     }
+    
+    static var minMax: Range<Float> {
+        return 0.0 ..< 35.0
+    }
+    
+    static var unitStep: Float {
+        return 0.05
+    }
 }

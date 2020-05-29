@@ -49,11 +49,14 @@ class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplay
     }
     
     // MARK: IB
+    @IBOutlet private weak var infoLabel: UILabel!
+    @IBOutlet private weak var syncButton: UIButton!
     
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         doLoad()
     }
     
@@ -64,8 +67,20 @@ class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplay
         interactor?.doLoad(request: request)
     }
     
+    private func setupUI() {
+        infoLabel.text = "settings_pump_user_info_label_text".localized
+        syncButton.setTitle("settings_pump_user_sync_button_title".localized, for: .normal)
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: SettingsPumpUser.Load.ViewModel) {
+    }
+    
+    // MARK: Handlers
+    
+    @IBAction private func onSync(_ sender: UIButton) {
+        let request = SettingsPumpUser.Sync.Request()
+        interactor?.doSync(request: request)
     }
 }

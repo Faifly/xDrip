@@ -13,7 +13,9 @@
 import UIKit
 
 protocol SettingsPenUserBusinessLogic {
-    func doLoad(request: SettingsPenUser.Load.Request)
+    func doUpdateData(request: SettingsPenUser.UpdateData.Request)
+    func doAdd(request: SettingsPenUser.Add.Request)
+    func doDelete(request: SettingsPenUser.Delete.Request)
 }
 
 protocol SettingsPenUserDataStore: AnyObject {
@@ -23,10 +25,49 @@ final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPen
     var presenter: SettingsPenUserPresentationLogic?
     var router: SettingsPenUserRoutingLogic?
     
+    private lazy var basalRates: [BasalRate] = {
+        return User.current.settings.sortedBasalRates
+    }()
+    
     // MARK: Do something
     
-    func doLoad(request: SettingsPenUser.Load.Request) {
-        let response = SettingsPenUser.Load.Response()
-        presenter?.presentLoad(response: response)
+    func doUpdateData(request: SettingsPenUser.UpdateData.Request) {
+        let response = SettingsPenUser.UpdateData.Response(
+            animated: request.animated,
+            basalRates: basalRates,
+            pickerValueChangedHandler: handlePickerValueChanged(_:_:_:)
+        )
+        presenter?.presentUpdateData(response: response)
+    }
+    
+    func doAdd(request: SettingsPenUser.Add.Request) {
+        let settings = User.current.settings
+        
+        if let rate = settings?.addBasalRate(startTime: 0.0, units: 0.0) {
+            basalRates.append(rate)
+            updateData(animated: true)
+        }
+    }
+    
+    func doDelete(request: SettingsPenUser.Delete.Request) {
+        let rate = basalRates[request.index]
+        basalRates.remove(at: request.index)
+        
+        User.current.settings.deleteBasalRate(rate)
+        updateData(animated: true)
+    }
+    
+    private func handlePickerValueChanged(_ index: Int, _ startTime: TimeInterval, _ units: Float) {
+        guard basalRates.count > index else { return }
+        let basalRate = basalRates[index]
+        
+        basalRate.update(withStartTime: startTime, units: units)
+        
+        updateData(animated: false)
+    }
+    
+    private func updateData(animated: Bool) {
+        let request = SettingsPenUser.UpdateData.Request(animated: animated)
+        doUpdateData(request: request)
     }
 }

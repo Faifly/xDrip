@@ -49,9 +49,14 @@ final class SettingsPumpUserViewControllerTests: XCTestCase {
     
     final class SettingsPumpUserBusinessLogicSpy: SettingsPumpUserBusinessLogic {
         var doLoadCalled = false
+        var doSyncCalled = false
         
         func doLoad(request: SettingsPumpUser.Load.Request) {
             doLoadCalled = true
+        }
+        
+        func doSync(request: SettingsPumpUser.Sync.Request) {
+            doSyncCalled = true
         }
     }
     
@@ -77,6 +82,36 @@ final class SettingsPumpUserViewControllerTests: XCTestCase {
         loadView()
         sut.displayLoad(viewModel: viewModel)
         
+        // Then
+    }
+    
+    func testShouldCallDoSyncWhenButtonPressed() {
+        let spy = SettingsPumpUserBusinessLogicSpy()
+        sut.interactor = spy
+        
+        loadView()
+        
+        guard let button = sut.view.subviews.compactMap({ $0 as? UIButton }).first else {
+            XCTFail("Cannot obatin sync button")
+            return
+        }
+        
+        // When
+        button.sendActions(for: .touchUpInside)
+        // Then
+        XCTAssertTrue(spy.doSyncCalled)
+    }
+    
+    func testDoSync() {
+        loadView()
+        
+        guard let button = sut.view.subviews.compactMap({ $0 as? UIButton }).first else {
+            XCTFail("Cannot obatin sync button")
+            return
+        }
+        
+        // When
+        button.sendActions(for: .touchUpInside)
         // Then
     }
 }

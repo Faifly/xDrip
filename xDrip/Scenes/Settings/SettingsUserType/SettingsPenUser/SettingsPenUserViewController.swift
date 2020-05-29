@@ -13,10 +13,10 @@
 import UIKit
 
 protocol SettingsPenUserDisplayLogic: AnyObject {
-    func displayLoad(viewModel: SettingsPenUser.Load.ViewModel)
+    func displayUpdateData(viewModel: SettingsPenUser.UpdateData.ViewModel)
 }
 
-class SettingsPenUserViewController: BaseSettingsViewController, SettingsPenUserDisplayLogic {
+class SettingsPenUserViewController: UIViewController, ExpandableTableContainer, SettingsPenUserDisplayLogic {
     var interactor: SettingsPenUserBusinessLogic?
     var router: SettingsPenUserDataPassing?
     
@@ -28,7 +28,7 @@ class SettingsPenUserViewController: BaseSettingsViewController, SettingsPenUser
     }
     
     required init() {
-        super.init()
+        super.init(nibName: nil, bundle: nil)
         setup()
     }
     
@@ -49,6 +49,40 @@ class SettingsPenUserViewController: BaseSettingsViewController, SettingsPenUser
     }
     
     // MARK: IB
+    private lazy var tableView: UITableView = {
+        var tableView = UITableView(frame: .zero, style: tableViewStyle)
+        
+        tableView.keyboardDismissMode = .onDrag
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(tableView)
+        tableView.bindToSuperview()
+        
+        tableView.registerNib(type: BaseSettingsDisclosureCell.self)
+        tableView.registerNib(type: PickerExpandableTableViewCell.self)
+        
+        return tableView
+    }()
+    
+    private var tableViewStyle: UITableView.Style {
+        if #available(iOS 13.0, *) {
+            return .insetGrouped
+        } else {
+            return .grouped
+        }
+    }
+    
+    private lazy var addBarButton: UIBarButtonItem = {
+        return UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(onAdd)
+        )
+    }()
+    private var viewModel: BaseSettings.ViewModel?
+    internal var expandedCell: IndexPath?
     
     // MARK: View lifecycle
     
@@ -57,15 +91,166 @@ class SettingsPenUserViewController: BaseSettingsViewController, SettingsPenUser
         doLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        showAddButton()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        parent?.parent?.navigationItem.rightBarButtonItem = nil
+    }
+    
     // MARK: Do something
     
     private func doLoad() {
-        let request = SettingsPenUser.Load.Request()
-        interactor?.doLoad(request: request)
+        let request = SettingsPenUser.UpdateData.Request(animated: false)
+        interactor?.doUpdateData(request: request)
+    }
+    
+    private func showAddButton() {
+        parent?.parent?.navigationItem.rightBarButtonItem = addBarButton
     }
     
     // MARK: Display
     
-    func displayLoad(viewModel: SettingsPenUser.Load.ViewModel) {
+    func displayUpdateData(viewModel: SettingsPenUser.UpdateData.ViewModel) {
+        update(with: viewModel.tableViewModel, animated: viewModel.animated)
+    }
+    
+    // MARK: Handlers
+    
+    @objc private func onAdd() {
+        let request = SettingsPenUser.Add.Request()
+        interactor?.doAdd(request: request)
+    }
+    
+    private func update(with tableViewModel: BaseSettings.ViewModel, animated: Bool) {
+        self.viewModel = tableViewModel
+        if animated {
+            UIView.transition(
+                with: tableView,
+                duration: Constants.tableViewReloadAnimationDuration,
+                options: .transitionCrossDissolve,
+                animations: { self.tableView.reloadData() }
+            )
+        } else {
+            tableView.reloadData()
+        }
+    }
+}
+
+extension SettingsPenUserViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel?.sections.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel?.sections[section].rowsCount ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let viewModel = viewModel else { fatalError() }
+        
+        switch viewModel.sections[indexPath.section] {
+        case .normal(let cells, _, _, _, _):
+            switch cells[indexPath.row] {
+            case let .pickerExpandable(mainText, detailText, picker):
+                let cell = tableView.dequeueReusableCell(ofType: PickerExpandableTableViewCell.self, for: indexPath)
+                cell.configure(
+                    mainText: mainText,
+                    detailText: detailText,
+                    pickerView: picker,
+                    isExpanded: expandedCell == indexPath
+                )
+                
+                return cell
+                
+            case let .info(mainText, detailText, detailTextColor):
+                let cell = tableView.dequeueReusableCell(ofType: BaseSettingsDisclosureCell.self, for: indexPath)
+                cell.configure(
+                    mainText: mainText,
+                    detailText: detailText,
+                    showDisclosureIndicator: false,
+                    detailTextColor: detailTextColor
+                )
+                
+                return cell
+            default:
+                break
+            }
+        default:
+            break
+        }
+        
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel?.sections[section].header
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section == 0 ? expandedCell != indexPath : false
+    }
+}
+
+extension SettingsPenUserViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let viewModel = viewModel else { return }
+        
+        let section = viewModel.sections[indexPath.section]
+        switch section {
+        case .normal(let cells, _, _, _, _):
+            switch cells[indexPath.row] {
+            case .pickerExpandable:
+                toggleExpansion(indexPath: indexPath, tableView: tableView)
+            default:
+                break
+            }
+        default:
+            break
+        }
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let alertController = UIAlertController(
+                title: "settings_pen_user_delete_alert_title".localized,
+                message: "settings_pen_user_delete_alert_message".localized,
+                preferredStyle: .alert
+            )
+            let yesAction = UIAlertAction(
+                title: "settings_pen_user_delete_alert_confirm_button".localized,
+                style: .destructive
+            ) { [weak self] _ in
+                let request = SettingsPenUser.Delete.Request(index: indexPath.row)
+                self?.interactor?.doDelete(request: request)
+            }
+            
+            alertController.addAction(yesAction)
+            alertController.addAction(
+                UIAlertAction(
+                    title: "settings_pen_user_delete_alert_cancel_button".localized,
+                    style: .cancel,
+                    handler: nil
+                )
+            )
+            
+            present(alertController, animated: true)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if indexPath.section == 0 {
+            return expandedCell == indexPath ? .none : .delete
+        }
+        
+        return .none
     }
 }

@@ -241,6 +241,27 @@
 "settings_range_selection_urgent_high_low" = "Urgent High/Low";
 "settings_range_selection_urgent_section_header" = "CRITICAL LEVELS";
 
+// Settings User Type Root
+"settings_user_type_scene_title" = "User Types";
+"settings_user_type_pen_user" = "Pen User";
+"settings_user_type_pump_user" = "Pump User";
+
+// Settings Pen User
+"settings_pen_user_basal_rates_section_header" = "BASAL RATES";
+"settings_pen_user_units" = "units";
+"settings_pen_user_u" = "U";
+"settings_pen_user_total_daily" = "Total Daily";
+"settings_pen_user_start_time_rate" = "Start Time/Rate";
+"settings_pen_user_delete" = "Delete";
+"settings_pen_user_delete_alert_title" = "Warning";
+"settings_pen_user_delete_alert_message" = "Are you sure you want to delete this record?";
+"settings_pen_user_delete_alert_confirm_button" = "Yes";
+"settings_pen_user_delete_alert_cancel_button" = "No";
+
+// Settings Pump User
+"settings_pump_user_info_label_text" = "The Nightscout system allows you to attach (or pair) a device to the Dexcom receiver that transmits the glucose readings to the Internet, where any web-connected device can view the numbers. It's that simple";
+"settings_pump_user_sync_button_title" = "Synchronise with NightScout";
+
 // Bluetooth Errors
 "bluetooth_error_title" = "Transmitter Service Error";
 "bluetooth_error_unknown" = "Unknown bluetooth error happened";
@@ -280,6 +301,8 @@
 // Custom Picker
 "custom_picker_hours" = "hours";
 "custom_picker_minutes" = "min";
+"custom_picker_h" = "h";
+"custom_picker_m" = "m";
 
 // Notifications
 "notification_pairing_request_title" = "Pairing Request";
