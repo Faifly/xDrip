@@ -43,6 +43,7 @@ final class GlucoseReading: Object {
     }
     
     static var allForCurrentSensor: [GlucoseReading] {
+        guard CGMDevice.current.isSensorStarted else { return [] }
         guard let sensorStartDate = CGMDevice.current.sensorStartDate else { return [] }
         return all.filter { $0.date >? sensorStartDate }
     }
@@ -70,7 +71,7 @@ final class GlucoseReading: Object {
                                           unfiltered: Double,
                                           date: Date = Date()) -> GlucoseReading? {
         LogController.log(message: "[Glucose] Trying to create reading...", type: .debug)
-        guard let sensorStarted = CGMDevice.current.sensorStartDate else {
+        guard let sensorStarted = CGMDevice.current.sensorStartDate, CGMDevice.current.isSensorStarted else {
             LogController.log(message: "[Glucose] Can't create reading, sensor not started", type: .error)
             return nil
         }

@@ -22,6 +22,7 @@ protocol SettingsRootRoutingLogic {
     func routeToModeSettings()
     func routeToUserType()
     func routeToRangeSelection()
+    func routeToSensor()
 }
 
 protocol SettingsRootDataPassing {
@@ -68,6 +69,10 @@ final class SettingsRootRouter: SettingsRootRoutingLogic, SettingsRootDataPassin
     
     func routeToUserType() {
         present(SettingsUserTypeRootViewController())
+    }
+    
+    func routeToSensor() {
+        present(SettingsSensorViewController())
     }
     
     private func present(_ viewController: UIViewController) {

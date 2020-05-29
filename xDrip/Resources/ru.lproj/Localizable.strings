@@ -232,6 +232,50 @@
 "settings_transmitter_reset_unsupported_alert_title" = "Невозможно продолжить";
 "settings_transmitter_reset_unsupported_alert_message" = "Сброс датчика с такой версии прошивки не поддерживается";
 
+// Settings Sensor
+"settings_sensor_screen_title" = "Сенсор";
+"settings_sensor_info_section_header" = "ИНФОРМАЦИЯ";
+"settings_sensor_start_time" = "Сенсор Запущен";
+"settings_sensor_start_time_unavailable" = "Не Запущен";
+"settings_sensor_age" = "Возраст Сенсора";
+"settings_sensor_age_unavailable" = "Н/Д";
+"settings_sensor_start_button" = "Запустить Сенсор";
+"settings_sensor_stop_button" = "Остановить Сенсор";
+"settings_sensor_confirm_stop_alert_title" = "Остановка Сенсора";
+"settings_sensor_confirm_stop_alert_message" = "Вы уверены, что хотите остановить сенсор? Это действие необратимо";
+"settings_sensor_confirm_stop_alert_confirm_button" = "Остановить";
+"settings_sensor_confirm_stop_alert_cancel_button" = "Отмена";
+"settings_sensor_calibrations_section_title" = "КАЛИБРОВКИ";
+"settings_sensor_total_calibrations" = "Всего";
+"settings_sensor_last_calibration" = "Последняя";
+"settings_sensor_last_calibration_unavailable" = "Н/Д";
+"settings_sensor_delete_all_calibrations_button" = "Удалить Все";
+"settings_sensor_delete_last_calibration_button" = "Удалить Последнюю";
+"settings_sensor_delete_all_alert_title" = "Удаление Всех";
+"settings_sensor_delete_all_alert_message" = "Вы уверены, что хотите удалить все калибровки для текущего сенсора? Вы должны будете ввести начальные калибровки заново";
+"settings_sensor_delete_all_alert_confirm_button" = "Удалить Все";
+"settings_sensor_delete_all_alert_cancel_button" = "Отмена";
+"settings_sensor_delete_last_alert_title" = "Удаление Последней Калибровки";
+"settings_sensor_delete_last_alert_message" = "Вы уверены, что хотите удалить последнюю калибровку? Это действие необратимо";
+"settings_sensor_delete_last_alert_confirm_button" = "Удалить";
+"settings_sensor_delete_last_alert_cancel_button" = "Отмена";
+"settings_sensor_advanced_section_title" = "РАСШИРЕННЫЕ НАСТРОЙКИ";
+"settings_sensor_skip_warmup" = "Пропустить Разогрев";
+"settings_sensor_skip_warmup_alert_title" = "Предупреждение";
+"settings_sensor_skip_warmup_alert_message" = "Пропуск разогрева может привести к неточным считываниям первые несколько часов и скорее всего потребует дополнительные калибровки в течении первого дня. Это свойство будет установлено для всех последующих сенсоров";
+"settings_sensor_skip_warmup_alert_confirm_button" = "Пропустить Разогрев";
+"settings_sensor_skip_warmup_alert_cancel_button" = "Отмена";
+"settings_sensor_no_calibrations_alert_title" = "Предупреждение";
+"settings_sensor_no_calibrations_alert_message" = "У вас нет калибровок для удаления";
+"settings_sensor_no_calibrations_alert_button" = "Хорошо";
+"settings_sensor_no_transmitter_alert_title" = "Предупреждение";
+"settings_sensor_no_transmitter_alert_message" = "Вы не подключили датчик. Сделайте это до того, как запускать сенсор";
+"settings_sensor_no_transmitter_alert_button" = "Хорошо";
+
+// Settings Start Sensor
+"settings_start_sensor_screen_title" = "Запустить Сенсор";
+"settings_start_sensor_hint_label" = "Вы должны указать дату и время когда сенсор был вставлен. Очень важно, чтобы вы указали точное время и дату, иначе это может негативно повлиять на показания датчика";
+
 // Settings Range Selection
 "settings_range_selection_scene_title" = "Выбор диапазона";
 "settings_range_selection_not_higher_less" = "Не выше/ниже";

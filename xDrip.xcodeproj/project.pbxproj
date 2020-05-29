@@ -278,7 +278,6 @@
 		580E4BEA243F73B200565EDE /* SettingsSensorModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4BE4243F73B200565EDE /* SettingsSensorModels.swift */; };
 		580E4BEB243F73B200565EDE /* SettingsSensorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4BE5243F73B200565EDE /* SettingsSensorViewController.swift */; };
 		580E4BEC243F73B200565EDE /* SettingsSensorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4BE6243F73B200565EDE /* SettingsSensorInteractor.swift */; };
-		580E4BED243F73B200565EDE /* SettingsSensorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 580E4BE7243F73B200565EDE /* SettingsSensorViewController.xib */; };
 		580E4BF5243F73E200565EDE /* SettingsChartRangesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4BEF243F73E200565EDE /* SettingsChartRangesPresenter.swift */; };
 		580E4BF6243F73E200565EDE /* SettingsChartRangesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4BF0243F73E200565EDE /* SettingsChartRangesRouter.swift */; };
 		580E4BF7243F73E200565EDE /* SettingsChartRangesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580E4BF1243F73E200565EDE /* SettingsChartRangesModels.swift */; };
@@ -475,6 +474,9 @@
 		5860389124488D8C008D54B6 /* TimeInterval+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860389024488D8C008D54B6 /* TimeInterval+Constants.swift */; };
 		586F6BAF245C2B04004FB4E6 /* Calibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586F6BAE245C2B04004FB4E6 /* Calibration.swift */; };
 		586F6BB1245C4B6A004FB4E6 /* SlopeParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586F6BB0245C4B6A004FB4E6 /* SlopeParameters.swift */; };
+		5871C1C524816EBA00B79ACF /* StartSensorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5871C1C324816EBA00B79ACF /* StartSensorViewController.swift */; };
+		5871C1C624816EBA00B79ACF /* StartSensorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5871C1C424816EBA00B79ACF /* StartSensorViewController.xib */; };
+		5871C1C82481747E00B79ACF /* ConfirmationPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5871C1C72481747E00B79ACF /* ConfirmationPresentable.swift */; };
 		58788B7324264711000EB113 /* AbstractEntriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B7224264711000EB113 /* AbstractEntriesWorker.swift */; };
 		58788B75242647C5000EB113 /* TrainingEntriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B74242647C5000EB113 /* TrainingEntriesWorker.swift */; };
 		58788B7724264A36000EB113 /* CalibrationEntriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58788B7624264A36000EB113 /* CalibrationEntriesWorker.swift */; };
@@ -889,7 +891,6 @@
 		580E4BE4243F73B200565EDE /* SettingsSensorModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSensorModels.swift; sourceTree = "<group>"; };
 		580E4BE5243F73B200565EDE /* SettingsSensorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSensorViewController.swift; sourceTree = "<group>"; };
 		580E4BE6243F73B200565EDE /* SettingsSensorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSensorInteractor.swift; sourceTree = "<group>"; };
-		580E4BE7243F73B200565EDE /* SettingsSensorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsSensorViewController.xib; sourceTree = "<group>"; };
 		580E4BEF243F73E200565EDE /* SettingsChartRangesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChartRangesPresenter.swift; sourceTree = "<group>"; };
 		580E4BF0243F73E200565EDE /* SettingsChartRangesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChartRangesRouter.swift; sourceTree = "<group>"; };
 		580E4BF1243F73E200565EDE /* SettingsChartRangesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChartRangesModels.swift; sourceTree = "<group>"; };
@@ -1088,6 +1089,9 @@
 		5860389024488D8C008D54B6 /* TimeInterval+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Constants.swift"; sourceTree = "<group>"; };
 		586F6BAE245C2B04004FB4E6 /* Calibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calibration.swift; sourceTree = "<group>"; };
 		586F6BB0245C4B6A004FB4E6 /* SlopeParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlopeParameters.swift; sourceTree = "<group>"; };
+		5871C1C324816EBA00B79ACF /* StartSensorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSensorViewController.swift; sourceTree = "<group>"; };
+		5871C1C424816EBA00B79ACF /* StartSensorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StartSensorViewController.xib; sourceTree = "<group>"; };
+		5871C1C72481747E00B79ACF /* ConfirmationPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationPresentable.swift; sourceTree = "<group>"; };
 		58788B7224264711000EB113 /* AbstractEntriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractEntriesWorker.swift; sourceTree = "<group>"; };
 		58788B74242647C5000EB113 /* TrainingEntriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingEntriesWorker.swift; sourceTree = "<group>"; };
 		58788B7624264A36000EB113 /* CalibrationEntriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationEntriesWorker.swift; sourceTree = "<group>"; };
@@ -1370,6 +1374,7 @@
 				2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */,
 				2C493C27244B18CA00F4A54B /* PickerView.swift */,
 				2C4E7F0B246ABF830062D403 /* ExpandableTableContainer.swift */,
+				5871C1C72481747E00B79ACF /* ConfirmationPresentable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -2119,12 +2124,12 @@
 		580E4BE1243F73A100565EDE /* SettingsSensor */ = {
 			isa = PBXGroup;
 			children = (
+				5871C1C224816EA300B79ACF /* StartSensor */,
 				580E4BE2243F73B200565EDE /* SettingsSensorPresenter.swift */,
 				580E4BE3243F73B200565EDE /* SettingsSensorRouter.swift */,
 				580E4BE4243F73B200565EDE /* SettingsSensorModels.swift */,
 				580E4BE5243F73B200565EDE /* SettingsSensorViewController.swift */,
 				580E4BE6243F73B200565EDE /* SettingsSensorInteractor.swift */,
-				580E4BE7243F73B200565EDE /* SettingsSensorViewController.xib */,
 			);
 			path = SettingsSensor;
 			sourceTree = "<group>";
@@ -2782,6 +2787,15 @@
 				2C493C2224489ABF00F4A54B /* Settings+Notifications.swift */,
 			);
 			path = BaseSettings;
+			sourceTree = "<group>";
+		};
+		5871C1C224816EA300B79ACF /* StartSensor */ = {
+			isa = PBXGroup;
+			children = (
+				5871C1C324816EBA00B79ACF /* StartSensorViewController.swift */,
+				5871C1C424816EBA00B79ACF /* StartSensorViewController.xib */,
+			);
+			path = StartSensor;
 			sourceTree = "<group>";
 		};
 		58732F4C2402BD1C000F38C6 /* Resources */ = {
@@ -3497,6 +3511,7 @@
 				5805CA0A243892D6002AFA1B /* InitialSetupG6DeviceIDViewController.xib in Resources */,
 				2C09D2172441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.xib in Resources */,
 				2C4E7EF524694F440062D403 /* Typewriters.caf in Resources */,
+				5871C1C624816EBA00B79ACF /* StartSensorViewController.xib in Resources */,
 				5805CA12243892D6002AFA1B /* InitialSetupDeviceModeViewController.xib in Resources */,
 				58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */,
 				2C4E7F0924694F440062D403 /* Swoosh.caf in Resources */,
@@ -3506,7 +3521,6 @@
 				58184A512438C36700E848C6 /* StatsRootViewController.xib in Resources */,
 				580E4BC5243F733100565EDE /* SettingsModeRootViewController.xib in Resources */,
 				2C4E7EF424694F440062D403 /* Anticipate.caf in Resources */,
-				580E4BED243F73B200565EDE /* SettingsSensorViewController.xib in Resources */,
 				2C4E7EFB24694F440062D403 /* Swish.caf in Resources */,
 				580E4B44243E38B300565EDE /* BaseSettingsDisclosureCell.xib in Resources */,
 				2C4E7EFC24694F440062D403 /* Suspense.caf in Resources */,
@@ -3707,6 +3721,7 @@
 				580EC7BD2421521C00C34948 /* EditCalibrationRouter.swift in Sources */,
 				58B5FD3624190E2F00DB857D /* HomeInteractor.swift in Sources */,
 				2CBE1A96243212D7003BE14E /* EntriesListBolusFormattingWorker.swift in Sources */,
+				5871C1C524816EBA00B79ACF /* StartSensorViewController.swift in Sources */,
 				584432AB243CFD9B00282A6C /* SettingsChartRouter.swift in Sources */,
 				58A8A42B242523DF00CCFCAC /* FoodEntriesWorker.swift in Sources */,
 				58DDC45E2423C99B008CB04D /* TrainingEntry.swift in Sources */,
@@ -3830,6 +3845,7 @@
 				58B5FD4B24190EB300DB857D /* HistoryRootInteractor.swift in Sources */,
 				580E4C21243F74A300565EDE /* SettingsPumpUserInteractor.swift in Sources */,
 				58FE4CB924796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift in Sources */,
+				5871C1C82481747E00B79ACF /* ConfirmationPresentable.swift in Sources */,
 				2C09D21E2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.swift in Sources */,
 				58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */,
 				58788B75242647C5000EB113 /* TrainingEntriesWorker.swift in Sources */,

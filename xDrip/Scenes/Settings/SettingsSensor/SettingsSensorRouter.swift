@@ -12,17 +12,89 @@
 
 import UIKit
 
-protocol SettingsSensorRoutingLogic {    
+protocol SettingsSensorRoutingLogic {
+    func routeToStartSensor(callback: @escaping (Date) -> Void)
+    func showStopSensorConfirmation(completion: @escaping () -> Void)
+    func showDeleteLastCalibrationConfirmation(completion: @escaping () -> Void)
+    func showDeleteAllCalibrationsConfirmation(completion: @escaping () -> Void)
+    func showSkipWarmUpConfirmation(completion: @escaping (Bool) -> Void)
+    func showNoCalibrationsAlert()
+    func showNoTransmitterAlert()
 }
 
 protocol SettingsSensorDataPassing {
     var dataStore: SettingsSensorDataStore? { get }
 }
 
-final class SettingsSensorRouter: SettingsSensorRoutingLogic, SettingsSensorDataPassing {
+final class SettingsSensorRouter: SettingsSensorRoutingLogic, SettingsSensorDataPassing, ConfirmationPresentable {
     weak var viewController: SettingsSensorViewController?
     weak var dataStore: SettingsSensorDataStore?
     
     // MARK: Routing
     
+    func routeToStartSensor(callback: @escaping (Date) -> Void) {
+        let viewController = StartSensorViewController()
+        viewController.dateSavedHandler = callback
+        self.viewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func showStopSensorConfirmation(completion: @escaping () -> Void) {
+        presentConfirmation(prefix: "settings_sensor_confirm_stop") { confirmed in
+            if confirmed {
+                completion()
+            }
+        }
+    }
+    
+    func showDeleteLastCalibrationConfirmation(completion: @escaping () -> Void) {
+        presentConfirmation(prefix: "settings_sensor_delete_last") { confirmed in
+            if confirmed {
+                completion()
+            }
+        }
+    }
+    
+    func showDeleteAllCalibrationsConfirmation(completion: @escaping () -> Void) {
+        presentConfirmation(prefix: "settings_sensor_delete_all") { confirmed in
+            if confirmed {
+                completion()
+            }
+        }
+    }
+    
+    func showSkipWarmUpConfirmation(completion: @escaping (Bool) -> Void) {
+        presentConfirmation(prefix: "settings_sensor_skip_warmup", completion: completion)
+    }
+    
+    func showNoCalibrationsAlert() {
+        let alert = UIAlertController(
+            title: "settings_sensor_no_calibrations_alert_title".localized,
+            message: "settings_sensor_no_calibrations_alert_message".localized,
+            preferredStyle: .alert
+        )
+        
+        let confirmAction = UIAlertAction(
+            title: "settings_sensor_no_calibrations_alert_button".localized,
+            style: .cancel
+        )
+        alert.addAction(confirmAction)
+        
+        viewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showNoTransmitterAlert() {
+        let alert = UIAlertController(
+            title: "settings_sensor_no_transmitter_alert_title".localized,
+            message: "settings_sensor_no_transmitter_alert_message".localized,
+            preferredStyle: .alert
+        )
+        
+        let confirmAction = UIAlertAction(
+            title: "settings_sensor_no_transmitter_alert_button".localized,
+            style: .cancel
+        )
+        alert.addAction(confirmAction)
+        
+        viewController?.present(alert, animated: true, completion: nil)
+    }
 }

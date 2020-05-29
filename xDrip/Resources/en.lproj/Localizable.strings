@@ -232,6 +232,51 @@
 "settings_transmitter_reset_unsupported_alert_title" = "Can't proceed";
 "settings_transmitter_reset_unsupported_alert_message" = "Resetting transmitter with your firmware version is unsupported";
 
+// Settings Sensor
+"settings_sensor_screen_title" = "Sensor";
+"settings_sensor_info_section_header" = "INFO";
+"settings_sensor_start_time" = "Sensor Start";
+"settings_sensor_start_time_unavailable" = "Not Started";
+"settings_sensor_age" = "Sensor Age";
+"settings_sensor_age_unavailable" = "N/A";
+"settings_sensor_start_button" = "Start Sensor";
+"settings_sensor_stop_button" = "Stop Sensor";
+"settings_sensor_confirm_stop_alert_title" = "Stop Sensor";
+"settings_sensor_confirm_stop_alert_message" = "Are you sure you want to stop the sensor? This action cannot be undone";
+"settings_sensor_confirm_stop_alert_confirm_button" = "Stop";
+"settings_sensor_confirm_stop_alert_cancel_button" = "Cancel";
+"settings_sensor_calibrations_section_title" = "CALIBRATIONS";
+"settings_sensor_total_calibrations" = "Total";
+"settings_sensor_last_calibration" = "Last";
+"settings_sensor_last_calibration_unavailable" = "N/A";
+"settings_sensor_delete_all_calibrations_button" = "Delete All";
+"settings_sensor_delete_last_calibration_button" = "Delete Last";
+"settings_sensor_delete_all_alert_title" = "Delete All";
+"settings_sensor_delete_all_alert_message" = "Are you sure you want to delete all calibrations for this sensor? You will have to enter initial calibrations one more time";
+"settings_sensor_delete_all_alert_confirm_button" = "Delete All";
+"settings_sensor_delete_all_alert_cancel_button" = "Cancel";
+"settings_sensor_delete_last_alert_title" = "Delete Last";
+"settings_sensor_delete_last_alert_message" = "Are you sure you want to delete the last calibration? This action cannot be undone";
+"settings_sensor_delete_last_alert_confirm_button" = "Delete";
+"settings_sensor_delete_last_alert_cancel_button" = "Cancel";
+"settings_sensor_advanced_section_title" = "ADVANCED";
+"settings_sensor_skip_warmup" = "Skip Warm-Ups";
+"settings_sensor_skip_warmup_alert_title" = "Warning";
+"settings_sensor_skip_warmup_alert_message" = "Skipping warm-ups can give inaccurate readings the first couple of hours and will probably require a few extra calibrations on the first day.
+This setting will be applied to all future sensors";
+"settings_sensor_skip_warmup_alert_confirm_button" = "Skip Warm-Ups";
+"settings_sensor_skip_warmup_alert_cancel_button" = "Cancel";
+"settings_sensor_no_calibrations_alert_title" = "Warning";
+"settings_sensor_no_calibrations_alert_message" = "You don't have any calibrations to delete";
+"settings_sensor_no_calibrations_alert_button" = "OK";
+"settings_sensor_no_transmitter_alert_title" = "Warning";
+"settings_sensor_no_transmitter_alert_message" = "You haven't set up a transmitter. You should do it before starting a sensor";
+"settings_sensor_no_transmitter_alert_button" = "OK";
+
+// Settings Start Sensor
+"settings_start_sensor_screen_title" = "Start Sensor";
+"settings_start_sensor_hint_label" = "You need to set the date and time the sensor was inserted. It's important that you set them as accurately as possible otherwise you might compromise the accuracy of the glucose readings";
+
 // Settings Range Selection
 "settings_range_selection_scene_title" = "Range Selection";
 "settings_range_selection_not_higher_less" = "Not Higher/Less";
