@@ -232,6 +232,15 @@
 "settings_transmitter_reset_unsupported_alert_title" = "Невозможно продолжить";
 "settings_transmitter_reset_unsupported_alert_message" = "Сброс датчика с такой версии прошивки не поддерживается";
 
+// Settings Range Selection
+"settings_range_selection_scene_title" = "Выбор диапазона";
+"settings_range_selection_not_higher_less" = "Не выше/ниже";
+"settings_range_selection_normal_section_header" = "НОРМАЛЬНЫЕ ИНДИКАТОРЫ";
+"settings_range_selection_high_low" = "Выше/Ниже";
+"setttings_range_selection_above_normal_section_header" = "ВЫШЕ/НИЖЕ НОРМЫ";
+"settings_range_selection_urgent_high_low" = "Критически выше/ниже";
+"settings_range_selection_urgent_section_header" = "КРИТИЧЕСКИЕ ПОКАЗАТЕЛИ";
+
 // Settings User Type Root
 "settings_user_type_scene_title" = "Типы пользователя";
 "settings_user_type_pen_user" = "Ручка";
@@ -246,21 +255,12 @@
 "settings_pen_user_delete" = "Удалить";
 "settings_pen_user_delete_alert_title" = "Внимание";
 "settings_pen_user_delete_alert_message" = "Вы уверенны, что хотите удалить эту запись?";
-"settings_pen_user_yes" = "Да";
-"settings_pen_user_no" = "Нет";
+"settings_pen_user_delete_alert_confirm_button" = "Да";
+"settings_pen_user_delete_alert_cancel_button" = "Нет";
 
 // Settings Pump User
 "settings_pump_user_info_label_text" = "Система Nightscout позволяет подключить (или присоединить) устройство к приемнику Dexcom, который передает показания глюкозы в Интернет, где любое подключенное к сети устройство может просматривать цифры. Это так просто";
 "settings_pump_user_sync_button_title" = "Синхронизировать с NightScout";
-
-// Settings Range Selection
-"settings_range_selection_scene_title" = "Выбор диапазона";
-"settings_range_selection_not_higher_less" = "Не выше/ниже";
-"settings_range_selection_normal_section_header" = "НОРМАЛЬНЫЕ ИНДИКАТОРЫ";
-"settings_range_selection_high_low" = "Выше/Ниже";
-"setttings_range_selection_above_normal_section_header" = "ВЫШЕ/НИЖЕ НОРМЫ";
-"settings_range_selection_urgent_high_low" = "Критически выше/ниже";
-"settings_range_selection_urgent_section_header" = "КРИТИЧЕСКИЕ ПОКАЗАТЕЛИ";
 
 // Bluetooth Errors
 "bluetooth_error_title" = "Ошибка Сервиса Датчиков";

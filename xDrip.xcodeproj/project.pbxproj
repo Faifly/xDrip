@@ -21,6 +21,7 @@
 		2C1DE8A524792DEF0023B512 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1DE8A324792DEF0023B512 /* PopUpViewController.swift */; };
 		2C1DE8A624792DEF0023B512 /* PopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C1DE8A424792DEF0023B512 /* PopUpViewController.xib */; };
 		2C1DE8A8247938780023B512 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1DE8A7247938780023B512 /* CustomAlertController.swift */; };
+		2C225D0A248012C400A575A0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C225D09248012C400A575A0 /* Constants.swift */; };
 		2C467FCB247E686B006D651D /* ChartRangesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C467FCA247E686B006D651D /* ChartRangesHeaderView.swift */; };
 		2C467FCD247E6884006D651D /* ChartRangesHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C467FCC247E6884006D651D /* ChartRangesHeaderView.xib */; };
 		2C48E6E42428AA78006B63B0 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */; };
@@ -631,6 +632,7 @@
 		2C1DE8A324792DEF0023B512 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		2C1DE8A424792DEF0023B512 /* PopUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopUpViewController.xib; sourceTree = "<group>"; };
 		2C1DE8A7247938780023B512 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
+		2C225D09248012C400A575A0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2C467FCA247E686B006D651D /* ChartRangesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartRangesHeaderView.swift; sourceTree = "<group>"; };
 		2C467FCC247E6884006D651D /* ChartRangesHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChartRangesHeaderView.xib; sourceTree = "<group>"; };
 		2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
@@ -3208,6 +3210,7 @@
 				58DDC4582423C816008CB04D /* Entries */,
 				5805C9BB2438925F002AFA1B /* Device */,
 				2C4E7ED3246940DC0062D403 /* CustomSound.swift */,
+				2C225D09248012C400A575A0 /* Constants.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3865,6 +3868,7 @@
 				58443259243CD3FB00282A6C /* ChartSettings.swift in Sources */,
 				58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */,
 				58443261243CE71000282A6C /* NightscoutSyncSettings.swift in Sources */,
+				2C225D0A248012C400A575A0 /* Constants.swift in Sources */,
 				5805C9CB2438929E002AFA1B /* CenteredTitleButton.swift in Sources */,
 				5805C9C32438925F002AFA1B /* CGMDeviceType.swift in Sources */,
 				580E4BB7243F725600565EDE /* NightscoutCloudBackfillInteractor.swift in Sources */,

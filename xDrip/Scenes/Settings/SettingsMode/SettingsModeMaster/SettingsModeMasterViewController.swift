@@ -57,12 +57,6 @@ class SettingsModeMasterViewController: BaseSettingsViewController, SettingsMode
         doLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        parent?.parent?.navigationItem.rightBarButtonItem = nil
-    }
-    
     // MARK: Do something
     
     private func doLoad() {

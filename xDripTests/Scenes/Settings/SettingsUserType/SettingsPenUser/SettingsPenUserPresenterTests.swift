@@ -40,10 +40,10 @@ final class SettingsPenUserPresenterTests: XCTestCase {
     // MARK: Test doubles
     
     final class SettingsPenUserDisplayLogicSpy: SettingsPenUserDisplayLogic {
-        var displayLoadCalled = false
+        var displayUpdateDataCalled = false
         
-        func displayLoad(viewModel: SettingsPenUser.UpdateData.ViewModel) {
-            displayLoadCalled = true
+        func displayUpdateData(viewModel: SettingsPenUser.UpdateData.ViewModel) {
+            displayUpdateDataCalled = true
         }
     }
     
@@ -53,14 +53,18 @@ final class SettingsPenUserPresenterTests: XCTestCase {
         // Given
         let spy = SettingsPenUserDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsPenUser.UpdateData.Response()
+        let response = SettingsPenUser.UpdateData.Response(
+            animated: false,
+            basalRates: [],
+            pickerValueChangedHandler: { _, _, _ in }
+        )
         
         // When
         sut.presentUpdateData(response: response)
         
         // Then
         XCTAssertTrue(
-            spy.displayLoadCalled,
+            spy.displayUpdateDataCalled,
             "presentLoad(response:) should ask the view controller to display the result"
         )
     }

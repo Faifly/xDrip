@@ -40,10 +40,10 @@ final class SettingsPenUserInteractorTests: XCTestCase {
     // MARK: Test doubles
     
     final class SettingsPenUserPresentationLogicSpy: SettingsPenUserPresentationLogic {
-        var presentLoadCalled = false
+        var presentUpdateDataCalled = false
         
         func presentUpdateData(response: SettingsPenUser.UpdateData.Response) {
-            presentLoadCalled = true
+            presentUpdateDataCalled = true
         }
     }
     
@@ -56,12 +56,12 @@ final class SettingsPenUserInteractorTests: XCTestCase {
         // Given
         let spy = SettingsPenUserPresentationLogicSpy()
         sut.presenter = spy
-        let request = SettingsPenUser.UpdateData.Request()
+        let request = SettingsPenUser.UpdateData.Request(animated: false)
         
         // When
-        sut.doLoad(request: request)
+        sut.doUpdateData(request: request)
         
         // Then
-        XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+        XCTAssertTrue(spy.presentUpdateDataCalled, "doLoad(request:) should ask the presenter to format the result")
     }
 }

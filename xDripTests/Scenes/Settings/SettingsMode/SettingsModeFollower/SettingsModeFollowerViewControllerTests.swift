@@ -95,14 +95,16 @@ final class SettingsModeFollowerViewControllerTests: XCTestCase {
     }
     
     func testDoLogin() {
-        let navController = UINavigationController(rootViewController: sut)
+        let containerController = UITabBarController()
+        containerController.viewControllers = [sut]
+        let navigationController = UINavigationController(rootViewController: containerController)
         let spy = SettingsModeFollowerBusinessLogicSpy()
         sut.interactor = spy
         
         loadView()
         sut.viewWillAppear(false)
         
-        guard let loginButton = navController.navigationItem.rightBarButtonItem else {
+        guard let loginButton = navigationController.navigationItem.rightBarButtonItem else {
             XCTFail("Cannot obtain loginButton")
             return
         }
@@ -114,12 +116,14 @@ final class SettingsModeFollowerViewControllerTests: XCTestCase {
     }
     
     func testDisplayLogin() {
-        let navController = UINavigationController(rootViewController: sut)
+        let containerController = UITabBarController()
+        containerController.viewControllers = [sut]
+        let navigationController = UINavigationController(rootViewController: containerController)
         
         loadView()
         sut.viewWillAppear(false)
         
-        guard let loginButton = navController.navigationItem.rightBarButtonItem else {
+        guard let loginButton = navigationController.navigationItem.rightBarButtonItem else {
             XCTFail("Cannot obtain loginButton")
             return
         }
@@ -161,12 +165,14 @@ final class SettingsModeFollowerViewControllerTests: XCTestCase {
     }
     
     func testTextEditingChangedHandler() {
-        let navController = UINavigationController(rootViewController: sut)
+        let containerController = UITabBarController()
+        containerController.viewControllers = [sut]
+        let navigationController = UINavigationController(rootViewController: containerController)
         
         loadView()
         sut.viewWillAppear(false)
         
-        guard let loginButton = navController.navigationItem.rightBarButtonItem else {
+        guard let loginButton = navigationController.navigationItem.rightBarButtonItem else {
             XCTFail("Cannot obtain loginButton")
             return
         }
@@ -219,5 +225,22 @@ final class SettingsModeFollowerViewControllerTests: XCTestCase {
         picker.selectRow(15, inComponent: 2, animated: false)
         picker.pickerView(picker, didSelectRow: 1, inComponent: 0)
         // Then
+    }
+    
+    func testNavigationItem() {
+        let containerController = UITabBarController()
+        containerController.viewControllers = [sut]
+        let navigationController = UINavigationController(rootViewController: containerController)
+        loadView()
+        
+        // When
+        sut.viewWillAppear(false)
+        // Then
+        XCTAssertNotNil(navigationController.navigationItem.rightBarButtonItem)
+        
+        // When
+        sut.viewWillDisappear(false)
+        // Then
+        XCTAssertNil(navigationController.navigationItem.rightBarButtonItem)
     }
 }

@@ -71,7 +71,7 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
         if animated {
             UIView.transition(
                 with: tableView,
-                duration: 0.35,
+                duration: Constants.tableViewReloadAnimationDuration,
                 options: .transitionCrossDissolve,
                 animations: { self.tableView.reloadData() }
             )

@@ -25,11 +25,13 @@ final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPen
     var presenter: SettingsPenUserPresentationLogic?
     var router: SettingsPenUserRoutingLogic?
     
+    private lazy var basalRates: [BasalRate] = {
+        return User.current.settings.sortedBasalRates
+    }()
+    
     // MARK: Do something
     
     func doUpdateData(request: SettingsPenUser.UpdateData.Request) {
-        let basalRates = Array(User.current.settings.basalRates)
-        
         let response = SettingsPenUser.UpdateData.Response(
             animated: request.animated,
             basalRates: basalRates,
@@ -41,18 +43,21 @@ final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPen
     func doAdd(request: SettingsPenUser.Add.Request) {
         let settings = User.current.settings
         
-        settings?.addBasalRate(startTime: 0.0, units: 0.0)
-        
-        updateData(animated: true)
+        if let rate = settings?.addBasalRate(startTime: 0.0, units: 0.0) {
+            basalRates.append(rate)
+            updateData(animated: true)
+        }
     }
     
     func doDelete(request: SettingsPenUser.Delete.Request) {
-        let settings = User.current.settings
-        settings?.deleteBasalRate(at: request.index)
+        let rate = basalRates[request.index]
+        basalRates.remove(at: request.index)
+        
+        User.current.settings.deleteBasalRate(rate)
+        updateData(animated: true)
     }
     
     private func handlePickerValueChanged(_ index: Int, _ startTime: TimeInterval, _ units: Float) {
-        let basalRates = User.current.settings.basalRates
         guard basalRates.count > index else { return }
         let basalRate = basalRates[index]
         

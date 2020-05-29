@@ -119,21 +119,26 @@ final class Settings: Object {
     
     // MARK: Basal rates
     
-    let basalRates = List<BasalRate>()
+    private let basalRates = List<BasalRate>()
+    var sortedBasalRates: [BasalRate] {
+        return basalRates.sorted { $0.startTime < $1.startTime }
+    }
     
-    @discardableResult func addBasalRate(startTime: TimeInterval, units: Float) -> BasalRate {
+    @discardableResult func addBasalRate(startTime: TimeInterval, units: Float) -> BasalRate? {
         let rate = BasalRate(startTime: startTime, units: units)
+        
+        if basalRates.contains(where: { $0.startTime == rate.startTime }) {
+            return nil
+        }
+        
         Realm.shared.safeWrite {
             basalRates.append(rate)
         }
         return rate
     }
     
-    func deleteBasalRate(at index: Int) {
-        let rate = basalRates[index]
-        
+    func deleteBasalRate(_ rate: BasalRate) {
         Realm.shared.safeWrite {
-            basalRates.remove(at: index)
             rate.deleteFromRealm()
         }
     }

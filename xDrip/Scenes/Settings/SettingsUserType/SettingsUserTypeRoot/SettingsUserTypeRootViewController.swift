@@ -52,7 +52,7 @@ class SettingsUserTypeRootViewController: NibViewController, SettingsUserTypeRoo
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var containerView: UIView!
     
-    private var tabBar: UITabBarController?
+    private var embeddedTabBarController: UITabBarController?
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -74,16 +74,16 @@ class SettingsUserTypeRootViewController: NibViewController, SettingsUserTypeRoo
         let penViewController = SettingsPenUserViewController()
         let pumpViewController = SettingsPumpUserViewController()
         
-        let tabBar = UITabBarController()
-        tabBar.viewControllers = [penViewController, pumpViewController]
-        tabBar.tabBar.isHidden = true
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [penViewController, pumpViewController]
+        tabBarController.tabBar.isHidden = true
         
-        tabBar.view.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(tabBar.view)
-        tabBar.view.bindToSuperview()
-        addChild(tabBar)
+        tabBarController.view.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(tabBarController.view)
+        tabBarController.view.bindToSuperview()
+        addChild(tabBarController)
         
-        self.tabBar = tabBar
+        embeddedTabBarController = tabBarController
         
         let titles = UserInjectionType.allCases.map { $0.title }
         segmentedControl.removeAllSegments()
@@ -96,7 +96,7 @@ class SettingsUserTypeRootViewController: NibViewController, SettingsUserTypeRoo
         }
         
         segmentedControl.selectedSegmentIndex = User.current.settings.deviceMode.rawValue
-        tabBar.selectedIndex = 0
+        tabBarController.selectedIndex = 0
     }
     
     // MARK: Display
@@ -107,7 +107,7 @@ class SettingsUserTypeRootViewController: NibViewController, SettingsUserTypeRoo
     // MARK: Handlers
     
     @IBAction private func onSegmentedControlValueChanged(_ sender: UISegmentedControl) {
-        tabBar?.selectedIndex = sender.selectedSegmentIndex
+        embeddedTabBarController?.selectedIndex = sender.selectedSegmentIndex
     }
 }
 

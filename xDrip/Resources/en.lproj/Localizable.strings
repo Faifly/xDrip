@@ -232,6 +232,15 @@
 "settings_transmitter_reset_unsupported_alert_title" = "Can't proceed";
 "settings_transmitter_reset_unsupported_alert_message" = "Resetting transmitter with your firmware version is unsupported";
 
+// Settings Range Selection
+"settings_range_selection_scene_title" = "Range Selection";
+"settings_range_selection_not_higher_less" = "Not Higher/Less";
+"settings_range_selection_normal_section_header" = "INDICATORS ARE NORMAL";
+"settings_range_selection_high_low" = "High/Low";
+"setttings_range_selection_above_normal_section_header" = "ABOVE/BELOW NORMAL";
+"settings_range_selection_urgent_high_low" = "Urgent High/Low";
+"settings_range_selection_urgent_section_header" = "CRITICAL LEVELS";
+
 // Settings User Type Root
 "settings_user_type_scene_title" = "User Types";
 "settings_user_type_pen_user" = "Pen User";
@@ -246,21 +255,12 @@
 "settings_pen_user_delete" = "Delete";
 "settings_pen_user_delete_alert_title" = "Warning";
 "settings_pen_user_delete_alert_message" = "Are you sure you want to delete this record?";
-"settings_pen_user_yes" = "Yes";
-"settings_pen_user_no" = "No";
+"settings_pen_user_delete_alert_confirm_button" = "Yes";
+"settings_pen_user_delete_alert_cancel_button" = "No";
 
 // Settings Pump User
 "settings_pump_user_info_label_text" = "The Nightscout system allows you to attach (or pair) a device to the Dexcom receiver that transmits the glucose readings to the Internet, where any web-connected device can view the numbers. It's that simple";
 "settings_pump_user_sync_button_title" = "Synchronise with NightScout";
-
-// Settings Range Selection
-"settings_range_selection_scene_title" = "Range Selection";
-"settings_range_selection_not_higher_less" = "Not Higher/Less";
-"settings_range_selection_normal_section_header" = "INDICATORS ARE NORMAL";
-"settings_range_selection_high_low" = "High/Low";
-"setttings_range_selection_above_normal_section_header" = "ABOVE/BELOW NORMAL";
-"settings_range_selection_urgent_high_low" = "Urgent High/Low";
-"settings_range_selection_urgent_section_header" = "CRITICAL LEVELS";
 
 // Bluetooth Errors
 "bluetooth_error_title" = "Transmitter Service Error";

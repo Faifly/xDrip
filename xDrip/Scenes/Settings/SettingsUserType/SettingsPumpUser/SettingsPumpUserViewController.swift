@@ -60,12 +60,6 @@ class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplay
         doLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        parent?.parent?.navigationItem.rightBarButtonItem = nil
-    }
-    
     // MARK: Do something
     
     private func doLoad() {
@@ -89,5 +83,4 @@ class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplay
         let request = SettingsPumpUser.Sync.Request()
         interactor?.doSync(request: request)
     }
-    
 }

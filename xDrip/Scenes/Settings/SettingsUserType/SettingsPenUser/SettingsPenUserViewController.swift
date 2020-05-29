@@ -74,7 +74,13 @@ class SettingsPenUserViewController: UIViewController, ExpandableTableContainer,
         }
     }
     
-    private var addBarButton: UIBarButtonItem?
+    private lazy var addBarButton: UIBarButtonItem = {
+        return UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(onAdd)
+        )
+    }()
     private var viewModel: BaseSettings.ViewModel?
     internal var expandedCell: IndexPath?
     
@@ -82,7 +88,6 @@ class SettingsPenUserViewController: UIViewController, ExpandableTableContainer,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createAddButton()
         doLoad()
     }
     
@@ -92,16 +97,17 @@ class SettingsPenUserViewController: UIViewController, ExpandableTableContainer,
         showAddButton()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        parent?.parent?.navigationItem.rightBarButtonItem = nil
+    }
+    
     // MARK: Do something
     
     private func doLoad() {
         let request = SettingsPenUser.UpdateData.Request(animated: false)
         interactor?.doUpdateData(request: request)
-    }
-    
-    private func createAddButton() {
-        let barButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onAdd))
-        addBarButton = barButton
     }
     
     private func showAddButton() {
@@ -126,7 +132,7 @@ class SettingsPenUserViewController: UIViewController, ExpandableTableContainer,
         if animated {
             UIView.transition(
                 with: tableView,
-                duration: 0.35,
+                duration: Constants.tableViewReloadAnimationDuration,
                 options: .transitionCrossDissolve,
                 animations: { self.tableView.reloadData() }
             )
@@ -149,7 +155,7 @@ extension SettingsPenUserViewController: UITableViewDataSource {
         guard let viewModel = viewModel else { fatalError() }
         
         switch viewModel.sections[indexPath.section] {
-        case .normal(let cells, _, _):
+        case .normal(let cells, _, _, _, _):
             switch cells[indexPath.row] {
             case let .pickerExpandable(mainText, detailText, picker):
                 let cell = tableView.dequeueReusableCell(ofType: PickerExpandableTableViewCell.self, for: indexPath)
@@ -197,7 +203,7 @@ extension SettingsPenUserViewController: UITableViewDelegate {
         
         let section = viewModel.sections[indexPath.section]
         switch section {
-        case .normal(let cells, _, _):
+        case .normal(let cells, _, _, _, _):
             switch cells[indexPath.row] {
             case .pickerExpandable:
                 toggleExpansion(indexPath: indexPath, tableView: tableView)
@@ -209,25 +215,19 @@ extension SettingsPenUserViewController: UITableViewDelegate {
         }
     }
     
-    func tableView(
-        _ tableView: UITableView,
-        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
-    ) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(
-            style: .destructive,
-            title: "settings_pen_user_delete".localized
-        ) { [weak self] _, _, _ in
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             let alertController = UIAlertController(
                 title: "settings_pen_user_delete_alert_title".localized,
                 message: "settings_pen_user_delete_alert_message".localized,
                 preferredStyle: .alert
             )
             let yesAction = UIAlertAction(
-                title: "settings_pen_user_yes".localized,
+                title: "settings_pen_user_delete_alert_confirm_button".localized,
                 style: .destructive
             ) { [weak self] _ in
-                self?.removeCell(tableView, at: indexPath)
-                
                 let request = SettingsPenUser.Delete.Request(index: indexPath.row)
                 self?.interactor?.doDelete(request: request)
             }
@@ -235,37 +235,22 @@ extension SettingsPenUserViewController: UITableViewDelegate {
             alertController.addAction(yesAction)
             alertController.addAction(
                 UIAlertAction(
-                    title: "settings_pen_user_no".localized,
+                    title: "settings_pen_user_delete_alert_cancel_button".localized,
                     style: .cancel,
                     handler: nil
                 )
             )
             
-            self?.present(alertController, animated: true)
+            present(alertController, animated: true)
         }
-        
-        return UISwipeActionsConfiguration(actions: [action])
     }
     
-    private func removeCell(_ tableView: UITableView, at indexPath: IndexPath) {
-        guard let section = viewModel?.sections[indexPath.section] else {
-            return
+    func tableView(_ tableView: UITableView,
+                   editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if indexPath.section == 0 {
+            return expandedCell == indexPath ? .none : .delete
         }
         
-        switch section {
-        case let .normal(cells, header, footer):
-            var cells = cells
-            cells.remove(at: indexPath.row)
-            
-            viewModel?.sections[indexPath.section] = .normal(
-                cells: cells,
-                header: header,
-                footer: footer
-            )
-        default:
-            break
-        }
-        
-        tableView.deleteRows(at: [indexPath], with: .automatic)
+        return .none
     }
 }

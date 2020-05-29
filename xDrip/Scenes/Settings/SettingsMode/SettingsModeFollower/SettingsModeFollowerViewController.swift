@@ -50,12 +50,22 @@ class SettingsModeFollowerViewController: BaseSettingsViewController, SettingsMo
     }
     
     // MARK: IB
-    private var loginBarButtonItem: UIBarButtonItem?
+    private lazy var loginBarButtonItem: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+           title: "settings_mode_settings_login_button".localized,
+           style: .done,
+           target: self,
+           action: #selector(onLogin)
+        )
+        button.isEnabled = false
+        
+        return button
+    }()
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
         doLoad()
     }
     
@@ -65,22 +75,17 @@ class SettingsModeFollowerViewController: BaseSettingsViewController, SettingsMo
         showLoginButton()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        parent?.parent?.navigationItem.rightBarButtonItem = nil
+    }
+    
     // MARK: Do something
     
     private func doLoad() {
         let request = SettingsModeFollower.Load.Request()
         interactor?.doLoad(request: request)
-    }
-    
-    private func setupUI() {
-        let barButtonItem = UIBarButtonItem(
-            title: "settings_mode_settings_login_button".localized,
-            style: .done,
-            target: self,
-            action: #selector(onLogin)
-        )
-        barButtonItem.isEnabled = false
-        loginBarButtonItem = barButtonItem
     }
     
     private func showLoginButton() {
@@ -99,6 +104,6 @@ class SettingsModeFollowerViewController: BaseSettingsViewController, SettingsMo
     }
     
     func displayUpdate(viewModel: SettingsModeFollower.Update.ViewModel) {
-        loginBarButtonItem?.isEnabled = viewModel.loginButtonEnabled
+        loginBarButtonItem.isEnabled = viewModel.loginButtonEnabled
     }
 }
