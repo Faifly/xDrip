@@ -142,4 +142,14 @@ final class Settings: Object {
             rate.deleteFromRealm()
         }
     }
+    
+    // MARK: Skip warm-up
+    
+    @objc private(set) dynamic var skipWarmUp = false
+    
+    func updateSkipWarmUp(_ skip: Bool) {
+        Realm.shared.safeWrite {
+            self.skipWarmUp = skip
+        }
+    }
 }

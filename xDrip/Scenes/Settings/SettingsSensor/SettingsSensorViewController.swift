@@ -14,9 +14,10 @@ import UIKit
 
 protocol SettingsSensorDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsSensor.Load.ViewModel)
+    func displayData(viewModel: SettingsSensor.UpdateData.ViewModel)
 }
 
-class SettingsSensorViewController: NibViewController, SettingsSensorDisplayLogic {
+class SettingsSensorViewController: BaseSettingsViewController, SettingsSensorDisplayLogic {
     var interactor: SettingsSensorBusinessLogic?
     var router: SettingsSensorDataPassing?
     
@@ -60,6 +61,8 @@ class SettingsSensorViewController: NibViewController, SettingsSensorDisplayLogi
     // MARK: Do something
     
     private func doLoad() {
+        title = "settings_sensor_screen_title".localized
+        
         let request = SettingsSensor.Load.Request()
         interactor?.doLoad(request: request)
     }
@@ -67,5 +70,9 @@ class SettingsSensorViewController: NibViewController, SettingsSensorDisplayLogi
     // MARK: Display
     
     func displayLoad(viewModel: SettingsSensor.Load.ViewModel) {
+    }
+    
+    func displayData(viewModel: SettingsSensor.UpdateData.ViewModel) {
+        update(with: viewModel.settingsViewModel)
     }
 }

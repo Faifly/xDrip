@@ -11,9 +11,11 @@
 //
 
 import UIKit
+import AKUtils
 
 protocol SettingsSensorPresentationLogic {
     func presentLoad(response: SettingsSensor.Load.Response)
+    func presentData(response: SettingsSensor.UpdateData.Response)
 }
 
 final class SettingsSensorPresenter: SettingsSensorPresentationLogic {
@@ -24,5 +26,124 @@ final class SettingsSensorPresenter: SettingsSensorPresentationLogic {
     func presentLoad(response: SettingsSensor.Load.Response) {
         let viewModel = SettingsSensor.Load.ViewModel()
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    func presentData(response: SettingsSensor.UpdateData.Response) {
+        let sections = [
+            createInfoSection(response: response),
+            createCalibrationsSection(response: response),
+            createAdvancedSection(response: response)
+        ]
+        
+        let settingsViewModel = BaseSettings.ViewModel(sections: sections)
+        let viewModel = SettingsSensor.UpdateData.ViewModel(settingsViewModel: settingsViewModel)
+        viewController?.displayData(viewModel: viewModel)
+    }
+    
+    // MARK: Logic
+    
+    private func createInfoSection(response: SettingsSensor.UpdateData.Response) -> BaseSettings.Section {
+        let startStopTitle = response.device.isSensorStarted ?
+            "settings_sensor_stop_button".localized :
+            "settings_sensor_start_button".localized
+        
+        let cells: [BaseSettings.Cell] = [
+            .info(
+                mainText: "settings_sensor_start_time".localized,
+                detailText: sensorStartTime(device: response.device),
+                detailTextColor: nil
+            ),
+            .info(
+                mainText: "settings_sensor_age".localized,
+                detailText: sensorAge(device: response.device),
+                detailTextColor: nil
+            ),
+            .button(
+                title: startStopTitle,
+                color: response.device.isSensorStarted ? .tabBarRedColor : .tabBarBlueColor,
+                handler: response.startStopHandler
+            )
+        ]
+        return BaseSettings.Section.normal(
+            cells: cells,
+            header: "settings_sensor_info_section_header".localized,
+            footer: nil,
+            headerView: nil,
+            footerView: nil
+        )
+    }
+    
+    private func createCalibrationsSection(response: SettingsSensor.UpdateData.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            .info(
+                mainText: "settings_sensor_total_calibrations".localized,
+                detailText: "\(response.sensorCalibrations.count)",
+                detailTextColor: nil
+            ),
+            .info(
+                mainText: "settings_sensor_last_calibration".localized,
+                detailText: lastCalibration(response.sensorCalibrations),
+                detailTextColor: nil
+            ),
+            .button(
+                title: "settings_sensor_delete_all_calibrations_button".localized,
+                color: .tabBarRedColor,
+                handler: response.deleteAllHandler
+            ),
+            .button(
+                title: "settings_sensor_delete_last_calibration_button".localized,
+                color: .tabBarRedColor,
+                handler: response.deleteLastHandler
+            )
+        ]
+        
+        return BaseSettings.Section.normal(
+            cells: cells,
+            header: "settings_sensor_calibrations_section_title".localized,
+            footer: nil,
+            headerView: nil,
+            footerView: nil
+        )
+    }
+    
+    private func createAdvancedSection(response: SettingsSensor.UpdateData.Response) -> BaseSettings.Section {
+        let cell = BaseSettings.Cell.rightSwitch(
+            text: "settings_sensor_skip_warmup".localized,
+            isSwitchOn: User.current.settings.skipWarmUp,
+            switchHandler: response.skipWarmsUpHandler
+        )
+        return BaseSettings.Section.normal(
+            cells: [cell],
+            header: "settings_sensor_advanced_section_title".localized,
+            footer: nil,
+            headerView: nil,
+            footerView: nil
+        )
+    }
+    
+    private func sensorStartTime(device: CGMDevice) -> String {
+        guard device.isSensorStarted else { return "settings_sensor_start_time_unavailable".localized }
+        guard let date = device.sensorStartDate else { return "settings_sensor_start_time_unavailable".localized }
+        return DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .short)
+    }
+    
+    private func sensorAge(device: CGMDevice) -> String {
+        guard device.isSensorStarted else { return "settings_sensor_age_unavailable".localized }
+        guard let date = device.sensorStartDate else { return "settings_sensor_age_unavailable".localized }
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .short
+        formatter.allowedUnits = [.minute, .hour, .day]
+        let interval = Date().timeIntervalSince1970 - date.timeIntervalSince1970
+        return formatter.string(from: interval) ?? "settings_sensor_age_unavailable".localized
+    }
+    
+    private func lastCalibration(_ calibrations: [Calibration]) -> String {
+        let unknown = "settings_sensor_last_calibration_unavailable".localized
+        guard let calibration = calibrations.min(by: { $0.date >? $1.date }) else { return unknown }
+        guard let date = calibration.date else { return unknown }
+        let level = GlucoseUnit.convertToUserDefined(calibration.glucoseLevel)
+        let unit = User.current.settings.unit.label
+        let dateString = DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .short)
+        return "\(level) \(unit), \(dateString)"
     }
 }

@@ -45,9 +45,32 @@ final class SettingsSensorInteractorTests: XCTestCase {
         func presentLoad(response: SettingsSensor.Load.Response) {
             presentLoadCalled = true
         }
+        
+        func presentData(response: SettingsSensor.UpdateData.Response) {
+        }
     }
     
     final class SettingsSensorRoutingLogicSpy: SettingsSensorRoutingLogic {
+        func routeToStartSensor(callback: @escaping (Date) -> Void) {
+        }
+        
+        func showDeleteAllCalibrationsConfirmation(completion: @escaping () -> Void) {
+        }
+        
+        func showDeleteLastCalibrationConfirmation(completion: @escaping () -> Void) {
+        }
+        
+        func showNoCalibrationsAlert() {
+        }
+        
+        func showNoTransmitterAlert() {
+        }
+        
+        func showSkipWarmUpConfirmation(completion: @escaping (Bool) -> Void) {
+        }
+        
+        func showStopSensorConfirmation(completion: @escaping () -> Void) {
+        }
     }
     
     // MARK: Tests

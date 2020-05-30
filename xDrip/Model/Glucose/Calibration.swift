@@ -14,6 +14,7 @@ import AKUtils
 // swiftlint:disable type_body_length
 // swiftlint:disable function_body_length
 // swiftlint:disable closure_body_length
+// swiftlint:disable file_length
 
 enum CalibrationError: Error {
     case notEnoughReadings
@@ -51,6 +52,7 @@ final class Calibration: Object {
     }
     
     static var allForCurrentSensor: [Calibration] {
+        guard CGMDevice.current.isSensorStarted else { return [] }
         guard let sensorStartDate = CGMDevice.current.sensorStartDate else { return [] }
         return all.filter { $0.date >? sensorStartDate }
     }
@@ -95,6 +97,7 @@ final class Calibration: Object {
         let last2Readings = GlucoseReading.latestByCount(2)
         guard last2Readings.count == 2 else { throw CalibrationError.notEnoughReadings }
         guard let sensorStarted = CGMDevice.current.sensorStartDate else { throw CalibrationError.sensorNotStarted }
+        guard CGMDevice.current.isSensorStarted else { throw CalibrationError.sensorNotStarted }
         
         clearAllExistingCalibrations()
         
@@ -168,6 +171,7 @@ final class Calibration: Object {
     static func createRegularCalibration(glucoseLevel: Double, date: Date) throws {
         guard let reading = GlucoseReading.reading(for: date) else { throw CalibrationError.noReadingsNearDate }
         guard let sensorStarted = CGMDevice.current.sensorStartDate else { throw CalibrationError.sensorNotStarted }
+        guard CGMDevice.current.isSensorStarted else { throw CalibrationError.sensorNotStarted }
         
         let calibration = Calibration()
         calibration.glucoseLevel = glucoseLevel
@@ -244,6 +248,21 @@ final class Calibration: Object {
         
         readings.first?.findNewRawCurve()
         readings.first?.findNewCurve()
+    }
+    
+    static func deleteLast() {
+        guard let last = allForCurrentSensor.last else { return }
+        let realm = Realm.shared
+        realm.safeWrite {
+            realm.delete(last)
+        }
+    }
+    
+    static func deleteAll() {
+        let realm = Realm.shared
+        realm.safeWrite {
+            realm.delete(allForCurrentSensor)
+        }
     }
     
     private static func calculateWLS() {

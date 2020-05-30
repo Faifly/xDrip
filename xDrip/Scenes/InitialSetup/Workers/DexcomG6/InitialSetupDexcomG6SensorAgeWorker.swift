@@ -18,6 +18,6 @@ final class InitialSetupDexcomG6SensorAgeWorker {
     }
     
     func saveSensorAge(_ date: Date) {
-        CGMDevice.current.updateMetadata(ofType: .sensorAge, value: "\(date.timeIntervalSince1970)")
+        CGMDevice.current.sensorStartDate = date
     }
 }

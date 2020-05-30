@@ -42,6 +42,10 @@ final class CGMDevice: Object {
         }
     }
     
+    var isSetUp: Bool {
+        return deviceType != nil
+    }
+    
     // MARK: Device type
     
     @objc private dynamic var rawDeviceType: Int = -1
@@ -110,10 +114,29 @@ final class CGMDevice: Object {
         }
     }
     
+    // MARK: Sensor
+    
+    @objc private(set) dynamic var isSensorStarted: Bool = false
+    
+    func updateSensorIsStarted(_ isStarted: Bool) {
+        Realm.shared.safeWrite {
+            self.isSensorStarted = isStarted
+        }
+    }
+    
     var sensorStartDate: Date? {
-        guard let sensorStartedString = CGMDevice.current.metadata(ofType: .sensorAge)?.value else { return nil }
-        guard let sensorStarted = TimeInterval(sensorStartedString) else { return nil }
-        return Date(timeIntervalSince1970: sensorStarted)
+        get {
+            guard let sensorStartedString = metadata(ofType: .sensorAge)?.value else { return nil }
+            guard let sensorStarted = TimeInterval(sensorStartedString) else { return nil }
+            return Date(timeIntervalSince1970: sensorStarted)
+        }
+        set {
+            guard let newValue = newValue else {
+                updateMetadata(ofType: .sensorAge, value: nil)
+                return
+            }
+            updateMetadata(ofType: .sensorAge, value: "\(newValue.timeIntervalSince1970)")
+        }
     }
     
     // MARK: Reset

@@ -27,4 +27,19 @@ enum SettingsSensor {
         struct ViewModel {
         }
     }
+    
+    enum UpdateData {
+        struct Response {
+            let device: CGMDevice
+            let sensorCalibrations: [Calibration]
+            let startStopHandler: () -> Void
+            let deleteLastHandler: () -> Void
+            let deleteAllHandler: () -> Void
+            let skipWarmsUpHandler: (Bool) -> Void
+        }
+        
+        struct ViewModel {
+            let settingsViewModel: BaseSettings.ViewModel
+        }
+    }
 }
