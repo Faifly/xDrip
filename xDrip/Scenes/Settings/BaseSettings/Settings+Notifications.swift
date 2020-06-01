@@ -13,6 +13,8 @@ extension NotificationCenter {
     enum Setting {
         case unit
         case chart
+        case deviceMode
+        case injectionType
     }
     
     func subscribe(forSettingsChange settings: [Setting],
@@ -35,6 +37,8 @@ fileprivate extension NotificationCenter.Setting {
         switch self {
         case .unit: name = "settingsUnit"
         case .chart: name = "settingsChart"
+        case .deviceMode: name = "settingsDeviceMode"
+        case .injectionType: name = "settingsInjectionType"
         }
         return Notification.Name(name)
     }

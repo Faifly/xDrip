@@ -54,20 +54,25 @@ class SettingsRootViewController: BaseSettingsViewController, SettingsRootDispla
         return UIDevice.current.userInterfaceIdiom == .pad ? .grouped : super.tableViewStyle
     }
     
+    private var settingsChangeObservers: [NSObjectProtocol] = []
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupUI()
+        setupNavigationItems()
         doLoad()
+        
+        settingsChangeObservers = NotificationCenter.default.subscribe(
+            forSettingsChange: [.deviceMode, .injectionType],
+            notificationHandler: doLoad
+        )
     }
     
     // MARK: Do something
     
     private func doLoad() {
-        setupUI()
-        setupNavigationItems()
-        
         let request = SettingsRoot.Load.Request()
         interactor?.doLoad(request: request)
     }

@@ -23,6 +23,7 @@ protocol SettingsRootRoutingLogic {
     func routeToUserType()
     func routeToRangeSelection()
     func routeToSensor()
+    func routeToNightscoutService()
 }
 
 protocol SettingsRootDataPassing {
@@ -73,6 +74,9 @@ final class SettingsRootRouter: SettingsRootRoutingLogic, SettingsRootDataPassin
     
     func routeToSensor() {
         present(SettingsSensorViewController())
+    }
+    
+    func routeToNightscoutService() {
     }
     
     private func present(_ viewController: UIViewController) {

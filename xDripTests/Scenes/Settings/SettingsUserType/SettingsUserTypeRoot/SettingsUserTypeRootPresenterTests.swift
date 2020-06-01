@@ -53,7 +53,7 @@ final class SettingsUserTypeRootPresenterTests: XCTestCase {
         // Given
         let spy = SettingsUserTypeRootDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsUserTypeRoot.Load.Response()
+        let response = SettingsUserTypeRoot.Load.Response(injectionType: .pen)
         
         // When
         sut.presentLoad(response: response)

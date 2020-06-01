@@ -22,6 +22,20 @@ enum SettingsModeRoot {
         }
         
         struct Response {
+            let mode: UserDeviceMode
+        }
+        
+        struct ViewModel {
+            let mode: UserDeviceMode
+        }
+    }
+    
+    enum ChangeMode {
+        struct Request {
+            let mode: UserDeviceMode
+        }
+        
+        struct Response {
         }
         
         struct ViewModel {
