@@ -21,6 +21,16 @@
 "entries_list_scene_title_bolus" = "Активный инсулин";
 "entries_list_cell_no_date" = "Дата не указана";
 
+// Edit Calibration
+"edit_calibration_scene_title" = "Калибровка";
+"edit_calibration_single_section_header" = "ВВЕДИТЕ ЗНАЧЕНИЕ НИЖЕ";
+"edit_calibration_first_section_header" = "ВВЕДИТЕ ПЕРВОЕ ЗНАЧЕНИЕ НИЖЕ";
+"edit_calibration_second_section_header" = "ВВЕДИТЕ ВТОРОЕ ЗНАЧЕНИЕ НИЖЕ";
+"edit_calibration_single_section_footer" = "ПОЖАЛУЙСТА, СДЕЛАЙТЕ ТЕСТ И ВВЕДИТЕ ЗНАЧЕНИЕ!";
+"edit_calibration_second_section_footer" = "ДЛЯ ТОГО ЧТОБЫ НАЧАТЬ, ПОЖАЛУЙСТА, СДЕЛАЙТЕ ОДИН ИЛИ ДВА ТЕСТА И ВВЕДИТЕ ЗНАЧЕНИЯ!";
+"edit_calibration_date_picker_title" = "Дата/Время";
+"edit_calibration_value_picker_title" = "Уровень Глюкозы";
+
 // Settings Root
 "settings_root_title" = "Настройки";
 "settings_root_units_title" = "Единицы измерения";

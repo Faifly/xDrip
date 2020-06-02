@@ -22,7 +22,112 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: EditCalibration.Load.Response) {
-        let viewModel = EditCalibration.Load.ViewModel(displaySecondEntrySet: !response.hasInitialCalibrations)
+        var sections: [BaseSettings.Section] = [
+            createSection(.firstInput, response: response)
+        ]
+        
+        if !response.hasInitialCalibrations {
+            sections.append(
+                createSection(.secondInput, response: response)
+            )
+        }
+        
+        let tableViewModel = BaseSettings.ViewModel(sections: sections)
+        let viewModel = EditCalibration.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    private func createSection(
+        _ field: EditCalibration.Field,
+        response: EditCalibration.Load.Response
+    ) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createGlucosePickerCell(field, glucoseValueChangedPicker: response.glucosePickerValueChanged),
+            createDatePickerCell(field, dateValueChagedHandler: response.datePickerValueChanged)
+        ]
+        
+        var header = ""
+        var footer: String?
+        
+        if response.hasInitialCalibrations {
+            header = "edit_calibration_single_section_header".localized
+            footer = "edit_calibration_single_section_footer".localized
+        } else {
+            switch field {
+            case .firstInput:
+                header = "edit_calibration_first_section_header".localized
+                footer = nil
+            case .secondInput:
+                header = "edit_calibration_second_section_header".localized
+                footer = "edit_calibration_second_section_footer".localized
+            }
+        }
+        
+        return .normal(
+            cells: cells,
+            header: header,
+            footer: footer)
+    }
+    
+    private func createDatePickerCell(
+        _ field: EditCalibration.Field,
+        dateValueChagedHandler: @escaping (EditCalibration.Field, Date) -> Void
+    ) -> BaseSettings.Cell {
+        let date = Date()
+        
+        let picker = CustomDatePicker()
+        picker.datePickerMode = .dateAndTime
+        
+        picker.minimumDate = CGMDevice.current.sensorStartDate
+        picker.maximumDate = date
+        
+        picker.formatDate = { date in
+            dateValueChagedHandler(field, date)
+            return DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
+        }
+        
+        let formattedDate = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
+        
+        return .pickerExpandable(
+            mainText: "edit_calibration_date_picker_title".localized,
+            detailText: formattedDate,
+            picker: picker
+        )
+    }
+    
+    private func createGlucosePickerCell(
+        _ field: EditCalibration.Field,
+        glucoseValueChangedPicker: @escaping (EditCalibration.Field, String?) -> Void
+    ) -> BaseSettings.Cell {
+        let unit = User.current.settings.unit
+        let range = unit.minMax
+        let step = unit.pickerStep
+        let array = Array(stride(from: range.lowerBound, to: range.upperBound + step, by: step))
+        let strings = array.map { String(format: "%.1f", $0) }
+
+        let picker = CustomPickerView(data: [strings, [unit.title]])
+
+        picker.formatValues = { strings in
+           glucoseValueChangedPicker(field, strings[0])
+           
+           return strings[0] + " " + strings[1]
+        }
+        
+        let detail = "0.0 " + unit.title
+        
+        return .pickerExpandable(
+            mainText: "edit_calibration_value_picker_title".localized,
+            detailText: detail,
+            picker: picker
+        )
+    }
+}
+
+private extension GlucoseUnit {
+    var title: String {
+        switch self {
+        case .mgDl: return "settings_units_mgdl".localized
+        case .mmolL: return "settings_units_mmolL".localized
+        }
     }
 }

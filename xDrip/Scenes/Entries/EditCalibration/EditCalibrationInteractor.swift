@@ -22,11 +22,19 @@ protocol EditCalibrationDataStore: AnyObject {
 }
 
 final class EditCalibrationInteractor: EditCalibrationBusinessLogic, EditCalibrationDataStore {
+    struct Input {
+        var value: String?
+        var date = Date()
+    }
+    
     var presenter: EditCalibrationPresentationLogic?
     var router: EditCalibrationRoutingLogic?
     
     private let statusWorker: EditCalibrationStatusWorkerLogic
     private let savingWorker: EditCalibrationSavingWorkerLogic
+    
+    private var firstInput = Input()
+    private var secondInput = Input()
     
     init() {
         statusWorker = EditCalibrationStatusWorker()
@@ -36,7 +44,11 @@ final class EditCalibrationInteractor: EditCalibrationBusinessLogic, EditCalibra
     // MARK: Do something
     
     func doLoad(request: EditCalibration.Load.Request) {
-        let response = EditCalibration.Load.Response(hasInitialCalibrations: statusWorker.hasInitialCalibrations)
+        let response = EditCalibration.Load.Response(
+            hasInitialCalibrations: statusWorker.hasInitialCalibrations,
+            datePickerValueChanged: handleDatePickerValueChanged(_:_:),
+            glucosePickerValueChanged: handleGlucosePickerValueChanged(_:_:)
+        )
         presenter?.presentLoad(response: response)
     }
     
@@ -47,10 +59,10 @@ final class EditCalibrationInteractor: EditCalibrationBusinessLogic, EditCalibra
     func doSave(request: EditCalibration.Save.Request) {
         do {
             try savingWorker.saveInput(
-                entry1: request.entry1,
-                entry2: request.entry2,
-                date1: request.date1,
-                date2: request.date2
+                entry1: firstInput.value,
+                entry2: secondInput.value,
+                date1: firstInput.date,
+                date2: secondInput.date
             )
         } catch {
             router?.showError(error.localizedDescription)
@@ -58,5 +70,19 @@ final class EditCalibrationInteractor: EditCalibrationBusinessLogic, EditCalibra
         }
         
         router?.showSuccessAndDismiss()
+    }
+    
+    private func handleDatePickerValueChanged(_ field: EditCalibration.Field, _ date: Date) {
+        switch field {
+        case .firstInput: firstInput.date = date
+        case .secondInput: secondInput.date = date
+        }
+    }
+    
+    private func handleGlucosePickerValueChanged(_ field: EditCalibration.Field, _ value: String?) {
+        switch field {
+        case .firstInput: firstInput.value = value
+        case .secondInput: secondInput.value = value
+        }
     }
 }

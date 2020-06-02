@@ -21,6 +21,16 @@
 "entries_list_scene_title_bolus" = "Active insulin";
 "entries_list_cell_no_date" = "No date specified";
 
+// Edit Calibration
+"edit_calibration_scene_title" = "Calibration";
+"edit_calibration_single_section_header" = "ENTER THE VALUE BELOW";
+"edit_calibration_first_section_header" = "ENTER THE FIRST VALUE BELOW";
+"edit_calibration_second_section_header" = "ENTER THE SECOND VALUE BELOW";
+"edit_calibration_single_section_footer" = "PLEASE PERFORM ONE FINGER PRICK TEST AND ENTER THE VALUE HERE!";
+"edit_calibration_second_section_footer" = "IN ORDER TO GET STARTED, PLEASE PERFORM ONE OR TWO FINGER PRICK TESTS AND ENTER THE VALUE HERE!";
+"edit_calibration_date_picker_title" = "Date/Time";
+"edit_calibration_value_picker_title" = "BG Value";
+
 // Settings Root
 "settings_root_title" = "Settings";
 "settings_root_units_title" = "Units";
