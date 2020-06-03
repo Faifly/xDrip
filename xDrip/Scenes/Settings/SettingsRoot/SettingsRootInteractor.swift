@@ -12,6 +12,8 @@
 
 import UIKit
 
+// swiftlint:disable cyclomatic_complexity
+
 protocol SettingsRootBusinessLogic {
     func doLoad(request: SettingsRoot.Load.Request)
     func doCancel(request: SettingsRoot.Cancel.Request)
@@ -31,9 +33,10 @@ final class SettingsRootInteractor: SettingsRootBusinessLogic, SettingsRootDataS
         
         let response = SettingsRoot.Load.Response(
             deviceMode: user.settings.deviceMode,
-            injectionType: user.settings.injectionType) { [weak self] field in
-                self?.handleFieldSelection(field)
-        }
+            injectionType: user.settings.injectionType,
+            selectionHandler: handleFieldSelection(_:),
+            timePickerValueChangedHandler: handleTimePickerValueChanged(_:_:)
+        )
         presenter?.presentLoad(response: response)
     }
     
@@ -54,6 +57,17 @@ final class SettingsRootInteractor: SettingsRootBusinessLogic, SettingsRootDataS
         case .userType: router?.routeToUserType()
         case .rangeSelection: router?.routeToRangeSelection()
         case .sensor: router?.routeToSensor()
+        case .nightscoutService: router?.routeToNightscoutService()
+        default: break
+        }
+    }
+    
+    private func handleTimePickerValueChanged(_ field: SettingsRoot.Field, _ time: TimeInterval) {
+        let settings = User.current.settings
+        
+        switch field {
+        case .carbsDurationTime: settings?.updateCarbsAbsorptionRate(time)
+        case .insulinDurationTime: settings?.updateInsulinActionTime(time)
         default: break
         }
     }

@@ -22,32 +22,45 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsRoot.Load.Response) {
-        let tableViewModel = BaseSettings.ViewModel(
-            sections: [
-                createApplicationSetupSection(response: response),
-                createProfileSetupSection(response: response)
-            ]
-        )
+        var sections = [
+            createApplicationSetupSection(response: response),
+            createProfileSetupSection(response: response)
+        ]
+        
+        if response.injectionType == .pump {
+            sections.append(
+                createServicesSection(response: response)
+            )
+        }
+        
+        let tableViewModel = BaseSettings.ViewModel(sections: sections)
         
         let viewModel = SettingsRoot.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
     }
     
     private func createApplicationSetupSection(response: SettingsRoot.Load.Response) -> BaseSettings.Section {
-        let cells: [BaseSettings.Cell] = [
+        var cells: [BaseSettings.Cell] = [
             createDisclosureCell(.chartSettings, detailText: nil, selectionHandler: response.selectionHandler),
             createDisclosureCell(.alert, detailText: nil, selectionHandler: response.selectionHandler),
             createDisclosureCell(.cloudUpload, detailText: nil, selectionHandler: response.selectionHandler),
             createDisclosureCell(
                 .modeSettings,
-                detailText: "Master/Follower",
+                detailText: response.deviceMode.title,
                 selectionHandler: response.selectionHandler
-            ),
-            createDisclosureCell(.sensor, detailText: nil, selectionHandler: response.selectionHandler),
-            createDisclosureCell(.transmitter, detailText: nil, selectionHandler: response.selectionHandler)
+            )
         ]
         
-        return BaseSettings.Section.normal(
+        if response.deviceMode == .main {
+            cells.append(
+                contentsOf: [
+                    createDisclosureCell(.sensor, detailText: nil, selectionHandler: response.selectionHandler),
+                    createDisclosureCell(.transmitter, detailText: nil, selectionHandler: response.selectionHandler)
+                ]
+            )
+        }
+        
+        return .normal(
             cells: cells,
             header: "settings_root_application_setup_header".localized,
             footer: nil
@@ -55,17 +68,44 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
     }
     
     private func createProfileSetupSection(response: SettingsRoot.Load.Response) -> BaseSettings.Section {
+        let carbsDuration = User.current.settings.carbsAbsorptionRate
+        let insulinDuration = User.current.settings.insulinActionTime
+        
         let cells: [BaseSettings.Cell] = [
             createDisclosureCell(.rangeSelection, detailText: nil, selectionHandler: response.selectionHandler),
-            createDisclosureCell(.userType, detailText: "Pen/Pump", selectionHandler: response.selectionHandler),
+            createDisclosureCell(
+                .userType,
+                detailText: response.injectionType.title,
+                selectionHandler: response.selectionHandler
+            ),
             createDisclosureCell(.units, detailText: nil, selectionHandler: response.selectionHandler),
-            createDisclosureCell(.carbsDurationTime, detailText: nil, selectionHandler: response.selectionHandler),
-            createDisclosureCell(.insulinDurationTime, detailText: nil, selectionHandler: response.selectionHandler)
+            createTimePickerCell(
+                .carbsDurationTime,
+                detail: carbsDuration,
+                timePickerValueChanged: response.timePickerValueChangedHandler
+            ),
+            createTimePickerCell(
+                .insulinDurationTime,
+                detail: insulinDuration,
+                timePickerValueChanged: response.timePickerValueChangedHandler
+            )
         ]
         
-        return BaseSettings.Section.normal(
+        return .normal(
             cells: cells,
             header: "settings_root_profile_setup_header".localized,
+            footer: nil
+        )
+    }
+    
+    func createServicesSection(response: SettingsRoot.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createDisclosureCell(.nightscoutService, detailText: nil, selectionHandler: response.selectionHandler)
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: "settings_root_services_header".localized,
             footer: nil
         )
     }
@@ -79,30 +119,40 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
         }
     }
     
-    private func createRightSwitchCell(
+    private func createTimePickerCell(
         _ field: SettingsRoot.Field,
-        isSwitchOn: Bool,
-        switchHandler: @escaping (Bool) -> Void) -> BaseSettings.Cell {
-        return .rightSwitch(text: field.title, isSwitchOn: isSwitchOn) { _ in }
-    }
-    
-    private func createVolumeSliderCell(
-        _ value: Float,
-        valueChangedHandler: @escaping (Float) -> Void) -> BaseSettings.Cell {
-        return .volumeSlider(value: value, changeHandler: valueChangedHandler)
-    }
-    
-    private func createTextInputCell(
-        _ field: SettingsRoot.Field,
-        detailText: String?,
-        placeholder: String?,
-        textChangeHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
-        return .textInput(
-            mainText: field.title,
-            detailText: detailText,
-            placeholder: placeholder,
-            textChangedHandler: textChangeHandler
+        detail: TimeInterval,
+        timePickerValueChanged: @escaping (SettingsRoot.Field, TimeInterval) -> Void) -> BaseSettings.Cell {
+        let hour = Int(detail / TimeInterval.secondsPerHour)
+        let minutes = Int((detail - TimeInterval(hour) * TimeInterval.secondsPerHour) / TimeInterval.secondsPerMinute)
+        let detail = String(
+            format: "%d" + "custom_picker_h".localized + " %02d" + "custom_picker_m".localized,
+            hour,
+            minutes
         )
+        
+        let picker = CustomPickerView(mode: .countDown)
+        
+        picker.selectRow(hour, inComponent: 0, animated: false)
+        picker.selectRow(minutes, inComponent: 2, animated: false)
+        
+        picker.formatValues = { strings in
+            guard let hour = TimeInterval(strings[0]), let minutes = TimeInterval(strings[2]) else {
+                return ""
+            }
+            
+            let time = hour * TimeInterval.secondsPerHour + minutes * TimeInterval.secondsPerMinute
+            timePickerValueChanged(field, time)
+            
+            let formattedString = String(
+                format: "%d" + "custom_picker_h".localized + " %02d" + "custom_picker_m".localized,
+                Int(hour),
+                Int(minutes)
+            )
+            return formattedString
+        }
+        
+        return .pickerExpandable(mainText: field.title, detailText: detail, picker: picker)
     }
 }
 
@@ -121,6 +171,24 @@ private extension SettingsRoot.Field {
         case .carbsDurationTime: return "settings_root_carbs_duration_time_title".localized
         case .insulinDurationTime: return "settings_root_insulin_duration_time_title".localized
         case .nightscoutService: return "settings_root_nightscout_pump_title".localized
+        }
+    }
+}
+
+private extension UserInjectionType {
+    var title: String {
+        switch self {
+        case .pen: return "settings_root_user_type_pen".localized
+        case .pump: return "settings_root_user_type_pump".localized
+        }
+    }
+}
+
+private extension UserDeviceMode {
+    var title: String {
+        switch self {
+        case .main: return "settings_root_user_mode_master".localized
+        case .follower: return "settings_root_user_mode_follower".localized
         }
     }
 }

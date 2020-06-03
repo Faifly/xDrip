@@ -22,7 +22,7 @@ final class SettingsModeRootPresenter: SettingsModeRootPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: SettingsModeRoot.Load.Response) {
-        let viewModel = SettingsModeRoot.Load.ViewModel()
+        let viewModel = SettingsModeRoot.Load.ViewModel(mode: response.mode)
         viewController?.displayLoad(viewModel: viewModel)
     }
 }
