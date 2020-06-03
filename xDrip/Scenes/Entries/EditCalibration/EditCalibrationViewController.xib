@@ -64,7 +64,7 @@
                     </subviews>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ThG-yh-Uqg">
-                    <rect key="frame" x="170.5" y="597" width="34" height="30"/>
+                    <rect key="frame" x="325" y="37" width="34" height="30"/>
                     <state key="normal" title="Save"/>
                     <connections>
                         <action selector="onSaveButtonTap" destination="-1" eventType="touchUpInside" id="yhw-0n-Zw4"/>
@@ -73,9 +73,9 @@
             </subviews>
             <color key="backgroundColor" name="background_1"/>
             <constraints>
-                <constraint firstItem="ThG-yh-Uqg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="6Iq-1w-nwi"/>
                 <constraint firstItem="tJe-d4-8Aw" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="QIw-d0-svy"/>
-                <constraint firstItem="ThG-yh-Uqg" firstAttribute="top" secondItem="tJe-d4-8Aw" secondAttribute="bottom" constant="8" id="WNf-og-BgJ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ThG-yh-Uqg" secondAttribute="trailing" constant="16" id="bTS-lj-JVF"/>
+                <constraint firstItem="ThG-yh-Uqg" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="37" id="c2g-ra-k5e"/>
                 <constraint firstItem="tJe-d4-8Aw" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="jSr-Ig-Fkk"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

@@ -13,7 +13,7 @@ final class AlertSettings: Object {
     @objc private(set) dynamic var isSystemVolumeOverriden: Bool = false
     @objc private(set) dynamic var volume: Float = 0.0
     @objc private(set) dynamic var isMuteOverriden: Bool = false
-    @objc private(set) dynamic var isNotificationsEnabled: Bool = false
+    @objc private(set) dynamic var isNotificationsEnabled: Bool = true
     @objc private(set) dynamic var defaultConfiguration: AlertConfiguration?
     
     private let customConfigurations = List<AlertConfiguration>()

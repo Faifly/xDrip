@@ -19,7 +19,7 @@ enum ApplicationLaunchController {
         #endif
         setupRealm()
         setupDevice()
-        NotificationController.shared.requestAuthorization()
+        NotificationController.requestAuthorization()
     }
     
     static func createWindow() -> UIWindow {

@@ -18,4 +18,27 @@ enum AlertEventType: Int, CaseIterable {
     case urgentLow
     case missedReadings
     case phoneMuted
+    case calibrationRequest
+    case initialCalibrationRequest
+    case pairingRequest
+    
+    var requiresGlucoseThreshold: Bool {
+        switch self {
+        case .default,
+             .missedReadings,
+             .phoneMuted,
+             .calibrationRequest,
+             .initialCalibrationRequest,
+             .pairingRequest,
+             .fastRise,
+             .fastDrop:
+            return false
+            
+        case .urgentHigh,
+             .high,
+             .low,
+             .urgentLow:
+            return true
+        }
+    }
 }

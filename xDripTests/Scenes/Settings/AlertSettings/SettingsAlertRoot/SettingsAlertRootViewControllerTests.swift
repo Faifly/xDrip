@@ -103,7 +103,7 @@ final class SettingsAlertRootViewControllerTests: XCTestCase {
         
         // Default
         XCTAssertTrue(tableView.numberOfSections == 1)
-        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 3)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 4)
         
         let cellType = BaseSettingsRightSwitchTableViewCell.self
         let indexPaths = [
@@ -130,13 +130,13 @@ final class SettingsAlertRootViewControllerTests: XCTestCase {
         // Default
         XCTAssertTrue(settings?.isSystemVolumeOverriden == false)
         XCTAssertTrue(settings?.isMuteOverriden == false)
-        XCTAssertTrue(settings?.isNotificationsEnabled == false)
+        XCTAssertTrue(settings?.isNotificationsEnabled == true)
         
         // When
         volumeSwitch.isOn = true
         volumeSwitch.sendActions(for: .valueChanged)
         // Then
-        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 4)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 5)
         XCTAssertTrue(settings?.isSystemVolumeOverriden == true)
         
         // When

@@ -43,7 +43,7 @@ final class CGMDevice: Object {
     }
     
     var isSetUp: Bool {
-        return deviceType != nil
+        return deviceType != nil && metadata(ofType: .serialNumber)?.value != nil
     }
     
     // MARK: Device type

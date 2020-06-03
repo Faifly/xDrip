@@ -26,9 +26,15 @@ final class InitialSetupG6DeviceIDViewController: InitialSetupAbstractStepViewCo
     }
     
     private func showInvalidFormatAlert() {
-        UIAlertController.showOKAlert(
+        let alert = UIAlertController(
             title: "Invalid format",
-            message: "Dexcom G6 serial number should contain 6 uppercased characters or digits"
+            message: "Dexcom G6 serial number should contain 6 uppercased characters or digits",
+            preferredStyle: .alert
         )
+        
+        let confirmAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(confirmAction)
+        
+        AlertPresenter.shared.presentAlert(alert)
     }
 }

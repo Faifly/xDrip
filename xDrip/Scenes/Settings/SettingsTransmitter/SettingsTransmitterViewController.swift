@@ -91,6 +91,7 @@ class SettingsTransmitterViewController: UIViewController, SettingsTransmitterDi
         scanButton.translatesAutoresizingMaskIntoConstraints = false
         scanButton.setTitleColor(.white, for: .normal)
         scanButton.addTarget(self, action: #selector(onScanButtonTap), for: .touchUpInside)
+        scanButton.layer.cornerRadius = 5.0
         view.addSubview(scanButton)
         self.scanButton = scanButton
         

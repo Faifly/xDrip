@@ -103,7 +103,7 @@ final class SettingsAlertTypesViewControllerTests: XCTestCase {
         
         XCTAssert(tableView.numberOfSections == 2)
         XCTAssert(tableView.numberOfRows(inSection: 0) == 6)
-        XCTAssert(tableView.numberOfRows(inSection: 1) == 8)
+        XCTAssert(tableView.numberOfRows(inSection: 1) == 11)
     }
     
     func testSwitchValueChangedHandlers() {

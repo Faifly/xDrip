@@ -98,9 +98,15 @@ extension CGMController: CGMBluetoothServiceDelegate {
     }
     
     func serviceDidFail(withError error: CGMBluetoothServiceError) {
-        UIAlertController.showOKAlert(
+        let alert = UIAlertController(
             title: "bluetooth_error_title".localized,
-            message: error.localizedDescription
+            message: error.localizedDescription,
+            preferredStyle: .alert
         )
+        
+        let confirmAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(confirmAction)
+        
+        AlertPresenter.shared.presentAlert(alert)
     }
 }

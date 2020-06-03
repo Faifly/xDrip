@@ -142,7 +142,7 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
     }
     
     func workerDidRequestPairing() {
-        NotificationController.shared.sendNotification(ofType: .pairingRequest)
+        NotificationController.sendNotification(ofType: .pairingRequest)
     }
 }
 

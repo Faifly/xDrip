@@ -21,6 +21,16 @@
 "entries_list_scene_title_bolus" = "Активный инсулин";
 "entries_list_cell_no_date" = "Дата не указана";
 
+// Edit Calibration
+"edit_calibration_scene_title" = "Калибровка";
+"edit_calibration_single_section_header" = "ВВЕДИТЕ ЗНАЧЕНИЕ НИЖЕ";
+"edit_calibration_first_section_header" = "ВВЕДИТЕ ПЕРВОЕ ЗНАЧЕНИЕ НИЖЕ";
+"edit_calibration_second_section_header" = "ВВЕДИТЕ ВТОРОЕ ЗНАЧЕНИЕ НИЖЕ";
+"edit_calibration_single_section_footer" = "Пожалуйста, сделайте тест и введите значение";
+"edit_calibration_second_section_footer" = "Для того чтобы начать, пожалуйста, сделайте один или два теста и введите значения";
+"edit_calibration_date_picker_title" = "Дата/Время";
+"edit_calibration_value_picker_title" = "Уровень Глюкозы";
+
 // Settings Root
 "settings_root_title" = "Настройки";
 "settings_root_units_title" = "Единицы измерения";
@@ -37,6 +47,13 @@
 "settings_root_nightscout_pump_title" = "Nightscout (Помпа)";
 "settings_root_application_setup_header" = "Настройки приложения";
 "settings_root_profile_setup_header" = "Настройки профиля";
+"settings_root_services_header" = "Сервисы";
+
+"settings_root_user_mode_master" = "Мастер";
+"settings_root_user_mode_follower" = "Подписчик";
+
+"settings_root_user_type_pen" = "Ручка";
+"settings_root_user_type_pump" = "Помпа";
 
 // Settings Chart
 "settings_chart_active_insulin" = "Активный инсулин";
@@ -75,6 +92,9 @@
 "settings_alert_types_event_type_title_urgent_low" = "Крайне низкий";
 "settings_alert_types_event_type_title_missed_readings" = "Пропущенные уведомления";
 "settings_alert_types_event_type_title_phone_muted" = "Телефон без звука";
+"settings_alert_types_event_type_title_calibration_request" = "Запрос Калибровки";
+"settings_alert_types_event_type_title_initial_calibration" = "Запрос Начальной Калибровки";
+"settings_alert_types_event_type_title_pairing_request" = "Запрос Сопряжения";
 "settings_alert_types_minutes" = "мин";
 
 // Settings Alert Root // Alert Types // Alert Single Type
@@ -101,6 +121,9 @@
 "settings_alert_single_type_event_type_title_urgent_low" = "Крайне низкий";
 "settings_alert_single_type_event_type_title_missed_readings" = "Пропущенные уведомления";
 "settings_alert_single_type_event_type_title_phone_muted" = "Телефон без звука";
+"settings_alert_single_type_event_title_calibration_request" = "Запрос Калибровки";
+"settings_alert_single_type_event_title_initial_calibration" = "Запрос Начальной Калибровки";
+"settings_alert_single_type_event_title_pairing_request" = "Запрос Сопряжения";
 "settings_alert_single_type_minutes" = "мин";
 
 // Settings Alert Root // Alert Sound
@@ -341,6 +364,10 @@
 "calibration_not_ready_error_title" = "Калибровка не доступна";
 "calibration_not_ready_error_general_message" = "Не достигнуты все условия для калибровки";
 "calibration_not_ready_error_no_initial_readings" = "Недостаточно показаний для первичной калибровки";
+"calibration_initial_alert_title" = "Начальная Калибровка";
+"calibration_initial_alert_message" = "Для нормального функционирования сенсора требуется начальная калибровка";
+"calibration_initial_alert_proceed_button" = "Продолжить";
+"calibration_initial_alert_cancel_button" = "Отмена";
 
 // Custom Picker
 "custom_picker_hours" = "ч";
@@ -351,3 +378,5 @@
 // Notifications
 "notification_pairing_request_title" = "Запрос Соединения";
 "notification_pairing_request_body" = "Пожалуйста, разблокируйте свой телефон и примите запрос на подключение от вашего датчика в течении 30ти секунд";
+"notification_initial_calibration_title" = "Начальная калибровка";
+"notification_initial_calibration_body" = "Сенсор теперь готов получить начальную калибровку";

@@ -166,6 +166,8 @@ final class Calibration: Object {
         }
         
         adjustRecentReadings(adjustedReadingsAmount)
+        
+        CalibrationController.shared.initialCalibrationCompleted()
     }
     
     static func createRegularCalibration(glucoseLevel: Double, date: Date) throws {
@@ -251,7 +253,7 @@ final class Calibration: Object {
     }
     
     static func deleteLast() {
-        guard let last = allForCurrentSensor.last else { return }
+        guard let last = allForCurrentSensor.first else { return }
         let realm = Realm.shared
         realm.safeWrite {
             realm.delete(last)
