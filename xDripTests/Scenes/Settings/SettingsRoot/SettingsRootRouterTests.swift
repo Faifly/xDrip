@@ -14,6 +14,7 @@
 import XCTest
 
 // swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable identifier_name
 
 final class SettingsRootRouterTests: XCTestCase {
     // MARK: Subject under test
@@ -41,6 +42,18 @@ final class SettingsRootRouterTests: XCTestCase {
         }
     }
     
+    final class SplitViewControllerSpy: UISplitViewController {
+        var lastPresentedViewController: UIViewController?
+        
+        override func showDetailViewController(_ vc: UIViewController, sender: Any?) {
+            lastPresentedViewController = vc
+            
+            if let navController = vc as? UINavigationController {
+                lastPresentedViewController = navController.viewControllers.first
+            }
+        }
+    }
+    
     // MARK: Tests
     
     func testDismissSelf() {
@@ -53,5 +66,122 @@ final class SettingsRootRouterTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.dismissCalled)
+    }
+    
+    func testRouteToUnits() {
+        // Given
+        let spy = SplitViewControllerSpy()
+        let root = SettingsRootViewController()
+        spy.viewControllers = [root.embedInNavigation(), SettingsChartViewController().embedInNavigation()]
+        sut.viewController = root
+        
+        // When
+        sut.routeToUnits()
+        // Then
+        XCTAssertTrue(spy.lastPresentedViewController is SettingsUnitsViewController)
+    }
+    
+    func testRouteToChartSettings() {
+        // Given
+        let spy = SplitViewControllerSpy()
+        let root = SettingsRootViewController()
+        spy.viewControllers = [root.embedInNavigation(), SettingsChartViewController().embedInNavigation()]
+        sut.viewController = root
+        
+        // When
+        sut.routeToChartSettings()
+        // Then
+        XCTAssertTrue(spy.lastPresentedViewController is SettingsChartViewController)
+    }
+    
+    func testRouteAlertRoot() {
+        // Given
+        let spy = SplitViewControllerSpy()
+        let root = SettingsRootViewController()
+        spy.viewControllers = [root.embedInNavigation(), SettingsChartViewController().embedInNavigation()]
+        sut.viewController = root
+        
+        // When
+        sut.routeToAlertRoot()
+        // Then
+        XCTAssertTrue(spy.lastPresentedViewController is SettingsAlertRootViewController)
+    }
+    
+    func testRouteToCloudUploads() {
+        // Given
+        let spy = SplitViewControllerSpy()
+        let root = SettingsRootViewController()
+        spy.viewControllers = [root.embedInNavigation(), SettingsChartViewController().embedInNavigation()]
+        sut.viewController = root
+        
+        // When
+        sut.routeToCloudUploads()
+        // Then
+        XCTAssertTrue(spy.lastPresentedViewController is SettingsCloudTypesViewController)
+    }
+    
+    func testRouteToTransmitter() {
+        // Given
+        let spy = SplitViewControllerSpy()
+        let root = SettingsRootViewController()
+        spy.viewControllers = [root.embedInNavigation(), SettingsChartViewController().embedInNavigation()]
+        sut.viewController = root
+        
+        // When
+        sut.routeToTransmitter()
+        // Then
+        XCTAssertTrue(spy.lastPresentedViewController is SettingsTransmitterViewController)
+    }
+    
+    func testRouteToRangeSelection() {
+        // Given
+        let spy = SplitViewControllerSpy()
+        let root = SettingsRootViewController()
+        spy.viewControllers = [root.embedInNavigation(), SettingsChartViewController().embedInNavigation()]
+        sut.viewController = root
+        
+        // When
+        sut.routeToRangeSelection()
+        // Then
+        XCTAssertTrue(spy.lastPresentedViewController is SettingsChartRangesViewController)
+    }
+    
+    func testRouteToModeSettings() {
+        // Given
+        let spy = SplitViewControllerSpy()
+        let root = SettingsRootViewController()
+        spy.viewControllers = [root.embedInNavigation(), SettingsChartViewController().embedInNavigation()]
+        sut.viewController = root
+        
+        // When
+        sut.routeToModeSettings()
+        // Then
+        XCTAssertTrue(spy.lastPresentedViewController is SettingsModeRootViewController)
+    }
+    
+    func testRouteToUserType() {
+        // Given
+        let spy = SplitViewControllerSpy()
+        let root = SettingsRootViewController()
+        spy.viewControllers = [root.embedInNavigation(), SettingsChartViewController().embedInNavigation()]
+        sut.viewController = root
+        
+        // When
+        sut.routeToUserType()
+        // Then
+        XCTAssertTrue(spy.lastPresentedViewController is SettingsUserTypeRootViewController)
+    }
+    
+    func testRouteToSensor() {
+        // Given
+        let spy = SplitViewControllerSpy()
+        let root = SettingsRootViewController()
+        spy.viewControllers = [root.embedInNavigation(), SettingsChartViewController().embedInNavigation()]
+        sut.viewController = root
+        
+        // When
+        sut.routeToSensor()
+        // Then
+        XCTAssertTrue(spy.lastPresentedViewController is SettingsSensorViewController)
     }
 }

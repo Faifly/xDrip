@@ -22,7 +22,7 @@ final class SettingsUserTypeRootPresenter: SettingsUserTypeRootPresentationLogic
     // MARK: Do something
     
     func presentLoad(response: SettingsUserTypeRoot.Load.Response) {
-        let viewModel = SettingsUserTypeRoot.Load.ViewModel()
+        let viewModel = SettingsUserTypeRoot.Load.ViewModel(injectionType: response.injectionType)
         viewController?.displayLoad(viewModel: viewModel)
     }
 }

@@ -53,7 +53,7 @@ final class SettingsModeRootPresenterTests: XCTestCase {
         // Given
         let spy = SettingsModeRootDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsModeRoot.Load.Response()
+        let response = SettingsModeRoot.Load.Response(mode: .main)
         
         // When
         sut.presentLoad(response: response)

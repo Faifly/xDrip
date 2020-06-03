@@ -14,6 +14,7 @@ import UIKit
 
 protocol SettingsUserTypeRootBusinessLogic {
     func doLoad(request: SettingsUserTypeRoot.Load.Request)
+    func doChangeType(request: SettingsUserTypeRoot.ChangeType.Request)
 }
 
 protocol SettingsUserTypeRootDataStore: AnyObject {
@@ -26,7 +27,16 @@ final class SettingsUserTypeRootInteractor: SettingsUserTypeRootBusinessLogic, S
     // MARK: Do something
     
     func doLoad(request: SettingsUserTypeRoot.Load.Request) {
-        let response = SettingsUserTypeRoot.Load.Response()
+        let type = User.current.settings.injectionType
+        
+        let response = SettingsUserTypeRoot.Load.Response(injectionType: type)
         presenter?.presentLoad(response: response)
+    }
+    
+    func doChangeType(request: SettingsUserTypeRoot.ChangeType.Request) {
+        let settings = User.current.settings
+        settings?.updateInjectionType(request.injectionType)
+        
+        NotificationCenter.default.postSettingsChangeNotification(setting: .injectionType)
     }
 }

@@ -14,6 +14,7 @@ import UIKit
 
 protocol SettingsModeRootBusinessLogic {
     func doLoad(request: SettingsModeRoot.Load.Request)
+    func doChangeMode(request: SettingsModeRoot.ChangeMode.Request)
 }
 
 protocol SettingsModeRootDataStore: AnyObject {    
@@ -26,7 +27,15 @@ final class SettingsModeRootInteractor: SettingsModeRootBusinessLogic, SettingsM
     // MARK: Do something
     
     func doLoad(request: SettingsModeRoot.Load.Request) {
-        let response = SettingsModeRoot.Load.Response()
+        let mode = User.current.settings.deviceMode
+        let response = SettingsModeRoot.Load.Response(mode: mode)
         presenter?.presentLoad(response: response)
+    }
+    
+    func doChangeMode(request: SettingsModeRoot.ChangeMode.Request) {
+        let settings = User.current.settings
+        settings?.updateDeviceMode(request.mode)
+        
+        NotificationCenter.default.postSettingsChangeNotification(setting: .deviceMode)
     }
 }

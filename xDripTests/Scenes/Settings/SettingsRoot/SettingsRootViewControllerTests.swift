@@ -60,6 +60,61 @@ final class SettingsRootViewControllerTests: XCTestCase {
         }
     }
     
+    final class SettingsRootRoutingLogicSpy: SettingsRootRoutingLogic {
+        var toUnitsCalled = false
+        var toChartSettingsCalled = false
+        var toAlertRootCalled = false
+        var toCloudUploadsCalled = false
+        var toTransmitterCalled = false
+        var toRangeSelectionCalled = false
+        var toModeSettingsCalled = false
+        var toUserTypeCalled = false
+        var toSensorCalled = false
+        var toNightscoutServiceCalled = false
+        
+        func dismissSelf() { }
+        
+        func routeToUnits() {
+            toUnitsCalled = true
+        }
+        
+        func routeToChartSettings() {
+            toChartSettingsCalled = true
+        }
+        
+        func routeToAlertRoot() {
+            toAlertRootCalled = true
+        }
+        
+        func routeToCloudUploads() {
+            toCloudUploadsCalled = true
+        }
+        
+        func routeToTransmitter() {
+            toTransmitterCalled = true
+        }
+        
+        func routeToRangeSelection() {
+            toRangeSelectionCalled = true
+        }
+        
+        func routeToModeSettings() {
+            toModeSettingsCalled = true
+        }
+        
+        func routeToUserType() {
+            toUserTypeCalled = true
+        }
+        
+        func routeToSensor() {
+            toSensorCalled = true
+        }
+        
+        func routeToNightscoutService() {
+            toNightscoutServiceCalled = true
+        }
+    }
+    
     // MARK: Tests
     
     func testShouldDoLoadWhenViewIsLoaded() {
@@ -103,5 +158,135 @@ final class SettingsRootViewControllerTests: XCTestCase {
         
         // Given
         XCTAssertTrue(spy.cancelCalled)
+    }
+    
+    func testSingleSelectionHandler() {
+        User.current.settings.updateDeviceMode(.main)
+        User.current.settings.updateInjectionType(.pen)
+        
+        let spy = SettingsRootRoutingLogicSpy()
+        if let interactor = sut.interactor as? SettingsRootInteractor {
+            interactor.router = spy
+        }
+        
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssertTrue(tableView.numberOfSections == 2)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 6)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 5)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 0, section: 0))
+        // Then
+        XCTAssertTrue(spy.toChartSettingsCalled)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 1, section: 0))
+        // Then
+        XCTAssertTrue(spy.toAlertRootCalled)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 2, section: 0))
+        // Then
+        XCTAssertTrue(spy.toCloudUploadsCalled)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 3, section: 0))
+        // Then
+        XCTAssertTrue(spy.toModeSettingsCalled)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 4, section: 0))
+        // Then
+        XCTAssertTrue(spy.toSensorCalled)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 5, section: 0))
+        // Then
+        XCTAssertTrue(spy.toTransmitterCalled)
+        
+        // When
+        User.current.settings.updateDeviceMode(.follower)
+        NotificationCenter.default.postSettingsChangeNotification(setting: .deviceMode)
+        // Then
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 4)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 0, section: 1))
+        // Then
+        XCTAssertTrue(spy.toRangeSelectionCalled)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 1, section: 1))
+        // Then
+        XCTAssertTrue(spy.toUserTypeCalled)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 2, section: 1))
+        // Then
+        XCTAssertTrue(spy.toUnitsCalled)
+        
+        // When
+        User.current.settings.updateInjectionType(.pump)
+        NotificationCenter.default.postSettingsChangeNotification(setting: .injectionType)
+        // Then
+        XCTAssertTrue(tableView.numberOfSections == 3)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 2) == 1)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 0, section: 2))
+        // Then
+        XCTAssertTrue(spy.toNightscoutServiceCalled)
+    }
+    
+    func testTimePickerValueChanged() {
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        let cellType = PickerExpandableTableViewCell.self
+        guard let carbsCell = tableView.getCell(of: cellType, at: IndexPath(row: 3, section: 1)),
+            let insulinCell = tableView.getCell(of: cellType, at: IndexPath(row: 4, section: 1)) else {
+            XCTFail("Cannot obtain picker cells")
+            return
+        }
+        
+        carbsCell.togglePickerVisibility()
+        insulinCell.togglePickerVisibility()
+        
+        guard let carbsStackView = carbsCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let insulinStackView = insulinCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let carbsPicker = carbsStackView.arrangedSubviews.first as? CustomPickerView,
+            let insulinPicker = insulinStackView.arrangedSubviews.first as? CustomPickerView else {
+            XCTFail("Cannot obtain pickers")
+            return
+        }
+        
+        let settings = User.current.settings
+        var time = 10.0 * TimeInterval.secondsPerHour + 10.0 * TimeInterval.secondsPerMinute
+        
+        // When
+        carbsPicker.selectRow(10, inComponent: 0, animated: false)
+        carbsPicker.selectRow(10, inComponent: 2, animated: false)
+        carbsPicker.pickerView(carbsPicker, didSelectRow: 0, inComponent: 1)
+        // Then
+        XCTAssertTrue(settings?.carbsAbsorptionRate == time)
+        
+        // When
+        insulinPicker.selectRow(15, inComponent: 0, animated: false)
+        insulinPicker.selectRow(15, inComponent: 2, animated: false)
+        insulinPicker.pickerView(insulinPicker, didSelectRow: 0, inComponent: 1)
+        
+        time = 15.0 * TimeInterval.secondsPerHour + 15.0 * TimeInterval.secondsPerMinute
+        // Then
+        XCTAssertTrue(settings?.insulinActionTime == time)
     }
 }

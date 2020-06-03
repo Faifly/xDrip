@@ -56,7 +56,8 @@ final class SettingsRootPresenterTests: XCTestCase {
         let response = SettingsRoot.Load.Response(
             deviceMode: .default,
             injectionType: .default,
-            selectionHandler: { _ in }
+            selectionHandler: { _ in },
+            timePickerValueChangedHandler: { _, _ in }
         )
         
         // When

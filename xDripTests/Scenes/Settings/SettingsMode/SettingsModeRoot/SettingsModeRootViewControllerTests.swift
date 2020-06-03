@@ -49,9 +49,14 @@ final class SettingsModeRootViewControllerTests: XCTestCase {
     
     final class SettingsModeRootBusinessLogicSpy: SettingsModeRootBusinessLogic {
         var doLoadCalled = false
+        var doChangeModeCalled = false
         
         func doLoad(request: SettingsModeRoot.Load.Request) {
             doLoadCalled = true
+        }
+        
+        func doChangeMode(request: SettingsModeRoot.ChangeMode.Request) {
+            doChangeModeCalled = true
         }
     }
     
@@ -71,7 +76,7 @@ final class SettingsModeRootViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsModeRoot.Load.ViewModel()
+        let viewModel = SettingsModeRoot.Load.ViewModel(mode: .main)
         
         // When
         loadView()
@@ -97,6 +102,8 @@ final class SettingsModeRootViewControllerTests: XCTestCase {
             return
         }
         
+        let settings = User.current.settings
+        
         XCTAssertTrue(segmentedControl.numberOfSegments == 2)
         
         // When
@@ -104,11 +111,30 @@ final class SettingsModeRootViewControllerTests: XCTestCase {
         segmentedControl.sendActions(for: .valueChanged)
         // Then
         XCTAssertTrue(tabBar.selectedIndex == 0)
+        XCTAssertTrue(settings?.deviceMode == .main)
         
         // When
         segmentedControl.selectedSegmentIndex = 1
         segmentedControl.sendActions(for: .valueChanged)
         // Then
         XCTAssertTrue(tabBar.selectedIndex == 1)
+        XCTAssertTrue(settings?.deviceMode == .follower)
+    }
+    
+    func testDoChangeModeShouldCall() {
+        let spy = SettingsModeRootBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        
+        guard let segmentedControl = sut.view.subviews.compactMap({ $0 as? UISegmentedControl }).first else {
+            XCTFail("Cannot obtain segmented control")
+            return
+        }
+        
+        // When
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.sendActions(for: .valueChanged)
+        
+        XCTAssertTrue(spy.doChangeModeCalled)
     }
 }
