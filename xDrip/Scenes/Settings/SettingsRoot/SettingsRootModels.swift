@@ -40,6 +40,7 @@ enum SettingsRoot {
             let deviceMode: UserDeviceMode
             let injectionType: UserInjectionType
             let selectionHandler: (Field) -> Void
+            let timePickerValueChangedHandler: (Field, TimeInterval) -> Void
         }
         
         struct ViewModel {

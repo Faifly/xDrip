@@ -94,20 +94,23 @@ class SettingsUserTypeRootViewController: NibViewController, SettingsUserTypeRoo
                 animated: false
             )
         }
-        
-        segmentedControl.selectedSegmentIndex = User.current.settings.deviceMode.rawValue
-        tabBarController.selectedIndex = 0
     }
     
     // MARK: Display
     
     func displayLoad(viewModel: SettingsUserTypeRoot.Load.ViewModel) {
+        segmentedControl.selectedSegmentIndex = viewModel.injectionType.rawValue
+        embeddedTabBarController?.selectedIndex = viewModel.injectionType.rawValue
     }
     
     // MARK: Handlers
     
     @IBAction private func onSegmentedControlValueChanged(_ sender: UISegmentedControl) {
         embeddedTabBarController?.selectedIndex = sender.selectedSegmentIndex
+        
+        guard let type = UserInjectionType(rawValue: sender.selectedSegmentIndex) else { return }
+        let request = SettingsUserTypeRoot.ChangeType.Request(injectionType: type)
+        interactor?.doChangeType(request: request)
     }
 }
 

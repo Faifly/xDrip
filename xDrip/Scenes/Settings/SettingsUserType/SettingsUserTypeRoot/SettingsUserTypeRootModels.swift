@@ -22,6 +22,20 @@ enum SettingsUserTypeRoot {
         }
         
         struct Response {
+            let injectionType: UserInjectionType
+        }
+        
+        struct ViewModel {
+            let injectionType: UserInjectionType
+        }
+    }
+    
+    enum ChangeType {
+        struct Request {
+            let injectionType: UserInjectionType
+        }
+        
+        struct Response {
         }
         
         struct ViewModel {

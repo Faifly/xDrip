@@ -49,9 +49,14 @@ final class SettingsUserTypeRootViewControllerTests: XCTestCase {
     
     final class SettingsUserTypeRootBusinessLogicSpy: SettingsUserTypeRootBusinessLogic {
         var doLoadCalled = false
+        var doChangeTypeCalled = false
         
         func doLoad(request: SettingsUserTypeRoot.Load.Request) {
             doLoadCalled = true
+        }
+        
+        func doChangeType(request: SettingsUserTypeRoot.ChangeType.Request) {
+            doChangeTypeCalled = true
         }
     }
     
@@ -71,12 +76,65 @@ final class SettingsUserTypeRootViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = SettingsUserTypeRoot.Load.ViewModel()
+        let viewModel = SettingsUserTypeRoot.Load.ViewModel(injectionType: .pen)
         
         // When
         loadView()
         sut.displayLoad(viewModel: viewModel)
         
         // Then
+    }
+    
+    func testDoChangeTypeShouldCall() {
+        let spy = SettingsUserTypeRootBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        
+        guard let segmentedControl = sut.view.subviews.compactMap({ $0 as? UISegmentedControl }).first else {
+            XCTFail("Cannot obtain segmented control")
+            return
+        }
+        
+        // When
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.sendActions(for: .valueChanged)
+        
+        XCTAssertTrue(spy.doChangeTypeCalled)
+    }
+    
+    func testTabBar() {
+        loadView()
+        
+        guard let tabBar = sut.children.compactMap({ $0 as? UITabBarController }).first else {
+            XCTFail("Cannot obtain tabbar")
+            return
+        }
+        
+        XCTAssertTrue(tabBar.viewControllers?.count == 2)
+        XCTAssertTrue(tabBar.viewControllers?[0] is  SettingsPenUserViewController)
+        XCTAssertTrue(tabBar.viewControllers?[1] is SettingsPumpUserViewController)
+        
+        guard let segmentedControl = sut.view.subviews.compactMap({ $0 as? UISegmentedControl }).first else {
+            XCTFail("Cannot obtain segmented control")
+            return
+        }
+        
+        let settings = User.current.settings
+        
+        XCTAssertTrue(segmentedControl.numberOfSegments == 2)
+        
+        // When
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(tabBar.selectedIndex == 0)
+        XCTAssertTrue(settings?.injectionType == .pen)
+        
+        // When
+        segmentedControl.selectedSegmentIndex = 1
+        segmentedControl.sendActions(for: .valueChanged)
+        // Then
+        XCTAssertTrue(tabBar.selectedIndex == 1)
+        XCTAssertTrue(settings?.injectionType == .pump)
     }
 }

@@ -47,6 +47,13 @@
 "settings_root_nightscout_pump_title" = "Nightscout (Помпа)";
 "settings_root_application_setup_header" = "Настройки приложения";
 "settings_root_profile_setup_header" = "Настройки профиля";
+"settings_root_services_header" = "Сервисы";
+
+"settings_root_user_mode_master" = "Мастер";
+"settings_root_user_mode_follower" = "Подписчик";
+
+"settings_root_user_type_pen" = "Ручка";
+"settings_root_user_type_pump" = "Помпа";
 
 // Settings Chart
 "settings_chart_active_insulin" = "Активный инсулин";
