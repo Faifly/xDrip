@@ -46,8 +46,8 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
             createDatePickerCell(field, dateValueChagedHandler: response.datePickerValueChanged)
         ]
         
-        var header = ""
-        var footer: String?
+        let header: String
+        let footer: String?
         
         if response.hasInitialCalibrations {
             header = "edit_calibration_single_section_header".localized

@@ -1,6 +1,7 @@
 // AUTO-GENERATED
 // General
 "cancel" = "Отмена";
+"error" = "Ошибка";
 
 // Home
 "home_time_frame_1h" = "1Ч";
@@ -26,10 +27,12 @@
 "edit_calibration_single_section_header" = "ВВЕДИТЕ ЗНАЧЕНИЕ НИЖЕ";
 "edit_calibration_first_section_header" = "ВВЕДИТЕ ПЕРВОЕ ЗНАЧЕНИЕ НИЖЕ";
 "edit_calibration_second_section_header" = "ВВЕДИТЕ ВТОРОЕ ЗНАЧЕНИЕ НИЖЕ";
-"edit_calibration_single_section_footer" = "ПОЖАЛУЙСТА, СДЕЛАЙТЕ ТЕСТ И ВВЕДИТЕ ЗНАЧЕНИЕ!";
-"edit_calibration_second_section_footer" = "ДЛЯ ТОГО ЧТОБЫ НАЧАТЬ, ПОЖАЛУЙСТА, СДЕЛАЙТЕ ОДИН ИЛИ ДВА ТЕСТА И ВВЕДИТЕ ЗНАЧЕНИЯ!";
+"edit_calibration_single_section_footer" = "Пожалуйста, сделайте тест и введите значение";
+"edit_calibration_second_section_footer" = "Для того чтобы начать, пожалуйста, сделайте один или два теста и введите значения";
 "edit_calibration_date_picker_title" = "Дата/Время";
 "edit_calibration_value_picker_title" = "Уровень Глюкозы";
+"edit_calibration_success_input_alert_title" = "Успех";
+"edit_calibration_success_input_alert_message" = "Ваши данные были успешно сохранен!";
 
 // Settings Root
 "settings_root_title" = "Настройки";

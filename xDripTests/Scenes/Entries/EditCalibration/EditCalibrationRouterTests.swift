@@ -34,7 +34,62 @@ final class EditCalibrationRouterTests: XCTestCase {
     // MARK: Test doubles
     
     final class ViewControllerSpy: EditCalibrationViewController {
+        var lastPresentedViewController: UIViewController?
+        var dismissCalled = false
+        
+        override func present(
+            _ viewControllerToPresent: UIViewController,
+            animated flag: Bool,
+            completion: (() -> Void)? = nil
+        ) {
+            lastPresentedViewController = viewControllerToPresent
+        }
+        
+        override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+            dismissCalled = true
+        }
     }
     
     // MARK: Tests
+    
+    func testDismissScene() {
+        let spy = createSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.dismissScene()
+        // Then
+        XCTAssertTrue(spy.dismissCalled)
+    }
+    
+    func testShowError() {
+        let spy = createSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.showError("Test error")
+        // Then
+        guard let alert = spy.lastPresentedViewController as? UIAlertController else {
+            XCTFail("Cannot obtain alert controller")
+            return
+        }
+        
+        XCTAssertTrue(alert.message == "Test error")
+        XCTAssertTrue(alert.actions.count == 1)
+    }
+    
+    func testShowSuccessAndDismiss() {
+        let spy = createSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.showSuccessAndDismiss()
+        // Then
+        guard let alert = spy.lastPresentedViewController as? UIAlertController else {
+            XCTFail("Cannot obtain alert controller")
+            return
+        }
+        
+        XCTAssertTrue(alert.message == "edit_calibration_success_input_alert_message".localized)
+    }
 }

@@ -22,7 +22,7 @@ protocol EditCalibrationDataStore: AnyObject {
 }
 
 final class EditCalibrationInteractor: EditCalibrationBusinessLogic, EditCalibrationDataStore {
-    struct Input {
+    private struct Input {
         var value: String?
         var date = Date()
     }

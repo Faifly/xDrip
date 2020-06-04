@@ -22,8 +22,6 @@ protocol EditCalibrationDataPassing {
     var dataStore: EditCalibrationDataStore? { get }
 }
 
-// swiftlint:disable todo
-
 final class EditCalibrationRouter: EditCalibrationRoutingLogic, EditCalibrationDataPassing {
     weak var viewController: EditCalibrationViewController?
     weak var dataStore: EditCalibrationDataStore?
@@ -35,21 +33,19 @@ final class EditCalibrationRouter: EditCalibrationRoutingLogic, EditCalibrationD
     }
     
     func showError(_ error: String) {
-        // TODO: Localize
-        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        let alert = UIAlertController(title: "error".localized, message: error, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK".localized, style: .cancel, handler: nil)
         alert.addAction(okAction)
         viewController?.present(alert, animated: true, completion: nil)
     }
     
     func showSuccessAndDismiss() {
-        // TODO: Localize
         let alert = UIAlertController(
-            title: "Success",
-            message: "Your input was successfully saved!",
+            title: "edit_calibration_success_input_alert_title".localized,
+            message: "edit_calibration_success_input_alert_message".localized,
             preferredStyle: .alert
         )
-        let okAction = UIAlertAction(title: "OK", style: .cancel) { [weak self] _ in
+        let okAction = UIAlertAction(title: "OK".localized, style: .cancel) { [weak self] _ in
             self?.dismissScene()
         }
         alert.addAction(okAction)
