@@ -16,7 +16,7 @@ protocol EditCalibrationDisplayLogic: AnyObject {
     func displayLoad(viewModel: EditCalibration.Load.ViewModel)
 }
 
-class EditCalibrationViewController: NibViewController, EditCalibrationDisplayLogic {
+class EditCalibrationViewController: BaseSettingsViewController, EditCalibrationDisplayLogic {
     var interactor: EditCalibrationBusinessLogic?
     var router: EditCalibrationDataPassing?
     
@@ -50,19 +50,8 @@ class EditCalibrationViewController: NibViewController, EditCalibrationDisplayLo
     
     // MARK: IB
     
-    @IBOutlet private weak var glucoseLevel1TextField: UITextField!
-    @IBOutlet private weak var glucoseLevel2TextField: UITextField!
-    @IBOutlet private weak var datePicker1: UIDatePicker!
-    @IBOutlet private weak var datePicker2: UIDatePicker!
-    @IBOutlet private weak var entry2Label: UILabel!
-    
-    @IBAction private func onSaveButtonTap() {
-        let request = EditCalibration.Save.Request(
-            entry1: glucoseLevel1TextField.text,
-            entry2: glucoseLevel2TextField.text,
-            date1: datePicker1.date,
-            date2: datePicker2.date
-        )
+    @objc private func onSaveButtonTap() {
+        let request = EditCalibration.Save.Request()
         interactor?.doSave(request: request)
     }
     
@@ -76,6 +65,7 @@ class EditCalibrationViewController: NibViewController, EditCalibrationDisplayLo
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
+        setupUI()
         setupNavigationItems()
     }
     
@@ -93,15 +83,22 @@ class EditCalibrationViewController: NibViewController, EditCalibrationDisplayLo
             action: #selector(onCancelButtonTap)
         )
         navigationItem.leftBarButtonItem = cancelButton
+        
+        let doneButton = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(onSaveButtonTap)
+        )
+        navigationItem.rightBarButtonItem = doneButton
+    }
+    
+    private func setupUI() {
+        title = "edit_calibration_scene_title".localized
     }
     
     // MARK: Display
     
     func displayLoad(viewModel: EditCalibration.Load.ViewModel) {
-        if !viewModel.displaySecondEntrySet {
-            entry2Label.isHidden = true
-            datePicker2.isHidden = true
-            glucoseLevel2TextField.isHidden = true
-        }
+        update(with: viewModel.tableViewModel)
     }
 }

@@ -441,7 +441,6 @@
 		58184A492438C1E800E848C6 /* EditFoodEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A482438C1E800E848C6 /* EditFoodEntryViewController.xib */; };
 		58184A4B2438C20D00E848C6 /* EntriesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A4A2438C20D00E848C6 /* EntriesListViewController.xib */; };
 		58184A4D2438C30500E848C6 /* EditTrainingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A4C2438C30500E848C6 /* EditTrainingViewController.xib */; };
-		58184A4F2438C31C00E848C6 /* EditCalibrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A4E2438C31C00E848C6 /* EditCalibrationViewController.xib */; };
 		58184A512438C36700E848C6 /* StatsRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A502438C36700E848C6 /* StatsRootViewController.xib */; };
 		58184A532438C51100E848C6 /* HistoryRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A522438C51100E848C6 /* HistoryRootViewController.xib */; };
 		58184A572438C64100E848C6 /* EntriesListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A562438C64100E848C6 /* EntriesListTableViewCell.xib */; };
@@ -1058,7 +1057,6 @@
 		58184A482438C1E800E848C6 /* EditFoodEntryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditFoodEntryViewController.xib; sourceTree = "<group>"; };
 		58184A4A2438C20D00E848C6 /* EntriesListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntriesListViewController.xib; sourceTree = "<group>"; };
 		58184A4C2438C30500E848C6 /* EditTrainingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditTrainingViewController.xib; sourceTree = "<group>"; };
-		58184A4E2438C31C00E848C6 /* EditCalibrationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditCalibrationViewController.xib; sourceTree = "<group>"; };
 		58184A502438C36700E848C6 /* StatsRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsRootViewController.xib; sourceTree = "<group>"; };
 		58184A522438C51100E848C6 /* HistoryRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryRootViewController.xib; sourceTree = "<group>"; };
 		58184A562438C64100E848C6 /* EntriesListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntriesListTableViewCell.xib; sourceTree = "<group>"; };
@@ -2592,7 +2590,6 @@
 				580EC7B82421521C00C34948 /* EditCalibrationRouter.swift */,
 				580EC7B92421521C00C34948 /* EditCalibrationModels.swift */,
 				580EC7BA2421521C00C34948 /* EditCalibrationViewController.swift */,
-				58184A4E2438C31C00E848C6 /* EditCalibrationViewController.xib */,
 				580EC7BB2421521C00C34948 /* EditCalibrationInteractor.swift */,
 			);
 			path = EditCalibration;
@@ -3537,7 +3534,6 @@
 				2C4E7EF324694F440062D403 /* Sherwood_Forest.caf in Resources */,
 				5805CA10243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.xib in Resources */,
 				5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */,
-				58184A4F2438C31C00E848C6 /* EditCalibrationViewController.xib in Resources */,
 				2C4E7F0324694F440062D403 /* Noir.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

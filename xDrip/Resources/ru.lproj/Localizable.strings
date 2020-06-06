@@ -1,6 +1,7 @@
 // AUTO-GENERATED
 // General
 "cancel" = "Отмена";
+"error" = "Ошибка";
 
 // Home
 "home_time_frame_1h" = "1Ч";
@@ -30,6 +31,8 @@
 "edit_calibration_second_section_footer" = "Для того чтобы начать, пожалуйста, сделайте один или два теста и введите значения";
 "edit_calibration_date_picker_title" = "Дата/Время";
 "edit_calibration_value_picker_title" = "Уровень Глюкозы";
+"edit_calibration_success_input_alert_title" = "Успех";
+"edit_calibration_success_input_alert_message" = "Ваши данные были успешно сохранен!";
 
 // Settings Root
 "settings_root_title" = "Настройки";

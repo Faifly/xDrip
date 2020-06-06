@@ -24,6 +24,11 @@ enum EditCalibration {
         case sensorNotStarted
     }
     
+    enum Field {
+        case firstInput
+        case secondInput
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -32,19 +37,17 @@ enum EditCalibration {
         
         struct Response {
             let hasInitialCalibrations: Bool
+            let datePickerValueChanged: (Field, Date) -> Void
+            let glucosePickerValueChanged: (Field, String?) -> Void
         }
         
         struct ViewModel {
-            let displaySecondEntrySet: Bool
+            let tableViewModel: BaseSettings.ViewModel
         }
     }
     
     enum Save {
         struct Request {
-            let entry1: String?
-            let entry2: String?
-            let date1: Date
-            let date2: Date
         }
         
         struct Response {
