@@ -189,6 +189,9 @@ private extension AlertEventType {
         case .urgentLow: return "settings_alert_types_event_type_title_urgent_low".localized
         case .missedReadings: return "settings_alert_types_event_type_title_missed_readings".localized
         case .phoneMuted: return "settings_alert_types_event_type_title_phone_muted".localized
+        case .calibrationRequest: return "settings_alert_types_event_type_title_calibration_request".localized
+        case .initialCalibrationRequest: return "settings_alert_types_event_type_title_initial_calibration".localized
+        case .pairingRequest: return "settings_alert_types_event_type_title_pairing_request".localized
         }
     }
 }

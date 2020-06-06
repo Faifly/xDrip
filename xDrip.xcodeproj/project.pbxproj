@@ -506,8 +506,11 @@
 		58A8A42324251FC400CCFCAC /* GlucoseWarningLevelSettingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A42224251FC400CCFCAC /* GlucoseWarningLevelSettingTests.swift */; };
 		58A8A4262425215500CCFCAC /* AbstractEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A4252425215500CCFCAC /* AbstractEntryTests.swift */; };
 		58A8A42B242523DF00CCFCAC /* FoodEntriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A42A242523DF00CCFCAC /* FoodEntriesWorker.swift */; };
+		58A9A395248268EE00743D53 /* CalibrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9A394248268EE00743D53 /* CalibrationController.swift */; };
+		58A9A397248274F500743D53 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9A396248274F500743D53 /* AlertPresenter.swift */; };
+		58A9A399248276D200743D53 /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9A398248276D200743D53 /* UIApplication+TopViewController.swift */; };
 		58AB0CEE2466F61100A2173C /* FloatingPoint+Comparison_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB0CED2466F61100A2173C /* FloatingPoint+Comparison_Tests.swift */; };
-		58B288FD2479726000D24A2B /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B288FC2479726000D24A2B /* NotificationType.swift */; };
+		58B288FD2479726000D24A2B /* AlertEventType+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B288FC2479726000D24A2B /* AlertEventType+Data.swift */; };
 		58B4F67F24114938003C6D8F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 58B4F67E24114938003C6D8F /* GoogleService-Info.plist */; };
 		58B4F6AB24114D2D003C6D8F /* GoogleDataTransport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68724114BCD003C6D8F /* GoogleDataTransport.framework */; platformFilter = ios; };
 		58B4F6AC24114D2D003C6D8F /* GoogleDataTransportCCTSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68824114BCD003C6D8F /* GoogleDataTransportCCTSupport.framework */; platformFilter = ios; };
@@ -1119,8 +1122,11 @@
 		58A8A42224251FC400CCFCAC /* GlucoseWarningLevelSettingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseWarningLevelSettingTests.swift; sourceTree = "<group>"; };
 		58A8A4252425215500CCFCAC /* AbstractEntryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractEntryTests.swift; sourceTree = "<group>"; };
 		58A8A42A242523DF00CCFCAC /* FoodEntriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodEntriesWorker.swift; sourceTree = "<group>"; };
+		58A9A394248268EE00743D53 /* CalibrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationController.swift; sourceTree = "<group>"; };
+		58A9A396248274F500743D53 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
+		58A9A398248276D200743D53 /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
 		58AB0CED2466F61100A2173C /* FloatingPoint+Comparison_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FloatingPoint+Comparison_Tests.swift"; sourceTree = "<group>"; };
-		58B288FC2479726000D24A2B /* NotificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
+		58B288FC2479726000D24A2B /* AlertEventType+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertEventType+Data.swift"; sourceTree = "<group>"; };
 		58B4F674241015F0003C6D8F /* pull_request_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = pull_request_template.md; path = .github/pull_request_template.md; sourceTree = SOURCE_ROOT; };
 		58B4F67E24114938003C6D8F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		58B4F68224114BCD003C6D8F /* FirebaseCrashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseCrashlytics.framework; sourceTree = "<group>"; };
@@ -2647,6 +2653,7 @@
 				5860389024488D8C008D54B6 /* TimeInterval+Constants.swift */,
 				58B8533F2448CA740045F30A /* DateInterval+Helpers.swift */,
 				58B986DC2466B68200E38376 /* FloatingPoint+Comparison.swift */,
+				58A9A398248276D200743D53 /* UIApplication+TopViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3354,8 +3361,10 @@
 		58FE4CBC247970FA00511B80 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				58B288FC2479726000D24A2B /* NotificationType.swift */,
+				58B288FC2479726000D24A2B /* AlertEventType+Data.swift */,
 				58FE4CBA247970BE00511B80 /* NotificationController.swift */,
+				58A9A394248268EE00743D53 /* CalibrationController.swift */,
+				58A9A396248274F500743D53 /* AlertPresenter.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -3618,6 +3627,7 @@
 				2CBE1A922432128E003BE14E /* EntriesListBolusPersistenceWorker.swift in Sources */,
 				58B5FD3E24190E6700DB857D /* StatsRootModels.swift in Sources */,
 				5805C9A124389230002AFA1B /* DexcomG6SensorDataTxMessage.swift in Sources */,
+				58A9A397248274F500743D53 /* AlertPresenter.swift in Sources */,
 				58F4CC84243BA2110053D17C /* DebugLogRouter.swift in Sources */,
 				5805C9A424389230002AFA1B /* DexcomG6AuthRequestTxMessage.swift in Sources */,
 				5805C9C724389275002AFA1B /* LogController.swift in Sources */,
@@ -3712,6 +3722,7 @@
 				580E4B72243F716000565EDE /* SettingsAlertSingleTypeRouter.swift in Sources */,
 				580E4CE2243F802F00565EDE /* SettingsModeMasterViewController.swift in Sources */,
 				58F4CC85243BA2110053D17C /* DebugLogModels.swift in Sources */,
+				58A9A399248276D200743D53 /* UIApplication+TopViewController.swift in Sources */,
 				58443257243CD35600282A6C /* Settings.swift in Sources */,
 				2C1DE8A8247938780023B512 /* CustomAlertController.swift in Sources */,
 				580EC7BD2421521C00C34948 /* EditCalibrationRouter.swift in Sources */,
@@ -3734,7 +3745,7 @@
 				580EC7C02421521C00C34948 /* EditCalibrationInteractor.swift in Sources */,
 				580E4B57243F711200565EDE /* SettingsAlertRootPresenter.swift in Sources */,
 				5805CA18243892D6002AFA1B /* InitialSetupDexcomG6ConnectionWorker.swift in Sources */,
-				58B288FD2479726000D24A2B /* NotificationType.swift in Sources */,
+				58B288FD2479726000D24A2B /* AlertEventType+Data.swift in Sources */,
 				580E4BAA243F723200565EDE /* NightscoutCloudExtraOptionsInteractor.swift in Sources */,
 				5805CA0D243892D6002AFA1B /* InitialSetupIntroViewController.swift in Sources */,
 				580E4B80243F717E00565EDE /* SettingsAlertSoundModels.swift in Sources */,
@@ -3780,6 +3791,7 @@
 				580E4B43243E38B300565EDE /* BaseSettingsDisclosureCell.swift in Sources */,
 				58D4FD3B2423B39C0044E687 /* User.swift in Sources */,
 				2C467FCB247E686B006D651D /* ChartRangesHeaderView.swift in Sources */,
+				58A9A395248268EE00743D53 /* CalibrationController.swift in Sources */,
 				580EC79224214CDD00C34948 /* EntriesListModels.swift in Sources */,
 				580E4C06243F746F00565EDE /* SettingsUserTypeRootViewController.swift in Sources */,
 				5805C9B824389230002AFA1B /* CGMBluetoothServiceError.swift in Sources */,

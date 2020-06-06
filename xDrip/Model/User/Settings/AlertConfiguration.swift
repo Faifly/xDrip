@@ -17,7 +17,7 @@ final class AlertConfiguration: Object {
     @objc private(set) dynamic var `repeat`: Bool = false
     @objc private(set) dynamic var soundID: Int = -1
     @objc private(set) dynamic var isVibrating: Bool = false
-    @objc private(set) dynamic var isEntireDay: Bool = false
+    @objc private(set) dynamic var isEntireDay: Bool = true
     @objc private(set) dynamic var startTime: TimeInterval = 0.0
     @objc private(set) dynamic var endTime: TimeInterval = 0.0
     @objc private(set) dynamic var highThreshold: Float = 0.0

@@ -31,6 +31,6 @@ final class HomeGlucoseDataWorker: NSObject, HomeGlucoseDataWorkerProtocol {
     
     func fetchGlucoseData() -> [GlucoseReading] {
         let minimumDate = Date() - .secondsPerDay
-        return Array(GlucoseReading.all.filter { $0.date >=? minimumDate })
+        return Array(GlucoseReading.all.filter { $0.date >=? minimumDate && $0.filteredCalculatedValue > .ulpOfOne })
     }
 }

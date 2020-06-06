@@ -71,24 +71,26 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
             cells.append(contentsOf: createCellsForEntireDayConfig(config, response: response))
         }
         
-        let high = GlucoseUnit.convertFromDefault(Double(config.highThreshold))
-        let low = GlucoseUnit.convertFromDefault(Double(config.lowThreshold))
-        let highTresholdString = String(format: "%.1f", high)
-        let lowTresholdString = String(format: "%.1f", low)
-        cells.append(
-            contentsOf: [
-                createUnitsPickerView(
-                    .highTreshold,
-                    detailText: highTresholdString,
-                    valueChangeHandler: response.pickerViewValueChangedHandler
-                ),
-                createUnitsPickerView(
-                    .lowTreshold,
-                    detailText: lowTresholdString,
-                    valueChangeHandler: response.pickerViewValueChangedHandler
-                )
-            ]
-        )
+        if config.eventType.requiresGlucoseThreshold {
+            let high = GlucoseUnit.convertFromDefault(Double(config.highThreshold))
+            let low = GlucoseUnit.convertFromDefault(Double(config.lowThreshold))
+            let highTresholdString = String(format: "%.1f", high)
+            let lowTresholdString = String(format: "%.1f", low)
+            cells.append(
+                contentsOf: [
+                    createUnitsPickerView(
+                        .highTreshold,
+                        detailText: highTresholdString,
+                        valueChangeHandler: response.pickerViewValueChangedHandler
+                    ),
+                    createUnitsPickerView(
+                        .lowTreshold,
+                        detailText: lowTresholdString,
+                        valueChangeHandler: response.pickerViewValueChangedHandler
+                    )
+                ]
+            )
+        }
         
         return .normal(cells: cells, header: "settings_alert_single_type_events_header".localized, footer: nil)
     }
@@ -335,6 +337,9 @@ private extension AlertEventType {
         case .urgentLow: return "settings_alert_single_type_event_type_title_urgent_low".localized
         case .missedReadings: return "settings_alert_single_type_event_type_title_missed_readings".localized
         case .phoneMuted: return "settings_alert_single_type_event_type_title_phone_muted".localized
+        case .calibrationRequest: return "settings_alert_single_type_event_title_calibration_request".localized
+        case .initialCalibrationRequest: return "settings_alert_single_type_event_title_initial_calibration".localized
+        case .pairingRequest: return "settings_alert_single_type_event_title_pairing_request".localized
         }
     }
 }

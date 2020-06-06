@@ -9,23 +9,21 @@
 import UIKit
 import UserNotifications
 
-final class NotificationController {
-    static let shared = NotificationController()
-    
-    func requestAuthorization() {
+enum NotificationController {
+    static func requestAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { _, _ in }
     }
     
-    func sendNotification(ofType type: NotificationType) {
+    static func sendNotification(ofType type: AlertEventType) {
         guard UIApplication.shared.applicationState != .active else { return }
         
         let content = UNMutableNotificationContent()
-        content.title = type.title
-        content.body = type.body
+        content.title = type.alertTitle
+        content.body = type.alertBody
         content.sound = .default
         
         let request = UNNotificationRequest(
-            identifier: type.identifier,
+            identifier: type.alertID,
             content: content,
             trigger: nil
         )

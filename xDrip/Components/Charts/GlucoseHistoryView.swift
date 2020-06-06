@@ -8,6 +8,8 @@
 
 import UIKit
 
+// swiftlint:disable type_body_length
+
 final class GlucoseHistoryView: UIView {
     private let verticalLines: Int = 5
     private var forwardTimeOffset: TimeInterval = 600.0
@@ -106,7 +108,6 @@ final class GlucoseHistoryView: UIView {
             guard let self = self else { return }
             self.userRelativeSelection = relativeOffset
             self.updateDetailLabel()
-            self.detailsView.setHidden(false)
             self.detailsView.setRelativeOffset(relativeOffset)
         }
     }
@@ -183,7 +184,11 @@ final class GlucoseHistoryView: UIView {
         leftLabelsView.labels = labels
         leftLabelsView.setNeedsDisplay()
         chartView.verticalLinesCount = labels.count
-        chartView.yRange = adjustedMinValue...adjustedMaxValue
+        if adjustedMinValue ~~ adjustedMaxValue {
+            chartView.yRange = (adjustedMinValue - 1.0)...(adjustedMaxValue + 1.0)
+        } else {
+            chartView.yRange = adjustedMinValue...adjustedMaxValue
+        }
     }
     
     private func calculateHorizontalBottomLabels() {
@@ -251,14 +256,20 @@ final class GlucoseHistoryView: UIView {
         let selectedDate = globalDateRange.start + currentRelativeStartTime
         if let entry = nearestEntry(forDate: selectedDate) {
             detailsView.set(value: entry.value, unit: unit, date: entry.date)
+            detailsView.setHidden(false)
+        } else {
+            detailsView.setHidden(true)
         }
     }
     
     private func nearestEntry(forDate date: Date) -> GlucoseChartGlucoseEntry? {
+        let maxDiff: TimeInterval = .secondsPerMinute * 5.0
+        
         if glucoseEntries.isEmpty {
             return nil
         } else if glucoseEntries.count == 1 {
-            return glucoseEntries[0]
+            let diff = abs(date.timeIntervalSince1970 - glucoseEntries[0].date.timeIntervalSince1970)
+            return diff <= maxDiff ? glucoseEntries[0] : nil
         }
         for index in 0..<glucoseEntries.count - 1 {
             let entry1 = glucoseEntries[index]
@@ -266,8 +277,25 @@ final class GlucoseHistoryView: UIView {
             if entry1.date > date && entry2.date < date {
                 let diff1 = entry1.date.timeIntervalSince1970 - date.timeIntervalSince1970
                 let diff2 = date.timeIntervalSince1970 - entry2.date.timeIntervalSince1970
-                return diff1 < diff2 ? entry1 : entry2
+                if diff1 < diff2 && abs(diff1) <= maxDiff {
+                    return entry1
+                } else if diff2 > diff1 && abs(diff2) <= maxDiff {
+                    return entry2
+                }
             }
+        }
+        
+        let lastIndex = glucoseEntries.count - 1
+        
+        let firstDiff = abs(date.timeIntervalSince1970 - glucoseEntries[0].date.timeIntervalSince1970)
+        let lastDiff = abs(date.timeIntervalSince1970 - glucoseEntries[lastIndex].date.timeIntervalSince1970)
+        
+        if firstDiff < maxDiff && lastDiff < maxDiff {
+            return firstDiff < lastDiff ? glucoseEntries[0] : glucoseEntries[lastIndex]
+        } else if firstDiff < maxDiff {
+            return glucoseEntries[0]
+        } else if lastDiff < maxDiff {
+            return glucoseEntries[lastIndex]
         }
         
         return nil

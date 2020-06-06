@@ -100,6 +100,10 @@ final class GlucoseReading: Object {
             "\(reading.calculatedValue)"
         )
         
+        if Calibration.allForCurrentSensor.isEmpty && GlucoseReading.allForCurrentSensor.count >= 2 {
+            CalibrationController.shared.requestInitialCalibration()
+        }
+        
         return reading
     }
     
