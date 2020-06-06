@@ -49,15 +49,37 @@ final class EditCalibrationViewControllerTests: XCTestCase {
     
     final class EditCalibrationBusinessLogicSpy: EditCalibrationBusinessLogic {
         var doLoadCalled = false
+        var doSaveCalled = false
+        var doDismissCalled = false
         
         func doLoad(request: EditCalibration.Load.Request) {
             doLoadCalled = true
         }
         
         func doSave(request: EditCalibration.Save.Request) {
+            doSaveCalled = true
         }
         
         func doDismiss(request: EditCalibration.Dismiss.Request) {
+            doDismissCalled = true
+        }
+    }
+    
+    final class EditCalibrationRoutingLogicSpy: EditCalibrationRoutingLogic {
+        var dismissCalled = false
+        var showErrorCalled = false
+        var showSuccessCalled = false
+        
+        func dismissScene() {
+            dismissCalled = true
+        }
+        
+        func showError(_ error: String) {
+            showErrorCalled = true
+        }
+        
+        func showSuccessAndDismiss() {
+            showSuccessCalled = true
         }
     }
     
@@ -77,12 +99,184 @@ final class EditCalibrationViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = EditCalibration.Load.ViewModel(displaySecondEntrySet: false)
+        let tableViewModel = BaseSettings.ViewModel(sections: [])
+        let viewModel = EditCalibration.Load.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()
         sut.displayLoad(viewModel: viewModel)
         
         // Then
+    }
+    
+    func testDoDismiss() {
+        // Given
+        let spy = EditCalibrationBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        
+        guard let cancelButton = sut.navigationItem.leftBarButtonItem else {
+            XCTFail("Cannot obtain cancel button")
+            return
+        }
+        // When
+        _ = cancelButton.target?.perform(cancelButton.action, with: nil)
+        // Then
+        XCTAssertTrue(spy.doDismissCalled)
+    }
+    
+    func testDoSave() {
+        // Given
+        let spy = EditCalibrationBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        
+        guard let saveButton = sut.navigationItem.rightBarButtonItem else {
+            XCTFail("Cannot obtain cancel button")
+            return
+        }
+        // When
+        _ = saveButton.target?.perform(saveButton.action, with: nil)
+        // Then
+        XCTAssertTrue(spy.doSaveCalled)
+    }
+    
+    func testRouterDismissScene() {
+        let spy = EditCalibrationRoutingLogicSpy()
+        if let interactor = sut.interactor as? EditCalibrationInteractor {
+            interactor.router = spy
+        }
+        
+        loadView()
+        
+        guard let cancelButton = sut.navigationItem.leftBarButtonItem else {
+            XCTFail("Cannot obtain cancel button")
+            return
+        }
+        // When
+        _ = cancelButton.target?.perform(cancelButton.action, with: nil)
+        // Then
+        XCTAssertTrue(spy.dismissCalled)
+    }
+    
+    func testRouterShowError() {
+        let spy = EditCalibrationRoutingLogicSpy()
+        if let interactor = sut.interactor as? EditCalibrationInteractor {
+            interactor.router = spy
+        }
+        
+        loadView()
+        
+        guard let saveButton = sut.navigationItem.rightBarButtonItem else {
+            XCTFail("Cannot obtain cancel button")
+            return
+        }
+        // When
+        _ = saveButton.target?.perform(saveButton.action, with: nil)
+        // Then
+        XCTAssertTrue(spy.showErrorCalled)
+    }
+    
+    func testTableView() {
+        var date = Date().addingTimeInterval(-86400)
+        
+        User.current.settings.updateUnit(.mmolL)
+        CGMController.shared.setupService(for: .dexcomG6)
+        CGMDevice.current.sensorStartDate = date
+        CGMDevice.current.updateSensorIsStarted(true)
+        date = date.addingTimeInterval(3600)
+        GlucoseReading.create(filtered: 1.0, unfiltered: 1.0, date: date)
+        date = date.addingTimeInterval(3600)
+        GlucoseReading.create(filtered: 1.0, unfiltered: 1.0, date: date)
+        
+        let spy = EditCalibrationRoutingLogicSpy()
+        if let interactor = sut.interactor as? EditCalibrationInteractor {
+            interactor.router = spy
+        }
+        
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssertTrue(tableView.numberOfSections == 2)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 2)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 2)
+        
+        guard let firstValuePicker = getPicker(tableView, at: IndexPath(row: 0, section: 0)) as? CustomPickerView,
+            let firstDatePicker = getPicker(tableView, at: IndexPath(row: 1, section: 0)) as? CustomDatePicker else {
+            XCTFail("Cannot obtain first section cells")
+            return
+        }
+        
+        firstDatePicker.date = date.addingTimeInterval(3600)
+        firstDatePicker.sendActions(for: .valueChanged)
+        
+        firstValuePicker.selectRow(10, inComponent: 0, animated: false)
+        firstValuePicker.pickerView(firstValuePicker, didSelectRow: 10, inComponent: 0)
+        
+        let saveButton = sut.navigationItem.rightBarButtonItem
+        _ = saveButton?.target?.perform(saveButton?.action, with: nil)
+        XCTAssertTrue(spy.showErrorCalled)
+        
+        guard let secondValuePicker = getPicker(tableView, at: IndexPath(row: 0, section: 1)) as? CustomPickerView,
+            let secondDatePicker = getPicker(tableView, at: IndexPath(row: 1, section: 1)) as? CustomDatePicker else {
+            XCTFail("Cannot obtain first section cells")
+            return
+        }
+        
+        secondDatePicker.date = date.addingTimeInterval(7200)
+        secondDatePicker.sendActions(for: .valueChanged)
+        
+        secondValuePicker.selectRow(10, inComponent: 0, animated: false)
+        secondValuePicker.pickerView(secondValuePicker, didSelectRow: 10, inComponent: 0)
+        
+        _ = saveButton?.target?.perform(saveButton?.action, with: nil)
+        XCTAssertTrue(spy.showSuccessCalled)
+    }
+    
+    func testTableViewWithInitialCalibrations() {
+        let date = Date().addingTimeInterval(-86400)
+        User.current.settings.updateUnit(.mgDl)
+        CGMController.shared.setupService(for: .dexcomG6)
+        CGMDevice.current.sensorStartDate = date
+        CGMDevice.current.updateSensorIsStarted(true)
+        
+        try? Calibration.createInitialCalibration(
+            glucoseLevel1: 10.0,
+            glucoseLevel2: 10.0,
+            date1: date.addingTimeInterval(3600),
+            date2: date.addingTimeInterval(7200)
+        )
+        
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssertTrue(tableView.numberOfSections == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 2)
+    }
+    
+    private func getPicker(_ tableView: UITableView, at indexPath: IndexPath) -> PickerView? {
+        let cellType = PickerExpandableTableViewCell.self
+        guard let pickerCell = tableView.getCell(of: cellType, at: indexPath) else {
+            XCTFail("Cannot obtain picker cell")
+            return nil
+        }
+        
+        pickerCell.togglePickerVisibility()
+        
+        guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let picker = stackView.arrangedSubviews.first as? PickerView else {
+            XCTFail("Cannot obtain picker")
+            return nil
+        }
+        
+        return picker
     }
 }

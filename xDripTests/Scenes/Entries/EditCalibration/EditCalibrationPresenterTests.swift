@@ -53,7 +53,11 @@ final class EditCalibrationPresenterTests: XCTestCase {
         // Given
         let spy = EditCalibrationDisplayLogicSpy()
         sut.viewController = spy
-        let response = EditCalibration.Load.Response(hasInitialCalibrations: false)
+        let response = EditCalibration.Load.Response(
+            hasInitialCalibrations: false,
+            datePickerValueChanged: { _, _ in },
+            glucosePickerValueChanged: { _, _ in }
+        )
         
         // When
         sut.presentLoad(response: response)

@@ -1,6 +1,7 @@
 // AUTO-GENERATED
 // General
 "cancel" = "Cancel";
+"error" = "Error";
 
 // Home
 "home_time_frame_1h" = "1H";
@@ -20,6 +21,18 @@
 "entries_list_scene_title_carbs" = "Active Carbohydrates";
 "entries_list_scene_title_bolus" = "Active insulin";
 "entries_list_cell_no_date" = "No date specified";
+
+// Edit Calibration
+"edit_calibration_scene_title" = "Calibration";
+"edit_calibration_single_section_header" = "ENTER THE VALUE BELOW";
+"edit_calibration_first_section_header" = "ENTER THE FIRST VALUE BELOW";
+"edit_calibration_second_section_header" = "ENTER THE SECOND VALUE BELOW";
+"edit_calibration_single_section_footer" = "Please perform one finger prick test and enter the value here";
+"edit_calibration_second_section_footer" = "In order to get started, please perform one or two finger prick tests and enter the values here";
+"edit_calibration_date_picker_title" = "Date/Time";
+"edit_calibration_value_picker_title" = "BG Value";
+"edit_calibration_success_input_alert_title" = "Success";
+"edit_calibration_success_input_alert_message" = "Your input was successfully saved!";
 
 // Settings Root
 "settings_root_title" = "Settings";
