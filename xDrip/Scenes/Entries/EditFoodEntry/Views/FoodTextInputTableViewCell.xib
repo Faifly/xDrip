@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FoodTextInputTableViewCell" id="KGk-i7-Jjw" customClass="FoodTextInputTableViewCell" customModule="xDrip" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rpu-CU-HqZ">
+                        <rect key="frame" x="16" y="11.5" width="81" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mfz-uP-AaG" customClass="CustomTextField" customModule="xDrip" customModuleProvider="target">
+                        <rect key="frame" x="113" y="11" width="191" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <textInputTraits key="textInputTraits"/>
+                        <connections>
+                            <action selector="textFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="wFA-it-3zM"/>
+                        </connections>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="rpu-CU-HqZ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ULc-Oc-CW6"/>
+                    <constraint firstItem="rpu-CU-HqZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="b3I-8n-vz3"/>
+                    <constraint firstItem="Mfz-uP-AaG" firstAttribute="leading" secondItem="rpu-CU-HqZ" secondAttribute="trailing" constant="16" id="dxk-bC-GyM"/>
+                    <constraint firstItem="Mfz-uP-AaG" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="ewO-80-HT8"/>
+                    <constraint firstItem="Mfz-uP-AaG" firstAttribute="centerY" secondItem="rpu-CU-HqZ" secondAttribute="centerY" id="gKo-Hh-HpN"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="textField" destination="Mfz-uP-AaG" id="aQZ-AU-ciU"/>
+                <outlet property="titleLabel" destination="rpu-CU-HqZ" id="fnM-kc-L5y"/>
+            </connections>
+            <point key="canvasLocation" x="-57" y="15"/>
+        </tableViewCell>
+    </objects>
+</document>

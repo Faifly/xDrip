@@ -12,7 +12,7 @@
 
 // Root
 "root_add_entry_food" = "Еда";
-"root_add_entry_bolus" = "Лекарства";
+"root_add_entry_bolus" = "Доза";
 "root_add_entry_carbs" = "Углеводы";
 "root_add_entry_training" = "Тренировки";
 
@@ -33,6 +33,20 @@
 "edit_calibration_value_picker_title" = "Уровень Глюкозы";
 "edit_calibration_success_input_alert_title" = "Успех";
 "edit_calibration_success_input_alert_message" = "Ваши данные были успешно сохранен!";
+
+// Edit Calibration
+"edit_food_entry_food_scene_title" = "Еда";
+"edit_food_entry_bolus_scene_title" = "Доза";
+"edit_food_entry_carbs_scene_title" = "Углеводы";
+"edit_food_entry_section_header" = "ВВЕДИТЕ ЗНАЧЕНИЯ НИЖЕ";
+"edit_food_entry_carbs_section_footer" = "Укажите точное количество потребляемого количества в граммах, дату и тип пищи, чтобы лучше понять ваш рацион";
+"edit_food_entry_bolus_section_footer" = "Выберите дозировку и выберите точную дату инъекции";
+"edit_food_entry_carbs_amount_title" = "Потребленное кол-во";
+"edit_food_entry_type_of_food" = "Тип пищи";
+"edit_food_entry_bolus_amount_title" = "Дозировка";
+"edit_food_entry_date_and_time" = "Дата/Время";
+"edit_food_entry_carbs_amount_unit_grams" = "г";
+"edit_food_entry_bolus_unit_milligrams" = "мг";
 
 // Settings Root
 "settings_root_title" = "Настройки";

@@ -27,4 +27,8 @@ final class BolusEntry: AbstractEntry {
             self.updateDate(date)
         }
     }
+    
+    func updateAmount(_ amount: Double) {
+        self.amount = amount
+    }
 }

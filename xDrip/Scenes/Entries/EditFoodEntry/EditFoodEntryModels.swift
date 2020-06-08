@@ -15,6 +15,20 @@ import UIKit
 enum EditFoodEntry {
     // MARK: Models
     
+    enum Field {
+        case carbsAmount
+        case carbsDate
+        case foodType
+        case bolusAmount
+        case bolusDate
+    }
+    
+    enum EntryType {
+        case food
+        case bolus
+        case carbs
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -22,8 +36,31 @@ enum EditFoodEntry {
         }
         
         struct Response {
+            let entryType: EntryType
+            let textChangedHandler: (Field, String?) -> Void
+            let dateChangedHandler: (Field, Date) -> Void
+            let foodTypeChangedHandler: (String?) -> Void
         }
         
+        struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
+        }
+    }
+    
+    enum Cancel {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
+    
+    enum Save {
+        struct Request {
+        }
+        struct Response {
+        }
         struct ViewModel {
         }
     }

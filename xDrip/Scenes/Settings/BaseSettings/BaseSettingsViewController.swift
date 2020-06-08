@@ -28,6 +28,8 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
         tableView.registerNib(type: PickerExpandableTableViewCell.self)
         tableView.registerNib(type: BaseSettingsTextInputTableViewCell.self)
         tableView.registerNib(type: BaseSettingsButtonCell.self)
+        tableView.registerNib(type: FoodTypeTableViewCell.self)
+        tableView.registerNib(type: FoodTextInputTableViewCell.self)
         
         return tableView
     }()
@@ -149,6 +151,24 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
                 selectedIndex: selectedIndex,
                 indexPath: indexPath
             )
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let viewModel = viewModel else { fatalError() }
+        
+        switch viewModel.sections[indexPath.section] {
+        case .normal(let cells, _, _, _, _):
+            switch cells[indexPath.row] {
+            case .foodType:
+                if let cell = cell as? FoodTextInputTableViewCell {
+                    cell.setTextFieldFirstResponder()
+                }
+            default:
+                break
+            }
+        default:
+            break
         }
     }
     

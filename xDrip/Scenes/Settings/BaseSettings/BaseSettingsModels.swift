@@ -16,7 +16,9 @@ enum BaseSettings {
         case textInput(
             mainText: String,
             detailText: String?,
+            textFieldText: String?,
             placeholder: String?,
+            keyboardType: UIKeyboardType = .default,
             textChangedHandler: (String?) -> Void
         )
         case rightSwitch(text: String, isSwitchOn: Bool, switchHandler: (Bool) -> Void)
@@ -24,6 +26,7 @@ enum BaseSettings {
         case pickerExpandable(mainText: String, detailText: String?, picker: PickerView)
         case button(title: String, color: UIColor, handler: () -> Void)
         case info(mainText: String, detailText: String?, detailTextColor: UIColor?)
+        case foodType(foodTypePickedHandler: (String?) -> Void)
     }
     
     enum Section {

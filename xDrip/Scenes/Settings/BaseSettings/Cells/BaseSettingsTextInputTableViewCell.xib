@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -25,7 +25,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pEO-a1-BPZ">
-                        <rect key="frame" x="66" y="5" width="238" height="34"/>
+                        <rect key="frame" x="66" y="5" width="224" height="34"/>
                         <accessibility key="accessibilityConfiguration" identifier="textField"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
@@ -33,12 +33,20 @@
                             <action selector="editingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="qbE-8H-5Io"/>
                         </connections>
                     </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="g" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arI-gG-1i6">
+                        <rect key="frame" x="294" y="10.5" width="10" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="pEO-a1-BPZ" secondAttribute="bottom" constant="5" id="Fz5-0l-Yht"/>
                     <constraint firstItem="pEO-a1-BPZ" firstAttribute="leading" secondItem="Xrm-Sy-Bkz" secondAttribute="trailing" constant="8" id="Jt9-xl-nnk"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="pEO-a1-BPZ" secondAttribute="trailing" id="bvA-1w-C04"/>
+                    <constraint firstAttribute="trailing" secondItem="arI-gG-1i6" secondAttribute="trailing" constant="16" id="Tcf-Gm-0If"/>
+                    <constraint firstItem="arI-gG-1i6" firstAttribute="leading" secondItem="pEO-a1-BPZ" secondAttribute="trailing" constant="4" id="XFv-91-UEm"/>
                     <constraint firstItem="pEO-a1-BPZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="dCw-0L-YLO"/>
+                    <constraint firstItem="arI-gG-1i6" firstAttribute="firstBaseline" secondItem="pEO-a1-BPZ" secondAttribute="firstBaseline" id="gWq-RV-EQ5"/>
                     <constraint firstItem="Xrm-Sy-Bkz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="iA3-U5-ZHA"/>
                     <constraint firstItem="Xrm-Sy-Bkz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="j3j-ig-VDf"/>
                     <constraint firstAttribute="bottom" secondItem="Xrm-Sy-Bkz" secondAttribute="bottom" constant="11" id="pVU-bd-7by"/>
@@ -46,10 +54,11 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="detailLabel" destination="arI-gG-1i6" id="0Qq-RE-acB"/>
                 <outlet property="mainTextLabel" destination="Xrm-Sy-Bkz" id="53a-Uy-M3A"/>
                 <outlet property="textField" destination="pEO-a1-BPZ" id="S2j-p5-5U8"/>
             </connections>
-            <point key="canvasLocation" x="132" y="154"/>
+            <point key="canvasLocation" x="131.8840579710145" y="153.34821428571428"/>
         </tableViewCell>
     </objects>
 </document>

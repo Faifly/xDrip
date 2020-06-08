@@ -146,7 +146,8 @@ final class SettingsTransmitterPresenter: SettingsTransmitterPresentationLogic {
         if response.allowSerialNumberChange {
             return .textInput(
                 mainText: "settings_transmitter_serial_number_field".localized,
-                detailText: serialNumber,
+                detailText: nil,
+                textFieldText: serialNumber,
                 placeholder: "settings_transmitter_serial_number_placeholder".localized,
                 textChangedHandler: response.serialNumberChangeHandler
             )

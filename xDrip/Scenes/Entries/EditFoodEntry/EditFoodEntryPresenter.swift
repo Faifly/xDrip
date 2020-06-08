@@ -22,7 +22,114 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
     // MARK: Do something
     
     func presentLoad(response: EditFoodEntry.Load.Response) {
-        let viewModel = EditFoodEntry.Load.ViewModel()
+        var sections = [BaseSettings.Section]()
+        
+        switch response.entryType {
+        case .food:
+            sections = [
+                createCarbsSection(response: response),
+                createBolusSection(response: response)
+            ]
+        case .bolus:
+            sections = [
+                createBolusSection(response: response)
+            ]
+        case .carbs:
+            sections = [
+                createCarbsSection(response: response)
+            ]
+        }
+        
+        let tableViewModel = BaseSettings.ViewModel(sections: sections)
+        
+        let viewModel = EditFoodEntry.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    private func createCarbsSection(response: EditFoodEntry.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createTextInputCell(
+                .carbsAmount,
+                detail: "edit_food_entry_carbs_amount_unit_grams".localized,
+                textChangeHandler: response.textChangedHandler
+            ),
+            .foodType(foodTypePickedHandler: response.foodTypeChangedHandler),
+            createDatePickerCell(.carbsDate, dateChangedHandler: response.dateChangedHandler)
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: "edit_food_entry_section_header".localized,
+            footer: "edit_food_entry_bolus_section_footer".localized
+        )
+    }
+    
+    private func createBolusSection(response: EditFoodEntry.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createTextInputCell(
+                .bolusAmount,
+                detail: "edit_food_entry_bolus_unit_milligrams".localized,
+                textChangeHandler: response.textChangedHandler
+            ),
+            createDatePickerCell(.bolusDate, dateChangedHandler: response.dateChangedHandler)
+        ]
+        
+        var header: String?
+        if response.entryType == .bolus {
+            header = "edit_food_entry_section_header".localized
+        }
+        
+        return .normal(
+            cells: cells,
+            header: header,
+            footer: "edit_food_entry_bolus_section_footer".localized
+        )
+    }
+    
+    private func createTextInputCell(
+        _ field: EditFoodEntry.Field,
+        detail: String?,
+        textChangeHandler: @escaping (EditFoodEntry.Field, String?) -> Void
+    ) -> BaseSettings.Cell {
+        return .textInput(
+            mainText: field.title,
+            detailText: detail,
+            textFieldText: nil,
+            placeholder: "0",
+            keyboardType: .decimalPad,
+            textChangedHandler: { string in
+                textChangeHandler(field, string)
+        })
+    }
+    
+    private func createDatePickerCell(
+        _ field: EditFoodEntry.Field,
+        dateChangedHandler: @escaping (EditFoodEntry.Field, Date) -> Void
+    ) -> BaseSettings.Cell {
+        let date = Date()
+        let picker = CustomDatePicker()
+        picker.datePickerMode = .dateAndTime
+        picker.date = date
+        
+        picker.formatDate = { date in
+            dateChangedHandler(field, date)
+            
+            return DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
+        }
+        
+        let detail = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
+        return .pickerExpandable(mainText: field.title, detailText: detail, picker: picker)
+    }
+}
+
+private extension EditFoodEntry.Field {
+    var title: String {
+        switch self {
+        case .carbsAmount: return "edit_food_entry_carbs_amount_title".localized
+        case .carbsDate: return "edit_food_entry_date_and_time".localized
+        case .foodType: return "edit_food_entry_type_of_food".localized
+        case .bolusAmount: return "edit_food_entry_bolus_amount_title".localized
+        case .bolusDate: return "edit_food_entry_date_and_time".localized
+        }
     }
 }

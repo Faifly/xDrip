@@ -13,6 +13,7 @@
 import UIKit
 
 protocol EditFoodEntryRoutingLogic {
+    func dismissScene()
 }
 
 protocol EditFoodEntryDataPassing {
@@ -24,5 +25,7 @@ final class EditFoodEntryRouter: EditFoodEntryRoutingLogic, EditFoodEntryDataPas
     weak var dataStore: EditFoodEntryDataStore?
     
     // MARK: Routing
-    
+    func dismissScene() {
+        viewController?.dismiss(animated: true, completion: nil)
+    }
 }

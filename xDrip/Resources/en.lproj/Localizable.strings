@@ -34,6 +34,20 @@
 "edit_calibration_success_input_alert_title" = "Success";
 "edit_calibration_success_input_alert_message" = "Your input was successfully saved!";
 
+// Edit Calibration
+"edit_food_entry_food_scene_title" = "Food";
+"edit_food_entry_bolus_scene_title" = "Bolus";
+"edit_food_entry_carbs_scene_title" = "Carbs";
+"edit_food_entry_section_header" = "ENTER THE VALUES BELOW";
+"edit_food_entry_carbs_section_footer" = "Provide an exact number of amount consumed in grams, date and type of food to have a better overview of your diet.";
+"edit_food_entry_bolus_section_footer" = "Choose bolus units amount and select the precise date of the injection";
+"edit_food_entry_carbs_amount_title" = "Amount consumed";
+"edit_food_entry_type_of_food" = "Type of food";
+"edit_food_entry_bolus_amount_title" = "Units";
+"edit_food_entry_date_and_time" = "Date/Time";
+"edit_food_entry_carbs_amount_unit_grams" = "g";
+"edit_food_entry_bolus_unit_milligrams" = "mg";
+
 // Settings Root
 "settings_root_title" = "Settings";
 "settings_root_units_title" = "Units";

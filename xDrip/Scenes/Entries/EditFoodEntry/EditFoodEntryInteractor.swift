@@ -11,22 +11,83 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol EditFoodEntryBusinessLogic {
     func doLoad(request: EditFoodEntry.Load.Request)
+    func doCancel(request: EditFoodEntry.Cancel.Request)
+    func doSave(request: EditFoodEntry.Save.Request)
 }
 
-protocol EditFoodEntryDataStore: AnyObject {    
+protocol EditFoodEntryDataStore: AnyObject {
+    var entryType: EditFoodEntry.EntryType? { get set }
 }
 
 final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDataStore {
     var presenter: EditFoodEntryPresentationLogic?
     var router: EditFoodEntryRoutingLogic?
     
+    var entryType: EditFoodEntry.EntryType?
+    private lazy var carbEntry: CarbEntry = {
+        return CarbEntry()
+    }()
+    private lazy var bolusEntry: BolusEntry = {
+        return BolusEntry()
+    }()
+    
     // MARK: Do something
     
     func doLoad(request: EditFoodEntry.Load.Request) {
-        let response = EditFoodEntry.Load.Response()
+        let response = EditFoodEntry.Load.Response(
+            entryType: entryType ?? .food,
+            textChangedHandler: handleTextChanged(_:_:),
+            dateChangedHandler: handleDateChanged(_:_:),
+            foodTypeChangedHandler: handleFoodTypeChanged(_:)
+        )
         presenter?.presentLoad(response: response)
+    }
+    
+    func doCancel(request: EditFoodEntry.Cancel.Request) {
+        router?.dismissScene()
+    }
+    
+    func doSave(request: EditFoodEntry.Save.Request) {
+        if bolusEntry.amount != 0.0 {
+            Realm.shared.safeWrite {
+                bolusEntry.addToRealm()
+            }
+        }
+        
+        if carbEntry.amount != 0.0 {
+            Realm.shared.safeWrite {
+                carbEntry.addToRealm()
+            }
+        }
+
+        router?.dismissScene()
+    }
+    
+    private func handleTextChanged(_ field: EditFoodEntry.Field, _ string: String?) {
+        guard let stringValue = string, let value = Double(stringValue) else {
+            return
+        }
+        
+        switch field {
+        case .carbsAmount: carbEntry.updateAmount(value)
+        case .bolusAmount: bolusEntry.updateAmount(value)
+        default: break
+        }
+    }
+    
+    private func handleDateChanged(_ field: EditFoodEntry.Field, _ date: Date) {
+        switch field {
+        case .carbsDate: carbEntry.updateDate(date)
+        case .bolusDate: bolusEntry.updateDate(date)
+        default: break
+        }
+    }
+    
+    private func handleFoodTypeChanged(_ foodType: String?) {
+        carbEntry.updateFoodType(foodType)
     }
 }

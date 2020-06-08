@@ -33,4 +33,12 @@ final class CarbEntry: AbstractEntry {
             self.updateDate(date)
         }
     }
+    
+    func updateAmount(_ amount: Double) {
+        self.amount = amount
+    }
+    
+    func updateFoodType(_ foodType: String?) {
+        self.foodType = foodType
+    }
 }
