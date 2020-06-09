@@ -47,7 +47,9 @@ final class EditFoodEntryInteractorTests: XCTestCase {
         }
     }
     
-    final class EditFoodEntryRoutingLogicSpy: EditFoodEntryRoutingLogic {        
+    final class EditFoodEntryRoutingLogicSpy: EditFoodEntryRoutingLogic {
+        func dismissScene() {
+        }
     }
     
     // MARK: Tests

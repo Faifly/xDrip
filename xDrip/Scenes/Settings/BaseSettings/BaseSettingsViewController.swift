@@ -154,24 +154,6 @@ extension BaseSettingsViewController: UITableViewDelegate, UITableViewDataSource
         }
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let viewModel = viewModel else { fatalError() }
-        
-        switch viewModel.sections[indexPath.section] {
-        case .normal(let cells, _, _, _, _):
-            switch cells[indexPath.row] {
-            case .foodType:
-                if let cell = cell as? FoodTextInputTableViewCell {
-                    cell.setTextFieldFirstResponder()
-                }
-            default:
-                break
-            }
-        default:
-            break
-        }
-    }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 40.0

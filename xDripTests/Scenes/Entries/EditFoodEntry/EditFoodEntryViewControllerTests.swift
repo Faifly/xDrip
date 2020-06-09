@@ -53,6 +53,12 @@ final class EditFoodEntryViewControllerTests: XCTestCase {
         func doLoad(request: EditFoodEntry.Load.Request) {
             doLoadCalled = true
         }
+        
+        func doCancel(request: EditFoodEntry.Cancel.Request) {
+        }
+        
+        func doSave(request: EditFoodEntry.Save.Request) {
+        }
     }
     
     // MARK: Tests
@@ -71,7 +77,8 @@ final class EditFoodEntryViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = EditFoodEntry.Load.ViewModel()
+        let tableViewModel = BaseSettings.ViewModel(sections: [])
+        let viewModel = EditFoodEntry.Load.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()

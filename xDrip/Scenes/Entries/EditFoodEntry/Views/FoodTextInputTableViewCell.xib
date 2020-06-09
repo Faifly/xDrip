@@ -10,42 +10,61 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FoodTextInputTableViewCell" id="KGk-i7-Jjw" customClass="FoodTextInputTableViewCell" customModule="xDrip" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FoodTextInputTableViewCell" rowHeight="235" id="KGk-i7-Jjw" customClass="FoodTextInputTableViewCell" customModule="xDrip" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="235"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="235"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rpu-CU-HqZ">
-                        <rect key="frame" x="16" y="11.5" width="81" height="21"/>
+                        <rect key="frame" x="16" y="13.5" width="81" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mfz-uP-AaG" customClass="CustomTextField" customModule="xDrip" customModuleProvider="target">
-                        <rect key="frame" x="113" y="11" width="191" height="22"/>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Placeholder" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mfz-uP-AaG">
+                        <rect key="frame" x="113" y="8" width="191" height="31"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <textInputTraits key="textInputTraits"/>
                         <connections>
-                            <action selector="textFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="wFA-it-3zM"/>
+                            <action selector="textFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="wWF-73-ypg"/>
                         </connections>
                     </textField>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="BbW-Wt-QLR">
+                        <rect key="frame" x="0.0" y="47" width="320" height="180"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="180" id="24k-69-O0H"/>
+                        </constraints>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="D14-5L-fHM">
+                            <size key="itemSize" width="35" height="35"/>
+                            <size key="headerReferenceSize" width="16" height="50"/>
+                            <size key="footerReferenceSize" width="16" height="10"/>
+                            <inset key="sectionInset" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                    </collectionView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="rpu-CU-HqZ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ULc-Oc-CW6"/>
+                    <constraint firstItem="BbW-Wt-QLR" firstAttribute="top" secondItem="Mfz-uP-AaG" secondAttribute="bottom" constant="8" id="CIN-vw-zLc"/>
+                    <constraint firstAttribute="bottom" secondItem="BbW-Wt-QLR" secondAttribute="bottom" constant="8" id="FXe-3e-jPs"/>
+                    <constraint firstAttribute="trailing" secondItem="BbW-Wt-QLR" secondAttribute="trailing" id="TP0-DV-81M"/>
                     <constraint firstItem="rpu-CU-HqZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="b3I-8n-vz3"/>
                     <constraint firstItem="Mfz-uP-AaG" firstAttribute="leading" secondItem="rpu-CU-HqZ" secondAttribute="trailing" constant="16" id="dxk-bC-GyM"/>
                     <constraint firstItem="Mfz-uP-AaG" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="ewO-80-HT8"/>
-                    <constraint firstItem="Mfz-uP-AaG" firstAttribute="centerY" secondItem="rpu-CU-HqZ" secondAttribute="centerY" id="gKo-Hh-HpN"/>
+                    <constraint firstItem="Mfz-uP-AaG" firstAttribute="centerY" secondItem="rpu-CU-HqZ" secondAttribute="centerY" id="j0x-UC-J8p"/>
+                    <constraint firstItem="Mfz-uP-AaG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="xUL-y8-OsD"/>
+                    <constraint firstItem="BbW-Wt-QLR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="yG3-09-iSk"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="collectionView" destination="BbW-Wt-QLR" id="k0s-xw-O7p"/>
                 <outlet property="textField" destination="Mfz-uP-AaG" id="aQZ-AU-ciU"/>
                 <outlet property="titleLabel" destination="rpu-CU-HqZ" id="fnM-kc-L5y"/>
             </connections>
-            <point key="canvasLocation" x="-57" y="15"/>
+            <point key="canvasLocation" x="-57.971014492753625" y="76.674107142857139"/>
         </tableViewCell>
     </objects>
 </document>

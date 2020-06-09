@@ -43,6 +43,7 @@
 "edit_food_entry_bolus_section_footer" = "Выберите дозировку и выберите точную дату инъекции";
 "edit_food_entry_carbs_amount_title" = "Потребленное кол-во";
 "edit_food_entry_type_of_food" = "Тип пищи";
+"edit_food_entry_type_of_food_textfield_placeholder" = "Введите тип пищи...";
 "edit_food_entry_bolus_amount_title" = "Дозировка";
 "edit_food_entry_date_and_time" = "Дата/Время";
 "edit_food_entry_carbs_amount_unit_grams" = "г";

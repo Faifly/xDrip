@@ -41,8 +41,6 @@
 		2C493C3B244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */; };
 		2C493C3D244F012600F4A54B /* Settings+Notifications_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */; };
 		2C493C3F244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3E244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift */; };
-		2C4ABEEA248A5244001ED694 /* EmojiInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABEE8248A5244001ED694 /* EmojiInputViewController.swift */; };
-		2C4ABEEB248A5244001ED694 /* EmojiInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C4ABEE9248A5244001ED694 /* EmojiInputViewController.xib */; };
 		2C4ABEEE248A5447001ED694 /* EmojiInputHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABEEC248A5447001ED694 /* EmojiInputHeaderView.swift */; };
 		2C4ABEEF248A5447001ED694 /* EmojiInputHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C4ABEED248A5447001ED694 /* EmojiInputHeaderView.xib */; };
 		2C4ABEF2248A555C001ED694 /* EmojiInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABEF0248A555C001ED694 /* EmojiInputCell.swift */; };
@@ -670,8 +668,6 @@
 		2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsTextInputTableViewCellTests.swift; sourceTree = "<group>"; };
 		2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Notifications_Tests.swift"; sourceTree = "<group>"; };
 		2C493C3E244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewControllerTests.swift; sourceTree = "<group>"; };
-		2C4ABEE8248A5244001ED694 /* EmojiInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiInputViewController.swift; sourceTree = "<group>"; };
-		2C4ABEE9248A5244001ED694 /* EmojiInputViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiInputViewController.xib; sourceTree = "<group>"; };
 		2C4ABEEC248A5447001ED694 /* EmojiInputHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiInputHeaderView.swift; sourceTree = "<group>"; };
 		2C4ABEED248A5447001ED694 /* EmojiInputHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiInputHeaderView.xib; sourceTree = "<group>"; };
 		2C4ABEF0248A555C001ED694 /* EmojiInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiInputCell.swift; sourceTree = "<group>"; };
@@ -1334,8 +1330,6 @@
 		2C4ABEE7248A5213001ED694 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2C4ABEE8248A5244001ED694 /* EmojiInputViewController.swift */,
-				2C4ABEE9248A5244001ED694 /* EmojiInputViewController.xib */,
 				2C4ABEEC248A5447001ED694 /* EmojiInputHeaderView.swift */,
 				2C4ABEED248A5447001ED694 /* EmojiInputHeaderView.xib */,
 				2C4ABEF0248A555C001ED694 /* EmojiInputCell.swift */,
@@ -3590,7 +3584,6 @@
 				2C4E7EF424694F440062D403 /* Anticipate.caf in Resources */,
 				2C4E7EFB24694F440062D403 /* Swish.caf in Resources */,
 				580E4B44243E38B300565EDE /* BaseSettingsDisclosureCell.xib in Resources */,
-				2C4ABEEB248A5244001ED694 /* EmojiInputViewController.xib in Resources */,
 				2C4E7EFC24694F440062D403 /* Suspense.caf in Resources */,
 				2C4E7F0024694F440062D403 /* Calypso.caf in Resources */,
 				2C4E7EF324694F440062D403 /* Sherwood_Forest.caf in Resources */,
@@ -3854,7 +3847,6 @@
 				58B5FD54241910BD00DB857D /* SettingsRootModels.swift in Sources */,
 				580E4C2D243F74F000565EDE /* SettingsUnitsViewController.swift in Sources */,
 				58B5FD3C24190E6700DB857D /* StatsRootPresenter.swift in Sources */,
-				2C4ABEEA248A5244001ED694 /* EmojiInputViewController.swift in Sources */,
 				58B95B50244B13400005CA60 /* ChartEntryDetailView.swift in Sources */,
 				584432AD243CFD9B00282A6C /* SettingsChartViewController.swift in Sources */,
 				580E4B81243F717E00565EDE /* SettingsAlertSoundViewController.swift in Sources */,

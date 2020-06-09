@@ -60,7 +60,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         return .normal(
             cells: cells,
             header: "edit_food_entry_section_header".localized,
-            footer: "edit_food_entry_bolus_section_footer".localized
+            footer: "edit_food_entry_carbs_section_footer".localized
         )
     }
     
