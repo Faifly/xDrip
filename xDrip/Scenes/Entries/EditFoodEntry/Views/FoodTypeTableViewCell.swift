@@ -19,7 +19,7 @@ final class FoodTypeTableViewCell: UITableViewCell {
         case custom
     }
 
-    private var selectionState = SelectionState.fast {
+    var selectionState = SelectionState.fast {
         didSet {
             updateButtons()
         }

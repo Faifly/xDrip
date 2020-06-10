@@ -16,10 +16,10 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
         XCTAssertTrue(realm.objects(CarbEntry.self).isEmpty)
         
         let date = Date(timeIntervalSince1970: 6.0)
-        let entry = FoodEntriesWorker.addCarbEntry(amount: 1.1, foodType: "2.2", assimilationDuration: 3.3, date: date)
+        let entry = FoodEntriesWorker.addCarbEntry(amount: 1.1, foodType: "2.2", date: date)
         XCTAssertTrue(entry.amount ~ 1.1)
         XCTAssertTrue(entry.foodType == "2.2")
-        XCTAssertTrue(entry.assimilationDuration ~ 3.3)
+        XCTAssertTrue(entry.assimilationDuration ~ 0.0)
         XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 6.0)
         
         XCTAssertTrue(realm.objects(CarbEntry.self).count == 1)
@@ -30,7 +30,7 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
         
         for index in 1...10 {
             let date = Date(timeIntervalSince1970: 1000.0 - Double(index) * 10.0)
-            let entry = CarbEntry(amount: 1.0, foodType: "\(index)", assimilationDuration: 1.0, date: date)
+            let entry = CarbEntry(amount: 1.0, foodType: "\(index)", date: date)
             realm.safeWrite {
                 realm.add(entry)
             }

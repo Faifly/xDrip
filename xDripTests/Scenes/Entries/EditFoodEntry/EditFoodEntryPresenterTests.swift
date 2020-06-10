@@ -54,6 +54,8 @@ final class EditFoodEntryPresenterTests: XCTestCase {
         let spy = EditFoodEntryDisplayLogicSpy()
         sut.viewController = spy
         let response = EditFoodEntry.Load.Response(
+            bolusEntry: nil,
+            carbEntry: nil,
             entryType: .food,
             textChangedHandler: { _, _ in },
             dateChangedHandler: { _, _ in },

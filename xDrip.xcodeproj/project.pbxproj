@@ -45,9 +45,7 @@
 		2C4ABEEF248A5447001ED694 /* EmojiInputHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C4ABEED248A5447001ED694 /* EmojiInputHeaderView.xib */; };
 		2C4ABEF2248A555C001ED694 /* EmojiInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABEF0248A555C001ED694 /* EmojiInputCell.swift */; };
 		2C4ABEF3248A555C001ED694 /* EmojiInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C4ABEF1248A555C001ED694 /* EmojiInputCell.xib */; };
-		2C4ABEF7248A5953001ED694 /* EmojiDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABEF6248A5953001ED694 /* EmojiDataSource.swift */; };
 		2C4ABEF9248A5AD8001ED694 /* FoodEmojiDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABEF8248A5AD8001ED694 /* FoodEmojiDataSource.swift */; };
-		2C4ABEFB248A5CC2001ED694 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABEFA248A5CC2001ED694 /* CustomTextField.swift */; };
 		2C4ABEFE248A5FEA001ED694 /* FoodTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABEFC248A5FEA001ED694 /* FoodTypeTableViewCell.swift */; };
 		2C4ABEFF248A5FEA001ED694 /* FoodTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C4ABEFD248A5FEA001ED694 /* FoodTypeTableViewCell.xib */; };
 		2C4ABF02248A7EB5001ED694 /* FoodTextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABF00248A7EB5001ED694 /* FoodTextInputTableViewCell.swift */; };
@@ -672,9 +670,7 @@
 		2C4ABEED248A5447001ED694 /* EmojiInputHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiInputHeaderView.xib; sourceTree = "<group>"; };
 		2C4ABEF0248A555C001ED694 /* EmojiInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiInputCell.swift; sourceTree = "<group>"; };
 		2C4ABEF1248A555C001ED694 /* EmojiInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiInputCell.xib; sourceTree = "<group>"; };
-		2C4ABEF6248A5953001ED694 /* EmojiDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiDataSource.swift; sourceTree = "<group>"; };
 		2C4ABEF8248A5AD8001ED694 /* FoodEmojiDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodEmojiDataSource.swift; sourceTree = "<group>"; };
-		2C4ABEFA248A5CC2001ED694 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		2C4ABEFC248A5FEA001ED694 /* FoodTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTypeTableViewCell.swift; sourceTree = "<group>"; };
 		2C4ABEFD248A5FEA001ED694 /* FoodTypeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodTypeTableViewCell.xib; sourceTree = "<group>"; };
 		2C4ABF00248A7EB5001ED694 /* FoodTextInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTextInputTableViewCell.swift; sourceTree = "<group>"; };
@@ -1347,7 +1343,6 @@
 		2C4ABEF5248A5944001ED694 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				2C4ABEF6248A5953001ED694 /* EmojiDataSource.swift */,
 				2C4ABEF8248A5AD8001ED694 /* FoodEmojiDataSource.swift */,
 			);
 			path = Helpers;
@@ -2732,7 +2727,6 @@
 				580E4CFA2441BF2100565EDE /* Charts */,
 				5805C9C92438929E002AFA1B /* CenteredTitleButton.swift */,
 				2C1DE8A7247938780023B512 /* CustomAlertController.swift */,
-				2C4ABEFA248A5CC2001ED694 /* CustomTextField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -3677,7 +3671,6 @@
 				5805C9A224389230002AFA1B /* DexcomG6TransmitterVersionTxMessage.swift in Sources */,
 				580E4CF92441BF1E00565EDE /* GlucoseChartView.swift in Sources */,
 				2C48E6E42428AA78006B63B0 /* UIColor+Colors.swift in Sources */,
-				2C4ABEF7248A5953001ED694 /* EmojiDataSource.swift in Sources */,
 				580E4C1F243F74A300565EDE /* SettingsPumpUserModels.swift in Sources */,
 				580E4B90243F71DC00565EDE /* SettingsCloudTypesInteractor.swift in Sources */,
 				5805C9A924389230002AFA1B /* DexcomG6AuthRequestRxMessage.swift in Sources */,
@@ -3725,7 +3718,6 @@
 				58B5FD56241910BD00DB857D /* SettingsRootInteractor.swift in Sources */,
 				58B5FD3D24190E6700DB857D /* StatsRootRouter.swift in Sources */,
 				589EA8D3247700AF00515BCC /* BaseSettingsButtonCell.swift in Sources */,
-				2C4ABEFB248A5CC2001ED694 /* CustomTextField.swift in Sources */,
 				580E4BC2243F733100565EDE /* SettingsModeRootModels.swift in Sources */,
 				5805C9C22438925F002AFA1B /* CGMDevice.swift in Sources */,
 				580E4B8F243F71DC00565EDE /* SettingsCloudTypesViewController.swift in Sources */,

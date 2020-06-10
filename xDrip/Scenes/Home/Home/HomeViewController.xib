@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kVg-zr-V5c">
-                    <rect key="frame" x="16" y="59" width="382" height="32"/>
+                    <rect key="frame" x="16" y="60" width="382" height="32"/>
                     <segments>
                         <segment title="First"/>
                         <segment title="Second"/>
@@ -30,11 +30,11 @@
                         <action selector="onTimeFrameSegmentSelected" destination="-1" eventType="valueChanged" id="GZa-vY-TUM"/>
                     </connections>
                 </segmentedControl>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xzh-FR-4Nr">
-                    <rect key="frame" x="162.5" y="99" width="89" height="30"/>
-                    <state key="normal" title="to entries list"/>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xzh-FR-4Nr">
+                    <rect key="frame" x="215" y="99" width="183" height="30"/>
+                    <state key="normal" title="to carbs entries list"/>
                     <connections>
-                        <action selector="toEntriesList" destination="-1" eventType="touchUpInside" id="1ad-Tu-NTA"/>
+                        <action selector="toEntriesList:" destination="-1" eventType="touchUpInside" id="UME-B1-shW"/>
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dSe-Qa-bqu" customClass="GlucoseHistoryView" customModule="xDrip" customModuleProvider="target">
@@ -44,17 +44,28 @@
                         <constraint firstAttribute="height" constant="270" id="x0y-Ag-e9B"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S2b-uv-T9b">
+                    <rect key="frame" x="16" y="99" width="183" height="30"/>
+                    <state key="normal" title="to bolus entries list"/>
+                    <connections>
+                        <action selector="toEntriesList:" destination="-1" eventType="touchUpInside" id="g88-dt-p4A"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
+                <constraint firstItem="S2b-uv-T9b" firstAttribute="width" secondItem="Xzh-FR-4Nr" secondAttribute="width" id="8WI-uF-4Cv"/>
+                <constraint firstItem="S2b-uv-T9b" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="FPr-1W-vuA"/>
                 <constraint firstItem="dSe-Qa-bqu" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Krg-EG-wEs"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Xzh-FR-4Nr" secondAttribute="trailing" constant="16" id="NU5-mO-nmn"/>
+                <constraint firstItem="Xzh-FR-4Nr" firstAttribute="leading" secondItem="S2b-uv-T9b" secondAttribute="trailing" constant="16" id="Syi-VX-cJ0"/>
                 <constraint firstItem="Xzh-FR-4Nr" firstAttribute="top" secondItem="kVg-zr-V5c" secondAttribute="bottom" constant="8" id="T0o-h1-Eah"/>
                 <constraint firstItem="kVg-zr-V5c" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="Zbj-Td-dxa"/>
                 <constraint firstItem="kVg-zr-V5c" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="c1A-id-guO"/>
+                <constraint firstItem="S2b-uv-T9b" firstAttribute="top" secondItem="Xzh-FR-4Nr" secondAttribute="top" id="ioh-JJ-F97"/>
                 <constraint firstItem="dSe-Qa-bqu" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="j5q-I5-9ae"/>
                 <constraint firstItem="dSe-Qa-bqu" firstAttribute="top" secondItem="Xzh-FR-4Nr" secondAttribute="bottom" constant="8" id="lXE-ck-Yi9"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="kVg-zr-V5c" secondAttribute="trailing" constant="16" id="rlk-6p-J2V"/>
-                <constraint firstItem="Xzh-FR-4Nr" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yuw-uo-bs9"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="137.68115942028987" y="114.50892857142857"/>

@@ -26,7 +26,11 @@ enum BaseSettings {
         case pickerExpandable(mainText: String, detailText: String?, picker: PickerView)
         case button(title: String, color: UIColor, handler: () -> Void)
         case info(mainText: String, detailText: String?, detailTextColor: UIColor?)
-        case foodType(foodTypePickedHandler: (String?) -> Void)
+        case foodType(
+            selectedType: FoodTypeTableViewCell.SelectionState,
+            foodTypeString: String?,
+            foodTypePickedHandler: (String?) -> Void
+        )
     }
     
     enum Section {

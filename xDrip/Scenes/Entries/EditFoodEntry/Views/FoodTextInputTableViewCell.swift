@@ -13,7 +13,7 @@ final class FoodTextInputTableViewCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var textField: UITextField!
     
-    private var emojis: EmojiDataSource = FoodEmojiDataSource()
+    private var emojis = FoodEmojiDataSource()
     
     var didEditingChange: ((String?) -> Void)?
     
@@ -50,6 +50,10 @@ final class FoodTextInputTableViewCell: UITableViewCell {
             layout.sectionHeadersPinToVisibleBounds = true
             layout.sectionFootersPinToVisibleBounds = true
         }
+    }
+    
+    func configurate(with foodType: String?) {
+        textField.text = foodType
     }
     
     @IBAction private func textFieldEditingChanged(_ sender: Any) {

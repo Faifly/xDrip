@@ -8,51 +8,40 @@
 
 import Foundation
 
-class FoodEmojiDataSource: EmojiDataSource {
-    private static let fast: [String] = {
-        var fast = [
-            "🍭", "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍",
-            "🍎", "🍏", "🍐", "🍑", "🍒", "🍓", "🥝",
-            "🍅", "🥔", "🥕", "🌽", "🌶", "🥒", "🥗", "🍄",
-            "🍞", "🥐", "🥖", "🥞", "🍿", "🍘", "🍙",
-            "🍚", "🍢", "🍣", "🍡", "🍦", "🍧", "🍨",
-            "🍩", "🍪", "🎂", "🍰", "🍫", "🍬", "🍮",
-            "🍯", "🍼", "🥛", "☕️", "🍵",
-            "🥥", "🥦", "🥨", "🥠", "🥧"
-        ]
+final class FoodEmojiDataSource {
+    struct EmojiSection {
+        let title: String
+        let items: [String]
+    }
+    
+    private static let fast: [String] = [
+        "🍭", "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍",
+        "🍎", "🍏", "🍐", "🍑", "🍒", "🍓", "🥝",
+        "🍅", "🥔", "🥕", "🌽", "🌶", "🥒", "🥗", "🍄",
+        "🍞", "🥐", "🥖", "🥞", "🍿", "🍘", "🍙",
+        "🍚", "🍢", "🍣", "🍡", "🍦", "🍧", "🍨",
+        "🍩", "🍪", "🎂", "🍰", "🍫", "🍬", "🍮",
+        "🍯", "🍼", "🥛", "☕️", "🍵",
+        "🥥", "🥦", "🥨", "🥠", "🥧"
+    ]
 
-        return fast
-    }()
+    private static let medium: [String] = [
+        "🌮", "🍆", "🍟", "🍳", "🍲", "🍱", "🍛",
+        "🍜", "🍠", "🍤", "🍥", "🍹",
+        "🥪", "🥫", "🥟", "🥡"
+    ]
 
-    private static let medium: [String] = {
-        var medium = [
-            "🌮", "🍆", "🍟", "🍳", "🍲", "🍱", "🍛",
-            "🍜", "🍠", "🍤", "🍥", "🍹",
-            "🥪", "🥫", "🥟", "🥡"
-        ]
+    private static let slow: [String] = [
+        "🍕", "🥑", "🥜", "🌰", "🧀", "🍖", "🍗", "🥓",
+        "🍔", "🌭", "🌯", "🍝", "🥩"
+    ]
 
-        return medium
-    }()
-
-    private static let slow: [String] = {
-        var slow = [
-            "🍕", "🥑", "🥜", "🌰", "🧀", "🍖", "🍗", "🥓",
-            "🍔", "🌭", "🌯", "🍝", "🥩"
-        ]
-
-        return slow
-    }()
-
-    private static let other: [String] = {
-        var other = [
-            "🍶", "🍾", "🍷", "🍸", "🍺", "🍻", "🥂", "🥃",
-            "🥣", "🥤", "🥢",
-            "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣",
-            "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"
-        ]
-
-        return other
-    }()
+    private static let other: [String] = [
+        "🍶", "🍾", "🍷", "🍸", "🍺", "🍻", "🥂", "🥃",
+        "🥣", "🥤", "🥢",
+        "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣",
+        "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"
+    ]
 
     let sections: [EmojiSection]
 
@@ -60,23 +49,19 @@ class FoodEmojiDataSource: EmojiDataSource {
         sections = [
             EmojiSection(
                 title: "Fast",
-                items: FoodEmojiDataSource.fast,
-                indexSymbol: " 🍭 "
+                items: FoodEmojiDataSource.fast
             ),
             EmojiSection(
                 title: "Medium",
-                items: FoodEmojiDataSource.medium,
-                indexSymbol: "🌮"
+                items: FoodEmojiDataSource.medium
             ),
             EmojiSection(
                 title: "Slow",
-                items: FoodEmojiDataSource.slow,
-                indexSymbol: "🍕"
+                items: FoodEmojiDataSource.slow
             ),
             EmojiSection(
                 title: "Other",
-                items: FoodEmojiDataSource.other,
-                indexSymbol: "⋯ "
+                items: FoodEmojiDataSource.other
             )
         ]
     }

@@ -47,14 +47,38 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
     }
     
     private func createCarbsSection(response: EditFoodEntry.Load.Response) -> BaseSettings.Section {
+        let carbsValue = response.carbEntry?.amount ?? 0.0
+        let valueString = carbsValue ~~ 0.0 ? nil : "\(carbsValue)"
+        
+        let foodTypes = FoodEmojiDataSource().sections.compactMap { $0.items.first }
+        var selectedType = FoodTypeTableViewCell.SelectionState.fast
+        let foodType = response.carbEntry?.foodType
+        
+        if let foodType = foodType {
+            if let index = foodTypes.firstIndex(of: foodType) {
+                selectedType = FoodTypeTableViewCell.SelectionState(rawValue: index) ?? .fast
+            } else {
+                selectedType = .custom
+            }
+        }
+        
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
                 .carbsAmount,
                 detail: "edit_food_entry_carbs_amount_unit_grams".localized,
+                textFieldText: valueString,
                 textChangeHandler: response.textChangedHandler
             ),
-            .foodType(foodTypePickedHandler: response.foodTypeChangedHandler),
-            createDatePickerCell(.carbsDate, dateChangedHandler: response.dateChangedHandler)
+            .foodType(
+                selectedType: selectedType,
+                foodTypeString: foodType,
+                foodTypePickedHandler: response.foodTypeChangedHandler
+            ),
+            createDatePickerCell(
+                .carbsDate,
+                date: response.carbEntry?.date,
+                dateChangedHandler: response.dateChangedHandler
+            )
         ]
         
         return .normal(
@@ -65,13 +89,21 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
     }
     
     private func createBolusSection(response: EditFoodEntry.Load.Response) -> BaseSettings.Section {
+        let bolusValue = response.bolusEntry?.amount ?? 0.0
+        let valueString = bolusValue ~~ 0.0 ? nil : "\(bolusValue)"
+        
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
                 .bolusAmount,
                 detail: "edit_food_entry_bolus_unit_milligrams".localized,
+                textFieldText: valueString,
                 textChangeHandler: response.textChangedHandler
             ),
-            createDatePickerCell(.bolusDate, dateChangedHandler: response.dateChangedHandler)
+            createDatePickerCell(
+                .bolusDate,
+                date: response.bolusEntry?.date,
+                dateChangedHandler: response.dateChangedHandler
+            )
         ]
         
         var header: String?
@@ -89,12 +121,13 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
     private func createTextInputCell(
         _ field: EditFoodEntry.Field,
         detail: String?,
+        textFieldText: String?,
         textChangeHandler: @escaping (EditFoodEntry.Field, String?) -> Void
     ) -> BaseSettings.Cell {
         return .textInput(
             mainText: field.title,
             detailText: detail,
-            textFieldText: nil,
+            textFieldText: textFieldText,
             placeholder: "0",
             keyboardType: .decimalPad,
             textChangedHandler: { string in
@@ -104,9 +137,10 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
     
     private func createDatePickerCell(
         _ field: EditFoodEntry.Field,
+        date: Date?,
         dateChangedHandler: @escaping (EditFoodEntry.Field, Date) -> Void
     ) -> BaseSettings.Cell {
-        let date = Date()
+        let date = date ?? Date()
         let picker = CustomDatePicker()
         picker.datePickerMode = .dateAndTime
         picker.date = date

@@ -55,6 +55,9 @@ final class EntriesListInteractorTests: XCTestCase {
         func dismissScene() {
             dismissSceneCalled = true
         }
+        
+        func routeToEditEntry() {
+        }
     }
     
     // MARK: Tests

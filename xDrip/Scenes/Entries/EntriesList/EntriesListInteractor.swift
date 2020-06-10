@@ -20,6 +20,7 @@ protocol EntriesListBusinessLogic {
 }
 
 protocol EntriesListDataStore: AnyObject {
+    var entry: AbstractEntry? { get set }
 }
 
 final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStore {
@@ -27,6 +28,7 @@ final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStor
     var router: EntriesListRoutingLogic?
     
     let entriesWorker: EntriesListEntryPersistenceWorker
+    var entry: AbstractEntry?
     
     init(persistenceWorker: EntriesListEntryPersistenceWorker) {
         entriesWorker = persistenceWorker
@@ -50,8 +52,8 @@ final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStor
     }
     
     func doShowSelectedEntry(request: EntriesList.ShowSelectedEntry.Request) {
-        _ = entriesWorker.fetchEntries()[request.index]
+        entry = entriesWorker.fetchEntries()[request.index]
         
-        // add route to edit entry controller
+        router?.routeToEditEntry()
     }
 }

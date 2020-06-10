@@ -36,6 +36,8 @@ enum EditFoodEntry {
         }
         
         struct Response {
+            let bolusEntry: BolusEntry?
+            let carbEntry: CarbEntry?
             let entryType: EntryType
             let textChangedHandler: (Field, String?) -> Void
             let dateChangedHandler: (Field, Date) -> Void

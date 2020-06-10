@@ -71,8 +71,8 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         interactor?.doLoad(request: request)
     }
     
-    @IBAction private func toEntriesList() {
-        let request = Home.ShowEntriesList.Request(entriesType: Bool.random() ? .carbs : .bolus)
+    @IBAction private func toEntriesList(_ sender: UIButton) {
+        let request = Home.ShowEntriesList.Request(entriesType: sender.tag == 1 ? .carbs : .bolus)
         interactor?.doShowEntriesList(request: request)
     }
     
