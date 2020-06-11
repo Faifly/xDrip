@@ -44,23 +44,23 @@ final class FoodEmojiDataSource {
     ]
 
     let sections: [EmojiSection]
-
+    
     init() {
         sections = [
             EmojiSection(
-                title: "Fast",
+                title: "edit_food_entry_fast_carbs_title".localized,
                 items: FoodEmojiDataSource.fast
             ),
             EmojiSection(
-                title: "Medium",
+                title: "edit_food_entry_medium_carbs_title".localized,
                 items: FoodEmojiDataSource.medium
             ),
             EmojiSection(
-                title: "Slow",
+                title: "edit_food_entry_slow_carbs_title".localized,
                 items: FoodEmojiDataSource.slow
             ),
             EmojiSection(
-                title: "Other",
+                title: "edit_food_entry_other_carbs_title".localized,
                 items: FoodEmojiDataSource.other
             )
         ]

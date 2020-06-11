@@ -44,19 +44,21 @@ final class EntriesListInteractorTests: XCTestCase {
     final class EntriesListPresentationLogicSpy: EntriesListPresentationLogic {
         var presentLoadCalled = false
         
-        func presentLoad(response: EntriesList.Load.Response) {
+        func presentUpdateData(response: EntriesList.UpdateData.Response) {
             presentLoadCalled = true
         }
     }
     
     final class EntriesListRoutingLogicSpy: EntriesListRoutingLogic {
         var dismissSceneCalled = false
+        var routeToEditEntryCalled = false
         
         func dismissScene() {
             dismissSceneCalled = true
         }
         
         func routeToEditEntry() {
+            routeToEditEntryCalled = true
         }
     }
     
@@ -66,13 +68,13 @@ final class EntriesListInteractorTests: XCTestCase {
         // Given
         let spy = EntriesListPresentationLogicSpy()
         sut.presenter = spy
-        let request = EntriesList.Load.Request()
+        let request = EntriesList.UpdateData.Request()
         
         // When
-        sut.doLoad(request: request)
+        sut.doUpdateData(request: request)
         
         // Then
-        XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+        XCTAssertTrue(spy.presentLoadCalled, "doUpdateData(request:) should ask the presenter to format the result")
     }
     
     func testDoCancel() {
@@ -86,5 +88,19 @@ final class EntriesListInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.dismissSceneCalled)
+    }
+    
+    func testRouteToEditEntryCalled() {
+        FoodEntriesWorker.addCarbEntry(amount: 0.0, foodType: nil, date: Date())
+        
+        let spy = EntriesListRoutingLogicSpy()
+        sut.router = spy
+        
+        let request = EntriesList.ShowSelectedEntry.Request(index: 0)
+        sut.doShowSelectedEntry(request: request)
+        
+        XCTAssertTrue(spy.routeToEditEntryCalled)
+        
+        sut.entriesWorker.deleteEntry(0)
     }
 }

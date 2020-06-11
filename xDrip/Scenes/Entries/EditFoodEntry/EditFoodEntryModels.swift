@@ -29,6 +29,11 @@ enum EditFoodEntry {
         case carbs
     }
     
+    enum Mode {
+        case create
+        case edit
+    }
+    
     // MARK: Use cases
     
     enum Load {

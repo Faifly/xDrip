@@ -33,13 +33,6 @@ final class FoodTypeTableViewCell: UITableViewCell {
         
         titleLabel.text = "edit_food_entry_type_of_food".localized
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        contentView.layoutMargins.left = separatorInset.left
-        contentView.layoutMargins.right = separatorInset.left
-    }
 
     private func updateButtons() {
         for case (let index, let button as UIButton) in buttonStack.arrangedSubviews.enumerated() {

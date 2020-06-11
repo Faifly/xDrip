@@ -49,15 +49,19 @@ final class EditFoodEntryViewControllerTests: XCTestCase {
     
     final class EditFoodEntryBusinessLogicSpy: EditFoodEntryBusinessLogic {
         var doLoadCalled = false
+        var doCancelCalled = false
+        var doSaveCalled = false
         
         func doLoad(request: EditFoodEntry.Load.Request) {
             doLoadCalled = true
         }
         
         func doCancel(request: EditFoodEntry.Cancel.Request) {
+            doCancelCalled = true
         }
         
         func doSave(request: EditFoodEntry.Save.Request) {
+            doSaveCalled = true
         }
     }
     
@@ -85,5 +89,250 @@ final class EditFoodEntryViewControllerTests: XCTestCase {
         sut.displayLoad(viewModel: viewModel)
         
         // Then
+    }
+    
+    func testDoCancelCalled() {
+        // Given
+        let spy = EditFoodEntryBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        
+        let button = sut.navigationItem.leftBarButtonItem
+        // When
+        _ = button?.target?.perform(button?.action, with: nil)
+        // Then
+        XCTAssertTrue(spy.doCancelCalled)
+    }
+    
+    func testDoSaveCalled() {
+        // Given
+        let spy = EditFoodEntryBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        
+        let button = sut.navigationItem.rightBarButtonItem
+        // When
+        _ = button?.target?.perform(button?.action, with: nil)
+        // Then
+        XCTAssertTrue(spy.doSaveCalled)
+    }
+    
+    func testTableViewFoodSetup() {
+        sut.router?.dataStore?.entryType = .food
+        loadView()
+        
+        let tableView = getTableView()
+        
+        XCTAssertTrue(tableView.numberOfSections == 2)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 3)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 2)
+    }
+    
+    func testTableViewBolusSetup() {
+        sut.router?.dataStore?.entryType = .bolus
+        loadView()
+        
+        let tableView = getTableView()
+        
+        XCTAssertTrue(tableView.numberOfSections == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 2)
+    }
+    
+    func testTableViewCarbsSetup() {
+        sut.router?.dataStore?.entryType = .carbs
+        loadView()
+        
+        let tableView = getTableView()
+        
+        XCTAssertTrue(tableView.numberOfSections == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 3)
+    }
+    
+    func testAmountChangedHandlers() {
+        let dataStore = sut.router?.dataStore
+        dataStore?.entryType = .food
+        
+        loadView()
+        
+        let tableView = getTableView()
+        
+        let cellType = BaseSettingsTextInputTableViewCell.self
+        guard
+            let carbsAmountCell = tableView.getCell(of: cellType, at: IndexPath(row: 0, section: 0)),
+            let bolusAmountCell = tableView.getCell(of: cellType, at: IndexPath(row: 0, section: 1)),
+            let carbsTextField = carbsAmountCell.contentView.findView(with: "textField") as? UITextField,
+            let bolusTextField = bolusAmountCell.contentView.findView(with: "textField") as? UITextField
+        else {
+            XCTFail("Cannot obtain textfields")
+            return
+        }
+        
+        carbsTextField.text = "123"
+        carbsTextField.sendActions(for: .editingChanged)
+        
+        bolusTextField.text = "321"
+        bolusTextField.sendActions(for: .editingChanged)
+        
+        bolusTextField.text = "random text"
+        bolusTextField.sendActions(for: .editingChanged)
+        
+        let button = sut.navigationItem.rightBarButtonItem
+        _ = button?.target?.perform(button?.action, with: nil)
+    }
+    
+    func testDateChangedHandlers() {
+        let dataStore = sut.router?.dataStore
+        
+        let carbEntry = CarbEntry(amount: 100.0, foodType: "🍭", date: Date())
+        let bolusEntry = BolusEntry(amount: 100.0, date: Date())
+        dataStore?.carbEntry = carbEntry
+        dataStore?.bolusEntry = bolusEntry
+        dataStore?.entryType = .food
+        
+        loadView()
+        
+        let tableView = getTableView()
+        
+        guard
+            let carbsPicker = getPicker(tableView, at: IndexPath(row: 2, section: 0)) as? CustomDatePicker,
+            let bolusPicker = getPicker(tableView, at: IndexPath(row: 1, section: 1)) as? CustomDatePicker
+        else {
+            XCTFail("Cannot obtain picker")
+            return
+        }
+        
+        carbsPicker.date = Date().addingTimeInterval(-84600)
+        carbsPicker.sendActions(for: .valueChanged)
+        
+        bolusPicker.date = Date().addingTimeInterval(-3600)
+        bolusPicker.sendActions(for: .valueChanged)
+        
+        let button = sut.navigationItem.rightBarButtonItem
+        _ = button?.target?.perform(button?.action, with: nil)
+    }
+    
+    func testFoodTypeCell() {
+        let dataStore = sut.router?.dataStore
+        
+        let carbEntry = CarbEntry(amount: 100.0, foodType: "🍭", date: Date())
+        dataStore?.carbEntry = carbEntry
+        dataStore?.entryType = .carbs
+        
+        loadView()
+        
+        let tableView = getTableView()
+        
+        let cellType = FoodTypeTableViewCell.self
+        guard let cell = tableView.getCell(of: cellType, at: IndexPath(row: 1, section: 0)) else {
+            XCTFail("Cannot obtain cell of type FoodTypeTableViewCell")
+            return
+        }
+        
+        guard let stackView = cell.contentView.subviews.compactMap({ $0 as? UIStackView }).first
+        else {
+            XCTFail("Cannot obtain buttons")
+            return
+        }
+        
+        let buttons = stackView.arrangedSubviews.compactMap({ $0 as? UIButton })
+        
+        buttons.first?.sendActions(for: .touchUpInside)
+        
+        buttons.last?.sendActions(for: .touchUpInside)
+        
+        let anotherCellType = FoodTextInputTableViewCell.self
+        guard tableView.getCell(of: anotherCellType, at: IndexPath(row: 1, section: 0)) != nil else {
+            XCTFail("Cannot obtain cell of type FoodTextInputTableViewCell")
+            return
+        }
+    }
+    
+    func testFoodTypeCellCustomInput() {
+        let dataStore = sut.router?.dataStore
+        
+        let carbEntry = CarbEntry(amount: 100.0, foodType: "custom input", date: Date())
+        dataStore?.carbEntry = carbEntry
+        dataStore?.entryType = .carbs
+        
+        loadView()
+        
+        let tableView = getTableView()
+        
+        let cellType = FoodTextInputTableViewCell.self
+        guard let cell = tableView.getCell(of: cellType, at: IndexPath(row: 1, section: 0)) else {
+            XCTFail("Cannot obtain cell of type FoodTextInputTableViewCell")
+            return
+        }
+        
+        guard let collectionView = cell.contentView.subviews.compactMap({ $0 as? UICollectionView }).first else {
+            XCTFail("Cannot obtain collectionView")
+            return
+        }
+        
+        let dataSource = FoodEmojiDataSource()
+        XCTAssertTrue(collectionView.numberOfSections == dataSource.sections.count)
+        
+        let header = cell.collectionView(
+            collectionView,
+            viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader,
+            at: IndexPath(row: 0, section: 0)
+        )
+        _ = cell.collectionView(
+            collectionView,
+            viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionFooter,
+            at: IndexPath(row: 0, section: 0)
+        )
+        _ = cell.collectionView(
+            collectionView,
+            viewForSupplementaryElementOfKind: "default",
+            at: IndexPath(row: 0, section: 0)
+        )
+        
+        XCTAssertTrue(header is EmojiInputHeaderView)
+        
+        let collectionCell = cell.collectionView(collectionView, cellForItemAt: IndexPath(row: 0, section: 1))
+        collectionCell.isSelected = true
+        collectionCell.isSelected = false
+        collectionCell.isHighlighted = true
+        collectionCell.isHighlighted = false
+        
+        guard let textField = cell.contentView.subviews.compactMap({ $0 as? UITextField }).first else {
+            XCTFail("Cannot obtain textField")
+            return
+        }
+        
+        cell.collectionView(collectionView, didSelectItemAt: IndexPath(row: 0, section: 1))
+        
+        let emoji = dataSource.sections[1].items[0]
+        XCTAssertTrue(textField.text?.contains(emoji) != nil)
+        
+        textField.sendActions(for: .editingChanged)
+    }
+    
+    private func getTableView() -> UITableView {
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            fatalError()
+        }
+        
+        return tableView
+    }
+    
+    private func getPicker(_ tableView: UITableView, at indexPath: IndexPath) -> PickerView? {
+        let cellType = PickerExpandableTableViewCell.self
+        guard let pickerCell = tableView.getCell(of: cellType, at: indexPath) else {
+            XCTFail("Cannot obtain picker cell")
+            return nil
+        }
+        
+        pickerCell.togglePickerVisibility()
+        
+        guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let picker = stackView.arrangedSubviews.first as? PickerView else {
+            XCTFail("Cannot obtain picker")
+            return nil
+        }
+        
+        return picker
     }
 }

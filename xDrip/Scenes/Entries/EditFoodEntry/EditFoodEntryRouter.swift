@@ -26,6 +26,10 @@ final class EditFoodEntryRouter: EditFoodEntryRoutingLogic, EditFoodEntryDataPas
     
     // MARK: Routing
     func dismissScene() {
-        viewController?.dismiss(animated: true, completion: nil)
+        if dataStore?.mode == .create {
+            viewController?.dismiss(animated: true, completion: nil)
+        } else if dataStore?.mode == .edit {
+            viewController?.navigationController?.popViewController(animated: true)
+        }
     }
 }

@@ -37,6 +37,8 @@ final class EntriesListRouter: EntriesListRoutingLogic, EntriesListDataPassing {
         let viewController = EditFoodEntryViewController()
         let dataStore = viewController.router?.dataStore
         
+        dataStore?.mode = .edit
+        
         switch entry {
         case is BolusEntry:
             dataStore?.entryType = .bolus

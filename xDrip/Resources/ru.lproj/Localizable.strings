@@ -21,6 +21,8 @@
 "entries_list_scene_title_carbs" = "Активные углеводы";
 "entries_list_scene_title_bolus" = "Активный инсулин";
 "entries_list_cell_no_date" = "Дата не указана";
+"entries_list_scene_carbs_amount_unit_grams" = "г";
+"entries_list_scene_carbs_bolus_unit" = "Ед";
 
 // Edit Calibration
 "edit_calibration_scene_title" = "Калибровка";
@@ -48,6 +50,10 @@
 "edit_food_entry_date_and_time" = "Дата/Время";
 "edit_food_entry_carbs_amount_unit_grams" = "г";
 "edit_food_entry_bolus_unit_milligrams" = "мг";
+"edit_food_entry_fast_carbs_title" = "Быстрые";
+"edit_food_entry_medium_carbs_title" = "Средние";
+"edit_food_entry_slow_carbs_title" = "Медленные";
+"edit_food_entry_other_carbs_title" = "Другие";
 
 // Settings Root
 "settings_root_title" = "Настройки";

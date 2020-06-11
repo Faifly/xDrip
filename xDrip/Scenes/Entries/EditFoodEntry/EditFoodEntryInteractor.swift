@@ -11,7 +11,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 protocol EditFoodEntryBusinessLogic {
     func doLoad(request: EditFoodEntry.Load.Request)
@@ -20,6 +19,7 @@ protocol EditFoodEntryBusinessLogic {
 }
 
 protocol EditFoodEntryDataStore: AnyObject {
+    var mode: EditFoodEntry.Mode { get set }
     var entryType: EditFoodEntry.EntryType? { get set }
     var carbEntry: CarbEntry? { get set }
     var bolusEntry: BolusEntry? { get set }
@@ -40,6 +40,7 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     var presenter: EditFoodEntryPresentationLogic?
     var router: EditFoodEntryRoutingLogic?
     
+    var mode: EditFoodEntry.Mode = .create
     var entryType: EditFoodEntry.EntryType?
     var carbEntry: CarbEntry?
     var bolusEntry: BolusEntry?

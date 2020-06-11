@@ -42,7 +42,7 @@ final class EntriesListPresenterTests: XCTestCase {
     final class EntriesListDisplayLogicSpy: EntriesListDisplayLogic {
         var displayLoadCalled = false
         
-        func displayLoad(viewModel: EntriesList.Load.ViewModel) {
+        func displayUpdateData(viewModel: EntriesList.UpdateData.ViewModel) {
             displayLoadCalled = true
         }
     }
@@ -53,15 +53,15 @@ final class EntriesListPresenterTests: XCTestCase {
         // Given
         let spy = EntriesListDisplayLogicSpy()
         sut.viewController = spy
-        let response = EntriesList.Load.Response(entries: [])
+        let response = EntriesList.UpdateData.Response(entries: [])
         
         // When
-        sut.presentLoad(response: response)
+        sut.presentUpdateData(response: response)
         
         // Then
         XCTAssertTrue(
             spy.displayLoadCalled,
-            "presentLoad(response:) should ask the view controller to display the result"
+            "presentUpdateData(response:) should ask the view controller to display the result"
         )
     }
 }

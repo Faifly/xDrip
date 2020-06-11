@@ -34,7 +34,51 @@ final class EditFoodEntryRouterTests: XCTestCase {
     // MARK: Test doubles
     
     final class ViewControllerSpy: EditFoodEntryViewController {
+        var dismissCalled = false
+        
+        override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+            dismissCalled = true
+        }
+    }
+    
+    final class NavigationControllerSpy: UINavigationController {
+        var popCalled = false
+        
+        override func popViewController(animated: Bool) -> UIViewController? {
+            popCalled = true
+            return nil
+        }
     }
     
     // MARK: Tests
+    
+    func testDismissSceneOnCreateMode() {
+        let navSpy = NavigationControllerSpy()
+        let spy = ViewControllerSpy()
+        navSpy.viewControllers = [spy]
+        
+        spy.router?.dataStore?.mode = .create
+        sut.dataStore = spy.router?.dataStore
+        sut.viewController = spy
+        
+        sut.dismissScene()
+        
+        XCTAssertTrue(spy.dismissCalled)
+        XCTAssertFalse(navSpy.popCalled)
+    }
+    
+    func testDismissSceneOnEditMode() {
+        let navSpy = NavigationControllerSpy()
+        let spy = ViewControllerSpy()
+        navSpy.viewControllers = [spy]
+        
+        spy.router?.dataStore?.mode = .edit
+        sut.dataStore = spy.router?.dataStore
+        sut.viewController = spy
+        
+        sut.dismissScene()
+        
+        XCTAssertFalse(spy.dismissCalled)
+        XCTAssertTrue(navSpy.popCalled)
+    }
 }

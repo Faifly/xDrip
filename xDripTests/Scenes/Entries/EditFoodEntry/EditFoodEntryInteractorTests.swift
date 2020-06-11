@@ -48,7 +48,10 @@ final class EditFoodEntryInteractorTests: XCTestCase {
     }
     
     final class EditFoodEntryRoutingLogicSpy: EditFoodEntryRoutingLogic {
+        var dismissCalled = false
+        
         func dismissScene() {
+            dismissCalled = true
         }
     }
     
@@ -65,5 +68,16 @@ final class EditFoodEntryInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+    }
+    
+    func testDoCancel() {
+        let spy = EditFoodEntryRoutingLogicSpy()
+        sut.router = spy
+        
+        // When
+        sut.doCancel(request: EditFoodEntry.Cancel.Request())
+        
+        // Then
+        XCTAssertTrue(spy.dismissCalled)
     }
 }

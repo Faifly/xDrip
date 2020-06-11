@@ -44,6 +44,14 @@ final class EntriesListRouterTests: XCTestCase {
         }
     }
     
+    final class NavigationControllerSpy: UINavigationController {
+        var lastPushedViewController: UIViewController?
+        
+        override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+            lastPushedViewController = viewController
+        }
+    }
+    
     // MARK: Tests
     
     func testDismissSelf() {
@@ -56,5 +64,53 @@ final class EntriesListRouterTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.dismissCalled)
+    }
+    
+    func testShowEditControllerForCarbEntry() {
+        let spy = NavigationControllerSpy()
+        let controller = createSpy()
+        sut.viewController = controller
+        spy.viewControllers = [controller]
+        
+        sut.dataStore = controller.interactor as? EntriesListInteractor
+        
+        let entry = CarbEntry(amount: 0.0, foodType: nil, date: Date())
+        sut.dataStore?.entry = entry
+        
+        sut.routeToEditEntry()
+        
+        guard let pushedController = spy.lastPushedViewController as? EditFoodEntryViewController else {
+            XCTFail("Cannot obtain edit controller")
+            return
+        }
+        
+        XCTAssertTrue(pushedController.router?.dataStore?.mode == .edit)
+        XCTAssertTrue(pushedController.router?.dataStore?.entryType == .carbs)
+        XCTAssertTrue(pushedController.router?.dataStore?.carbEntry == entry)
+        XCTAssertTrue(pushedController.router?.dataStore?.bolusEntry == nil)
+    }
+    
+    func testShowEditControllerForBolusEntry() {
+        let spy = NavigationControllerSpy()
+        let controller = createSpy()
+        sut.viewController = controller
+        spy.viewControllers = [controller]
+        
+        sut.dataStore = controller.interactor as? EntriesListInteractor
+        
+        let entry = BolusEntry(amount: 0.0, date: Date())
+        sut.dataStore?.entry = entry
+        
+        sut.routeToEditEntry()
+        
+        guard let pushedController = spy.lastPushedViewController as? EditFoodEntryViewController else {
+            XCTFail("Cannot obtain edit controller")
+            return
+        }
+        
+        XCTAssertTrue(pushedController.router?.dataStore?.mode == .edit)
+        XCTAssertTrue(pushedController.router?.dataStore?.entryType == .bolus)
+        XCTAssertTrue(pushedController.router?.dataStore?.bolusEntry == entry)
+        XCTAssertTrue(pushedController.router?.dataStore?.carbEntry == nil)
     }
 }
