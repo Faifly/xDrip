@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  xDrip
+
+  Created by Ivan Skoryk on 11.06.2020.
+  Copyright © 2020 Faifly. All rights reserved.
+*/
+
+NSBluetoothAlwaysUsageDescription = "Нам необходим доступ к Bluetooth, чтобы вы могли подключаться к вашим датчикам";
+NSBluetoothPeripheralUsageDescription = "Нам необходим доступ к Bluetooth, чтобы вы могли подключаться к вашим датчикам";
