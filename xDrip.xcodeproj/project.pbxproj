@@ -99,6 +99,7 @@
 		2CBE1A9B24323A58003BE14E /* EntriesListTableControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A9A24323A58003BE14E /* EntriesListTableControllerTests.swift */; };
 		2CBE1A9D2433718C003BE14E /* EntriesListSceneBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A9C2433718C003BE14E /* EntriesListSceneBuilderTests.swift */; };
 		2CBF32A4242E030700DE944A /* EntriesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */; };
+		2CDDFEBD24927A9C009505B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CDDFEBF24927A9C009505B0 /* InfoPlist.strings */; };
 		5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C97C243891CA002AFA1B /* HomeViewController.xib */; };
 		5805C9A024389230002AFA1B /* DexcomG6OutgoingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C98324389230002AFA1B /* DexcomG6OutgoingMessage.swift */; };
 		5805C9A124389230002AFA1B /* DexcomG6SensorDataTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C98424389230002AFA1B /* DexcomG6SensorDataTxMessage.swift */; };
@@ -724,6 +725,7 @@
 		2CBE1A9A24323A58003BE14E /* EntriesListTableControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableControllerTests.swift; sourceTree = "<group>"; };
 		2CBE1A9C2433718C003BE14E /* EntriesListSceneBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListSceneBuilderTests.swift; sourceTree = "<group>"; };
 		2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableViewCell.swift; sourceTree = "<group>"; };
+		2CDDFEBE24927A9C009505B0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5805C97C243891CA002AFA1B /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		5805C98324389230002AFA1B /* DexcomG6OutgoingMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DexcomG6OutgoingMessage.swift; sourceTree = "<group>"; };
 		5805C98424389230002AFA1B /* DexcomG6SensorDataTxMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DexcomG6SensorDataTxMessage.swift; sourceTree = "<group>"; };
@@ -2854,6 +2856,7 @@
 				58E5A6782402B8A8002C2BE3 /* Assets.xcassets */,
 				58E5A67A2402B8A8002C2BE3 /* LaunchScreen.storyboard */,
 				58B4F6CB24116394003C6D8F /* Localizable.strings */,
+				2CDDFEBF24927A9C009505B0 /* InfoPlist.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -3521,6 +3524,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58B4F6C924116394003C6D8F /* Localizable.strings in Resources */,
+				2CDDFEBD24927A9C009505B0 /* InfoPlist.strings in Resources */,
 				2C4E7F0524694F440062D403 /* Descent.caf in Resources */,
 				2C4E7EF724694F440062D403 /* Horn.caf in Resources */,
 				2C4ABF03248A7EB5001ED694 /* FoodTextInputTableViewCell.xib in Resources */,
@@ -4210,6 +4214,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2CDDFEBF24927A9C009505B0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2CDDFEBE24927A9C009505B0 /* ru */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		58B4F6CB24116394003C6D8F /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
