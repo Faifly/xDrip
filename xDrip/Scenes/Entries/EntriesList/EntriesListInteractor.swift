@@ -13,13 +13,14 @@
 import UIKit
 
 protocol EntriesListBusinessLogic {
-    func doLoad(request: EntriesList.Load.Request)
+    func doUpdateData(request: EntriesList.UpdateData.Request)
     func doCancel(request: EntriesList.Cancel.Request)
     func doDeleteEntry(request: EntriesList.DeleteEntry.Request)
     func doShowSelectedEntry(request: EntriesList.ShowSelectedEntry.Request)
 }
 
 protocol EntriesListDataStore: AnyObject {
+    var entry: AbstractEntry? { get set }
 }
 
 final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStore {
@@ -27,6 +28,7 @@ final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStor
     var router: EntriesListRoutingLogic?
     
     let entriesWorker: EntriesListEntryPersistenceWorker
+    var entry: AbstractEntry?
     
     init(persistenceWorker: EntriesListEntryPersistenceWorker) {
         entriesWorker = persistenceWorker
@@ -34,11 +36,11 @@ final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStor
     
     // MARK: Do something
     
-    func doLoad(request: EntriesList.Load.Request) {
+    func doUpdateData(request: EntriesList.UpdateData.Request) {
         let entries = entriesWorker.fetchEntries()
         
-        let response = EntriesList.Load.Response(entries: entries)
-        presenter?.presentLoad(response: response)
+        let response = EntriesList.UpdateData.Response(entries: entries)
+        presenter?.presentUpdateData(response: response)
     }
     
     func doCancel(request: EntriesList.Cancel.Request) {
@@ -50,8 +52,11 @@ final class EntriesListInteractor: EntriesListBusinessLogic, EntriesListDataStor
     }
     
     func doShowSelectedEntry(request: EntriesList.ShowSelectedEntry.Request) {
-        _ = entriesWorker.fetchEntries()[request.index]
+        let entries = entriesWorker.fetchEntries()
+        guard entries.count > request.index else { return }
         
-        // add route to edit entry controller
+        entry = entries[request.index]
+        
+        router?.routeToEditEntry()
     }
 }

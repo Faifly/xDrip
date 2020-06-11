@@ -18,7 +18,10 @@ final class EntriesListCarbsFormattingWorker: EntriesListAbstractFormattingWorke
     private func transformToViewModel(_ entry: CarbEntry?) -> EntriesListTableViewCell.ViewModel? {
         guard let entry = entry else { return nil }
         
-        let value = String(format: "%.02f g", entry.amount)
+        let value = String(
+            format: "%.02f " + "entries_list_scene_carbs_amount_unit_grams".localized,
+            entry.amount
+        )
         let date = getDateString(for: entry)
         
         return EntriesListTableViewCell.ViewModel(value: value, date: date)

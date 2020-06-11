@@ -89,7 +89,7 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
                 .baseURL,
-                detailText: response.settings.baseURL,
+                textFieldText: response.settings.baseURL,
                 placeholder: "settings_nightscout_cloud_configuration_base_url_placeholder".localized,
                 textEditingChangedHandler: response.textEditingChangedHandler
             )
@@ -134,12 +134,13 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
     
     private func createTextInputCell(
         _ field: NightscoutCloudConfiguration.Field,
-        detailText: String?,
+        textFieldText: String?,
         placeholder: String?,
         textEditingChangedHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
         return .textInput(
             mainText: field.title,
-            detailText: detailText,
+            detailText: nil,
+            textFieldText: textFieldText,
             placeholder: placeholder,
             textChangedHandler: { text in
                 textEditingChangedHandler(text)

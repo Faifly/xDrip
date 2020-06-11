@@ -22,7 +22,7 @@ enum EntriesList {
     
     // MARK: Use cases
     
-    enum Load {
+    enum UpdateData {
         struct Request {
         }
         

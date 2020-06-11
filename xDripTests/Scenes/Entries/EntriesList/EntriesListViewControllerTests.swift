@@ -59,7 +59,7 @@ final class EntriesListViewControllerTests: XCTestCase {
         var deleteEntryCalled = false
         var worker: EntriesListEntryPersistenceWorker?
         
-        func doLoad(request: EntriesList.Load.Request) {
+        func doUpdateData(request: EntriesList.UpdateData.Request) {
             doLoadCalled = true
         }
         
@@ -96,11 +96,11 @@ final class EntriesListViewControllerTests: XCTestCase {
     func testDisplayLoad() {
         // Given
         let items = generateDummyData()
-        let viewModel = EntriesList.Load.ViewModel(items: items)
+        let viewModel = EntriesList.UpdateData.ViewModel(items: items)
         
         // When
         loadView()
-        sut.displayLoad(viewModel: viewModel)
+        sut.displayUpdateData(viewModel: viewModel)
         
         guard let tableView = sut.view.subviews.first(where: { $0 is UITableView }) as? UITableView else {
             XCTFail("Cannot obtain tableView")
@@ -117,11 +117,11 @@ final class EntriesListViewControllerTests: XCTestCase {
         sut.interactor = spy
         
         let items = generateDummyData()
-        let viewModel = EntriesList.Load.ViewModel(items: items)
+        let viewModel = EntriesList.UpdateData.ViewModel(items: items)
         
         // When
         loadView()
-        sut.displayLoad(viewModel: viewModel)
+        sut.displayUpdateData(viewModel: viewModel)
         
         guard let tableView = sut.view.subviews.first(where: { $0 is UITableView }) as? UITableView else {
             XCTFail("Cannot obtain tableView")
@@ -149,11 +149,11 @@ final class EntriesListViewControllerTests: XCTestCase {
         sut.interactor = spy
         
         let items = generateDummyData()
-        let viewModel = EntriesList.Load.ViewModel(items: items)
+        let viewModel = EntriesList.UpdateData.ViewModel(items: items)
         
         // When
         loadView()
-        sut.displayLoad(viewModel: viewModel)
+        sut.displayUpdateData(viewModel: viewModel)
         
         guard let tableView = sut.view.subviews.first(where: { $0 is UITableView }) as? UITableView else {
             XCTFail("Cannot obtain tableView")
@@ -193,6 +193,89 @@ final class EntriesListViewControllerTests: XCTestCase {
         
         // Given
         XCTAssertTrue(spy.cancelCalled)
+    }
+    
+    func testEditButtonTap() {
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        guard let rightBarButton = sut.navigationItem.rightBarButtonItem else {
+            XCTFail("Cannot obtain bar button")
+            return
+        }
+        
+        XCTAssertTrue(tableView.isEditing == false)
+        
+        _ = rightBarButton.target?.perform(rightBarButton.action, with: nil)
+        
+        XCTAssertTrue(tableView.isEditing == true)
+    }
+    
+    func testLoadWithCarbsWorkers() {
+        FoodEntriesWorker.fetchAllCarbEntries().forEach { entry in
+            FoodEntriesWorker.deleteEntry(entry)
+        }
+        
+        FoodEntriesWorker.addCarbEntry(amount: 0.0, foodType: nil, date: Date())
+        
+        sut = EntriesListViewController(
+            persistenceWorker: EntriesListCarbsPersistenceWorker(),
+            formattingWorker: EntriesListCarbsFormattingWorker()
+        )
+        
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssertTrue(tableView.numberOfSections == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 1)
+        
+        guard let tableController = tableView.delegate as? EntriesListTableController else {
+            XCTFail("Cannot obtaint table controller")
+            return
+        }
+        
+        tableController.tableView(tableView, commit: .delete, forRowAt: IndexPath(row: 0, section: 0))
+        
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 0)
+    }
+    
+    func testLoadWithBolusWorkers() {
+        FoodEntriesWorker.fetchAllBolusEntries().forEach { entry in
+            FoodEntriesWorker.deleteEntry(entry)
+        }
+        FoodEntriesWorker.addBolusEntry(amount: 0.0, date: Date())
+        
+        sut = EntriesListViewController(
+            persistenceWorker: EntriesListBolusPersistenceWorker(),
+            formattingWorker: EntriesListBolusFormattingWorker()
+        )
+        
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssertTrue(tableView.numberOfSections == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 1)
+        
+        guard let tableController = tableView.delegate as? EntriesListTableController else {
+            XCTFail("Cannot obtaint table controller")
+            return
+        }
+        
+        tableController.tableView(tableView, commit: .delete, forRowAt: IndexPath(row: 0, section: 0))
+        
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 0)
     }
     
     // Helpers

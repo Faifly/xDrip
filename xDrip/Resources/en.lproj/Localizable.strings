@@ -21,6 +21,8 @@
 "entries_list_scene_title_carbs" = "Active Carbohydrates";
 "entries_list_scene_title_bolus" = "Active insulin";
 "entries_list_cell_no_date" = "No date specified";
+"entries_list_scene_carbs_amount_unit_grams" = "g";
+"entries_list_scene_carbs_bolus_unit" = "U";
 
 // Edit Calibration
 "edit_calibration_scene_title" = "Calibration";
@@ -33,6 +35,25 @@
 "edit_calibration_value_picker_title" = "BG Value";
 "edit_calibration_success_input_alert_title" = "Success";
 "edit_calibration_success_input_alert_message" = "Your input was successfully saved!";
+
+// Edit Calibration
+"edit_food_entry_food_scene_title" = "Food";
+"edit_food_entry_bolus_scene_title" = "Bolus";
+"edit_food_entry_carbs_scene_title" = "Carbs";
+"edit_food_entry_section_header" = "ENTER THE VALUES BELOW";
+"edit_food_entry_carbs_section_footer" = "Provide an exact number of amount consumed in grams, date and type of food to have a better overview of your diet.";
+"edit_food_entry_bolus_section_footer" = "Choose bolus units amount and select the precise date of the injection";
+"edit_food_entry_carbs_amount_title" = "Amount consumed";
+"edit_food_entry_type_of_food" = "Type of food";
+"edit_food_entry_type_of_food_textfield_placeholder" = "Enter food type...";
+"edit_food_entry_bolus_amount_title" = "Units";
+"edit_food_entry_date_and_time" = "Date/Time";
+"edit_food_entry_carbs_amount_unit_grams" = "g";
+"edit_food_entry_bolus_unit_milligrams" = "mg";
+"edit_food_entry_fast_carbs_title" = "Fast";
+"edit_food_entry_medium_carbs_title" = "Medium";
+"edit_food_entry_slow_carbs_title" = "Slow";
+"edit_food_entry_other_carbs_title" = "Other";
 
 // Settings Root
 "settings_root_title" = "Settings";

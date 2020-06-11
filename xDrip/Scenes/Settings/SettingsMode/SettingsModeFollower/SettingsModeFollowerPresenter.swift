@@ -45,7 +45,7 @@ final class SettingsModeFollowerPresenter: SettingsModeFollowerPresentationLogic
             ),
             createTextInputCell(
                 .nightscoutUrl,
-                detailText: nil,
+                textFieldText: nil,
                 placeholder: nil,
                 textEditingChangedHandler: response.textEditingChangedHandler
             ),
@@ -73,12 +73,13 @@ final class SettingsModeFollowerPresenter: SettingsModeFollowerPresentationLogic
     
     private func createTextInputCell(
         _ field: SettingsModeFollower.Field,
-        detailText: String?,
+        textFieldText: String?,
         placeholder: String?,
         textEditingChangedHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
         return .textInput(
             mainText: field.title,
-            detailText: detailText,
+            detailText: nil,
+            textFieldText: textFieldText,
             placeholder: placeholder,
             textChangedHandler: textEditingChangedHandler
         )

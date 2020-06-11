@@ -46,6 +46,11 @@ class EntriesListTableControllerTests: XCTestCase {
             persistenceWorker: EntriesListCarbsPersistenceWorker(),
             formattingWorker: EntriesListCarbsFormattingWorker()
         )
+    }
+    
+    func loadView() {
+        window.addSubview(viewController.view)
+        RunLoop.current.run(until: Date())
         
         guard let tableView = viewController.view.subviews.first(
             where: { $0 is UITableView }
@@ -55,11 +60,6 @@ class EntriesListTableControllerTests: XCTestCase {
         tableView.dataSource = sut
         
         self.tableView = tableView
-    }
-    
-    func loadView() {
-        window.addSubview(viewController.view)
-        RunLoop.current.run(until: Date())
     }
     
     func testReload() {

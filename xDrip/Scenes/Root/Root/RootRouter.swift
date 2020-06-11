@@ -18,7 +18,9 @@ protocol RootRoutingLogic {
     func routeToHistory()
     func routeToSettings()
     
-    func routeToAddEntry()
+    func routeToAddFood()
+    func routeToAddBolus()
+    func routeToAddCarbs()
     func routeToInitialSetup()
     
     func showCalibrationError(title: String, message: String)
@@ -63,12 +65,38 @@ final class RootRouter: RootRoutingLogic, RootDataPassing {
         viewController?.present(splitViewController, animated: true)
     }
     
-    func routeToAddEntry() {        
+    func routeToAddFood() {
+        routeToAddEntry(entryType: .food)
+    }
+    
+    func routeToAddBolus() {
+        routeToAddEntry(entryType: .bolus)
+    }
+    
+    func routeToAddCarbs() {
+        routeToAddEntry(entryType: .carbs)
     }
     
     func routeToInitialSetup() {
         let viewController = InitialSetupViewController()
         self.viewController?.present(viewController, animated: true, completion: nil)
+    }
+    
+    private func routeToAddEntry(entryType: Root.EntryType) {
+        let editViewController = EditFoodEntryViewController()
+        guard let dataStore = editViewController.router?.dataStore else {
+            return
+        }
+        
+        switch entryType {
+        case .food: dataStore.entryType = .food
+        case .bolus: dataStore.entryType = .bolus
+        case .carbs: dataStore.entryType = .carbs
+        default:
+            break
+        }
+        
+        presentViewController(editViewController)
     }
     
     private func presentViewController(_ viewController: UIViewController) {

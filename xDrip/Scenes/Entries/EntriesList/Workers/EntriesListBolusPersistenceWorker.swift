@@ -12,23 +12,12 @@ final class EntriesListBolusPersistenceWorker: EntriesListEntryPersistenceWorker
     private var bolusEntries: [BolusEntry] = []
     
     func fetchEntries() -> [AbstractEntry] {
-        bolusEntries = []
-        
-        for _ in 0 ... 20 {
-            let randValue = Double.random(in: 0...100)
-            let randomTimeInterval = TimeInterval.random(in: 0 ... 1_000_000_000)
-            let date = Date(timeIntervalSince1970: randomTimeInterval)
-            
-            let entry = BolusEntry(amount: randValue, date: date)
-                bolusEntries.append(entry)
-        }
-        
+        bolusEntries = FoodEntriesWorker.fetchAllBolusEntries()
         return bolusEntries
     }
 
     func deleteEntry(_ index: Int) {
-        _ = bolusEntries.remove(at: index)
-        
-        // add delete from database
+        let entry = bolusEntries.remove(at: index)
+        FoodEntriesWorker.deleteEntry(entry)
     }
 }
