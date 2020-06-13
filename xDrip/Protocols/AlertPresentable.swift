@@ -1,5 +1,5 @@
 //
-//  ConfirmationPresentable.swift
+//  AlertPresentable.swift
 //  xDrip
 //
 //  Created by Artem Kalmykov on 29.05.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ConfirmationPresentable {
+protocol AlertPresentable {
     associatedtype T: UIViewController
     var viewController: T? { get }
     
@@ -18,9 +18,10 @@ protocol ConfirmationPresentable {
                              confirmButton: String?,
                              cancelButton: String?,
                              completion: @escaping (Bool) -> Void)
+    func presentNotYetImplementedAlert()
 }
 
-extension ConfirmationPresentable {
+extension AlertPresentable {
     func presentConfirmation(prefix: String, completion: @escaping (Bool) -> Void) {
         presentConfirmation(
             title: "\(prefix)_alert_title".localized,
@@ -57,6 +58,19 @@ extension ConfirmationPresentable {
             completion(false)
         }
         alert.addAction(cancelAction)
+        
+        viewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func presentNotYetImplementedAlert() {
+        let alert = UIAlertController(
+            title: "nyi_alert_title".localized,
+            message: "nyi_alert_message".localized,
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "nyi_alert_ok_button".localized, style: .cancel)
+        alert.addAction(okAction)
         
         viewController?.present(alert, animated: true, completion: nil)
     }

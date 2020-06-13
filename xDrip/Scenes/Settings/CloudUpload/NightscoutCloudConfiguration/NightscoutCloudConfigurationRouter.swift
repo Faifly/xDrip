@@ -14,22 +14,35 @@ import UIKit
 
 protocol NightscoutCloudConfigurationRoutingLogic {
     func routeToExtraOptions()
+    func presentNotYetImplementedAlert()
+    func showConnectionTestingAlert()
+    func finishConnectionTestingAlert(message: String, icon: UIImage)
 }
 
 protocol NightscoutCloudConfigurationDataPassing {
     var dataStore: NightscoutCloudConfigurationDataStore? { get }
 }
 
-final class NightscoutCloudConfigurationRouter: NightscoutCloudConfigurationDataPassing {
+final class NightscoutCloudConfigurationRouter: NightscoutCloudConfigurationDataPassing, AlertPresentable {
     weak var viewController: NightscoutCloudConfigurationViewController?
     weak var dataStore: NightscoutCloudConfigurationDataStore?
     
-    // MARK: Routing
+    private weak var popUpController: PopUpViewController?
+    
     func routeToExtraOptions() {
         let extraOptionsViewController = NightscoutCloudExtraOptionsViewController()
         viewController?.navigationController?.pushViewController(extraOptionsViewController, animated: true)
     }
+    
+    func showConnectionTestingAlert() {
+        let popUpController = PopUpViewController()
+        viewController?.present(popUpController, animated: true, completion: nil)
+        self.popUpController = popUpController
+    }
+    
+    func finishConnectionTestingAlert(message: String, icon: UIImage) {
+        popUpController?.presentFinishAlert(message: message, icon: icon)
+    }
 }
 
-extension NightscoutCloudConfigurationRouter: NightscoutCloudConfigurationRoutingLogic {
-}
+extension NightscoutCloudConfigurationRouter: NightscoutCloudConfigurationRoutingLogic {}

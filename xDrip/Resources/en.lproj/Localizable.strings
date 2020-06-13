@@ -2,6 +2,9 @@
 // General
 "cancel" = "Cancel";
 "error" = "Error";
+"nyi_alert_title" = "Not Yet Implemented";
+"nyi_alert_message" = "This feature is still under development, please follow the updates.";
+"nyi_alert_ok_button" = "OK";
 
 // Home
 "home_time_frame_1h" = "1H";
@@ -194,8 +197,15 @@
 "settings_nightscout_cloud_configuration_send_display_glucose_title" = "Send Display Glucose";
 "settings_nightscout_cloud_configuration_send_display_glucose_section_footer" = "Use noise smoothing and plugins etc (if enabled) for broadcasted value";
 "settings_nightscout_cloud_configuration_base_url_title" = "Base URL";
-"settings_nightscout_cloud_configuration_base_url_placeholder" = "https://google.com";
-"settings_nightscout_cloud_configuration_base_url_section_footer" = "This is only the base URL, the uploader will automatically append / entries for the post. API SECRET on the server should match your pathphrase in the settings";
+"settings_nightscout_cloud_configuration_base_url_placeholder" = "https://nightscout.com";
+"settings_nightscout_cloud_configuration_credentials_section_footer" = "Enter the base URL of your Nightscout server. This is only the base URL, the uploader will automatically append /entries for the requests";
+"settings_nightscout_cloud_configuration_api_secret_title" = "API Secret";
+"settings_nightscout_cloud_configuration_api_secret_placeholder" = "Secret key";
+"settings_nightscout_cloud_configuration_api_test_button" = "Test Connection";
+"settings_nightscout_cloud_configuration_api_test_result_success" = "Connection is successful, all future data will be synchronized with this Nightscout server.";
+"settings_nightscout_cloud_configuration_api_test_result_unauthorized" = "The server was found, but the API Secret key you provided is invalid. Make sure it is correct and that it is truly an API secret, but not access token.";
+"settings_nightscout_cloud_configuration_api_test_result_invalid_server" = "Couldn't find this server. Please check the provided URL and that you have an active internet connection.";
+"settings_nightscout_cloud_configuration_api_test_result_no_secret" = "Please provide the API Secret.";
 "settings_nightscout_cloud_configuration_download_data_title" = "Download data";
 "settings_nightscout_cloud_configuration_download_data_section_footer" = "Also try to download data from Nightscout";
 "settings_nightscout_cloud_configuration_extra_options_title" = "Extra Options";

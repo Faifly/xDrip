@@ -33,6 +33,17 @@ final class GlucoseReading: Object {
     @objc private(set) dynamic var hideSlope: Bool = false
     @objc private(set) dynamic var calculatedValueSlope: Double = 0.0
     @objc private(set) dynamic var timeSinceSensorStarted: TimeInterval = 0.0
+    @objc private(set) dynamic var externalID: String?
+    @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notApplicable.rawValue
+    
+    var cloudUploadStatus: CloudUploadStatus {
+        get {
+            return CloudUploadStatus(rawValue: rawCloudUploadStatus) ?? .notApplicable
+        }
+        set {
+            rawCloudUploadStatus = newValue.rawValue
+        }
+    }
     
     required init() {
         super.init()
@@ -77,6 +88,7 @@ final class GlucoseReading: Object {
         }
         
         let reading = GlucoseReading()
+        reading.externalID = UUID().uuidString
         reading.calibration = Calibration.calibration(for: date)
         reading.rawValue = unfiltered
         reading.filteredValue = filtered
@@ -84,6 +96,10 @@ final class GlucoseReading: Object {
         reading.timeSinceSensorStarted = date.timeIntervalSince1970 - sensorStarted.timeIntervalSince1970
         reading.calculateAgeAdjustedRawValue()
         reading.findSlope()
+        
+        if let settings = User.current.settings.nightscoutSync, settings.isEnabled {
+            reading.cloudUploadStatus = .notUploaded
+        }
         
         Realm.shared.safeWrite {
             Realm.shared.add(reading)
@@ -103,6 +119,8 @@ final class GlucoseReading: Object {
         if Calibration.allForCurrentSensor.isEmpty && GlucoseReading.allForCurrentSensor.count >= 2 {
             CalibrationController.shared.requestInitialCalibration()
         }
+        
+        NightscoutService.shared.scanForNotUploadedEntries()
         
         return reading
     }
@@ -135,9 +153,21 @@ final class GlucoseReading: Object {
         return last.ra * pow(date.timeIntervalSince1970, 2) + last.rb * date.timeIntervalSince1970 + last.rc
     }
     
+    static func markEntryAsUploaded(externalID: String) {
+        guard let entry = all.first(where: { $0.externalID == externalID }) else {
+            return
+        }
+        Realm.shared.safeWrite {
+            entry.cloudUploadStatus = .uploaded
+        }
+    }
+    
     func updateCalculatedValue(_ value: Double) {
         Realm.shared.safeWrite {
             self.calculatedValue = value
+            if self.cloudUploadStatus == .uploaded {
+                self.cloudUploadStatus = .modified
+            }
         }
     }
     

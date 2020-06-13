@@ -58,7 +58,7 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
     final class NightscoutCloudConfigurationBusinessLogicSpy: NightscoutCloudConfigurationBusinessLogic {
         var doLoadCalled = false
         
-        func doLoad(request: NightscoutCloudConfiguration.Load.Request) {
+        func doUpdateData(request: NightscoutCloudConfiguration.UpdateData.Request) {
             doLoadCalled = true
         }
     }
@@ -68,6 +68,15 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
         
         func routeToExtraOptions() {
             routeToExtraOptionsCalled = true
+        }
+        
+        func showConnectionTestingAlert() {
+        }
+        
+        func presentNotYetImplementedAlert() {
+        }
+        
+        func finishConnectionTestingAlert(message: String, icon: UIImage) {
         }
     }
     
@@ -88,11 +97,11 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
     func testDisplayLoad() {
         // Given
         let tableViewModel = BaseSettings.ViewModel(sections: [])
-        let viewModel = NightscoutCloudConfiguration.Load.ViewModel(tableViewModel: tableViewModel)
+        let viewModel = NightscoutCloudConfiguration.UpdateData.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()
-        sut.displayLoad(viewModel: viewModel)
+        sut.displayData(viewModel: viewModel)
         
         // Then
     }
@@ -123,6 +132,7 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
     }
     
     func testCellularSwitchValueChanged() {
+        User.current.settings.nightscoutSync?.updateIsEnabled(true)
         loadView()
         
         let cellType = BaseSettingsRightSwitchTableViewCell.self
@@ -143,10 +153,11 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
         cellularSwitch.isOn = false
         cellularSwitch.sendActions(for: .valueChanged)
         // Then
-        XCTAssert(settings?.useCellularData == false)
+        XCTAssert(settings?.useCellularData == true)
     }
     
     func testGlucoseSwitchValueChanged() {
+        User.current.settings.nightscoutSync?.updateIsEnabled(true)
         loadView()
         
         let cellType = BaseSettingsRightSwitchTableViewCell.self
@@ -161,7 +172,7 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
         glucoseSwitch.isOn = true
         glucoseSwitch.sendActions(for: .valueChanged)
         // Then
-        XCTAssert(settings?.sendDisplayGlucose == true)
+        XCTAssert(settings?.sendDisplayGlucose == false)
         
         // When
         glucoseSwitch.isOn = false
@@ -171,6 +182,7 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
     }
     
     func testDataSwitchValueChanged() {
+        User.current.settings.nightscoutSync?.updateIsEnabled(true)
         loadView()
         
         let cellType = BaseSettingsRightSwitchTableViewCell.self
@@ -185,7 +197,7 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
         dataSwitch.isOn = true
         dataSwitch.sendActions(for: .valueChanged)
         // Then
-        XCTAssert(settings?.downloadData == true)
+        XCTAssert(settings?.downloadData == false)
         
         // When
         dataSwitch.isOn = false
@@ -195,6 +207,7 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
     }
     
     func testTextEditingChangedHandler() {
+        User.current.settings.nightscoutSync?.updateIsEnabled(true)
         loadView()
         
         let cellType = BaseSettingsTextInputTableViewCell.self
@@ -215,6 +228,7 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
     }
     
     func testSingleSelectionHandler() {
+        User.current.settings.nightscoutSync?.updateIsEnabled(true)
         loadView()
         
         let spy = NightscoutCloudConfigurationRoutingLogicSpy()

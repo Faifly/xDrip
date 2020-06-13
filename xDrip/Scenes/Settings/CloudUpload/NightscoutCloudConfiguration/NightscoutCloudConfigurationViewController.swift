@@ -13,7 +13,7 @@
 import UIKit
 
 protocol NightscoutCloudConfigurationDisplayLogic: AnyObject {
-    func displayLoad(viewModel: NightscoutCloudConfiguration.Load.ViewModel)
+    func displayData(viewModel: NightscoutCloudConfiguration.UpdateData.ViewModel)
 }
 
 class NightscoutCloudConfigurationViewController: BaseSettingsViewController, NightscoutCloudConfigurationDisplayLogic {
@@ -61,8 +61,8 @@ class NightscoutCloudConfigurationViewController: BaseSettingsViewController, Ni
     // MARK: Do something
     
     private func doLoad() {
-        let request = NightscoutCloudConfiguration.Load.Request()
-        interactor?.doLoad(request: request)
+        let request = NightscoutCloudConfiguration.UpdateData.Request()
+        interactor?.doUpdateData(request: request)
     }
     
     private func setupUI() {
@@ -71,7 +71,7 @@ class NightscoutCloudConfigurationViewController: BaseSettingsViewController, Ni
     
     // MARK: Display
     
-    func displayLoad(viewModel: NightscoutCloudConfiguration.Load.ViewModel) {
-        update(with: viewModel.tableViewModel)
+    func displayData(viewModel: NightscoutCloudConfiguration.UpdateData.ViewModel) {
+        update(with: viewModel.tableViewModel, animated: true)
     }
 }

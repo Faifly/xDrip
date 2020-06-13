@@ -13,7 +13,7 @@
 import UIKit
 
 protocol NightscoutCloudConfigurationBusinessLogic {
-    func doLoad(request: NightscoutCloudConfiguration.Load.Request)
+    func doUpdateData(request: NightscoutCloudConfiguration.UpdateData.Request)
 }
 
 protocol NightscoutCloudConfigurationDataStore: AnyObject {
@@ -30,32 +30,85 @@ final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfiguration
     
     // MARK: Do something
     
-    func doLoad(request: NightscoutCloudConfiguration.Load.Request) {
-        let response = NightscoutCloudConfiguration.Load.Response(
-            settings: settings,
-            switchValueChangedHandler: handleSwitchValueChanged(_:_:),
-            textEditingChangedHandler: handleTextEditingChanged(_:),
-            singleSelectionHandler: handleSingleSelection
-        )
-        
-        presenter?.presentLoad(response: response)
+    func doUpdateData(request: NightscoutCloudConfiguration.UpdateData.Request) {
+        updateData()
     }
     
     private func handleSwitchValueChanged(_ field: NightscoutCloudConfiguration.Field, _ value: Bool) {
         switch field {
-        case .enabled: settings.updateIsEnabled(value)
-        case .useCellularData: settings.updateUseCellularData(value)
-        case .sendDisplayGlucose: settings.updateSendDisplayGlucose(value)
-        case .downloadData: settings.updateDownloadData(value)
+        case .enabled:
+            settings.updateIsEnabled(value)
+            
+        case .useCellularData:
+//            settings.updateUseCellularData(value)
+            router?.presentNotYetImplementedAlert()
+            
+        case .sendDisplayGlucose:
+//            settings.updateSendDisplayGlucose(value)
+            router?.presentNotYetImplementedAlert()
+            
+        case .downloadData:
+//            settings.updateDownloadData(value)
+            router?.presentNotYetImplementedAlert()
+            
         default: break
         }
+        
+        updateData()
     }
     
-    private func handleTextEditingChanged(_ string: String?) {
-        settings.updateBaseURL(string)
+    private func handleTextEditingChanged(_ field: NightscoutCloudConfiguration.Field, _ string: String?) {
+        if field == .baseURL {
+            settings.updateBaseURL(string)
+        } else if field == .apiSecret {
+            settings.updateAPISecret(string)
+        }
     }
     
     private func handleSingleSelection() {
         router?.routeToExtraOptions()
+    }
+    
+    private func testConnection() {
+        router?.showConnectionTestingAlert()
+        NightscoutService.shared.testNightscoutConnection { [weak self] success, error in
+            guard let self = self else { return }
+            if success {
+                guard let icon = UIImage(named: "icon_success") else { fatalError() }
+                self.router?.finishConnectionTestingAlert(
+                    message: "settings_nightscout_cloud_configuration_api_test_result_success".localized,
+                    icon: icon
+                )
+            } else {
+                guard let icon = UIImage(named: "icon_error") else { fatalError() }
+                
+                let message: String
+                if let error = error {
+                    switch error {
+                    case .cantConnect, .invalidURL:
+                        message = "settings_nightscout_cloud_configuration_api_test_result_invalid_server".localized
+                    case .noAPISecret:
+                        message = "settings_nightscout_cloud_configuration_api_test_result_no_secret".localized
+                    case .invalidAPISecret:
+                        message = "settings_nightscout_cloud_configuration_api_test_result_unauthorized".localized
+                    }
+                } else {
+                    message = "error".localized
+                }
+                self.router?.finishConnectionTestingAlert(message: message, icon: icon)
+            }
+        }
+    }
+    
+    private func updateData() {
+        let response = NightscoutCloudConfiguration.UpdateData.Response(
+            settings: settings,
+            switchValueChangedHandler: handleSwitchValueChanged(_:_:),
+            textEditingChangedHandler: handleTextEditingChanged(_:_:),
+            singleSelectionHandler: handleSingleSelection,
+            testConnectionHandler: testConnection
+        )
+        
+        presenter?.presentData(response: response)
     }
 }

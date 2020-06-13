@@ -13,7 +13,7 @@
 import UIKit
 
 protocol NightscoutCloudConfigurationPresentationLogic {
-    func presentLoad(response: NightscoutCloudConfiguration.Load.Response)
+    func presentData(response: NightscoutCloudConfiguration.UpdateData.Response)
 }
 
 final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationPresentationLogic {
@@ -21,23 +21,25 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
     
     // MARK: Do something
     
-    func presentLoad(response: NightscoutCloudConfiguration.Load.Response) {
+    func presentData(response: NightscoutCloudConfiguration.UpdateData.Response) {
         let tableViewModel = BaseSettings.ViewModel(
             sections: [
                 createEnabledSection(response: response),
                 createCellularSection(response: response),
                 createGlucoseSection(response: response),
-                createBaseURLSection(response: response),
+                createCredentialsSection(response: response),
                 createDownloadSection(response: response),
                 createExtraSection(response: response)
-            ]
+            ].compactMap { $0 }
         )
         
-        let viewModel = NightscoutCloudConfiguration.Load.ViewModel(tableViewModel: tableViewModel)
-        viewController?.displayLoad(viewModel: viewModel)
+        let viewModel = NightscoutCloudConfiguration.UpdateData.ViewModel(tableViewModel: tableViewModel)
+        viewController?.displayData(viewModel: viewModel)
     }
     
-    private func createEnabledSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+    private func createEnabledSection(
+        response: NightscoutCloudConfiguration.UpdateData.Response
+    ) -> BaseSettings.Section {
         let cells: [BaseSettings.Cell] = [
             createRightSwitchCell(
                 .enabled,
@@ -53,7 +55,11 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         )
     }
     
-    private func createCellularSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+    private func createCellularSection(
+        response: NightscoutCloudConfiguration.UpdateData.Response
+    ) -> BaseSettings.Section? {
+        guard response.settings.isEnabled else { return nil }
+        
         let cells: [BaseSettings.Cell] = [
             createRightSwitchCell(
                 .useCellularData,
@@ -69,7 +75,11 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         )
     }
     
-    private func createGlucoseSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+    private func createGlucoseSection(
+        response: NightscoutCloudConfiguration.UpdateData.Response
+    ) -> BaseSettings.Section? {
+        guard response.settings.isEnabled else { return nil }
+        
         let cells: [BaseSettings.Cell] = [
             createRightSwitchCell(
                 .sendDisplayGlucose,
@@ -85,23 +95,46 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         )
     }
     
-    private func createBaseURLSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+    private func createCredentialsSection(
+        response: NightscoutCloudConfiguration.UpdateData.Response
+    ) -> BaseSettings.Section? {
+        guard response.settings.isEnabled else { return nil }
+        
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
                 .baseURL,
                 textFieldText: response.settings.baseURL,
                 placeholder: "settings_nightscout_cloud_configuration_base_url_placeholder".localized,
-                textEditingChangedHandler: response.textEditingChangedHandler
+                textEditingChangedHandler: { text in
+                    response.textEditingChangedHandler(.baseURL, text)
+                }
+            ),
+            createTextInputCell(
+                .apiSecret,
+                textFieldText: response.settings.apiSecret,
+                placeholder: "settings_nightscout_cloud_configuration_api_secret_placeholder".localized,
+                textEditingChangedHandler: { text in
+                    response.textEditingChangedHandler(.apiSecret, text)
+                }
+            ),
+            .button(
+                title: "settings_nightscout_cloud_configuration_api_test_button".localized,
+                color: .customBlue,
+                handler: response.testConnectionHandler
             )
         ]
         return .normal(
             cells: cells,
             header: nil,
-            footer: "settings_nightscout_cloud_configuration_base_url_section_footer".localized
+            footer: "settings_nightscout_cloud_configuration_credentials_section_footer".localized
         )
     }
     
-    private func createDownloadSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+    private func createDownloadSection(
+        response: NightscoutCloudConfiguration.UpdateData.Response
+    ) -> BaseSettings.Section? {
+        guard response.settings.isEnabled else { return nil }
+        
         let cells: [BaseSettings.Cell] = [
             createRightSwitchCell(
                 .downloadData,
@@ -116,7 +149,11 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         )
     }
     
-    private func createExtraSection(response: NightscoutCloudConfiguration.Load.Response) -> BaseSettings.Section {
+    private func createExtraSection(
+        response: NightscoutCloudConfiguration.UpdateData.Response
+    ) -> BaseSettings.Section? {
+        guard response.settings.isEnabled else { return nil }
+        
         let cells: [BaseSettings.Cell] = [
             createDisclosureCell(.extraOptions, selectionHandler: response.singleSelectionHandler)
         ]
@@ -166,6 +203,8 @@ private extension NightscoutCloudConfiguration.Field {
         case .baseURL: return "settings_nightscout_cloud_configuration_base_url_title".localized
         case .downloadData: return "settings_nightscout_cloud_configuration_download_data_title".localized
         case .extraOptions: return "settings_nightscout_cloud_configuration_extra_options_title".localized
+        case .apiSecret: return "settings_nightscout_cloud_configuration_api_secret_title".localized
+        case .testConnection: return "settings_nightscout_cloud_configuration_api_test_button".localized
         }
     }
 }

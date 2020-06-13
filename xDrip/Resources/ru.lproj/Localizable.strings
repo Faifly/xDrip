@@ -2,6 +2,9 @@
 // General
 "cancel" = "Отмена";
 "error" = "Ошибка";
+"nyi_alert_title" = "Ещё Не Внедрено";
+"nyi_alert_message" = "Эта функция ещё не разработана. Следите за обновлениями!";
+"nyi_alert_ok_button" = "Хорошо";
 
 // Home
 "home_time_frame_1h" = "1Ч";
@@ -194,8 +197,15 @@
 "settings_nightscout_cloud_configuration_send_display_glucose_title" = "Отправлять Отображаемую Глюкозу";
 "settings_nightscout_cloud_configuration_send_display_glucose_section_footer" = "Используйте сглаживание шума и плагины и т.д. (если включено) для транслируемого значения";
 "settings_nightscout_cloud_configuration_base_url_title" = "Базовый URL";
-"settings_nightscout_cloud_configuration_base_url_placeholder" = "https://google.com";
-"settings_nightscout_cloud_configuration_base_url_section_footer" = "Это только базовый URL, загрузчик автоматически добавит / записи для поста. API SECRET на сервере должен соответствовать вашей фразе в настройках";
+"settings_nightscout_cloud_configuration_base_url_placeholder" = "https://nightscout.com";
+"settings_nightscout_cloud_configuration_credentials_section_footer" = "Это только базовый URL, загрузчик автоматически добавит /entries для запросов";
+"settings_nightscout_cloud_configuration_api_secret_title" = "Секретный Ключ API";
+"settings_nightscout_cloud_configuration_api_secret_placeholder" = "Секретный ключ";
+"settings_nightscout_cloud_configuration_api_test_button" = "Проверить Соединение";
+"settings_nightscout_cloud_configuration_api_test_result_success" = "Соединение было успешно установлено. Все последующие данные будут автоматически отправлены на этот сервер Nightscout.";
+"settings_nightscout_cloud_configuration_api_test_result_unauthorized" = "Сервер был найден, но секретный ключ API не подходит. Убедитесь, что вы указали его правильно и что это действительно секретный ключ API, а не токен доступа.";
+"settings_nightscout_cloud_configuration_api_test_result_invalid_server" = "Указанный сервер не был найден. Пожалуйста, убедитесь в правильности указанной ссылки и проверьте своё соединение с интернетом.";
+"settings_nightscout_cloud_configuration_api_test_result_no_secret" = "Пожалуйста, предоставьте секретный ключ API.";
 "settings_nightscout_cloud_configuration_download_data_title" = "Загружать данные";
 "settings_nightscout_cloud_configuration_download_data_section_footer" = "Также попробовать скачать данные с Nightscout";
 "settings_nightscout_cloud_configuration_extra_options_title" = "Дополнительные настройки";

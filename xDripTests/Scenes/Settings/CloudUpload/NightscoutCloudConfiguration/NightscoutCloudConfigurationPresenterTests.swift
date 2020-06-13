@@ -40,10 +40,10 @@ final class NightscoutCloudConfigurationPresenterTests: XCTestCase {
     // MARK: Test doubles
     
     final class NightscoutCloudConfigurationDisplayLogicSpy: NightscoutCloudConfigurationDisplayLogic {
-        var displayLoadCalled = false
+        var displayDataCalled = false
         
-        func displayLoad(viewModel: NightscoutCloudConfiguration.Load.ViewModel) {
-            displayLoadCalled = true
+        func displayData(viewModel: NightscoutCloudConfiguration.UpdateData.ViewModel) {
+            displayDataCalled = true
         }
     }
     
@@ -53,19 +53,20 @@ final class NightscoutCloudConfigurationPresenterTests: XCTestCase {
         // Given
         let spy = NightscoutCloudConfigurationDisplayLogicSpy()
         sut.viewController = spy
-        let response = NightscoutCloudConfiguration.Load.Response(
+        let response = NightscoutCloudConfiguration.UpdateData.Response(
             settings: NightscoutSyncSettings(),
             switchValueChangedHandler: { _, _ in },
-            textEditingChangedHandler: { _ in },
-            singleSelectionHandler: {}
+            textEditingChangedHandler: { _, _ in },
+            singleSelectionHandler: {},
+            testConnectionHandler: {}
         )
         
         // When
-        sut.presentLoad(response: response)
+        sut.presentData(response: response)
         
         // Then
         XCTAssertTrue(
-            spy.displayLoadCalled,
+            spy.displayDataCalled,
             "presentLoad(response:) should ask the view controller to display the result"
         )
     }
