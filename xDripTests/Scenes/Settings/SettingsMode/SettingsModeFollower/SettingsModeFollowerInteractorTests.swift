@@ -51,7 +51,10 @@ final class SettingsModeFollowerInteractorTests: XCTestCase {
     }
     
     final class SettingsModeFollowerRoutingLogicSpy: SettingsModeFollowerRoutingLogic {
-        func routeToApiSecret() {
+        func showConnectionTestingAlert() {
+        }
+        
+        func finishConnectionTestingAlert(message: String, icon: UIImage) {
         }
     }
     

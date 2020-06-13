@@ -61,10 +61,10 @@ final class SettingsModeFollowerViewControllerTests: XCTestCase {
     }
     
     final class SettingsModeFollowerRoutingLogicSpy: SettingsModeFollowerRoutingLogic {
-        var routeToApiSecretCalled = false
+        func showConnectionTestingAlert() {
+        }
         
-        func routeToApiSecret() {
-            routeToApiSecretCalled = true
+        func finishConnectionTestingAlert(message: String, icon: UIImage) {
         }
     }
     
@@ -82,14 +82,14 @@ final class SettingsModeFollowerViewControllerTests: XCTestCase {
         XCTAssertTrue(spy.doLoadCalled, "viewDidLoad() should ask the interactor to do load")
     }
     
-    func testDisplayLoad() {
+    func testDisplayUpdate() {
         // Given
         let tableViewModel = BaseSettings.ViewModel(sections: [])
-        let viewModel = SettingsModeFollower.Load.ViewModel(tableViewModel: tableViewModel)
+        let viewModel = SettingsModeFollower.Update.ViewModel(tableViewModel: tableViewModel, authButtonMode: .login)
         
         // When
         loadView()
-        sut.displayLoad(viewModel: viewModel)
+        sut.displayUpdate(viewModel: viewModel)
         
         // Then
     }
@@ -142,89 +142,7 @@ final class SettingsModeFollowerViewControllerTests: XCTestCase {
         }
         
         XCTAssertTrue(tableView.numberOfSections == 1)
-        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 4)
-    }
-    
-    func testSingleSelectionHandler() {
-        let spy = SettingsModeFollowerRoutingLogicSpy()
-        if let interactor = sut.interactor as? SettingsModeFollowerInteractor {
-            interactor.router = spy
-        }
-        
-        loadView()
-        
-        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
-            XCTFail("Cannot obtain tableView")
-            return
-        }
-        
-        // When
-        tableView.callDidSelect(at: IndexPath(row: 3, section: 0))
-        // Then
-        XCTAssertTrue(spy.routeToApiSecretCalled)
-    }
-    
-    func testTextEditingChangedHandler() {
-        let containerController = UITabBarController()
-        containerController.viewControllers = [sut]
-        let navigationController = UINavigationController(rootViewController: containerController)
-        
-        loadView()
-        sut.viewWillAppear(false)
-        
-        guard let loginButton = navigationController.navigationItem.rightBarButtonItem else {
-            XCTFail("Cannot obtain loginButton")
-            return
-        }
-        
-        XCTAssertFalse(loginButton.isEnabled)
-        
-        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
-            XCTFail("Cannot obtain tableView")
-            return
-        }
-        
-        let cellType = BaseSettingsTextInputTableViewCell.self
-        guard let textCell = tableView.getCell(of: cellType, at: IndexPath(row: 1, section: 0)),
-            let textField = textCell.findView(with: "textField") as? UITextField else {
-            XCTFail("Cannot obtain textField")
-            return
-        }
-        
-        // When
-        textField.text = "random url"
-        textField.sendActions(for: .editingChanged)
-        // Then
-        XCTAssertTrue(loginButton.isEnabled)
-    }
-    
-    func testPickerValueChangedHandler() {
-        loadView()
-        
-        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
-            XCTFail("Cannot obtain tableView")
-            return
-        }
-        
-        let cellType = PickerExpandableTableViewCell.self
-        guard let pickerCell = tableView.getCell(of: cellType, at: IndexPath(row: 2, section: 0)) else {
-            XCTFail("Cannot obtain picker cell")
-            return
-        }
-        
-        pickerCell.togglePickerVisibility()
-        
-        guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
-            let picker = stackView.arrangedSubviews.first as? CustomPickerView else {
-            XCTFail("Cannot obtain picker")
-            return
-        }
-        
-        // When
-        picker.selectRow(1, inComponent: 0, animated: false)
-        picker.selectRow(15, inComponent: 2, animated: false)
-        picker.pickerView(picker, didSelectRow: 1, inComponent: 0)
-        // Then
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 3)
     }
     
     func testNavigationItem() {

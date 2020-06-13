@@ -22,6 +22,11 @@ final class NightscoutSyncSettings: Object {
     @objc private(set) dynamic var alertOnFailures: Bool = false
     @objc private(set) dynamic var appendSourceInfoToDevices: Bool = false
     @objc private(set) dynamic var apiSecret: String?
+    @objc private(set) dynamic var isFollowerAuthed: Bool = false
+    
+    var inReadonlyFollowerMode: Bool {
+        return isFollowerAuthed && !String.isEmpty(apiSecret)
+    }
     
     func updateIsEnabled(_ isEnabled: Bool) {
         Realm.shared.safeWrite {
@@ -93,5 +98,12 @@ final class NightscoutSyncSettings: Object {
         Realm.shared.safeWrite {
             self.apiSecret = secret
         }
+    }
+    
+    func updateIsFollowerAuthed(_ authed: Bool) {
+        Realm.shared.safeWrite {
+            self.isFollowerAuthed = authed
+        }
+        NotificationCenter.default.postSettingsChangeNotification(setting: .followerAuthStatus)
     }
 }

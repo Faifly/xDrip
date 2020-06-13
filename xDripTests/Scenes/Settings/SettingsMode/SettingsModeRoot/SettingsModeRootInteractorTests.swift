@@ -48,6 +48,8 @@ final class SettingsModeRootInteractorTests: XCTestCase {
     }
     
     final class SettingsModeRootRoutingLogicSpy: SettingsModeRootRoutingLogic {
+        func presentSwitchingFromAuthorizedFollower(callback: @escaping (Bool) -> Void) {
+        }
     }
     
     // MARK: Tests

@@ -13,7 +13,8 @@
 import UIKit
 
 protocol SettingsModeFollowerRoutingLogic {
-    func routeToApiSecret()
+    func showConnectionTestingAlert()
+    func finishConnectionTestingAlert(message: String, icon: UIImage)
 }
 
 protocol SettingsModeFollowerDataPassing {
@@ -25,7 +26,16 @@ final class SettingsModeFollowerRouter: SettingsModeFollowerRoutingLogic, Settin
     weak var dataStore: SettingsModeFollowerDataStore?
     
     // MARK: Routing
-    func routeToApiSecret() {
-        // TO DO: - add route to api secret
+    
+    private weak var popUpController: PopUpViewController?
+    
+    func showConnectionTestingAlert() {
+        let popUpController = PopUpViewController()
+        viewController?.present(popUpController, animated: true, completion: nil)
+        self.popUpController = popUpController
+    }
+    
+    func finishConnectionTestingAlert(message: String, icon: UIImage) {
+        popUpController?.presentFinishAlert(message: message, icon: icon)
     }
 }

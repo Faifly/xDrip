@@ -24,9 +24,15 @@ final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfiguration
     var presenter: NightscoutCloudConfigurationPresentationLogic?
     var router: NightscoutCloudConfigurationRoutingLogic?
     
+    private let connectionTestWorker: NightscoutConnectionTestWorkerLogic
+    
     private lazy var settings: NightscoutSyncSettings = {
         return User.current.settings.nightscoutSync ?? NightscoutSyncSettings()
     }()
+    
+    init() {
+        connectionTestWorker = NightscoutConnectionTestWorker()
+    }
     
     // MARK: Do something
     
@@ -71,32 +77,8 @@ final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfiguration
     
     private func testConnection() {
         router?.showConnectionTestingAlert()
-        NightscoutService.shared.testNightscoutConnection { [weak self] success, error in
-            guard let self = self else { return }
-            if success {
-                guard let icon = UIImage(named: "icon_success") else { fatalError() }
-                self.router?.finishConnectionTestingAlert(
-                    message: "settings_nightscout_cloud_configuration_api_test_result_success".localized,
-                    icon: icon
-                )
-            } else {
-                guard let icon = UIImage(named: "icon_error") else { fatalError() }
-                
-                let message: String
-                if let error = error {
-                    switch error {
-                    case .cantConnect, .invalidURL:
-                        message = "settings_nightscout_cloud_configuration_api_test_result_invalid_server".localized
-                    case .noAPISecret:
-                        message = "settings_nightscout_cloud_configuration_api_test_result_no_secret".localized
-                    case .invalidAPISecret:
-                        message = "settings_nightscout_cloud_configuration_api_test_result_unauthorized".localized
-                    }
-                } else {
-                    message = "error".localized
-                }
-                self.router?.finishConnectionTestingAlert(message: message, icon: icon)
-            }
+        connectionTestWorker.testNightscoutConnection(tryAuth: true) { [weak self] _, message, icon in
+            self?.router?.finishConnectionTestingAlert(message: message, icon: icon)
         }
     }
     

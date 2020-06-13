@@ -211,10 +211,12 @@ final class CalibrationTests: AbstractRealmTest {
         let reading1 = GlucoseReading()
         reading1.setValue(now - .secondsPerMinute * 5.0 - 1.0, forKey: "date")
         reading1.setValue(130.0, forKey: "rawValue")
+        reading1.generateID()
         
         let reading2 = GlucoseReading()
         reading2.setValue(now - 1.0, forKey: "date")
         reading2.setValue(160.0, forKey: "rawValue")
+        reading2.generateID()
         
         realm.safeWrite {
             realm.add([reading1, reading2])
@@ -371,7 +373,7 @@ final class CalibrationTests: AbstractRealmTest {
         
         try? Calibration.createRegularCalibration(glucoseLevel: 160.0, date: now)
         
-        let readings = GlucoseReading.lastReadings(30)
+        let readings = GlucoseReading.lastMasterReadings(30)
         let calibrations = Calibration.lastCalibrations(30)
         
         XCTAssert(readings.count == 30)
@@ -452,6 +454,7 @@ final class CalibrationTests: AbstractRealmTest {
         reading.setValue(rawData, forKey: "rawValue")
         reading.setValue(Date() - minutes * .secondsPerMinute, forKey: "date")
         reading.setValue(rawData + 0.1, forKey: "ageAdjustedRawValue")
+        reading.generateID()
         realm.safeWrite {
             realm.add(reading)
         }

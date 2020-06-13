@@ -24,38 +24,74 @@ final class SettingsModeFollowerInteractor: SettingsModeFollowerBusinessLogic, S
     var presenter: SettingsModeFollowerPresentationLogic?
     var router: SettingsModeFollowerRoutingLogic?
     
+    private let connectionTestWorker: NightscoutConnectionTestWorkerLogic
+    private lazy var settingsSubscribers: [NSObjectProtocol] = NotificationCenter.default.subscribe(
+        forSettingsChange: [.followerAuthStatus]
+    ) { [weak self] in
+        self?.updateData()
+    }
+    
+    init() {
+        connectionTestWorker = NightscoutConnectionTestWorker()
+    }
+    
+    deinit {
+        settingsSubscribers.forEach { NotificationCenter.default.removeObserver($0) }
+    }
+    
     // MARK: Do something
     
     func doLoad(request: SettingsModeFollower.Load.Request) {
-        let response = SettingsModeFollower.Load.Response(
-            textEditingChangedHandler: handleTextEditingChanged(_:),
-            timePickerValueChangedHandler: handleTimePickerValueChanged(_:),
-            singleSelectionHandler: handleSingleSelection
-        )
-        
+        _ = settingsSubscribers
+        let response = SettingsModeFollower.Load.Response()
         presenter?.presentLoad(response: response)
+        
+        updateData()
     }
     
     func doLogin(request: SettingsModeFollower.Login.Request) {
+        guard let settings = User.current.settings.nightscoutSync else { return }
+        
+        if settings.isFollowerAuthed {
+            settings.updateIsFollowerAuthed(false)
+            updateData()
+        } else {
+            router?.showConnectionTestingAlert()
+            let tryAuth = !String.isEmpty(settings.apiSecret)
+            connectionTestWorker.testNightscoutConnection(tryAuth: tryAuth) { [weak self] success, message, icon in
+                self?.router?.finishConnectionTestingAlert(message: message, icon: icon)
+                if success {
+                    settings.updateIsFollowerAuthed(true)
+                    self?.updateData()
+                }
+            }
+        }
     }
     
-    private func handleTextEditingChanged(_ string: String?) {
-        // TO DO: - add text editing changed handler logic
-        
-        var enabled = false
-        if let str = string {
-            enabled = !str.isEmpty
+    private func handleTextEditingChanged(_ field: SettingsModeFollower.Field, _ string: String?) {
+        switch field {
+        case .nightscoutUrl:
+            User.current.settings.nightscoutSync?.updateBaseURL(string)
+            
+        case .apiSecret:
+            User.current.settings.nightscoutSync?.updateAPISecret(string)
+            
+        default: break
         }
+    }
+    
+    private func updateData() {
+        guard let settings = User.current.settings.nightscoutSync else { return }
         
-        let response = SettingsModeFollower.Update.Response(loginButtonEnabled: enabled)
+        let response = SettingsModeFollower.Update.Response(
+            settings: settings,
+            textEditingChangedHandler: handleTextEditingChanged(_:_:),
+            timePickerValueChangedHandler: handleTimePickerValueChanged(_:)
+        )
         presenter?.presentUpdate(response: response)
     }
     
     private func handleTimePickerValueChanged(_ time: TimeInterval) {
         // TO DO: - add time picker value changed handler logic
-    }
-    
-    private func handleSingleSelection() {
-        router?.routeToApiSecret()
     }
 }
