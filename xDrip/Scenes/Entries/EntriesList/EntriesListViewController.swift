@@ -13,7 +13,7 @@
 import UIKit
 
 protocol EntriesListDisplayLogic: AnyObject {
-    func displayLoad(viewModel: EntriesList.Load.ViewModel)
+    func displayUpdateData(viewModel: EntriesList.UpdateData.ViewModel)
 }
 
 class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
@@ -66,17 +66,21 @@ class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        doLoad()
-        
         setupUI()
         setupTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        doUpdateData()
+    }
+    
     // MARK: Do something
     
-    private func doLoad() {
-        let request = EntriesList.Load.Request()
-        interactor?.doLoad(request: request)
+    private func doUpdateData() {
+        let request = EntriesList.UpdateData.Request()
+        interactor?.doUpdateData(request: request)
     }
     
     @objc private func onCancelButtonTap() {
@@ -92,7 +96,7 @@ class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
     
     // MARK: Display
     
-    func displayLoad(viewModel: EntriesList.Load.ViewModel) {
+    func displayUpdateData(viewModel: EntriesList.UpdateData.ViewModel) {
         sectionViewModels = viewModel.items
         
         tableController.tableView = tableView

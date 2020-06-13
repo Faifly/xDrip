@@ -13,7 +13,7 @@
 import UIKit
 
 protocol EntriesListPresentationLogic {
-    func presentLoad(response: EntriesList.Load.Response)
+    func presentUpdateData(response: EntriesList.UpdateData.Response)
 }
 
 final class EntriesListPresenter: EntriesListPresentationLogic {
@@ -26,15 +26,15 @@ final class EntriesListPresenter: EntriesListPresentationLogic {
     
     // MARK: Do something
     
-    func presentLoad(response: EntriesList.Load.Response) {
+    func presentUpdateData(response: EntriesList.UpdateData.Response) {
         let entries = response.entries
         let cellViewModel = formattingWorker.formatEntries(entries)
         
         let title = "entries_list_data_section_title".localized
         
-        let viewModel = EntriesList.Load.ViewModel(
+        let viewModel = EntriesList.UpdateData.ViewModel(
             items: [EntriesList.SectionViewModel(title: title, items: cellViewModel)]
         )
-        viewController?.displayLoad(viewModel: viewModel)
+        viewController?.displayUpdateData(viewModel: viewModel)
     }
 }

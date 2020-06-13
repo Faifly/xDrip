@@ -39,7 +39,7 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
         let cells: [BaseSettings.Cell] = [
             createTextInputViewCell(
                 .name,
-                detailText: settings.name,
+                textFieldText: settings.name,
                 placeholder: settings.eventType.title,
                 editingChangedHandler: response.defaultSectionTextEditingChangedHandler
             ),
@@ -99,10 +99,15 @@ final class SettingsAlertTypesPresenter: SettingsAlertTypesPresentationLogic {
     
     private func createTextInputViewCell(
         _ field: SettingsAlertTypes.Field,
-        detailText: String?,
+        textFieldText: String?,
         placeholder: String?,
         editingChangedHandler: @escaping (String) -> Void) -> BaseSettings.Cell {
-        return .textInput(mainText: field.title, detailText: detailText, placeholder: placeholder) { string in
+        return .textInput(
+            mainText: field.title,
+            detailText: nil,
+            textFieldText: textFieldText,
+            placeholder: placeholder
+        ) { string in
             guard let string = string else { return }
             editingChangedHandler(string)
         }

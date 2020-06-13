@@ -54,9 +54,15 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
     }
     
     func doShowAddEntry(request: Root.ShowAddEntry.Request) {
-        _ = entryTypes[request.index]
+        let type = entryTypes[request.index]
         
-        // TO DO: - add route to add entry
+        switch type {
+        case .food: router?.routeToAddFood()
+        case .bolus: router?.routeToAddBolus()
+        case .carbs: router?.routeToAddCarbs()
+        default:
+            break
+        }
     }
     
     func doShowInitialSetupIfNeeded(request: Root.InitialSetup.Request) {

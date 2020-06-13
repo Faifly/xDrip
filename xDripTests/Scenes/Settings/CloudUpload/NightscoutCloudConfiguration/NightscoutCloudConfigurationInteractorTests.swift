@@ -40,15 +40,24 @@ final class NightscoutCloudConfigurationInteractorTests: XCTestCase {
     // MARK: Test doubles
     
     final class NightscoutCloudConfigurationPresentationLogicSpy: NightscoutCloudConfigurationPresentationLogic {
-        var presentLoadCalled = false
+        var presentDataCalled = false
         
-        func presentLoad(response: NightscoutCloudConfiguration.UpdateData.Response) {
-            presentLoadCalled = true
+        func presentData(response: NightscoutCloudConfiguration.UpdateData.Response) {
+            presentDataCalled = true
         }
     }
     
     final class NightscoutCloudConfigurationRoutingLogicSpy: NightscoutCloudConfigurationRoutingLogic {
         func routeToExtraOptions() {
+        }
+        
+        func showConnectionTestingAlert() {
+        }
+        
+        func finishConnectionTestingAlert(message: String, icon: UIImage) {
+        }
+        
+        func presentNotYetImplementedAlert() {
         }
     }
     
@@ -61,9 +70,9 @@ final class NightscoutCloudConfigurationInteractorTests: XCTestCase {
         let request = NightscoutCloudConfiguration.UpdateData.Request()
         
         // When
-        sut.doLoad(request: request)
+        sut.doUpdateData(request: request)
         
         // Then
-        XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+        XCTAssertTrue(spy.presentDataCalled, "doLoad(request:) should ask the presenter to format the result")
     }
 }

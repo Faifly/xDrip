@@ -27,7 +27,12 @@ final class BaseSettingsTextInputTableViewCellTests: XCTestCase {
         var string = ""
         var textChangeHandlerCalled = false
         
-        sut.configure(mainText: "main", detailText: nil, placeholder: "placeholder") { str in
+        sut.configure(
+            mainText: "main",
+            detailText: nil,
+            textFieldText: nil,
+            placeholder: "placeholder",
+            keyboardType: .default) { str in
             string = str ?? ""
             textChangeHandlerCalled = true
         }

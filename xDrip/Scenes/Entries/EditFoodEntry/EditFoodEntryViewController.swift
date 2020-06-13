@@ -16,7 +16,7 @@ protocol EditFoodEntryDisplayLogic: AnyObject {
     func displayLoad(viewModel: EditFoodEntry.Load.ViewModel)
 }
 
-class EditFoodEntryViewController: NibViewController, EditFoodEntryDisplayLogic {
+class EditFoodEntryViewController: BaseSettingsViewController, EditFoodEntryDisplayLogic {
     var interactor: EditFoodEntryBusinessLogic?
     var router: EditFoodEntryDataPassing?
     
@@ -55,6 +55,7 @@ class EditFoodEntryViewController: NibViewController, EditFoodEntryDisplayLogic 
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
+        setupNavigationBar()
     }
     
     // MARK: Do something
@@ -64,8 +65,43 @@ class EditFoodEntryViewController: NibViewController, EditFoodEntryDisplayLogic 
         interactor?.doLoad(request: request)
     }
     
+    @objc private func doCancel() {
+        let request = EditFoodEntry.Cancel.Request()
+        interactor?.doCancel(request: request)
+    }
+    
+    @objc private func doSave() {
+        let request = EditFoodEntry.Save.Request()
+        interactor?.doSave(request: request)
+    }
+    
+    private func setupNavigationBar() {
+        if let entryType = router?.dataStore?.entryType {
+            switch entryType {
+            case .food: title = "edit_food_entry_food_scene_title".localized
+            case .bolus: title = "edit_food_entry_bolus_scene_title".localized
+            case .carbs: title = "edit_food_entry_carbs_scene_title".localized
+            }
+        }
+        
+        let cancelButton = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(doCancel)
+        )
+        navigationItem.leftBarButtonItem = cancelButton
+        
+        let doneButton = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(doSave)
+        )
+        navigationItem.rightBarButtonItem = doneButton
+    }
+    
     // MARK: Display
     
     func displayLoad(viewModel: EditFoodEntry.Load.ViewModel) {
+        update(with: viewModel.tableViewModel)
     }
 }

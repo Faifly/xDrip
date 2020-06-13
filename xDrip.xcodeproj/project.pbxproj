@@ -41,6 +41,15 @@
 		2C493C3B244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */; };
 		2C493C3D244F012600F4A54B /* Settings+Notifications_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */; };
 		2C493C3F244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C493C3E244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift */; };
+		2C4ABEEE248A5447001ED694 /* EmojiInputHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABEEC248A5447001ED694 /* EmojiInputHeaderView.swift */; };
+		2C4ABEEF248A5447001ED694 /* EmojiInputHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C4ABEED248A5447001ED694 /* EmojiInputHeaderView.xib */; };
+		2C4ABEF2248A555C001ED694 /* EmojiInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABEF0248A555C001ED694 /* EmojiInputCell.swift */; };
+		2C4ABEF3248A555C001ED694 /* EmojiInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C4ABEF1248A555C001ED694 /* EmojiInputCell.xib */; };
+		2C4ABEF9248A5AD8001ED694 /* FoodEmojiDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABEF8248A5AD8001ED694 /* FoodEmojiDataSource.swift */; };
+		2C4ABEFE248A5FEA001ED694 /* FoodTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABEFC248A5FEA001ED694 /* FoodTypeTableViewCell.swift */; };
+		2C4ABEFF248A5FEA001ED694 /* FoodTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C4ABEFD248A5FEA001ED694 /* FoodTypeTableViewCell.xib */; };
+		2C4ABF02248A7EB5001ED694 /* FoodTextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4ABF00248A7EB5001ED694 /* FoodTextInputTableViewCell.swift */; };
+		2C4ABF03248A7EB5001ED694 /* FoodTextInputTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C4ABF01248A7EB5001ED694 /* FoodTextInputTableViewCell.xib */; };
 		2C4E7ED4246940DC0062D403 /* CustomSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4E7ED3246940DC0062D403 /* CustomSound.swift */; };
 		2C4E7EF024694F440062D403 /* News_Flash.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7ED624694F400062D403 /* News_Flash.caf */; };
 		2C4E7EF124694F440062D403 /* Minuet.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7ED724694F400062D403 /* Minuet.caf */; };
@@ -69,6 +78,8 @@
 		2C4E7F0824694F440062D403 /* Ding.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EEE24694F440062D403 /* Ding.caf */; };
 		2C4E7F0924694F440062D403 /* Swoosh.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EEF24694F440062D403 /* Swoosh.caf */; };
 		2C4E7F0C246ABF830062D403 /* ExpandableTableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4E7F0B246ABF830062D403 /* ExpandableTableContainer.swift */; };
+		2C581C62248E5EAD008A1F34 /* EmojiInputFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C581C60248E5EAC008A1F34 /* EmojiInputFooterView.swift */; };
+		2C581C63248E5EAD008A1F34 /* EmojiInputFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C581C61248E5EAC008A1F34 /* EmojiInputFooterView.xib */; };
 		2C5A615C2473E02C00C6BD3D /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5A615B2473E02C00C6BD3D /* AudioController.swift */; };
 		2C5B3F0A24533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */; };
 		2C5B3F0C2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */; };
@@ -88,6 +99,7 @@
 		2CBE1A9B24323A58003BE14E /* EntriesListTableControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A9A24323A58003BE14E /* EntriesListTableControllerTests.swift */; };
 		2CBE1A9D2433718C003BE14E /* EntriesListSceneBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A9C2433718C003BE14E /* EntriesListSceneBuilderTests.swift */; };
 		2CBF32A4242E030700DE944A /* EntriesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */; };
+		2CDDFEBD24927A9C009505B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CDDFEBF24927A9C009505B0 /* InfoPlist.strings */; };
 		5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C97C243891CA002AFA1B /* HomeViewController.xib */; };
 		5805C9A024389230002AFA1B /* DexcomG6OutgoingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C98324389230002AFA1B /* DexcomG6OutgoingMessage.swift */; };
 		5805C9A124389230002AFA1B /* DexcomG6SensorDataTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C98424389230002AFA1B /* DexcomG6SensorDataTxMessage.swift */; };
@@ -438,7 +450,6 @@
 		58160E0D2402E52000C792F4 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160E0C2402E52000C792F4 /* TabBarView.swift */; };
 		58161A43247931C70023FF76 /* DexcomG6Firmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58161A42247931C70023FF76 /* DexcomG6Firmware.swift */; };
 		58184A472438BE8E00E848C6 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A462438BE8E00E848C6 /* RootViewController.xib */; };
-		58184A492438C1E800E848C6 /* EditFoodEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A482438C1E800E848C6 /* EditFoodEntryViewController.xib */; };
 		58184A4B2438C20D00E848C6 /* EntriesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A4A2438C20D00E848C6 /* EntriesListViewController.xib */; };
 		58184A4D2438C30500E848C6 /* EditTrainingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A4C2438C30500E848C6 /* EditTrainingViewController.xib */; };
 		58184A512438C36700E848C6 /* StatsRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A502438C36700E848C6 /* StatsRootViewController.xib */; };
@@ -662,6 +673,15 @@
 		2C493C3A244EFF1400F4A54B /* BaseSettingsTextInputTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsTextInputTableViewCellTests.swift; sourceTree = "<group>"; };
 		2C493C3C244F012600F4A54B /* Settings+Notifications_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Notifications_Tests.swift"; sourceTree = "<group>"; };
 		2C493C3E244F04FB00F4A54B /* SettingsSplitViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewControllerTests.swift; sourceTree = "<group>"; };
+		2C4ABEEC248A5447001ED694 /* EmojiInputHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiInputHeaderView.swift; sourceTree = "<group>"; };
+		2C4ABEED248A5447001ED694 /* EmojiInputHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiInputHeaderView.xib; sourceTree = "<group>"; };
+		2C4ABEF0248A555C001ED694 /* EmojiInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiInputCell.swift; sourceTree = "<group>"; };
+		2C4ABEF1248A555C001ED694 /* EmojiInputCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiInputCell.xib; sourceTree = "<group>"; };
+		2C4ABEF8248A5AD8001ED694 /* FoodEmojiDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodEmojiDataSource.swift; sourceTree = "<group>"; };
+		2C4ABEFC248A5FEA001ED694 /* FoodTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTypeTableViewCell.swift; sourceTree = "<group>"; };
+		2C4ABEFD248A5FEA001ED694 /* FoodTypeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodTypeTableViewCell.xib; sourceTree = "<group>"; };
+		2C4ABF00248A7EB5001ED694 /* FoodTextInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTextInputTableViewCell.swift; sourceTree = "<group>"; };
+		2C4ABF01248A7EB5001ED694 /* FoodTextInputTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodTextInputTableViewCell.xib; sourceTree = "<group>"; };
 		2C4E7ED3246940DC0062D403 /* CustomSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSound.swift; sourceTree = "<group>"; };
 		2C4E7ED624694F400062D403 /* News_Flash.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = News_Flash.caf; sourceTree = "<group>"; };
 		2C4E7ED724694F400062D403 /* Minuet.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Minuet.caf; sourceTree = "<group>"; };
@@ -690,6 +710,8 @@
 		2C4E7EEE24694F440062D403 /* Ding.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ding.caf; sourceTree = "<group>"; };
 		2C4E7EEF24694F440062D403 /* Swoosh.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Swoosh.caf; sourceTree = "<group>"; };
 		2C4E7F0B246ABF830062D403 /* ExpandableTableContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableContainer.swift; sourceTree = "<group>"; };
+		2C581C60248E5EAC008A1F34 /* EmojiInputFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiInputFooterView.swift; sourceTree = "<group>"; };
+		2C581C61248E5EAC008A1F34 /* EmojiInputFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiInputFooterView.xib; sourceTree = "<group>"; };
 		2C5A615B2473E02C00C6BD3D /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 		2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BaseSettingsViewControllerCoderTest.storyboard; sourceTree = "<group>"; };
 		2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewControllerCoderTest.swift; sourceTree = "<group>"; };
@@ -709,6 +731,7 @@
 		2CBE1A9A24323A58003BE14E /* EntriesListTableControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableControllerTests.swift; sourceTree = "<group>"; };
 		2CBE1A9C2433718C003BE14E /* EntriesListSceneBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListSceneBuilderTests.swift; sourceTree = "<group>"; };
 		2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableViewCell.swift; sourceTree = "<group>"; };
+		2CDDFEBE24927A9C009505B0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5805C97C243891CA002AFA1B /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		5805C98324389230002AFA1B /* DexcomG6OutgoingMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DexcomG6OutgoingMessage.swift; sourceTree = "<group>"; };
 		5805C98424389230002AFA1B /* DexcomG6SensorDataTxMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DexcomG6SensorDataTxMessage.swift; sourceTree = "<group>"; };
@@ -1060,7 +1083,6 @@
 		58160E0C2402E52000C792F4 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		58161A42247931C70023FF76 /* DexcomG6Firmware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6Firmware.swift; sourceTree = "<group>"; };
 		58184A462438BE8E00E848C6 /* RootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
-		58184A482438C1E800E848C6 /* EditFoodEntryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditFoodEntryViewController.xib; sourceTree = "<group>"; };
 		58184A4A2438C20D00E848C6 /* EntriesListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntriesListViewController.xib; sourceTree = "<group>"; };
 		58184A4C2438C30500E848C6 /* EditTrainingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditTrainingViewController.xib; sourceTree = "<group>"; };
 		58184A502438C36700E848C6 /* StatsRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsRootViewController.xib; sourceTree = "<group>"; };
@@ -1313,6 +1335,31 @@
 				2C493C30244EFD5A00F4A54B /* CustomPickerViewTests.swift */,
 			);
 			path = Pickers;
+			sourceTree = "<group>";
+		};
+		2C4ABEE7248A5213001ED694 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2C4ABEEC248A5447001ED694 /* EmojiInputHeaderView.swift */,
+				2C4ABEED248A5447001ED694 /* EmojiInputHeaderView.xib */,
+				2C4ABEF0248A555C001ED694 /* EmojiInputCell.swift */,
+				2C4ABEF1248A555C001ED694 /* EmojiInputCell.xib */,
+				2C4ABEFC248A5FEA001ED694 /* FoodTypeTableViewCell.swift */,
+				2C4ABEFD248A5FEA001ED694 /* FoodTypeTableViewCell.xib */,
+				2C4ABF00248A7EB5001ED694 /* FoodTextInputTableViewCell.swift */,
+				2C4ABF01248A7EB5001ED694 /* FoodTextInputTableViewCell.xib */,
+				2C581C60248E5EAC008A1F34 /* EmojiInputFooterView.swift */,
+				2C581C61248E5EAC008A1F34 /* EmojiInputFooterView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2C4ABEF5248A5944001ED694 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2C4ABEF8248A5AD8001ED694 /* FoodEmojiDataSource.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		2C4E7ED524694F1A0062D403 /* NotificationSounds */ = {
@@ -2822,6 +2869,7 @@
 				58E5A6782402B8A8002C2BE3 /* Assets.xcassets */,
 				58E5A67A2402B8A8002C2BE3 /* LaunchScreen.storyboard */,
 				58B4F6CB24116394003C6D8F /* Localizable.strings */,
+				2CDDFEBF24927A9C009505B0 /* InfoPlist.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -3214,11 +3262,12 @@
 		58B5FD9D2419318E00DB857D /* EditFoodEntry */ = {
 			isa = PBXGroup;
 			children = (
+				2C4ABEF5248A5944001ED694 /* Helpers */,
+				2C4ABEE7248A5213001ED694 /* Views */,
 				580EC7782421457600C34948 /* EditFoodEntryPresenter.swift */,
 				580EC7792421457600C34948 /* EditFoodEntryRouter.swift */,
 				580EC77A2421457600C34948 /* EditFoodEntryModels.swift */,
 				580EC77B2421457600C34948 /* EditFoodEntryViewController.swift */,
-				58184A482438C1E800E848C6 /* EditFoodEntryViewController.xib */,
 				580EC77C2421457600C34948 /* EditFoodEntryInteractor.swift */,
 			);
 			path = EditFoodEntry;
@@ -3501,12 +3550,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				58B4F6C924116394003C6D8F /* Localizable.strings in Resources */,
+				2CDDFEBD24927A9C009505B0 /* InfoPlist.strings in Resources */,
 				2C4E7F0524694F440062D403 /* Descent.caf in Resources */,
 				2C4E7EF724694F440062D403 /* Horn.caf in Resources */,
+				2C4ABF03248A7EB5001ED694 /* FoodTextInputTableViewCell.xib in Resources */,
 				2C09D21F2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.xib in Resources */,
 				2C4E7F0224694F440062D403 /* Choo_Choo.caf in Resources */,
 				58184A472438BE8E00E848C6 /* RootViewController.xib in Resources */,
 				2C4E7F0424694F440062D403 /* Ladder.caf in Resources */,
+				2C4ABEF3248A555C001ED694 /* EmojiInputCell.xib in Resources */,
 				589EA8D4247700AF00515BCC /* BaseSettingsButtonCell.xib in Resources */,
 				5805CA0E243892D6002AFA1B /* InitialSetupSettingsViewController.xib in Resources */,
 				2C4E7EF224694F440062D403 /* Tiptoes.caf in Resources */,
@@ -3517,12 +3569,13 @@
 				58184A572438C64100E848C6 /* EntriesListTableViewCell.xib in Resources */,
 				58184A4D2438C30500E848C6 /* EditTrainingViewController.xib in Resources */,
 				5805CA0C243892D6002AFA1B /* InitialSetupIntroViewController.xib in Resources */,
-				58184A492438C1E800E848C6 /* EditFoodEntryViewController.xib in Resources */,
 				2C4E7EF124694F440062D403 /* Minuet.caf in Resources */,
 				2C4E7EF624694F440062D403 /* Bloom.caf in Resources */,
 				2C09D2272441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib in Resources */,
+				2C4ABEEF248A5447001ED694 /* EmojiInputHeaderView.xib in Resources */,
 				2C09D21324410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib in Resources */,
 				580E4C22243F74A300565EDE /* SettingsPumpUserViewController.xib in Resources */,
+				2C581C63248E5EAD008A1F34 /* EmojiInputFooterView.xib in Resources */,
 				2C4E7EF824694F440062D403 /* Spell.caf in Resources */,
 				5805CA03243892D6002AFA1B /* InitialSetupG6WarmUpViewController.xib in Resources */,
 				5805CA06243892D6002AFA1B /* InitialSetupG6ConnectViewController.xib in Resources */,
@@ -3560,6 +3613,7 @@
 				2C4E7EF324694F440062D403 /* Sherwood_Forest.caf in Resources */,
 				5805CA10243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.xib in Resources */,
 				5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */,
+				2C4ABEFF248A5FEA001ED694 /* FoodTypeTableViewCell.xib in Resources */,
 				2C4E7F0324694F440062D403 /* Noir.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3718,6 +3772,7 @@
 				5860389124488D8C008D54B6 /* TimeInterval+Constants.swift in Sources */,
 				580EC79024214CDD00C34948 /* EntriesListPresenter.swift in Sources */,
 				580E4BF5243F73E200565EDE /* SettingsChartRangesPresenter.swift in Sources */,
+				2C581C62248E5EAD008A1F34 /* EmojiInputFooterView.swift in Sources */,
 				580E4B8E243F71DC00565EDE /* SettingsCloudTypesModels.swift in Sources */,
 				5805C9B324389230002AFA1B /* DexcomG6Error.swift in Sources */,
 				588584AC248E7A2800C3F74C /* CloudUploadStatus.swift in Sources */,
@@ -3725,6 +3780,7 @@
 				5805CA11243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.swift in Sources */,
 				5805C9AD24389230002AFA1B /* DexcomG6SensorDataRxMessage.swift in Sources */,
 				58B5FD55241910BD00DB857D /* SettingsRootViewController.swift in Sources */,
+				2C4ABF02248A7EB5001ED694 /* FoodTextInputTableViewCell.swift in Sources */,
 				5805CA17243892D6002AFA1B /* InitialSetupDexcomG6SensorAgeWorker.swift in Sources */,
 				5844325D243CD8C300282A6C /* AlertConfiguration.swift in Sources */,
 				58F4CC83243BA2110053D17C /* DebugLogPresenter.swift in Sources */,
@@ -3734,6 +3790,7 @@
 				5805C9B924389230002AFA1B /* CGMBluetoothServiceDelegate.swift in Sources */,
 				580E4B65243F713A00565EDE /* SettingsAlertTypesRouter.swift in Sources */,
 				58B95B52244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift in Sources */,
+				2C4ABEF9248A5AD8001ED694 /* FoodEmojiDataSource.swift in Sources */,
 				58161A43247931C70023FF76 /* DexcomG6Firmware.swift in Sources */,
 				580E4BC0243F733100565EDE /* SettingsModeRootPresenter.swift in Sources */,
 				580E4B9B243F721500565EDE /* NightscoutCloudConfigurationModels.swift in Sources */,
@@ -3783,6 +3840,7 @@
 				580E4BE8243F73B200565EDE /* SettingsSensorPresenter.swift in Sources */,
 				580E4C1D243F74A300565EDE /* SettingsPumpUserPresenter.swift in Sources */,
 				580E4B7E243F717E00565EDE /* SettingsAlertSoundPresenter.swift in Sources */,
+				2C4ABEEE248A5447001ED694 /* EmojiInputHeaderView.swift in Sources */,
 				580EC7BF2421521C00C34948 /* EditCalibrationViewController.swift in Sources */,
 				5826A60724698A12009684E4 /* RootCalibrationValidatorWorker.swift in Sources */,
 				580E4B59243F711200565EDE /* SettingsAlertRootModels.swift in Sources */,
@@ -3833,6 +3891,7 @@
 				580E4BDE243F739C00565EDE /* SettingsTransmitterViewController.swift in Sources */,
 				580E4CF02440BC0300565EDE /* MockedBluetoothService.swift in Sources */,
 				2CBE1A902432127C003BE14E /* EntriesListCarbsPersistenceWorker.swift in Sources */,
+				2C4ABEFE248A5FEA001ED694 /* FoodTypeTableViewCell.swift in Sources */,
 				5805CA19243892D6002AFA1B /* InitialSetupG6StepWorker.swift in Sources */,
 				586F6BAF245C2B04004FB4E6 /* Calibration.swift in Sources */,
 				580E4C04243F746F00565EDE /* SettingsUserTypeRootRouter.swift in Sources */,
@@ -3867,6 +3926,7 @@
 				580EC7A8242151BC00C34948 /* EditTrainingPresenter.swift in Sources */,
 				5805CA13243892D6002AFA1B /* InitialSetupDeviceModeViewController.swift in Sources */,
 				580E4BC3243F733100565EDE /* SettingsModeRootViewController.swift in Sources */,
+				2C4ABEF2248A555C001ED694 /* EmojiInputCell.swift in Sources */,
 				2C1DE8A524792DEF0023B512 /* PopUpViewController.swift in Sources */,
 				5805C9B224389230002AFA1B /* DexcomG6MessageWorker.swift in Sources */,
 				2CBE1A8924320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift in Sources */,
@@ -4186,6 +4246,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2CDDFEBF24927A9C009505B0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2CDDFEBE24927A9C009505B0 /* ru */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		58B4F6CB24116394003C6D8F /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -9,9 +9,13 @@
 import UIKit
 
 // swiftlint:disable function_body_length
+// swiftlint:disable cyclomatic_complexity
 
 final class BaseSettingsCellFactory {
     weak var tableView: UITableView?
+    
+    var isCustomFoodType = false
+    var ignoreFoodSelectedType = false
     
     func createCell(ofType type: BaseSettings.Cell, indexPath: IndexPath, expandedCell: IndexPath?) -> UITableViewCell {
         guard let tableView = tableView else { fatalError() }
@@ -37,12 +41,14 @@ final class BaseSettingsCellFactory {
             )
             return cell
             
-        case let .textInput(mainText, detailText, placeholder, textChangeHandler):
+        case let .textInput(mainText, detailText, textFieldText, placeholder, keyboardType, textChangeHandler):
             let cell = tableView.dequeueReusableCell(ofType: BaseSettingsTextInputTableViewCell.self, for: indexPath)
             cell.configure(
                 mainText: mainText,
                 detailText: detailText,
+                textFieldText: textFieldText,
                 placeholder: placeholder,
+                keyboardType: keyboardType,
                 textChangeHandler: textChangeHandler
             )
             
@@ -81,6 +87,34 @@ final class BaseSettingsCellFactory {
             let cell = tableView.dequeueReusableCell(ofType: BaseSettingsButtonCell.self, for: indexPath)
             cell.configure(title: title, titleColor: color, tapHandler: handler)
             return cell
+        
+        case let .foodType(selectedType, foodType, handler):
+            if !ignoreFoodSelectedType {
+                isCustomFoodType = selectedType == .custom
+            }
+            
+            if isCustomFoodType {
+                let cell = tableView.dequeueReusableCell(ofType: FoodTextInputTableViewCell.self, for: indexPath)
+                cell.configurate(with: foodType)
+                cell.didEditingChange = handler
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(ofType: FoodTypeTableViewCell.self, for: indexPath)
+                cell.selectionState = selectedType
+                
+                cell.didSelectFoodType = handler
+                
+                cell.didSelectCustomType = { [weak self] in
+                    self?.isCustomFoodType = true
+                    self?.ignoreFoodSelectedType = true
+                    
+                    tableView.beginUpdates()
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                    tableView.endUpdates()
+                }
+                
+                return cell
+            }
         }
     }
     

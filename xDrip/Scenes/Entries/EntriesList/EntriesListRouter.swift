@@ -14,6 +14,7 @@ import UIKit
 
 protocol EntriesListRoutingLogic {
     func dismissScene()
+    func routeToEditEntry()
 }
 
 protocol EntriesListDataPassing {
@@ -28,5 +29,27 @@ final class EntriesListRouter: EntriesListRoutingLogic, EntriesListDataPassing {
     
     func dismissScene() {
         viewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    func routeToEditEntry() {
+        guard let entry = dataStore?.entry else { return }
+        
+        let viewController = EditFoodEntryViewController()
+        let dataStore = viewController.router?.dataStore
+        
+        dataStore?.mode = .edit
+        
+        switch entry {
+        case is BolusEntry:
+            dataStore?.entryType = .bolus
+            dataStore?.bolusEntry = entry as? BolusEntry
+        case is CarbEntry:
+            dataStore?.entryType = .carbs
+            dataStore?.carbEntry = entry as? CarbEntry
+        default:
+            break
+        }
+        
+        self.viewController?.navigationController?.pushViewController(viewController, animated: true)
     }
 }

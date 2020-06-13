@@ -13,12 +13,10 @@ final class FoodEntriesWorker: AbstractEntriesWorker {
     @discardableResult static func addCarbEntry(
         amount: Double,
         foodType: String?,
-        assimilationDuration: TimeInterval,
         date: Date) -> CarbEntry {
         let entry = CarbEntry(
             amount: amount,
             foodType: foodType,
-            assimilationDuration: assimilationDuration,
             date: date
         )
         return add(entry: entry)

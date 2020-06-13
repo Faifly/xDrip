@@ -28,6 +28,8 @@ class BaseSettingsViewController: UIViewController, ExpandableTableContainer {
         tableView.registerNib(type: PickerExpandableTableViewCell.self)
         tableView.registerNib(type: BaseSettingsTextInputTableViewCell.self)
         tableView.registerNib(type: BaseSettingsButtonCell.self)
+        tableView.registerNib(type: FoodTypeTableViewCell.self)
+        tableView.registerNib(type: FoodTextInputTableViewCell.self)
         
         return tableView
     }()

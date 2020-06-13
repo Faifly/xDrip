@@ -39,7 +39,7 @@ class EntriesListSceneBuilderTests: XCTestCase {
         var worker: EntriesListEntryPersistenceWorker?
         var presenter: EntriesListPresentationLogic?
         
-        func doLoad(request: EntriesList.Load.Request) { }
+        func doUpdateData(request: EntriesList.UpdateData.Request) { }
         
         func doCancel(request: EntriesList.Cancel.Request) { }
         
@@ -55,7 +55,7 @@ class EntriesListSceneBuilderTests: XCTestCase {
     final class EntriesListPresentationLogicSpy: EntriesListPresentationLogic {
         var worker: EntriesListFormattingWorker?
         
-        func presentLoad(response: EntriesList.Load.Response) { }
+        func presentUpdateData(response: EntriesList.UpdateData.Response) { }
         
         func inject(formattingWorker: EntriesListFormattingWorker) {
             worker = formattingWorker

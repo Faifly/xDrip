@@ -18,7 +18,10 @@ final class EntriesListBolusFormattingWorker: EntriesListAbstractFormattingWorke
     private func transformToViewModel(_ entry: BolusEntry?) -> EntriesListTableViewCell.ViewModel? {
         guard let entry = entry else { return nil }
         
-        let value = String(format: "%.02f U", entry.amount)
+        let value = String(
+            format: "%.02f " + "entries_list_scene_carbs_bolus_unit".localized,
+            entry.amount
+        )
         let date = getDateString(for: entry)
         
         return EntriesListTableViewCell.ViewModel(value: value, date: date)

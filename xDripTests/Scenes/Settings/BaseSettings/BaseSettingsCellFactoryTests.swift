@@ -47,6 +47,7 @@ final class BaseSettingsCellFactoryTests: XCTestCase {
         let textInput = BaseSettings.Cell.textInput(
             mainText: "",
             detailText: nil,
+            textFieldText: nil,
             placeholder: nil,
             textChangedHandler: { _ in }
         )

@@ -76,7 +76,13 @@ final class RootInteractorTests: XCTestCase {
             routeToSettingsCalled = true
         }
         
-        func routeToAddEntry() {            
+        func routeToAddFood() {
+        }
+        
+        func routeToAddBolus() {
+        }
+        
+        func routeToAddCarbs() {
         }
         
         func routeToInitialSetup() {

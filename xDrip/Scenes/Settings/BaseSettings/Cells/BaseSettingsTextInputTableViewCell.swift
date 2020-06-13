@@ -8,9 +8,12 @@
 
 import UIKit
 
+//swiftlint:disable function_parameter_count
+
 final class BaseSettingsTextInputTableViewCell: UITableViewCell {
     @IBOutlet private weak var mainTextLabel: UILabel!
     @IBOutlet private weak var textField: UITextField!
+    @IBOutlet private weak var detailLabel: UILabel!
     
     private var textChangeHandler: ((String?) -> Void)?
     
@@ -23,11 +26,15 @@ final class BaseSettingsTextInputTableViewCell: UITableViewCell {
     func configure(
         mainText: String,
         detailText: String?,
+        textFieldText: String?,
         placeholder: String?,
+        keyboardType: UIKeyboardType,
         textChangeHandler: ((String?) -> Void)?) {
         mainTextLabel.text = mainText
-        textField.text = detailText
+        detailLabel.text = detailText
+        textField.text = textFieldText
         textField.placeholder = placeholder
+        textField.keyboardType = keyboardType
         self.textChangeHandler = textChangeHandler
     }
     

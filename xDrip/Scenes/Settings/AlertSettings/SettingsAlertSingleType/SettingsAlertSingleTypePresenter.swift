@@ -104,7 +104,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
             contentsOf: [
                 createTextInputViewCell(
                     .name,
-                    detailText: config.name,
+                    textFieldText: config.name,
                     placeholder: config.eventType.title,
                     editingChangedHandler: response.textEditingChangedHandler
                 ),
@@ -178,10 +178,15 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
     
     private func createTextInputViewCell(
         _ field: SettingsAlertSingleType.Field,
-        detailText: String?,
+        textFieldText: String?,
         placeholder: String?,
         editingChangedHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
-        return .textInput(mainText: field.title, detailText: detailText, placeholder: placeholder) { string in
+        return .textInput(
+            mainText: field.title,
+            detailText: nil,
+            textFieldText: textFieldText,
+            placeholder: placeholder
+        ) { string in
             editingChangedHandler(string)
         }
     }
