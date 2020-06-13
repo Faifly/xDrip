@@ -99,7 +99,16 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         response: NightscoutCloudConfiguration.UpdateData.Response
     ) -> BaseSettings.Section? {
         guard response.settings.isEnabled else { return nil }
-        
+        if response.settings.isFollowerAuthed {
+            return createReadonlyCredentialsSection(response: response)
+        } else {
+            return createEditableCredentialsSection(response: response)
+        }
+    }
+    
+    private func createEditableCredentialsSection(
+        response: NightscoutCloudConfiguration.UpdateData.Response
+    ) -> BaseSettings.Section {
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
                 .baseURL,
@@ -127,6 +136,28 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
             cells: cells,
             header: nil,
             footer: "settings_nightscout_cloud_configuration_credentials_section_footer".localized
+        )
+    }
+    
+    private func createReadonlyCredentialsSection(
+        response: NightscoutCloudConfiguration.UpdateData.Response
+    ) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            .info(
+                mainText: NightscoutCloudConfiguration.Field.baseURL.title,
+                detailText: response.settings.baseURL,
+                detailTextColor: nil
+            ),
+            .info(
+                mainText: NightscoutCloudConfiguration.Field.apiSecret.title,
+                detailText: response.settings.apiSecret,
+                detailTextColor: nil
+            )
+        ]
+        return .normal(
+            cells: cells,
+            header: nil,
+            footer: "settings_nightscout_cloud_configuration_credentials_readonly_section_footer".localized
         )
     }
     

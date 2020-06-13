@@ -23,42 +23,67 @@ final class SettingsModeFollowerPresenter: SettingsModeFollowerPresentationLogic
     // MARK: Do something
     
     func presentLoad(response: SettingsModeFollower.Load.Response) {
+        let viewModel = SettingsModeFollower.Load.ViewModel()
+        viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    func presentUpdate(response: SettingsModeFollower.Update.Response) {
         let tableViewModel = BaseSettings.ViewModel(
             sections: [
                 createSection(response: response)
             ]
         )
-        let viewModel = SettingsModeFollower.Load.ViewModel(tableViewModel: tableViewModel)
-        viewController?.displayLoad(viewModel: viewModel)
-    }
-    
-    func presentUpdate(response: SettingsModeFollower.Update.Response) {
-        let viewModel = SettingsModeFollower.Update.ViewModel(loginButtonEnabled: response.loginButtonEnabled)
+        
+        let viewModel = SettingsModeFollower.Update.ViewModel(
+            tableViewModel: tableViewModel,
+            authButtonMode: response.settings.isFollowerAuthed ? .logout : .login
+        )
         viewController?.displayUpdate(viewModel: viewModel)
     }
     
-    private func createSection(response: SettingsModeFollower.Load.Response) -> BaseSettings.Section {
-        let cells: [BaseSettings.Cell] = [
+    private func createSection(response: SettingsModeFollower.Update.Response) -> BaseSettings.Section {
+        var cells: [BaseSettings.Cell] = [
             createInfoCell(
                 .service,
                 detailText: "settings_mode_settings_nightscout".localized
-            ),
-            createTextInputCell(
-                .nightscoutUrl,
-                textFieldText: nil,
-                placeholder: nil,
-                textEditingChangedHandler: response.textEditingChangedHandler
-            ),
-            createTimePickerCell(
-                .offset,
-                detailText: 0.0,
-                timePickerValueChanged: response.timePickerValueChangedHandler
-            ),
-            createDisclosureCell(
-                .apiSecret,
-                selectionHandler: response.singleSelectionHandler
             )
         ]
+        
+        if response.settings.isFollowerAuthed {
+            cells.append(
+                createInfoCell(
+                    .nightscoutUrl,
+                    detailText: response.settings.baseURL
+                )
+            )
+            cells.append(
+                createInfoCell(
+                    .apiSecret,
+                    detailText: response.settings.apiSecret
+                )
+            )
+        } else {
+            cells.append(
+                createTextInputCell(
+                    .nightscoutUrl,
+                    textFieldText: response.settings.baseURL,
+                    placeholder: "settings_nightscout_cloud_configuration_base_url_placeholder".localized,
+                    textEditingChangedHandler: { text in
+                        response.textEditingChangedHandler(.nightscoutUrl, text)
+                    }
+                )
+            )
+            cells.append(
+                createTextInputCell(
+                    .apiSecret,
+                    textFieldText: response.settings.apiSecret,
+                    placeholder: "settings_nightscout_cloud_configuration_api_secret_placeholder".localized,
+                    textEditingChangedHandler: { text in
+                        response.textEditingChangedHandler(.apiSecret, text)
+                    }
+                )
+            )
+        }
         
         return .normal(
             cells: cells,
@@ -111,12 +136,6 @@ final class SettingsModeFollowerPresenter: SettingsModeFollowerPresentationLogic
         }
         
         return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)
-    }
-    
-    private func createDisclosureCell(
-        _ field: SettingsModeFollower.Field,
-        selectionHandler: @escaping () -> Void) -> BaseSettings.Cell {
-        return .disclosure(mainText: field.title, detailText: nil, selectionHandler: selectionHandler)
     }
 }
 

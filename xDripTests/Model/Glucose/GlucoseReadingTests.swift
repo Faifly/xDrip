@@ -19,20 +19,23 @@ final class GlucoseReadingTests: AbstractRealmTest {
         let reading1 = GlucoseReading()
         reading1.setValue(Date(timeIntervalSince1970: 1.0), forKey: "date")
         reading1.setValue(1.0, forKey: "a")
+        reading1.generateID()
         
         let reading2 = GlucoseReading()
         reading2.setValue(Date(timeIntervalSince1970: 2.0), forKey: "date")
         reading2.setValue(2.0, forKey: "a")
+        reading2.generateID()
         
         let reading3 = GlucoseReading()
         reading3.setValue(Date(timeIntervalSince1970: 3.0), forKey: "date")
         reading3.setValue(3.0, forKey: "a")
+        reading3.generateID()
         
         realm.safeWrite {
             realm.add([reading1, reading2, reading3])
         }
         
-        let all = GlucoseReading.all
+        let all = GlucoseReading.allMaster
         
         XCTAssertTrue(all[0].a ~ 3.0)
         XCTAssertTrue(all[1].a ~ 2.0)
@@ -46,64 +49,67 @@ final class GlucoseReadingTests: AbstractRealmTest {
         )
         CGMDevice.current.updateSensorIsStarted(true)
         
-        XCTAssertTrue(GlucoseReading.lastReadings(0).isEmpty)
-        XCTAssertTrue(GlucoseReading.lastReadings(1).isEmpty)
-        XCTAssertTrue(GlucoseReading.lastReadings(10).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(0).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(1).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(10).isEmpty)
         
         let reading1 = GlucoseReading()
         reading1.setValue(Date(timeIntervalSince1970: 1.0), forKey: "date")
         reading1.setValue(1.0, forKey: "a")
+        reading1.generateID()
         
         realm.safeWrite {
             realm.add(reading1)
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(1).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(1).isEmpty)
         
         realm.safeWrite {
             reading1.setValue(1.0, forKey: "rawValue")
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(1).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(1).isEmpty)
         
         realm.safeWrite {
             reading1.setValue(1.0, forKey: "calculatedValue")
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(0).isEmpty)
-        XCTAssertTrue(GlucoseReading.lastReadings(1).count == 1)
-        XCTAssertTrue(GlucoseReading.lastReadings(2).count == 1)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(0).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(1).count == 1)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(2).count == 1)
         
         let reading2 = GlucoseReading()
         reading2.setValue(Date(timeIntervalSince1970: 2.0), forKey: "date")
         reading2.setValue(2.0, forKey: "a")
         reading2.setValue(1.0, forKey: "rawValue")
         reading2.setValue(1.0, forKey: "calculatedValue")
+        reading2.generateID()
         
         realm.safeWrite {
             realm.add(reading2)
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(1).count == 1)
-        XCTAssertTrue(GlucoseReading.lastReadings(2).count == 2)
-        XCTAssertTrue(GlucoseReading.lastReadings(3).count == 2)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(1).count == 1)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(2).count == 2)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(3).count == 2)
         
         let reading3 = GlucoseReading()
         reading3.setValue(Date(timeIntervalSince1970: 3.0), forKey: "date")
         reading3.setValue(3.0, forKey: "a")
         reading3.setValue(1.0, forKey: "rawValue")
         reading3.setValue(1.0, forKey: "calculatedValue")
+        reading3.generateID()
         
         realm.safeWrite {
             realm.add(reading3)
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(1).count == 1)
-        XCTAssertTrue(GlucoseReading.lastReadings(2).count == 2)
-        XCTAssertTrue(GlucoseReading.lastReadings(3).count == 3)
-        XCTAssertTrue(GlucoseReading.lastReadings(4).count == 3)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(1).count == 1)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(2).count == 2)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(3).count == 3)
+        XCTAssertTrue(GlucoseReading.lastMasterReadings(4).count == 3)
         
-        let last3 = GlucoseReading.lastReadings(3)
+        let last3 = GlucoseReading.lastMasterReadings(3)
         
         XCTAssertTrue(last3[0].a ~ 3.0)
         XCTAssertTrue(last3[1].a ~ 2.0)
@@ -205,6 +211,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         let reading1 = GlucoseReading()
         reading1.setValue(Date(timeIntervalSince1970: 0.0), forKey: "date")
         reading1.setValue(1.0, forKey: "a")
+        reading1.generateID()
         realm.safeWrite {
             realm.add(reading1)
         }
@@ -216,11 +223,13 @@ final class GlucoseReadingTests: AbstractRealmTest {
         let reading2 = GlucoseReading()
         reading2.setValue(Date(timeIntervalSince1970: 10.0), forKey: "date")
         reading2.setValue(2.0, forKey: "a")
+        reading2.generateID()
         realm.safeWrite {
             realm.add(reading2)
         }
         
         let reading3 = GlucoseReading()
+        reading3.generateID()
         realm.safeWrite {
             realm.add(reading3)
         }
@@ -302,6 +311,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         reading1.setValue(Date(timeIntervalSince1970: 2.0), forKey: "date")
         reading1.setValue(22.0, forKey: "calculatedValue")
         reading1.setValue(22.0, forKey: "rawValue")
+        reading1.generateID()
         
         realm.safeWrite {
             realm.add(reading1)
@@ -316,6 +326,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         reading2.setValue(Date(timeIntervalSince1970: 3.0), forKey: "date")
         reading2.setValue(33.0, forKey: "calculatedValue")
         reading2.setValue(33.0, forKey: "rawValue")
+        reading2.generateID()
         
         realm.safeWrite {
             realm.add(reading2)
@@ -330,6 +341,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         reading3.setValue(Date(timeIntervalSince1970: 4.0), forKey: "date")
         reading3.setValue(44.0, forKey: "calculatedValue")
         reading3.setValue(44.0, forKey: "rawValue")
+        reading3.generateID()
         
         realm.safeWrite {
             realm.add(reading3)
@@ -353,6 +365,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         reading1.setValue(22.0, forKey: "ageAdjustedRawValue")
         reading1.setValue(22.0, forKey: "calculatedValue")
         reading1.setValue(22.0, forKey: "rawValue")
+        reading1.generateID()
         
         realm.safeWrite {
             realm.add(reading1)
@@ -368,6 +381,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         reading2.setValue(33.0, forKey: "ageAdjustedRawValue")
         reading2.setValue(33.0, forKey: "calculatedValue")
         reading2.setValue(33.0, forKey: "rawValue")
+        reading2.generateID()
         
         realm.safeWrite {
             realm.add(reading2)
@@ -383,6 +397,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         reading3.setValue(44.0, forKey: "ageAdjustedRawValue")
         reading3.setValue(44.0, forKey: "calculatedValue")
         reading3.setValue(44.0, forKey: "rawValue")
+        reading3.generateID()
         
         realm.safeWrite {
             realm.add(reading3)

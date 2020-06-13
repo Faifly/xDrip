@@ -56,11 +56,7 @@ final class SettingsModeFollowerPresenterTests: XCTestCase {
         // Given
         let spy = SettingsModeFollowerDisplayLogicSpy()
         sut.viewController = spy
-        let response = SettingsModeFollower.Load.Response(
-            textEditingChangedHandler: { _ in },
-            timePickerValueChangedHandler: { _ in },
-            singleSelectionHandler: {}
-        )
+        let response = SettingsModeFollower.Load.Response()
         
         // When
         sut.presentLoad(response: response)

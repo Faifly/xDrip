@@ -480,6 +480,7 @@
 		584432B7243CFE1900282A6C /* SettingsChartInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584432B3243CFE1900282A6C /* SettingsChartInteractorTests.swift */; };
 		584432B8243CFE1900282A6C /* SettingsChartRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584432B4243CFE1900282A6C /* SettingsChartRouterTests.swift */; };
 		584432B9243CFE1900282A6C /* SettingsChartPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584432B5243CFE1900282A6C /* SettingsChartPresenterTests.swift */; };
+		585531CE2494DAAE00CC80D6 /* NightscoutConnectionTestWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585531CD2494DAAE00CC80D6 /* NightscoutConnectionTestWorker.swift */; };
 		5860385B24462B64008D54B6 /* ChartVerticalLabelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860385A24462B64008D54B6 /* ChartVerticalLabelsView.swift */; };
 		5860389124488D8C008D54B6 /* TimeInterval+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860389024488D8C008D54B6 /* TimeInterval+Constants.swift */; };
 		586F6BAF245C2B04004FB4E6 /* Calibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586F6BAE245C2B04004FB4E6 /* Calibration.swift */; };
@@ -1114,6 +1115,7 @@
 		584432B3243CFE1900282A6C /* SettingsChartInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChartInteractorTests.swift; sourceTree = "<group>"; };
 		584432B4243CFE1900282A6C /* SettingsChartRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChartRouterTests.swift; sourceTree = "<group>"; };
 		584432B5243CFE1900282A6C /* SettingsChartPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChartPresenterTests.swift; sourceTree = "<group>"; };
+		585531CD2494DAAE00CC80D6 /* NightscoutConnectionTestWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutConnectionTestWorker.swift; sourceTree = "<group>"; };
 		5860385A24462B64008D54B6 /* ChartVerticalLabelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartVerticalLabelsView.swift; sourceTree = "<group>"; };
 		5860389024488D8C008D54B6 /* TimeInterval+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Constants.swift"; sourceTree = "<group>"; };
 		586F6BAE245C2B04004FB4E6 /* Calibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calibration.swift; sourceTree = "<group>"; };
@@ -2841,6 +2843,14 @@
 			path = SettingsChart;
 			sourceTree = "<group>";
 		};
+		585531CC2494DA9100CC80D6 /* SharedWorkers */ = {
+			isa = PBXGroup;
+			children = (
+				585531CD2494DAAE00CC80D6 /* NightscoutConnectionTestWorker.swift */,
+			);
+			path = SharedWorkers;
+			sourceTree = "<group>";
+		};
 		586EF6B9243E326A004F08B1 /* BaseSettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -3076,6 +3086,7 @@
 		58B5FD2124190BC700DB857D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				585531CC2494DA9100CC80D6 /* SharedWorkers */,
 				586EF6B9243E326A004F08B1 /* BaseSettings */,
 				58B5FD4C241910AF00DB857D /* SettingsRoot */,
 				58443273243CFC1C00282A6C /* SettingsChart */,
@@ -3979,6 +3990,7 @@
 				580E4CE3243F802F00565EDE /* SettingsModeMasterInteractor.swift in Sources */,
 				58160E0D2402E52000C792F4 /* TabBarView.swift in Sources */,
 				580EC79424214CDD00C34948 /* EntriesListInteractor.swift in Sources */,
+				585531CE2494DAAE00CC80D6 /* NightscoutConnectionTestWorker.swift in Sources */,
 				584432AA243CFD9B00282A6C /* SettingsChartPresenter.swift in Sources */,
 				58443259243CD3FB00282A6C /* ChartSettings.swift in Sources */,
 				58F43BA1249130C2006C5F2C /* UploadRequest.swift in Sources */,

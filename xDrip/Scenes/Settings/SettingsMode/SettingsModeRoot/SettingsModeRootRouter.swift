@@ -13,16 +13,20 @@
 import UIKit
 
 protocol SettingsModeRootRoutingLogic {
+    func presentSwitchingFromAuthorizedFollower(callback: @escaping (Bool) -> Void)
 }
 
 protocol SettingsModeRootDataPassing {
     var dataStore: SettingsModeRootDataStore? { get }
 }
 
-final class SettingsModeRootRouter: SettingsModeRootRoutingLogic, SettingsModeRootDataPassing {
+final class SettingsModeRootRouter: SettingsModeRootRoutingLogic, SettingsModeRootDataPassing, AlertPresentable {
     weak var viewController: SettingsModeRootViewController?
     weak var dataStore: SettingsModeRootDataStore?
     
     // MARK: Routing
     
+    func presentSwitchingFromAuthorizedFollower(callback: @escaping (Bool) -> Void) {
+        presentConfirmation(prefix: "settings_mode_switch_from_follower", completion: callback)
+    }
 }

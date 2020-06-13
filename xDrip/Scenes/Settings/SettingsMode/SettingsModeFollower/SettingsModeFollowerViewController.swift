@@ -57,7 +57,6 @@ class SettingsModeFollowerViewController: BaseSettingsViewController, SettingsMo
            target: self,
            action: #selector(onLogin)
         )
-        button.isEnabled = false
         
         return button
     }()
@@ -100,10 +99,16 @@ class SettingsModeFollowerViewController: BaseSettingsViewController, SettingsMo
     // MARK: Display
     
     func displayLoad(viewModel: SettingsModeFollower.Load.ViewModel) {
-        update(with: viewModel.tableViewModel)
     }
     
     func displayUpdate(viewModel: SettingsModeFollower.Update.ViewModel) {
-        loginBarButtonItem.isEnabled = viewModel.loginButtonEnabled
+        update(with: viewModel.tableViewModel)
+        
+        switch viewModel.authButtonMode {
+        case .login:
+            loginBarButtonItem.title = "settings_mode_settings_login_button".localized
+        case .logout:
+            loginBarButtonItem.title = "settings_mode_settings_logout_button".localized
+        }
     }
 }

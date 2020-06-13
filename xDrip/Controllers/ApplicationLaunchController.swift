@@ -20,6 +20,7 @@ enum ApplicationLaunchController {
         setupRealm()
         setupDevice()
         NotificationController.requestAuthorization()
+        _ = NightscoutService.shared
     }
     
     static func createWindow() -> UIWindow {

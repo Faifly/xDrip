@@ -22,6 +22,11 @@ enum SettingsModeFollower {
         case apiSecret
     }
     
+    enum AuthButtonMode {
+        case login
+        case logout
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -29,13 +34,9 @@ enum SettingsModeFollower {
         }
         
         struct Response {
-            let textEditingChangedHandler: (String?) -> Void
-            let timePickerValueChangedHandler: (TimeInterval) -> Void
-            let singleSelectionHandler: () -> Void
         }
         
         struct ViewModel {
-            let tableViewModel: BaseSettings.ViewModel
         }
     }
     
@@ -55,11 +56,14 @@ enum SettingsModeFollower {
         }
         
         struct Response {
-            let loginButtonEnabled: Bool
+            let settings: NightscoutSyncSettings
+            let textEditingChangedHandler: (Field, String?) -> Void
+            let timePickerValueChangedHandler: (TimeInterval) -> Void
         }
         
         struct ViewModel {
-            let loginButtonEnabled: Bool
+            let tableViewModel: BaseSettings.ViewModel
+            let authButtonMode: AuthButtonMode
         }
     }
 }

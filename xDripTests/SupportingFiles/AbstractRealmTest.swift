@@ -20,3 +20,9 @@ class AbstractRealmTest: XCTestCase {
         }
     }
 }
+
+extension GlucoseReading {
+    func generateID() {
+        setValue(UUID().uuidString, forKey: "externalID") 
+    }
+}

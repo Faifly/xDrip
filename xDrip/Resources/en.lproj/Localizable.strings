@@ -199,6 +199,7 @@
 "settings_nightscout_cloud_configuration_base_url_title" = "Base URL";
 "settings_nightscout_cloud_configuration_base_url_placeholder" = "https://nightscout.com";
 "settings_nightscout_cloud_configuration_credentials_section_footer" = "Enter the base URL of your Nightscout server. This is only the base URL, the uploader will automatically append /entries for the requests";
+"settings_nightscout_cloud_configuration_credentials_readonly_section_footer" = "You are authenticated as a follower on this Nightscout server. To modify these settings please go to mode settings";
 "settings_nightscout_cloud_configuration_api_secret_title" = "API Secret";
 "settings_nightscout_cloud_configuration_api_secret_placeholder" = "Secret key";
 "settings_nightscout_cloud_configuration_api_test_button" = "Test Connection";
@@ -247,8 +248,13 @@
 "settings_mode_settings_offset" = "Offset";
 "settings_mode_settings_api_secret" = "API Secret";
 "settings_mode_settings_login_button" = "Login";
+"settings_mode_settings_logout_button" = "Logout";
 "settings_mode_settings_follower_section_footer" = "If a follower wants to add treatments to the master, the master’s API Secret needs to be set in the field above. If the master’s site is protected with the AUTH_DEFAULT_ROLES variable and is preventing from fetching data, setting the master’s API secret should solve the issue. If none of these features are needed you can leave this field blank";
 "settings_mode_settings_follower_time_minutes" = "m";
+"settings_mode_switch_from_follower_alert_title" = "Switching from follower mode";
+"settings_mode_switch_from_follower_alert_message" = "You're authorized as a follower. If you switch to master mode now, authorization will be aborted and you will stop receiving follower data.";
+"settings_mode_switch_from_follower_alert_confirm_button" = "Switch to master";
+"settings_mode_switch_from_follower_alert_cancel_button" = "Cancel";
 
 // Settings Transmitter
 "settings_transmitter_screen_title" = "Transmitter";
