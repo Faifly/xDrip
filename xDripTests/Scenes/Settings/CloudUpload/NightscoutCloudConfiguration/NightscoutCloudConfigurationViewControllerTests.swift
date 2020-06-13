@@ -58,7 +58,7 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
     final class NightscoutCloudConfigurationBusinessLogicSpy: NightscoutCloudConfigurationBusinessLogic {
         var doLoadCalled = false
         
-        func doLoad(request: NightscoutCloudConfiguration.Load.Request) {
+        func doLoad(request: NightscoutCloudConfiguration.UpdateData.Request) {
             doLoadCalled = true
         }
     }
@@ -88,7 +88,7 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
     func testDisplayLoad() {
         // Given
         let tableViewModel = BaseSettings.ViewModel(sections: [])
-        let viewModel = NightscoutCloudConfiguration.Load.ViewModel(tableViewModel: tableViewModel)
+        let viewModel = NightscoutCloudConfiguration.UpdateData.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()

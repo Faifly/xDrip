@@ -42,7 +42,7 @@ final class NightscoutCloudConfigurationInteractorTests: XCTestCase {
     final class NightscoutCloudConfigurationPresentationLogicSpy: NightscoutCloudConfigurationPresentationLogic {
         var presentLoadCalled = false
         
-        func presentLoad(response: NightscoutCloudConfiguration.Load.Response) {
+        func presentLoad(response: NightscoutCloudConfiguration.UpdateData.Response) {
             presentLoadCalled = true
         }
     }
@@ -58,7 +58,7 @@ final class NightscoutCloudConfigurationInteractorTests: XCTestCase {
         // Given
         let spy = NightscoutCloudConfigurationPresentationLogicSpy()
         sut.presenter = spy
-        let request = NightscoutCloudConfiguration.Load.Request()
+        let request = NightscoutCloudConfiguration.UpdateData.Request()
         
         // When
         sut.doLoad(request: request)

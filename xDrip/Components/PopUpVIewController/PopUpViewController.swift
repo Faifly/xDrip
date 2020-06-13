@@ -14,6 +14,16 @@ final class PopUpViewController: NibViewController {
     
     var okActionHandler: (() -> Void)?
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        modalPresentationStyle = .overFullScreen
+    }
+    
+    required init() {
+        super.init()
+        modalPresentationStyle = .overFullScreen
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,16 +37,10 @@ final class PopUpViewController: NibViewController {
             }
         }
         #endif
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) { [weak self] in
-            self?.presentGlucoseAlert(queuedReadings: 614, queuedTreatments: 0)
-        }
     }
-
-    func presentGlucoseAlert(queuedReadings: Int, queuedTreatments: Int) {
+    
+    func presentFinishAlert(message: String, icon: UIImage) {
         activityIndicatorContainerView.isHidden = true
-        
-        let message = "Queued \(queuedReadings) glucose readings and \(queuedTreatments) treatments"
         
         #if targetEnvironment(macCatalyst)
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -44,7 +48,7 @@ final class PopUpViewController: NibViewController {
         present(alertController, animated: true)
         #else
         let alertController = CustomAlertController(title: "", message: message, preferredStyle: .alert)
-        alertController.setTitleImage(UIImage(named: "icon_error")?.withRenderingMode(.alwaysOriginal))
+        alertController.setTitleImage(icon.withRenderingMode(.alwaysOriginal))
         
         alertController.addAction(createOKAction())
         

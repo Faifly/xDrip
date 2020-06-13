@@ -26,13 +26,12 @@ final class NightscoutCloudBackfillRouter: NightscoutCloudBackfillRoutingLogic, 
     
     // MARK: Routing
     func presentPopUp() {
-        let popUp = PopUpViewController()
-        popUp.modalPresentationStyle = .overFullScreen
-        popUp.okActionHandler = { [weak self] in
-            self?.dismissScene()
-        }
-        
-        viewController?.present(popUp, animated: true, completion: nil)
+//        let popUp = PopUpViewController()
+//        popUp.okActionHandler = { [weak self] in
+//            self?.dismissScene()
+//        }
+//
+//        viewController?.present(popUp, animated: true, completion: nil)
     }
     
     private func dismissScene() {

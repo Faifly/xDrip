@@ -20,21 +20,24 @@ enum NightscoutCloudConfiguration {
         case useCellularData
         case sendDisplayGlucose
         case baseURL
+        case apiSecret
+        case testConnection
         case downloadData
         case extraOptions
     }
     
     // MARK: Use cases
     
-    enum Load {
+    enum UpdateData {
         struct Request {
         }
         
         struct Response {
             let settings: NightscoutSyncSettings
             let switchValueChangedHandler: (Field, Bool) -> Void
-            let textEditingChangedHandler: (String?) -> Void
+            let textEditingChangedHandler: (Field, String?) -> Void
             let singleSelectionHandler: () -> Void
+            let testConnectionHandler: () -> Void
         }
         
         struct ViewModel {

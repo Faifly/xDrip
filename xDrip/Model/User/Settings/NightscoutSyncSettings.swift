@@ -21,6 +21,7 @@ final class NightscoutSyncSettings: Object {
     @objc private(set) dynamic var uploadTreatments: Bool = false
     @objc private(set) dynamic var alertOnFailures: Bool = false
     @objc private(set) dynamic var appendSourceInfoToDevices: Bool = false
+    @objc private(set) dynamic var apiSecret: String?
     
     func updateIsEnabled(_ isEnabled: Bool) {
         Realm.shared.safeWrite {
@@ -85,6 +86,12 @@ final class NightscoutSyncSettings: Object {
     func updateAppendSourceInfoToDevices(_ append: Bool) {
         Realm.shared.safeWrite {
             self.appendSourceInfoToDevices = append
+        }
+    }
+    
+    func updateAPISecret(_ secret: String?) {
+        Realm.shared.safeWrite {
+            self.apiSecret = secret
         }
     }
 }

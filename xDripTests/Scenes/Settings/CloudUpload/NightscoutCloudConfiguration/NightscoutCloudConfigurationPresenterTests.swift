@@ -42,7 +42,7 @@ final class NightscoutCloudConfigurationPresenterTests: XCTestCase {
     final class NightscoutCloudConfigurationDisplayLogicSpy: NightscoutCloudConfigurationDisplayLogic {
         var displayLoadCalled = false
         
-        func displayLoad(viewModel: NightscoutCloudConfiguration.Load.ViewModel) {
+        func displayLoad(viewModel: NightscoutCloudConfiguration.UpdateData.ViewModel) {
             displayLoadCalled = true
         }
     }
@@ -53,7 +53,7 @@ final class NightscoutCloudConfigurationPresenterTests: XCTestCase {
         // Given
         let spy = NightscoutCloudConfigurationDisplayLogicSpy()
         sut.viewController = spy
-        let response = NightscoutCloudConfiguration.Load.Response(
+        let response = NightscoutCloudConfiguration.UpdateData.Response(
             settings: NightscoutSyncSettings(),
             switchValueChangedHandler: { _, _ in },
             textEditingChangedHandler: { _ in },

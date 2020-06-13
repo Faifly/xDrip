@@ -26,7 +26,7 @@ protocol SettingsSensorDataPassing {
     var dataStore: SettingsSensorDataStore? { get }
 }
 
-final class SettingsSensorRouter: SettingsSensorRoutingLogic, SettingsSensorDataPassing, ConfirmationPresentable {
+final class SettingsSensorRouter: SettingsSensorRoutingLogic, SettingsSensorDataPassing, AlertPresentable {
     weak var viewController: SettingsSensorViewController?
     weak var dataStore: SettingsSensorDataStore?
     
