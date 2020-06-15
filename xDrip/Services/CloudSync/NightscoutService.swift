@@ -24,8 +24,10 @@ final class NightscoutService {
     }
     private lazy var lastFollowerFetchTime = GlucoseReading.allFollower.last?.date
     private var followerFetchTimer: Timer?
+    private let requestFactory: UploadRequestFactoryLogic
     
     init() {
+        requestFactory = UploadRequestFactory()
         _ = settingsObservers
         if let settings = User.current.settings.nightscoutSync, settings.isFollowerAuthed {
             startFetchingFollowerData()
@@ -36,11 +38,35 @@ final class NightscoutService {
         guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else { return }
         let all = GlucoseReading.allMaster
         let notUploaded = all.filter { $0.cloudUploadStatus == .notUploaded }
-            
+        let modified = all.filter { $0.cloudUploadStatus == .modified }
+        
         for entry in notUploaded {
-            guard !self.requestQueue.contains(where: { $0.itemID == entry.externalID }) else { continue }
-            guard let request = self.createNotUploadedGlucoseRequest(entry) else { return }
-            self.requestQueue.append(request)
+            guard !requestQueue.contains(where: {
+                $0.itemID == entry.externalID && $0.type == .postGlucoseReading
+            }) else { continue }
+            guard let request = requestFactory.createNotUploadedGlucoseRequest(entry) else { return }
+            requestQueue.append(request)
+        }
+        
+        for entry in modified {
+            if let index = requestQueue.firstIndex(where: {
+                $0.itemID == entry.externalID && $0.type == .postGlucoseReading
+            }) {
+                requestQueue.remove(at: index)
+            }
+            
+            if !requestQueue.contains(where: {
+                $0.itemID == entry.externalID && $0.type == .deleteGlucoseReading
+            }), let request = requestFactory.createDeleteReadingRequest(entry) {
+                requestQueue.append(request)
+            }
+            
+            if !requestQueue.contains(where: {
+                $0.itemID == entry.externalID && $0.type == .modifyGlucoseReading
+            }), var request = requestFactory.createModifiedGlucoseRequest(entry) {
+                request.type = .modifyGlucoseReading
+                requestQueue.append(request)
+            }
         }
         
         self.runQueue()
@@ -48,15 +74,8 @@ final class NightscoutService {
     
     func testNightscoutConnection(tryAuth: Bool, callback: @escaping (Bool, NightscoutError?) -> Void) {
         do {
-            guard var request = try createPostEntriesRequest(appendSecret: tryAuth) else {
-                callback(false, NightscoutError.invalidURL)
-                return
-            }
+            let request = try requestFactory.createTestConnectionRequest(tryAuth: tryAuth)
             
-            request.timeoutInterval = 10.0
-            if tryAuth {
-                request.httpBody = "[{\"date\":1}]".data(using: .utf8)
-            }
             URLSession.shared.dataTask(with: request) { _, response, error in
                 DispatchQueue.main.async {
                     guard let response = response as? HTTPURLResponse else {
@@ -70,49 +89,10 @@ final class NightscoutService {
                         callback(response.statusCode == 200 && error == nil, NightscoutError.cantConnect)
                     }
                 }
-            }
-            .resume()
+            }.resume()
         } catch {
             callback(false, error as? NightscoutError)
         }
-    }
-    
-    private func createNotUploadedGlucoseRequest(_ entry: GlucoseReading) -> UploadRequest? {
-        guard var request = try? createPostEntriesRequest() else { return nil }
-        let codableEntry = CGlucoseReading(reading: entry)
-        request.httpBody = try? JSONEncoder().encode([codableEntry])
-        
-        return UploadRequest(request: request, itemID: entry.externalID ?? "")
-    }
-    
-    private func createPostEntriesRequest(appendSecret: Bool = true) throws -> URLRequest? {
-        guard let baseURLString = User.current.settings.nightscoutSync?.baseURL else {
-            throw NightscoutError.invalidURL
-        }
-        guard let baseURL = URL(string: baseURLString) else {
-            throw NightscoutError.invalidURL
-        }
-        
-        let url = baseURL.appendingPathComponent("/api/v1/entries.json")
-        var request = URLRequest(url: url)
-        
-        if appendSecret {
-            guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret else {
-                throw NightscoutError.noAPISecret
-            }
-            guard !apiSecret.isEmpty else {
-                throw NightscoutError.noAPISecret
-            }
-            
-            request.httpMethod = "POST"
-            request.allHTTPHeaderFields = [
-                "API-SECRET": apiSecret.sha1
-            ]
-        } else {
-            request.httpMethod = "GET"
-        }
-        
-        return request
     }
     
     private func runQueue() {
@@ -127,8 +107,7 @@ final class NightscoutService {
             DispatchQueue.main.async {
                 GlucoseReading.markEntryAsUploaded(externalID: first.itemID)
             }
-        }
-        .resume()
+        }.resume()
     }
     
     private func startFetchingFollowerData() {
@@ -146,12 +125,7 @@ final class NightscoutService {
     }
     
     private func fetchFollowerData() {
-        guard let settings = User.current.settings.nightscoutSync else { return }
-        guard settings.isFollowerAuthed else { return }
-        guard var request = try? createPostEntriesRequest(appendSecret: false) else { return }
-        guard let url = request.url else { return }
-        request.url = URL(string: url.absoluteString + "?count=50")
-        request.httpMethod = "GET"
+        guard let request = requestFactory.createFetchFollowerDataRequest() else { return }
         URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else { return }
             guard let entries = try? JSONDecoder().decode([CGlucoseReading].self, from: data) else { return }
@@ -159,7 +133,6 @@ final class NightscoutService {
                 GlucoseReading.parseFollowerEntries(entries)
                 CGMController.shared.notifyGlucoseChange()
             }
-        }
-        .resume()
+        }.resume()
     }
 }

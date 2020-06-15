@@ -11,6 +11,13 @@ import Foundation
 struct UploadRequest {
     let request: URLRequest
     let itemID: String
+    var type: UploadRequestType
+}
+
+enum UploadRequestType {
+    case postGlucoseReading
+    case modifyGlucoseReading
+    case deleteGlucoseReading
 }
 
 extension UploadRequest: Equatable {

@@ -32,7 +32,7 @@ final class BaseSettingsTextInputTableViewCellTests: XCTestCase {
             detailText: nil,
             textFieldText: nil,
             placeholder: "placeholder",
-            keyboardType: .default) { str in
+            textFieldConfigurator: nil) { str in
             string = str ?? ""
             textChangeHandlerCalled = true
         }

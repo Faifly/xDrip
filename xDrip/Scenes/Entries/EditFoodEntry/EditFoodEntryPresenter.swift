@@ -129,7 +129,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
             detailText: detail,
             textFieldText: textFieldText,
             placeholder: "0",
-            keyboardType: .decimalPad,
+            textFieldConfigurator: { $0.keyboardType = .decimalPad },
             textChangedHandler: { string in
                 textChangeHandler(field, string)
         })
