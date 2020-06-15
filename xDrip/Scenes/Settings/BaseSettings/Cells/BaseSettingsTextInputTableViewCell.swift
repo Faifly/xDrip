@@ -28,13 +28,13 @@ final class BaseSettingsTextInputTableViewCell: UITableViewCell {
         detailText: String?,
         textFieldText: String?,
         placeholder: String?,
-        keyboardType: UIKeyboardType,
+        textFieldConfigurator: ((UITextField) -> Void)?,
         textChangeHandler: ((String?) -> Void)?) {
         mainTextLabel.text = mainText
         detailLabel.text = detailText
         textField.text = textFieldText
         textField.placeholder = placeholder
-        textField.keyboardType = keyboardType
+        textFieldConfigurator?(textField)
         self.textChangeHandler = textChangeHandler
     }
     

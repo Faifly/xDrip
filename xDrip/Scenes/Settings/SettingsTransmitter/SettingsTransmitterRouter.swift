@@ -30,10 +30,14 @@ final class SettingsTransmitterRouter: SettingsTransmitterRoutingLogic, Settings
     // MARK: Routing
     
     func showInvalidSerialError() {
-        UIAlertController.showOKAlert(
+        let alert = UIAlertController(
             title: "settings_transmitter_invalid_serial_alert_title".localized,
-            message: "settings_transmitter_invalid_serial_alert_message".localized
+            message: "settings_transmitter_invalid_serial_alert_message".localized,
+            preferredStyle: .alert
         )
+        let okAction = UIAlertAction(title: "OK".localized, style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        viewController?.present(alert, animated: true, completion: nil)
     }
     
     func showStopTransmitterConfirmation(callback: @escaping () -> Void) {
@@ -77,9 +81,13 @@ final class SettingsTransmitterRouter: SettingsTransmitterRoutingLogic, Settings
     }
     
     func showResetUnsupportedWarning() {
-        UIAlertController.showOKAlert(
+        let alert = UIAlertController(
             title: "settings_transmitter_reset_unsupported_alert_title".localized,
-            message: "settings_transmitter_reset_unsupported_alert_message".localized
+            message: "settings_transmitter_reset_unsupported_alert_message".localized,
+            preferredStyle: .alert
         )
+        let okAction = UIAlertAction(title: "OK".localized, style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        viewController?.present(alert, animated: true, completion: nil)
     }
 }

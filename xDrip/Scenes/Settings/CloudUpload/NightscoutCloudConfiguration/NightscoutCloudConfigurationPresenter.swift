@@ -200,16 +200,37 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         })
     }
     
-    private func createTextInputCell(
-        _ field: NightscoutCloudConfiguration.Field,
-        textFieldText: String?,
-        placeholder: String?,
-        textEditingChangedHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
+    private func createTextInputCell(_ field: NightscoutCloudConfiguration.Field,
+                                     textFieldText: String?,
+                                     placeholder: String?,
+                                     textEditingChangedHandler: @escaping (String?) -> Void) -> BaseSettings.Cell {
+        let configurator: ((UITextField) -> Void)?
+        switch field {
+        case .baseURL:
+            configurator = { textField in
+                textField.keyboardType = .URL
+                textField.autocapitalizationType = .none
+                textField.autocorrectionType = .no
+                textField.textContentType = .URL
+            }
+            
+        case .apiSecret:
+            configurator = { textField in
+                textField.keyboardType = .default
+                textField.autocapitalizationType = .none
+                textField.autocorrectionType = .no
+                textField.textContentType = .none
+            }
+            
+        default: configurator = nil
+        }
+        
         return .textInput(
             mainText: field.title,
             detailText: nil,
             textFieldText: textFieldText,
             placeholder: placeholder,
+            textFieldConfigurator: configurator,
             textChangedHandler: { text in
                 textEditingChangedHandler(text)
             }

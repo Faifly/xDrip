@@ -41,14 +41,14 @@ final class BaseSettingsCellFactory {
             )
             return cell
             
-        case let .textInput(mainText, detailText, textFieldText, placeholder, keyboardType, textChangeHandler):
+        case let .textInput(mainText, detailText, textFieldText, placeholder, configurator, textChangeHandler):
             let cell = tableView.dequeueReusableCell(ofType: BaseSettingsTextInputTableViewCell.self, for: indexPath)
             cell.configure(
                 mainText: mainText,
                 detailText: detailText,
                 textFieldText: textFieldText,
                 placeholder: placeholder,
-                keyboardType: keyboardType,
+                textFieldConfigurator: configurator,
                 textChangeHandler: textChangeHandler
             )
             

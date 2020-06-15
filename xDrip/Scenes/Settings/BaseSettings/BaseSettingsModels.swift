@@ -18,7 +18,7 @@ enum BaseSettings {
             detailText: String?,
             textFieldText: String?,
             placeholder: String?,
-            keyboardType: UIKeyboardType = .default,
+            textFieldConfigurator: ((UITextField) -> Void)? = nil,
             textChangedHandler: (String?) -> Void
         )
         case rightSwitch(text: String, isSwitchOn: Bool, switchHandler: (Bool) -> Void)
