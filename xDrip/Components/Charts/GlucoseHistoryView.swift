@@ -8,8 +8,6 @@
 
 import UIKit
 
-// swiftlint:disable type_body_length
-
 final class GlucoseHistoryView: UIView {
     private let verticalLines: Int = 5
     private var forwardTimeOffset: TimeInterval = 600.0
@@ -271,33 +269,15 @@ final class GlucoseHistoryView: UIView {
             let diff = abs(date.timeIntervalSince1970 - glucoseEntries[0].date.timeIntervalSince1970)
             return diff <= maxDiff ? glucoseEntries[0] : nil
         }
-        for index in 0..<glucoseEntries.count - 1 {
-            let entry1 = glucoseEntries[index]
-            let entry2 = glucoseEntries[index + 1]
-            if entry1.date > date && entry2.date < date {
-                let diff1 = entry1.date.timeIntervalSince1970 - date.timeIntervalSince1970
-                let diff2 = date.timeIntervalSince1970 - entry2.date.timeIntervalSince1970
-                if diff1 < diff2 && abs(diff1) <= maxDiff {
-                    return entry1
-                } else if diff2 > diff1 && abs(diff2) <= maxDiff {
-                    return entry2
-                }
-            }
+        
+        let diffs = glucoseEntries.map { abs(date.timeIntervalSince1970 - $0.date.timeIntervalSince1970) }
+        var minDiff = Double.greatestFiniteMagnitude
+        var minDiffIndex = 0
+        for (index, diff) in diffs.enumerated() where diff < minDiff {
+            minDiff = diff
+            minDiffIndex = index
         }
         
-        let lastIndex = glucoseEntries.count - 1
-        
-        let firstDiff = abs(date.timeIntervalSince1970 - glucoseEntries[0].date.timeIntervalSince1970)
-        let lastDiff = abs(date.timeIntervalSince1970 - glucoseEntries[lastIndex].date.timeIntervalSince1970)
-        
-        if firstDiff < maxDiff && lastDiff < maxDiff {
-            return firstDiff < lastDiff ? glucoseEntries[0] : glucoseEntries[lastIndex]
-        } else if firstDiff < maxDiff {
-            return glucoseEntries[0]
-        } else if lastDiff < maxDiff {
-            return glucoseEntries[lastIndex]
-        }
-        
-        return nil
+        return minDiff <= maxDiff ? glucoseEntries[minDiffIndex] : nil
     }
 }

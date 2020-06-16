@@ -522,6 +522,7 @@
 		58A8A42324251FC400CCFCAC /* GlucoseWarningLevelSettingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A42224251FC400CCFCAC /* GlucoseWarningLevelSettingTests.swift */; };
 		58A8A4262425215500CCFCAC /* AbstractEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A4252425215500CCFCAC /* AbstractEntryTests.swift */; };
 		58A8A42B242523DF00CCFCAC /* FoodEntriesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8A42A242523DF00CCFCAC /* FoodEntriesWorker.swift */; };
+		58A92069249930200025C1C7 /* Double+Rounding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A92068249930200025C1C7 /* Double+Rounding.swift */; };
 		58A9A395248268EE00743D53 /* CalibrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9A394248268EE00743D53 /* CalibrationController.swift */; };
 		58A9A397248274F500743D53 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9A396248274F500743D53 /* AlertPresenter.swift */; };
 		58A9A399248276D200743D53 /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9A398248276D200743D53 /* UIApplication+TopViewController.swift */; };
@@ -1157,6 +1158,7 @@
 		58A8A42224251FC400CCFCAC /* GlucoseWarningLevelSettingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseWarningLevelSettingTests.swift; sourceTree = "<group>"; };
 		58A8A4252425215500CCFCAC /* AbstractEntryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractEntryTests.swift; sourceTree = "<group>"; };
 		58A8A42A242523DF00CCFCAC /* FoodEntriesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodEntriesWorker.swift; sourceTree = "<group>"; };
+		58A92068249930200025C1C7 /* Double+Rounding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Rounding.swift"; sourceTree = "<group>"; };
 		58A9A394248268EE00743D53 /* CalibrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationController.swift; sourceTree = "<group>"; };
 		58A9A396248274F500743D53 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		58A9A398248276D200743D53 /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
@@ -2717,6 +2719,7 @@
 				58B8533F2448CA740045F30A /* DateInterval+Helpers.swift */,
 				58B986DC2466B68200E38376 /* FloatingPoint+Comparison.swift */,
 				58A9A398248276D200743D53 /* UIApplication+TopViewController.swift */,
+				58A92068249930200025C1C7 /* Double+Rounding.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3958,6 +3961,7 @@
 				580E4BE9243F73B200565EDE /* SettingsSensorRouter.swift in Sources */,
 				58B5FD4B24190EB300DB857D /* HistoryRootInteractor.swift in Sources */,
 				580E4C21243F74A300565EDE /* SettingsPumpUserInteractor.swift in Sources */,
+				58A92069249930200025C1C7 /* Double+Rounding.swift in Sources */,
 				58FE4CB924796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift in Sources */,
 				5871C1C82481747E00B79ACF /* AlertPresentable.swift in Sources */,
 				2C09D21E2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.swift in Sources */,

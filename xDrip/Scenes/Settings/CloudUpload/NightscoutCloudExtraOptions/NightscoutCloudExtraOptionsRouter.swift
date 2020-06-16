@@ -14,13 +14,14 @@ import UIKit
 
 protocol NightscoutCloudExtraOptionsRoutingLogic {
     func routeToBackfillData()
+    func presentNotYetImplementedAlert()
 }
 
 protocol NightscoutCloudExtraOptionsDataPassing {
     var dataStore: NightscoutCloudExtraOptionsDataStore? { get }
 }
 
-final class NightscoutCloudExtraOptionsRouter: NightscoutCloudExtraOptionsDataPassing {
+final class NightscoutCloudExtraOptionsRouter: NightscoutCloudExtraOptionsDataPassing, AlertPresentable {
     weak var viewController: NightscoutCloudExtraOptionsViewController?
     weak var dataStore: NightscoutCloudExtraOptionsDataStore?
     

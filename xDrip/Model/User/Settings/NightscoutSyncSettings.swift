@@ -16,7 +16,7 @@ final class NightscoutSyncSettings: Object {
     @objc private(set) dynamic var baseURL: String?
     @objc private(set) dynamic var downloadData: Bool = false
     @objc private(set) dynamic var automaticCalibration: Bool = false
-    @objc private(set) dynamic var skipLANUploads: Bool = true
+    @objc private(set) dynamic var skipLANUploads: Bool = false
     @objc private(set) dynamic var uploadBridgeBattery: Bool = false
     @objc private(set) dynamic var uploadTreatments: Bool = false
     @objc private(set) dynamic var alertOnFailures: Bool = false
