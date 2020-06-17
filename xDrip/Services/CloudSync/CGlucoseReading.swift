@@ -12,12 +12,16 @@ struct CGlucoseReading: Codable {
     let identifier: String?
     let type: String?
     let date: Int64?
-    let sgv: Int?
+    let sgv: Double?
+    let filtered: Double?
+    let unfiltered: Double?
     
     init(reading: GlucoseReading) {
         identifier = reading.externalID
         type = "sgv"
         date = Int64((reading.date?.timeIntervalSince1970 ?? 0.0) * 1000.0)
-        sgv = Int(reading.calculatedValue.rounded())
+        sgv = reading.calculatedValue.rounded(to: 2)
+        filtered = reading.rawValue.rounded(to: 2)
+        unfiltered = reading.filteredValue.rounded(to: 2)
     }
 }

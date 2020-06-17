@@ -72,6 +72,6 @@ class NightscoutCloudExtraOptionsViewController: BaseSettingsViewController, Nig
     // MARK: Display
     
     func displayLoad(viewModel: NightscoutCloudExtraOptions.Load.ViewModel) {
-        update(with: viewModel.tableViewModel)
+        update(with: viewModel.tableViewModel, animated: true)
     }
 }
