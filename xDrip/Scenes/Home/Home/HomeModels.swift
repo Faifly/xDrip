@@ -67,4 +67,20 @@ enum Home {
             let timeInterval: TimeInterval
         }
     }
+    
+    enum GlucoseCurrentInfo {
+        struct Request {
+        }
+        
+        struct Response {
+            let lastGlucoseReading: GlucoseReading?
+        }
+        
+        struct ViewModel {
+            let glucoseValue: Double?
+            let slopeValue: Double?
+            let lastScanDate: Date?
+            let difValue: Double?
+        }
+    }
 }

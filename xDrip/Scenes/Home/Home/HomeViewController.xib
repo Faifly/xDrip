@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="xDrip" customModuleProvider="target">
             <connections>
                 <outlet property="glucoseChart" destination="dSe-Qa-bqu" id="leZ-tw-snL"/>
+                <outlet property="glucoseCurrentInfoView" destination="O5h-Rw-Fg2" id="5Zz-hz-Hic"/>
                 <outlet property="timeLineSegmentView" destination="kVg-zr-V5c" id="1OU-lX-GZs"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bzO-Wv-6Q2"/>
             </connections>
@@ -21,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kVg-zr-V5c">
-                    <rect key="frame" x="16" y="60" width="382" height="32"/>
+                    <rect key="frame" x="16" y="146" width="382" height="32"/>
                     <segments>
                         <segment title="First"/>
                         <segment title="Second"/>
@@ -31,37 +32,47 @@
                     </connections>
                 </segmentedControl>
                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xzh-FR-4Nr">
-                    <rect key="frame" x="215" y="99" width="183" height="30"/>
+                    <rect key="frame" x="215" y="185" width="183" height="30"/>
                     <state key="normal" title="to carbs entries list"/>
                     <connections>
                         <action selector="toEntriesList:" destination="-1" eventType="touchUpInside" id="UME-B1-shW"/>
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dSe-Qa-bqu" customClass="GlucoseHistoryView" customModule="xDrip" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="137" width="414" height="270"/>
+                    <rect key="frame" x="0.0" y="223" width="414" height="270"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="270" id="x0y-Ag-e9B"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S2b-uv-T9b">
-                    <rect key="frame" x="16" y="99" width="183" height="30"/>
+                    <rect key="frame" x="16" y="185" width="183" height="30"/>
                     <state key="normal" title="to bolus entries list"/>
                     <connections>
                         <action selector="toEntriesList:" destination="-1" eventType="touchUpInside" id="g88-dt-p4A"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O5h-Rw-Fg2" customClass="GlucoseCurrentInfoView" customModule="xDrip" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="54" width="414" height="70"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="2JL-ar-1ol"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
+                <constraint firstItem="kVg-zr-V5c" firstAttribute="top" secondItem="O5h-Rw-Fg2" secondAttribute="bottom" constant="22" id="0On-c8-vNw"/>
                 <constraint firstItem="S2b-uv-T9b" firstAttribute="width" secondItem="Xzh-FR-4Nr" secondAttribute="width" id="8WI-uF-4Cv"/>
                 <constraint firstItem="S2b-uv-T9b" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="FPr-1W-vuA"/>
                 <constraint firstItem="dSe-Qa-bqu" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Krg-EG-wEs"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Xzh-FR-4Nr" secondAttribute="trailing" constant="16" id="NU5-mO-nmn"/>
                 <constraint firstItem="Xzh-FR-4Nr" firstAttribute="leading" secondItem="S2b-uv-T9b" secondAttribute="trailing" constant="16" id="Syi-VX-cJ0"/>
                 <constraint firstItem="Xzh-FR-4Nr" firstAttribute="top" secondItem="kVg-zr-V5c" secondAttribute="bottom" constant="8" id="T0o-h1-Eah"/>
-                <constraint firstItem="kVg-zr-V5c" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="Zbj-Td-dxa"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="O5h-Rw-Fg2" secondAttribute="trailing" id="VIx-mS-3oi"/>
+                <constraint firstItem="O5h-Rw-Fg2" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="ars-8M-dab"/>
                 <constraint firstItem="kVg-zr-V5c" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="c1A-id-guO"/>
+                <constraint firstItem="O5h-Rw-Fg2" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="hHX-Kg-VRy"/>
                 <constraint firstItem="S2b-uv-T9b" firstAttribute="top" secondItem="Xzh-FR-4Nr" secondAttribute="top" id="ioh-JJ-F97"/>
                 <constraint firstItem="dSe-Qa-bqu" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="j5q-I5-9ae"/>
                 <constraint firstItem="dSe-Qa-bqu" firstAttribute="top" secondItem="Xzh-FR-4Nr" secondAttribute="bottom" constant="8" id="lXE-ck-Yi9"/>

@@ -30,6 +30,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
         glucoseDataWorker.glucoseDataHandler = { [weak self] in
+            self?.updateGlucoseCurrentInfo()
             self?.updateGlucoseChartData()
         }
     }
@@ -39,7 +40,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     func doLoad(request: Home.Load.Request) {
         let response = Home.Load.Response()
         presenter?.presentLoad(response: response)
-        
+        updateGlucoseCurrentInfo()
         updateGlucoseChartData()
     }
     
@@ -66,5 +67,10 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private func updateGlucoseChartData() {
         let response = Home.GlucoseDataUpdate.Response(glucoseData: glucoseDataWorker.fetchGlucoseData())
         self.presenter?.presentGlucoseData(response: response)
+    }
+    
+    private func updateGlucoseCurrentInfo() {
+        let response = Home.GlucoseCurrentInfo.Response(lastGlucoseReading: glucoseDataWorker.fetchGlucoseData().first)
+        self.presenter?.presentGlucoseCurrentInfo(response: response)
     }
 }
