@@ -19,15 +19,27 @@ private struct HomeGlucoseEntry: GlucoseChartGlucoseEntry {
 }
 
 private struct HomeGlucoseCurrentInfoEntry: GlucoseCurrentInfoEntry {
-    let glucoseValue: Double
-    let slopeValue: Double
-    let lastScanDate: Date
-    let difValue: Double
+    let glucoseIntValue: String
+    let glucoseDecimalValue: String
+    let slopeValue: String
+    let lastScanDate: String
+    let difValue: String
+    let severityColor: UIColor
+    
+    static var emptyEntry: HomeGlucoseCurrentInfoEntry {
+        return HomeGlucoseCurrentInfoEntry(
+        glucoseIntValue: "--",
+        glucoseDecimalValue: "-",
+        slopeValue: "",
+        lastScanDate: "--",
+        difValue: "--",
+        severityColor: .black)
+    }
 }
 
 protocol HomeGlucoseFormattingWorkerProtocol {
     func formatEntries(_ entries: [GlucoseReading]) -> [GlucoseChartGlucoseEntry]
-    func formatEntry(_ entry: GlucoseReading?) -> GlucoseCurrentInfoEntry?
+    func formatEntry(_ entry: GlucoseReading?) -> GlucoseCurrentInfoEntry
 }
 
 final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
@@ -44,13 +56,83 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         }
     }
     
-    func formatEntry(_ entry: GlucoseReading?) -> GlucoseCurrentInfoEntry? {
-        guard let entry = entry else { return nil }
+    func formatEntry(_ entry: GlucoseReading?) -> GlucoseCurrentInfoEntry {
+        guard let entry = entry else {
+            return HomeGlucoseCurrentInfoEntry.emptyEntry
+        }
+        let components = getComponentsForGlucoseValue(GlucoseUnit.convertToUserDefined(
+            entry.filteredCalculatedValue) )
+        let glucoseIntValue = components.first ?? "--"
+        let glucoseDecimalValue = components.last ?? "-"
+        let slopeValue = slopeToArrowSymbol(slope: entry.activeSlope() )
+        var lastScanDate: String
+        if let date = entry.date {
+            lastScanDate = getLastScanDateStringFrom(date: date)
+        } else {
+            lastScanDate = "--"
+        }
+        let difValue = getDeltaString(entry.calculatedValueSlope)
+        let settings = User.current.settings
+        let severity = GlucoseChartSeverityLevel(
+                           warningLevel: settings?.warningLevel(forValue: entry.filteredCalculatedValue))
+        let color = UIColor.colorForSeverityLevel(severity)
         return HomeGlucoseCurrentInfoEntry(
-            glucoseValue: GlucoseUnit.convertToUserDefined(entry.filteredCalculatedValue),
-            slopeValue: entry.activeSlope(),
-            lastScanDate: entry.date ?? Date(),
-            difValue: entry.calculatedValueSlope)
+            glucoseIntValue: glucoseIntValue,
+            glucoseDecimalValue: glucoseDecimalValue,
+            slopeValue: slopeValue,
+            lastScanDate: lastScanDate,
+            difValue: difValue,
+            severityColor: color)
+    }
+    
+    private func getComponentsForGlucoseValue(_ glucoseValue: Double) -> [String] {
+        let roundedGlucoseValueString = getRoundedStringFrom(glucoseValue, place: 1)
+        return roundedGlucoseValueString.components(separatedBy: ".")
+    }
+    
+    private func getRoundedStringFrom(_ value: Double, place: Int) -> String {
+        return String(format: "%.\(place)f", value.rounded(toPlaces: place))
+    }
+    
+    private func getDeltaString(_ value: Double?) -> String {
+        guard let value = value else { return "--" }
+        let unit = User.current.settings.unit
+        var valueString: String
+        if value.rounded(toPlaces: 2).isZero {
+            valueString = getRoundedStringFrom(abs(value), place: 1)
+        } else if abs(value) < 0.1 {
+            valueString = getRoundedStringFrom(value, place: 2)
+        } else {
+            valueString = getRoundedStringFrom(value, place: 1)
+        }
+        let signString = value > 0 ? "+" : ""
+        let unitString = unit.label
+        return signString + valueString + " " + unitString
+    }
+    
+    private func  slopeToArrowSymbol(slope: Double) -> String {
+        if slope <= -3.5 {
+            return "\u{21ca}"// ⇊
+        } else if slope <= -2 {
+            return "\u{2193}" // ↓
+        } else if slope <= -1 {
+            return "\u{2198}" // ↘
+        } else if slope <= 1 {
+            return "\u{2192}" // →
+        } else if slope <= 2 {
+            return "\u{2197}" // ↗
+        } else if slope <= 3.5 {
+            return "\u{2191}" // ↑
+        } else {
+            return "\u{21c8}" // ⇈
+        }
+    }
+    
+    private func getLastScanDateStringFrom(date: Date) -> String {
+        return DateFormatter.localizedString(
+            from: date,
+            dateStyle: Calendar.current.isDateInToday(date) ? .none : .short,
+            timeStyle: .short)
     }
 }
 

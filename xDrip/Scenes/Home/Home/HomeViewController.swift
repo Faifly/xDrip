@@ -109,12 +109,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     }
     
     func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel) {
-        DispatchQueue.main.async { [weak self] in
-            self?.glucoseCurrentInfoView.setup(glucoseValue: viewModel.glucoseValue,
-                                               slopeValue: viewModel.slopeValue,
-                                               lastScanDate: viewModel.lastScanDate,
-                                               difValue: viewModel.difValue)
-        }
+        glucoseCurrentInfoView.setup(with: viewModel)
     }
     
     private func setupUI() {
