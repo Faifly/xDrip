@@ -16,10 +16,10 @@ enum GlucoseWarningLevel: Int {
     
     var defaultValue: Double {
         switch self {
-        case .urgentLow: return 50.0
+        case .urgentLow: return 55.0
         case .low: return 70.0
-        case .high: return 130.0
-        case .urgentHigh: return 170.0
+        case .high: return 170.0
+        case .urgentHigh: return 200.0
         }
     }
 }

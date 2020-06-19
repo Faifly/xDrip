@@ -35,6 +35,10 @@ final class AlertSettings: Object {
         }
     }
     
+    func getCustomConfiguration(for type: AlertEventType) -> AlertConfiguration? {
+        return customConfigurations.first(where: { $0.eventType == type })
+    }
+    
     func updateVolume(_ volume: Float) {
         Realm.shared.safeWrite {
             self.volume = volume

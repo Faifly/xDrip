@@ -13,7 +13,16 @@ extension AlertEventType {
         switch self {
         case .pairingRequest: return "notification_pairing_request_title".localized
         case .initialCalibrationRequest: return "notification_initial_calibration_title".localized
-        default: return ""
+        case .default: return "default alert"
+        case .fastRise: return "fast rise alert"
+        case .urgentHigh: return "urgent high"
+        case .high: return "high alert"
+        case .fastDrop: return "fast drop alert"
+        case .low: return "low alert"
+        case .urgentLow: return "urgent low alert"
+        case .missedReadings: return "missed readings alert"
+        case .phoneMuted: return "phone muted alert"
+        case .calibrationRequest: return "calibration request alert"
         }
     }
     
@@ -21,7 +30,16 @@ extension AlertEventType {
         switch self {
         case .pairingRequest: return "notification_pairing_request_body".localized
         case .initialCalibrationRequest: return "notification_initial_calibration_body".localized
-        default: return ""
+        case .default: return "default body"
+        case .fastRise: return "fast rise body"
+        case .urgentHigh: return "urgent high body"
+        case .high: return "high body"
+        case .fastDrop: return "fast drop body"
+        case .low: return "low body"
+        case .urgentLow: return "urgent low body"
+        case .missedReadings: return "missed readings body"
+        case .phoneMuted: return "phone muted body"
+        case .calibrationRequest: return "calibration request body"
         }
     }
     
@@ -29,7 +47,16 @@ extension AlertEventType {
         switch self {
         case .pairingRequest: return "pairingRequest"
         case .initialCalibrationRequest: return "initialCalibration"
-        default: return ""
+        case .default: return "defaultAlertID"
+        case .fastRise: return "glucoseFastRise"
+        case .urgentHigh: return "glucoseUrgentHigh"
+        case .high: return "glucoseHigh"
+        case .fastDrop: return "glucoseFastDrop"
+        case .low: return "glucoseLow"
+        case .urgentLow: return "glucoseUrgentLow"
+        case .missedReadings: return "missedReadings"
+        case .phoneMuted: return "phoneMuted"
+        case .calibrationRequest: return "calibrationRequest"
         }
     }
 }

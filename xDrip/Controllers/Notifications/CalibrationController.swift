@@ -24,7 +24,10 @@ final class CalibrationController {
     private var regularCalibrationRequested = false
     
     func requestInitialCalibration() {
-        NotificationController.sendNotification(ofType: .initialCalibrationRequest)
+        if UIApplication.shared.applicationState != .active {
+            NotificationController.sendNotification(ofType: .initialCalibrationRequest)
+        }
+        
         guard !initialCalibrationRequested else { return }
         initialCalibrationRequested = true
         

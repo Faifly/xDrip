@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum CustomSound: CaseIterable {
-    case alarm
+enum CustomSound: Int, CaseIterable {
+    case alarm = 0
     case anticipate
     case bell
     case bloom
