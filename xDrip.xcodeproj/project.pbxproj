@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A89541F249CE7060067601F /* GlucoseCurrentInfoEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A89541E249CE7060067601F /* GlucoseCurrentInfoEntry.swift */; };
+		0A895423249CE71A0067601F /* GlucoseCurrentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A895421249CE71A0067601F /* GlucoseCurrentInfoView.swift */; };
+		0A895424249CE71A0067601F /* GlucoseCurrentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */; };
+		0A895426249CE84E0067601F /* NibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A895425249CE84E0067601F /* NibView.swift */; };
 		2C09D21224410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */; };
 		2C09D21324410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */; };
 		2C09D2162441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */; };
@@ -642,6 +646,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A89541E249CE7060067601F /* GlucoseCurrentInfoEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoEntry.swift; sourceTree = "<group>"; };
+		0A895421249CE71A0067601F /* GlucoseCurrentInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoView.swift; sourceTree = "<group>"; };
+		0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlucoseCurrentInfoView.xib; sourceTree = "<group>"; };
+		0A895425249CE84E0067601F /* NibView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibView.swift; sourceTree = "<group>"; };
 		2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsRightSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsRightSwitchTableViewCell.xib; sourceTree = "<group>"; };
 		2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsSingleSelectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -1316,6 +1324,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A89541D249CE7060067601F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				0A89541E249CE7060067601F /* GlucoseCurrentInfoEntry.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		0A895420249CE71A0067601F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0A895421249CE71A0067601F /* GlucoseCurrentInfoView.swift */,
+				0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */,
+			);
+			name = Views;
+			path = xDrip/Scenes/Home/Home/Views;
+			sourceTree = SOURCE_ROOT;
+		};
 		2C1DE8A224792DDA0023B512 /* PopUpVIewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2708,6 +2734,7 @@
 		58160E012402C8B100C792F4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0A895425249CE84E0067601F /* NibView.swift */,
 				589FD947247065EB004C01A4 /* RealmUtils.swift */,
 				2C48E6E32428AA78006B63B0 /* UIColor+Colors.swift */,
 				2C48E6EB24290536006B63B0 /* UIView+Bindings.swift */,
@@ -3133,6 +3160,8 @@
 		58B5FD2C24190D4700DB857D /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				0A895420249CE71A0067601F /* Views */,
+				0A89541D249CE7060067601F /* Protocols */,
 				5805CA20243892E4002AFA1B /* Workers */,
 				58B5FD2D24190E2F00DB857D /* HomePresenter.swift */,
 				58B5FD2E24190E2F00DB857D /* HomeRouter.swift */,
@@ -3601,6 +3630,7 @@
 				5805CA14243892D6002AFA1B /* InitialSetupInjectionTypeViewController.xib in Resources */,
 				2C4E7F0124694F440062D403 /* Electronic.caf in Resources */,
 				58B4F67F24114938003C6D8F /* GoogleService-Info.plist in Resources */,
+				0A895424249CE71A0067601F /* GlucoseCurrentInfoView.xib in Resources */,
 				2C4E7EFA24694F440062D403 /* Alarm.caf in Resources */,
 				58184A532438C51100E848C6 /* HistoryRootViewController.xib in Resources */,
 				58E5A67C2402B8A8002C2BE3 /* LaunchScreen.storyboard in Resources */,
@@ -3809,6 +3839,7 @@
 				58B95B52244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift in Sources */,
 				2C4ABEF9248A5AD8001ED694 /* FoodEmojiDataSource.swift in Sources */,
 				58161A43247931C70023FF76 /* DexcomG6Firmware.swift in Sources */,
+				0A895426249CE84E0067601F /* NibView.swift in Sources */,
 				580E4BC0243F733100565EDE /* SettingsModeRootPresenter.swift in Sources */,
 				580E4B9B243F721500565EDE /* NightscoutCloudConfigurationModels.swift in Sources */,
 				2C09D2162441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift in Sources */,
@@ -3842,6 +3873,7 @@
 				580E4C05243F746F00565EDE /* SettingsUserTypeRootModels.swift in Sources */,
 				5805C9B724389230002AFA1B /* DexcomG6BluetoothService.swift in Sources */,
 				580E4CDF243F802F00565EDE /* SettingsModeMasterPresenter.swift in Sources */,
+				0A895423249CE71A0067601F /* GlucoseCurrentInfoView.swift in Sources */,
 				5805CA04243892D6002AFA1B /* InitialSetupG6WarmUpViewController.swift in Sources */,
 				580E4B74243F716000565EDE /* SettingsAlertSingleTypeViewController.swift in Sources */,
 				5805CA16243892D6002AFA1B /* DexcomG6SerialSavingWorker.swift in Sources */,
@@ -4019,6 +4051,7 @@
 				580E4C14243F748500565EDE /* SettingsPenUserInteractor.swift in Sources */,
 				58DDC44F2423B5B1008CB04D /* UserInjectionType.swift in Sources */,
 				580E4B8C243F71DC00565EDE /* SettingsCloudTypesPresenter.swift in Sources */,
+				0A89541F249CE7060067601F /* GlucoseCurrentInfoEntry.swift in Sources */,
 				58B5FD52241910BD00DB857D /* SettingsRootPresenter.swift in Sources */,
 				580E4BD2243F736D00565EDE /* SettingsModeFollowerInteractor.swift in Sources */,
 				58F818EB246EFC82004CD2FE /* EditCalibrationStatusWorker.swift in Sources */,

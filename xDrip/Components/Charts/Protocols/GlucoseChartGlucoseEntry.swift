@@ -19,10 +19,3 @@ protocol GlucoseChartGlucoseEntry {
     var date: Date { get }
     var severity: GlucoseChartSeverityLevel { get }
 }
-
-protocol GlucoseCurrentInfoEntry {
-    var glucoseValue: Double { get }
-    var slopeValue: Double { get }
-    var lastScanDate: Date { get }
-    var difValue: Double { get }
-}

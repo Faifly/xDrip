@@ -91,14 +91,14 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
     }
     
     private func getRoundedStringFrom(_ value: Double, place: Int) -> String {
-        return String(format: "%.\(place)f", value.rounded(toPlaces: place))
+        return String(format: "%.\(place)f", value.rounded(to: place))
     }
     
     private func getDeltaString(_ value: Double?) -> String {
         guard let value = value else { return "--" }
         let unit = User.current.settings.unit
         var valueString: String
-        if value.rounded(toPlaces: 2).isZero {
+        if value.rounded(to: 2).isZero {
             valueString = getRoundedStringFrom(abs(value), place: 1)
         } else if abs(value) < 0.1 {
             valueString = getRoundedStringFrom(value, place: 2)
