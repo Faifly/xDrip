@@ -18,8 +18,16 @@ private struct HomeGlucoseEntry: GlucoseChartGlucoseEntry {
     let severity: GlucoseChartSeverityLevel
 }
 
+private struct HomeGlucoseCurrentInfoEntry: GlucoseCurrentInfoEntry {
+    let glucoseValue: Double
+    let slopeValue: Double
+    let lastScanDate: Date
+    let difValue: Double
+}
+
 protocol HomeGlucoseFormattingWorkerProtocol {
     func formatEntries(_ entries: [GlucoseReading]) -> [GlucoseChartGlucoseEntry]
+    func formatEntry(_ entry: GlucoseReading?) -> GlucoseCurrentInfoEntry?
 }
 
 final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
@@ -34,6 +42,15 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
                 )
             )
         }
+    }
+    
+    func formatEntry(_ entry: GlucoseReading?) -> GlucoseCurrentInfoEntry? {
+        guard let entry = entry else { return nil }
+        return HomeGlucoseCurrentInfoEntry(
+            glucoseValue: GlucoseUnit.convertToUserDefined(entry.filteredCalculatedValue),
+            slopeValue: entry.activeSlope(),
+            lastScanDate: entry.date ?? Date(),
+            difValue: entry.calculatedValueSlope)
     }
 }
 
