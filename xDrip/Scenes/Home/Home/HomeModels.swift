@@ -77,10 +77,12 @@ enum Home {
         }
         
         struct ViewModel {
-            let glucoseValue: Double?
-            let slopeValue: Double?
-            let lastScanDate: Date?
-            let difValue: Double?
+            let glucoseIntValue: String
+            let glucoseDecimalValue: String
+            let slopeValue: String
+            let lastScanDate: String
+            let difValue: String
+            let severityColor: UIColor
         }
     }
 }

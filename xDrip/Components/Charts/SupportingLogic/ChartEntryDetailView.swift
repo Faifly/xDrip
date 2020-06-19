@@ -55,7 +55,7 @@ final class ChartEntryDetailView: UIView {
         let finalString = NSMutableAttributedString()
         
         let valueSubstring = NSAttributedString(
-            string: String(format: "%g", value),
+            string: String(format: "%0.2f", value),
             attributes: [
                 .font: UIFont.systemFont(ofSize: 26.0, weight: .medium),
                 .foregroundColor: UIColor.highEmphasisText

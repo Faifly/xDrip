@@ -50,10 +50,12 @@ final class HomePresenter: HomePresentationLogic {
     func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
         let value = glucoseFormattingWorker.formatEntry(response.lastGlucoseReading)
         let viewModel = Home.GlucoseCurrentInfo.ViewModel(
-            glucoseValue: value?.glucoseValue,
-            slopeValue: value?.slopeValue,
-            lastScanDate: value?.lastScanDate,
-            difValue: value?.difValue)
+            glucoseIntValue: value.glucoseIntValue,
+            glucoseDecimalValue: value.glucoseDecimalValue,
+            slopeValue: value.slopeValue,
+            lastScanDate: value.lastScanDate,
+            difValue: value.difValue,
+            severityColor: value.severityColor)
         viewController?.displayGlucoseCurrentInfo(viewModel: viewModel)
     }
 }

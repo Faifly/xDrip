@@ -31,6 +31,41 @@ final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBu
     // MARK: Do something
     
     func doLoad(request: NightscoutCloudExtraOptions.Load.Request) {
+        updateData()
+    }
+    
+    private func handleSwitchValueChanged(_ field: NightscoutCloudExtraOptions.Field, _ value: Bool) {
+        switch field {
+        case .skipLANUploads:
+//            settings.updateSkipLANUploads(value)
+            router?.presentNotYetImplementedAlert()
+            updateData()
+            
+        case .uploadBattery:
+//            settings.updateUploadBridgeBattery(value)
+            router?.presentNotYetImplementedAlert()
+            updateData()
+            
+        case .uploadTreatments:
+//            settings.updateUploadTreatments(value)
+            router?.presentNotYetImplementedAlert()
+            updateData()
+            
+        case .alertOnFailures:
+//            settings.updateAlertOnFailures(value)
+            router?.presentNotYetImplementedAlert()
+            updateData()
+            
+        case .appendSourceInfo:
+//            settings.updateAppendSourceInfoToDevices(value)
+            router?.presentNotYetImplementedAlert()
+            updateData()
+            
+        default: break
+        }
+    }
+    
+    private func updateData() {
         let response = NightscoutCloudExtraOptions.Load.Response(
             settings: settings,
             switchValueChangedHandler: handleSwitchValueChanged(_:_:),
@@ -39,18 +74,8 @@ final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBu
         presenter?.presentLoad(response: response)
     }
     
-    private func handleSwitchValueChanged(_ field: NightscoutCloudExtraOptions.Field, _ value: Bool) {
-        switch field {
-        case .skipLANUploads: settings.updateSkipLANUploads(value)
-        case .uploadBattery: settings.updateUploadBridgeBattery(value)
-        case .uploadTreatments: settings.updateUploadTreatments(value)
-        case .alertOnFailures: settings.updateAlertOnFailures(value)
-        case .appendSourceInfo: settings.updateAppendSourceInfoToDevices(value)
-        default: break
-        }
-    }
-    
     private func handleSingleSelection() {
-        router?.routeToBackfillData()
+//        router?.routeToBackfillData()
+        router?.presentNotYetImplementedAlert()
     }
 }

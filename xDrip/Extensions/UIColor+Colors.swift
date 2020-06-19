@@ -30,6 +30,8 @@ extension UIColor {
         case chartSliderBackground
         case chartSelectionLine
         case customBlue
+        case diffTextColor
+        case lastScanDateTextColor
     }
     
     static var background1: UIColor {
@@ -112,10 +114,26 @@ extension UIColor {
         return color(withName: Colors.customBlue.rawValue)
     }
     
+    static var diffTextColor: UIColor {
+        return color(withName: Colors.diffTextColor.rawValue)
+    }
+    
+    static var lastScanDateTextColor: UIColor {
+        return color(withName: Colors.lastScanDateTextColor.rawValue)
+    }
+    
     private static func color(withName name: String) -> UIColor {
         guard let color = UIColor(named: name) else {
             fatalError("No color with name: \(name)")
         }
         return color
+    }
+    
+    static func colorForSeverityLevel(_ level: GlucoseChartSeverityLevel) -> UIColor {
+        switch level {
+        case .normal: return .chartValueNormal
+        case .abnormal: return .chartValueAbnormal
+        case .critical: return .chartValueCritical
+        }
     }
 }
