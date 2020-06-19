@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0A676C5B2499140C0039CEE3 /* GlucoseCurrentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A676C5A2499140C0039CEE3 /* GlucoseCurrentInfoView.swift */; };
 		0A676C5D249914350039CEE3 /* GlucoseCurrentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A676C5C249914350039CEE3 /* GlucoseCurrentInfoView.xib */; };
-		0ABBF7F6249AA98700C6F257 /* Double+Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABBF7F5249AA98700C6F257 /* Double+Round.swift */; };
+		0A89541C249CE4110067601F /* Double+Rounding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A89541B249CE4110067601F /* Double+Rounding.swift */; };
 		2C09D21224410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */; };
 		2C09D21324410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */; };
 		2C09D2162441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */; };
@@ -646,7 +646,7 @@
 /* Begin PBXFileReference section */
 		0A676C5A2499140C0039CEE3 /* GlucoseCurrentInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoView.swift; sourceTree = "<group>"; };
 		0A676C5C249914350039CEE3 /* GlucoseCurrentInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GlucoseCurrentInfoView.xib; sourceTree = "<group>"; };
-		0ABBF7F5249AA98700C6F257 /* Double+Round.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Round.swift"; sourceTree = "<group>"; };
+		0A89541B249CE4110067601F /* Double+Rounding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Rounding.swift"; sourceTree = "<group>"; };
 		2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsRightSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsRightSwitchTableViewCell.xib; sourceTree = "<group>"; };
 		2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsSingleSelectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -2732,7 +2732,7 @@
 				58B8533F2448CA740045F30A /* DateInterval+Helpers.swift */,
 				58B986DC2466B68200E38376 /* FloatingPoint+Comparison.swift */,
 				58A9A398248276D200743D53 /* UIApplication+TopViewController.swift */,
-				0ABBF7F5249AA98700C6F257 /* Double+Round.swift */,
+				0A89541B249CE4110067601F /* Double+Rounding.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3880,6 +3880,7 @@
 				580E4B59243F711200565EDE /* SettingsAlertRootModels.swift in Sources */,
 				2C4E7ED4246940DC0062D403 /* CustomSound.swift in Sources */,
 				586F6BB1245C4B6A004FB4E6 /* SlopeParameters.swift in Sources */,
+				0A89541C249CE4110067601F /* Double+Rounding.swift in Sources */,
 				2CBF32A4242E030700DE944A /* EntriesListTableViewCell.swift in Sources */,
 				58DDC45C2423C925008CB04D /* BolusEntry.swift in Sources */,
 				58B85356244A021B0045F30A /* HomeGlucoseFormattingWorker.swift in Sources */,
@@ -3937,7 +3938,6 @@
 				580EC77F2421457600C34948 /* EditFoodEntryModels.swift in Sources */,
 				5805C9B124389230002AFA1B /* DexcomG6MessageFactory.swift in Sources */,
 				580E4B64243F713A00565EDE /* SettingsAlertTypesPresenter.swift in Sources */,
-				0ABBF7F6249AA98700C6F257 /* Double+Round.swift in Sources */,
 				2C493C28244B18CA00F4A54B /* PickerView.swift in Sources */,
 				58F4CC86243BA2110053D17C /* DebugLogViewController.swift in Sources */,
 				5805CA1B243892D6002AFA1B /* InitialSetupRouter.swift in Sources */,

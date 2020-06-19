@@ -48,7 +48,7 @@ class GlucoseCurrentInfoView: UIView, NibLoadable {
     }
     
     fileprivate func getRoundedStringFrom(_ value: Double, place: Int) -> String {
-        return String(format: "%.\(place)f", value.rounded(toPlaces: place))
+        return String(format: "%.\(place)f", value.rounded(to: place))
     }
     
     fileprivate func getDeltaString(_ value: Double?) -> String {
