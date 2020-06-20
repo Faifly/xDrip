@@ -8,8 +8,8 @@
 
 import UIKit
 
-open class NibView: UIView {
-    public static func instantiate<T: UIView>() -> T {
+class NibView: UIView {
+     static func instantiate<T: UIView>() -> T {
         let nib = UINib(nibName: className, bundle: Bundle(for: self))
         guard let view = nib.instantiate(withOwner: nil, options: nil).first as? T else {
             fatalError("View: \(className) couldn't be instantiated from nib")
@@ -17,22 +17,22 @@ open class NibView: UIView {
         return view
     }
     
-    override open func awakeAfter(using aDecoder: NSCoder) -> Any? {
+    override func awakeAfter(using aDecoder: NSCoder) -> Any? {
         guard subviews.isEmpty else {
             return self
         }
-
+        
         let currentClass = type(of: self)
         guard let view = Bundle(for: currentClass)
             .loadNibNamed(currentClass.className, owner: nil, options: nil)?
             .first as? UIView else {
-            return self
+                return self
         }
-
+        
         view.frame = frame
         view.autoresizingMask = autoresizingMask
         view.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
-
+        
         for constraint in constraints {
             var firstItem = constraint.firstItem
             if firstItem === (self as AnyObject?) {
@@ -42,7 +42,7 @@ open class NibView: UIView {
             if secondItem === (self as AnyObject?) {
                 secondItem = view
             }
-
+            
             if let firstItem = firstItem {
                 view.addConstraint(NSLayoutConstraint(item: firstItem,
                                                       attribute: constraint.firstAttribute,
@@ -53,7 +53,7 @@ open class NibView: UIView {
                                                       constant: constraint.constant))
             }
         }
-
+        
         return view
     }
 }

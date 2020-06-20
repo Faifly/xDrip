@@ -82,7 +82,7 @@ enum Home {
             let slopeValue: String
             let lastScanDate: String
             let difValue: String
-            let severityColor: UIColor
+            let severityColor: UIColor?
         }
     }
 }

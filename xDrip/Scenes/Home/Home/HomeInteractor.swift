@@ -30,8 +30,9 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
         glucoseDataWorker.glucoseDataHandler = { [weak self] in
-            self?.updateGlucoseCurrentInfo()
-            self?.updateGlucoseChartData()
+            guard let self = self else { return }
+            self.updateGlucoseCurrentInfo()
+            self.updateGlucoseChartData()
         }
     }
     

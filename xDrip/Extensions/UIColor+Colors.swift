@@ -115,7 +115,7 @@ extension UIColor {
     }
     
     static var diffTextColor: UIColor {
-        return color(withName: Colors.diffTextColor.rawValue)
+        return .chartValueNormal
     }
     
     static var lastScanDateTextColor: UIColor {
