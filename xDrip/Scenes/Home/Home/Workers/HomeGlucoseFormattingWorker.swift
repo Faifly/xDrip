@@ -94,8 +94,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         return String(format: "%.\(place)f", value.rounded(to: place))
     }
     
-    private func getDeltaString(_ value: Double?) -> String {
-        guard let value = value else { return "--" }
+    private func getDeltaString(_ value: Double) -> String {
         let unit = User.current.settings.unit
         var valueString: String
         if value.rounded(to: 2).isZero {

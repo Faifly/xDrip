@@ -26,9 +26,9 @@ final class GlucoseCurrentInfoView: NibView {
         slopeArrowLabel.textColor = viewModel.severityColor
         lastScanTitleLabel.text = "home_last_scan_title".localized
         lastScanTitleLabel.textColor = .lastScanDateTextColor
-        lastScanValueLabel.text = viewModel.lastScanDate
+        lastScanValueLabel.text = "- " + viewModel.lastScanDate
         difTitleLabel.text = "home_last_diff_title".localized
         difTitleLabel.textColor = .diffTextColor
-        difValueLabel.text = viewModel.difValue
+        difValueLabel.text = "- " + viewModel.difValue
     }
 }
