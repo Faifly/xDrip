@@ -19,7 +19,7 @@ enum ApplicationLaunchController {
         #endif
         setupRealm()
         setupDevice()
-        NotificationController.requestAuthorization()
+        NotificationController.shared.requestAuthorization()
         _ = NightscoutService.shared
     }
     

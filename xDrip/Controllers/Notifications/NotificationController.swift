@@ -9,11 +9,23 @@
 import UIKit
 import UserNotifications
 
-enum NotificationController {
-    private static let defaultCategoryID = "AlertEvent"
-    private static let snoozableNotificationCategoryID = "SnoozableNotification"
+final class NotificationController: NSObject {
+    private let defaultCategoryID = "AlertEvent"
+    private let snoozableNotificationCategoryID = "SnoozableNotification"
     
-    static func requestAuthorization() {
+    static let shared = NotificationController()
+    private var glucoseNotificationWorker = GlucoseNotificationWorker()
+    
+    override init() {
+        super.init()
+        
+        glucoseNotificationWorker.notificationRequest = { [weak self] alertType in
+            guard let self = self else { return }
+            self.sendNotification(ofType: alertType)
+        }
+    }
+    
+    func requestAuthorization() {
         var options: UNAuthorizationOptions = [
             .alert,
             .badge,
@@ -24,18 +36,18 @@ enum NotificationController {
             options.update(with: .criticalAlert)
         }
         
-        UNUserNotificationCenter.current().requestAuthorization(options: options) { granted, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { [weak self] granted, error in
             if let error = error {
                 LogController.log(message: "Error while request notification authorization", type: .error, error: error)
             }
             
             if granted {
-                setupCategories()
+                self?.setupCategories()
             }
         }
     }
     
-    private static func setupCategories() {
+    private func setupCategories() {
         let snoozeAction = UNNotificationAction(
             identifier: "snooze_action",
             title: "Snooze",
@@ -43,7 +55,7 @@ enum NotificationController {
         )
         
         let alertEventCategory = UNNotificationCategory(
-            identifier: "SnoozableNotification",
+            identifier: snoozableNotificationCategoryID,
             actions: [snoozeAction],
             intentIdentifiers: [],
             hiddenPreviewsBodyPlaceholder: "",
@@ -53,27 +65,30 @@ enum NotificationController {
         UNUserNotificationCenter.current().setNotificationCategories([alertEventCategory])
     }
     
-    static func sendNotification(ofType type: AlertEventType) {
+    func sendNotification(ofType type: AlertEventType) {
         let content = createContentForNotification(ofType: type)
-        
-        let request = UNNotificationRequest(
-            identifier: type.alertID,
-            content: content,
-            trigger: nil
-        )
-        
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
-            if let error = error {
-                LogController.log(
-                    message: "Error while add notification request to a queue",
-                    type: .error,
-                    error: error
-                )
-            }
-        })
+        checkPendingNotifications(ofType: type) { scheduled in
+            guard !scheduled else { return }
+            
+            let request = UNNotificationRequest(
+                identifier: type.alertID,
+                content: content,
+                trigger: nil
+            )
+            
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
+                if let error = error {
+                    LogController.log(
+                        message: "Error while add notification request to a queue",
+                        type: .error,
+                        error: error
+                    )
+                }
+            })
+        }
     }
     
-    static func scheduleSnoozeForNotification(ofType type: AlertEventType) {
+    func scheduleSnoozeForNotification(ofType type: AlertEventType) {
         guard
             let alertSettings = User.current.settings.alert,
             let defaultConfig = alertSettings.defaultConfiguration
@@ -112,7 +127,7 @@ enum NotificationController {
         })
     }
     
-    private static func createContentForNotification(ofType type: AlertEventType) -> UNMutableNotificationContent {
+    private func createContentForNotification(ofType type: AlertEventType) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.title = type.alertTitle
         content.body = type.alertBody
@@ -165,7 +180,7 @@ enum NotificationController {
         return content
     }
     
-    private static func getSound(for soundID: Int) -> UNNotificationSound {
+    private func getSound(for soundID: Int) -> UNNotificationSound {
         var sound: UNNotificationSound = .default
         
         if let alert = User.current.settings.alert {
@@ -184,5 +199,20 @@ enum NotificationController {
         }
         
         return sound
+    }
+    
+    private func checkPendingNotifications(ofType type: AlertEventType, completionHandler: @escaping ((Bool) -> Void))  {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            var scheduled = false
+            
+            for request in requests {
+                if request.identifier == type.alertID {
+                    scheduled = true
+                    break
+                }
+            }
+            
+            completionHandler(scheduled)
+        }
     }
 }

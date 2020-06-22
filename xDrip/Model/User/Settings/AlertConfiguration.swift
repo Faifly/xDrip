@@ -20,8 +20,9 @@ final class AlertConfiguration: Object {
     @objc private(set) dynamic var isEntireDay: Bool = true
     @objc private(set) dynamic var startTime: TimeInterval = 0.0
     @objc private(set) dynamic var endTime: TimeInterval = 0.0
-    @objc private(set) dynamic var highThreshold: Float = 0.0
-    @objc private(set) dynamic var lowThreshold: Float = 0.0
+    @objc private(set) dynamic var minimumBGChange: Float = 10.0
+    @objc private(set) dynamic var highThreshold: Float = 170.0
+    @objc private(set) dynamic var lowThreshold: Float = 70.0
     @objc private dynamic var rawEventType: Int = 0
     
     private(set) var eventType: AlertEventType {
@@ -117,6 +118,12 @@ final class AlertConfiguration: Object {
     func updateEventType(_ eventType: AlertEventType) {
         Realm.shared.safeWrite {
             self.eventType = eventType
+        }
+    }
+    
+    func updateMinimumBGChange(_ minimumChange: Float) {
+        Realm.shared.safeWrite {
+            self.minimumBGChange = minimumChange
         }
     }
 }

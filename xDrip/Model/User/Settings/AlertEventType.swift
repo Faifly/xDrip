@@ -30,10 +30,29 @@ enum AlertEventType: Int, CaseIterable {
              .calibrationRequest,
              .initialCalibrationRequest,
              .pairingRequest,
+             .urgentHigh,
+             .high,
+             .low,
+             .urgentLow:
+            return false
+            
+        case .fastRise,
+             .fastDrop:
+            return true
+        }
+    }
+    
+    var requiresGlucoseWarningLevel: Bool {
+        switch self {
+        case .default,
+             .missedReadings,
+             .phoneMuted,
+             .calibrationRequest,
+             .initialCalibrationRequest,
+             .pairingRequest,
              .fastRise,
              .fastDrop:
             return false
-            
         case .urgentHigh,
              .high,
              .low,

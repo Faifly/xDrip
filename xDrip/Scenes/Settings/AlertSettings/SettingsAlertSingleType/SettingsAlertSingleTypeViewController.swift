@@ -56,7 +56,7 @@ class SettingsAlertSingleTypeViewController: BaseSettingsViewController, Setting
         super.viewDidLoad()
         
         if let type = router?.dataStore?.eventType {
-            NotificationController.sendNotification(ofType: type)
+            NotificationController.shared.sendNotification(ofType: type)
         }
         
         doLoad()

@@ -63,6 +63,13 @@ enum GlucoseUnit: Int, CaseIterable {
         }
     }
     
+    var changeRange: Range<Double> {
+        switch self {
+        case .mgDl: return 0.0 ..< 30.0
+        case .mmolL: return 0.0 ..< 1.7
+        }
+    }
+    
     var pickerStep: Double {
         switch self {
         case .mgDl: return 1.0

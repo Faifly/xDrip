@@ -84,6 +84,7 @@
 		2C5B3F0A24533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */; };
 		2C5B3F0C2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */; };
 		2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C87F045243E69C0002CF3D8 /* UView+Tests.swift */; };
+		2C8ADBBF24A0B98400827FF4 /* GlucoseNotificationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */; };
 		2C90528C24769D2100719793 /* UITableView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90528B24769D2100719793 /* UITableView+Tests.swift */; };
 		2C90528E2476CD0000719793 /* AudioControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90528D2476CD0000719793 /* AudioControllerTests.swift */; };
 		2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */; };
@@ -719,6 +720,7 @@
 		2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BaseSettingsViewControllerCoderTest.storyboard; sourceTree = "<group>"; };
 		2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewControllerCoderTest.swift; sourceTree = "<group>"; };
 		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
+		2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseNotificationWorker.swift; sourceTree = "<group>"; };
 		2C90528B24769D2100719793 /* UITableView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Tests.swift"; sourceTree = "<group>"; };
 		2C90528D2476CD0000719793 /* AudioControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioControllerTests.swift; sourceTree = "<group>"; };
 		2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableController.swift; sourceTree = "<group>"; };
@@ -3457,6 +3459,7 @@
 				58FE4CBA247970BE00511B80 /* NotificationController.swift */,
 				58A9A394248268EE00743D53 /* CalibrationController.swift */,
 				58A9A396248274F500743D53 /* AlertPresenter.swift */,
+				2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -3711,6 +3714,7 @@
 			files = (
 				5805CA1C243892D6002AFA1B /* InitialSetupModels.swift in Sources */,
 				580E4BDB243F739C00565EDE /* SettingsTransmitterPresenter.swift in Sources */,
+				2C8ADBBF24A0B98400827FF4 /* GlucoseNotificationWorker.swift in Sources */,
 				5805CA09243892D6002AFA1B /* InitialSetupG6DeviceIDViewController.swift in Sources */,
 				580E4C2B243F74F000565EDE /* SettingsUnitsRouter.swift in Sources */,
 				58B95B4E244A09E40005CA60 /* Settings+WarningLevels.swift in Sources */,

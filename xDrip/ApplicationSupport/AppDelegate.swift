@@ -48,7 +48,7 @@ import UserNotifications
             switch response.actionIdentifier {
             case "snooze_action":
                 if let alertType = AlertEventType.allCases.first(where: { $0.alertID == identifier }) {
-                    NotificationController.scheduleSnoozeForNotification(ofType: alertType)
+                    NotificationController.shared.scheduleSnoozeForNotification(ofType: alertType)
                 }
                 completionHandler()
                 return

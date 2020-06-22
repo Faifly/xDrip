@@ -27,7 +27,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         let settings = User.current.settings
         return entries.map {
             HomeGlucoseEntry(
-                value: GlucoseUnit.convertToUserDefined($0.filteredCalculatedValue),
+                value: GlucoseUnit.convertFromDefault($0.filteredCalculatedValue),
                 date: $0.date ?? Date(),
                 severity: GlucoseChartSeverityLevel(
                     warningLevel: settings?.warningLevel(forValue: $0.filteredCalculatedValue)

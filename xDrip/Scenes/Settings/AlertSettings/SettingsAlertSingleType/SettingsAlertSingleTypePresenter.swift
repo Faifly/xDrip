@@ -74,20 +74,30 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         if config.eventType.requiresGlucoseThreshold {
             let high = GlucoseUnit.convertFromDefault(Double(config.highThreshold))
             let low = GlucoseUnit.convertFromDefault(Double(config.lowThreshold))
+            let minimumChange = GlucoseUnit.convertFromDefault(Double(config.minimumBGChange))
             let highTresholdString = String(format: "%.1f", high)
             let lowTresholdString = String(format: "%.1f", low)
+            let minimumChangeString = String(format: "%.1f", minimumChange)
+            
             cells.append(
                 contentsOf: [
                     createUnitsPickerView(
                         .highTreshold,
                         detailText: highTresholdString,
+                        settings: response.settings,
                         valueChangeHandler: response.pickerViewValueChangedHandler
                     ),
                     createUnitsPickerView(
                         .lowTreshold,
                         detailText: lowTresholdString,
+                        settings: response.settings,
                         valueChangeHandler: response.pickerViewValueChangedHandler
-                    )
+                    ),
+                    createUnitsPickerView(
+                        .minimumBGChange,
+                        detailText: minimumChangeString,
+                        settings: response.settings,
+                        valueChangeHandler: response.pickerViewValueChangedHandler)
                 ]
             )
         }
@@ -272,14 +282,16 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
     
     private func createUnitsPickerView(
         _ field: SettingsAlertSingleType.Field,
-        detailText: String?,
+        detailText: String,
+        settings: Settings,
         valueChangeHandler: @escaping (SettingsAlertSingleType.Field, Double) -> Void) -> BaseSettings.Cell {
-        let range = User.current.settings.unit.minMax
-        let step = User.current.settings.unit.pickerStep
+        let unit = settings.unit
+        let range = field == .minimumBGChange ? unit.changeRange : unit.minMax
+        let step = unit.pickerStep
         let array = Array(stride(from: range.lowerBound, to: range.upperBound + step, by: step))
         let strings = array.map { String(format: "%.1f", $0) }
         
-        let picker = CustomPickerView(data: [strings])
+        let picker = CustomPickerView(data: [strings, [unit.label]])
         
         let tolerance = step / 2
         picker.formatValues = { strings in
@@ -287,19 +299,19 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
                 valueChangeHandler(field, value)
             }
             
-            return strings[0]
+            return strings[0] + " " + strings[1]
         }
         
         let index = array.firstIndex(
             where: { val in
-                guard let text = detailText, let num = Double(text) else { return false }
+                guard let num = Double(detailText) else { return false }
                 return fabs(val - num) < tolerance
             }
         )
         
         picker.selectRow(index ?? 0, inComponent: 0, animated: false)
         
-        return .pickerExpandable(mainText: field.title, detailText: detailText, picker: picker)
+        return .pickerExpandable(mainText: field.title, detailText: detailText + " " + unit.label, picker: picker)
     }
     
     private func createDisclosureCell(
@@ -326,6 +338,7 @@ private extension SettingsAlertSingleType.Field {
         case .endTime: return "settings_alert_single_type_end_time".localized
         case .highTreshold: return "settings_alert_single_type_high_treshold".localized
         case .lowTreshold: return "settings_alert_single_type_low_treshold".localized
+        case .minimumBGChange: return "Minimum BG Change"
         }
     }
 }
