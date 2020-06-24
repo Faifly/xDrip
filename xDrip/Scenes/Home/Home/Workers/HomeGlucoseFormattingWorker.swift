@@ -12,7 +12,7 @@
 
 import UIKit
 
-private struct HomeGlucoseEntry: GlucoseChartGlucoseEntry {
+ struct HomeGlucoseEntry: GlucoseChartGlucoseEntry {
     let value: Double
     let date: Date
     let severity: GlucoseChartSeverityLevel

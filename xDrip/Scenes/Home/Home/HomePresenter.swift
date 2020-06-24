@@ -16,6 +16,8 @@ protocol HomePresentationLogic {
     func presentLoad(response: Home.Load.Response)
     func presentGlucoseData(response: Home.GlucoseDataUpdate.Response)
     func presentGlucoseChartTimeFrameChange(response: Home.ChangeGlucoseChartTimeFrame.Response)
+    func presentEntriesData(response: Home.GlucoseDataUpdate.Response)
+    func presentEntriesChartTimeFrameChange(response: Home.ChangeGlucoseChartTimeFrame.Response)
 }
 
 final class HomePresenter: HomePresentationLogic {
@@ -44,5 +46,17 @@ final class HomePresenter: HomePresentationLogic {
     func presentGlucoseChartTimeFrameChange(response: Home.ChangeGlucoseChartTimeFrame.Response) {
         let viewModel = Home.ChangeGlucoseChartTimeFrame.ViewModel(timeInterval: response.timeInterval)
         viewController?.displayGlucoseChartTimeFrame(viewModel: viewModel)
+    }
+    
+    func presentEntriesData(response: Home.GlucoseDataUpdate.Response) {
+        let values = glucoseFormattingWorker.formatEntries(response.glucoseData)
+        let unit = User.current.settings.unit.label
+        let viewModel = Home.GlucoseDataUpdate.ViewModel(glucoseValues: values, unit: unit)
+        viewController?.displayEntriesData(viewModel: viewModel)
+    }
+    
+    func presentEntriesChartTimeFrameChange(response: Home.ChangeGlucoseChartTimeFrame.Response) {
+        let viewModel = Home.ChangeGlucoseChartTimeFrame.ViewModel(timeInterval: response.timeInterval)
+        viewController?.displayEntriesChartTimeFrame(viewModel: viewModel)
     }
 }

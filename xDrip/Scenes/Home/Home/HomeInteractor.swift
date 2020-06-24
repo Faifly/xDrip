@@ -16,6 +16,7 @@ protocol HomeBusinessLogic {
     func doLoad(request: Home.Load.Request)
     func doShowEntriesList(request: Home.ShowEntriesList.Request)
     func doChangeGlucoseChartTimeFrame(request: Home.ChangeGlucoseChartTimeFrame.Request)
+    func doChangeEntriesChartTimeFrame(request: Home.ChangeGlucoseChartTimeFrame.Request)
 }
 
 protocol HomeDataStore: AnyObject {
@@ -31,6 +32,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         glucoseDataWorker = HomeGlucoseDataWorker()
         glucoseDataWorker.glucoseDataHandler = { [weak self] in
             self?.updateGlucoseChartData()
+            self?.updateEntriesChartData()
         }
     }
     
@@ -41,6 +43,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         presenter?.presentLoad(response: response)
         
         updateGlucoseChartData()
+        updateEntriesChartData()
     }
     
     func doShowEntriesList(request: Home.ShowEntriesList.Request) {
@@ -66,5 +69,19 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private func updateGlucoseChartData() {
         let response = Home.GlucoseDataUpdate.Response(glucoseData: glucoseDataWorker.fetchGlucoseData())
         self.presenter?.presentGlucoseData(response: response)
+    }
+    
+    func doChangeEntriesChartTimeFrame(request: Home.ChangeGlucoseChartTimeFrame.Request) {
+        let response = Home.ChangeGlucoseChartTimeFrame.Response(
+            timeInterval: .secondsPerHour * TimeInterval(request.hours)
+        )
+        presenter?.presentEntriesChartTimeFrameChange(response: response)
+    }
+    
+    // MARK: Logic
+    
+    private func updateEntriesChartData() {
+        let response = Home.GlucoseDataUpdate.Response(glucoseData: glucoseDataWorker.fetchGlucoseData())
+        self.presenter?.presentEntriesData(response: response)
     }
 }

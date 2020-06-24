@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A0CA75A24A2229E00C63857 /* EntriesChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA75924A2229E00C63857 /* EntriesChartView.swift */; };
+		0A0CA75C24A2232C00C63857 /* EntriesChartProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA75B24A2232C00C63857 /* EntriesChartProvider.swift */; };
+		0A0CA75E24A223F400C63857 /* EntriesHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA75D24A223F400C63857 /* EntriesHistoryView.swift */; };
 		2C09D21224410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */; };
 		2C09D21324410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */; };
 		2C09D2162441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */; };
@@ -642,6 +645,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A0CA75924A2229E00C63857 /* EntriesChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesChartView.swift; sourceTree = "<group>"; };
+		0A0CA75B24A2232C00C63857 /* EntriesChartProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesChartProvider.swift; sourceTree = "<group>"; };
+		0A0CA75D24A223F400C63857 /* EntriesHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesHistoryView.swift; sourceTree = "<group>"; };
 		2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsRightSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsRightSwitchTableViewCell.xib; sourceTree = "<group>"; };
 		2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsSingleSelectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -2001,6 +2007,8 @@
 				58F72D872441BFF4007AB093 /* ChartSliderView.swift */,
 				58B95B4F244B13400005CA60 /* ChartEntryDetailView.swift */,
 				58B95B51244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift */,
+				0A0CA75924A2229E00C63857 /* EntriesChartView.swift */,
+				0A0CA75B24A2232C00C63857 /* EntriesChartProvider.swift */,
 			);
 			path = SupportingLogic;
 			sourceTree = "<group>";
@@ -2567,6 +2575,7 @@
 				58B8533C2448CA0B0045F30A /* Protocols */,
 				5808DC0B2448C990000642FB /* SupportingLogic */,
 				580E4CF62441BED600565EDE /* GlucoseHistoryView.swift */,
+				0A0CA75D24A223F400C63857 /* EntriesHistoryView.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -3856,6 +3865,7 @@
 				5805C9AB24389230002AFA1B /* DexcomG6AuthChallengeRxMessage.swift in Sources */,
 				580E4CF42440D24800565EDE /* BaseChartView.swift in Sources */,
 				580E4BE8243F73B200565EDE /* SettingsSensorPresenter.swift in Sources */,
+				0A0CA75E24A223F400C63857 /* EntriesHistoryView.swift in Sources */,
 				580E4C1D243F74A300565EDE /* SettingsPumpUserPresenter.swift in Sources */,
 				580E4B7E243F717E00565EDE /* SettingsAlertSoundPresenter.swift in Sources */,
 				2C4ABEEE248A5447001ED694 /* EmojiInputHeaderView.swift in Sources */,
@@ -3925,6 +3935,7 @@
 				58F4CC86243BA2110053D17C /* DebugLogViewController.swift in Sources */,
 				5805CA1B243892D6002AFA1B /* InitialSetupRouter.swift in Sources */,
 				2C493C2324489ABF00F4A54B /* Settings+Notifications.swift in Sources */,
+				0A0CA75C24A2232C00C63857 /* EntriesChartProvider.swift in Sources */,
 				580E4B8D243F71DC00565EDE /* SettingsCloudTypesRouter.swift in Sources */,
 				580E4B3F243E37E800565EDE /* BaseSettingsCellFactory.swift in Sources */,
 				580E4C11243F748500565EDE /* SettingsPenUserRouter.swift in Sources */,
@@ -3949,6 +3960,7 @@
 				5805C9B224389230002AFA1B /* DexcomG6MessageWorker.swift in Sources */,
 				2CBE1A8924320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift in Sources */,
 				584432AC243CFD9B00282A6C /* SettingsChartModels.swift in Sources */,
+				0A0CA75A24A2229E00C63857 /* EntriesChartView.swift in Sources */,
 				588584A3248E76DF00C3F74C /* NightscoutService.swift in Sources */,
 				580E4BDC243F739C00565EDE /* SettingsTransmitterRouter.swift in Sources */,
 				58B5FD3324190E2F00DB857D /* HomeRouter.swift in Sources */,

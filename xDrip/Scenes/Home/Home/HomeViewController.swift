@@ -17,6 +17,8 @@ protocol HomeDisplayLogic: AnyObject {
     func displayLoad(viewModel: Home.Load.ViewModel)
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel)
     func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel)
+    func displayEntriesData(viewModel: Home.GlucoseDataUpdate.ViewModel)
+    func displayEntriesChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel)
 }
 
 class HomeViewController: NibViewController, HomeDisplayLogic {
@@ -55,7 +57,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     @IBOutlet private weak var timeLineSegmentView: UISegmentedControl!
     @IBOutlet private weak var glucoseChart: GlucoseHistoryView!
-    
+    @IBOutlet private weak var entriesHistoryView: EntriesHistoryView!
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -89,6 +91,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         
         let request = Home.ChangeGlucoseChartTimeFrame.Request(hours: hours)
         interactor?.doChangeGlucoseChartTimeFrame(request: request)
+        interactor?.doChangeEntriesChartTimeFrame(request: request)
     }
     
     // MARK: Display
@@ -104,6 +107,16 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel) {
         glucoseChart.setTimeFrame(viewModel.timeInterval)
+    }
+    
+    func displayEntriesData(viewModel: Home.GlucoseDataUpdate.ViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            self?.entriesHistoryView.setup(with: viewModel.glucoseValues, unit: viewModel.unit)
+        }
+    }
+    
+    func displayEntriesChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel) {
+        entriesHistoryView.setTimeFrame(viewModel.timeInterval)
     }
     
     private func setupUI() {
