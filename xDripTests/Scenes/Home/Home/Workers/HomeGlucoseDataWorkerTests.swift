@@ -7,10 +7,9 @@
 //
 
 import XCTest
-import RealmSwift
 @testable import xDrip
 
-final class HomeGlucoseDataWorkerTests: XCTestCase {    
+final class HomeGlucoseDataWorkerTests: AbstractRealmTest {
     let sut = HomeGlucoseDataWorker()
     var calledDataHandler = false
     
@@ -40,8 +39,8 @@ final class HomeGlucoseDataWorkerTests: XCTestCase {
         reading.generateID()
         // When
         User.current.settings.updateDeviceMode(.default)
-        Realm.shared.safeWrite {
-            Realm.shared.add(reading)
+        realm.safeWrite {
+            realm.add(reading)
         }
         // Then
         XCTAssertNil(sut.fetchLastGlucoseReading())
@@ -53,8 +52,8 @@ final class HomeGlucoseDataWorkerTests: XCTestCase {
         reading1.generateID()
         // When
         User.current.settings.updateDeviceMode(.default)
-        Realm.shared.safeWrite {
-            Realm.shared.add(reading1)
+        realm.safeWrite {
+            realm.add(reading1)
         }
         // Then
         XCTAssertNil(sut.fetchLastGlucoseReading())
@@ -67,8 +66,8 @@ final class HomeGlucoseDataWorkerTests: XCTestCase {
         reading2.generateID()
         // When
         User.current.settings.updateDeviceMode(.follower)
-        Realm.shared.safeWrite {
-            Realm.shared.add(reading2)
+        realm.safeWrite {
+            realm.add(reading2)
         }
         // Then
         XCTAssertNotNil(sut.fetchLastGlucoseReading())

@@ -24,8 +24,8 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
         // When
         let formattedEntry = sut.formatEntry(reading)
         // Then
-        XCTAssertTrue(formattedEntry.glucoseIntValue == "0")
-        XCTAssertTrue(formattedEntry.glucoseDecimalValue == "0")
+        XCTAssertTrue(formattedEntry.glucoseIntValue == "-")
+        XCTAssertTrue(formattedEntry.glucoseDecimalValue == "-")
         XCTAssertTrue(formattedEntry.lastScanDate == "--")
         XCTAssertTrue(formattedEntry.difValue == "--")
         

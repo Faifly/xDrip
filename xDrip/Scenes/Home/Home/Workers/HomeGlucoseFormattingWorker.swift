@@ -28,8 +28,8 @@ private struct HomeGlucoseCurrentInfoEntry: GlucoseCurrentInfoEntry {
     
     static var emptyEntry: HomeGlucoseCurrentInfoEntry {
         return HomeGlucoseCurrentInfoEntry(
-        glucoseIntValue: "0",
-        glucoseDecimalValue: "0",
+        glucoseIntValue: "-",
+        glucoseDecimalValue: "-",
         slopeValue: "-",
         lastScanDate: "--",
         difValue: "--",
@@ -62,8 +62,8 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         }
         let components = getComponentsForGlucoseValue(GlucoseUnit.convertToUserDefined(
             entry.filteredCalculatedValue) )
-        let glucoseIntValue = components.first ?? "0"
-        let glucoseDecimalValue = components.last ?? "0"
+        let glucoseIntValue = components.first ?? "-"
+        let glucoseDecimalValue = components.last ?? "-"
         let slopeValue = slopeToArrowSymbol(slope: entry.activeSlope() )
         var lastScanDate: String
         if let date = entry.date {
@@ -109,7 +109,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         return signString + valueString + " " + unitString
     }
     
-    private func  slopeToArrowSymbol(slope: Double) -> String {
+    private func slopeToArrowSymbol(slope: Double) -> String {
         if slope <= -3.5 {
             return "\u{21ca}"// ⇊
         } else if slope <= -2 {
