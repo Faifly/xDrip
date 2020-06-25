@@ -16,10 +16,10 @@ final class CarbEntryTests: AbstractRealmTest {
         let date = Date(timeIntervalSince1970: 5.0)
         let entry = CarbEntry(amount: 1.1, foodType: "2.2", date: date)
         
-        XCTAssertTrue(entry.amount ~ 1.1)
+        XCTAssertTrue(entry.value ~ 1.1)
         XCTAssertTrue(entry.foodType == "2.2")
         XCTAssertTrue(entry.assimilationDuration ~ 0)
-        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 5.0)
+        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 5.0)
     }
     
     func testUpdate() {
@@ -27,9 +27,9 @@ final class CarbEntryTests: AbstractRealmTest {
         let entry = CarbEntry(amount: 1.1, foodType: "1.1", date: Date())
         entry.update(amount: 2.2, foodType: "2.2", date: date)
         
-        XCTAssertTrue(entry.amount ~ 2.2)
+        XCTAssertTrue(entry.value ~ 2.2)
         XCTAssertTrue(entry.foodType == "2.2")
         XCTAssertTrue(entry.assimilationDuration ~ 0)
-        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 6.0)
+        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 6.0)
     }
 }

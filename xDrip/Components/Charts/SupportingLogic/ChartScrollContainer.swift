@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class GlucoseChartScrollContainer: UIView {
+final class ChartScrollContainer: UIView {
     var onSelectionChanged: ((CGFloat) -> Void)?
     
     let scrollView: UIScrollView = {

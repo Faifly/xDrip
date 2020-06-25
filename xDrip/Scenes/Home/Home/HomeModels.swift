@@ -42,6 +42,23 @@ enum Home {
         }
     }
     
+    enum EntriesDataUpdate {
+        struct Request {
+        }
+        
+        struct Response {
+            let glucoseData: [GlucoseReading]
+        }
+        
+        struct ViewModel {
+            let chartTitle: String
+            let chartButtonTitle: String
+            let entries: [BaseChartEntry]
+            let unit: String
+            let color: UIColor
+        }
+    }
+    
     enum ShowEntriesList {
         struct Request {
             let entriesType: Root.EntryType
@@ -54,7 +71,7 @@ enum Home {
         }
     }
     
-    enum ChangeGlucoseChartTimeFrame {
+    enum ChangeEntriesChartTimeFrame {
         struct Request {
             let hours: Int
         }

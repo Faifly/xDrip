@@ -28,7 +28,7 @@ final class ChartSliderView: UIView, GlucoseChartProvider {
         return view
     }()
     
-    var entries: [GlucoseChartGlucoseEntry] = []
+    var glucoseEntries: [GlucoseChartGlucoseEntry] = []
     var dateInterval = DateInterval()
     var yRange: ClosedRange<Double> = 0.0...0.0
     

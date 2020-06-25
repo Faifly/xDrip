@@ -20,7 +20,7 @@ final class EntriesListBolusFormattingWorker: EntriesListAbstractFormattingWorke
         
         let value = String(
             format: "%.02f " + "entries_list_scene_carbs_bolus_unit".localized,
-            entry.amount
+            entry.value
         )
         let date = getDateString(for: entry)
         

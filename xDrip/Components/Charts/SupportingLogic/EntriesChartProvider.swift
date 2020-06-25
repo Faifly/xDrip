@@ -11,15 +11,16 @@ import UIKit
 protocol EntriesChartProvider {
     var dateInterval: DateInterval { get }
     var yRange: ClosedRange<Double> { get }
-    var entries: [GlucoseChartGlucoseEntry] { get }
+    var entries: [BaseChartEntry] { get }
     var insets: UIEdgeInsets { get }
-    var circleSide: CGFloat { get }
+    var color: UIColor { get }
     
-    func drawGlucoseChart()
+    func drawChart()
 }
 
 extension EntriesChartProvider where Self: UIView {
-    func drawGlucoseChart() {
+    func drawChart() {
+        if entries.count < 2 { return }
         guard let context = UIGraphicsGetCurrentContext() else { return }
         let minDate = dateInterval.start.timeIntervalSince1970
         let maxDate = dateInterval.end.timeIntervalSince1970
@@ -32,14 +33,18 @@ extension EntriesChartProvider where Self: UIView {
         for (index, entry) in entries.enumerated() {
             let centerX = CGFloat((entry.date.timeIntervalSince1970 - minDate) * pixelsPerSecond) + insets.left
             let centerY = CGFloat((yRange.upperBound - entry.value) * pixelsPerValue) + insets.top
+            let minY = CGFloat((yRange.upperBound - yRange.lowerBound) * pixelsPerValue) + insets.top
             if index == 0 {
-                context.setLineWidth(1.0)
-                context.setStrokeColor(UIColor.red.cgColor)
-                context.move(to: CGPoint(x: centerX, y: centerY))
+                context.beginPath()
+                context.move(to: CGPoint(x: centerX, y: minY))
+                context.addLine(to: CGPoint(x: centerX, y: centerY))
             } else {
                 context.addLine(to: CGPoint(x: centerX, y: centerY))
                 if index == entries.count - 1 {
-                    context.strokePath()
+                    context.addLine(to: CGPoint(x: centerX, y: minY))
+                    context.closePath()
+                    context.setFillColor(color.cgColor)
+                    context.fillPath()
                 }
             }
         }

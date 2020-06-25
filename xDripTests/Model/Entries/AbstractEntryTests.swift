@@ -14,16 +14,16 @@ import XCTest
 final class AbstractEntryTests: XCTestCase {
     func testDate() {
         let entry = AbstractEntry()
-        XCTAssertNil(entry.date)
+        XCTAssertNil(entry.entryDate)
         
         let date = Date(timeIntervalSince1970: 22.0)
         entry.updateDate(date)
-        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 22.0)
+        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 22.0)
     }
     
     func testInit() {
         let date = Date(timeIntervalSince1970: 9.0)
         let entry = AbstractEntry(date: date)
-        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 9.0)
+        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 9.0)
     }
 }

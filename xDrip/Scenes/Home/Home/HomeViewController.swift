@@ -16,9 +16,11 @@ import AKUtils
 protocol HomeDisplayLogic: AnyObject {
     func displayLoad(viewModel: Home.Load.ViewModel)
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel)
-    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel)
-    func displayEntriesData(viewModel: Home.GlucoseDataUpdate.ViewModel)
-    func displayEntriesChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel)
+    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
+    func displayBolusData(viewModel: Home.EntriesDataUpdate.ViewModel)
+    func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
+    func displayCarbsData(viewModel: Home.EntriesDataUpdate.ViewModel)
+    func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
 }
 
 class HomeViewController: NibViewController, HomeDisplayLogic {
@@ -57,13 +59,15 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     @IBOutlet private weak var timeLineSegmentView: UISegmentedControl!
     @IBOutlet private weak var glucoseChart: GlucoseHistoryView!
-    @IBOutlet private weak var entriesHistoryView: EntriesHistoryView!
+    @IBOutlet private weak var bolusHistoryView: EntriesHistoryView!
+    @IBOutlet private weak var carbsHistoryView: EntriesHistoryView!
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
         setupUI()
+        sibscribeToViewsButtonEvents()
     }
     
     // MARK: Do something
@@ -89,9 +93,10 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         default: hours = 0
         }
         
-        let request = Home.ChangeGlucoseChartTimeFrame.Request(hours: hours)
+        let request = Home.ChangeEntriesChartTimeFrame.Request(hours: hours)
         interactor?.doChangeGlucoseChartTimeFrame(request: request)
-        interactor?.doChangeEntriesChartTimeFrame(request: request)
+        interactor?.doChangeBolusChartTimeFrame(request: request)
+        interactor?.doChangeCarbsChartTimeFrame(request: request)
     }
     
     // MARK: Display
@@ -105,18 +110,28 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         }
     }
     
-    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel) {
+    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
         glucoseChart.setTimeFrame(viewModel.timeInterval)
     }
     
-    func displayEntriesData(viewModel: Home.GlucoseDataUpdate.ViewModel) {
+    func displayBolusData(viewModel: Home.EntriesDataUpdate.ViewModel) {
         DispatchQueue.main.async { [weak self] in
-            self?.entriesHistoryView.setup(with: viewModel.glucoseValues, unit: viewModel.unit)
+            self?.bolusHistoryView.setup(with: viewModel)
         }
     }
     
-    func displayEntriesChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel) {
-        entriesHistoryView.setTimeFrame(viewModel.timeInterval)
+    func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
+        bolusHistoryView.setTimeFrame(viewModel.timeInterval)
+    }
+    
+    func displayCarbsData(viewModel: Home.EntriesDataUpdate.ViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            self?.carbsHistoryView.setup(with: viewModel)
+        }
+    }
+    
+    func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
+        carbsHistoryView.setTimeFrame(viewModel.timeInterval)
     }
     
     private func setupUI() {
@@ -137,5 +152,17 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
             )
         }
         timeLineSegmentView.selectedSegmentIndex = 0
+    }
+    
+    private func sibscribeToViewsButtonEvents() {
+        bolusHistoryView.onButtonClicked = { [weak self] in
+            let request = Home.ShowEntriesList.Request(entriesType: .bolus)
+            self?.interactor?.doShowEntriesList(request: request)
+        }
+        
+        carbsHistoryView.onButtonClicked = { [weak self] in
+               let request = Home.ShowEntriesList.Request(entriesType: .carbs)
+               self?.interactor?.doShowEntriesList(request: request)
+           }
     }
 }

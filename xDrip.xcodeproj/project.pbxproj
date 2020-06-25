@@ -10,6 +10,7 @@
 		0A0CA75A24A2229E00C63857 /* EntriesChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA75924A2229E00C63857 /* EntriesChartView.swift */; };
 		0A0CA75C24A2232C00C63857 /* EntriesChartProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA75B24A2232C00C63857 /* EntriesChartProvider.swift */; };
 		0A0CA75E24A223F400C63857 /* EntriesHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA75D24A223F400C63857 /* EntriesHistoryView.swift */; };
+		0A0CA76224A3949200C63857 /* BaseHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA76124A3949200C63857 /* BaseHistoryView.swift */; };
 		2C09D21224410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */; };
 		2C09D21324410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */; };
 		2C09D2162441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */; };
@@ -596,7 +597,7 @@
 		58B85356244A021B0045F30A /* HomeGlucoseFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B85355244A021B0045F30A /* HomeGlucoseFormattingWorker.swift */; };
 		58B95B4E244A09E40005CA60 /* Settings+WarningLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B4D244A09E40005CA60 /* Settings+WarningLevels.swift */; };
 		58B95B50244B13400005CA60 /* ChartEntryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B4F244B13400005CA60 /* ChartEntryDetailView.swift */; };
-		58B95B52244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B51244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift */; };
+		58B95B52244B7B9E0005CA60 /* ChartScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B51244B7B9E0005CA60 /* ChartScrollContainer.swift */; };
 		58B986DD2466B68200E38376 /* FloatingPoint+Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B986DC2466B68200E38376 /* FloatingPoint+Comparison.swift */; };
 		58D4FD3B2423B39C0044E687 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D4FD3A2423B39C0044E687 /* User.swift */; };
 		58D4FD3E2423B4130044E687 /* UserDeviceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D4FD3D2423B4130044E687 /* UserDeviceMode.swift */; };
@@ -648,6 +649,7 @@
 		0A0CA75924A2229E00C63857 /* EntriesChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesChartView.swift; sourceTree = "<group>"; };
 		0A0CA75B24A2232C00C63857 /* EntriesChartProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesChartProvider.swift; sourceTree = "<group>"; };
 		0A0CA75D24A223F400C63857 /* EntriesHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesHistoryView.swift; sourceTree = "<group>"; };
+		0A0CA76124A3949200C63857 /* BaseHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHistoryView.swift; sourceTree = "<group>"; };
 		2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsRightSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsRightSwitchTableViewCell.xib; sourceTree = "<group>"; };
 		2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsSingleSelectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -1245,7 +1247,7 @@
 		58B85355244A021B0045F30A /* HomeGlucoseFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGlucoseFormattingWorker.swift; sourceTree = "<group>"; };
 		58B95B4D244A09E40005CA60 /* Settings+WarningLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+WarningLevels.swift"; sourceTree = "<group>"; };
 		58B95B4F244B13400005CA60 /* ChartEntryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartEntryDetailView.swift; sourceTree = "<group>"; };
-		58B95B51244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseChartScrollContainer.swift; sourceTree = "<group>"; };
+		58B95B51244B7B9E0005CA60 /* ChartScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScrollContainer.swift; sourceTree = "<group>"; };
 		58B986DC2466B68200E38376 /* FloatingPoint+Comparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FloatingPoint+Comparison.swift"; sourceTree = "<group>"; };
 		58D4FD3A2423B39C0044E687 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		58D4FD3D2423B4130044E687 /* UserDeviceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDeviceMode.swift; sourceTree = "<group>"; };
@@ -2006,7 +2008,7 @@
 				580E4CF82441BF1E00565EDE /* GlucoseChartView.swift */,
 				58F72D872441BFF4007AB093 /* ChartSliderView.swift */,
 				58B95B4F244B13400005CA60 /* ChartEntryDetailView.swift */,
-				58B95B51244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift */,
+				58B95B51244B7B9E0005CA60 /* ChartScrollContainer.swift */,
 				0A0CA75924A2229E00C63857 /* EntriesChartView.swift */,
 				0A0CA75B24A2232C00C63857 /* EntriesChartProvider.swift */,
 			);
@@ -2576,6 +2578,7 @@
 				5808DC0B2448C990000642FB /* SupportingLogic */,
 				580E4CF62441BED600565EDE /* GlucoseHistoryView.swift */,
 				0A0CA75D24A223F400C63857 /* EntriesHistoryView.swift */,
+				0A0CA76124A3949200C63857 /* BaseHistoryView.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -3782,6 +3785,7 @@
 				580E4B3B243E336000565EDE /* BaseSettingsModels.swift in Sources */,
 				580E4B71243F716000565EDE /* SettingsAlertSingleTypePresenter.swift in Sources */,
 				580E4B73243F716000565EDE /* SettingsAlertSingleTypeModels.swift in Sources */,
+				0A0CA76224A3949200C63857 /* BaseHistoryView.swift in Sources */,
 				580E4C13243F748500565EDE /* SettingsPenUserViewController.swift in Sources */,
 				589FD948247065EB004C01A4 /* RealmUtils.swift in Sources */,
 				58B5FD53241910BD00DB857D /* SettingsRootRouter.swift in Sources */,
@@ -3815,7 +3819,7 @@
 				580E4BC4243F733100565EDE /* SettingsModeRootInteractor.swift in Sources */,
 				5805C9B924389230002AFA1B /* CGMBluetoothServiceDelegate.swift in Sources */,
 				580E4B65243F713A00565EDE /* SettingsAlertTypesRouter.swift in Sources */,
-				58B95B52244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift in Sources */,
+				58B95B52244B7B9E0005CA60 /* ChartScrollContainer.swift in Sources */,
 				2C4ABEF9248A5AD8001ED694 /* FoodEmojiDataSource.swift in Sources */,
 				58161A43247931C70023FF76 /* DexcomG6Firmware.swift in Sources */,
 				580E4BC0243F733100565EDE /* SettingsModeRootPresenter.swift in Sources */,

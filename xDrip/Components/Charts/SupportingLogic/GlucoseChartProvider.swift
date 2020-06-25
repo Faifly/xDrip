@@ -11,7 +11,7 @@ import UIKit
 protocol GlucoseChartProvider {
     var dateInterval: DateInterval { get }
     var yRange: ClosedRange<Double> { get }
-    var entries: [GlucoseChartGlucoseEntry] { get }
+    var glucoseEntries: [GlucoseChartGlucoseEntry] { get }
     var insets: UIEdgeInsets { get }
     var circleSide: CGFloat { get }
     
@@ -32,7 +32,7 @@ extension GlucoseChartProvider where Self: UIView {
         
         context.setLineWidth(0.0)
         
-        for entry in entries {
+        for entry in glucoseEntries {
             let centerX = CGFloat((entry.date.timeIntervalSince1970 - minDate) * pixelsPerSecond) + insets.left
             let centerY = CGFloat((yRange.upperBound - entry.value) * pixelsPerValue) + insets.top
             let circleRect = CGRect(

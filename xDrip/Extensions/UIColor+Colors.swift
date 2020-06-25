@@ -30,6 +30,7 @@ extension UIColor {
         case chartSliderBackground
         case chartSelectionLine
         case customBlue
+        case chartButtonTextColor
     }
     
     static var background1: UIColor {
@@ -111,6 +112,12 @@ extension UIColor {
     static var customBlue: UIColor {
         return color(withName: Colors.customBlue.rawValue)
     }
+    
+    static var chartButtonTextColor: UIColor {
+        return color(withName: Colors.chartButtonTextColor.rawValue)
+    }
+    
+    
     
     private static func color(withName name: String) -> UIColor {
         guard let color = UIColor(named: name) else {

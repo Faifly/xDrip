@@ -52,14 +52,14 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     
     func doLoad(request: EditFoodEntry.Load.Request) {
         if let carbEntry = carbEntry {
-            carbInput.amount = carbEntry.amount
+            carbInput.amount = carbEntry.value
             carbInput.foodType = carbEntry.foodType
-            carbInput.date = carbEntry.date ?? Date()
+            carbInput.date = carbEntry.entryDate ?? Date()
         }
         
         if let bolusEntry = bolusEntry {
-            bolusInput.amount = bolusEntry.amount
-            bolusInput.date = bolusEntry.date ?? Date()
+            bolusInput.amount = bolusEntry.value
+            bolusInput.date = bolusEntry.entryDate ?? Date()
         }
         
         let response = EditFoodEntry.Load.Response(
@@ -79,15 +79,15 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     
     func doSave(request: EditFoodEntry.Save.Request) {
         if let bolusEntry = bolusEntry,
-            (bolusEntry.amount !~ bolusInput.amount || bolusEntry.date != bolusInput.date) {
+            (bolusEntry.value !~ bolusInput.amount || bolusEntry.date != bolusInput.date) {
             bolusEntry.update(amount: bolusInput.amount, date: bolusInput.date)
         } else if bolusEntry == nil, bolusInput.amount !~ 0.0 {
             FoodEntriesWorker.addBolusEntry(amount: bolusInput.amount, date: bolusInput.date)
         }
         
         if let carbEntry = carbEntry,
-            (carbEntry.amount !~ carbInput.amount ||
-            carbEntry.date != carbInput.date ||
+            (carbEntry.value !~ carbInput.amount ||
+            carbEntry.entryDate != carbInput.date ||
             carbEntry.foodType != carbInput.foodType) {
             carbEntry.update(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
         } else if carbEntry == nil, carbInput.amount !~ 0.0 {

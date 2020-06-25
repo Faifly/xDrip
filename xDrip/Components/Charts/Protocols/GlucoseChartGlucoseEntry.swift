@@ -14,8 +14,13 @@ enum GlucoseChartSeverityLevel {
     case critical
 }
 
-protocol GlucoseChartGlucoseEntry {
+protocol GlucoseChartGlucoseEntry: BaseChartEntry {
     var value: Double { get }
     var date: Date { get }
     var severity: GlucoseChartSeverityLevel { get }
+}
+
+protocol BaseChartEntry {
+    var value: Double { get }
+    var date: Date { get }
 }

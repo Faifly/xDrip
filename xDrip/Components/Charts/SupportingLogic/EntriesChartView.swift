@@ -11,13 +11,10 @@ import Foundation
 import UIKit
 
 final class EntriesChartView: BaseChartView, EntriesChartProvider {
-    var entries: [GlucoseChartGlucoseEntry] = []
-    let circleSide: CGFloat = 6.0
-    var dateInterval = DateInterval()
-    var yRange: ClosedRange<Double> = 0.0...0.0
     var insets: UIEdgeInsets {
         return chartInsets
     }
+    var color = UIColor.clear
     
     required init() {
         super.init(frame: .zero)
@@ -33,6 +30,6 @@ final class EntriesChartView: BaseChartView, EntriesChartProvider {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        drawGlucoseChart()
+        drawChart()
     }
 }
