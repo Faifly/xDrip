@@ -17,9 +17,9 @@ protocol HomePresentationLogic {
     func presentGlucoseData(response: Home.GlucoseDataUpdate.Response)
     func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response)
     func presentGlucoseChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response)
-    func presentBolusData(response: Home.EntriesDataUpdate.Response)
+    func presentBolusData(response: Home.BolusDataUpdate.Response)
     func presentBolusChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response)
-    func presentCarbsData(response: Home.EntriesDataUpdate.Response)
+    func presentCarbsData(response: Home.CarbsDataUpdate.Response)
     func presentCarbsChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response)
 }
 
@@ -27,9 +27,11 @@ final class HomePresenter: HomePresentationLogic {
     weak var viewController: HomeDisplayLogic?
     
     private let glucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol
+    private let homeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol
     
     init() {
         glucoseFormattingWorker = HomeGlucoseFormattingWorker()
+        homeEntriesFormattingWorker = HomeEntriesFormattingWorker()
     }
     
     // MARK: Do something
@@ -63,14 +65,13 @@ final class HomePresenter: HomePresentationLogic {
         viewController?.displayGlucoseCurrentInfo(viewModel: viewModel)
     }
     
-    func presentBolusData(response: Home.EntriesDataUpdate.Response) {
-        let values = glucoseFormattingWorker.formatEntries(response.glucoseData)
-        let unit = User.current.settings.unit.label
-        let viewModel = Home.EntriesDataUpdate.ViewModel(chartTitle: "Active Insulin",
-                                                         chartButtonTitle: "14.49 U>",
-                                                         entries: values,
-                                                         unit: unit,
-                                                         color: UIColor.red)
+    func presentBolusData(response: Home.BolusDataUpdate.Response) {
+        let entry = homeEntriesFormattingWorker.formatBolusResponse(response)
+        let viewModel = Home.BolusDataUpdate.ViewModel(chartTitle: entry.title,
+                                                       chartButtonTitle: entry.buttonTitle,
+                                                       entries: entry.entries,
+                                                       unit: entry.unit,
+                                                       color: entry.color)
         viewController?.displayBolusData(viewModel: viewModel)
     }
     
@@ -79,14 +80,13 @@ final class HomePresenter: HomePresentationLogic {
         viewController?.displayBolusChartTimeFrame(viewModel: viewModel)
     }
     
-    func presentCarbsData(response: Home.EntriesDataUpdate.Response) {
-        let values = glucoseFormattingWorker.formatEntries(response.glucoseData)
-        let unit = User.current.settings.unit.label
-        let viewModel = Home.EntriesDataUpdate.ViewModel(chartTitle: "Active Carbohydrates",
-                                                         chartButtonTitle: "40 g>",
-                                                         entries: values,
-                                                         unit: unit,
-                                                         color: UIColor.red)
+    func presentCarbsData(response: Home.CarbsDataUpdate.Response) {
+        let entry = homeEntriesFormattingWorker.formatCarbsResponse(response)
+        let viewModel = Home.CarbsDataUpdate.ViewModel(chartTitle: entry.title,
+                                                       chartButtonTitle: entry.buttonTitle,
+                                                       entries: entry.entries,
+                                                       unit: entry.unit,
+                                                       color: entry.color)
         viewController?.displayCarbsData(viewModel: viewModel)
     }
     

@@ -18,9 +18,9 @@ protocol HomeDisplayLogic: AnyObject {
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel)
     func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel)
     func displayGlucoseChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
-    func displayBolusData(viewModel: Home.EntriesDataUpdate.ViewModel)
+    func displayBolusData(viewModel: Home.BolusDataUpdate.ViewModel)
     func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
-    func displayCarbsData(viewModel: Home.EntriesDataUpdate.ViewModel)
+    func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel)
     func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
 }
 
@@ -120,7 +120,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         glucoseCurrentInfoView.setup(with: viewModel)
     }
     
-    func displayBolusData(viewModel: Home.EntriesDataUpdate.ViewModel) {
+    func displayBolusData(viewModel: Home.BolusDataUpdate.ViewModel) {
         DispatchQueue.main.async { [weak self] in
             self?.bolusHistoryView.setup(with: viewModel)
         }
@@ -130,7 +130,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         bolusHistoryView.setTimeFrame(viewModel.timeInterval)
     }
     
-    func displayCarbsData(viewModel: Home.EntriesDataUpdate.ViewModel) {
+    func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel) {
         DispatchQueue.main.async { [weak self] in
             self?.carbsHistoryView.setup(with: viewModel)
         }

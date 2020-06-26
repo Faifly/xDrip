@@ -81,6 +81,7 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
         if let bolusEntry = bolusEntry,
             (bolusEntry.value !~ bolusInput.amount || bolusEntry.date != bolusInput.date) {
             bolusEntry.update(amount: bolusInput.amount, date: bolusInput.date)
+            FoodEntriesWorker.updatedBolusEntry()
         } else if bolusEntry == nil, bolusInput.amount !~ 0.0 {
             FoodEntriesWorker.addBolusEntry(amount: bolusInput.amount, date: bolusInput.date)
         }
@@ -90,6 +91,7 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
             carbEntry.entryDate != carbInput.date ||
             carbEntry.foodType != carbInput.foodType) {
             carbEntry.update(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
+            FoodEntriesWorker.updatedCarbsEntry()
         } else if carbEntry == nil, carbInput.amount !~ 0.0 {
             FoodEntriesWorker.addCarbEntry(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
         }

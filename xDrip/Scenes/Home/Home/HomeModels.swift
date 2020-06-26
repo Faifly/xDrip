@@ -12,6 +12,14 @@
 
 import UIKit
 
+protocol BaseFoodEntryViewModel {
+    var chartTitle: String { get }
+    var chartButtonTitle: String { get }
+    var entries: [BaseChartEntry] { get }
+    var unit: String { get }
+    var color: UIColor { get }
+}
+
 enum Home {
     // MARK: Models
     
@@ -42,15 +50,32 @@ enum Home {
         }
     }
     
-    enum EntriesDataUpdate {
+    enum BolusDataUpdate {
         struct Request {
         }
         
         struct Response {
-            let glucoseData: [GlucoseReading]
+            let bolusData: [BolusEntry]
         }
         
-        struct ViewModel {
+        struct ViewModel: BaseFoodEntryViewModel {
+            let chartTitle: String
+            let chartButtonTitle: String
+            let entries: [BaseChartEntry]
+            let unit: String
+            let color: UIColor
+        }
+    }
+        
+    enum CarbsDataUpdate {
+        struct Request {
+        }
+        
+        struct Response {
+            let carbsData: [CarbEntry]
+        }
+        
+        struct ViewModel: BaseFoodEntryViewModel {
             let chartTitle: String
             let chartButtonTitle: String
             let entries: [BaseChartEntry]

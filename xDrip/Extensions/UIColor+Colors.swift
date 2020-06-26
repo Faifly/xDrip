@@ -127,8 +127,6 @@ extension UIColor {
         return color(withName: Colors.chartButtonTextColor.rawValue)
     }
     
-    
-    
     private static func color(withName name: String) -> UIColor {
         guard let color = UIColor(named: name) else {
             fatalError("No color with name: \(name)")

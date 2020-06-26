@@ -52,7 +52,8 @@ final class EntriesHistoryView: BaseHistoryView {
         chartButton.addTarget(self, action: #selector(self.buttonClicked), for: .touchUpInside)
         addSubview(chartButton)
         chartButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -14).isActive = true
-        chartButton.leadingAnchor.constraint(greaterThanOrEqualTo: chartTitleLabel.trailingAnchor, constant: 5).isActive = true
+        chartButton.leadingAnchor.constraint(greaterThanOrEqualTo: chartTitleLabel.trailingAnchor,
+                                             constant: 5).isActive = true
         chartButton.topAnchor.constraint(equalTo: topAnchor).isActive = true
         chartButton.bottomAnchor.constraint(equalTo: scrollContainer.topAnchor).isActive = true
     }
@@ -61,7 +62,7 @@ final class EntriesHistoryView: BaseHistoryView {
         super.updateChart()
     }
     
-    func setup(with viewModel: Home.EntriesDataUpdate.ViewModel) {
+    func setup(with viewModel: BaseFoodEntryViewModel) {
         super.setup(with: viewModel.entries, unit: viewModel.unit)
         entriesChartView.color = viewModel.color
         chartTitleLabel.text = viewModel.chartTitle

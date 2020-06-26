@@ -11,7 +11,7 @@ import RealmSwift
 
 final class CarbEntry: AbstractEntry, BaseChartEntry {
      var date: Date {
-        return super.entryDate ?? Date()
+        return entryDate ?? Date()
     }
     @objc private(set) dynamic var value: Double = 0.0
     @objc private(set) dynamic var foodType: String?

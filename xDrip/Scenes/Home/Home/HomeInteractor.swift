@@ -35,7 +35,13 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             guard let self = self else { return }
             self.updateGlucoseCurrentInfo()
             self.updateGlucoseChartData()
+        }
+        FoodEntriesWorker.bolusDataHandler = { [weak self] in
+            guard let self = self else { return }
             self.updateBolusChartData()
+        }
+        FoodEntriesWorker.carbsDataHandler = { [weak self] in
+            guard let self = self else { return }
             self.updateCarbsChartData()
         }
     }
@@ -91,7 +97,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     // MARK: Logic
     
     private func updateBolusChartData() {
-        let response = Home.EntriesDataUpdate.Response(glucoseData: glucoseDataWorker.fetchGlucoseData())
+        let response = Home.BolusDataUpdate.Response(bolusData: FoodEntriesWorker.fetchAllBolusEntries())
         self.presenter?.presentBolusData(response: response)
     }
     
@@ -105,7 +111,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     // MARK: Logic
     
     private func updateCarbsChartData() {
-        let response = Home.EntriesDataUpdate.Response(glucoseData: glucoseDataWorker.fetchGlucoseData())
+        let response = Home.CarbsDataUpdate.Response(carbsData: FoodEntriesWorker.fetchAllCarbEntries())
         self.presenter?.presentCarbsData(response: response)
     }
 }

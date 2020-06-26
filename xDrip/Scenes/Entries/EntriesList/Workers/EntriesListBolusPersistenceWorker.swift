@@ -18,6 +18,6 @@ final class EntriesListBolusPersistenceWorker: EntriesListEntryPersistenceWorker
 
     func deleteEntry(_ index: Int) {
         let entry = bolusEntries.remove(at: index)
-        FoodEntriesWorker.deleteEntry(entry)
+        FoodEntriesWorker.deleteBolusEntry(entry)
     }
 }

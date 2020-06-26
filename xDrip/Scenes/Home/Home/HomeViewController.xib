@@ -13,6 +13,7 @@
                 <outlet property="bolusHistoryView" destination="c8R-uH-uoG" id="o4y-lU-h4F"/>
                 <outlet property="carbsHistoryView" destination="exW-aS-99K" id="sCC-2z-cvL"/>
                 <outlet property="glucoseChart" destination="dSe-Qa-bqu" id="leZ-tw-snL"/>
+                <outlet property="glucoseCurrentInfoView" destination="IPS-zK-3KI" id="n1J-4Z-ku7"/>
                 <outlet property="timeLineSegmentView" destination="8oq-oy-gzX" id="eST-au-ynj"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bzO-Wv-6Q2"/>
             </connections>
@@ -23,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="8oq-oy-gzX">
-                    <rect key="frame" x="16" y="56" width="382" height="32"/>
+                    <rect key="frame" x="16" y="114" width="382" height="32"/>
                     <segments>
                         <segment title="First"/>
                         <segment title="Second"/>
@@ -33,7 +34,7 @@
                     </connections>
                 </segmentedControl>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="raE-nK-klS">
-                    <rect key="frame" x="0.0" y="87" width="414" height="775"/>
+                    <rect key="frame" x="0.0" y="145" width="414" height="717"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wsn-D0-Tbr">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="670"/>
@@ -72,16 +73,26 @@
                     <viewLayoutGuide key="contentLayoutGuide" id="MNn-vO-eyC"/>
                     <viewLayoutGuide key="frameLayoutGuide" id="vad-XZ-2mG"/>
                 </scrollView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IPS-zK-3KI" customClass="GlucoseCurrentInfoView" customModule="xDrip" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="49" width="414" height="60"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="A3K-zJ-OjB"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="raE-nK-klS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="10Z-st-4ze"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="raE-nK-klS" secondAttribute="bottom" id="COA-Qo-QTE"/>
+                <constraint firstItem="IPS-zK-3KI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="KMS-Zh-8Ll"/>
+                <constraint firstItem="IPS-zK-3KI" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="5" id="Myx-LH-WjM"/>
+                <constraint firstItem="IPS-zK-3KI" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="QEv-Hd-NL4"/>
                 <constraint firstItem="8oq-oy-gzX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="SKy-Ef-V5t"/>
+                <constraint firstItem="8oq-oy-gzX" firstAttribute="top" secondItem="IPS-zK-3KI" secondAttribute="bottom" constant="5" id="Wg6-7X-8jD"/>
                 <constraint firstItem="raE-nK-klS" firstAttribute="top" secondItem="8oq-oy-gzX" secondAttribute="bottom" id="a6A-ct-FGP"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="8oq-oy-gzX" secondAttribute="trailing" constant="16" id="cBn-mf-mEx"/>
                 <constraint firstItem="raE-nK-klS" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="do2-sv-FY9"/>
-                <constraint firstItem="8oq-oy-gzX" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="12" id="ree-7A-mJT"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="137.68115942028987" y="103.79464285714285"/>
