@@ -19,14 +19,17 @@ final class CalibrationTests: AbstractRealmTest {
         let calibration1 = Calibration()
         calibration1.setValue(Date(timeIntervalSince1970: 1.0), forKey: "date")
         calibration1.setValue(1.0, forKey: "rawValue")
+        calibration1.generateID()
         
         let calibration2 = Calibration()
         calibration2.setValue(Date(timeIntervalSince1970: 2.0), forKey: "date")
         calibration2.setValue(2.0, forKey: "rawValue")
+        calibration2.generateID()
         
         let calibration3 = Calibration()
         calibration3.setValue(Date(timeIntervalSince1970: 3.0), forKey: "date")
         calibration3.setValue(3.0, forKey: "rawValue")
+        calibration3.generateID()
         
         realm.safeWrite {
             realm.add([calibration1, calibration2, calibration3])
@@ -53,6 +56,7 @@ final class CalibrationTests: AbstractRealmTest {
         let calibration1 = Calibration()
         calibration1.setValue(Date(timeIntervalSince1970: 1.0), forKey: "date")
         calibration1.setValue(1.0, forKey: "rawValue")
+        calibration1.generateID()
         
         realm.safeWrite {
             realm.add(calibration1)
@@ -65,6 +69,7 @@ final class CalibrationTests: AbstractRealmTest {
         let calibration2 = Calibration()
         calibration2.setValue(Date(timeIntervalSince1970: 2.0), forKey: "date")
         calibration2.setValue(2.0, forKey: "rawValue")
+        calibration2.generateID()
         
         realm.safeWrite {
             realm.add(calibration2)
@@ -77,6 +82,7 @@ final class CalibrationTests: AbstractRealmTest {
         let calibration3 = Calibration()
         calibration3.setValue(Date(timeIntervalSince1970: 3.0), forKey: "date")
         calibration3.setValue(3.0, forKey: "rawValue")
+        calibration3.generateID()
         
         realm.safeWrite {
             realm.add(calibration3)
@@ -104,6 +110,7 @@ final class CalibrationTests: AbstractRealmTest {
         XCTAssertNil(Calibration.lastValid)
         
         let calibration = Calibration()
+        calibration.generateID()
         calibration.setValue(Date(), forKey: "date")
         realm.safeWrite {
             realm.add(calibration)
@@ -131,6 +138,7 @@ final class CalibrationTests: AbstractRealmTest {
         XCTAssertNil(Calibration.lastValid)
         
         let calibration2 = Calibration()
+        calibration2.generateID()
         calibration2.setValue(Date(timeIntervalSince1970: 5.0), forKey: "date")
         calibration2.setValue(2.0, forKey: "slope")
         calibration2.setValue(1.0, forKey: "slopeConfidence")
@@ -159,6 +167,7 @@ final class CalibrationTests: AbstractRealmTest {
         XCTAssertNil(Calibration.calibration(for: Date()))
         
         let calibration1 = Calibration()
+        calibration1.generateID()
         calibration1.setValue(Date(timeIntervalSince1970: 10.0), forKey: "date")
         realm.safeWrite {
             realm.add(calibration1)
@@ -179,6 +188,7 @@ final class CalibrationTests: AbstractRealmTest {
         calibration2.setValue(Date(timeIntervalSince1970: 12.0), forKey: "date")
         calibration2.setValue(2.0, forKey: "slopeConfidence")
         calibration2.setValue(2.0, forKey: "sensorConfidence")
+        calibration2.generateID()
         
         realm.safeWrite {
             realm.add(calibration2)

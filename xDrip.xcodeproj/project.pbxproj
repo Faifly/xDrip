@@ -629,6 +629,7 @@
 		58FE4CB7247958DF00511B80 /* CGMDeviceResistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CB6247958DF00511B80 /* CGMDeviceResistance.swift */; };
 		58FE4CB924796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CB824796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift */; };
 		58FE4CBB247970BE00511B80 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CBA247970BE00511B80 /* NotificationController.swift */; };
+		58FFBC1B24A49EBC003D2DE6 /* CCalibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1278,6 +1279,7 @@
 		58FE4CB6247958DF00511B80 /* CGMDeviceResistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMDeviceResistance.swift; sourceTree = "<group>"; };
 		58FE4CB824796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6KeepAliveTxMessage.swift; sourceTree = "<group>"; };
 		58FE4CBA247970BE00511B80 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCalibration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2937,11 +2939,11 @@
 		588584A1248E76C700C3F74C /* CloudSync */ = {
 			isa = PBXGroup;
 			children = (
+				58FFBC1924A49EAD003D2DE6 /* Codables */,
 				588584A2248E76DF00C3F74C /* NightscoutService.swift */,
 				58E3B7C12493BDBB008738DF /* NightscoutError.swift */,
 				58F43BA0249130C2006C5F2C /* UploadRequest.swift */,
 				589B1A212497D17900C1DABD /* UploadRequestFactory.swift */,
-				58828B8F2492876C001D4C3E /* CGlucoseReading.swift */,
 			);
 			path = CloudSync;
 			sourceTree = "<group>";
@@ -3461,6 +3463,15 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
+		58FFBC1924A49EAD003D2DE6 /* Codables */ = {
+			isa = PBXGroup;
+			children = (
+				58828B8F2492876C001D4C3E /* CGlucoseReading.swift */,
+				58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */,
+			);
+			path = Codables;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -3846,6 +3857,7 @@
 				580E4B74243F716000565EDE /* SettingsAlertSingleTypeViewController.swift in Sources */,
 				5805CA16243892D6002AFA1B /* DexcomG6SerialSavingWorker.swift in Sources */,
 				580EC7C02421521C00C34948 /* EditCalibrationInteractor.swift in Sources */,
+				58FFBC1B24A49EBC003D2DE6 /* CCalibration.swift in Sources */,
 				580E4B57243F711200565EDE /* SettingsAlertRootPresenter.swift in Sources */,
 				5805CA18243892D6002AFA1B /* InitialSetupDexcomG6ConnectionWorker.swift in Sources */,
 				58B288FD2479726000D24A2B /* AlertEventType+Data.swift in Sources */,
