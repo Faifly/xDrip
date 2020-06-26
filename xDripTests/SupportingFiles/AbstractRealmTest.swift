@@ -26,3 +26,9 @@ extension GlucoseReading {
         setValue(UUID().uuidString, forKey: "externalID") 
     }
 }
+
+extension Calibration {
+    func generateID() {
+        setValue(UUID().uuidString, forKey: "externalID")
+    }
+}

@@ -12,6 +12,8 @@ protocol UploadRequestFactoryLogic {
     func createNotUploadedGlucoseRequest(_ entry: GlucoseReading) -> UploadRequest?
     func createModifiedGlucoseRequest(_ entry: GlucoseReading) -> UploadRequest?
     func createDeleteReadingRequest(_ entry: GlucoseReading) -> UploadRequest?
+    func createCalibrationRequest(_ calibration: Calibration) -> UploadRequest?
+    func createDeleteCalibrationRequest(_ calibration: Calibration) -> UploadRequest?
     func createTestConnectionRequest(tryAuth: Bool) throws -> URLRequest
     func createFetchFollowerDataRequest() -> URLRequest?
 }
@@ -32,13 +34,26 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     }
     
     func createDeleteReadingRequest(_ entry: GlucoseReading) -> UploadRequest? {
+        return createDeleteRequest(
+            itemID: entry.externalID,
+            date: entry.date,
+            type: .deleteGlucoseReading
+        )
+    }
+    
+    func createCalibrationRequest(_ calibration: Calibration) -> UploadRequest? {
         guard var request = try? createEntriesRequest() else { return nil }
-        guard let url = request.url else { return nil }
-        guard let itemID = entry.externalID else { return nil }
-        guard let date = entry.date else { return nil }
-        request.url = URL(string: url.absoluteString + "?find[date]=\(Int64(date.timeIntervalSince1970 * 1000.0))")
-        request.httpMethod = "DELETE"
-        return UploadRequest(request: request, itemID: itemID, type: .deleteGlucoseReading)
+        let codableEntry = CCalibration(calibration: calibration)
+        request.httpBody = try? JSONEncoder().encode([codableEntry])
+        return UploadRequest(request: request, itemID: calibration.externalID ?? "", type: .postCalibration)
+    }
+    
+    func createDeleteCalibrationRequest(_ calibration: Calibration) -> UploadRequest? {
+        return createDeleteRequest(
+            itemID: calibration.externalID,
+            date: calibration.date,
+            type: .deleteCalibration
+        )
     }
     
     func createTestConnectionRequest(tryAuth: Bool) throws -> URLRequest {
@@ -62,6 +77,16 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         request.url = URL(string: url.absoluteString + "?count=50")
         request.httpMethod = "GET"
         return request
+    }
+    
+    private func createDeleteRequest(itemID: String?, date: Date?, type: UploadRequestType) -> UploadRequest? {
+        guard var request = try? createEntriesRequest() else { return nil }
+        guard let url = request.url else { return nil }
+        guard let itemID = itemID else { return nil }
+        guard let date = date else { return nil }
+        request.url = URL(string: url.absoluteString + "?find[date]=\(Int64(date.timeIntervalSince1970 * 1000.0))")
+        request.httpMethod = "DELETE"
+        return UploadRequest(request: request, itemID: itemID, type: type)
     }
     
     private func createEntriesRequest(appendSecret: Bool = true) throws -> URLRequest? {

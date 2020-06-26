@@ -18,6 +18,8 @@ enum UploadRequestType {
     case postGlucoseReading
     case modifyGlucoseReading
     case deleteGlucoseReading
+    case postCalibration
+    case deleteCalibration
 }
 
 extension UploadRequest: Equatable {
