@@ -84,4 +84,22 @@ enum Home {
             let timeInterval: TimeInterval
         }
     }
+    
+    enum GlucoseCurrentInfo {
+        struct Request {
+        }
+        
+        struct Response {
+            let lastGlucoseReading: GlucoseReading?
+        }
+        
+        struct ViewModel {
+            let glucoseIntValue: String
+            let glucoseDecimalValue: String
+            let slopeValue: String
+            let lastScanDate: String
+            let difValue: String
+            let severityColor: UIColor?
+        }
+    }
 }

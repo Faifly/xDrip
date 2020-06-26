@@ -422,3 +422,10 @@
 "notification_pairing_request_body" = "Пожалуйста, разблокируйте свой телефон и примите запрос на подключение от вашего датчика в течении 30ти секунд";
 "notification_initial_calibration_title" = "Начальная калибровка";
 "notification_initial_calibration_body" = "Сенсор теперь готов получить начальную калибровку";
+
+// Initial Welcome screen
+"initial_welcome_screen_title" = "Приветствуем!";
+"initial_welcome_large_welcome_message" = "Добро пожаловать в xDrip для iOS!";
+"initial_welcome_small_welcome_message" = "Похоже, что это ваш первый раз в этом приложении. Хотите, чтобы мы провели вас через процесс первоначальной настройки?";
+"initial_welcome_start_button" = "Начать Настройку";
+"initial_welcome_skip_button" = "Пропустить";

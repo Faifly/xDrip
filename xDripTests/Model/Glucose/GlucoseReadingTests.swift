@@ -476,4 +476,26 @@ final class GlucoseReadingTests: AbstractRealmTest {
         XCTAssert(reading.calculatedValue ~ 400.0)
         XCTAssertFalse(reading.hideSlope)
     }
+    
+    func testActiveSlope() {
+        let reading = GlucoseReading()
+        let date = Date()
+        XCTAssert(reading.activeSlope() ~ 0.0)
+        
+        reading.setValue(0.0, forKey: "a")
+        reading.setValue(0.0, forKey: "b")
+        XCTAssert(reading.activeSlope() ~ 0.0)
+    
+        reading.setValue(1.0 / date.timeIntervalSince1970, forKey: "a")
+        reading.setValue(1.0, forKey: "b")
+        XCTAssert(reading.activeSlope(date: date) ~ 3.0)
+        
+        reading.setValue(1.0 / date.timeIntervalSince1970, forKey: "a")
+        reading.setValue(0.0, forKey: "b")
+        XCTAssert(reading.activeSlope(date: date) ~ 2.0)
+        
+        reading.setValue(0.0, forKey: "a")
+        reading.setValue(1.0, forKey: "b")
+        XCTAssert(reading.activeSlope() ~ 1.0)
+    }
 }

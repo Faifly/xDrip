@@ -15,6 +15,7 @@ import UIKit
 protocol HomePresentationLogic {
     func presentLoad(response: Home.Load.Response)
     func presentGlucoseData(response: Home.GlucoseDataUpdate.Response)
+    func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response)
     func presentGlucoseChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response)
     func presentBolusData(response: Home.EntriesDataUpdate.Response)
     func presentBolusChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response)
@@ -48,6 +49,18 @@ final class HomePresenter: HomePresentationLogic {
     func presentGlucoseChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
         let viewModel = Home.ChangeEntriesChartTimeFrame.ViewModel(timeInterval: response.timeInterval)
         viewController?.displayGlucoseChartTimeFrame(viewModel: viewModel)
+    }
+    
+    func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
+        let value = glucoseFormattingWorker.formatEntry(response.lastGlucoseReading)
+        let viewModel = Home.GlucoseCurrentInfo.ViewModel(
+            glucoseIntValue: value.glucoseIntValue,
+            glucoseDecimalValue: value.glucoseDecimalValue,
+            slopeValue: value.slopeValue,
+            lastScanDate: value.lastScanDate,
+            difValue: value.difValue,
+            severityColor: value.severityColor)
+        viewController?.displayGlucoseCurrentInfo(viewModel: viewModel)
     }
     
     func presentBolusData(response: Home.EntriesDataUpdate.Response) {

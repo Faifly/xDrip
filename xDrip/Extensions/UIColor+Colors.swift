@@ -30,6 +30,8 @@ extension UIColor {
         case chartSliderBackground
         case chartSelectionLine
         case customBlue
+        case diffTextColor
+        case lastScanDateTextColor
         case chartButtonTextColor
     }
     
@@ -113,6 +115,14 @@ extension UIColor {
         return color(withName: Colors.customBlue.rawValue)
     }
     
+    static var diffTextColor: UIColor {
+        return .chartValueNormal
+    }
+    
+    static var lastScanDateTextColor: UIColor {
+        return color(withName: Colors.lastScanDateTextColor.rawValue)
+    }
+    
     static var chartButtonTextColor: UIColor {
         return color(withName: Colors.chartButtonTextColor.rawValue)
     }
@@ -124,5 +134,13 @@ extension UIColor {
             fatalError("No color with name: \(name)")
         }
         return color
+    }
+    
+    static func colorForSeverityLevel(_ level: GlucoseChartSeverityLevel) -> UIColor {
+        switch level {
+        case .normal: return .chartValueNormal
+        case .abnormal: return .chartValueAbnormal
+        case .critical: return .chartValueCritical
+        }
     }
 }

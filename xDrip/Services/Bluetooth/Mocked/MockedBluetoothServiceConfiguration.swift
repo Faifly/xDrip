@@ -65,7 +65,7 @@ extension MockedBluetoothServiceConfiguration.Predefined {
             glucoseReadingsInterval: 300.0,
             initialGlucose: 748.0,
             failProbability: 0.0,
-            glucoseMaximumEpsilon: 0.0,
+            glucoseMaximumEpsilon: 3.0,
             glucoseChangeMode: .normalDeviation
         )
     }

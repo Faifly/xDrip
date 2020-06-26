@@ -41,13 +41,8 @@ extension GlucoseChartProvider where Self: UIView {
                 width: circleSide,
                 height: circleSide
             )
-            
-            let color: UIColor
-            switch entry.severity {
-            case .normal: color = .chartValueNormal
-            case .abnormal: color = .chartValueAbnormal
-            case .critical: color = .chartValueCritical
-            }
+    
+            let color = UIColor.colorForSeverityLevel(entry.severity)
             context.setFillColor(color.cgColor)
             context.fillEllipse(in: circleRect)
         }

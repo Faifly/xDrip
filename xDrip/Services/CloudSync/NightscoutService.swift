@@ -36,6 +36,19 @@ final class NightscoutService {
     
     func scanForNotUploadedEntries() {
         guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else { return }
+        scanForGlucoseEntries()
+        scanForCalibrations()
+        runQueue()
+    }
+    
+    func deleteCalibrations(_ calibrations: [Calibration]) {
+        guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else { return }
+        let requests = calibrations.compactMap { requestFactory.createDeleteCalibrationRequest($0) }
+        requestQueue.append(contentsOf: requests)
+        runQueue()
+    }
+    
+    private func scanForGlucoseEntries() {
         let all = GlucoseReading.allMaster
         let notUploaded = all.filter { $0.cloudUploadStatus == .notUploaded }
         let modified = all.filter { $0.cloudUploadStatus == .modified }
@@ -68,8 +81,17 @@ final class NightscoutService {
                 requestQueue.append(request)
             }
         }
-        
-        self.runQueue()
+    }
+    
+    private func scanForCalibrations() {
+        let notUploaded = Calibration.allForCurrentSensor.filter { !$0.isUploaded }
+        for entry in notUploaded {
+            guard !requestQueue.contains(where: {
+                $0.itemID == entry.externalID && $0.type == .postCalibration
+            }) else { continue }
+            guard let request = requestFactory.createCalibrationRequest(entry) else { continue }
+            requestQueue.append(request)
+        }
     }
     
     func testNightscoutConnection(tryAuth: Bool, callback: @escaping (Bool, NightscoutError?) -> Void) {
@@ -105,7 +127,16 @@ final class NightscoutService {
             self.runQueue()
             
             DispatchQueue.main.async {
-                GlucoseReading.markEntryAsUploaded(externalID: first.itemID)
+                switch first.type {
+                case .postGlucoseReading, .modifyGlucoseReading:
+                    GlucoseReading.markEntryAsUploaded(externalID: first.itemID)
+                    
+                case .deleteGlucoseReading, .deleteCalibration:
+                    break
+                    
+                case .postCalibration:
+                    Calibration.markCalibrationAsUploaded(itemID: first.itemID)
+                }
             }
         }.resume()
     }
