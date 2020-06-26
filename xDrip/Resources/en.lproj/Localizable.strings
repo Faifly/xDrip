@@ -12,6 +12,8 @@
 "home_time_frame_6h" = "6H";
 "home_time_frame_12h" = "12H";
 "home_time_frame_24h" = "24H";
+"home_last_scan_title" = "Last Scan";
+"home_last_diff_title" = "DIF";
 
 // Root
 "root_add_entry_food" = "Food";

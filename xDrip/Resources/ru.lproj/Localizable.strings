@@ -12,6 +12,8 @@
 "home_time_frame_6h" = "6Ч";
 "home_time_frame_12h" = "12Ч";
 "home_time_frame_24h" = "24Ч";
+"home_last_scan_title" = "Дата";
+"home_last_diff_title" = "Разница";
 
 // Root
 "root_add_entry_food" = "Еда";
