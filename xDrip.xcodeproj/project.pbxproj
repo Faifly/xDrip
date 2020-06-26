@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A216CC824A50BE4002DA0AF /* GlucoseCurrentInfoViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CC724A50BE4002DA0AF /* GlucoseCurrentInfoViewTests.swift */; };
+		0A216CCA24A52AE0002DA0AF /* NibViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CC924A52AE0002DA0AF /* NibViewTests.swift */; };
+		0A216CD124A5EBFF002DA0AF /* MirrorObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CD024A5EBFF002DA0AF /* MirrorObject.swift */; };
+		0A216CD324A5F718002DA0AF /* GlucoseCurrentInfoViewMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CD224A5F718002DA0AF /* GlucoseCurrentInfoViewMirror.swift */; };
+		0A216CD524A5F7BE002DA0AF /* HomeViewControllerMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CD424A5F7BE002DA0AF /* HomeViewControllerMirror.swift */; };
 		0A89541F249CE7060067601F /* GlucoseCurrentInfoEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A89541E249CE7060067601F /* GlucoseCurrentInfoEntry.swift */; };
 		0A895423249CE71A0067601F /* GlucoseCurrentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A895421249CE71A0067601F /* GlucoseCurrentInfoView.swift */; };
 		0A895424249CE71A0067601F /* GlucoseCurrentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */; };
@@ -647,6 +652,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A216CC724A50BE4002DA0AF /* GlucoseCurrentInfoViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoViewTests.swift; sourceTree = "<group>"; };
+		0A216CC924A52AE0002DA0AF /* NibViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibViewTests.swift; sourceTree = "<group>"; };
+		0A216CD024A5EBFF002DA0AF /* MirrorObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorObject.swift; sourceTree = "<group>"; };
+		0A216CD224A5F718002DA0AF /* GlucoseCurrentInfoViewMirror.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoViewMirror.swift; sourceTree = "<group>"; };
+		0A216CD424A5F7BE002DA0AF /* HomeViewControllerMirror.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerMirror.swift; sourceTree = "<group>"; };
 		0A89541E249CE7060067601F /* GlucoseCurrentInfoEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoEntry.swift; sourceTree = "<group>"; };
 		0A895421249CE71A0067601F /* GlucoseCurrentInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoView.swift; sourceTree = "<group>"; };
 		0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlucoseCurrentInfoView.xib; sourceTree = "<group>"; };
@@ -1326,6 +1336,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A216CC624A50BB9002DA0AF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0A216CC724A50BE4002DA0AF /* GlucoseCurrentInfoViewTests.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0A216CCB24A53FBA002DA0AF /* NibViewTests */ = {
+			isa = PBXGroup;
+			children = (
+				0A216CC924A52AE0002DA0AF /* NibViewTests.swift */,
+			);
+			path = NibViewTests;
+			sourceTree = "<group>";
+		};
+		0A216CD624A5F8A0002DA0AF /* Mirroring */ = {
+			isa = PBXGroup;
+			children = (
+				0A216CD024A5EBFF002DA0AF /* MirrorObject.swift */,
+				0A216CD224A5F718002DA0AF /* GlucoseCurrentInfoViewMirror.swift */,
+				0A216CD424A5F7BE002DA0AF /* HomeViewControllerMirror.swift */,
+			);
+			path = Mirroring;
+			sourceTree = "<group>";
+		};
 		0A89541D249CE7060067601F /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -2757,6 +2793,7 @@
 		58160E042402CAF500C792F4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0A216CCB24A53FBA002DA0AF /* NibViewTests */,
 				2C48E6E92428F592006B63B0 /* UIColor+Colors_Tests.swift */,
 				2C48E6ED242909F4006B63B0 /* UIView+Bindings_Tests.swift */,
 				5805CAA12438A707002AFA1B /* UIView+Effects_Tests.swift */,
@@ -2949,6 +2986,7 @@
 		58788B7D24264CFE000EB113 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				0A216CD624A5F8A0002DA0AF /* Mirroring */,
 				58788B7E24264D13000EB113 /* AbstractRealmTest.swift */,
 			);
 			path = SupportingFiles;
@@ -3243,6 +3281,7 @@
 		58B5FD5F2419264500DB857D /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				0A216CC624A50BB9002DA0AF /* Views */,
 				5805CA2324389D20002AFA1B /* Workers */,
 				58B5FD782419280100DB857D /* HomeViewControllerTests.swift */,
 				58B5FD792419280100DB857D /* HomeInteractorTests.swift */,
@@ -4085,6 +4124,7 @@
 				5805CA712438A344002AFA1B /* DexcomG6SensorDataTxMessageTests.swift in Sources */,
 				5805CA672438A2B7002AFA1B /* DexcomG6MessageWorkerTests.swift in Sources */,
 				580E4CC5243F789D00565EDE /* SettingsPenUserPresenterTests.swift in Sources */,
+				0A216CC824A50BE4002DA0AF /* GlucoseCurrentInfoViewTests.swift in Sources */,
 				580E4C72243F77A800565EDE /* NightscoutCloudConfigurationPresenterTests.swift in Sources */,
 				5805CA472438A06A002AFA1B /* InitialSetupG6WarmUpViewControllerTests.swift in Sources */,
 				58B5FD5D241922DC00DB857D /* RootRouterTests.swift in Sources */,
@@ -4134,6 +4174,7 @@
 				580E4C95243F781500565EDE /* SettingsModeFollowerInteractorTests.swift in Sources */,
 				5805CA6B2438A2EE002AFA1B /* DexcomG6CharacteristicTypeTests.swift in Sources */,
 				5805CA952438A5F3002AFA1B /* CGMDeviceTypeTests.swift in Sources */,
+				0A216CD324A5F718002DA0AF /* GlucoseCurrentInfoViewMirror.swift in Sources */,
 				580E4CD7243F78CB00565EDE /* SettingsUnitsPresenterTests.swift in Sources */,
 				5805CA572438A148002AFA1B /* InitialSetupViewControllerTests.swift in Sources */,
 				5805CA3224389F09002AFA1B /* InitialSetupGenericStepWorkerTests.swift in Sources */,
@@ -4141,6 +4182,7 @@
 				58B5FD9B24192E5A00DB857D /* SettingsRootRouterTests.swift in Sources */,
 				580EC7C72421525300C34948 /* EditCalibrationInteractorTests.swift in Sources */,
 				5844326A243CF95300282A6C /* AlertSettingsTests.swift in Sources */,
+				0A216CCA24A52AE0002DA0AF /* NibViewTests.swift in Sources */,
 				58B5FD9024192BB200DB857D /* HistoryRootViewControllerTests.swift in Sources */,
 				580EC79B24214D1200C34948 /* EntriesListInteractorTests.swift in Sources */,
 				58A8A41F24251F0300CCFCAC /* UserDeviceModeTests.swift in Sources */,
@@ -4173,6 +4215,7 @@
 				58788B7A24264AC2000EB113 /* AbstractEntriesWorkerTests.swift in Sources */,
 				5805CA2524389D32002AFA1B /* HomeGlucoseDataWorkerTests.swift in Sources */,
 				5805CAA02438A6D1002AFA1B /* LogControllerTests.swift in Sources */,
+				0A216CD524A5F7BE002DA0AF /* HomeViewControllerMirror.swift in Sources */,
 				5805CA432438A041002AFA1B /* InitialSetupInjectionTypeViewControllerTests.swift in Sources */,
 				580E4C56243F774C00565EDE /* SettingsAlertSingleTypePresenterTests.swift in Sources */,
 				2C493C39244EFF0400F4A54B /* PickerExpandableTableViewCellTests.swift in Sources */,
@@ -4259,6 +4302,7 @@
 				580E4CCD243F78B300565EDE /* SettingsPumpUserRouterTests.swift in Sources */,
 				580E4CD6243F78CB00565EDE /* SettingsUnitsRouterTests.swift in Sources */,
 				580EC7C82421525300C34948 /* EditCalibrationRouterTests.swift in Sources */,
+				0A216CD124A5EBFF002DA0AF /* MirrorObject.swift in Sources */,
 				580E4C67243F779500565EDE /* SettingsCloudTypesInteractorTests.swift in Sources */,
 				5805CA632438A269002AFA1B /* DexcomG6OpCodeTests.swift in Sources */,
 				58B5FD9924192E5A00DB857D /* SettingsRootViewControllerTests.swift in Sources */,

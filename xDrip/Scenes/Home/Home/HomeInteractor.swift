@@ -72,6 +72,6 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     
     private func updateGlucoseCurrentInfo() {
         let response = Home.GlucoseCurrentInfo.Response(lastGlucoseReading: glucoseDataWorker.fetchLastGlucoseReading())
-        self.presenter?.presentGlucoseCurrentInfo(response: response)
+        presenter?.presentGlucoseCurrentInfo(response: response)
     }
 }
