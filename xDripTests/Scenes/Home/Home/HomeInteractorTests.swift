@@ -41,6 +41,7 @@ final class HomeInteractorTests: XCTestCase {
     
     final class HomePresentationLogicSpy: HomePresentationLogic {
         var presentLoadCalled = false
+        var presentGlucoseCurrentInfoCalled = false
         
         func presentLoad(response: Home.Load.Response) {
             presentLoadCalled = true
@@ -50,6 +51,10 @@ final class HomeInteractorTests: XCTestCase {
         }
         
         func presentGlucoseChartTimeFrameChange(response: Home.ChangeGlucoseChartTimeFrame.Response) {
+        }
+        
+        func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
+            presentGlucoseCurrentInfoCalled = true
         }
     }
     
@@ -79,6 +84,7 @@ final class HomeInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+        XCTAssertTrue(spy.presentGlucoseCurrentInfoCalled)
     }
     
     func testDoShowEntriesList() {

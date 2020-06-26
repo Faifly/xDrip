@@ -347,4 +347,8 @@ final class GlucoseReading: Object {
             }
         }
     }
+    
+    func activeSlope(date: Date = Date()) -> Double {
+        return 2 * a * date.timeIntervalSince1970 + b
+    }
 }

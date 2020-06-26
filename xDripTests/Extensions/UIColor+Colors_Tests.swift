@@ -28,5 +28,26 @@ class UIColor_Colors_Tests: XCTestCase {
         
         XCTAssert(UIColor.Colors.tabBarRed.rawValue == "tabBarRed")
         _ = UIColor.tabBarRedColor
+        
+        XCTAssert(UIColor.Colors.lastScanDateTextColor.rawValue == "lastScanDateTextColor")
+        _ = UIColor.lastScanDateTextColor
+        
+        // Given
+        let diffTextColor: UIColor = .diffTextColor
+        let chartValueNormal: UIColor = .chartValueNormal
+        // When
+        let comparisonResult = diffTextColor.isEqual(chartValueNormal)
+        // Then
+        XCTAssert(comparisonResult)
+    }
+    
+    func testColorForSeverityLevel() {
+        let normalColor = UIColor.colorForSeverityLevel(.normal)
+        let abnormalColor = UIColor.colorForSeverityLevel(.abnormal)
+        let criticalColor = UIColor.colorForSeverityLevel(.critical)
+
+        XCTAssert(normalColor.isEqual(UIColor.chartValueNormal))
+        XCTAssert(abnormalColor.isEqual(UIColor.chartValueAbnormal))
+        XCTAssert(criticalColor.isEqual(UIColor.chartValueCritical))
     }
 }
