@@ -21,6 +21,7 @@ protocol RootRoutingLogic {
     func routeToAddFood()
     func routeToAddBolus()
     func routeToAddCarbs()
+    func routeToAddTraining()
     func routeToInitialSetup()
     
     func showCalibrationError(title: String, message: String)
@@ -75,6 +76,11 @@ final class RootRouter: RootRoutingLogic, RootDataPassing {
     
     func routeToAddCarbs() {
         routeToAddEntry(entryType: .carbs)
+    }
+    
+    func routeToAddTraining() {
+        let editTrainingViewController =  EditTrainingViewController()
+        presentViewController(editTrainingViewController)
     }
     
     func routeToInitialSetup() {

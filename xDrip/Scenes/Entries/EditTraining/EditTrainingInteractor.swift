@@ -14,19 +14,86 @@ import UIKit
 
 protocol EditTrainingBusinessLogic {
     func doLoad(request: EditTraining.Load.Request)
+    func doCancel(request: EditTraining.Cancel.Request)
+    func doSave(request: EditTraining.Done.Request)
 }
 
 protocol EditTrainingDataStore: AnyObject {
+    var mode: EditTraining.Mode { get set }
 }
 
 final class EditTrainingInteractor: EditTrainingBusinessLogic, EditTrainingDataStore {
+    private struct LocalTraining {
+        var duration = TimeInterval()
+        var intensity = TrainingIntensity.default
+        var date = Date()
+    }
+    
     var presenter: EditTrainingPresentationLogic?
     var router: EditTrainingRoutingLogic?
+    var mode: EditTraining.Mode = .create
+    
+    private var localTraining = LocalTraining()
     
     // MARK: Do something
     
     func doLoad(request: EditTraining.Load.Request) {
-        let response = EditTraining.Load.Response()
+        let trainingEntry: TrainingEntry?
+        
+        switch mode {
+        case .edit(let entry):
+            localTraining.duration = entry.duration
+            localTraining.intensity = entry.intensity
+            localTraining.date = entry.date ?? Date()
+            trainingEntry = entry
+        default:
+            trainingEntry = nil
+        }
+        
+        let response = EditTraining.Load.Response(
+            trainingEntry: trainingEntry,
+            dateChangedHandler: handleDateChanged(_:),
+            timeIntervalChangedHandler: handleDurationChanged(_:),
+            trainingIntensityChangedHandler: handleIntensityChanged(_:)
+        )
         presenter?.presentLoad(response: response)
+    }
+    
+    func doCancel(request: EditTraining.Cancel.Request) {
+        router?.dismissSelf()
+    }
+    
+    func doSave(request: EditTraining.Done.Request) {
+        switch mode {
+        case .create:
+            TrainingEntriesWorker.addTraining(
+                duration: localTraining.duration,
+                intensity: localTraining.intensity,
+                date: localTraining.date
+            )
+        case .edit(let entry):
+            if entry.duration != localTraining.duration ||
+                entry.intensity != localTraining.intensity ||
+                entry.date != localTraining.date {
+                entry.update(
+                    duration: localTraining.duration,
+                    intensity: localTraining.intensity,
+                    date: localTraining.date
+                )
+            }
+        }
+        router?.dismissSelf()
+    }
+    
+    private func handleDateChanged(_ date: Date) {
+        localTraining.date = date
+    }
+    
+    private func handleDurationChanged(_ duration: TimeInterval) {
+        localTraining.duration = duration
+    }
+    
+    private func handleIntensityChanged(_ intensity: TrainingIntensity) {
+        localTraining.intensity = intensity
     }
 }

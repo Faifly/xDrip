@@ -461,7 +461,6 @@
 		58161A43247931C70023FF76 /* DexcomG6Firmware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58161A42247931C70023FF76 /* DexcomG6Firmware.swift */; };
 		58184A472438BE8E00E848C6 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A462438BE8E00E848C6 /* RootViewController.xib */; };
 		58184A4B2438C20D00E848C6 /* EntriesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A4A2438C20D00E848C6 /* EntriesListViewController.xib */; };
-		58184A4D2438C30500E848C6 /* EditTrainingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A4C2438C30500E848C6 /* EditTrainingViewController.xib */; };
 		58184A512438C36700E848C6 /* StatsRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A502438C36700E848C6 /* StatsRootViewController.xib */; };
 		58184A532438C51100E848C6 /* HistoryRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A522438C51100E848C6 /* HistoryRootViewController.xib */; };
 		58184A572438C64100E848C6 /* EntriesListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58184A562438C64100E848C6 /* EntriesListTableViewCell.xib */; };
@@ -1108,7 +1107,6 @@
 		58161A42247931C70023FF76 /* DexcomG6Firmware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6Firmware.swift; sourceTree = "<group>"; };
 		58184A462438BE8E00E848C6 /* RootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		58184A4A2438C20D00E848C6 /* EntriesListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntriesListViewController.xib; sourceTree = "<group>"; };
-		58184A4C2438C30500E848C6 /* EditTrainingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditTrainingViewController.xib; sourceTree = "<group>"; };
 		58184A502438C36700E848C6 /* StatsRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsRootViewController.xib; sourceTree = "<group>"; };
 		58184A522438C51100E848C6 /* HistoryRootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryRootViewController.xib; sourceTree = "<group>"; };
 		58184A562438C64100E848C6 /* EntriesListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EntriesListTableViewCell.xib; sourceTree = "<group>"; };
@@ -2696,7 +2694,6 @@
 				580EC7A4242151BC00C34948 /* EditTrainingRouter.swift */,
 				580EC7A5242151BC00C34948 /* EditTrainingModels.swift */,
 				580EC7A6242151BC00C34948 /* EditTrainingViewController.swift */,
-				58184A4C2438C30500E848C6 /* EditTrainingViewController.xib */,
 				580EC7A7242151BC00C34948 /* EditTrainingInteractor.swift */,
 			);
 			path = EditTraining;
@@ -3666,7 +3663,6 @@
 				58184A4B2438C20D00E848C6 /* EntriesListViewController.xib in Resources */,
 				2C4E7EFD24694F440062D403 /* Telegraph.caf in Resources */,
 				58184A572438C64100E848C6 /* EntriesListTableViewCell.xib in Resources */,
-				58184A4D2438C30500E848C6 /* EditTrainingViewController.xib in Resources */,
 				5805CA0C243892D6002AFA1B /* InitialSetupIntroViewController.xib in Resources */,
 				2C4E7EF124694F440062D403 /* Minuet.caf in Resources */,
 				2C4E7EF624694F440062D403 /* Bloom.caf in Resources */,
