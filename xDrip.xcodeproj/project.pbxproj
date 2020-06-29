@@ -153,7 +153,6 @@
 		5805CA03243892D6002AFA1B /* InitialSetupG6WarmUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C9D8243892D6002AFA1B /* InitialSetupG6WarmUpViewController.xib */; };
 		5805CA04243892D6002AFA1B /* InitialSetupG6WarmUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C9D9243892D6002AFA1B /* InitialSetupG6WarmUpViewController.swift */; };
 		5805CA05243892D6002AFA1B /* InitialSetupG6ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C9DB243892D6002AFA1B /* InitialSetupG6ConnectViewController.swift */; };
-		5805CA06243892D6002AFA1B /* InitialSetupG6ConnectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C9DC243892D6002AFA1B /* InitialSetupG6ConnectViewController.xib */; };
 		5805CA07243892D6002AFA1B /* InitialSetupG6SensorAgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C9DE243892D6002AFA1B /* InitialSetupG6SensorAgeViewController.swift */; };
 		5805CA08243892D6002AFA1B /* InitialSetupG6SensorAgeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C9DF243892D6002AFA1B /* InitialSetupG6SensorAgeViewController.xib */; };
 		5805CA09243892D6002AFA1B /* InitialSetupG6DeviceIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C9E1243892D6002AFA1B /* InitialSetupG6DeviceIDViewController.swift */; };
@@ -161,13 +160,9 @@
 		5805CA0B243892D6002AFA1B /* InitialSetupAbstractStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C9E3243892D6002AFA1B /* InitialSetupAbstractStepViewController.swift */; };
 		5805CA0C243892D6002AFA1B /* InitialSetupIntroViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C9E6243892D6002AFA1B /* InitialSetupIntroViewController.xib */; };
 		5805CA0D243892D6002AFA1B /* InitialSetupIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C9E7243892D6002AFA1B /* InitialSetupIntroViewController.swift */; };
-		5805CA0E243892D6002AFA1B /* InitialSetupSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C9E9243892D6002AFA1B /* InitialSetupSettingsViewController.xib */; };
 		5805CA0F243892D6002AFA1B /* InitialSetupSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C9EA243892D6002AFA1B /* InitialSetupSettingsViewController.swift */; };
-		5805CA10243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C9EC243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.xib */; };
 		5805CA11243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C9ED243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.swift */; };
-		5805CA12243892D6002AFA1B /* InitialSetupDeviceModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C9EF243892D6002AFA1B /* InitialSetupDeviceModeViewController.xib */; };
 		5805CA13243892D6002AFA1B /* InitialSetupDeviceModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C9F0243892D6002AFA1B /* InitialSetupDeviceModeViewController.swift */; };
-		5805CA14243892D6002AFA1B /* InitialSetupInjectionTypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C9F2243892D6002AFA1B /* InitialSetupInjectionTypeViewController.xib */; };
 		5805CA15243892D6002AFA1B /* InitialSetupInjectionTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C9F3243892D6002AFA1B /* InitialSetupInjectionTypeViewController.swift */; };
 		5805CA16243892D6002AFA1B /* DexcomG6SerialSavingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C9F6243892D6002AFA1B /* DexcomG6SerialSavingWorker.swift */; };
 		5805CA17243892D6002AFA1B /* InitialSetupDexcomG6SensorAgeWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C9F7243892D6002AFA1B /* InitialSetupDexcomG6SensorAgeWorker.swift */; };
@@ -639,6 +634,14 @@
 		58FE4CB7247958DF00511B80 /* CGMDeviceResistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CB6247958DF00511B80 /* CGMDeviceResistance.swift */; };
 		58FE4CB924796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CB824796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift */; };
 		58FE4CBB247970BE00511B80 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CBA247970BE00511B80 /* NotificationController.swift */; };
+		58FFBC1D24A5EC2C003D2DE6 /* LocalizedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC1C24A5EC2C003D2DE6 /* LocalizedLabel.swift */; };
+		58FFBC1F24A5ECEA003D2DE6 /* LocalizedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC1E24A5ECEA003D2DE6 /* LocalizedButton.swift */; };
+		58FFBC2124A5ED5F003D2DE6 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC2024A5ED5F003D2DE6 /* ActionButton.swift */; };
+		58FFBC2424A61F42003D2DE6 /* InitialSetupNightscoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC2324A61F42003D2DE6 /* InitialSetupNightscoutViewController.swift */; };
+		58FFBC2924A756CF003D2DE6 /* InitialSetupWarmUpWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC2824A756CF003D2DE6 /* InitialSetupWarmUpWorker.swift */; };
+		58FFBC2F24A765F2003D2DE6 /* InitialSetupFinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC2D24A765F2003D2DE6 /* InitialSetupFinishViewController.swift */; };
+		58FFBC3024A765F2003D2DE6 /* InitialSetupFinishViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FFBC2E24A765F2003D2DE6 /* InitialSetupFinishViewController.xib */; };
+		58FFBC3224AA1A4A003D2DE6 /* LocalizedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC3124AA1A4A003D2DE6 /* LocalizedTextField.swift */; };
 		58FFBC1B24A49EBC003D2DE6 /* CCalibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */; };
 /* End PBXBuildFile section */
 
@@ -799,7 +802,6 @@
 		5805C9D8243892D6002AFA1B /* InitialSetupG6WarmUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialSetupG6WarmUpViewController.xib; sourceTree = "<group>"; };
 		5805C9D9243892D6002AFA1B /* InitialSetupG6WarmUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSetupG6WarmUpViewController.swift; sourceTree = "<group>"; };
 		5805C9DB243892D6002AFA1B /* InitialSetupG6ConnectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSetupG6ConnectViewController.swift; sourceTree = "<group>"; };
-		5805C9DC243892D6002AFA1B /* InitialSetupG6ConnectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialSetupG6ConnectViewController.xib; sourceTree = "<group>"; };
 		5805C9DE243892D6002AFA1B /* InitialSetupG6SensorAgeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSetupG6SensorAgeViewController.swift; sourceTree = "<group>"; };
 		5805C9DF243892D6002AFA1B /* InitialSetupG6SensorAgeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialSetupG6SensorAgeViewController.xib; sourceTree = "<group>"; };
 		5805C9E1243892D6002AFA1B /* InitialSetupG6DeviceIDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSetupG6DeviceIDViewController.swift; sourceTree = "<group>"; };
@@ -807,13 +809,9 @@
 		5805C9E3243892D6002AFA1B /* InitialSetupAbstractStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSetupAbstractStepViewController.swift; sourceTree = "<group>"; };
 		5805C9E6243892D6002AFA1B /* InitialSetupIntroViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialSetupIntroViewController.xib; sourceTree = "<group>"; };
 		5805C9E7243892D6002AFA1B /* InitialSetupIntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSetupIntroViewController.swift; sourceTree = "<group>"; };
-		5805C9E9243892D6002AFA1B /* InitialSetupSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialSetupSettingsViewController.xib; sourceTree = "<group>"; };
 		5805C9EA243892D6002AFA1B /* InitialSetupSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSetupSettingsViewController.swift; sourceTree = "<group>"; };
-		5805C9EC243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialSetupTransmitterTypeViewController.xib; sourceTree = "<group>"; };
 		5805C9ED243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSetupTransmitterTypeViewController.swift; sourceTree = "<group>"; };
-		5805C9EF243892D6002AFA1B /* InitialSetupDeviceModeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialSetupDeviceModeViewController.xib; sourceTree = "<group>"; };
 		5805C9F0243892D6002AFA1B /* InitialSetupDeviceModeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSetupDeviceModeViewController.swift; sourceTree = "<group>"; };
-		5805C9F2243892D6002AFA1B /* InitialSetupInjectionTypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialSetupInjectionTypeViewController.xib; sourceTree = "<group>"; };
 		5805C9F3243892D6002AFA1B /* InitialSetupInjectionTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSetupInjectionTypeViewController.swift; sourceTree = "<group>"; };
 		5805C9F6243892D6002AFA1B /* DexcomG6SerialSavingWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DexcomG6SerialSavingWorker.swift; sourceTree = "<group>"; };
 		5805C9F7243892D6002AFA1B /* InitialSetupDexcomG6SensorAgeWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialSetupDexcomG6SensorAgeWorker.swift; sourceTree = "<group>"; };
@@ -1299,6 +1297,14 @@
 		58FE4CB6247958DF00511B80 /* CGMDeviceResistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMDeviceResistance.swift; sourceTree = "<group>"; };
 		58FE4CB824796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6KeepAliveTxMessage.swift; sourceTree = "<group>"; };
 		58FE4CBA247970BE00511B80 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		58FFBC1C24A5EC2C003D2DE6 /* LocalizedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedLabel.swift; sourceTree = "<group>"; };
+		58FFBC1E24A5ECEA003D2DE6 /* LocalizedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedButton.swift; sourceTree = "<group>"; };
+		58FFBC2024A5ED5F003D2DE6 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		58FFBC2324A61F42003D2DE6 /* InitialSetupNightscoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupNightscoutViewController.swift; sourceTree = "<group>"; };
+		58FFBC2824A756CF003D2DE6 /* InitialSetupWarmUpWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupWarmUpWorker.swift; sourceTree = "<group>"; };
+		58FFBC2D24A765F2003D2DE6 /* InitialSetupFinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupFinishViewController.swift; sourceTree = "<group>"; };
+		58FFBC2E24A765F2003D2DE6 /* InitialSetupFinishViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupFinishViewController.xib; sourceTree = "<group>"; };
+		58FFBC3124AA1A4A003D2DE6 /* LocalizedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedTextField.swift; sourceTree = "<group>"; };
 		58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCalibration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1673,10 +1679,10 @@
 		5805C9D6243892D6002AFA1B /* G6 */ = {
 			isa = PBXGroup;
 			children = (
-				5805C9D7243892D6002AFA1B /* InitialSetupG6WarmUpViewController */,
-				5805C9DA243892D6002AFA1B /* InitialSetupG6ConnectViewController */,
-				5805C9DD243892D6002AFA1B /* InitialSetupG6SensorAgeViewController */,
 				5805C9E0243892D6002AFA1B /* InitialSetupG6DeviceIDViewController */,
+				5805C9DD243892D6002AFA1B /* InitialSetupG6SensorAgeViewController */,
+				5805C9DA243892D6002AFA1B /* InitialSetupG6ConnectViewController */,
+				5805C9D7243892D6002AFA1B /* InitialSetupG6WarmUpViewController */,
 			);
 			path = G6;
 			sourceTree = "<group>";
@@ -1694,7 +1700,6 @@
 			isa = PBXGroup;
 			children = (
 				5805C9DB243892D6002AFA1B /* InitialSetupG6ConnectViewController.swift */,
-				5805C9DC243892D6002AFA1B /* InitialSetupG6ConnectViewController.xib */,
 			);
 			path = InitialSetupG6ConnectViewController;
 			sourceTree = "<group>";
@@ -1721,10 +1726,12 @@
 			isa = PBXGroup;
 			children = (
 				5805C9E5243892D6002AFA1B /* InitialSetupIntroViewController */,
-				5805C9E8243892D6002AFA1B /* InitialSetupSettingsViewController */,
-				5805C9EB243892D6002AFA1B /* InitialSetupTransmitterTypeViewController */,
 				5805C9EE243892D6002AFA1B /* InitialSetupDeviceModeViewController */,
 				5805C9F1243892D6002AFA1B /* InitialSetupInjectionTypeViewController */,
+				5805C9E8243892D6002AFA1B /* InitialSetupSettingsViewController */,
+				58FFBC2224A61EDB003D2DE6 /* InitialSetupNightscoutViewController */,
+				5805C9EB243892D6002AFA1B /* InitialSetupTransmitterTypeViewController */,
+				58FFBC2A24A76566003D2DE6 /* InitialSetupFinishViewController */,
 			);
 			path = Generic;
 			sourceTree = "<group>";
@@ -1742,7 +1749,6 @@
 			isa = PBXGroup;
 			children = (
 				5805C9EA243892D6002AFA1B /* InitialSetupSettingsViewController.swift */,
-				5805C9E9243892D6002AFA1B /* InitialSetupSettingsViewController.xib */,
 			);
 			path = InitialSetupSettingsViewController;
 			sourceTree = "<group>";
@@ -1751,7 +1757,6 @@
 			isa = PBXGroup;
 			children = (
 				5805C9ED243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.swift */,
-				5805C9EC243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.xib */,
 			);
 			path = InitialSetupTransmitterTypeViewController;
 			sourceTree = "<group>";
@@ -1760,7 +1765,6 @@
 			isa = PBXGroup;
 			children = (
 				5805C9F0243892D6002AFA1B /* InitialSetupDeviceModeViewController.swift */,
-				5805C9EF243892D6002AFA1B /* InitialSetupDeviceModeViewController.xib */,
 			);
 			path = InitialSetupDeviceModeViewController;
 			sourceTree = "<group>";
@@ -1769,7 +1773,6 @@
 			isa = PBXGroup;
 			children = (
 				5805C9F3243892D6002AFA1B /* InitialSetupInjectionTypeViewController.swift */,
-				5805C9F2243892D6002AFA1B /* InitialSetupInjectionTypeViewController.xib */,
 			);
 			path = InitialSetupInjectionTypeViewController;
 			sourceTree = "<group>";
@@ -1780,6 +1783,7 @@
 				5805C9F5243892D6002AFA1B /* DexcomG6 */,
 				5805C9F9243892D6002AFA1B /* InitialSetupG6StepWorker.swift */,
 				5805C9FA243892D6002AFA1B /* InitialSetupGenericStepWorker.swift */,
+				58FFBC2824A756CF003D2DE6 /* InitialSetupWarmUpWorker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -2818,6 +2822,10 @@
 				580E4CFA2441BF2100565EDE /* Charts */,
 				5805C9C92438929E002AFA1B /* CenteredTitleButton.swift */,
 				2C1DE8A7247938780023B512 /* CustomAlertController.swift */,
+				58FFBC1C24A5EC2C003D2DE6 /* LocalizedLabel.swift */,
+				58FFBC1E24A5ECEA003D2DE6 /* LocalizedButton.swift */,
+				58FFBC2024A5ED5F003D2DE6 /* ActionButton.swift */,
+				58FFBC3124AA1A4A003D2DE6 /* LocalizedTextField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -3540,7 +3548,24 @@
 				58828B8F2492876C001D4C3E /* CGlucoseReading.swift */,
 				58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */,
 			);
+			sourceTree = "<group>";
 			path = Codables;
+		};
+		58FFBC2224A61EDB003D2DE6 /* InitialSetupNightscoutViewController */ = {
+			isa = PBXGroup;
+			children = (
+				58FFBC2324A61F42003D2DE6 /* InitialSetupNightscoutViewController.swift */,
+			);
+			path = InitialSetupNightscoutViewController;
+			sourceTree = "<group>";
+		};
+		58FFBC2A24A76566003D2DE6 /* InitialSetupFinishViewController */ = {
+			isa = PBXGroup;
+			children = (
+				58FFBC2D24A765F2003D2DE6 /* InitialSetupFinishViewController.swift */,
+				58FFBC2E24A765F2003D2DE6 /* InitialSetupFinishViewController.xib */,
+			);
+			path = InitialSetupFinishViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3659,7 +3684,6 @@
 				2C4E7F0424694F440062D403 /* Ladder.caf in Resources */,
 				2C4ABEF3248A555C001ED694 /* EmojiInputCell.xib in Resources */,
 				589EA8D4247700AF00515BCC /* BaseSettingsButtonCell.xib in Resources */,
-				5805CA0E243892D6002AFA1B /* InitialSetupSettingsViewController.xib in Resources */,
 				2C4E7EF224694F440062D403 /* Tiptoes.caf in Resources */,
 				2C4E7F0724694F440062D403 /* Chime.caf in Resources */,
 				2C1DE8A624792DEF0023B512 /* PopUpViewController.xib in Resources */,
@@ -3677,10 +3701,9 @@
 				2C581C63248E5EAD008A1F34 /* EmojiInputFooterView.xib in Resources */,
 				2C4E7EF824694F440062D403 /* Spell.caf in Resources */,
 				5805CA03243892D6002AFA1B /* InitialSetupG6WarmUpViewController.xib in Resources */,
-				5805CA06243892D6002AFA1B /* InitialSetupG6ConnectViewController.xib in Resources */,
+				58FFBC3024A765F2003D2DE6 /* InitialSetupFinishViewController.xib in Resources */,
 				5805CA08243892D6002AFA1B /* InitialSetupG6SensorAgeViewController.xib in Resources */,
 				2C4E7EF024694F440062D403 /* News_Flash.caf in Resources */,
-				5805CA14243892D6002AFA1B /* InitialSetupInjectionTypeViewController.xib in Resources */,
 				2C4E7F0124694F440062D403 /* Electronic.caf in Resources */,
 				58B4F67F24114938003C6D8F /* GoogleService-Info.plist in Resources */,
 				0A895424249CE71A0067601F /* GlucoseCurrentInfoView.xib in Resources */,
@@ -3697,7 +3720,6 @@
 				2C09D2172441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.xib in Resources */,
 				2C4E7EF524694F440062D403 /* Typewriters.caf in Resources */,
 				5871C1C624816EBA00B79ACF /* StartSensorViewController.xib in Resources */,
-				5805CA12243892D6002AFA1B /* InitialSetupDeviceModeViewController.xib in Resources */,
 				58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */,
 				2C4E7F0924694F440062D403 /* Swoosh.caf in Resources */,
 				2C467FCD247E6884006D651D /* ChartRangesHeaderView.xib in Resources */,
@@ -3711,7 +3733,6 @@
 				2C4E7EFC24694F440062D403 /* Suspense.caf in Resources */,
 				2C4E7F0024694F440062D403 /* Calypso.caf in Resources */,
 				2C4E7EF324694F440062D403 /* Sherwood_Forest.caf in Resources */,
-				5805CA10243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.xib in Resources */,
 				5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */,
 				2C4ABEFF248A5FEA001ED694 /* FoodTypeTableViewCell.xib in Resources */,
 				2C4E7F0324694F440062D403 /* Noir.caf in Resources */,
@@ -3751,7 +3772,7 @@
 		};
 		58B4F6CE241164E4003C6D8F /* Localization */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -3811,6 +3832,7 @@
 				58F4CC84243BA2110053D17C /* DebugLogRouter.swift in Sources */,
 				5805C9A424389230002AFA1B /* DexcomG6AuthRequestTxMessage.swift in Sources */,
 				5805C9C724389275002AFA1B /* LogController.swift in Sources */,
+				58FFBC2424A61F42003D2DE6 /* InitialSetupNightscoutViewController.swift in Sources */,
 				58B853422448CAA80045F30A /* GlucoseChartGlucoseEntry.swift in Sources */,
 				580EC79324214CDD00C34948 /* EntriesListViewController.swift in Sources */,
 				589EA8D72478359200515BCC /* DexcomG6ResetTxMessage.swift in Sources */,
@@ -3819,6 +3841,7 @@
 				58160DF32402C7F600C792F4 /* RootRouter.swift in Sources */,
 				580E4BA6243F723200565EDE /* NightscoutCloudExtraOptionsPresenter.swift in Sources */,
 				2C493C25244B164800F4A54B /* CustomPickerView.swift in Sources */,
+				58FFBC3224AA1A4A003D2DE6 /* LocalizedTextField.swift in Sources */,
 				5805C9A824389230002AFA1B /* DexcomG6FirmwareVersionTxMessage.swift in Sources */,
 				58DDC4602423C9EF008CB04D /* TrainingIntensity.swift in Sources */,
 				580E4C07243F746F00565EDE /* SettingsUserTypeRootInteractor.swift in Sources */,
@@ -3859,6 +3882,7 @@
 				580E4C13243F748500565EDE /* SettingsPenUserViewController.swift in Sources */,
 				589FD948247065EB004C01A4 /* RealmUtils.swift in Sources */,
 				58B5FD53241910BD00DB857D /* SettingsRootRouter.swift in Sources */,
+				58FFBC2F24A765F2003D2DE6 /* InitialSetupFinishViewController.swift in Sources */,
 				58B5FD4724190EB300DB857D /* HistoryRootPresenter.swift in Sources */,
 				584432AE243CFD9B00282A6C /* SettingsChartInteractor.swift in Sources */,
 				5805C9AE24389230002AFA1B /* DexcomG6TransmitterVersionRxMessage.swift in Sources */,
@@ -3938,6 +3962,7 @@
 				580E4BAA243F723200565EDE /* NightscoutCloudExtraOptionsInteractor.swift in Sources */,
 				5805CA0D243892D6002AFA1B /* InitialSetupIntroViewController.swift in Sources */,
 				580E4B80243F717E00565EDE /* SettingsAlertSoundModels.swift in Sources */,
+				58FFBC2124A5ED5F003D2DE6 /* ActionButton.swift in Sources */,
 				580EC7812421457700C34948 /* EditFoodEntryInteractor.swift in Sources */,
 				5805C9AB24389230002AFA1B /* DexcomG6AuthChallengeRxMessage.swift in Sources */,
 				580E4CF42440D24800565EDE /* BaseChartView.swift in Sources */,
@@ -3993,6 +4018,7 @@
 				580EC7AA242151BC00C34948 /* EditTrainingModels.swift in Sources */,
 				2CBE1A8D243211A5003BE14E /* EntriesListSceneBuilder.swift in Sources */,
 				580E4BDE243F739C00565EDE /* SettingsTransmitterViewController.swift in Sources */,
+				58FFBC2924A756CF003D2DE6 /* InitialSetupWarmUpWorker.swift in Sources */,
 				580E4CF02440BC0300565EDE /* MockedBluetoothService.swift in Sources */,
 				2CBE1A902432127C003BE14E /* EntriesListCarbsPersistenceWorker.swift in Sources */,
 				2C4ABEFE248A5FEA001ED694 /* FoodTypeTableViewCell.swift in Sources */,
@@ -4026,6 +4052,7 @@
 				2C09D22B24447D3D008538E9 /* SettingsSplitViewController.swift in Sources */,
 				580E4BCF243F736D00565EDE /* SettingsModeFollowerRouter.swift in Sources */,
 				58F4CC87243BA2110053D17C /* DebugLogInteractor.swift in Sources */,
+				58FFBC1D24A5EC2C003D2DE6 /* LocalizedLabel.swift in Sources */,
 				5805CA1F243892D6002AFA1B /* InitialSetupStep.swift in Sources */,
 				580EC7A8242151BC00C34948 /* EditTrainingPresenter.swift in Sources */,
 				5805CA13243892D6002AFA1B /* InitialSetupDeviceModeViewController.swift in Sources */,
@@ -4039,6 +4066,7 @@
 				580E4BDC243F739C00565EDE /* SettingsTransmitterRouter.swift in Sources */,
 				58B5FD3324190E2F00DB857D /* HomeRouter.swift in Sources */,
 				2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */,
+				58FFBC1F24A5ECEA003D2DE6 /* LocalizedButton.swift in Sources */,
 				58160DF52402C7F600C792F4 /* RootViewController.swift in Sources */,
 				2C09D21224410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift in Sources */,
 				5805C9C02438925F002AFA1B /* CGMDeviceMetadataType.swift in Sources */,

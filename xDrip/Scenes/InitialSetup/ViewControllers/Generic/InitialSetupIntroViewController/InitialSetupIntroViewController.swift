@@ -9,6 +9,8 @@
 import UIKit
 
 final class InitialSetupIntroViewController: InitialSetupAbstractStepViewController {
+    @IBOutlet private weak var startFlowButton: UIButton!
+    
     @IBAction private func onBeginSetup() {
         let request = InitialSetup.BeginSetup.Request()
         interactor?.doBeginSetup(request: request)
@@ -17,5 +19,10 @@ final class InitialSetupIntroViewController: InitialSetupAbstractStepViewControl
     @IBAction private func onSkipSetup() {
         let request = InitialSetup.SkipSetup.Request()
         interactor?.doSkipSetup(request: request)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "initial_welcome_screen_title".localized
     }
 }

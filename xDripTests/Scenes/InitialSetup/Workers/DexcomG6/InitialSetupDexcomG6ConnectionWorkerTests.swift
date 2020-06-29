@@ -49,6 +49,9 @@ final class InitialSetupDexcomG6ConnectionWorkerTests: XCTestCase {
         XCTAssert(calledSuccessfulConnectionHandler == false)
         
         controller.serviceDidUpdateMetadata(.transmitterTime, value: "123123123")
+        XCTAssert(calledSuccessfulConnectionHandler == false)
+        
+        controller.serviceDidUpdateMetadata(.deviceName, value: "321")
         XCTAssert(calledSuccessfulConnectionHandler == true)
     }
 }

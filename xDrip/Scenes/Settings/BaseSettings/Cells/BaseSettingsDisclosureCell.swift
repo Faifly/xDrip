@@ -9,10 +9,29 @@
 import UIKit
 
 final class BaseSettingsDisclosureCell: UITableViewCell {
-    func configure(mainText: String, detailText: String?, showDisclosureIndicator: Bool, detailTextColor: UIColor?) {
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.frame = CGRect(x: 0.0, y: 0.0, width: 35.0, height: 35.0)
+        return indicator
+    }()
+    
+    func configure(mainText: String,
+                   detailText: String?,
+                   showDisclosureIndicator: Bool,
+                   detailTextColor: UIColor?,
+                   isLoading: Bool) {
         textLabel?.text = mainText
         detailTextLabel?.text = detailText
-        accessoryType = showDisclosureIndicator ? .disclosureIndicator : .none
+        if isLoading {
+            accessoryType = .none
+            activityIndicator.startAnimating()
+            accessoryView = activityIndicator
+        } else {
+            activityIndicator.stopAnimating()
+            accessoryView = nil
+            accessoryType = showDisclosureIndicator ? .disclosureIndicator : .none
+        }
         selectionStyle = showDisclosureIndicator ? .default : .none
         detailTextLabel?.textColor = detailTextColor ?? .mediumEmphasisText
     }

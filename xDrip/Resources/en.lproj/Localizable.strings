@@ -430,3 +430,74 @@ This setting will be applied to all future sensors";
 "initial_welcome_small_welcome_message" = "Seems like this is yout first time in xDrip. Do you want us to guide you through the initial setup process?";
 "initial_welcome_start_button" = "Begin Initial Setup";
 "initial_welcome_skip_button" = "Skip";
+
+// Initial Warm Up
+"initial_warmup_minutes_left" = "%.0f minutes";
+"initial_warmup_hour_minutes_left" = "1 hour %.0f minutes";
+"initial_warmup_screen_title" = "Setup is done";
+"initial_warmup_time_left_text" = "\n\nYou have started your sensor less than 2 hours ago. You have to wait %@ more to start receiving readings. If you don't want to wait, you can turn off the warm-up in settings.";
+
+// Initial device mode
+"initial_device_mode_screen_title" = "Device Mode";
+"initial_device_mode_master" = "Master";
+"initial_device_mode_follower" = "Follower";
+"initial_device_mode_section_footer" = "Select 'Master' if you want to receive readings from your own CGM device.\nSelect 'Follower' if you want to connect to a Nightscout server to receive remote data.";
+
+// Initial injection type
+"initial_injection_type_screen_title" = "Injection Type";
+"initial_injection_type_pen" = "Pen";
+"initial_injection_type_section_footer" = "Select your injection type. Only pen for now, pump option will be implemented soon.";
+
+// Initial settings
+"initial_settings_screen_title" = "Settings";
+"initial_settings_units_section_header" = "UNITS";
+"initial_settings_units_section_footer" = "Select a unit to be used accross the app.";
+"initial_settings_alerts_enabled" = "Enabled";
+"initial_settings_alerts_disabled" = "Disabled";
+"initial_settings_alerts_section_header" = "ALERTS";
+"initial_settings_alerts_section_footer" = "Alerts will notify you about missed glucose readings, fast drops and rises, urgent high or low glucose levels etc.\nYou can customize alerts later in settings.";
+"initial_settings_cloud_none" = "None";
+"initial_settings_cloud_nightscout" = "Nightscout";
+"initial_settings_cloud_section_header" = "Cloud Upload";
+"initial_settings_cloud_section_footer" = "By selecting Nightscout you will be prompted to enter connection details on the next screen.";
+
+// Initial nightscout
+"initial_nightscout_screen_title" = "Nightscout";
+
+// Initial transmitter type
+"initial_transmitter_type_screen_title" = "Transmitter Type";
+"initial_transmitter_type_dexcom_g6" = "Dexcom G6";
+"initial_transmitter_type_section_footer" = "Select your CGM device type. Only G6 for now, other devices will be added soon.";
+
+// Initial finish
+"initial_finish_text" = "You're now set up to use xDrip. Press the button below to continue to the home page and start using the app.";
+"initial_finish_button" = "Finish Setup";
+"initial_finish_screen_title" = "Setup Done";
+
+// Initial sensor age
+"initial_sensor_age_screen_title" = "Sensor";
+"initial_sensor_age_hint_label" = "Select a precise time and date when the sensor was inserted. This greatly affects the precision of readings";
+
+// Initial connect
+"initial_connect_screen_title" = "Transmitter";
+"initial_connect_continue_button" = "Continue";
+"initial_connect_device_name" = "Device name";
+"initial_connect_firmware" = "Firmware version";
+"initial_connect_battery_a" = "Battery level A";
+"initial_connect_battery_b" = "Battery level B";
+"initial_connect_transmitter_age" = "Transmitter age";
+"initial_connect_in_progress_section_header" = "CONNECTING...";
+"initial_connect_in_progress_section_footer" = "Please allow up to 30 minutes to connect to the transmitter. You may put the app into background for now.";
+"initial_connect_finished_section_header" = "CONNECTED!";
+"initial_connect_finished_section_footer" = "The connection has been established, you may proceed now.";
+
+// Initial transmitter ID
+"initial_transmitter_id_screen_title" = "Transmitter Serial";
+"initial_transmitter_id_top_text" = "Enter your transmitter serial number.\n\nYou can find it either on the transmitter box, or on the transmitter itself, like shown on the image below.";
+"initial_transmitter_id_textfield_placeholder" = "XXXXXX";
+"initial_transmitter_id_bottom_text" = "If you experience any issues finding the serial number, please refer to the official guide by tapping the button below";
+"initial_transmitter_id_open_guide_button" = "Open Guide";
+"initial_transmitter_id_guide_link" = "https://provider.dexcom.com/education-research/cgm-education-use/videos/how-replace-your-dexcom-g6-transmitter";
+"initial_transmitter_id_invalid_alert_title" = "Invalid format";
+"initial_transmitter_id_invalid_alert_message" = "Dexcom G6 serial number should contain 6 uppercased characters or digits";
+"initial_transmitter_id_invalid_alert_button" = "OK";

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,43 +19,64 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="moQ-st-E9j">
-                    <rect key="frame" x="16" y="84" width="382" height="81.5"/>
-                    <string key="text">Enter your device ID.
-
-Here should be a description and image of how and where to obtain it</string>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="initial_transmitter_id_top_text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="moQ-st-E9j" customClass="LocalizedLabel" customModule="xDrip" customModuleProvider="target">
+                    <rect key="frame" x="16" y="60" width="382" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Oku-oD-WcL">
-                    <rect key="frame" x="16" y="181.5" width="382" height="34"/>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="initial_transmitter_id_textfield_placeholder" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Oku-oD-WcL" customClass="LocalizedTextField" customModule="xDrip" customModuleProvider="target">
+                    <rect key="frame" x="16" y="300.5" width="382" height="34"/>
                     <accessibility key="accessibilityConfiguration" identifier="deviceIDTextField"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VpL-Sw-t8d">
-                    <rect key="frame" x="176" y="231.5" width="62" height="30"/>
-                    <accessibility key="accessibilityConfiguration" identifier="continueButton"/>
-                    <state key="normal" title="Continue"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="g6_transmitter_id" translatesAutoresizingMaskIntoConstraints="NO" id="vks-iV-nNx">
+                    <rect key="frame" x="16" y="100.5" width="382" height="180"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="180" id="D2q-Z6-H5z"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="initial_transmitter_id_bottom_text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6Y-zW-Znx" customClass="LocalizedLabel" customModule="xDrip" customModuleProvider="target">
+                    <rect key="frame" x="16" y="342.5" width="382" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2uT-0g-eoA" customClass="LocalizedButton" customModule="xDrip" customModuleProvider="target">
+                    <rect key="frame" x="16" y="371" width="382" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="mry-Ol-pVv"/>
+                    </constraints>
+                    <state key="normal" title="initial_transmitter_id_open_guide_button"/>
                     <connections>
-                        <action selector="onContinueTap" destination="-1" eventType="touchUpInside" id="3kj-xg-Swh"/>
+                        <action selector="onOpenGuide" destination="-1" eventType="touchUpInside" id="DIX-Db-7Tp"/>
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="Oku-oD-WcL" firstAttribute="top" secondItem="moQ-st-E9j" secondAttribute="bottom" constant="16" id="6Mn-KB-w3m"/>
+                <constraint firstItem="2uT-0g-eoA" firstAttribute="leading" secondItem="t7B-dk-cvY" secondAttribute="leading" constant="16" id="7Lf-Vd-iHg"/>
+                <constraint firstItem="2uT-0g-eoA" firstAttribute="top" secondItem="N6Y-zW-Znx" secondAttribute="bottom" constant="8" id="A1v-76-27e"/>
                 <constraint firstAttribute="trailing" secondItem="moQ-st-E9j" secondAttribute="trailing" constant="16" id="Cve-2m-RQ1"/>
-                <constraint firstItem="moQ-st-E9j" firstAttribute="top" secondItem="t7B-dk-cvY" secondAttribute="top" constant="40" id="G2Y-8g-qZq"/>
+                <constraint firstAttribute="trailing" secondItem="N6Y-zW-Znx" secondAttribute="trailing" constant="16" id="Eg0-de-dB6"/>
+                <constraint firstItem="moQ-st-E9j" firstAttribute="top" secondItem="t7B-dk-cvY" secondAttribute="top" constant="16" id="G2Y-8g-qZq"/>
+                <constraint firstItem="Oku-oD-WcL" firstAttribute="top" secondItem="vks-iV-nNx" secondAttribute="bottom" constant="20" id="GF4-Xy-j1j"/>
                 <constraint firstItem="moQ-st-E9j" firstAttribute="leading" secondItem="t7B-dk-cvY" secondAttribute="leading" constant="16" id="KCN-2B-aq4"/>
-                <constraint firstItem="VpL-Sw-t8d" firstAttribute="top" secondItem="Oku-oD-WcL" secondAttribute="bottom" constant="16" id="Vl5-gg-oH8"/>
-                <constraint firstItem="VpL-Sw-t8d" firstAttribute="centerX" secondItem="C3T-Qa-kBQ" secondAttribute="centerX" id="bZd-5E-dZz"/>
+                <constraint firstItem="t7B-dk-cvY" firstAttribute="trailing" secondItem="2uT-0g-eoA" secondAttribute="trailing" constant="16" id="ReU-DC-8qs"/>
+                <constraint firstItem="t7B-dk-cvY" firstAttribute="trailing" secondItem="vks-iV-nNx" secondAttribute="trailing" constant="16" id="eKz-he-aY2"/>
                 <constraint firstItem="t7B-dk-cvY" firstAttribute="trailing" secondItem="Oku-oD-WcL" secondAttribute="trailing" constant="16" id="fEw-LI-OS6"/>
+                <constraint firstItem="N6Y-zW-Znx" firstAttribute="leading" secondItem="t7B-dk-cvY" secondAttribute="leading" constant="16" id="mnl-4q-XGF"/>
+                <constraint firstItem="vks-iV-nNx" firstAttribute="leading" secondItem="t7B-dk-cvY" secondAttribute="leading" constant="16" id="n9h-os-ReW"/>
                 <constraint firstItem="Oku-oD-WcL" firstAttribute="leading" secondItem="t7B-dk-cvY" secondAttribute="leading" constant="16" id="pGs-Hw-c4p"/>
+                <constraint firstItem="vks-iV-nNx" firstAttribute="top" secondItem="moQ-st-E9j" secondAttribute="bottom" constant="20" id="poJ-j3-qOh"/>
+                <constraint firstItem="N6Y-zW-Znx" firstAttribute="top" secondItem="Oku-oD-WcL" secondAttribute="bottom" constant="8" id="qsa-Rf-9HL"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="t7B-dk-cvY"/>
-            <point key="canvasLocation" x="139" y="123"/>
+            <point key="canvasLocation" x="137.68115942028987" y="122.54464285714285"/>
         </view>
     </objects>
+    <resources>
+        <image name="g6_transmitter_id" width="872" height="414"/>
+    </resources>
 </document>
