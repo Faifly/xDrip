@@ -88,8 +88,14 @@ class EditTrainingViewController: BaseSettingsViewController, EditTrainingDispla
         )
         navigationItem.leftBarButtonItem = cancelButton
         
+        let rightItem: UIBarButtonItem.SystemItem
+        switch router?.dataStore?.mode {
+        case .edit: rightItem = .save
+        default: rightItem = .done
+        }
+        
         let doneButton = UIBarButtonItem(
-            barButtonSystemItem: .done,
+            barButtonSystemItem: rightItem,
             target: self,
             action: #selector(doSave)
         )

@@ -79,7 +79,7 @@ final class RootRouter: RootRoutingLogic, RootDataPassing {
     }
     
     func routeToAddTraining() {
-        let editTrainingViewController =  EditTrainingViewController()
+        let editTrainingViewController = EditTrainingViewController()
         presentViewController(editTrainingViewController)
     }
     
