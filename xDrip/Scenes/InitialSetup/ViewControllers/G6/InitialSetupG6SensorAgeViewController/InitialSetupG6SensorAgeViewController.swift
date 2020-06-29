@@ -16,15 +16,25 @@ final class InitialSetupG6SensorAgeViewController: InitialSetupAbstractStepViewC
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "initial_sensor_age_screen_title".localized
         datePicker.maximumDate = Date()
         datePicker.minimumDate = Date() - month
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .save,
+            target: self,
+            action: #selector(onSaveButtonTap)
+        )
     }
     
-    @IBAction private func onContinueButtonTap() {
+    @objc private func onSaveButtonTap() {
         guard worker.validateSensorAge(datePicker.date) else { return }
         worker.saveSensorAge(datePicker.date)
         
-        let request = InitialSetup.CompleteCustomDeviceStep.Request(moreStepsExpected: true)
+        let request = InitialSetup.CompleteCustomDeviceStep.Request(
+            moreStepsExpected: true,
+            step: InitialSetupG6Step.sensorAge
+        )
         interactor?.doCompleteCustomDeviceStep(request: request)
     }
 }

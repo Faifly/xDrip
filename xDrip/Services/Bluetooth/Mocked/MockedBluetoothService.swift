@@ -25,10 +25,11 @@ final class MockedBluetoothService {
         delegate?.serviceDidUpdateMetadata(.batteryTemperature, value: "30")
         delegate?.serviceDidUpdateMetadata(.batteryVoltageA, value: "280")
         delegate?.serviceDidUpdateMetadata(.batteryVoltageB, value: "270")
-        delegate?.serviceDidUpdateMetadata(.firmwareVersion, value: "01010101")
+        delegate?.serviceDidUpdateMetadata(.firmwareVersion, value: "1.6.5.1")
         delegate?.serviceDidUpdateMetadata(.transmitterTime, value: "22")
-        delegate?.serviceDidUpdateMetadata(.transmitterVersion, value: "02020202")
+        delegate?.serviceDidUpdateMetadata(.transmitterVersion, value: "1.6.5.1")
         delegate?.serviceDidUpdateMetadata(.deviceName, value: "Dexcom LK")
+        CGMDevice.current.updateBluetoothID("123")
     }
     
     private func generateGlucoseReading() {
