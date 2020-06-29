@@ -19,6 +19,8 @@ final class InitialSetupDeviceModeViewControllerTests: XCTestCase {
         func doLoad(request: InitialSetup.Load.Request) { }
         func doBeginSetup(request: InitialSetup.BeginSetup.Request) { }
         func doSkipSetup(request: InitialSetup.SkipSetup.Request) { }
+        func doSaveNightscoutConnectionData(request: InitialSetup.SaveNightscoutCredentials.Request) { }
+        func doFinishSetup(request: InitialSetup.FinishSetup.Request) { }
         
         func doSelectDeviceMode(request: InitialSetup.SelectDeviceMode.Request) {
             calledSelectDeviceMode = true
@@ -34,26 +36,21 @@ final class InitialSetupDeviceModeViewControllerTests: XCTestCase {
     func testButtonsCallback() {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
+        sut.loadViewIfNeeded()
         
-        guard let mainButton = sut.view.findView(with: "mainButton") as? UIButton else {
+        guard let mainButton = sut.navigationItem.rightBarButtonItem else {
             XCTFail("Cannot obtain button")
+            return
+        }
+        guard let action = mainButton.action else {
+            XCTFail("Cannot obtain action")
             return
         }
         
         // When
-        mainButton.sendActions(for: .touchUpInside)
+        UIApplication.shared.sendAction(action, to: mainButton.target, from: self, for: nil)
         // Then
         XCTAssertTrue(spy.calledSelectDeviceMode)
         XCTAssert(spy.deviceMode == .main)
-        
-        guard let followerButton = sut.view.findView(with: "followerButton") as? UIButton else {
-            XCTFail("Cannot obtain button")
-            return
-        }
-        
-        // When
-        followerButton.sendActions(for: .touchUpInside)
-        // Then
-        XCTAssertTrue(spy.deviceMode == .follower)
     }
 }

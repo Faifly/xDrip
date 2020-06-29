@@ -21,6 +21,8 @@ enum InitialSetup {
         case injectionType
         case settings
         case transmitterType
+        case nightscoutSync
+        case finish
     }
     
     // MARK: Use cases
@@ -84,12 +86,20 @@ enum InitialSetup {
     
     enum SaveSettings {
         struct Request {
+            let alertsEnabled: Bool
+            let units: GlucoseUnit
+            let nightscoutEnabled: Bool
         }
         
         struct Response {
         }
         
         struct ViewModel {
+        }
+    }
+    
+    enum SaveNightscoutCredentials {
+        struct Request {
         }
     }
     
@@ -105,9 +115,15 @@ enum InitialSetup {
         }
     }
     
+    enum FinishSetup {
+        struct Request {
+        }
+    }
+    
     enum CompleteCustomDeviceStep {
         struct Request {
             let moreStepsExpected: Bool
+            let step: InitialSetupStep
         }
         
         struct Response {

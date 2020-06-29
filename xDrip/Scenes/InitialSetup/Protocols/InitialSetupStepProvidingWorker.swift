@@ -9,7 +9,7 @@
 import Foundation
 
 protocol InitialSetupStepProvidingWorker {
-    func completeStep()
+    func completeStep(_ step: InitialSetupStep)
     func initConnectionStep()
     var nextStep: InitialSetupStep? { get }
 }

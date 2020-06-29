@@ -13,7 +13,18 @@ final class InitialSetupG6DeviceIDViewController: InitialSetupAbstractStepViewCo
     
     @IBOutlet private weak var deviceIDTextField: UITextField!
     
-    @IBAction private func onContinueTap() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        title = "initial_transmitter_id_screen_title".localized
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .save,
+            target: self,
+            action: #selector(onSaveTap)
+        )
+    }
+    
+    @objc private func onSaveTap() {
         guard worker.validate(deviceIDTextField.text) else {
             showInvalidFormatAlert()
             return
@@ -21,18 +32,30 @@ final class InitialSetupG6DeviceIDViewController: InitialSetupAbstractStepViewCo
         
         worker.saveID(deviceIDTextField.text)
         
-        let request = InitialSetup.CompleteCustomDeviceStep.Request(moreStepsExpected: true)
+        let request = InitialSetup.CompleteCustomDeviceStep.Request(
+            moreStepsExpected: true,
+            step: InitialSetupG6Step.deviceID
+        )
         interactor?.doCompleteCustomDeviceStep(request: request)
+    }
+    
+    @IBAction private func onOpenGuide() {
+        guard let url = URL(string: "initial_transmitter_id_guide_link".localized) else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     private func showInvalidFormatAlert() {
         let alert = UIAlertController(
-            title: "Invalid format",
-            message: "Dexcom G6 serial number should contain 6 uppercased characters or digits",
+            title: "initial_transmitter_id_invalid_alert_title".localized,
+            message: "initial_transmitter_id_invalid_alert_message".localized,
             preferredStyle: .alert
         )
         
-        let confirmAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        let confirmAction = UIAlertAction(
+            title: "initial_transmitter_id_invalid_alert_button".localized,
+            style: .cancel,
+            handler: nil
+        )
         alert.addAction(confirmAction)
         
         AlertPresenter.shared.presentAlert(alert)
