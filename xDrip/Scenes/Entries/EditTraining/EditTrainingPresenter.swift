@@ -67,7 +67,7 @@ final class EditTrainingPresenter: EditTrainingPresentationLogic {
         picker.selectRow(hours, inComponent: 0, animated: false)
         picker.selectRow(mins, inComponent: 2, animated: false)
         
-        detail = String(format: "%.0f m", duration / TimeInterval.secondsPerMinute)
+        detail = String(format: "%.0f %@", duration / TimeInterval.secondsPerMinute, "edit_training_m".localized)
         
         picker.formatValues = { values in
             guard let hour = Double(values[0]), let min = Double(values[2]) else { return "" }
@@ -83,7 +83,7 @@ final class EditTrainingPresenter: EditTrainingPresentationLogic {
             
             let totalMins = totalSec / TimeInterval.secondsPerMinute
             
-            return String(format: "%.0f m", totalMins)
+            return String(format: "%.0f %@", totalMins, "edit_training_m".localized)
         }
         
         return .pickerExpandable(
@@ -99,12 +99,7 @@ final class EditTrainingPresenter: EditTrainingPresentationLogic {
     ) -> BaseSettings.Cell {
         var detail = ""
         let intensity = intensity ?? TrainingIntensity.default
-        
-        let data = [
-            TrainingIntensity.low.localizedTitle,
-            TrainingIntensity.normal.localizedTitle,
-            TrainingIntensity.high.localizedTitle
-        ]
+        let data = TrainingIntensity.allCases.map({ $0.localizedTitle })
         
         let picker = CustomPickerView(data: [data])
         
@@ -116,11 +111,7 @@ final class EditTrainingPresenter: EditTrainingPresentationLogic {
         picker.formatValues = { values in
             guard let intensityString = values.first else { return "" }
             
-            let trainings = [
-                TrainingIntensity.low,
-                TrainingIntensity.normal,
-                TrainingIntensity.high
-            ]
+            let trainings = TrainingIntensity.allCases
             
             if let intensity = trainings.first(where: { $0.localizedTitle == intensityString }) {
                 intensityChangedHandler(intensity)

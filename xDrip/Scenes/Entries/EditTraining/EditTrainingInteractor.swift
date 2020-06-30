@@ -72,7 +72,7 @@ final class EditTrainingInteractor: EditTrainingBusinessLogic, EditTrainingDataS
                 date: localTraining.date
             )
         case .edit(let entry):
-            if entry.duration != localTraining.duration ||
+            if entry.duration !~ localTraining.duration ||
                 entry.intensity != localTraining.intensity ||
                 entry.date != localTraining.date {
                 entry.update(

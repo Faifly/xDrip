@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -30,9 +30,12 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hh7-43-aSK" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="76.5" height="22"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
-                                    <state key="normal" title="Calibration" image="icon_calibration">
+                                    <state key="normal" title="tabbar_calibration_title" image="icon_calibration">
                                         <color key="titleColor" name="tabBarGreen"/>
                                     </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="localize" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="onCalibrationButtonTap" destination="bNS-PN-gLw" eventType="touchUpInside" id="bRO-ho-3lb"/>
                                     </connections>
@@ -40,9 +43,12 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l6E-ty-g72" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
                                     <rect key="frame" x="76.5" y="0.0" width="76.5" height="22"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
-                                    <state key="normal" title="Statistics" image="icon_chart">
+                                    <state key="normal" title="tabbar_statistics_title" image="icon_chart">
                                         <color key="titleColor" name="tabBarOrange"/>
                                     </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="localize" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="onChartButtonTap" destination="bNS-PN-gLw" eventType="touchUpInside" id="qUi-GA-xpe"/>
                                     </connections>
@@ -50,9 +56,12 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Hc-f0-08J" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
                                     <rect key="frame" x="153" y="0.0" width="76" height="22"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
-                                    <state key="normal" title="Add" image="icon_plus">
+                                    <state key="normal" title="tabbar_add_title" image="icon_plus">
                                         <color key="titleColor" name="tabBarBlue"/>
                                     </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="localize" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="onPlusButtonTap" destination="bNS-PN-gLw" eventType="touchUpInside" id="W6X-7h-L6U"/>
                                     </connections>
@@ -60,9 +69,12 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VEN-6h-2y3" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
                                     <rect key="frame" x="229" y="0.0" width="76.5" height="22"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
-                                    <state key="normal" title="History" image="icon_history">
+                                    <state key="normal" title="tabbar_history_title" image="icon_history">
                                         <color key="titleColor" name="tabBarRed"/>
                                     </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="localize" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="onHistoryButtonTap" destination="bNS-PN-gLw" eventType="touchUpInside" id="Vxx-Kz-QAc"/>
                                     </connections>
@@ -70,7 +82,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ASH-Fs-V4k" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
                                     <rect key="frame" x="305.5" y="0.0" width="76.5" height="22"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
-                                    <state key="normal" title="Settings" image="icon_settings">
+                                    <state key="normal" title="tabbar_settings_title" image="icon_settings">
                                         <color key="titleColor" name="tabBarGray"/>
                                     </state>
                                     <connections>
@@ -144,7 +156,7 @@
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.77647058823529413" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tabBarGray">
-            <color red="0.46700000762939453" green="0.46700000762939453" blue="0.46700000762939453" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tabBarGreen">
             <color red="0.22400000691413879" green="0.74099999666213989" blue="0.50199997425079346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

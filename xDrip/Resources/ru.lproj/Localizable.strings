@@ -6,6 +6,13 @@
 "nyi_alert_message" = "Эта функция ещё не разработана. Следите за обновлениями!";
 "nyi_alert_ok_button" = "Хорошо";
 
+// Tabbar
+"tabbar_calibration_title" = "Калибровка";
+"tabbar_statistics_title" = "Статистика";
+"tabbar_add_title" = "Добавить";
+"tabbar_history_title" = "История";
+"tabbar_settings_title" = "Настройки";
+
 // Home
 "home_time_frame_1h" = "1Ч";
 "home_time_frame_3h" = "3Ч";
@@ -399,8 +406,7 @@
 "edit_training_intensity_low" = "Низкая";
 "edit_training_intensity_normal" = "Нормальная";
 "edit_training_intensity_high" = "Высокая";
-"edit_training_hours" = "ч";
-"edit_training_min" = "мин";
+"edit_training_m" = "мин";
 
 // Calibration
 "calibration_not_ready_error_title" = "Калибровка не доступна";
