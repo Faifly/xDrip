@@ -97,4 +97,25 @@ final class EditTrainingInteractorTests: XCTestCase {
         // Than
         XCTAssertTrue(spy.dismissSelfCalled)
     }
+    
+    func testEntrySaving() {
+        // Given
+        let guess = TrainingEntriesWorker.fetchAllTrainings().count + 1
+        let request = EditTraining.Done.Request()
+        sut.mode = .create
+        
+        // When
+        sut.doSave(request: request)
+        
+        // Than
+        let entries = TrainingEntriesWorker.fetchAllTrainings()
+        XCTAssertTrue(guess == entries.count)
+        
+        guard let lastEntries = entries.last else {
+            XCTFail("Cannot get the last entry")
+            return
+        }
+        
+        TrainingEntriesWorker.deleteEntry(lastEntries)
+    }
 }
