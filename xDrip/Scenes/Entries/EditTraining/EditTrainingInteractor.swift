@@ -24,7 +24,7 @@ protocol EditTrainingDataStore: AnyObject {
 
 final class EditTrainingInteractor: EditTrainingBusinessLogic, EditTrainingDataStore {
     private struct LocalTraining {
-        var duration = TimeInterval()
+        var duration = TimeInterval.secondsPerMinute
         var intensity = TrainingIntensity.default
         var date = Date()
     }
