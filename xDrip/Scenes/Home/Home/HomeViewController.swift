@@ -17,6 +17,7 @@ protocol HomeDisplayLogic: AnyObject {
     func displayLoad(viewModel: Home.Load.ViewModel)
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel)
     func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel)
+    func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel)
 }
 
 class HomeViewController: NibViewController, HomeDisplayLogic {
@@ -53,6 +54,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     // MARK: IB
     
+    @IBOutlet private weak var glucoseCurrentInfoView: GlucoseCurrentInfoView!
     @IBOutlet private weak var timeLineSegmentView: UISegmentedControl!
     @IBOutlet private weak var glucoseChart: GlucoseHistoryView!
     
@@ -104,6 +106,10 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel) {
         glucoseChart.setTimeFrame(viewModel.timeInterval)
+    }
+    
+    func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel) {
+        glucoseCurrentInfoView.setup(with: viewModel)
     }
     
     private func setupUI() {

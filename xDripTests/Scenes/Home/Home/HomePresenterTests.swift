@@ -41,6 +41,7 @@ final class HomePresenterTests: XCTestCase {
     
     final class HomeDisplayLogicSpy: HomeDisplayLogic {
         var displayLoadCalled = false
+        var displayGlucoseCurrentInfoCalled = false
         
         func displayLoad(viewModel: Home.Load.ViewModel) {
             displayLoadCalled = true
@@ -50,6 +51,8 @@ final class HomePresenterTests: XCTestCase {
         }
         
         func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel) {
+        }
+        func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel) {
         }
     }
     

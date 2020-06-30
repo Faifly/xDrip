@@ -25,7 +25,12 @@ enum BaseSettings {
         case volumeSlider(value: Float, changeHandler: (Float) -> Void)
         case pickerExpandable(mainText: String, detailText: String?, picker: PickerView)
         case button(title: String, color: UIColor, handler: () -> Void)
-        case info(mainText: String, detailText: String?, detailTextColor: UIColor?)
+        case info(
+            mainText: String,
+            detailText: String?,
+            detailTextColor: UIColor?,
+            isLoading: Bool = false
+        )
         case foodType(
             selectedType: FoodTypeTableViewCell.SelectionState,
             foodTypeString: String?,

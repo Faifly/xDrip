@@ -190,14 +190,15 @@ final class GlucoseReading: Object {
     }
     
     static func parseFollowerEntries(_ rawEntries: [CGlucoseReading]) {
-        let readings = rawEntries.map { createReading(from: $0) }
+        let readings = rawEntries.compactMap { createReading(from: $0) }
         let realm = Realm.shared
         realm.safeWrite {
             realm.add(readings, update: .all)
         }
     }
     
-    static func createReading(from rawEntry: CGlucoseReading) -> GlucoseReading {
+    static func createReading(from rawEntry: CGlucoseReading) -> GlucoseReading? {
+        guard rawEntry.type == "sgv" else { return nil }
         let entry = GlucoseReading()
         entry.calculatedValue = Double(rawEntry.sgv ?? 0)
         entry.filteredCalculatedValue = entry.calculatedValue
@@ -345,5 +346,9 @@ final class GlucoseReading: Object {
                 hideSlope = false
             }
         }
+    }
+    
+    func activeSlope(date: Date = Date()) -> Double {
+        return 2 * a * date.timeIntervalSince1970 + b
     }
 }

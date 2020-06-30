@@ -12,6 +12,8 @@
 "home_time_frame_6h" = "6Ч";
 "home_time_frame_12h" = "12Ч";
 "home_time_frame_24h" = "24Ч";
+"home_last_scan_title" = "Дата";
+"home_last_diff_title" = "Разница";
 
 // Root
 "root_add_entry_food" = "Еда";
@@ -420,3 +422,81 @@
 "notification_pairing_request_body" = "Пожалуйста, разблокируйте свой телефон и примите запрос на подключение от вашего датчика в течении 30ти секунд";
 "notification_initial_calibration_title" = "Начальная калибровка";
 "notification_initial_calibration_body" = "Сенсор теперь готов получить начальную калибровку";
+
+// Initial Welcome screen
+"initial_welcome_screen_title" = "Приветствуем!";
+"initial_welcome_large_welcome_message" = "Добро пожаловать в xDrip для iOS!";
+"initial_welcome_small_welcome_message" = "Похоже, что это ваш первый раз в этом приложении. Хотите, чтобы мы провели вас через процесс первоначальной настройки?";
+"initial_welcome_start_button" = "Начать Настройку";
+"initial_welcome_skip_button" = "Пропустить";
+
+// Initial Warm Up
+"initial_warmup_minutes_left" = "%.0f минут";
+"initial_warmup_hour_minutes_left" = "1 час %.0f минут";
+"initial_warmup_screen_title" = "Настройка завершена";
+"initial_warmup_time_left_text" = "\n\nВы включили свой сенсор меньше чем 2 часа назад. Вам нужно подождать ещё %@ чтобы начать получать показания. Если вы не хотите ждать, вы можете выключить режим прогрева в настройках.";
+
+// Initial device mode
+"initial_device_mode_screen_title" = "Режим Устройства";
+"initial_device_mode_master" = "Мастер";
+"initial_device_mode_follower" = "Подписчик";
+"initial_device_mode_section_footer" = "Выберите 'Мастер' если хотите получать данные с вашего датчика глюкозы.\nВыберите 'Подписчик' если хотите подключиться к серверу Nightscout для получения данных.";
+
+// Initial injection type
+"initial_injection_type_screen_title" = "Тип Инъекций";
+"initial_injection_type_pen" = "Ручка";
+"initial_injection_type_section_footer" = "Выберите ваш тип инъекций. Пока доступен только вариант 'Ручка', но вскоре будет добавлена и помпа.";
+
+// Initial settings
+"initial_settings_screen_title" = "Настройки";
+"initial_settings_units_section_header" = "ЕДИНИЦЫ ИЗМЕРЕНИЯ";
+"initial_settings_units_section_footer" = "Выберите единицу измерения, которая будет использоваться во всём приложении.";
+"initial_settings_alerts_enabled" = "Включены";
+"initial_settings_alerts_disabled" = "Выключены";
+"initial_settings_alerts_section_header" = "Оповещения";
+"initial_settings_alerts_section_footer" = "Оповещения будут сообщать вам о пропущенных показаниях датчика, резких изменений уровня глюкозы и многое другое.\nВы сможете персонализировать настройки оповещений позже в настройках приложения.";
+"initial_settings_cloud_none" = "Выключено";
+"initial_settings_cloud_nightscout" = "Nightscout";
+"initial_settings_cloud_section_header" = "Загрузка в Облако";
+"initial_settings_cloud_section_footer" = "При выборе Nightscout, мы попросим вас ввести данные сервера на следующем экране.";
+
+// Initial nightscout
+"initial_nightscout_screen_title" = "Nightscout";
+
+// Initial transmitter type
+"initial_transmitter_type_screen_title" = "Тип Датчика";
+"initial_transmitter_type_dexcom_g6" = "Dexcom G6";
+"initial_transmitter_type_section_footer" = "Выберите тип вашего датчика мониторинга глюкозы. Пока доступен только G6, другие устройства будут добавлены позже.";
+
+// Initial finish
+"initial_finish_text" = "xDrip готов к использованию. Нажми на кнопку снизу, чтобы перейти на главную страницу и начать пользоваться приложением.";
+"initial_finish_button" = "Закончить Настройку";
+"initial_finish_screen_title" = "Настройка Завершена";
+
+// Initial sensor age
+"initial_sensor_age_screen_title" = "Сенсор";
+"initial_sensor_age_hint_label" = "Выберите точное время и дату когда сенсор был установлен. Это сильно влияет на точность показаний.";
+
+// Initial connect
+"initial_connect_screen_title" = "Датчик";
+"initial_connect_continue_button" = "Продолжить";
+"initial_connect_device_name" = "Имя устройства";
+"initial_connect_firmware" = "Версия прошивки";
+"initial_connect_battery_a" = "Уровень батареи А";
+"initial_connect_battery_b" = "Уровень батареи Б";
+"initial_connect_transmitter_age" = "Возраст датчика";
+"initial_connect_in_progress_section_header" = "ПОДКЛЮЧЕНИЕ...";
+"initial_connect_in_progress_section_footer" = "Подключение может занять до 30 минут. Вы можете пока свернуть приложение.";
+"initial_connect_finished_section_header" = "ПОДКЛЮЧЕНО!";
+"initial_connect_finished_section_footer" = "Подключение было установлено, теперь вы можете продолжить.";
+
+// Initial transmitter ID
+"initial_transmitter_id_screen_title" = "Серийный Номер Датчика";
+"initial_transmitter_id_top_text" = "Введите серийный номер датчика.\n\nВы можете найти его либо на коробке, либо на самом датчика, как показано на рисунке снизу.";
+"initial_transmitter_id_textfield_placeholder" = "XXXXXX";
+"initial_transmitter_id_bottom_text" = "Если у вас возникают какие-то трудоности с поиском серийного номера, вы можете посмотреть официальную инструкцию, нажам на кнопку снизу.";
+"initial_transmitter_id_open_guide_button" = "Открыть Инструкцию";
+"initial_transmitter_id_guide_link" = "https://provider.dexcom.com/education-research/cgm-education-use/videos/how-replace-your-dexcom-g6-transmitter";
+"initial_transmitter_id_invalid_alert_title" = "Неправильный формат";
+"initial_transmitter_id_invalid_alert_message" = "Серийный номер Dexcom G6 должен состоять из шести цифр или заглавных букв.";
+"initial_transmitter_id_invalid_alert_button" = "Хорошо";

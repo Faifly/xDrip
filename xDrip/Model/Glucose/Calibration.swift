@@ -46,6 +46,12 @@ final class Calibration: Object {
     @objc private(set) dynamic var secondIntercept: Double = 0.0
     @objc private(set) dynamic var firstScale: Double = 0.0
     @objc private(set) dynamic var secondScale: Double = 0.0
+    @objc private(set) dynamic var isUploaded: Bool = false
+    @objc private(set) dynamic var externalID: String?
+    
+    override class func primaryKey() -> String? {
+        return "externalID"
+    }
     
     static var all: [Calibration] {
         return Array(Realm.shared.objects(Calibration.self).sorted(byKeyPath: "date", ascending: false))
@@ -129,6 +135,7 @@ final class Calibration: Object {
         highCalibration.rawValue = highReading.rawValue
         highCalibration.rawDate = highReading.date
         highCalibration.sensorAge = sensorAgeHigh
+        highCalibration.externalID = UUID().uuidString
         
         highReading.updateCalculatedValue(highLevel)
         highReading.updateIsCalibrated(true)
@@ -143,6 +150,7 @@ final class Calibration: Object {
         lowCalibration.rawValue = lowReading.rawValue
         lowCalibration.rawDate = lowReading.date
         lowCalibration.sensorAge = sensorAgeLow
+        lowCalibration.externalID = UUID().uuidString
         
         lowReading.updateCalculatedValue(lowLevel)
         lowReading.updateIsCalibrated(true)
@@ -168,6 +176,7 @@ final class Calibration: Object {
         adjustRecentReadings(adjustedReadingsAmount)
         
         CalibrationController.shared.initialCalibrationCompleted()
+        NightscoutService.shared.scanForNotUploadedEntries()
     }
     
     static func createRegularCalibration(glucoseLevel: Double, date: Date) throws {
@@ -181,6 +190,7 @@ final class Calibration: Object {
         calibration.rawValue = reading.rawValue
         calibration.adjustedRawValue = reading.ageAdjustedRawValue
         calibration.slopeConfidence = min(max(((4.0 - abs(reading.calculatedValueSlope * 60.0)) / 4.0), 0.0), 1.0)
+        calibration.externalID = UUID().uuidString
         
         let estimatedRawGlucoseLevel = GlucoseReading.estimatedRawGlucoseLevel(date: Date())
         calibration.rawDate = reading.date
@@ -204,6 +214,7 @@ final class Calibration: Object {
         reading.updateIsCalibrated(true)
         calculateWLS()
         adjustRecentReadings(30)
+        NightscoutService.shared.scanForNotUploadedEntries()
     }
     
     private static func clearAllExistingCalibrations() {
@@ -254,6 +265,7 @@ final class Calibration: Object {
     
     static func deleteLast() {
         guard let last = allForCurrentSensor.first else { return }
+        NightscoutService.shared.deleteCalibrations([last])
         let realm = Realm.shared
         realm.safeWrite {
             realm.delete(last)
@@ -262,8 +274,17 @@ final class Calibration: Object {
     
     static func deleteAll() {
         let realm = Realm.shared
+        let all = allForCurrentSensor
+        NightscoutService.shared.deleteCalibrations(all)
         realm.safeWrite {
-            realm.delete(allForCurrentSensor)
+            realm.delete(all)
+        }
+    }
+    
+    static func markCalibrationAsUploaded(itemID: String) {
+        guard let calibration = all.first(where: { $0.externalID == itemID }) else { return }
+        Realm.shared.safeWrite {
+            calibration.isUploaded = true
         }
     }
     
