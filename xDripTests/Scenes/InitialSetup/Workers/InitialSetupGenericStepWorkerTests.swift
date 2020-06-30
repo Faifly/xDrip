@@ -18,27 +18,27 @@ final class InitialSetupGenericStepWorkerTests: XCTestCase {
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupIntroViewController)
         
         // When
-        sut.completeStep()
+        sut.completeStep(InitialSetup.GenericStep.intro)
         // Then
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupDeviceModeViewController)
         
         // When
-        sut.completeStep()
+        sut.completeStep(InitialSetup.GenericStep.deviceMode)
         // Then
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupInjectionTypeViewController)
         
         // When
-        sut.completeStep()
+        sut.completeStep(InitialSetup.GenericStep.injectionType)
         // Then
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupSettingsViewController)
         
         // When
-        sut.completeStep()
+        sut.completeStep(InitialSetup.GenericStep.settings)
         // Then
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupTransmitterTypeViewController)
         
         // When
-        sut.completeStep()
+        sut.completeStep(InitialSetup.GenericStep.transmitterType)
         // Then
         XCTAssertTrue(sut.nextStep?.createViewController() == nil)
     }
@@ -49,13 +49,13 @@ final class InitialSetupGenericStepWorkerTests: XCTestCase {
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupIntroViewController)
         
         // When
-        sut.completeStep()
+        sut.completeStep(InitialSetup.GenericStep.intro)
         // Then
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupDeviceModeViewController)
         
         // When
-        sut.completeStep()
+        sut.completeStep(InitialSetup.GenericStep.deviceMode)
         // Then
-        XCTAssertTrue(sut.nextStep?.createViewController() == nil)
+        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupInjectionTypeViewController)
     }
 }

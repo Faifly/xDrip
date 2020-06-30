@@ -21,6 +21,8 @@ protocol InitialSetupBusinessLogic {
     func doSaveSettings(request: InitialSetup.SaveSettings.Request)
     func doSelectDeviceType(request: InitialSetup.SelectDevice.Request)
     func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request)
+    func doSaveNightscoutConnectionData(request: InitialSetup.SaveNightscoutCredentials.Request)
+    func doFinishSetup(request: InitialSetup.FinishSetup.Request)
 }
 
 protocol InitialSetupDataStore: AnyObject {
@@ -48,7 +50,7 @@ final class InitialSetupInteractor: InitialSetupBusinessLogic, InitialSetupDataS
     }
     
     func doBeginSetup(request: InitialSetup.BeginSetup.Request) {
-        stepProvidingWorker?.completeStep()
+        stepProvidingWorker?.completeStep(InitialSetup.GenericStep.intro)
         showNextStep()
     }
     
@@ -59,18 +61,24 @@ final class InitialSetupInteractor: InitialSetupBusinessLogic, InitialSetupDataS
     
     func doSelectDeviceMode(request: InitialSetup.SelectDeviceMode.Request) {
         User.current.settings.updateDeviceMode(request.deviceMode)
-        stepProvidingWorker?.completeStep()
+        NotificationCenter.default.postSettingsChangeNotification(setting: .deviceMode)
+        stepProvidingWorker?.completeStep(InitialSetup.GenericStep.deviceMode)
         showNextStep()
     }
     
     func doSelectInjectionType(request: InitialSetup.SelectInjectionType.Request) {
         User.current.settings.updateInjectionType(request.injectionType)
-        stepProvidingWorker?.completeStep()
+        NotificationCenter.default.postSettingsChangeNotification(setting: .injectionType)
+        stepProvidingWorker?.completeStep(InitialSetup.GenericStep.injectionType)
         showNextStep()
     }
     
     func doSaveSettings(request: InitialSetup.SaveSettings.Request) {
-        stepProvidingWorker?.completeStep()
+        User.current.settings.updateUnit(request.units)
+        User.current.settings.alert?.updateNotificationEnabled(request.alertsEnabled)
+        User.current.settings.nightscoutSync?.updateIsEnabled(request.nightscoutEnabled)
+        NotificationCenter.default.postSettingsChangeNotification(setting: .unit)
+        stepProvidingWorker?.completeStep(InitialSetup.GenericStep.settings)
         showNextStep()
     }
     
@@ -82,12 +90,22 @@ final class InitialSetupInteractor: InitialSetupBusinessLogic, InitialSetupDataS
     
     func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) {
         if request.moreStepsExpected {
-            stepProvidingWorker?.completeStep()
+            stepProvidingWorker?.completeStep(request.step)
             showNextStep()
         } else {
-            User.current.setIsInitialSetupDone(true)
             router?.dismissScene()
         }
+    }
+    
+    func doSaveNightscoutConnectionData(request: InitialSetup.SaveNightscoutCredentials.Request) {
+        User.current.settings.nightscoutSync?.updateIsFollowerAuthed(true)
+        stepProvidingWorker?.completeStep(InitialSetup.GenericStep.nightscoutSync)
+        showNextStep()
+    }
+    
+    func doFinishSetup(request: InitialSetup.FinishSetup.Request) {
+        stepProvidingWorker?.completeStep(InitialSetup.GenericStep.finish)
+        router?.dismissScene()
     }
     
     // MARK: Logic

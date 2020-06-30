@@ -9,5 +9,5 @@
 import Foundation
 
 protocol InitialSetupStep {
-    func createViewController() -> InitialSetupAbstractStepViewController
+    func createViewController() -> InitialSetupInteractable
 }

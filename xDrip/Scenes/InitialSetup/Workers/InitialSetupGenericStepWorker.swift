@@ -15,26 +15,35 @@ import UIKit
 final class InitialSetupGenericStepWorker: InitialSetupStepProvidingWorker {
     private var currentStep: InitialSetup.GenericStep? = .intro
     
-    func completeStep() {
-        guard let step = currentStep else { return }
+    func completeStep(_ step: InitialSetupStep) {
+        guard let step = step as? InitialSetup.GenericStep else { return }
         
         switch step {
         case .intro:
             currentStep = .deviceMode
             
         case .deviceMode:
-            switch User.current.settings.deviceMode {
-            case .main: currentStep = .injectionType
-            case .follower: currentStep = nil
-            }
+            currentStep = .injectionType
             
         case .injectionType:
             currentStep = .settings
             
         case .settings:
-            currentStep = .transmitterType
+            let isFollower = User.current.settings.deviceMode == .follower
+            let isNightscoutSyncing = User.current.settings.nightscoutSync?.isEnabled ?? false
+            if isFollower || isNightscoutSyncing {
+                currentStep = .nightscoutSync
+            } else {
+                currentStep = .transmitterType
+            }
             
-        case .transmitterType:
+        case .nightscoutSync:
+            switch User.current.settings.deviceMode {
+            case .main: currentStep = .transmitterType
+            case .follower: currentStep = .finish
+            }
+            
+        case .transmitterType, .finish:
             currentStep = nil
         }
     }
@@ -47,13 +56,15 @@ final class InitialSetupGenericStepWorker: InitialSetupStepProvidingWorker {
 }
 
 extension InitialSetup.GenericStep: InitialSetupStep {
-    func createViewController() -> InitialSetupAbstractStepViewController {
+    func createViewController() -> InitialSetupInteractable {
         switch self {
         case .intro: return InitialSetupIntroViewController()
         case .deviceMode: return InitialSetupDeviceModeViewController()
         case .injectionType: return InitialSetupInjectionTypeViewController()
         case .settings: return InitialSetupSettingsViewController()
         case .transmitterType: return InitialSetupTransmitterTypeViewController()
+        case .nightscoutSync: return InitialSetupNightscoutViewController()
+        case .finish: return InitialSetupFinishViewController()
         }
     }
 }

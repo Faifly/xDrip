@@ -168,13 +168,14 @@ extension SettingsPenUserViewController: UITableViewDataSource {
                 
                 return cell
                 
-            case let .info(mainText, detailText, detailTextColor):
+            case let .info(mainText, detailText, detailTextColor, isLoading):
                 let cell = tableView.dequeueReusableCell(ofType: BaseSettingsDisclosureCell.self, for: indexPath)
                 cell.configure(
                     mainText: mainText,
                     detailText: detailText,
                     showDisclosureIndicator: false,
-                    detailTextColor: detailTextColor
+                    detailTextColor: detailTextColor,
+                    isLoading: isLoading
                 )
                 
                 return cell

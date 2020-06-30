@@ -25,6 +25,8 @@ final class InitialSetupG6WarmUpViewControllerTests: XCTestCase {
         func doSelectInjectionType(request: InitialSetup.SelectInjectionType.Request) { }
         func doSaveSettings(request: InitialSetup.SaveSettings.Request) { }
         func doSelectDeviceType(request: InitialSetup.SelectDevice.Request) { }
+        func doSaveNightscoutConnectionData(request: InitialSetup.SaveNightscoutCredentials.Request) { }
+        func doFinishSetup(request: InitialSetup.FinishSetup.Request) { }
         
         func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) {
             calledCompleteSetup = true

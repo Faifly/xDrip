@@ -69,6 +69,12 @@ final class InitialSetupViewControllerTests: XCTestCase {
         func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) {            
         }
         
+        func doFinishSetup(request: InitialSetup.FinishSetup.Request) {
+        }
+        
+        func doSaveNightscoutConnectionData(request: InitialSetup.SaveNightscoutCredentials.Request) {
+        }
+        
         var doLoadCalled = false
         
         func doLoad(request: InitialSetup.Load.Request) {

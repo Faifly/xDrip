@@ -23,22 +23,22 @@ final class InitialSetupG6StepWorkerTests: XCTestCase {
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupG6DeviceIDViewController)
         
         // When
-        sut.completeStep()
+        sut.completeStep(InitialSetupG6Step.deviceID)
         // Then
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupG6SensorAgeViewController)
         
         // When
-        sut.completeStep()
+        sut.completeStep(InitialSetupG6Step.sensorAge)
         // Then
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupG6ConnectViewController)
         
         // When
-        sut.completeStep()
+        sut.completeStep(InitialSetupG6Step.connect)
         // Then
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupG6WarmUpViewController)
         
         // When
-        sut.completeStep()
+        sut.completeStep(InitialSetupG6Step.warmUp)
         // Then
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupG6WarmUpViewController)
     }
