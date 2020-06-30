@@ -75,29 +75,27 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
             let high = GlucoseUnit.convertFromDefault(Double(config.highThreshold))
             let low = GlucoseUnit.convertFromDefault(Double(config.lowThreshold))
             let minimumChange = GlucoseUnit.convertFromDefault(Double(config.minimumBGChange))
-            let highTresholdString = String(format: "%.1f", high)
-            let lowTresholdString = String(format: "%.1f", low)
-            let minimumChangeString = String(format: "%.1f", minimumChange)
             
             cells.append(
                 contentsOf: [
                     createUnitsPickerView(
                         .highTreshold,
-                        detailText: highTresholdString,
+                        detailText: String(format: "%.1f", high),
                         settings: response.settings,
                         valueChangeHandler: response.pickerViewValueChangedHandler
                     ),
                     createUnitsPickerView(
                         .lowTreshold,
-                        detailText: lowTresholdString,
+                        detailText: String(format: "%.1f", low),
                         settings: response.settings,
                         valueChangeHandler: response.pickerViewValueChangedHandler
                     ),
                     createUnitsPickerView(
                         .minimumBGChange,
-                        detailText: minimumChangeString,
+                        detailText: String(format: "%.1f", minimumChange),
                         settings: response.settings,
-                        valueChangeHandler: response.pickerViewValueChangedHandler)
+                        valueChangeHandler: response.pickerViewValueChangedHandler
+                    )
                 ]
             )
         }
@@ -235,9 +233,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
             let minuteString = strings[2]
             
             guard let hour = Double(hourString), let minute = Double(minuteString) else { return "" }
-            
             let time = minute * TimeInterval.secondsPerMinute + hour * TimeInterval.secondsPerHour
-            
             valueChangeHandler(field, time)
             
             return "\(Int(time / TimeInterval.secondsPerMinute)) " + "settings_alert_single_type_minutes".localized
@@ -261,8 +257,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         
         picker.formatDate = { date in
             let components = Calendar.current.dateComponents([.hour, .minute], from: date)
-            guard let hour = components.hour,
-                let minutes = components.minute else { return " " }
+            guard let hour = components.hour, let minutes = components.minute else { return " " }
             
             var time = TimeInterval(hour) * TimeInterval.secondsPerHour
             time += TimeInterval(minutes) * TimeInterval.secondsPerMinute

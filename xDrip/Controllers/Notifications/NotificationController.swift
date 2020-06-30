@@ -66,55 +66,25 @@ final class NotificationController: NSObject {
     }
     
     func sendNotification(ofType type: AlertEventType) {
-        let content = createContentForNotification(ofType: type)
-        checkPendingNotifications(ofType: type) { scheduled in
-            guard !scheduled else { return }
-            
-            let request = UNNotificationRequest(
-                identifier: type.alertID,
-                content: content,
-                trigger: nil
-            )
-            
-            UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
-                if let error = error {
-                    LogController.log(
-                        message: "Error while add notification request to a queue",
-                        type: .error,
-                        error: error
-                    )
-                }
-            })
-        }
-    }
-    
-    func scheduleSnoozeForNotification(ofType type: AlertEventType) {
-        guard
-            let alertSettings = User.current.settings.alert,
-            let defaultConfig = alertSettings.defaultConfiguration
-        else {
-            return
-        }
+        guard let settings = User.current.settings.alert, settings.isNotificationsEnabled else { return }
+        let config = settings.customConfiguration(for: type)
+        
+        guard config.snoozedUntilDate < Date() else { return }
         
         let content = createContentForNotification(ofType: type)
-        
-        var trigger: UNNotificationTrigger?
-        
-        if defaultConfig.defaultSnooze > 0 {
-            trigger = UNTimeIntervalNotificationTrigger(timeInterval: defaultConfig.defaultSnooze, repeats: false)
-        }
-        
-        if let config = alertSettings.getCustomConfiguration(for: type),
-            config.isEnabled,
-            config.defaultSnooze > 0 {
-            trigger = UNTimeIntervalNotificationTrigger(timeInterval: config.defaultSnooze, repeats: false)
-        }
         
         let request = UNNotificationRequest(
             identifier: type.alertID,
             content: content,
-            trigger: trigger
+            trigger: nil
         )
+        
+        let sound = settings.getSound(for: type)
+        AudioController.shared.playSoundFile(sound.fileName)
+        
+        if settings.getIsVibrating(for: type) {
+            AudioController.shared.vibrate()
+        }
         
         UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
             if let error = error {
@@ -127,6 +97,23 @@ final class NotificationController: NSObject {
         })
     }
     
+    func scheduleSnoozeForNotification(ofType type: AlertEventType) {
+        guard let alertSettings = User.current.settings.alert else { return }
+        
+        var date = Date()
+        let config = alertSettings.customConfiguration(for: type)
+        if config.isEnabled,
+            config.defaultSnooze > 0 {
+            date = Date().addingTimeInterval(config.defaultSnooze)
+        } else if let defaultConfig = alertSettings.defaultConfiguration,
+            defaultConfig.defaultSnooze > 0 {
+            date = Date().addingTimeInterval(defaultConfig.defaultSnooze)
+        }
+        config.updateSnoozedUntilDate(date)
+        
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [type.alertID])
+    }
+    
     private func createContentForNotification(ofType type: AlertEventType) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.title = type.alertTitle
@@ -136,83 +123,26 @@ final class NotificationController: NSObject {
         content.badge = 1
         
         if let alert = User.current.settings.alert {
-//            var sound: UNNotificationSound = .default
-            
-            if let defaultConfig = alert.defaultConfiguration {
-//                sound = getSound(for: defaultConfig.soundID)
-                
-                if let snd = CustomSound(rawValue: defaultConfig.soundID) {
-                    content.userInfo["soundFileName"] = snd.fileName
+            let configuration = alert.customConfiguration(for: type)
+            if configuration.isEnabled {
+                if let name = configuration.name {
+                    content.title = name
                 }
                 
+                if configuration.snoozeFromNotification {
+                    content.categoryIdentifier = snoozableNotificationCategoryID
+                } else {
+                    content.categoryIdentifier = defaultCategoryID
+                }
+            } else if let defaultConfig = alert.defaultConfiguration {
                 if defaultConfig.snoozeFromNotification {
                     content.categoryIdentifier = snoozableNotificationCategoryID
                 } else {
                     content.categoryIdentifier = defaultCategoryID
                 }
             }
-            
-            if let conf = alert.getCustomConfiguration(for: type), conf.isEnabled {
-                if let name = conf.name {
-                    content.title = name
-                }
-                
-//                sound = getSound(for: conf.soundID)
-                
-                if let snd = CustomSound(rawValue: conf.soundID) {
-                    content.userInfo["soundFileName"] = snd.fileName
-                }
-                
-                if conf.snoozeFromNotification {
-                    content.categoryIdentifier = snoozableNotificationCategoryID
-                } else {
-                    content.categoryIdentifier = defaultCategoryID
-                }
-            }
-            
-//            content.sound = sound
-            
-            content.userInfo["isMuteOverriden"] = alert.isMuteOverriden
-            content.userInfo["isSystemVolumeOverriden"] = alert.isSystemVolumeOverriden
-            content.userInfo["overridenVolume"] = alert.volume
         }
         
         return content
-    }
-    
-    private func getSound(for soundID: Int) -> UNNotificationSound {
-        var sound: UNNotificationSound = .default
-        
-        if let alert = User.current.settings.alert {
-            if let customSound = CustomSound(rawValue: soundID) {
-                sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: customSound.fileName))
-                
-                if alert.isMuteOverriden {
-                    if #available(iOS 12.0, *) {
-                        sound = .criticalSoundNamed(
-                            UNNotificationSoundName(rawValue: customSound.fileName),
-                            withAudioVolume: 1.0
-                        )
-                    }
-                }
-            }
-        }
-        
-        return sound
-    }
-    
-    private func checkPendingNotifications(ofType type: AlertEventType, completionHandler: @escaping ((Bool) -> Void))  {
-        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
-            var scheduled = false
-            
-            for request in requests {
-                if request.identifier == type.alertID {
-                    scheduled = true
-                    break
-                }
-            }
-            
-            completionHandler(scheduled)
-        }
     }
 }

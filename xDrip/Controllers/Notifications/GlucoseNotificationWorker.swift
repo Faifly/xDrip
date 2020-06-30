@@ -7,9 +7,38 @@
 //
 
 import Foundation
+import AKUtils
 
 final class GlucoseNotificationWorker: NSObject {
+    typealias RepeatAlertData = (isEnabled: Bool, lastFireTimestamp: TimeInterval, repeatCount: Int)
+    
     var notificationRequest: ((AlertEventType) -> Void)?
+    
+    private lazy var settingsChangeObserver: [NSObjectProtocol] = NotificationCenter.default.subscribe(
+        forSettingsChange: [.alertRepeat, .fastRise, .fastDrop, .urgentHigh, .urgentLow, .high, .low]
+    ) { [weak self] setting in
+        guard let self = self else { return }
+        
+        var alertType: AlertEventType?
+        switch setting {
+        case .fastRise: alertType = .fastRise
+        case .fastDrop: alertType = .fastDrop
+        case .urgentLow: alertType = .urgentLow
+        case .urgentHigh: alertType = .urgentHigh
+        case .high: alertType = .high
+        case .low: alertType = .low
+        case .alertRepeat: self.disableAlertsRelatedToDefaultConfig(); return
+        default: break
+        }
+        
+        if let type = alertType {
+            self.disableAlert(type)
+        }
+    }
+    
+    private var alertTimer: RepeatingTimer?
+    private var missedReadingsTimer: RepeatingTimer?
+    private var repeatAlertsData = [AlertEventType: RepeatAlertData]()
     
     override init() {
         super.init()
@@ -18,36 +47,183 @@ final class GlucoseNotificationWorker: NSObject {
             self.checkFastRise()
             self.checkFastDrop()
             self.checkWarningLevel(for: reading)
+            self.resetMissedReadingsTimer()
         }
+        
+        CGMController.shared.subscribeForMetadataEvents(listener: self) { [weak self] type in
+            guard let self = self else { return }
+            if type == .sensorAge {
+                self.resetMissedReadingsTimer()
+            }
+        }
+        
+        _ = settingsChangeObserver
+        
+        resetMissedReadingsTimer()
+        resetAlertTimer()
+        setupRepeatAlertsData()
+    }
+    
+    private func resetMissedReadingsTimer() {
+        let readings = GlucoseReading.lastReadings(4, forMaster: User.current.settings.deviceMode == .main)
+        guard !readings.isEmpty else {
+            missedReadingsTimer = nil
+            return
+        }
+        
+        var timeInterval = Constants.Glucose.defaultMissedReadingTimeInterval
+        if readings.count == 4 {
+            var interval = 0.0
+            var count = 0.0
+            
+            for index in 1 ..< readings.count {
+                if let date1 = readings[index - 1].date, let date2 = readings[index].date {
+                    interval += date1.timeIntervalSince(date2)
+                    count += 1.0
+                }
+            }
+            
+            if count >= 2 {
+                timeInterval = 2.0 * interval / count
+            }
+        }
+        
+        missedReadingsTimer = nil
+        missedReadingsTimer = RepeatingTimer(timeInterval: timeInterval)
+        missedReadingsTimer?.eventHandler = { [weak self] in
+            DispatchQueue.main.async {
+                self?.checkMissedReadings()
+            }
+        }
+        missedReadingsTimer?.resume()
+    }
+    
+    private func resetAlertTimer() {
+        alertTimer = nil
+        alertTimer = RepeatingTimer(timeInterval: 60.0)
+        alertTimer?.eventHandler = { [weak self] in
+            DispatchQueue.main.async {
+                self?.repeatAlerts()
+            }
+        }
+        alertTimer?.resume()
+    }
+    
+    private func repeatAlerts() {
+        let alertsData = repeatAlertsData.filter({ $0.value.isEnabled })
+        
+        for data in alertsData {
+            let now = Date().timeIntervalSince1970
+            if AlertEventType.warningLevelAlerts.contains(data.key) {
+                if now - data.value.lastFireTimestamp > 60.0 {
+                    fireAlert(ofType: data.key)
+                
+                    if repeatAlertsData[data.key]?.repeatCount >? Constants.Notifications.maximumRepeatCount {
+                        disableAlert(data.key)
+                    }
+                }
+            } else if data.key == .phoneMuted {
+                if now - data.value.lastFireTimestamp > Constants.Glucose.defaultPhoneMutedCheckTimeInterval {
+                    checkMuted()
+                }
+            }
+        }
+    }
+    
+    private func fireAlert(ofType type: AlertEventType) {
+        notificationRequest?(type)
+        enableAlert(type)
+        repeatAlertsData[type]?.1 = Date().timeIntervalSince1970
+        resetAlertTimer()
+    }
+    
+    private func setupRepeatAlertsData() {
+        let alertTypes = AlertEventType.warningLevelAlerts
+        
+        for type in alertTypes {
+            if let config = User.current.settings.alert?.customConfiguration(for: type), config.isEnabled {
+                if config.repeat {
+                    disableAlert(type)
+                }
+            } else if let defaultConfig = User.current.settings.alert?.defaultConfiguration {
+                if defaultConfig.repeat {
+                    disableAlert(type)
+                }
+            }
+        }
+        
+        enableAlert(.phoneMuted)
+    }
+    
+    private func disableAlertsRelatedToDefaultConfig() {
+        let alertTypes = AlertEventType.warningLevelAlerts
+        
+        for type in alertTypes {
+            if let config = User.current.settings.alert?.customConfiguration(for: type),
+                !config.isEnabled,
+                let defaultConfig = User.current.settings.alert?.defaultConfiguration {
+                if defaultConfig.repeat {
+                    disableAlert(type)
+                }
+            }
+        }
+    }
+    
+    private func enableAlert(_ type: AlertEventType) {
+        repeatAlertsData[type] = (true, repeatAlertsData[type]?.1 ?? 0.0, (repeatAlertsData[type]?.2 ?? 0) + 1)
+    }
+    
+    private func disableAlert(_ type: AlertEventType) {
+        repeatAlertsData[type] = (false, 0.0, 0)
+    }
+    
+    private func checkMuted() {
+        MuteChecker.shared.checkMute { [weak self] isMuted in
+            if isMuted {
+                self?.fireAlert(ofType: .phoneMuted)
+            }
+        }
+    }
+    
+    private func checkMissedReadings() {
+        notificationRequest?(.missedReadings)
     }
     
     private func checkFastRise() {
         if isGlucoseChangingFast(isRise: true) {
-            notificationRequest?(.fastRise)
+            fireAlert(ofType: .fastRise)
+        } else {
+            disableAlert(.fastRise)
         }
     }
     
     private func checkFastDrop() {
         if isGlucoseChangingFast(isRise: false) {
             notificationRequest?(.fastDrop)
+        } else {
+            disableAlert(.fastDrop)
         }
     }
     
     private func checkWarningLevel(for reading: GlucoseReading) {
         guard let warningLevel = User.current.settings.warningLevel(forValue: reading.calculatedValue) else {
+            disableAlert(.urgentLow)
+            disableAlert(.low)
+            disableAlert(.high)
+            disableAlert(.urgentLow)
             return
         }
         
         switch warningLevel {
-        case .urgentLow: notificationRequest?(.urgentLow)
-        case .low: notificationRequest?(.low)
-        case .high: notificationRequest?(.high)
-        case .urgentHigh: notificationRequest?(.urgentHigh)
+        case .urgentLow: fireAlert(ofType: .urgentLow)
+        case .low: fireAlert(ofType: .low)
+        case .high: fireAlert(ofType: .high)
+        case .urgentHigh: fireAlert(ofType: .urgentHigh)
         }
     }
     
     private func isGlucoseChangingFast(isRise: Bool) -> Bool {
-        let readings = User.current.settings.deviceMode == .main ? GlucoseReading.lastMasterReadings(3) : []
+        let readings = GlucoseReading.latestByCount(3, forMaster: User.current.settings.deviceMode == .main)
         
         guard readings.count == 3 else {
             return false
@@ -61,7 +237,7 @@ final class GlucoseNotificationWorker: NSObject {
         var lowThreshold = User.current.settings.warningLevelValue(for: .low)
         var minimumBGChange = 10.0
         
-        if let config = User.current.settings.alert?.getCustomConfiguration(for: isRise ? .fastRise : .fastDrop) {
+        if let config = User.current.settings.alert?.customConfiguration(for: isRise ? .fastRise : .fastDrop) {
             highThreshold = Double(config.highThreshold)
             lowThreshold = Double(config.lowThreshold)
             minimumBGChange = Double(config.minimumBGChange)

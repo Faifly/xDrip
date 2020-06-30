@@ -18,6 +18,8 @@
 		2C09D2262441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2242441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift */; };
 		2C09D2272441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D2252441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib */; };
 		2C09D22B24447D3D008538E9 /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D22A24447D3D008538E9 /* SettingsSplitViewController.swift */; };
+		2C1D399424AB4A000063D157 /* MuteChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1D399324AB4A000063D157 /* MuteChecker.swift */; };
+		2C1D399624AB4AAF0063D157 /* mute.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 2C1D399524AB4AAF0063D157 /* mute.aiff */; };
 		2C1DE8A524792DEF0023B512 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1DE8A324792DEF0023B512 /* PopUpViewController.swift */; };
 		2C1DE8A624792DEF0023B512 /* PopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C1DE8A424792DEF0023B512 /* PopUpViewController.xib */; };
 		2C1DE8A8247938780023B512 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1DE8A7247938780023B512 /* CustomAlertController.swift */; };
@@ -83,6 +85,8 @@
 		2C5A615C2473E02C00C6BD3D /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5A615B2473E02C00C6BD3D /* AudioController.swift */; };
 		2C5B3F0A24533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */; };
 		2C5B3F0C2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */; };
+		2C6DBE9E24A5EC3C00B0F33A /* 500ms-of-silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2C6DBE9D24A5EC3C00B0F33A /* 500ms-of-silence.mp3 */; };
+		2C6DBE9F24A5F02B00B0F33A /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C55FEF624A23B62006BB3EF /* RepeatingTimer.swift */; };
 		2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C87F045243E69C0002CF3D8 /* UView+Tests.swift */; };
 		2C8ADBBF24A0B98400827FF4 /* GlucoseNotificationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */; };
 		2C90528C24769D2100719793 /* UITableView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90528B24769D2100719793 /* UITableView+Tests.swift */; };
@@ -654,6 +658,8 @@
 		2C09D2242441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsTextInputTableViewCell.swift; sourceTree = "<group>"; };
 		2C09D2252441FF4D008538E9 /* BaseSettingsTextInputTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsTextInputTableViewCell.xib; sourceTree = "<group>"; };
 		2C09D22A24447D3D008538E9 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
+		2C1D399324AB4A000063D157 /* MuteChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuteChecker.swift; sourceTree = "<group>"; };
+		2C1D399524AB4AAF0063D157 /* mute.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = mute.aiff; sourceTree = "<group>"; };
 		2C1DE8A324792DEF0023B512 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		2C1DE8A424792DEF0023B512 /* PopUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopUpViewController.xib; sourceTree = "<group>"; };
 		2C1DE8A7247938780023B512 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
@@ -714,11 +720,13 @@
 		2C4E7EEE24694F440062D403 /* Ding.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ding.caf; sourceTree = "<group>"; };
 		2C4E7EEF24694F440062D403 /* Swoosh.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Swoosh.caf; sourceTree = "<group>"; };
 		2C4E7F0B246ABF830062D403 /* ExpandableTableContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableContainer.swift; sourceTree = "<group>"; };
+		2C55FEF624A23B62006BB3EF /* RepeatingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingTimer.swift; sourceTree = "<group>"; };
 		2C581C60248E5EAC008A1F34 /* EmojiInputFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiInputFooterView.swift; sourceTree = "<group>"; };
 		2C581C61248E5EAC008A1F34 /* EmojiInputFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiInputFooterView.xib; sourceTree = "<group>"; };
 		2C5A615B2473E02C00C6BD3D /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 		2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BaseSettingsViewControllerCoderTest.storyboard; sourceTree = "<group>"; };
 		2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewControllerCoderTest.swift; sourceTree = "<group>"; };
+		2C6DBE9D24A5EC3C00B0F33A /* 500ms-of-silence.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "500ms-of-silence.mp3"; sourceTree = "<group>"; };
 		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
 		2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseNotificationWorker.swift; sourceTree = "<group>"; };
 		2C90528B24769D2100719793 /* UITableView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Tests.swift"; sourceTree = "<group>"; };
@@ -1399,6 +1407,8 @@
 				2C4E7ED824694F400062D403 /* Tiptoes.caf */,
 				2C4E7EEC24694F440062D403 /* Tri-tone.caf */,
 				2C4E7EDB24694F410062D403 /* Typewriters.caf */,
+				2C1D399524AB4AAF0063D157 /* mute.aiff */,
+				2C6DBE9D24A5EC3C00B0F33A /* 500ms-of-silence.mp3 */,
 			);
 			path = NotificationSounds;
 			sourceTree = "<group>";
@@ -2751,6 +2761,8 @@
 				580E4CFA2441BF2100565EDE /* Charts */,
 				5805C9C92438929E002AFA1B /* CenteredTitleButton.swift */,
 				2C1DE8A7247938780023B512 /* CustomAlertController.swift */,
+				2C55FEF624A23B62006BB3EF /* RepeatingTimer.swift */,
+				2C1D399324AB4A000063D157 /* MuteChecker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -3624,6 +3636,7 @@
 				58F4CC89243BA21D0053D17C /* DebugLogViewController.xib in Resources */,
 				2C4E7EF924694F440062D403 /* Bell.caf in Resources */,
 				58184A512438C36700E848C6 /* StatsRootViewController.xib in Resources */,
+				2C6DBE9E24A5EC3C00B0F33A /* 500ms-of-silence.mp3 in Resources */,
 				580E4BC5243F733100565EDE /* SettingsModeRootViewController.xib in Resources */,
 				2C4E7EF424694F440062D403 /* Anticipate.caf in Resources */,
 				2C4E7EFB24694F440062D403 /* Swish.caf in Resources */,
@@ -3632,6 +3645,7 @@
 				2C4E7F0024694F440062D403 /* Calypso.caf in Resources */,
 				2C4E7EF324694F440062D403 /* Sherwood_Forest.caf in Resources */,
 				5805CA10243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.xib in Resources */,
+				2C1D399624AB4AAF0063D157 /* mute.aiff in Resources */,
 				5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */,
 				2C4ABEFF248A5FEA001ED694 /* FoodTypeTableViewCell.xib in Resources */,
 				2C4E7F0324694F440062D403 /* Noir.caf in Resources */,
@@ -3971,6 +3985,7 @@
 				2C09D21E2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.swift in Sources */,
 				58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */,
 				58788B75242647C5000EB113 /* TrainingEntriesWorker.swift in Sources */,
+				2C1D399424AB4A000063D157 /* MuteChecker.swift in Sources */,
 				2C5A615C2473E02C00C6BD3D /* AudioController.swift in Sources */,
 				58B986DD2466B68200E38376 /* FloatingPoint+Comparison.swift in Sources */,
 				58DDC4622423CA58008CB04D /* AbstractEntry.swift in Sources */,
@@ -3997,6 +4012,7 @@
 				5805C9D1243892B3002AFA1B /* String+Validation.swift in Sources */,
 				5805C9CF243892AE002AFA1B /* NibViewController.swift in Sources */,
 				2CBE1A94243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift in Sources */,
+				2C6DBE9F24A5F02B00B0F33A /* RepeatingTimer.swift in Sources */,
 				5805C9BA24389230002AFA1B /* CGMBluetoothService.swift in Sources */,
 				580E4B99243F721500565EDE /* NightscoutCloudConfigurationPresenter.swift in Sources */,
 				580E4CE3243F802F00565EDE /* SettingsModeMasterInteractor.swift in Sources */,

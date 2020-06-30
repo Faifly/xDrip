@@ -42,22 +42,5 @@ enum AlertEventType: Int, CaseIterable {
         }
     }
     
-    var requiresGlucoseWarningLevel: Bool {
-        switch self {
-        case .default,
-             .missedReadings,
-             .phoneMuted,
-             .calibrationRequest,
-             .initialCalibrationRequest,
-             .pairingRequest,
-             .fastRise,
-             .fastDrop:
-            return false
-        case .urgentHigh,
-             .high,
-             .low,
-             .urgentLow:
-            return true
-        }
-    }
+    static let warningLevelAlerts: [AlertEventType] = [.urgentLow, .low, .high, .urgentHigh, .fastRise, .fastDrop]
 }

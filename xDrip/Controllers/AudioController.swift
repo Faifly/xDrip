@@ -17,47 +17,51 @@ final class AudioController: NSObject {
     private var audioPlayer = AVAudioPlayer()
     private var previousVolume: Float = 0.0
     
-    func playSoundFile(_ fileName: String) {
-        guard let url = getFileURL(for: fileName) else { return }
-        playFile(with: url)
+    override init() {
+        super.init()
         
-        if let alert = User.current.settings.alert {
-            setupMuteOverriden(alert.isMuteOverriden)
+        setupAudioSession()
+    }
+    
+    func playSoundFile(_ fileName: String, overrideMute: Bool = false) {
+        guard let url = getFileURL(for: fileName) else { return }
+        
+        guard let alert = User.current.settings.alert else {
+            return
+        }
+        
+        if alert.isMuteOverriden {
             setupVolume(
                 isSystemVolumeOverriden: alert.isSystemVolumeOverriden,
                 overridenVolume: alert.volume
             )
-        }
-    }
-    
-    func playFileFromNotification(_ notification: UNNotification) {
-        let userInfo = notification.request.content.userInfo
-        guard let soundFileName = userInfo["soundFileName"] as? String,
-            let url = getFileURL(for: soundFileName) else {
-            return
-        }
-        playFile(with: url)
-        
-        if let isMuteOverriden = userInfo["isMuteOverriden"] as? Bool {
-            setupMuteOverriden(isMuteOverriden)
-        }
-        
-        if let isSystemVolumeOverriden = userInfo["isSystemVolumeOverriden"] as? Bool,
-            let volume = userInfo["overridenVolume"] as? Float {
-            setupVolume(
-                isSystemVolumeOverriden: isSystemVolumeOverriden,
-                overridenVolume: volume
-            )
+            playFile(with: url)
+        } else {
+            MuteChecker.shared.checkMute { [weak self] isMuted in
+                if !isMuted {
+                    self?.setupVolume(
+                        isSystemVolumeOverriden: alert.isSystemVolumeOverriden,
+                        overridenVolume: alert.volume
+                    )
+                    self?.playFile(with: url)
+                }
+            }
         }
     }
     
     private func playFile(with url: URL) {
         audioPlayer.stop()
-        
+
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer.delegate = self
             audioPlayer.prepareToPlay()
+            
+            do {
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch {
+                LogController.log(message: "Failed to activate audio session", type: .error, error: error)
+            }
         } catch {
             LogController.log(message: "Failed to instantiate audio player", type: .error, error: error)
         }
@@ -67,27 +71,26 @@ final class AudioController: NSObject {
     
     private func setupVolume(isSystemVolumeOverriden: Bool, overridenVolume: Float) {
         if isSystemVolumeOverriden {
-            previousVolume = MPVolumeView.volume ?? 0.5
+            previousVolume = AVAudioSession.sharedInstance().outputVolume
             MPVolumeView.setVolume(overridenVolume)
         }
     }
     
-    private func setupMuteOverriden(_ isOverriden: Bool) {
+    func setupAudioSession() {
         let session = AVAudioSession.sharedInstance()
         
         do {
             try session.setCategory(
-                isOverriden ? .playback : .soloAmbient//,
-//                mode: .default,
-//                options: [.duckOthers, .defaultToSpeaker]
+                .playback,
+                mode: .default,
+                options: [.mixWithOthers]
             )
             
             do {
-                try session.setActive(true)
+                try AVAudioSession.sharedInstance().setActive(true)
             } catch {
                 LogController.log(message: "Failed to activate audio session", type: .error, error: error)
             }
-//            UIApplication.shared.beginReceivingRemoteControlEvents()
         } catch {
             LogController.log(message: "Failed to configurate audio session", type: .error, error: error)
             print("AVAudioSession error: \(error)")
@@ -104,7 +107,7 @@ final class AudioController: NSObject {
         let name = fileNameParts[0]
         let type = fileNameParts[1]
         
-        guard let soundFilePath = Bundle(identifier: "com.faifly.xDrip")?.path(forResource: name, ofType: type) else { return nil }
+        guard let soundFilePath = Bundle.main.path(forResource: name, ofType: type) else { return nil }
         return URL(fileURLWithPath: "\(soundFilePath)")
     }
     
@@ -123,19 +126,6 @@ private extension MPVolumeView {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.01) {
             slider?.value = volume
         }
-        // Optional - Remove the HUD
-//        if let app = UIApplication.shared.delegate as? AppDelegate, let window = app.window {
-//            volumeView.alpha = 0.000001
-//            window.addSubview(volumeView)
-//        }
-    }
-    
-    static var volume: Float? {
-        let volumeView = MPVolumeView(frame: .zero)
-        // Search for the slider
-        let slider = volumeView.subviews.first(where: { $0 is UISlider }) as? UISlider
-        
-        return slider?.value
     }
 }
 

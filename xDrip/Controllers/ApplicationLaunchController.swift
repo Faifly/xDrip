@@ -21,6 +21,7 @@ enum ApplicationLaunchController {
         setupDevice()
         NotificationController.shared.requestAuthorization()
         _ = NightscoutService.shared
+        _ = AudioController.shared
     }
     
     static func createWindow() -> UIWindow {

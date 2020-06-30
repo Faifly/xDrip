@@ -8,11 +8,15 @@
 
 import UIKit
 import UserNotifications
+import AVKit
 
 // swiftlint:disable discouraged_optional_collection
 
-@UIApplicationMain final class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+@UIApplicationMain final class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, AVAudioPlayerDelegate {
     var window: UIWindow?
+    
+    private var player: AVAudioPlayer?
+    private var task = UIBackgroundTaskIdentifier(rawValue: 0)
     
     func application(
         _ application: UIApplication,
@@ -22,7 +26,35 @@ import UserNotifications
         window = ApplicationLaunchController.createWindow()
         UNUserNotificationCenter.current().delegate = self
         
+        application.applicationIconBadgeNumber = 0
+        
+        setupTask()
+        
         return true
+    }
+    
+    private func setupTask() {
+        task = UIApplication.shared.beginBackgroundTask(withName: "silence_sound_task") { [weak self] in
+            self?.restartTask()
+        }
+        
+        do {
+            guard let path = Bundle.main.path(forResource: "500ms-of-silence", ofType: ".mp3") else { return }
+            let url = URL(fileURLWithPath: path)
+            player?.stop()
+            player = try AVAudioPlayer(contentsOf: url)
+            player?.delegate = self
+        } catch {
+            LogController.log(message: "Cannot instantiate audioPlayer", type: .error, error: error)
+        }
+
+        player?.play()
+    }
+    
+    func restartTask() {
+        UIApplication.shared.endBackgroundTask(task)
+        task = .invalid
+        setupTask()
     }
     
     func userNotificationCenter(
@@ -30,8 +62,6 @@ import UserNotifications
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
-        AudioController.shared.playFileFromNotification(notification)
-        
         completionHandler([.alert, .badge, .sound])
     }
     
@@ -42,19 +72,14 @@ import UserNotifications
     ) {
         let identifier = response.notification.request.identifier
         
-        AudioController.shared.playFileFromNotification(response.notification)
-        
         if response.notification.request.content.categoryIdentifier == "SnoozableNotification" {
             switch response.actionIdentifier {
             case "snooze_action":
                 if let alertType = AlertEventType.allCases.first(where: { $0.alertID == identifier }) {
                     NotificationController.shared.scheduleSnoozeForNotification(ofType: alertType)
                 }
-                completionHandler()
-                return
             default:
-                completionHandler()
-                return
+                break
             }
         }
         
@@ -87,4 +112,8 @@ import UserNotifications
         MacMenuController.buildMenu(builder)
     }
     #endif
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        restartTask()
+    }
 }
