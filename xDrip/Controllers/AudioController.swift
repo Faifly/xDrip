@@ -30,6 +30,9 @@ final class AudioController: NSObject {
             return
         }
         
+        #if targetEnvironment(macCatalyst)
+        playFile(with: url)
+        #else
         if alert.isMuteOverriden {
             setupVolume(
                 isSystemVolumeOverriden: alert.isSystemVolumeOverriden,
@@ -39,14 +42,16 @@ final class AudioController: NSObject {
         } else {
             MuteChecker.shared.checkMute { [weak self] isMuted in
                 if !isMuted {
+                    let alert = User.current.settings.alert
                     self?.setupVolume(
-                        isSystemVolumeOverriden: alert.isSystemVolumeOverriden,
-                        overridenVolume: alert.volume
+                        isSystemVolumeOverriden: alert?.isSystemVolumeOverriden ?? false,
+                        overridenVolume: alert?.volume ?? 0.0
                     )
                     self?.playFile(with: url)
                 }
             }
         }
+        #endif
     }
     
     private func playFile(with url: URL) {
@@ -87,7 +92,7 @@ final class AudioController: NSObject {
             )
             
             do {
-                try AVAudioSession.sharedInstance().setActive(true)
+                try session.setActive(true)
             } catch {
                 LogController.log(message: "Failed to activate audio session", type: .error, error: error)
             }
