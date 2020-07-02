@@ -422,6 +422,22 @@
 "notification_pairing_request_body" = "Пожалуйста, разблокируйте свой телефон и примите запрос на подключение от вашего датчика в течении 30ти секунд";
 "notification_initial_calibration_title" = "Начальная калибровка";
 "notification_initial_calibration_body" = "Сенсор теперь готов получить начальную калибровку";
+"notification_fast_rise_title" = "Быстрый рост уровня сахара";
+"notification_fast_rise_body" = "Уровень сахара в вашей крови быстро растет";
+"notification_urgent_high_title" = "Очень высокий уровень сахара";
+"notification_urgent_high_body" = "Уровень сахара в вашей крови очень высокий";
+"notification_high_title" = "Высокий уровень сахара";
+"notification_high_body" = "Уровень сахара в вашей крови высокий";
+"notification_fast_drop_title" = "Быстрый спад уровня сахара";
+"notification_fast_drop_body" = "Уровень сахара в вашей крови быстро падает";
+"notification_low_title" = "Низкий уровень сахара";
+"notification_low_body" = "Уровень сахара в вашей крови низкий";
+"notification_urgent_low_title" = "Очень низкий уровень сахара";
+"notification_urgent_low_body" = "Уровень сахара в вашей крови очень низкий";
+"notification_missed_readings_title" = "Пропущенные считывания";
+"notification_missed_readings_body" = "Похоже, что у вас есть одно или более пропущеных считываний";
+"notification_phone_muted_title" = "Включен беззвучный режим";
+"notification_phone_muted_body" = "Ваше устройство находится в беззвучном режиме";
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Приветствуем!";

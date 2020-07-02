@@ -423,6 +423,22 @@ This setting will be applied to all future sensors";
 "notification_pairing_request_body" = "Please unlock your phone and confirm pairing request from your transmitter during the next 30 seconds";
 "notification_initial_calibration_title" = "Initial Calibration";
 "notification_initial_calibration_body" = "Sensor is now ready to receive initial calibration";
+"notification_fast_rise_title" = "Fast Rise Blood Glucose";
+"notification_fast_rise_body" = "Your blood glucose level rising fast";
+"notification_urgent_high_title" = "Urgent High Blood Glucose";
+"notification_urgent_high_body" = "Your blood glucose level is urgent high";
+"notification_high_title" = "High Blood Glucose";
+"notification_high_body" = "Your blood glucose level is high";
+"notification_fast_drop_title" = "Fast Drop Blood Glucose";
+"notification_fast_drop_body" = "Your blood glucose level dropping fast";
+"notification_low_title" = "Low Blood Glucose";
+"notification_low_body" = "Your blood glucose level is low";
+"notification_urgent_low_title" = "Urgent Low Blood Glucose";
+"notification_urgent_low_body" = "Your blood glucose level is urgent low";
+"notification_missed_readings_title" = "Missed Blood Glucose Readings";
+"notification_missed_readings_body" = "Seems like you have one or more missed BG readings";
+"notification_phone_muted_title" = "Phone Muted";
+"notification_phone_muted_body" = "Your device in Ring/Silent mode";
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Greetings";

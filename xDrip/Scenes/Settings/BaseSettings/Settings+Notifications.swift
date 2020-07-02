@@ -16,6 +16,7 @@ extension NotificationCenter {
         case deviceMode
         case injectionType
         case followerAuthStatus
+        case sensorStarted
         
         case alertRepeat
         case fastRise
@@ -67,6 +68,7 @@ fileprivate extension NotificationCenter.Setting {
         case .urgentLow: name = "repeatUrgentDrop"
         case .high: name = "repeatHigh"
         case .low: name = "repeatLow"
+        case .sensorStarted: name = "sensorStarted"
         }
         return Notification.Name(name)
     }

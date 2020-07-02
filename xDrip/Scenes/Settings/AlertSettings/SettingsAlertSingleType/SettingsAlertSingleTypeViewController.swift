@@ -54,11 +54,6 @@ class SettingsAlertSingleTypeViewController: BaseSettingsViewController, Setting
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let type = router?.dataStore?.eventType {
-            NotificationController.shared.sendNotification(ofType: type)
-        }
-        
         doLoad()
     }
     

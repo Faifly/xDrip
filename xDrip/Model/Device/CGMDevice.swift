@@ -122,6 +122,10 @@ final class CGMDevice: Object {
         Realm.shared.safeWrite {
             self.isSensorStarted = isStarted
         }
+        
+        if isStarted {
+            NotificationCenter.default.postSettingsChangeNotification(setting: .sensorStarted)
+        }
     }
     
     var sensorStartDate: Date? {

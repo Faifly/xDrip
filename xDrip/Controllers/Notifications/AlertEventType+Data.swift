@@ -14,15 +14,15 @@ extension AlertEventType {
         case .pairingRequest: return "notification_pairing_request_title".localized
         case .initialCalibrationRequest: return "notification_initial_calibration_title".localized
         case .default: return "default alert"
-        case .fastRise: return "fast rise alert"
-        case .urgentHigh: return "urgent high"
-        case .high: return "high alert"
-        case .fastDrop: return "fast drop alert"
-        case .low: return "low alert"
-        case .urgentLow: return "urgent low alert"
-        case .missedReadings: return "missed readings alert"
-        case .phoneMuted: return "phone muted alert"
-        case .calibrationRequest: return "calibration request alert"
+        case .fastRise: return "notification_fast_rise_title".localized
+        case .urgentHigh: return "notification_urgent_high_title".localized
+        case .high: return "notification_high_title".localized
+        case .fastDrop: return "notification_fast_drop_title".localized
+        case .low: return "notification_low_title".localized
+        case .urgentLow: return "notification_urgent_low_title".localized
+        case .missedReadings: return "notification_missed_readings_title".localized
+        case .phoneMuted: return "notification_phone_muted_title".localized
+        case .calibrationRequest: return "Calibration Request"
         }
     }
     
@@ -31,14 +31,14 @@ extension AlertEventType {
         case .pairingRequest: return "notification_pairing_request_body".localized
         case .initialCalibrationRequest: return "notification_initial_calibration_body".localized
         case .default: return "default body"
-        case .fastRise: return "fast rise body"
-        case .urgentHigh: return "urgent high body"
-        case .high: return "high body"
-        case .fastDrop: return "fast drop body"
-        case .low: return "low body"
-        case .urgentLow: return "urgent low body"
-        case .missedReadings: return "missed readings body"
-        case .phoneMuted: return "phone muted body"
+        case .fastRise: return "notification_fast_rise_body".localized
+        case .urgentHigh: return "notification_urgent_high_body".localized
+        case .high: return "notification_high_body".localized
+        case .fastDrop: return "notification_fast_drop_body".localized
+        case .low: return "notification_low_body".localized
+        case .urgentLow: return "notification_urgent_low_body".localized
+        case .missedReadings: return "notification_missed_readings_body".localized
+        case .phoneMuted: return "notification_phone_muted_body".localized
         case .calibrationRequest: return "calibration request body"
         }
     }

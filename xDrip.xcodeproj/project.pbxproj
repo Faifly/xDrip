@@ -90,6 +90,8 @@
 		2C4E7F0824694F440062D403 /* Ding.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EEE24694F440062D403 /* Ding.caf */; };
 		2C4E7F0924694F440062D403 /* Swoosh.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E7EEF24694F440062D403 /* Swoosh.caf */; };
 		2C4E7F0C246ABF830062D403 /* ExpandableTableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4E7F0B246ABF830062D403 /* ExpandableTableContainer.swift */; };
+		2C4FE9BB24ADD7F000D2048B /* NotificationControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FE9BA24ADD7F000D2048B /* NotificationControllerTests.swift */; };
+		2C4FE9BD24ADD81500D2048B /* GlucoseNotificationWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FE9BC24ADD81500D2048B /* GlucoseNotificationWorkerTests.swift */; };
 		2C581C62248E5EAD008A1F34 /* EmojiInputFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C581C60248E5EAC008A1F34 /* EmojiInputFooterView.swift */; };
 		2C581C63248E5EAD008A1F34 /* EmojiInputFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C581C61248E5EAC008A1F34 /* EmojiInputFooterView.xib */; };
 		2C5A615C2473E02C00C6BD3D /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5A615B2473E02C00C6BD3D /* AudioController.swift */; };
@@ -639,6 +641,7 @@
 		58FE4CB7247958DF00511B80 /* CGMDeviceResistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CB6247958DF00511B80 /* CGMDeviceResistance.swift */; };
 		58FE4CB924796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CB824796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift */; };
 		58FE4CBB247970BE00511B80 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CBA247970BE00511B80 /* NotificationController.swift */; };
+		58FFBC1B24A49EBC003D2DE6 /* CCalibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */; };
 		58FFBC1D24A5EC2C003D2DE6 /* LocalizedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC1C24A5EC2C003D2DE6 /* LocalizedLabel.swift */; };
 		58FFBC1F24A5ECEA003D2DE6 /* LocalizedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC1E24A5ECEA003D2DE6 /* LocalizedButton.swift */; };
 		58FFBC2124A5ED5F003D2DE6 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC2024A5ED5F003D2DE6 /* ActionButton.swift */; };
@@ -647,7 +650,6 @@
 		58FFBC2F24A765F2003D2DE6 /* InitialSetupFinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC2D24A765F2003D2DE6 /* InitialSetupFinishViewController.swift */; };
 		58FFBC3024A765F2003D2DE6 /* InitialSetupFinishViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FFBC2E24A765F2003D2DE6 /* InitialSetupFinishViewController.xib */; };
 		58FFBC3224AA1A4A003D2DE6 /* LocalizedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC3124AA1A4A003D2DE6 /* LocalizedTextField.swift */; };
-		58FFBC1B24A49EBC003D2DE6 /* CCalibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -744,6 +746,8 @@
 		2C4E7EEE24694F440062D403 /* Ding.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ding.caf; sourceTree = "<group>"; };
 		2C4E7EEF24694F440062D403 /* Swoosh.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Swoosh.caf; sourceTree = "<group>"; };
 		2C4E7F0B246ABF830062D403 /* ExpandableTableContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableContainer.swift; sourceTree = "<group>"; };
+		2C4FE9BA24ADD7F000D2048B /* NotificationControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationControllerTests.swift; sourceTree = "<group>"; };
+		2C4FE9BC24ADD81500D2048B /* GlucoseNotificationWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseNotificationWorkerTests.swift; sourceTree = "<group>"; };
 		2C55FEF624A23B62006BB3EF /* RepeatingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingTimer.swift; sourceTree = "<group>"; };
 		2C581C60248E5EAC008A1F34 /* EmojiInputFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiInputFooterView.swift; sourceTree = "<group>"; };
 		2C581C61248E5EAC008A1F34 /* EmojiInputFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiInputFooterView.xib; sourceTree = "<group>"; };
@@ -1307,6 +1311,7 @@
 		58FE4CB6247958DF00511B80 /* CGMDeviceResistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMDeviceResistance.swift; sourceTree = "<group>"; };
 		58FE4CB824796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6KeepAliveTxMessage.swift; sourceTree = "<group>"; };
 		58FE4CBA247970BE00511B80 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCalibration.swift; sourceTree = "<group>"; };
 		58FFBC1C24A5EC2C003D2DE6 /* LocalizedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedLabel.swift; sourceTree = "<group>"; };
 		58FFBC1E24A5ECEA003D2DE6 /* LocalizedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedButton.swift; sourceTree = "<group>"; };
 		58FFBC2024A5ED5F003D2DE6 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
@@ -1315,7 +1320,6 @@
 		58FFBC2D24A765F2003D2DE6 /* InitialSetupFinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupFinishViewController.swift; sourceTree = "<group>"; };
 		58FFBC2E24A765F2003D2DE6 /* InitialSetupFinishViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupFinishViewController.xib; sourceTree = "<group>"; };
 		58FFBC3124AA1A4A003D2DE6 /* LocalizedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedTextField.swift; sourceTree = "<group>"; };
-		58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCalibration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1492,6 +1496,15 @@
 				2C09D2212441D383008538E9 /* PickerExpandableTableViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		2C4FE9B924ADD7CF00D2048B /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				2C4FE9BA24ADD7F000D2048B /* NotificationControllerTests.swift */,
+				2C4FE9BC24ADD81500D2048B /* GlucoseNotificationWorkerTests.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		2C531F6F2445FE27006F4532 /* Pickers */ = {
@@ -2066,6 +2079,7 @@
 		5805CA9A2438A66D002AFA1B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2C4FE9B924ADD7CF00D2048B /* Notifications */,
 				5805CA9B2438A680002AFA1B /* ApplicationLaunchControllerTests.swift */,
 				5805CA9D2438A6AF002AFA1B /* CGMControllerTests.swift */,
 				5805CA9F2438A6D1002AFA1B /* LogControllerTests.swift */,
@@ -3563,8 +3577,8 @@
 				58828B8F2492876C001D4C3E /* CGlucoseReading.swift */,
 				58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */,
 			);
-			sourceTree = "<group>";
 			path = Codables;
+			sourceTree = "<group>";
 		};
 		58FFBC2224A61EDB003D2DE6 /* InitialSetupNightscoutViewController */ = {
 			isa = PBXGroup;
@@ -3749,7 +3763,6 @@
 				2C4E7EFC24694F440062D403 /* Suspense.caf in Resources */,
 				2C4E7F0024694F440062D403 /* Calypso.caf in Resources */,
 				2C4E7EF324694F440062D403 /* Sherwood_Forest.caf in Resources */,
-				5805CA10243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.xib in Resources */,
 				2C1D399624AB4AAF0063D157 /* mute.aiff in Resources */,
 				5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */,
 				2C4ABEFF248A5FEA001ED694 /* FoodTypeTableViewCell.xib in Resources */,
@@ -4321,6 +4334,7 @@
 				580EC7B5242151EB00C34948 /* EditTrainingPresenterTests.swift in Sources */,
 				580E4C4D243F773500565EDE /* SettingsAlertTypesPresenterTests.swift in Sources */,
 				580E4C8C243F780200565EDE /* SettingsModeRootInteractorTests.swift in Sources */,
+				2C4FE9BD24ADD81500D2048B /* GlucoseNotificationWorkerTests.swift in Sources */,
 				2C493C37244EFEF200F4A54B /* BaseSettingsSingleSelectionTableViewCellTests.swift in Sources */,
 				580E4C5F243F776700565EDE /* SettingsAlertSoundPresenterTests.swift in Sources */,
 				587E8C212465BDFB00303AA5 /* CalibrationTests.swift in Sources */,
@@ -4365,6 +4379,7 @@
 				580EC7C82421525300C34948 /* EditCalibrationRouterTests.swift in Sources */,
 				0A216CD124A5EBFF002DA0AF /* MirrorObject.swift in Sources */,
 				580E4C67243F779500565EDE /* SettingsCloudTypesInteractorTests.swift in Sources */,
+				2C4FE9BB24ADD7F000D2048B /* NotificationControllerTests.swift in Sources */,
 				5805CA632438A269002AFA1B /* DexcomG6OpCodeTests.swift in Sources */,
 				58B5FD9924192E5A00DB857D /* SettingsRootViewControllerTests.swift in Sources */,
 				58788B8524265235000EB113 /* CarbEntryTests.swift in Sources */,

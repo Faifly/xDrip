@@ -15,7 +15,7 @@ final class GlucoseNotificationWorker: NSObject {
     var notificationRequest: ((AlertEventType) -> Void)?
     
     private lazy var settingsChangeObserver: [NSObjectProtocol] = NotificationCenter.default.subscribe(
-        forSettingsChange: [.alertRepeat, .fastRise, .fastDrop, .urgentHigh, .urgentLow, .high, .low]
+        forSettingsChange: [.alertRepeat, .fastRise, .fastDrop, .urgentHigh, .urgentLow, .high, .low, .sensorStarted]
     ) { [weak self] setting in
         guard let self = self else { return }
         
@@ -28,6 +28,8 @@ final class GlucoseNotificationWorker: NSObject {
         case .high: alertType = .high
         case .low: alertType = .low
         case .alertRepeat: self.disableAlertsRelatedToDefaultConfig(); return
+        case .sensorStarted:
+            self.resetMissedReadingsTimer()
         default: break
         }
         
@@ -50,18 +52,15 @@ final class GlucoseNotificationWorker: NSObject {
             self.resetMissedReadingsTimer()
         }
         
-        CGMController.shared.subscribeForMetadataEvents(listener: self) { [weak self] type in
-            guard let self = self else { return }
-            if type == .sensorAge {
-                self.resetMissedReadingsTimer()
-            }
-        }
-        
         _ = settingsChangeObserver
         
         resetMissedReadingsTimer()
         resetAlertTimer()
         setupRepeatAlertsData()
+    }
+    
+    deinit {
+        CGMController.shared.unsubscribeFromGlucoseDataEvents(listener: self)
     }
     
     private func resetMissedReadingsTimer() {
@@ -244,9 +243,9 @@ final class GlucoseNotificationWorker: NSObject {
         }
         
         guard
-            lastReading.calculatedValue != 0.0,
-            middleReading.calculatedValue != 0,
-            firstReading.calculatedValue != 0,
+            lastReading.calculatedValue !~ 0.0,
+            middleReading.calculatedValue !~ 0.0,
+            firstReading.calculatedValue !~ 0.0,
             lastReading.calculatedValue <= highThreshold,
             lastReading.calculatedValue >= lowThreshold
         else { return false }

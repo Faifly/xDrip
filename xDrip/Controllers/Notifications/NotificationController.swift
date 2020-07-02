@@ -26,16 +26,7 @@ final class NotificationController: NSObject {
     }
     
     func requestAuthorization() {
-        var options: UNAuthorizationOptions = [
-            .alert,
-            .badge,
-            .sound
-        ]
-        
-        if #available(iOS 12.0, *) {
-            options.update(with: .criticalAlert)
-        }
-        
+        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(options: options) { [weak self] granted, error in
             if let error = error {
                 LogController.log(message: "Error while request notification authorization", type: .error, error: error)
@@ -68,8 +59,24 @@ final class NotificationController: NSObject {
     func sendNotification(ofType type: AlertEventType) {
         guard let settings = User.current.settings.alert, settings.isNotificationsEnabled else { return }
         let config = settings.customConfiguration(for: type)
+        let date = Date()
         
-        guard config.snoozedUntilDate < Date() else { return }
+        if !config.isEntireDay {
+            let startTime = config.startTime + Double(TimeZone.current.secondsFromGMT())
+            let endTime = config.endTime + Double(TimeZone.current.secondsFromGMT())
+            
+            let components = Calendar.current.dateComponents([.hour, .minute], from: date)
+            if let hour = components.hour, let minutes = components.minute {
+                var time = TimeInterval(hour) * TimeInterval.secondsPerHour
+                time += TimeInterval(minutes) * TimeInterval.secondsPerMinute
+                
+                if time < startTime || time > endTime {
+                    return
+                }
+            }
+        }
+        
+        guard config.snoozedUntilDate < date else { return }
         
         let content = createContentForNotification(ofType: type)
         

@@ -12,7 +12,7 @@ import AVKit
 
 // swiftlint:disable discouraged_optional_collection
 
-@UIApplicationMain final class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, AVAudioPlayerDelegate {
+@UIApplicationMain final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     private var player: AVAudioPlayer?
@@ -33,6 +33,7 @@ import AVKit
         return true
     }
     
+    // MARK: Setup background task for endless background mode
     private func setupTask() {
         task = UIApplication.shared.beginBackgroundTask(withName: "silence_sound_task") { [weak self] in
             self?.restartTask()
@@ -55,35 +56,6 @@ import AVKit
         UIApplication.shared.endBackgroundTask(task)
         task = .invalid
         setupTask()
-    }
-    
-    func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
-    ) {
-        completionHandler([.alert, .badge, .sound])
-    }
-    
-    func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        didReceive response: UNNotificationResponse,
-        withCompletionHandler completionHandler: @escaping () -> Void
-    ) {
-        let identifier = response.notification.request.identifier
-        
-        if response.notification.request.content.categoryIdentifier == "SnoozableNotification" {
-            switch response.actionIdentifier {
-            case "snooze_action":
-                if let alertType = AlertEventType.allCases.first(where: { $0.alertID == identifier }) {
-                    NotificationController.shared.scheduleSnoozeForNotification(ofType: alertType)
-                }
-            default:
-                break
-            }
-        }
-        
-        completionHandler()
     }
     
     #if targetEnvironment(macCatalyst)
@@ -112,7 +84,42 @@ import AVKit
         MacMenuController.buildMenu(builder)
     }
     #endif
+}
+
+// MARK: - UNUserNotificationCenterDelegate
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.alert, .badge, .sound])
+    }
     
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        let identifier = response.notification.request.identifier
+        
+        if response.notification.request.content.categoryIdentifier == "SnoozableNotification" {
+            switch response.actionIdentifier {
+            case "snooze_action":
+                if let alertType = AlertEventType.allCases.first(where: { $0.alertID == identifier }) {
+                    NotificationController.shared.scheduleSnoozeForNotification(ofType: alertType)
+                }
+            default:
+                break
+            }
+        }
+        
+        completionHandler()
+    }
+}
+
+// MARK: - AVAudioPlayerDelegate
+extension AppDelegate: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         restartTask()
     }

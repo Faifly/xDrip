@@ -35,10 +35,6 @@ final class AlertSettings: Object {
         }
     }
     
-//    func getCustomConfiguration(for type: AlertEventType) -> AlertConfiguration? {
-//        return customConfigurations.first(where: { $0.eventType == type })
-//    }
-    
     func getSound(for type: AlertEventType) -> CustomSound {
         var sound = CustomSound.tritone
         
