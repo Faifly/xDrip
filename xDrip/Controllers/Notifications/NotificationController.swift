@@ -9,16 +9,14 @@
 import UIKit
 import UserNotifications
 
-final class NotificationController: NSObject {
+final class NotificationController {
     private let defaultCategoryID = "AlertEvent"
     private let snoozableNotificationCategoryID = "SnoozableNotification"
     
     static let shared = NotificationController()
     private var glucoseNotificationWorker = GlucoseNotificationWorker()
     
-    override init() {
-        super.init()
-        
+    private init() {
         glucoseNotificationWorker.notificationRequest = { [weak self] alertType in
             guard let self = self else { return }
             self.sendNotification(ofType: alertType)
@@ -127,7 +125,7 @@ final class NotificationController: NSObject {
         content.body = type.alertBody
         content.sound = nil
         content.categoryIdentifier = defaultCategoryID
-        content.badge = 1
+        content.badge = 0
         
         if let alert = User.current.settings.alert {
             let configuration = alert.customConfiguration(for: type)

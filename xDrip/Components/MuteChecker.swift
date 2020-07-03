@@ -11,26 +11,26 @@ import UIKit
 import AudioToolbox
 
 @objcMembers
-public class MuteChecker: NSObject {
-    public typealias MuteNotificationCompletion = ((_ mute: Bool) -> Void)
+final class MuteChecker: NSObject {
+    typealias MuteNotificationCompletion = ((_ mute: Bool) -> Void)
 
     // MARK: Properties
     /// Shared instance
-    public static let shared = MuteChecker()
+    static let shared = MuteChecker()
 
     /// Sound ID for mute sound
     private let soundUrl = MuteChecker.muteSoundUrl
 
     /// Should notify every second or only when changes?
     /// True will notify every second of the state, false only when it changes
-    public var alwaysNotify = true
+    var alwaysNotify = true
 
     /// Notification handler to be triggered when mute status changes
     /// Triggered every second if alwaysNotify=true, otherwise only when it switches state
-    public var notify: MuteNotificationCompletion?
+    var notify: MuteNotificationCompletion?
 
     /// Current mute state
-    public private(set) var isMute = false
+    private(set) var isMute = false
 
     /// Silent sound (0.5 sec)
     private var soundId: SystemSoundID = 0

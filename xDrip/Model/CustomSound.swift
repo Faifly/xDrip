@@ -36,6 +36,8 @@ enum CustomSound: Int, CaseIterable {
     case tritone
     case typewriters
     
+    static let `default` = CustomSound.tritone
+    
     var fileName: String {
         switch self {
         case .alarm: return "Alarm.caf"

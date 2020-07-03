@@ -103,6 +103,7 @@
 		2C8ADBBF24A0B98400827FF4 /* GlucoseNotificationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */; };
 		2C90528C24769D2100719793 /* UITableView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90528B24769D2100719793 /* UITableView+Tests.swift */; };
 		2C90528E2476CD0000719793 /* AudioControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90528D2476CD0000719793 /* AudioControllerTests.swift */; };
+		2C93C9C524AF4829002B4B62 /* KeepAliveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C93C9C424AF4829002B4B62 /* KeepAliveController.swift */; };
 		2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */; };
 		2CBE1A86243204CC003BE14E /* ViewModelConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */; };
 		2CBE1A8924320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A8824320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift */; };
@@ -758,6 +759,7 @@
 		2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseNotificationWorker.swift; sourceTree = "<group>"; };
 		2C90528B24769D2100719793 /* UITableView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Tests.swift"; sourceTree = "<group>"; };
 		2C90528D2476CD0000719793 /* AudioControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioControllerTests.swift; sourceTree = "<group>"; };
+		2C93C9C424AF4829002B4B62 /* KeepAliveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepAliveController.swift; sourceTree = "<group>"; };
 		2CBE1A822430F6FA003BE14E /* EntriesListTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableController.swift; sourceTree = "<group>"; };
 		2CBE1A85243204CC003BE14E /* ViewModelConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConfigurable.swift; sourceTree = "<group>"; };
 		2CBE1A8824320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListEntryPersistenceWorker.swift; sourceTree = "<group>"; };
@@ -3161,6 +3163,7 @@
 				58F4CC78243B9F470053D17C /* MacMenuController.swift */,
 				58F4CC7A243BA0CB0053D17C /* DebugController.swift */,
 				2C5A615B2473E02C00C6BD3D /* AudioController.swift */,
+				2C93C9C424AF4829002B4B62 /* KeepAliveController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4174,6 +4177,7 @@
 				5805C9B424389230002AFA1B /* DexcomG6CharacteristicType.swift in Sources */,
 				2CBE1A86243204CC003BE14E /* ViewModelConfigurable.swift in Sources */,
 				580E4BEC243F73B200565EDE /* SettingsSensorInteractor.swift in Sources */,
+				2C93C9C524AF4829002B4B62 /* KeepAliveController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

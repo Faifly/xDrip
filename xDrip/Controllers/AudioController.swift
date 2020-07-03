@@ -9,7 +9,6 @@
 import Foundation
 import AVKit
 import MediaPlayer
-import UserNotifications
 
 final class AudioController: NSObject {
     static let shared = AudioController()
@@ -98,7 +97,6 @@ final class AudioController: NSObject {
             }
         } catch {
             LogController.log(message: "Failed to configurate audio session", type: .error, error: error)
-            print("AVAudioSession error: \(error)")
         }
     }
     

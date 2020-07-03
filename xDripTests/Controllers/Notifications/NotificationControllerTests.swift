@@ -9,7 +9,7 @@
 import XCTest
 @testable import xDrip
 
-final class NotificationContorllerTests: XCTestCase {
+final class NotificationContorllerTests: AbstractRealmTest {
     let sut = NotificationController.shared
     
     func testSendNotification() {

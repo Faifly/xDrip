@@ -9,7 +9,7 @@
 import XCTest
 @testable import xDrip
 
-final class GlucoseNotificationsWorkerTests: XCTestCase {
+final class GlucoseNotificationsWorkerTests: AbstractRealmTest {
     var sut: GlucoseNotificationWorker?
     
     func testGlucoseChangingFast() {

@@ -14,14 +14,15 @@ import FirebaseCore
 
 enum ApplicationLaunchController {
     static func runAppLaunchSequence() {
+        _ = AudioController.shared
         #if !targetEnvironment(macCatalyst)
         FirebaseApp.configure()
+        _ = KeepAliveController.shared
         #endif
         setupRealm()
         setupDevice()
         NotificationController.shared.requestAuthorization()
         _ = NightscoutService.shared
-        _ = AudioController.shared
     }
     
     static func createWindow() -> UIWindow {

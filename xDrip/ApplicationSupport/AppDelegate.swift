@@ -8,18 +8,10 @@
 
 import UIKit
 import UserNotifications
-#if !targetEnvironment(macCatalyst)
-import AVKit
-#endif
 
 // swiftlint:disable discouraged_optional_collection
 @UIApplicationMain final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    
-    #if !targetEnvironment(macCatalyst)
-    private var player: AVAudioPlayer?
-    private var task = UIBackgroundTaskIdentifier(rawValue: 0)
-    #endif
     
     func application(
         _ application: UIApplication,
@@ -29,41 +21,8 @@ import AVKit
         window = ApplicationLaunchController.createWindow()
         UNUserNotificationCenter.current().delegate = self
         
-        application.applicationIconBadgeNumber = 0
-        
-        #if !targetEnvironment(macCatalyst)
-        setupTask()
-        #endif
-        
         return true
     }
-    
-    #if !targetEnvironment(macCatalyst)
-    // MARK: Setup background task for endless background mode
-    private func setupTask() {
-        task = UIApplication.shared.beginBackgroundTask(withName: "silence_sound_task") { [weak self] in
-            self?.restartTask()
-        }
-        
-        do {
-            guard let path = Bundle.main.path(forResource: "500ms-of-silence", ofType: ".mp3") else { return }
-            let url = URL(fileURLWithPath: path)
-            player?.stop()
-            player = try AVAudioPlayer(contentsOf: url)
-            player?.delegate = self
-        } catch {
-            LogController.log(message: "Cannot instantiate audioPlayer", type: .error, error: error)
-        }
-
-        player?.play()
-    }
-    
-    func restartTask() {
-        UIApplication.shared.endBackgroundTask(task)
-        task = .invalid
-        setupTask()
-    }
-    #endif
     
     #if targetEnvironment(macCatalyst)
     // MARK: UISceneSession Lifecycle
@@ -100,7 +59,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
-        UIApplication.shared.applicationIconBadgeNumber = 0
         completionHandler([.alert, .badge, .sound])
     }
     
@@ -109,7 +67,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        UIApplication.shared.applicationIconBadgeNumber = 0
         let identifier = response.notification.request.identifier
         
         if response.notification.request.content.categoryIdentifier == "SnoozableNotification" {
@@ -126,12 +83,3 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler()
     }
 }
-
-#if !targetEnvironment(macCatalyst)
-// MARK: - AVAudioPlayerDelegate
-extension AppDelegate: AVAudioPlayerDelegate {
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        restartTask()
-    }
-}
-#endif

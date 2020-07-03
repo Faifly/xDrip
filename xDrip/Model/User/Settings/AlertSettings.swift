@@ -36,7 +36,7 @@ final class AlertSettings: Object {
     }
     
     func getSound(for type: AlertEventType) -> CustomSound {
-        var sound = CustomSound.tritone
+        var sound = CustomSound.default
         
         let configuration = customConfiguration(for: type)
         if configuration.isEnabled, let snd = CustomSound(rawValue: configuration.soundID) {

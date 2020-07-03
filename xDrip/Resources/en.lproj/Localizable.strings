@@ -146,6 +146,7 @@
 "settings_alert_single_type_end_time" = "End Time";
 "settings_alert_single_type_high_treshold" = "High Treshold";
 "settings_alert_single_type_low_treshold" = "Low Treshold";
+"settings_alert_single_type_minimum_bg_change" = "Minimum BG Change";
 "settings_alert_single_type_setting_header" = "SETTING";
 "settings_alert_single_type_events_header" = "EVENTS";
 "settings_alert_single_type_event_type_title_default" = "Alert";

@@ -64,14 +64,14 @@ final class GlucoseNotificationWorker: NSObject {
     }
     
     private func resetMissedReadingsTimer() {
-        let readings = GlucoseReading.lastReadings(4, forMaster: User.current.settings.deviceMode == .main)
+        let readings = GlucoseReading.lastReadings(4, for: User.current.settings.deviceMode)
         guard !readings.isEmpty else {
             missedReadingsTimer = nil
             return
         }
         
         var timeInterval = Constants.Glucose.defaultMissedReadingTimeInterval
-        if readings.count == 4 {
+        if readings.count == Constants.Glucose.requiredReadingsCountToCalculateInterval {
             var interval = 0.0
             var count = 0.0
             
@@ -222,15 +222,15 @@ final class GlucoseNotificationWorker: NSObject {
     }
     
     private func isGlucoseChangingFast(isRise: Bool) -> Bool {
-        let readings = GlucoseReading.latestByCount(3, forMaster: User.current.settings.deviceMode == .main)
+        let last3 = GlucoseReading.latestByCount(3, for: User.current.settings.deviceMode)
         
-        guard readings.count == 3 else {
+        guard last3.count == 3 else {
             return false
         }
         
-        let lastReading = readings[0]
-        let middleReading = readings[1]
-        let firstReading = readings[2]
+        let lastReading = last3[0]
+        let middleReading = last3[1]
+        let firstReading = last3[2]
         
         var highThreshold = User.current.settings.warningLevelValue(for: .high)
         var lowThreshold = User.current.settings.warningLevelValue(for: .low)
