@@ -13,6 +13,7 @@
 import UIKit
 
 protocol EditTrainingRoutingLogic {
+    func dismissSelf()
 }
 
 protocol EditTrainingDataPassing {
@@ -25,4 +26,12 @@ final class EditTrainingRouter: EditTrainingRoutingLogic, EditTrainingDataPassin
     
     // MARK: Routing
     
+    func dismissSelf() {
+        switch dataStore?.mode {
+        case .edit:
+            viewController?.navigationController?.popViewController(animated: true)
+        default:
+            viewController?.dismiss(animated: true, completion: nil)
+        }
+    }
 }

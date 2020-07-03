@@ -6,6 +6,13 @@
 "nyi_alert_message" = "This feature is still under development, please follow the updates.";
 "nyi_alert_ok_button" = "OK";
 
+// Tabbar
+"tabbar_calibration_title" = "Calibration";
+"tabbar_statistics_title" = "Statistics";
+"tabbar_add_title" = "Add";
+"tabbar_history_title" = "History";
+"tabbar_settings_title" = "Settings";
+
 // Home
 "home_time_frame_1h" = "1H";
 "home_time_frame_3h" = "3H";
@@ -400,8 +407,7 @@ This setting will be applied to all future sensors";
 "edit_training_intensity_low" = "Low";
 "edit_training_intensity_normal" = "Normal";
 "edit_training_intensity_high" = "High";
-"edit_training_hours" = "hours";
-"edit_training_min" = "min";
+"edit_training_m" = "m";
 
 // Calibration
 "calibration_not_ready_error_title" = "Not ready for calibration";

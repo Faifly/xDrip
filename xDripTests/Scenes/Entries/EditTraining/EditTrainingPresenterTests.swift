@@ -24,17 +24,12 @@ final class EditTrainingPresenterTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        setupEditTrainingPresenter()
+        sut = EditTrainingPresenter()
     }
     
     override func tearDown() {
+        sut = nil
         super.tearDown()
-    }
-    
-    // MARK: Test setup
-    
-    func setupEditTrainingPresenter() {
-        sut = EditTrainingPresenter()
     }
     
     // MARK: Test doubles
@@ -53,7 +48,12 @@ final class EditTrainingPresenterTests: XCTestCase {
         // Given
         let spy = EditTrainingDisplayLogicSpy()
         sut.viewController = spy
-        let response = EditTraining.Load.Response()
+        let response = EditTraining.Load.Response(
+            trainingEntry: nil,
+            dateChangedHandler: { _ in },
+            timeIntervalChangedHandler: { _ in },
+            trainingIntensityChangedHandler: { _ in }
+        )
         
         // When
         sut.presentLoad(response: response)
