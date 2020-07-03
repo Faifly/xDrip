@@ -16,7 +16,7 @@ protocol EditTrainingDisplayLogic: AnyObject {
     func displayLoad(viewModel: EditTraining.Load.ViewModel)
 }
 
-class EditTrainingViewController: NibViewController, EditTrainingDisplayLogic {
+class EditTrainingViewController: BaseSettingsViewController, EditTrainingDisplayLogic {
     var interactor: EditTrainingBusinessLogic?
     var router: EditTrainingDataPassing?
     
@@ -60,12 +60,51 @@ class EditTrainingViewController: NibViewController, EditTrainingDisplayLogic {
     // MARK: Do something
     
     private func doLoad() {
+        setupNavigationBar()
+        
         let request = EditTraining.Load.Request()
         interactor?.doLoad(request: request)
+    }
+    
+    @objc
+    private func doCancel() {
+        let request = EditTraining.Cancel.Request()
+        interactor?.doCancel(request: request)
+    }
+    
+    @objc
+    private func doSave() {
+        let request = EditTraining.Done.Request()
+        interactor?.doSave(request: request)
+    }
+    
+    private func setupNavigationBar() {
+        title = "edit_training_title".localized
+        
+        let cancelButton = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(doCancel)
+        )
+        navigationItem.leftBarButtonItem = cancelButton
+        
+        let rightItem: UIBarButtonItem.SystemItem
+        switch router?.dataStore?.mode {
+        case .edit: rightItem = .save
+        default: rightItem = .done
+        }
+        
+        let doneButton = UIBarButtonItem(
+            barButtonSystemItem: rightItem,
+            target: self,
+            action: #selector(doSave)
+        )
+        navigationItem.rightBarButtonItem = doneButton
     }
     
     // MARK: Display
     
     func displayLoad(viewModel: EditTraining.Load.ViewModel) {
+        update(with: viewModel.tableViewModel)
     }
 }

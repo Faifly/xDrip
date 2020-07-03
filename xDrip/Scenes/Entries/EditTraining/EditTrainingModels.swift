@@ -15,9 +15,47 @@ import UIKit
 enum EditTraining {
     // MARK: Models
     
+    enum Field {
+        case duration
+        case intensity
+        case dateTime
+    }
+    
+    enum Mode {
+        case create
+        case edit(_ entry: TrainingEntry)
+    }
+    
     // MARK: Use cases
     
     enum Load {
+        struct Request {
+        }
+        
+        struct Response {
+            let trainingEntry: TrainingEntry?
+            let dateChangedHandler: (Date) -> Void
+            let timeIntervalChangedHandler: (TimeInterval) -> Void
+            let trainingIntensityChangedHandler: (TrainingIntensity) -> Void
+        }
+        
+        struct ViewModel {
+            let tableViewModel: BaseSettings.ViewModel
+        }
+    }
+    
+    enum Done {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum Cancel {
         struct Request {
         }
         

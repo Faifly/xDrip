@@ -60,6 +60,7 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
         case .food: router?.routeToAddFood()
         case .bolus: router?.routeToAddBolus()
         case .carbs: router?.routeToAddCarbs()
+        case .training: router?.routeToAddTraining()
         default:
             break
         }

@@ -85,6 +85,9 @@ final class RootInteractorTests: XCTestCase {
         func routeToAddCarbs() {
         }
         
+        func routeToAddTraining() {
+        }
+        
         func routeToInitialSetup() {
         }
         

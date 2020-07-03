@@ -48,11 +48,16 @@ final class EditTrainingInteractorTests: XCTestCase {
     }
     
     final class EditTrainingRoutingLogicSpy: EditTrainingRoutingLogic {
+        var dismissSelfCalled = false
+        
+        func dismissSelf() {
+            dismissSelfCalled = true
+        }
     }
     
     // MARK: Tests
     
-    func testDoLoad() {
+    func testDoLoadOnCreateMode() {
         // Given
         let spy = EditTrainingPresentationLogicSpy()
         sut.presenter = spy
@@ -63,5 +68,54 @@ final class EditTrainingInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+    }
+    
+    func testDoLoadOnEditMode() {
+        // Given
+        let spy = EditTrainingPresentationLogicSpy()
+        let request = EditTraining.Load.Request()
+        let trainingEntry = TrainingEntry(duration: 0.0, intensity: .default, date: Date())
+        sut.presenter = spy
+        
+        // When
+        sut.mode = .edit(trainingEntry)
+        sut.doLoad(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+    }
+    
+    func testDoCancel() {
+        // Given
+        let spy = EditTrainingRoutingLogicSpy()
+        sut.router = spy
+        let request = EditTraining.Cancel.Request()
+        
+        // When
+        sut.doCancel(request: request)
+        
+        // Than
+        XCTAssertTrue(spy.dismissSelfCalled)
+    }
+    
+    func testEntrySaving() {
+        // Given
+        let guess = TrainingEntriesWorker.fetchAllTrainings().count + 1
+        let request = EditTraining.Done.Request()
+        sut.mode = .create
+        
+        // When
+        sut.doSave(request: request)
+        
+        // Than
+        let entries = TrainingEntriesWorker.fetchAllTrainings()
+        XCTAssertTrue(guess == entries.count)
+        
+        guard let lastEntries = entries.last else {
+            XCTFail("Cannot get the last entry")
+            return
+        }
+        
+        TrainingEntriesWorker.deleteEntry(lastEntries)
     }
 }

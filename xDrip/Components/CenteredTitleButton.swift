@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CenteredTitleButton: UIButton {    
+final class CenteredTitleButton: LocalizedButton {
     let padding: CGFloat = 5.0
     
     override func titleRect(forContentRect contentRect: CGRect) -> CGRect {

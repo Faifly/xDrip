@@ -31,10 +31,67 @@ final class EditTrainingRouterTests: XCTestCase {
         ViewControllerSpy()
     }
     
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+    
     // MARK: Test doubles
     
     final class ViewControllerSpy: EditTrainingViewController {
+        var dismissCalled = false
+        
+        override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+            dismissCalled = true
+        }
+    }
+    
+    final class NavigationControllerSpy: UINavigationController {
+        var popCalled = false
+        
+        override func popViewController(animated: Bool) -> UIViewController? {
+            popCalled = true
+            return nil
+        }
     }
     
     // MARK: Tests
+    
+    func testDismissSceneOnCreateMode() {
+        let navSpy = NavigationControllerSpy()
+        let spy = ViewControllerSpy()
+        navSpy.viewControllers = [spy]
+        
+        spy.router?.dataStore?.mode = .create
+        sut.dataStore = spy.router?.dataStore
+        sut.viewController = spy
+        
+        sut.dismissSelf()
+        
+        XCTAssertTrue(spy.dismissCalled)
+        XCTAssertFalse(navSpy.popCalled)
+        
+        sut.dataStore = nil
+        
+        sut.dismissSelf()
+        
+        XCTAssertTrue(spy.dismissCalled)
+        XCTAssertFalse(navSpy.popCalled)
+    }
+    
+    func testDismissSceneOnEditMode() {
+        let navSpy = NavigationControllerSpy()
+        let spy = ViewControllerSpy()
+        navSpy.viewControllers = [spy]
+        let trainingEntry = TrainingEntry(duration: 0.0, intensity: .default, date: Date())
+        
+        spy.router?.dataStore?.mode = .edit(trainingEntry)
+        sut.dataStore = spy.router?.dataStore
+        sut.viewController = spy
+        
+        sut.dismissSelf()
+        
+        XCTAssertFalse(spy.dismissCalled)
+        XCTAssertTrue(navSpy.popCalled)
+    }
 }

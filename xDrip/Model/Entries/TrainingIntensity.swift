@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum TrainingIntensity: Int {
+enum TrainingIntensity: Int, CaseIterable {
     case low
     case normal
     case high
