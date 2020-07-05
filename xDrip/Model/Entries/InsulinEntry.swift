@@ -1,5 +1,5 @@
 //
-//  BolusEntry.swift
+//  InsulinEntry.swift
 //  xDrip
 //
 //  Created by Artem Kalmykov on 19.03.2020.
@@ -9,16 +9,27 @@
 import Foundation
 import RealmSwift
 
-final class BolusEntry: AbstractEntry {
+final class InsulinEntry: AbstractEntry {
     @objc private(set) dynamic var amount: Double = 0.0
+    @objc private dynamic var rawType: Int = InsulinType.bolus.rawValue
+    
+    var type: InsulinType {
+        get {
+            return InsulinType(rawValue: rawType) ?? .bolus
+        }
+        set {
+            rawType = newValue.rawValue
+        }
+    }
     
     required init() {
         super.init()
     }
     
-    init(amount: Double, date: Date) {
+    init(amount: Double, date: Date, type: InsulinType) {
         super.init(date: date)
         self.amount = amount
+        self.type = type
     }
     
     func update(amount: Double, date: Date) {

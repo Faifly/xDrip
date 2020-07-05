@@ -24,9 +24,10 @@
 
 // Root
 "root_add_entry_food" = "Еда";
-"root_add_entry_bolus" = "Доза";
+"root_add_entry_bolus" = "Болюс";
 "root_add_entry_carbs" = "Углеводы";
 "root_add_entry_training" = "Тренировки";
+"root_add_entry_basal" = "Базал";
 
 // Entries List
 "entries_list_data_section_title" = "ДАННЫЕ";
@@ -34,7 +35,9 @@
 "entries_list_scene_title_bolus" = "Активный инсулин";
 "entries_list_cell_no_date" = "Дата не указана";
 "entries_list_scene_carbs_amount_unit_grams" = "г";
-"entries_list_scene_carbs_bolus_unit" = "Ед";
+"entries_list_scene_carbs_insulin_unit" = "Ед";
+"entries_list_bolus_entry_title" = "Болюс";
+"entries_list_basal_entry_title" = "Базал";
 
 // Edit Calibration
 "edit_calibration_scene_title" = "Калибровка";
@@ -50,18 +53,20 @@
 
 // Edit Calibration
 "edit_food_entry_food_scene_title" = "Еда";
-"edit_food_entry_bolus_scene_title" = "Доза";
+"edit_food_entry_bolus_scene_title" = "Болюс";
+"edit_food_entry_basal_scene_title" = "Базал";
 "edit_food_entry_carbs_scene_title" = "Углеводы";
 "edit_food_entry_section_header" = "ВВЕДИТЕ ЗНАЧЕНИЯ НИЖЕ";
 "edit_food_entry_carbs_section_footer" = "Укажите точное количество потребляемого количества в граммах, дату и тип пищи, чтобы лучше понять ваш рацион";
 "edit_food_entry_bolus_section_footer" = "Выберите дозировку и выберите точную дату инъекции";
+"edit_food_entry_basal_section_footer" = "Выберите дозировку и выберите точную дату инъекции";
 "edit_food_entry_carbs_amount_title" = "Потребленное кол-во";
 "edit_food_entry_type_of_food" = "Тип пищи";
 "edit_food_entry_type_of_food_textfield_placeholder" = "Введите тип пищи...";
-"edit_food_entry_bolus_amount_title" = "Дозировка";
+"edit_food_entry_insulin_amount_title" = "Дозировка";
 "edit_food_entry_date_and_time" = "Дата/Время";
 "edit_food_entry_carbs_amount_unit_grams" = "г";
-"edit_food_entry_bolus_unit_milligrams" = "мг";
+"edit_food_entry_insulin_unit_milligrams" = "мг";
 "edit_food_entry_fast_carbs_title" = "Быстрые";
 "edit_food_entry_medium_carbs_title" = "Средние";
 "edit_food_entry_slow_carbs_title" = "Медленные";
@@ -146,6 +151,7 @@
 "settings_alert_single_type_end_time" = "Время конца";
 "settings_alert_single_type_high_treshold" = "Верхний порог";
 "settings_alert_single_type_low_treshold" = "Нижний порог";
+"settings_alert_single_type_minimum_bg_change" = "Мин. изменение сахара";
 "settings_alert_single_type_setting_header" = "Настройки";
 "settings_alert_single_type_events_header" = "События";
 "settings_alert_single_type_event_type_title_default" = "Оповещение";
@@ -412,6 +418,7 @@
 "calibration_not_ready_error_title" = "Калибровка не доступна";
 "calibration_not_ready_error_general_message" = "Не достигнуты все условия для калибровки";
 "calibration_not_ready_error_no_initial_readings" = "Недостаточно показаний для первичной калибровки";
+"calibration_not_ready_error_warming_up" = "Во время разогрева сенсора калибровка невозможна";
 "calibration_initial_alert_title" = "Начальная Калибровка";
 "calibration_initial_alert_message" = "Для нормального функционирования сенсора требуется начальная калибровка";
 "calibration_initial_alert_proceed_button" = "Продолжить";
@@ -428,6 +435,22 @@
 "notification_pairing_request_body" = "Пожалуйста, разблокируйте свой телефон и примите запрос на подключение от вашего датчика в течении 30ти секунд";
 "notification_initial_calibration_title" = "Начальная калибровка";
 "notification_initial_calibration_body" = "Сенсор теперь готов получить начальную калибровку";
+"notification_fast_rise_title" = "Быстрый рост уровня сахара";
+"notification_fast_rise_body" = "Уровень сахара в вашей крови быстро растет";
+"notification_urgent_high_title" = "Очень высокий уровень сахара";
+"notification_urgent_high_body" = "Уровень сахара в вашей крови очень высокий";
+"notification_high_title" = "Высокий уровень сахара";
+"notification_high_body" = "Уровень сахара в вашей крови высокий";
+"notification_fast_drop_title" = "Быстрый спад уровня сахара";
+"notification_fast_drop_body" = "Уровень сахара в вашей крови быстро падает";
+"notification_low_title" = "Низкий уровень сахара";
+"notification_low_body" = "Уровень сахара в вашей крови низкий";
+"notification_urgent_low_title" = "Очень низкий уровень сахара";
+"notification_urgent_low_body" = "Уровень сахара в вашей крови очень низкий";
+"notification_missed_readings_title" = "Пропущенные считывания";
+"notification_missed_readings_body" = "Похоже, что у вас есть одно или более пропущеных считываний";
+"notification_phone_muted_title" = "Включен беззвучный режим";
+"notification_phone_muted_body" = "Ваше устройство находится в беззвучном режиме";
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Приветствуем!";

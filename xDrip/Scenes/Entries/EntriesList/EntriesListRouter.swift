@@ -40,9 +40,9 @@ final class EntriesListRouter: EntriesListRoutingLogic, EntriesListDataPassing {
         dataStore?.mode = .edit
         
         switch entry {
-        case is BolusEntry:
-            dataStore?.entryType = .bolus
-            dataStore?.bolusEntry = entry as? BolusEntry
+        case let entry as InsulinEntry:
+            dataStore?.entryType = entry.type == .bolus ? .bolus : .basal
+            dataStore?.insulinEntry = entry
         case is CarbEntry:
             dataStore?.entryType = .carbs
             dataStore?.carbEntry = entry as? CarbEntry

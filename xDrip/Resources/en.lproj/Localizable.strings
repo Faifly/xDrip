@@ -27,6 +27,7 @@
 "root_add_entry_bolus" = "Bolus";
 "root_add_entry_carbs" = "Carbs";
 "root_add_entry_training" = "Training";
+"root_add_entry_basal" = "Basal";
 
 // Entries List
 "entries_list_data_section_title" = "DATA";
@@ -34,7 +35,9 @@
 "entries_list_scene_title_bolus" = "Active insulin";
 "entries_list_cell_no_date" = "No date specified";
 "entries_list_scene_carbs_amount_unit_grams" = "g";
-"entries_list_scene_carbs_bolus_unit" = "U";
+"entries_list_scene_carbs_insulin_unit" = "U";
+"entries_list_bolus_entry_title" = "Bolus";
+"entries_list_basal_entry_title" = "Basal";
 
 // Edit Calibration
 "edit_calibration_scene_title" = "Calibration";
@@ -51,17 +54,19 @@
 // Edit Calibration
 "edit_food_entry_food_scene_title" = "Food";
 "edit_food_entry_bolus_scene_title" = "Bolus";
+"edit_food_entry_basal_scene_title" = "Basal";
 "edit_food_entry_carbs_scene_title" = "Carbs";
 "edit_food_entry_section_header" = "ENTER THE VALUES BELOW";
 "edit_food_entry_carbs_section_footer" = "Provide an exact number of amount consumed in grams, date and type of food to have a better overview of your diet.";
 "edit_food_entry_bolus_section_footer" = "Choose bolus units amount and select the precise date of the injection";
+"edit_food_entry_basal_section_footer" = "Choose basal units amount and select the precise date of the injection";
 "edit_food_entry_carbs_amount_title" = "Amount consumed";
 "edit_food_entry_type_of_food" = "Type of food";
 "edit_food_entry_type_of_food_textfield_placeholder" = "Enter food type...";
-"edit_food_entry_bolus_amount_title" = "Units";
+"edit_food_entry_insulin_amount_title" = "Units";
 "edit_food_entry_date_and_time" = "Date/Time";
 "edit_food_entry_carbs_amount_unit_grams" = "g";
-"edit_food_entry_bolus_unit_milligrams" = "mg";
+"edit_food_entry_insulin_unit_milligrams" = "mg";
 "edit_food_entry_fast_carbs_title" = "Fast";
 "edit_food_entry_medium_carbs_title" = "Medium";
 "edit_food_entry_slow_carbs_title" = "Slow";
@@ -146,6 +151,7 @@
 "settings_alert_single_type_end_time" = "End Time";
 "settings_alert_single_type_high_treshold" = "High Treshold";
 "settings_alert_single_type_low_treshold" = "Low Treshold";
+"settings_alert_single_type_minimum_bg_change" = "Minimum BG Change";
 "settings_alert_single_type_setting_header" = "SETTING";
 "settings_alert_single_type_events_header" = "EVENTS";
 "settings_alert_single_type_event_type_title_default" = "Alert";
@@ -413,6 +419,7 @@ This setting will be applied to all future sensors";
 "calibration_not_ready_error_title" = "Not ready for calibration";
 "calibration_not_ready_error_general_message" = "Not all conditions for calibration are met";
 "calibration_not_ready_error_no_initial_readings" = "Not enough readings for initial calibration";
+"calibration_not_ready_error_warming_up" = "Cannot calibration while sensor is warming up";
 "calibration_initial_alert_title" = "Initial Calibration";
 "calibration_initial_alert_message" = "Initial calibration is required to proceed with readings";
 "calibration_initial_alert_proceed_button" = "Provide Now";
@@ -429,6 +436,22 @@ This setting will be applied to all future sensors";
 "notification_pairing_request_body" = "Please unlock your phone and confirm pairing request from your transmitter during the next 30 seconds";
 "notification_initial_calibration_title" = "Initial Calibration";
 "notification_initial_calibration_body" = "Sensor is now ready to receive initial calibration";
+"notification_fast_rise_title" = "Fast Rise Blood Glucose";
+"notification_fast_rise_body" = "Your blood glucose level rising fast";
+"notification_urgent_high_title" = "Urgent High Blood Glucose";
+"notification_urgent_high_body" = "Your blood glucose level is urgent high";
+"notification_high_title" = "High Blood Glucose";
+"notification_high_body" = "Your blood glucose level is high";
+"notification_fast_drop_title" = "Fast Drop Blood Glucose";
+"notification_fast_drop_body" = "Your blood glucose level dropping fast";
+"notification_low_title" = "Low Blood Glucose";
+"notification_low_body" = "Your blood glucose level is low";
+"notification_urgent_low_title" = "Urgent Low Blood Glucose";
+"notification_urgent_low_body" = "Your blood glucose level is urgent low";
+"notification_missed_readings_title" = "Missed Blood Glucose Readings";
+"notification_missed_readings_body" = "Seems like you have one or more missed BG readings";
+"notification_phone_muted_title" = "Phone Muted";
+"notification_phone_muted_body" = "Your device in Ring/Silent mode";
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Greetings";

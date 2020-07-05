@@ -184,9 +184,9 @@ final class EditFoodEntryViewControllerTests: XCTestCase {
         let dataStore = sut.router?.dataStore
         
         let carbEntry = CarbEntry(amount: 100.0, foodType: "🍭", date: Date())
-        let bolusEntry = BolusEntry(amount: 100.0, date: Date())
+        let bolusEntry = InsulinEntry(amount: 100.0, date: Date(), type: .bolus)
         dataStore?.carbEntry = carbEntry
-        dataStore?.bolusEntry = bolusEntry
+        dataStore?.insulinEntry = bolusEntry
         dataStore?.entryType = .food
         
         loadView()

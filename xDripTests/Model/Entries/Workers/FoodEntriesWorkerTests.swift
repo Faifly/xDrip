@@ -43,28 +43,28 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
     }
     
     func testAddingBolusEntry() {
-        XCTAssertTrue(realm.objects(BolusEntry.self).isEmpty)
+        XCTAssertTrue(realm.objects(InsulinEntry.self).isEmpty)
         
         let date = Date(timeIntervalSince1970: 7.0)
-        let entry = FoodEntriesWorker.addBolusEntry(amount: 2.2, date: date)
+        let entry = InsulinEntriesWorker.addBolusEntry(amount: 2.2, date: date)
         XCTAssertTrue(entry.amount ~ 2.2)
         XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 7.0)
         
-        XCTAssertTrue(realm.objects(BolusEntry.self).count == 1)
+        XCTAssertTrue(realm.objects(InsulinEntry.self).count == 1)
     }
     
     func testFetchingBolusEntries() {
-        XCTAssertTrue(realm.objects(BolusEntry.self).isEmpty)
+        XCTAssertTrue(realm.objects(InsulinEntry.self).isEmpty)
         
         for index in 1...10 {
             let date = Date(timeIntervalSince1970: 1000.0 - Double(index) * 10.0)
-            let entry = BolusEntry(amount: Double(index), date: date)
+            let entry = InsulinEntry(amount: Double(index), date: date, type: .bolus)
             realm.safeWrite {
                 realm.add(entry)
             }
         }
         
-        let entries = FoodEntriesWorker.fetchAllBolusEntries()
+        let entries = InsulinEntriesWorker.fetchAllBolusEntries()
         XCTAssertTrue(entries.count == 10)
         XCTAssertTrue(entries[0].amount ~ 10.0)
         XCTAssertTrue(entries[9].amount ~ 1.0)

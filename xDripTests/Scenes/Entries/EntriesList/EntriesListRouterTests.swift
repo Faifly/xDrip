@@ -87,7 +87,7 @@ final class EntriesListRouterTests: XCTestCase {
         XCTAssertTrue(pushedController.router?.dataStore?.mode == .edit)
         XCTAssertTrue(pushedController.router?.dataStore?.entryType == .carbs)
         XCTAssertTrue(pushedController.router?.dataStore?.carbEntry == entry)
-        XCTAssertTrue(pushedController.router?.dataStore?.bolusEntry == nil)
+        XCTAssertTrue(pushedController.router?.dataStore?.insulinEntry == nil)
     }
     
     func testShowEditControllerForBolusEntry() {
@@ -98,7 +98,7 @@ final class EntriesListRouterTests: XCTestCase {
         
         sut.dataStore = controller.interactor as? EntriesListInteractor
         
-        let entry = BolusEntry(amount: 0.0, date: Date())
+        let entry = InsulinEntry(amount: 0.0, date: Date(), type: .bolus)
         sut.dataStore?.entry = entry
         
         sut.routeToEditEntry()
@@ -110,7 +110,7 @@ final class EntriesListRouterTests: XCTestCase {
         
         XCTAssertTrue(pushedController.router?.dataStore?.mode == .edit)
         XCTAssertTrue(pushedController.router?.dataStore?.entryType == .bolus)
-        XCTAssertTrue(pushedController.router?.dataStore?.bolusEntry == entry)
+        XCTAssertTrue(pushedController.router?.dataStore?.insulinEntry == entry)
         XCTAssertTrue(pushedController.router?.dataStore?.carbEntry == nil)
     }
 }

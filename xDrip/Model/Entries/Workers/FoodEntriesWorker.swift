@@ -22,16 +22,7 @@ final class FoodEntriesWorker: AbstractEntriesWorker {
         return add(entry: entry)
     }
     
-    @discardableResult static func addBolusEntry(amount: Double, date: Date) -> BolusEntry {
-        let entry = BolusEntry(amount: amount, date: date)
-        return add(entry: entry)
-    }
-    
     static func fetchAllCarbEntries() -> [CarbEntry] {
         return super.fetchAllEntries(type: CarbEntry.self)
-    }
-    
-    static func fetchAllBolusEntries() -> [BolusEntry] {
-        return super.fetchAllEntries(type: BolusEntry.self)
     }
 }

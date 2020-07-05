@@ -85,7 +85,7 @@ class EntriesListSceneBuilderTests: XCTestCase {
         let interactor = viewController.interactor as? EntriesListInteractor
         let presenter = interactor?.presenter as? EntriesListPresenter
         
-        XCTAssertTrue(interactor?.entriesWorker is EntriesListBolusPersistenceWorker)
-        XCTAssertTrue(presenter?.formattingWorker is EntriesListBolusFormattingWorker)
+        XCTAssertTrue(interactor?.entriesWorker is EntriesListInsulinPersistenceWorker)
+        XCTAssertTrue(presenter?.formattingWorker is EntriesListInsulinFormattingWorker)
     }
 }

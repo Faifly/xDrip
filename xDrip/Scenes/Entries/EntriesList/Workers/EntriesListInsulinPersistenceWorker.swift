@@ -1,5 +1,5 @@
 //
-//  EntriesListBolusPersistenceWorker.swift
+//  EntriesListInsulinPersistenceWorker.swift
 //  xDrip
 //
 //  Created by Ivan Skoryk on 30.03.2020.
@@ -9,15 +9,15 @@
 import Foundation
 
 final class EntriesListInsulinPersistenceWorker: EntriesListEntryPersistenceWorker {
-    private var bolusEntries: [InsulinEntry] = []
+    private var insulinEntries: [InsulinEntry] = []
     
     func fetchEntries() -> [AbstractEntry] {
-        bolusEntries = InsulinEntriesWorker.fetchAllBolusEntries()
-        return bolusEntries
+        insulinEntries = InsulinEntriesWorker.fetchAllInsulinEntries()
+        return insulinEntries
     }
 
     func deleteEntry(_ index: Int) {
-        let entry = bolusEntries.remove(at: index)
-        FoodEntriesWorker.deleteEntry(entry)
+        let entry = insulinEntries.remove(at: index)
+        InsulinEntriesWorker.deleteEntry(entry)
     }
 }

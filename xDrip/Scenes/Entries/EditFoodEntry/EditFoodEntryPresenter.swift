@@ -34,6 +34,10 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
             sections = [
                 createBolusSection(response: response)
             ]
+        case .basal:
+            sections = [
+                createBasalSection(response: response)
+            ]
         case .carbs:
             sections = [
                 createCarbsSection(response: response)
@@ -89,19 +93,19 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
     }
     
     private func createBolusSection(response: EditFoodEntry.Load.Response) -> BaseSettings.Section {
-        let bolusValue = response.bolusEntry?.amount ?? 0.0
+        let bolusValue = response.insulinEntry?.amount ?? 0.0
         let valueString = bolusValue ~~ 0.0 ? nil : "\(bolusValue)"
         
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
-                .bolusAmount,
-                detail: "edit_food_entry_bolus_unit_milligrams".localized,
+                .insulinAmount,
+                detail: "edit_food_entry_insulin_unit_milligrams".localized,
                 textFieldText: valueString,
                 textChangeHandler: response.textChangedHandler
             ),
             createDatePickerCell(
-                .bolusDate,
-                date: response.bolusEntry?.date,
+                .insulinDate,
+                date: response.insulinEntry?.date,
                 dateChangedHandler: response.dateChangedHandler
             )
         ]
@@ -115,6 +119,31 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
             cells: cells,
             header: header,
             footer: "edit_food_entry_bolus_section_footer".localized
+        )
+    }
+    
+    private func createBasalSection(response: EditFoodEntry.Load.Response) -> BaseSettings.Section {
+        let basalValue = response.insulinEntry?.amount ?? 0.0
+        let valueString = basalValue ~~ 0.0 ? nil : "\(basalValue)"
+        
+        let cells: [BaseSettings.Cell] = [
+            createTextInputCell(
+                .insulinAmount,
+                detail: "edit_food_entry_insulin_unit_milligrams".localized,
+                textFieldText: valueString,
+                textChangeHandler: response.textChangedHandler
+            ),
+            createDatePickerCell(
+                .insulinDate,
+                date: response.insulinEntry?.date,
+                dateChangedHandler: response.dateChangedHandler
+            )
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: "edit_food_entry_section_header".localized,
+            footer: "edit_food_entry_basal_section_footer".localized
         )
     }
     
@@ -162,8 +191,8 @@ private extension EditFoodEntry.Field {
         case .carbsAmount: return "edit_food_entry_carbs_amount_title".localized
         case .carbsDate: return "edit_food_entry_date_and_time".localized
         case .foodType: return "edit_food_entry_type_of_food".localized
-        case .bolusAmount: return "edit_food_entry_bolus_amount_title".localized
-        case .bolusDate: return "edit_food_entry_date_and_time".localized
+        case .insulinAmount: return "edit_food_entry_insulin_amount_title".localized
+        case .insulinDate: return "edit_food_entry_date_and_time".localized
         }
     }
 }
