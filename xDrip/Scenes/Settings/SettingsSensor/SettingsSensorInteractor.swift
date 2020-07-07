@@ -85,11 +85,13 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
     private func onSkipWarmUp(_ skip: Bool) {
         guard skip else {
             User.current.settings.updateSkipWarmUp(false)
+            NotificationCenter.default.postSettingsChangeNotification(setting: .warmUp)
             return
         }
         router?.showSkipWarmUpConfirmation { [weak self] confirmed in
             if confirmed {
                 User.current.settings.updateSkipWarmUp(true)
+                NotificationCenter.default.postSettingsChangeNotification(setting: .warmUp)
             }
             self?.updateData()
         }
@@ -97,12 +99,15 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
     
     private func stopSensor() {
         CGMDevice.current.updateSensorIsStarted(false)
+        CGMDevice.current.sensorStartDate = nil
+        CGMController.shared.notifyMetadataChanged(.sensorAge)
         updateData()
     }
     
     private func startSensor(date: Date) {
         CGMDevice.current.sensorStartDate = date
         CGMDevice.current.updateSensorIsStarted(true)
+        CGMController.shared.notifyMetadataChanged(.sensorAge)
         updateData()
     }
 }

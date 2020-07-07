@@ -444,6 +444,7 @@
 		580EC7C72421525300C34948 /* EditCalibrationInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7C32421525300C34948 /* EditCalibrationInteractorTests.swift */; };
 		580EC7C82421525300C34948 /* EditCalibrationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7C42421525300C34948 /* EditCalibrationRouterTests.swift */; };
 		580EC7C92421525300C34948 /* EditCalibrationPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7C52421525300C34948 /* EditCalibrationPresenterTests.swift */; };
+		581013F524AF6B0B007E72EF /* HomeWarmUpWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581013F424AF6B0B007E72EF /* HomeWarmUpWorker.swift */; };
 		58160DF22402C7F600C792F4 /* RootPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160DED2402C7F600C792F4 /* RootPresenter.swift */; };
 		58160DF32402C7F600C792F4 /* RootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160DEE2402C7F600C792F4 /* RootRouter.swift */; };
 		58160DF42402C7F600C792F4 /* RootModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58160DEF2402C7F600C792F4 /* RootModels.swift */; };
@@ -1094,6 +1095,7 @@
 		580EC7C32421525300C34948 /* EditCalibrationInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCalibrationInteractorTests.swift; sourceTree = "<group>"; };
 		580EC7C42421525300C34948 /* EditCalibrationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCalibrationRouterTests.swift; sourceTree = "<group>"; };
 		580EC7C52421525300C34948 /* EditCalibrationPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCalibrationPresenterTests.swift; sourceTree = "<group>"; };
+		581013F424AF6B0B007E72EF /* HomeWarmUpWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWarmUpWorker.swift; sourceTree = "<group>"; };
 		58160DE82402BDF400C792F4 /* xDrip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = xDrip.entitlements; sourceTree = "<group>"; };
 		58160DED2402C7F600C792F4 /* RootPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPresenter.swift; sourceTree = "<group>"; };
 		58160DEE2402C7F600C792F4 /* RootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouter.swift; sourceTree = "<group>"; };
@@ -1813,6 +1815,7 @@
 			children = (
 				5805CA21243892E4002AFA1B /* HomeGlucoseDataWorker.swift */,
 				58B85355244A021B0045F30A /* HomeGlucoseFormattingWorker.swift */,
+				581013F424AF6B0B007E72EF /* HomeWarmUpWorker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -4016,6 +4019,7 @@
 				580E4C06243F746F00565EDE /* SettingsUserTypeRootViewController.swift in Sources */,
 				5805C9B824389230002AFA1B /* CGMBluetoothServiceError.swift in Sources */,
 				5805C9C624389275002AFA1B /* CGMController.swift in Sources */,
+				581013F524AF6B0B007E72EF /* HomeWarmUpWorker.swift in Sources */,
 				58160DF62402C7F600C792F4 /* RootInteractor.swift in Sources */,
 				580E4B3D243E360400565EDE /* BaseSettingsViewController.swift in Sources */,
 				580EC7AA242151BC00C34948 /* EditTrainingModels.swift in Sources */,

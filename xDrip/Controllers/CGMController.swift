@@ -75,6 +75,10 @@ final class CGMController {
     func notifyGlucoseChange() {
         glucoseDataListeners.values.forEach { $0(nil) }
     }
+    
+    func notifyMetadataChanged(_ metadata: CGMDeviceMetadataType) {
+        metadataListeners.values.forEach { $0(metadata) }
+    }
 }
 
 extension CGMController: CGMBluetoothServiceDelegate {
@@ -92,6 +96,7 @@ extension CGMController: CGMBluetoothServiceDelegate {
     }
     
     func serviceDidReceiveGlucoseReading(raw: Double, filtered: Double) {
+        guard !CGMDevice.current.isWarmingUp else { return }
         if let reading = GlucoseReading.create(filtered: filtered, unfiltered: raw) {
             glucoseDataListeners.values.forEach { $0(reading) }
         }

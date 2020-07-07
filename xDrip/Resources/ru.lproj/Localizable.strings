@@ -21,6 +21,9 @@
 "home_time_frame_24h" = "24Ч";
 "home_last_scan_title" = "Дата";
 "home_last_diff_title" = "Разница";
+"home_warmingup_initial_label" = "Сенсор разогревается, ";
+"home_warmingup_time_label_hours" = "%d час %d минут осталось";
+"home_warmingup_time_label_minutes" = "%d минут осталось";
 
 // Root
 "root_add_entry_food" = "Еда";

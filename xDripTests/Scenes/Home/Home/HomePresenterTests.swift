@@ -54,6 +54,8 @@ final class HomePresenterTests: XCTestCase {
         }
         func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel) {
         }
+        func displayWarmUp(viewModel: Home.WarmUp.ViewModel) {
+        }
     }
     
     // MARK: Tests
