@@ -93,7 +93,8 @@ final class SettingsPenUserViewControllerTests: XCTestCase {
         // Given
         let viewModel = SettingsPenUser.UpdateData.ViewModel(
             animated: false,
-            tableViewModel: BaseSettings.ViewModel(sections: [])
+            tableViewModel: BaseSettings.ViewModel(sections: []),
+            addButtonEnabled: true
         )
         
         // When
@@ -234,10 +235,10 @@ final class SettingsPenUserViewControllerTests: XCTestCase {
         _ = button?.target?.perform(button?.action, with: nil)
         _ = button?.target?.perform(button?.action, with: nil)
         // Then
-        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 2)
         
         let pickerType = PickerExpandableTableViewCell.self
-        guard let pickerCell = tableView.getCell(of: pickerType, at: IndexPath(row: 0, section: 0)) else {
+        guard let pickerCell = tableView.getCell(of: pickerType, at: IndexPath(row: 1, section: 0)) else {
             XCTFail("Cannot obtain pickerCell")
             return
         }
@@ -245,28 +246,27 @@ final class SettingsPenUserViewControllerTests: XCTestCase {
         pickerCell.togglePickerVisibility()
         
         guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
-            let picker = stackView.arrangedSubviews.first as? CustomPickerView else {
+            let picker = stackView.arrangedSubviews.first as? BasalRatesPicker else {
             XCTFail("Cannot obtain picker")
             return
         }
         
-        XCTAssertTrue(picker.numberOfComponents == 6)
+        XCTAssertTrue(picker.numberOfComponents == 3)
         
         // When
-        picker.selectRow(10, inComponent: 0, animated: false)
-        picker.selectRow(5, inComponent: 2, animated: false)
-        picker.selectRow(2, inComponent: 4, animated: false)
-        picker.pickerView(picker, didSelectRow: 2, inComponent: 4)
+        picker.selectRow(20, inComponent: 0, animated: false)
+        picker.selectRow(2, inComponent: 1, animated: false)
+        picker.pickerView(picker, didSelectRow: 19, inComponent: 0)
         // Then
         let settings = User.current.settings
-        let rate = settings?.sortedBasalRates.first
-        XCTAssert(rate?.startTime == 36300) // 10*3600 + 5*60
+        let rate = settings?.sortedBasalRates.last
+        XCTAssert(rate?.startTime == 37800) // 10*3600 + 30*60
         XCTAssert(rate?.units == 0.1)
         
         // When
         _ = button?.target?.perform(button?.action, with: nil)
         // Then
-        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 2)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 3)
         
         let disclosureType = BaseSettingsDisclosureCell.self
         guard let infoCell = tableView.getCell(of: disclosureType, at: IndexPath(row: 0, section: 1)) else {
