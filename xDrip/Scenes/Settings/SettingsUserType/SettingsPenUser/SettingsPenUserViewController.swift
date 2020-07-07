@@ -118,6 +118,7 @@ class SettingsPenUserViewController: UIViewController, ExpandableTableContainer,
     
     func displayUpdateData(viewModel: SettingsPenUser.UpdateData.ViewModel) {
         update(with: viewModel.tableViewModel, animated: viewModel.animated)
+        addBarButton.isEnabled = viewModel.addButtonEnabled
     }
     
     // MARK: Handlers

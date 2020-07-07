@@ -31,6 +31,7 @@ enum SettingsPenUser {
         struct ViewModel {
             let animated: Bool
             let tableViewModel: BaseSettings.ViewModel
+            var addButtonEnabled: Bool
         }
     }
     

@@ -33,4 +33,12 @@ final class BasalRate: Object {
     static var unitStep: Float {
         return 0.05
     }
+    
+    static var minimumTimeIntervalBetweenRates: TimeInterval {
+        return 30.0 * 60.0
+    }
+    
+    static var lastValidStartTime: TimeInterval {
+        return 24.0 * 60.0 * 60.0 - minimumTimeIntervalBetweenRates
+    }
 }
