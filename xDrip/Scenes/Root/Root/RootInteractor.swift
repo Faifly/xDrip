@@ -61,7 +61,14 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
         case .bolus: router?.routeToAddBolus()
         case .carbs: router?.routeToAddCarbs()
         case .training: router?.routeToAddTraining()
-        case .basal: router?.routeToAddBasal()
+        case .basal:
+            if User.current.settings.sortedBasalRates.isEmpty {
+                let errorTitle = "Basal rates not setted up"
+                let errorMessage = "Please set up basal rates in settings before start to enter basal data"
+                router?.showErrorAlert(title: errorTitle, message: errorMessage)
+            } else {
+                router?.routeToAddBasal()
+            }
         case .injection, .calibration: break
         }
     }
@@ -79,7 +86,7 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
         case .allowed:
             router?.routeToCalibration()
         case let .notAllowed(errorTitle, errorMessage):
-            router?.showCalibrationError(title: errorTitle, message: errorMessage)
+            router?.showErrorAlert(title: errorTitle, message: errorMessage)
         }
     }
 }

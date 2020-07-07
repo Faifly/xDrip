@@ -32,12 +32,6 @@ final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPen
     // MARK: Do something
     
     func doUpdateData(request: SettingsPenUser.UpdateData.Request) {
-        if basalRates.isEmpty {
-            if let rate = User.current.settings.addBasalRate(startTime: 0.0, units: 0.0) {
-                basalRates.append(rate)
-            }
-        }
-        
         let response = SettingsPenUser.UpdateData.Response(
             animated: request.animated,
             basalRates: basalRates,
@@ -49,9 +43,12 @@ final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPen
     func doAdd(request: SettingsPenUser.Add.Request) {
         let settings = User.current.settings
         
-        let time = basalRates.last?.startTime ?? 0.0
+        var time = 0.0
+        if !basalRates.isEmpty {
+            time = (basalRates.last?.startTime ?? 0.0) + BasalRate.minimumTimeIntervalBetweenRates
+        }
         
-        if let rate = settings?.addBasalRate(startTime: time + BasalRate.minimumTimeIntervalBetweenRates, units: 0.0) {
+        if let rate = settings?.addBasalRate(startTime: time, units: 0.0) {
             basalRates.append(rate)
             updateData(animated: true)
         }
