@@ -17,6 +17,7 @@ protocol HomePresentationLogic {
     func presentGlucoseData(response: Home.GlucoseDataUpdate.Response)
     func presentGlucoseChartTimeFrameChange(response: Home.ChangeGlucoseChartTimeFrame.Response)
     func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response)
+    func presentWarmUp(response: Home.WarmUp.Response)
 }
 
 final class HomePresenter: HomePresentationLogic {
@@ -57,5 +58,30 @@ final class HomePresenter: HomePresentationLogic {
             difValue: value.difValue,
             severityColor: value.severityColor)
         viewController?.displayGlucoseCurrentInfo(viewModel: viewModel)
+    }
+    
+    func presentWarmUp(response: Home.WarmUp.Response) {
+        let hours: Int
+        let minutes: Int
+        
+        if let totalMinutes = response.state.minutesLeft {
+            if totalMinutes > 60 {
+                hours = totalMinutes / 60
+                minutes = totalMinutes - hours * 60
+            } else {
+                hours = 0
+                minutes = totalMinutes
+            }
+        } else {
+            hours = 0
+            minutes = 0
+        }
+        
+        let viewModel = Home.WarmUp.ViewModel(
+            shouldShowWarmUp: response.state.isWarmingUp,
+            warmUpLeftHours: hours,
+            warmUpLeftMinutes: minutes
+        )
+        viewController?.displayWarmUp(viewModel: viewModel)
     }
 }

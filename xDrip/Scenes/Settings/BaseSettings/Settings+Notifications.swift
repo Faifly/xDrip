@@ -16,6 +16,7 @@ extension NotificationCenter {
         case deviceMode
         case injectionType
         case followerAuthStatus
+        case warmUp
     }
     
     func subscribe(forSettingsChange settings: [Setting],
@@ -41,6 +42,7 @@ fileprivate extension NotificationCenter.Setting {
         case .deviceMode: name = "settingsDeviceMode"
         case .injectionType: name = "settingsInjectionType"
         case .followerAuthStatus: name = "followerAuthStatus"
+        case .warmUp: name = "warmUp"
         }
         return Notification.Name(name)
     }

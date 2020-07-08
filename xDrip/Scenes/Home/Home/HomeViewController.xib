@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,9 +11,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="xDrip" customModuleProvider="target">
             <connections>
                 <outlet property="glucoseChart" destination="dSe-Qa-bqu" id="leZ-tw-snL"/>
+                <outlet property="glucoseChartContainerView" destination="kcc-jl-unA" id="ypD-or-LCM"/>
                 <outlet property="glucoseCurrentInfoView" destination="O5h-Rw-Fg2" id="5Zz-hz-Hic"/>
                 <outlet property="timeLineSegmentView" destination="kVg-zr-V5c" id="1OU-lX-GZs"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bzO-Wv-6Q2"/>
+                <outlet property="warmUpLabel" destination="vz2-Ug-t1h" id="xHq-Rn-5hb"/>
+                <outlet property="warmUpLabelTopConstraint" destination="KAj-Jh-Gvs" id="ZVI-6Z-ZCp"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -21,37 +24,67 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kVg-zr-V5c">
-                    <rect key="frame" x="16" y="124" width="382" height="32"/>
-                    <segments>
-                        <segment title="First"/>
-                        <segment title="Second"/>
-                    </segments>
-                    <connections>
-                        <action selector="onTimeFrameSegmentSelected" destination="-1" eventType="valueChanged" id="GZa-vY-TUM"/>
-                    </connections>
-                </segmentedControl>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xzh-FR-4Nr">
-                    <rect key="frame" x="215" y="163" width="183" height="30"/>
-                    <state key="normal" title="to carbs entries list"/>
-                    <connections>
-                        <action selector="toEntriesList:" destination="-1" eventType="touchUpInside" id="UME-B1-shW"/>
-                    </connections>
-                </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dSe-Qa-bqu" customClass="GlucoseHistoryView" customModule="xDrip" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="201" width="414" height="270"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcc-jl-unA">
+                    <rect key="frame" x="0.0" y="124" width="414" height="363"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dSe-Qa-bqu" customClass="GlucoseHistoryView" customModule="xDrip" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="93" width="414" height="270"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="270" id="x0y-Ag-e9B"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xzh-FR-4Nr">
+                            <rect key="frame" x="215" y="55" width="183" height="30"/>
+                            <state key="normal" title="to carbs entries list"/>
+                            <connections>
+                                <action selector="toEntriesList:" destination="-1" eventType="touchUpInside" id="UME-B1-shW"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S2b-uv-T9b">
+                            <rect key="frame" x="16" y="55" width="183" height="30"/>
+                            <state key="normal" title="to bolus entries list"/>
+                            <connections>
+                                <action selector="toEntriesList:" destination="-1" eventType="touchUpInside" id="g88-dt-p4A"/>
+                            </connections>
+                        </button>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kVg-zr-V5c">
+                            <rect key="frame" x="16" y="16" width="382" height="32"/>
+                            <segments>
+                                <segment title="First"/>
+                                <segment title="Second"/>
+                            </segments>
+                            <connections>
+                                <action selector="onTimeFrameSegmentSelected" destination="-1" eventType="valueChanged" id="GZa-vY-TUM"/>
+                            </connections>
+                        </segmentedControl>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vz2-Ug-t1h">
+                            <rect key="frame" x="16" y="8" width="382" height="0.0"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="270" id="x0y-Ag-e9B"/>
+                        <constraint firstItem="Xzh-FR-4Nr" firstAttribute="top" secondItem="kVg-zr-V5c" secondAttribute="bottom" constant="8" id="0hM-0i-Azx"/>
+                        <constraint firstAttribute="bottom" secondItem="dSe-Qa-bqu" secondAttribute="bottom" id="2iv-xt-GsX"/>
+                        <constraint firstItem="kVg-zr-V5c" firstAttribute="leading" secondItem="kcc-jl-unA" secondAttribute="leading" constant="16" id="6Dx-eD-eQP"/>
+                        <constraint firstAttribute="trailing" secondItem="vz2-Ug-t1h" secondAttribute="trailing" constant="16" id="8UV-d2-mQE"/>
+                        <constraint firstItem="S2b-uv-T9b" firstAttribute="leading" secondItem="kcc-jl-unA" secondAttribute="leading" constant="16" id="8jB-9e-3MP"/>
+                        <constraint firstItem="vz2-Ug-t1h" firstAttribute="top" secondItem="kcc-jl-unA" secondAttribute="top" constant="8" id="KAj-Jh-Gvs"/>
+                        <constraint firstItem="Xzh-FR-4Nr" firstAttribute="leading" secondItem="S2b-uv-T9b" secondAttribute="trailing" constant="16" id="f6s-Y4-KUf"/>
+                        <constraint firstItem="vz2-Ug-t1h" firstAttribute="leading" secondItem="kcc-jl-unA" secondAttribute="leading" constant="16" id="fwS-LT-MxX"/>
+                        <constraint firstAttribute="trailing" secondItem="kVg-zr-V5c" secondAttribute="trailing" constant="16" id="nHu-XK-ci5"/>
+                        <constraint firstAttribute="trailing" secondItem="dSe-Qa-bqu" secondAttribute="trailing" id="ngv-0z-sqd"/>
+                        <constraint firstItem="dSe-Qa-bqu" firstAttribute="top" secondItem="Xzh-FR-4Nr" secondAttribute="bottom" constant="8" id="qpP-Vd-b0w"/>
+                        <constraint firstItem="dSe-Qa-bqu" firstAttribute="leading" secondItem="kcc-jl-unA" secondAttribute="leading" id="u6e-Fs-AfG"/>
+                        <constraint firstItem="S2b-uv-T9b" firstAttribute="top" secondItem="Xzh-FR-4Nr" secondAttribute="top" id="wwF-zH-7jy"/>
+                        <constraint firstAttribute="trailing" secondItem="Xzh-FR-4Nr" secondAttribute="trailing" constant="16" id="yc1-Ia-AD0"/>
+                        <constraint firstItem="kVg-zr-V5c" firstAttribute="top" secondItem="vz2-Ug-t1h" secondAttribute="bottom" constant="8" id="yf2-tm-QwU"/>
+                        <constraint firstItem="S2b-uv-T9b" firstAttribute="width" secondItem="Xzh-FR-4Nr" secondAttribute="width" id="z1T-NU-HrY"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S2b-uv-T9b">
-                    <rect key="frame" x="16" y="163" width="183" height="30"/>
-                    <state key="normal" title="to bolus entries list"/>
-                    <connections>
-                        <action selector="toEntriesList:" destination="-1" eventType="touchUpInside" id="g88-dt-p4A"/>
-                    </connections>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O5h-Rw-Fg2" customClass="GlucoseCurrentInfoView" customModule="xDrip" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="54" width="414" height="70"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -60,23 +93,14 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="kVg-zr-V5c" firstAttribute="top" secondItem="O5h-Rw-Fg2" secondAttribute="bottom" id="0On-c8-vNw"/>
-                <constraint firstItem="S2b-uv-T9b" firstAttribute="width" secondItem="Xzh-FR-4Nr" secondAttribute="width" id="8WI-uF-4Cv"/>
-                <constraint firstItem="S2b-uv-T9b" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="FPr-1W-vuA"/>
-                <constraint firstItem="dSe-Qa-bqu" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Krg-EG-wEs"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Xzh-FR-4Nr" secondAttribute="trailing" constant="16" id="NU5-mO-nmn"/>
-                <constraint firstItem="Xzh-FR-4Nr" firstAttribute="leading" secondItem="S2b-uv-T9b" secondAttribute="trailing" constant="16" id="Syi-VX-cJ0"/>
-                <constraint firstItem="Xzh-FR-4Nr" firstAttribute="top" secondItem="kVg-zr-V5c" secondAttribute="bottom" constant="8" id="T0o-h1-Eah"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="O5h-Rw-Fg2" secondAttribute="trailing" id="VIx-mS-3oi"/>
+                <constraint firstItem="kcc-jl-unA" firstAttribute="top" secondItem="O5h-Rw-Fg2" secondAttribute="bottom" id="YUw-vT-BdU"/>
                 <constraint firstItem="O5h-Rw-Fg2" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="ars-8M-dab"/>
-                <constraint firstItem="kVg-zr-V5c" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="c1A-id-guO"/>
+                <constraint firstItem="kcc-jl-unA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="fvJ-y9-Vek"/>
                 <constraint firstItem="O5h-Rw-Fg2" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="hHX-Kg-VRy"/>
-                <constraint firstItem="S2b-uv-T9b" firstAttribute="top" secondItem="Xzh-FR-4Nr" secondAttribute="top" id="ioh-JJ-F97"/>
-                <constraint firstItem="dSe-Qa-bqu" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="j5q-I5-9ae"/>
-                <constraint firstItem="dSe-Qa-bqu" firstAttribute="top" secondItem="Xzh-FR-4Nr" secondAttribute="bottom" constant="8" id="lXE-ck-Yi9"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="kVg-zr-V5c" secondAttribute="trailing" constant="16" id="rlk-6p-J2V"/>
+                <constraint firstItem="kcc-jl-unA" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="u2T-0B-KBj"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="137.68115942028987" y="114.50892857142857"/>
