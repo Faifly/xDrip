@@ -26,25 +26,25 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="initial_transmitter_id_textfield_placeholder" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Oku-oD-WcL" customClass="LocalizedTextField" customModule="xDrip" customModuleProvider="target">
-                    <rect key="frame" x="16" y="300.5" width="382" height="34"/>
+                    <rect key="frame" x="16" y="280.5" width="382" height="34"/>
                     <accessibility key="accessibilityConfiguration" identifier="deviceIDTextField"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                 </textField>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="g6_transmitter_id" translatesAutoresizingMaskIntoConstraints="NO" id="vks-iV-nNx">
-                    <rect key="frame" x="16" y="100.5" width="382" height="180"/>
+                    <rect key="frame" x="16" y="100.5" width="382" height="160"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="180" id="D2q-Z6-H5z"/>
+                        <constraint firstAttribute="height" constant="160" id="D2q-Z6-H5z"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="initial_transmitter_id_bottom_text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6Y-zW-Znx" customClass="LocalizedLabel" customModule="xDrip" customModuleProvider="target">
-                    <rect key="frame" x="16" y="342.5" width="382" height="20.5"/>
+                    <rect key="frame" x="16" y="322.5" width="382" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2uT-0g-eoA" customClass="LocalizedButton" customModule="xDrip" customModuleProvider="target">
-                    <rect key="frame" x="16" y="371" width="382" height="40"/>
+                    <rect key="frame" x="16" y="351" width="382" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="mry-Ol-pVv"/>
                     </constraints>

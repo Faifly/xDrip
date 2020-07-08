@@ -22,8 +22,8 @@ final class EntriesListSceneBuilder {
     }
     
     func createSceneForBolus() -> EntriesListViewController {
-        let persistenceWorker = EntriesListBolusPersistenceWorker()
-        let formattingWorker = EntriesListBolusFormattingWorker()
+        let persistenceWorker = EntriesListInsulinPersistenceWorker()
+        let formattingWorker = EntriesListInsulinFormattingWorker()
         
         let viewController = EntriesListViewController(
             persistenceWorker: persistenceWorker,

@@ -26,7 +26,7 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
     var presenter: RootPresentationLogic?
     var router: RootRoutingLogic?
     
-    private let entryTypes: [Root.EntryType] = [.food, .bolus, .carbs, .training]
+    private let entryTypes: [Root.EntryType] = [.food, .bolus, .basal, .carbs, .training]
     
     private let calibrationWorker: RootCalibrationValidatorProtocol
     
@@ -61,8 +61,8 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
         case .bolus: router?.routeToAddBolus()
         case .carbs: router?.routeToAddCarbs()
         case .training: router?.routeToAddTraining()
-        default:
-            break
+        case .basal: router?.routeToAddBasal()
+        case .injection, .calibration: break
         }
     }
     

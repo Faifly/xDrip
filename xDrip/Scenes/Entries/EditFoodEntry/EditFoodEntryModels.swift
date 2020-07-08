@@ -19,13 +19,14 @@ enum EditFoodEntry {
         case carbsAmount
         case carbsDate
         case foodType
-        case bolusAmount
-        case bolusDate
+        case insulinAmount
+        case insulinDate
     }
     
     enum EntryType {
         case food
         case bolus
+        case basal
         case carbs
     }
     
@@ -41,7 +42,7 @@ enum EditFoodEntry {
         }
         
         struct Response {
-            let bolusEntry: BolusEntry?
+            let insulinEntry: InsulinEntry?
             let carbEntry: CarbEntry?
             let entryType: EntryType
             let textChangedHandler: (Field, String?) -> Void

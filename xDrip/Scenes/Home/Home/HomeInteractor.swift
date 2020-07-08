@@ -26,9 +26,12 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     var router: HomeRoutingLogic?
     
     private let glucoseDataWorker: HomeGlucoseDataWorkerProtocol
+    private let warmUpWorker: HomeWarmUpWorkerLogic
     
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
+        warmUpWorker = HomeWarmUpWorker()
+        
         glucoseDataWorker.glucoseDataHandler = { [weak self] in
             guard let self = self else { return }
             self.updateGlucoseCurrentInfo()
@@ -43,6 +46,10 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         presenter?.presentLoad(response: response)
         updateGlucoseCurrentInfo()
         updateGlucoseChartData()
+        warmUpWorker.subscribeForWarmUpStateChange { [weak self] state in
+            let response = Home.WarmUp.Response(state: state)
+            self?.presenter?.presentWarmUp(response: response)
+        }
     }
     
     func doShowEntriesList(request: Home.ShowEntriesList.Request) {

@@ -13,17 +13,21 @@ protocol CalibrationServiceInterface {
 }
 
 final class CalibrationService: CalibrationServiceInterface {
-    enum CalibrationError: Error {
+    enum CalibrationError: LocalizedError {
         case noInitialReadings
+        case warmingUp
         
         var localizedDescription: String {
             switch self {
             case .noInitialReadings: return "calibration_not_ready_error_no_initial_readings".localized
+            case .warmingUp: return "calibration_not_ready_error_warming_up".localized
             }
         }
     }
     
     func isReadyForCalibration() -> (Bool, CalibrationError?) {
+        guard !CGMDevice.current.isWarmingUp else { return (false, .warmingUp) }
+        
         let all = Calibration.allForCurrentSensor
         
         if all.isEmpty {

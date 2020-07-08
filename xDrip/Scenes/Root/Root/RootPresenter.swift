@@ -32,6 +32,8 @@ private extension Root.EntryType {
             return ""
         case .training:
             return "root_add_entry_training".localized
+        case .basal:
+            return "root_add_entry_basal".localized
         }
     }
 }

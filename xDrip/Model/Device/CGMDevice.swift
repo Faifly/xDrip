@@ -143,6 +143,14 @@ final class CGMDevice: Object {
         }
     }
     
+    var isWarmingUp: Bool {
+        guard !User.current.settings.skipWarmUp else { return false }
+        guard isSensorStarted else { return false }
+        guard let sensorStartDate = sensorStartDate else { return false }
+        guard let deviceType = deviceType else { return false }
+        return Date().timeIntervalSince1970 - sensorStartDate.timeIntervalSince1970 < deviceType.warmUpInterval
+    }
+    
     // MARK: Reset
     
     @objc private(set) dynamic var isResetScheduled: Bool = false

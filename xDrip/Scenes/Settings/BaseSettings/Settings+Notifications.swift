@@ -25,6 +25,7 @@ extension NotificationCenter {
         case urgentLow
         case high
         case low
+        case warmUp
     }
     
     func subscribe(forSettingsChange settings: [Setting],
@@ -69,6 +70,7 @@ fileprivate extension NotificationCenter.Setting {
         case .high: name = "repeatHigh"
         case .low: name = "repeatLow"
         case .sensorStarted: name = "sensorStarted"
+        case .warmUp: name = "warmUp"
         }
         return Notification.Name(name)
     }

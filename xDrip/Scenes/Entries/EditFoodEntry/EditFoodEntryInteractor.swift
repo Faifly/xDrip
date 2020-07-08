@@ -22,7 +22,7 @@ protocol EditFoodEntryDataStore: AnyObject {
     var mode: EditFoodEntry.Mode { get set }
     var entryType: EditFoodEntry.EntryType? { get set }
     var carbEntry: CarbEntry? { get set }
-    var bolusEntry: BolusEntry? { get set }
+    var insulinEntry: InsulinEntry? { get set }
 }
 
 final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDataStore {
@@ -32,7 +32,7 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
         var date = Date()
     }
     
-    private struct BolusInput {
+    private struct InsulinInput {
         var amount = 0.0
         var date = Date()
     }
@@ -43,10 +43,10 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     var mode: EditFoodEntry.Mode = .create
     var entryType: EditFoodEntry.EntryType?
     var carbEntry: CarbEntry?
-    var bolusEntry: BolusEntry?
+    var insulinEntry: InsulinEntry?
     
     private var carbInput = CarbInput()
-    private var bolusInput = BolusInput()
+    private var insulinInput = InsulinInput()
     
     // MARK: Do something
     
@@ -57,13 +57,13 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
             carbInput.date = carbEntry.date ?? Date()
         }
         
-        if let bolusEntry = bolusEntry {
-            bolusInput.amount = bolusEntry.amount
-            bolusInput.date = bolusEntry.date ?? Date()
+        if let insulinEntry = insulinEntry {
+            insulinInput.amount = insulinEntry.amount
+            insulinInput.date = insulinEntry.date ?? Date()
         }
         
         let response = EditFoodEntry.Load.Response(
-            bolusEntry: bolusEntry,
+            insulinEntry: insulinEntry,
             carbEntry: carbEntry,
             entryType: entryType ?? .food,
             textChangedHandler: handleTextChanged(_:_:),
@@ -78,11 +78,15 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     }
     
     func doSave(request: EditFoodEntry.Save.Request) {
-        if let bolusEntry = bolusEntry,
-            (bolusEntry.amount !~ bolusInput.amount || bolusEntry.date != bolusInput.date) {
-            bolusEntry.update(amount: bolusInput.amount, date: bolusInput.date)
-        } else if bolusEntry == nil, bolusInput.amount !~ 0.0 {
-            FoodEntriesWorker.addBolusEntry(amount: bolusInput.amount, date: bolusInput.date)
+        if let insulinEntry = insulinEntry,
+            (insulinEntry.amount !~ insulinInput.amount || insulinEntry.date != insulinInput.date) {
+            insulinEntry.update(amount: insulinInput.amount, date: insulinInput.date)
+        } else if insulinEntry == nil, insulinInput.amount !~ 0.0 {
+            if entryType == .basal {
+                InsulinEntriesWorker.addBasalEntry(amount: insulinInput.amount, date: insulinInput.date)
+            } else {
+                InsulinEntriesWorker.addBolusEntry(amount: insulinInput.amount, date: insulinInput.date)
+            }
         }
         
         if let carbEntry = carbEntry,
@@ -104,7 +108,7 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
         
         switch field {
         case .carbsAmount: carbInput.amount = value
-        case .bolusAmount: bolusInput.amount = value
+        case .insulinAmount: insulinInput.amount = value
         default: break
         }
     }
@@ -112,7 +116,7 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     private func handleDateChanged(_ field: EditFoodEntry.Field, _ date: Date) {
         switch field {
         case .carbsDate: carbInput.date = date
-        case .bolusDate: bolusInput.date = date
+        case .insulinDate: insulinInput.date = date
         default: break
         }
     }

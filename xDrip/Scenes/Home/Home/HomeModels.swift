@@ -15,6 +15,11 @@ import UIKit
 enum Home {
     // MARK: Models
     
+    struct WarmUpState {
+        let isWarmingUp: Bool
+        let minutesLeft: Int?
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -83,6 +88,18 @@ enum Home {
             let lastScanDate: String
             let difValue: String
             let severityColor: UIColor?
+        }
+    }
+    
+    enum WarmUp {
+        struct Response {
+            let state: Home.WarmUpState
+        }
+        
+        struct ViewModel {
+            let shouldShowWarmUp: Bool
+            let warmUpLeftHours: Int
+            let warmUpLeftMinutes: Int
         }
     }
 }

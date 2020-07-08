@@ -18,6 +18,7 @@ protocol HomeDisplayLogic: AnyObject {
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel)
     func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel)
     func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel)
+    func displayWarmUp(viewModel: Home.WarmUp.ViewModel)
 }
 
 class HomeViewController: NibViewController, HomeDisplayLogic {
@@ -57,6 +58,9 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var glucoseCurrentInfoView: GlucoseCurrentInfoView!
     @IBOutlet private weak var timeLineSegmentView: UISegmentedControl!
     @IBOutlet private weak var glucoseChart: GlucoseHistoryView!
+    @IBOutlet private weak var glucoseChartContainerView: UIView!
+    @IBOutlet private weak var warmUpLabel: UILabel!
+    @IBOutlet private weak var warmUpLabelTopConstraint: NSLayoutConstraint!
     
     // MARK: View lifecycle
     
@@ -110,6 +114,55 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel) {
         glucoseCurrentInfoView.setup(with: viewModel)
+    }
+    
+    func displayWarmUp(viewModel: Home.WarmUp.ViewModel) {
+        if viewModel.shouldShowWarmUp {
+            if warmUpLabel.isHidden {
+                warmUpLabel.isHidden = false
+                warmUpLabelTopConstraint.constant = 8.0
+            }
+            
+            let timeLabel: String
+            if viewModel.warmUpLeftHours > 0 {
+                timeLabel = String(
+                    format: "home_warmingup_time_label_hours".localized,
+                    viewModel.warmUpLeftHours,
+                    viewModel.warmUpLeftMinutes
+                )
+            } else {
+                timeLabel = String(
+                    format: "home_warmingup_time_label_minutes".localized,
+                    viewModel.warmUpLeftMinutes
+                )
+            }
+            
+            let string = NSMutableAttributedString()
+            string.append(
+                NSAttributedString(
+                    string: "home_warmingup_initial_label".localized,
+                    attributes: [
+                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                        .foregroundColor: UIColor.highEmphasisText
+                    ]
+                )
+            )
+            string.append(
+                NSAttributedString(
+                    string: timeLabel,
+                    attributes: [
+                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                        .foregroundColor: UIColor.tabBarRedColor
+                    ]
+                )
+            )
+            
+            warmUpLabel.attributedText = string
+        } else {
+            warmUpLabel.isHidden = true
+            warmUpLabel.attributedText = nil
+            warmUpLabelTopConstraint.constant = 0.0
+        }
     }
     
     private func setupUI() {

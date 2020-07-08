@@ -14,14 +14,14 @@ import XCTest
 final class BolusEntryTests: AbstractRealmTest {
     func testInit() {
         let date = Date(timeIntervalSince1970: 2.0)
-        let entry = BolusEntry(amount: 1.1, date: date)
+        let entry = InsulinEntry(amount: 1.1, date: date, type: .bolus)
         
         XCTAssertTrue(entry.amount ~ 1.1)
         XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 2.0)
     }
     
     func testUpdate() {
-        let entry = BolusEntry(amount: 1.1, date: Date())
+        let entry = InsulinEntry(amount: 1.1, date: Date(), type: .bolus)
         
         let date = Date(timeIntervalSince1970: 3.0)
         entry.update(amount: 2.2, date: date)

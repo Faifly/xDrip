@@ -56,6 +56,9 @@ final class HomeInteractorTests: XCTestCase {
         func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
             presentGlucoseCurrentInfoCalled = true
         }
+        
+        func presentWarmUp(response: Home.WarmUp.Response) {
+        }
     }
     
     final class HomeRoutingLogicSpy: HomeRoutingLogic {

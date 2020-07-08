@@ -30,6 +30,7 @@ enum Root {
         case calibration
         case bolus
         case carbs
+        case basal
     }
     
     // MARK: Use cases

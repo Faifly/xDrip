@@ -20,6 +20,7 @@ protocol RootRoutingLogic {
     
     func routeToAddFood()
     func routeToAddBolus()
+    func routeToAddBasal()
     func routeToAddCarbs()
     func routeToAddTraining()
     func routeToInitialSetup()
@@ -74,6 +75,10 @@ final class RootRouter: RootRoutingLogic, RootDataPassing {
         routeToAddEntry(entryType: .bolus)
     }
     
+    func routeToAddBasal() {
+        routeToAddEntry(entryType: .basal)
+    }
+    
     func routeToAddCarbs() {
         routeToAddEntry(entryType: .carbs)
     }
@@ -97,6 +102,7 @@ final class RootRouter: RootRoutingLogic, RootDataPassing {
         switch entryType {
         case .food: dataStore.entryType = .food
         case .bolus: dataStore.entryType = .bolus
+        case .basal: dataStore.entryType = .basal
         case .carbs: dataStore.entryType = .carbs
         default:
             break

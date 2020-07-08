@@ -21,12 +21,16 @@
 "home_time_frame_24h" = "24Ч";
 "home_last_scan_title" = "Дата";
 "home_last_diff_title" = "Разница";
+"home_warmingup_initial_label" = "Сенсор разогревается, ";
+"home_warmingup_time_label_hours" = "%d час %d минут осталось";
+"home_warmingup_time_label_minutes" = "%d минут осталось";
 
 // Root
 "root_add_entry_food" = "Еда";
-"root_add_entry_bolus" = "Доза";
+"root_add_entry_bolus" = "Болюс";
 "root_add_entry_carbs" = "Углеводы";
 "root_add_entry_training" = "Тренировки";
+"root_add_entry_basal" = "Базал";
 
 // Entries List
 "entries_list_data_section_title" = "ДАННЫЕ";
@@ -34,7 +38,9 @@
 "entries_list_scene_title_bolus" = "Активный инсулин";
 "entries_list_cell_no_date" = "Дата не указана";
 "entries_list_scene_carbs_amount_unit_grams" = "г";
-"entries_list_scene_carbs_bolus_unit" = "Ед";
+"entries_list_scene_carbs_insulin_unit" = "Ед";
+"entries_list_bolus_entry_title" = "Болюс";
+"entries_list_basal_entry_title" = "Базал";
 
 // Edit Calibration
 "edit_calibration_scene_title" = "Калибровка";
@@ -50,18 +56,20 @@
 
 // Edit Calibration
 "edit_food_entry_food_scene_title" = "Еда";
-"edit_food_entry_bolus_scene_title" = "Доза";
+"edit_food_entry_bolus_scene_title" = "Болюс";
+"edit_food_entry_basal_scene_title" = "Базал";
 "edit_food_entry_carbs_scene_title" = "Углеводы";
 "edit_food_entry_section_header" = "ВВЕДИТЕ ЗНАЧЕНИЯ НИЖЕ";
 "edit_food_entry_carbs_section_footer" = "Укажите точное количество потребляемого количества в граммах, дату и тип пищи, чтобы лучше понять ваш рацион";
 "edit_food_entry_bolus_section_footer" = "Выберите дозировку и выберите точную дату инъекции";
+"edit_food_entry_basal_section_footer" = "Выберите дозировку и выберите точную дату инъекции";
 "edit_food_entry_carbs_amount_title" = "Потребленное кол-во";
 "edit_food_entry_type_of_food" = "Тип пищи";
 "edit_food_entry_type_of_food_textfield_placeholder" = "Введите тип пищи...";
-"edit_food_entry_bolus_amount_title" = "Дозировка";
+"edit_food_entry_insulin_amount_title" = "Дозировка";
 "edit_food_entry_date_and_time" = "Дата/Время";
 "edit_food_entry_carbs_amount_unit_grams" = "г";
-"edit_food_entry_bolus_unit_milligrams" = "мг";
+"edit_food_entry_insulin_unit_milligrams" = "мг";
 "edit_food_entry_fast_carbs_title" = "Быстрые";
 "edit_food_entry_medium_carbs_title" = "Средние";
 "edit_food_entry_slow_carbs_title" = "Медленные";
@@ -413,6 +421,7 @@
 "calibration_not_ready_error_title" = "Калибровка не доступна";
 "calibration_not_ready_error_general_message" = "Не достигнуты все условия для калибровки";
 "calibration_not_ready_error_no_initial_readings" = "Недостаточно показаний для первичной калибровки";
+"calibration_not_ready_error_warming_up" = "Во время разогрева сенсора калибровка невозможна";
 "calibration_initial_alert_title" = "Начальная Калибровка";
 "calibration_initial_alert_message" = "Для нормального функционирования сенсора требуется начальная калибровка";
 "calibration_initial_alert_proceed_button" = "Продолжить";
