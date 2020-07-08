@@ -67,10 +67,22 @@ final class SettingsPenUserPresenter: SettingsPenUserPresentationLogic {
     }
     
     private func createTotalsSection(response: SettingsPenUser.UpdateData.Response) -> BaseSettings.Section {
-        let totalValue = response.basalRates.reduce(0, { $0 + $1.units })
+        let rates = response.basalRates
+        var total: Double = 0
+
+        for (index, item) in rates.enumerated() {
+            var endTime = rates[0].startTime + TimeInterval.hours(24.0)
+
+            if index < rates.endIndex - 1 {
+                endTime = rates[index + 1].startTime
+            }
+
+            total += (endTime - item.startTime).hours * Double(item.units)
+        }
+        
         let totalValueString = String(
             format: "%.2f" + "settings_pen_user_u".localized,
-            totalValue
+            total
         )
         
         let cells: [BaseSettings.Cell] = [
