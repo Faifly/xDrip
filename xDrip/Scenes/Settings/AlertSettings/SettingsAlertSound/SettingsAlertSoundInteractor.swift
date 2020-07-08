@@ -40,6 +40,6 @@ final class SettingsAlertSoundInteractor: SettingsAlertSoundBusinessLogic, Setti
         configuration?.updateSoundID(index)
         
         let sound = CustomSound.allCases[index]
-        AudioController.shared.playSoundFile(sound.fileName)
+        AudioController.shared.playSoundFile(sound.fileName, overrideMute: true)
     }
 }

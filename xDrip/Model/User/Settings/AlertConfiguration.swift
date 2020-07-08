@@ -13,15 +13,17 @@ final class AlertConfiguration: Object {
     @objc private(set) dynamic var isEnabled: Bool = false
     @objc private(set) dynamic var name: String?
     @objc private(set) dynamic var snoozeFromNotification: Bool = false
-    @objc private(set) dynamic var defaultSnooze: TimeInterval = 0.0
+    @objc private(set) dynamic var defaultSnooze: TimeInterval = 60.0
+    @objc private(set) dynamic var snoozedUntilDate = Date(timeIntervalSince1970: 1)
     @objc private(set) dynamic var `repeat`: Bool = false
     @objc private(set) dynamic var soundID: Int = -1
     @objc private(set) dynamic var isVibrating: Bool = false
     @objc private(set) dynamic var isEntireDay: Bool = true
     @objc private(set) dynamic var startTime: TimeInterval = 0.0
     @objc private(set) dynamic var endTime: TimeInterval = 0.0
-    @objc private(set) dynamic var highThreshold: Float = 0.0
-    @objc private(set) dynamic var lowThreshold: Float = 0.0
+    @objc private(set) dynamic var minimumBGChange: Float = 10.0
+    @objc private(set) dynamic var highThreshold: Float = 170.0
+    @objc private(set) dynamic var lowThreshold: Float = 70.0
     @objc private dynamic var rawEventType: Int = 0
     
     private(set) var eventType: AlertEventType {
@@ -66,9 +68,32 @@ final class AlertConfiguration: Object {
         }
     }
     
+    func updateSnoozedUntilDate(_ date: Date) {
+        Realm.shared.safeWrite {
+            self.snoozedUntilDate = date
+        }
+    }
+    
     func updateRepeat(_ repeats: Bool) {
         Realm.shared.safeWrite {
             self.repeat = repeats
+        }
+        
+        var setting: NotificationCenter.Setting?
+        switch self.eventType {
+        case .urgentHigh: setting = .urgentHigh
+        case .urgentLow: setting = .urgentLow
+        case .low: setting = .low
+        case .high: setting = .high
+        case .fastDrop: setting = .fastDrop
+        case .fastRise: setting = .fastRise
+        case .default: setting = .alertRepeat
+        default:
+            break
+        }
+        
+        if let setting = setting {
+            NotificationCenter.default.postSettingsChangeNotification(setting: setting)
         }
     }
     
@@ -117,6 +142,12 @@ final class AlertConfiguration: Object {
     func updateEventType(_ eventType: AlertEventType) {
         Realm.shared.safeWrite {
             self.eventType = eventType
+        }
+    }
+    
+    func updateMinimumBGChange(_ minimumChange: Float) {
+        Realm.shared.safeWrite {
+            self.minimumBGChange = minimumChange
         }
     }
 }

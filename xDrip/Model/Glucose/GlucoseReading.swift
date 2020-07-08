@@ -86,18 +86,18 @@ final class GlucoseReading: Object {
         return allMaster.filter { $0.date >? sensorStartDate }
     }
     
-    static func lastMasterReadings(_ amount: Int) -> [GlucoseReading] {
-        return lastMaster(amount: amount, filter: { $0.calculatedValue !~ 0 && $0.rawValue !~ 0 })
+    static func lastReadings(_ amount: Int, for mode: UserDeviceMode) -> [GlucoseReading] {
+        return last(for: mode, amount: amount, filter: { $0.calculatedValue !~ 0 && $0.rawValue !~ 0 })
     }
     
-    static func latestMasterByCount(_ amount: Int) -> [GlucoseReading] {
-        return lastMaster(amount: amount, filter: { $0.rawValue !~ 0 })
+    static func latestByCount(_ amount: Int, for mode: UserDeviceMode) -> [GlucoseReading] {
+        return last(for: mode, amount: amount, filter: { $0.rawValue !~ 0 })
     }
     
-    static func lastMaster(amount: Int, filter: (GlucoseReading) -> Bool) -> [GlucoseReading] {
+    static func last(for mode: UserDeviceMode, amount: Int, filter: (GlucoseReading) -> Bool) -> [GlucoseReading] {
         guard amount > 0 else { return [] }
         
-        let allReadings = allMasterForCurrentSensor.filter(filter)
+        let allReadings = mode == .main ? allMasterForCurrentSensor.filter(filter) : allFollower.filter(filter)
         if allReadings.count > amount {
             return Array(allReadings[0..<amount])
         }
@@ -176,7 +176,7 @@ final class GlucoseReading: Object {
     }
     
     static func estimatedRawGlucoseLevel(date: Date) -> Double {
-        guard let last = lastMasterReadings(1).first else { return 160.0 }
+        guard let last = lastReadings(1, for: .main).first else { return 160.0 }
         return last.ra * pow(date.timeIntervalSince1970, 2) + last.rb * date.timeIntervalSince1970 + last.rc
     }
     
@@ -267,7 +267,7 @@ final class GlucoseReading: Object {
     }
     
     func findSlope() {
-        let last2Readings = GlucoseReading.lastMasterReadings(2)
+        let last2Readings = GlucoseReading.lastReadings(2, for: .main)
         
         Realm.shared.safeWrite {
             if last2Readings.count == 2 {
@@ -292,7 +292,7 @@ final class GlucoseReading: Object {
     }
     
     private func findCurve(valueKey: String, bKey: String) -> (a: Double, b: Double, c: Double) {
-        let last3 = GlucoseReading.lastMasterReadings(3)
+        let last3 = GlucoseReading.lastReadings(3, for: .main)
         
         let a: Double
         let b: Double

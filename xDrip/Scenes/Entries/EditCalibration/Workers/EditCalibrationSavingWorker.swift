@@ -17,13 +17,15 @@ final class EditCalibrationSavingWorker: EditCalibrationSavingWorkerLogic {
     func saveInput(entry1: String?, entry2: String?, date1: Date, date2: Date) throws {
         // TODO: Add entry sanity check
         guard let entry1 = entry1 else { throw EditCalibration.ValidationError.noGlucose1Input }
-        guard let value1 = Double(entry1) else { throw EditCalibration.ValidationError.noGlucose1Input }
+        guard var value1 = Double(entry1) else { throw EditCalibration.ValidationError.noGlucose1Input }
+        value1 = GlucoseUnit.convertToDefault(value1)
         
         let requiresInitialCalibration = Calibration.allForCurrentSensor.isEmpty
         do {
             if requiresInitialCalibration {
                 guard let entry2 = entry2 else { throw EditCalibration.ValidationError.noGlucose2Input }
-                guard let value2 = Double(entry2) else { throw EditCalibration.ValidationError.noGlucose2Input }
+                guard var value2 = Double(entry2) else { throw EditCalibration.ValidationError.noGlucose2Input }
+                value2 = GlucoseUnit.convertToDefault(value2)
                 
                 try Calibration.createInitialCalibration(
                     glucoseLevel1: value1,

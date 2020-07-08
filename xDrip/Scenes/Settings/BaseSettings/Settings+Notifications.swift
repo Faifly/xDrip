@@ -10,12 +10,21 @@ import Foundation
 import UIKit
 
 extension NotificationCenter {
-    enum Setting {
+    enum Setting: CaseIterable {
         case unit
         case chart
         case deviceMode
         case injectionType
         case followerAuthStatus
+        case sensorStarted
+        
+        case alertRepeat
+        case fastRise
+        case fastDrop
+        case urgentHigh
+        case urgentLow
+        case high
+        case low
         case warmUp
     }
     
@@ -23,6 +32,17 @@ extension NotificationCenter {
                    notificationHandler: @escaping () -> Void) -> [NSObjectProtocol] {
         let handler: (Notification) -> Void = { _ in
             notificationHandler()
+        }
+        
+        return settings.map { addObserver(forName: $0.notificationName, object: nil, queue: nil, using: handler) }
+    }
+    
+    func subscribe(forSettingsChange settings: [Setting],
+                   notificationHandler: @escaping (Setting) -> Void) -> [NSObjectProtocol] {
+        let handler: (Notification) -> Void = { notification in
+            if let setting = Setting.allCases.first(where: { $0.notificationName == notification.name }) {
+                notificationHandler(setting)
+            }
         }
         
         return settings.map { addObserver(forName: $0.notificationName, object: nil, queue: nil, using: handler) }
@@ -42,6 +62,14 @@ fileprivate extension NotificationCenter.Setting {
         case .deviceMode: name = "settingsDeviceMode"
         case .injectionType: name = "settingsInjectionType"
         case .followerAuthStatus: name = "followerAuthStatus"
+        case .alertRepeat: name = "alertRepeat"
+        case .fastRise: name = "repeatFastRise"
+        case .fastDrop: name = "repeatFastDrop"
+        case .urgentHigh: name = "repeatUrgentHigh"
+        case .urgentLow: name = "repeatUrgentDrop"
+        case .high: name = "repeatHigh"
+        case .low: name = "repeatLow"
+        case .sensorStarted: name = "sensorStarted"
         case .warmUp: name = "warmUp"
         }
         return Notification.Name(name)

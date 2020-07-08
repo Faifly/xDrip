@@ -7,9 +7,9 @@
 //
 
 import UIKit
+import UserNotifications
 
 // swiftlint:disable discouraged_optional_collection
-
 @UIApplicationMain final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
@@ -19,9 +19,10 @@ import UIKit
     ) -> Bool {
         ApplicationLaunchController.runAppLaunchSequence()
         window = ApplicationLaunchController.createWindow()
+        
         return true
     }
-
+    
     #if targetEnvironment(macCatalyst)
     // MARK: UISceneSession Lifecycle
     

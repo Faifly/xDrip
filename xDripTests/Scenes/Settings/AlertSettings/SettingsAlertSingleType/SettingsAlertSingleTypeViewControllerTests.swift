@@ -202,16 +202,7 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         
         toggleSecondSection(expanded: true)
         
-        let cellType = PickerExpandableTableViewCell.self
-        
-        guard let snoozeCell = tableView.getCell(of: cellType, at: IndexPath(row: 2, section: 1)) else {
-            XCTFail("Cannot obtain picker expandable cell")
-            return
-        }
-        // When
-        snoozeCell.togglePickerVisibility()
-        guard let stackView = snoozeCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
-            let pickerView = stackView.arrangedSubviews.first as? CustomPickerView else {
+        guard let pickerView = getPicker(tableView, at: IndexPath(row: 2, section: 1)) as? CustomPickerView else {
             XCTFail("Cannot obtain pickerView")
             return
         }
@@ -230,23 +221,11 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         toggleSecondSection(expanded: false)
         toggleEntireDaySwitch(expanded: false, isSecondSectionExpanded: false)
         
-        let cellType = PickerExpandableTableViewCell.self
-        
-        guard let startTimeCell = tableView.getCell(of: cellType, at: IndexPath(row: 1, section: 1)),
-            let endTimeCell = tableView.getCell(of: cellType, at: IndexPath(row: 2, section: 1)) else {
-            XCTFail("Cannot obtain picker expandable cell")
-            return
-        }
-        startTimeCell.togglePickerVisibility()
-        endTimeCell.togglePickerVisibility()
-        
         let startTime = Date(timeIntervalSince1970: 3600.0)
         let endTime = Date(timeIntervalSince1970: 7200.0)
         
-        guard let startStackView = startTimeCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
-            let endStackView = endTimeCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
-            let startPickerView = startStackView.arrangedSubviews.first as? CustomDatePicker,
-            let endPickerView = endStackView.arrangedSubviews.first as? CustomDatePicker else {
+        guard let startPickerView = getPicker(tableView, at: IndexPath(row: 1, section: 1)) as? CustomDatePicker,
+            let endPickerView = getPicker(tableView, at: IndexPath(row: 2, section: 1)) as? CustomDatePicker else {
             XCTFail("Cannot obtain pickerView")
             return
         }
@@ -263,10 +242,10 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         XCTAssertTrue(configuration?.endTime == endTime.timeIntervalSince1970)
     }
     
-    // TO DO: Fix
-    /*
     func testPickerValueChangedHandler() {
         User.current.settings.updateUnit(.mgDl)
+        sut.router?.dataStore?.eventType = .fastDrop
+        
         loadView()
         
         let configuration = sut.router?.dataStore?.configuration
@@ -274,32 +253,21 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         toggleSecondSection(expanded: false)
         toggleEntireDaySwitch(expanded: false, isSecondSectionExpanded: false)
         
-        let cellType = PickerExpandableTableViewCell.self
-        
-        guard let highTresholdCell = tableView.getCell(of: cellType, at: IndexPath(row: 3, section: 1)) else {
-            XCTFail("Cannot obtain picker expandable cells")
+        guard let highPickerView = getPicker(tableView, at: IndexPath(row: 3, section: 1)) as? CustomPickerView else {
+            XCTFail("Cannot obtain picker view")
             return
-        }
-        
-        highTresholdCell.togglePickerVisibility()
-        
-        guard let highStackView = highTresholdCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
-            let highPickerView = highStackView.arrangedSubviews.first as? CustomPickerView else {
-                XCTFail("Cannot obtain pickerView")
-                return
         }
         // When
         highPickerView.selectRow(12, inComponent: 0, animated: false)
         highPickerView.pickerView(highPickerView, didSelectRow: 12, inComponent: 0)
         // Then
         XCTAssertTrue(configuration?.highThreshold == 12.0)
-    } */
+    }
     
-    // TO DO: Fix
-    /*
     func testMmolUnitPickerValueChangedHandler() {
-        
         User.current.settings.updateUnit(.mmolL)
+        sut.router?.dataStore?.eventType = .fastRise
+        
         loadView()
         
         let configuration = sut.router?.dataStore?.configuration
@@ -307,21 +275,11 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         toggleSecondSection(expanded: false)
         toggleEntireDaySwitch(expanded: false, isSecondSectionExpanded: false)
         
-        let cellType = PickerExpandableTableViewCell.self
-        
-        
-        guard let lowTresholdCell = tableView.getCell(of: cellType, at: IndexPath(row: 4, section: 1)) else {
-            XCTFail("Cannot obtain picker expandable cells")
+        guard let lowPickerView = getPicker(tableView, at: IndexPath(row: 4, section: 1)) as? CustomPickerView else {
+            XCTFail("Cannot obtain picker view")
             return
         }
         
-        lowTresholdCell.togglePickerVisibility()
-        
-        guard let lowStackView = lowTresholdCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
-            let lowPickerView = lowStackView.arrangedSubviews.first as? CustomPickerView else {
-                XCTFail("Cannot obtain pickerView")
-                return
-        }
         // When
         lowPickerView.selectRow(12, inComponent: 0, animated: false)
         lowPickerView.pickerView(lowPickerView, didSelectRow: 12, inComponent: 0)
@@ -334,7 +292,30 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         }
         // Then
         XCTAssertTrue(configuration?.lowThreshold == value)
-    } */
+    }
+    
+    func testMinimumBGChangeHandler() {
+        User.current.settings.updateUnit(.mgDl)
+        sut.router?.dataStore?.eventType = .fastDrop
+        
+        loadView()
+        
+        let configuration = sut.router?.dataStore?.configuration
+        
+        toggleSecondSection(expanded: false)
+        toggleEntireDaySwitch(expanded: false, isSecondSectionExpanded: false)
+        
+        guard let bgPickerView = getPicker(tableView, at: IndexPath(row: 5, section: 1)) as? CustomPickerView else {
+            XCTFail("Cannot obtain picker view")
+            return
+        }
+        
+        // When
+        bgPickerView.selectRow(12, inComponent: 0, animated: false)
+        bgPickerView.pickerView(bgPickerView, didSelectRow: 12, inComponent: 0)
+        // Then
+        XCTAssertTrue(configuration?.minimumBGChange == 12.0)
+    }
     
     func testSingleSelectionHandler() {
         loadView()
@@ -374,5 +355,23 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         }
         entireDaySwitch.isOn = expanded
         entireDaySwitch.sendActions(for: .valueChanged)
+    }
+    
+    private func getPicker(_ tableView: UITableView, at indexPath: IndexPath) -> PickerView? {
+        let cellType = PickerExpandableTableViewCell.self
+        guard let pickerCell = tableView.getCell(of: cellType, at: indexPath) else {
+            XCTFail("Cannot obtain picker cell")
+            return nil
+        }
+        
+        pickerCell.togglePickerVisibility()
+        
+        guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let picker = stackView.arrangedSubviews.first as? PickerView else {
+            XCTFail("Cannot obtain picker")
+            return nil
+        }
+        
+        return picker
     }
 }
