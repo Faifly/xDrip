@@ -22,18 +22,18 @@ extension TimeInterval {
     }
 
     init(minutes: Double) {
-        self.init(minutes * 60)
+        self.init(minutes * .secondsPerMinute)
     }
 
     init(hours: Double) {
-        self.init(minutes: hours * 60)
+        self.init(minutes: hours * .secondsPerMinute)
     }
 
     var minutes: Double {
-        return self / 60.0
+        return self / .secondsPerMinute
     }
 
     var hours: Double {
-        return minutes / 60.0
+        return minutes / .secondsPerMinute
     }
 }

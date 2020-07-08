@@ -15,7 +15,7 @@ import XCTest
 
 // swiftlint:disable implicitly_unwrapped_optional
 
-final class SettingsPenUserViewControllerTests: XCTestCase {
+final class SettingsPenUserViewControllerTests: AbstractRealmTest {
     // MARK: Subject under test
     
     var sut: SettingsPenUserViewController!
@@ -31,7 +31,6 @@ final class SettingsPenUserViewControllerTests: XCTestCase {
     
     override func tearDown() {
         window = nil
-        clearBasalRates()
         super.tearDown()
     }
     
@@ -237,16 +236,7 @@ final class SettingsPenUserViewControllerTests: XCTestCase {
         // Then
         XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 2)
         
-        let pickerType = PickerExpandableTableViewCell.self
-        guard let pickerCell = tableView.getCell(of: pickerType, at: IndexPath(row: 1, section: 0)) else {
-            XCTFail("Cannot obtain pickerCell")
-            return
-        }
-        
-        pickerCell.togglePickerVisibility()
-        
-        guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
-            let picker = stackView.arrangedSubviews.first as? BasalRatesPicker else {
+        guard let picker = getPicker(tableView, at: IndexPath(row: 1, section: 0)) as? BasalRatesPicker else {
             XCTFail("Cannot obtain picker")
             return
         }
@@ -274,15 +264,38 @@ final class SettingsPenUserViewControllerTests: XCTestCase {
             return
         }
         
-        let text = "0.10" + "settings_pen_user_u".localized
+        let rates = settings?.sortedBasalRates ?? []
+        var total: Double = 0
+
+        for (index, item) in rates.enumerated() {
+            var endTime = rates[0].startTime + .hours(24.0)
+
+            if index < rates.endIndex - 1 {
+                endTime = rates[index + 1].startTime
+            }
+
+            total += (endTime - item.startTime).hours * Double(item.units)
+        }
+        
+        let text = String(format: "%.2f ", total) + "settings_pen_user_u".localized
         XCTAssertTrue(infoCell.detailTextLabel?.text == text)
     }
     
-    func clearBasalRates() {
-        let basalRates = User.current.settings.sortedBasalRates
-        
-        for rate in basalRates {
-            User.current.settings.deleteBasalRate(rate)
+    private func getPicker(_ tableView: UITableView, at indexPath: IndexPath) -> PickerView? {
+        let cellType = PickerExpandableTableViewCell.self
+        guard let pickerCell = tableView.getCell(of: cellType, at: indexPath) else {
+            XCTFail("Cannot obtain picker cell")
+            return nil
         }
+        
+        pickerCell.togglePickerVisibility()
+        
+        guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let picker = stackView.arrangedSubviews.first as? PickerView else {
+            XCTFail("Cannot obtain picker")
+            return nil
+        }
+        
+        return picker
     }
 }

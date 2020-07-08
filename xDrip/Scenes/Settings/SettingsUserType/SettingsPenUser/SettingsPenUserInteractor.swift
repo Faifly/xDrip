@@ -32,9 +32,22 @@ final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPen
     // MARK: Do something
     
     func doUpdateData(request: SettingsPenUser.UpdateData.Request) {
+        var total: Double = 0
+
+        for (index, item) in basalRates.enumerated() {
+            var endTime = basalRates[0].startTime + .hours(24.0)
+
+            if index < basalRates.endIndex - 1 {
+                endTime = basalRates[index + 1].startTime
+            }
+
+            total += (endTime - item.startTime).hours * Double(item.units)
+        }
+        
         let response = SettingsPenUser.UpdateData.Response(
             animated: request.animated,
             basalRates: basalRates,
+            totalValue: total,
             pickerValueChangedHandler: handlePickerValueChanged(_:_:_:)
         )
         presenter?.presentUpdateData(response: response)

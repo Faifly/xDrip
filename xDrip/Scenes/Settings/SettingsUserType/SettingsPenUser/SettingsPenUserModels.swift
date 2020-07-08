@@ -25,6 +25,7 @@ enum SettingsPenUser {
         struct Response {
             let animated: Bool
             let basalRates: [BasalRate]
+            let totalValue: Double
             let pickerValueChangedHandler: (Int, TimeInterval, Float) -> Void
         }
         

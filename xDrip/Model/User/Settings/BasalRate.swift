@@ -35,10 +35,10 @@ final class BasalRate: Object {
     }
     
     static var minimumTimeIntervalBetweenRates: TimeInterval {
-        return TimeInterval.minutes(30.0)
+        return .minutes(30.0)
     }
     
     static var lastValidStartTime: TimeInterval {
-        return TimeInterval.hours(24.0) - minimumTimeIntervalBetweenRates
+        return .hours(24.0) - minimumTimeIntervalBetweenRates
     }
 }
