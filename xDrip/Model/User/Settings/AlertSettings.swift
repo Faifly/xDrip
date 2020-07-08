@@ -35,6 +35,32 @@ final class AlertSettings: Object {
         }
     }
     
+    func getSound(for type: AlertEventType) -> CustomSound {
+        var sound = CustomSound.default
+        
+        let configuration = customConfiguration(for: type)
+        if configuration.isEnabled, let snd = CustomSound(rawValue: configuration.soundID) {
+            sound = snd
+        } else if let defaultConfig = defaultConfiguration, let snd = CustomSound(rawValue: defaultConfig.soundID) {
+            sound = snd
+        }
+        
+        return sound
+    }
+    
+    func getIsVibrating(for type: AlertEventType) -> Bool {
+        var isVibrating = false
+        
+        let configuration = customConfiguration(for: type)
+        if configuration.isEnabled {
+            isVibrating = configuration.isVibrating
+        } else if let defaultConfig = defaultConfiguration {
+            isVibrating = defaultConfig.isVibrating
+        }
+        
+        return isVibrating
+    }
+    
     func updateVolume(_ volume: Float) {
         Realm.shared.safeWrite {
             self.volume = volume

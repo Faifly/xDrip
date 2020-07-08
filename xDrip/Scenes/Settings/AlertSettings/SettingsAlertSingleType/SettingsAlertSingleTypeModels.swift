@@ -28,6 +28,7 @@ enum SettingsAlertSingleType {
         case endTime
         case highTreshold
         case lowTreshold
+        case minimumBGChange
     }
     
     // MARK: Use cases
@@ -39,6 +40,7 @@ enum SettingsAlertSingleType {
         
         struct Response {
             let animated: Bool
+            let settings: Settings
             let configuration: AlertConfiguration
             let switchValueChangedHandler: (Field, Bool) -> Void
             let textEditingChangedHandler: (String?) -> Void

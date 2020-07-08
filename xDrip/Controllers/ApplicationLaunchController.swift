@@ -10,16 +10,19 @@ import UIKit
 import RealmSwift
 #if !targetEnvironment(macCatalyst)
 import FirebaseCore
+private let keepAliveController = KeepAliveController()
 #endif
 
 enum ApplicationLaunchController {
     static func runAppLaunchSequence() {
+        _ = AudioController.shared
         #if !targetEnvironment(macCatalyst)
         FirebaseApp.configure()
+        _ = keepAliveController
         #endif
         setupRealm()
         setupDevice()
-        NotificationController.requestAuthorization()
+        NotificationController.shared.requestAuthorization()
         _ = NightscoutService.shared
     }
     

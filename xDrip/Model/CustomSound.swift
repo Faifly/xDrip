@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum CustomSound: CaseIterable {
-    case alarm
+enum CustomSound: Int, CaseIterable {
+    case alarm = 0
     case anticipate
     case bell
     case bloom
@@ -35,6 +35,8 @@ enum CustomSound: CaseIterable {
     case tiptoes
     case tritone
     case typewriters
+    
+    static let `default` = CustomSound.tritone
     
     var fileName: String {
         switch self {

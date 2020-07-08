@@ -35,13 +35,16 @@ final class SettingsAlertRootPresenter: SettingsAlertRootPresentationLogic {
     private func createTableViewSection(response: SettingsAlertRoot.Load.Response) -> BaseSettings.Section {
         let settings = User.current.settings.alert ?? AlertSettings()
         
-        var cells: [BaseSettings.Cell] = [
+        var cells: [BaseSettings.Cell] = []
+        
+        #if !targetEnvironment(macCatalyst)
+        cells.append(
             createRightSwitch(
                 .overrideSystemVolume,
                 isSwitchOn: settings.isSystemVolumeOverriden,
                 switchHandler: response.switchValueChangedHandler
             )
-        ]
+        )
         
         if settings.isSystemVolumeOverriden {
             cells.append(
@@ -50,18 +53,20 @@ final class SettingsAlertRootPresenter: SettingsAlertRootPresentationLogic {
         }
         
         cells.append(
-            contentsOf: [
-                createRightSwitch(
-                    .overrideMute,
-                    isSwitchOn: settings.isMuteOverriden,
-                    switchHandler: response.switchValueChangedHandler
-                ),
-                createRightSwitch(
-                    .notificationsOn,
-                    isSwitchOn: settings.isNotificationsEnabled,
-                    switchHandler: response.switchValueChangedHandler
-                )
-            ]
+            createRightSwitch(
+                .overrideMute,
+                isSwitchOn: settings.isMuteOverriden,
+                switchHandler: response.switchValueChangedHandler
+            )
+        )
+        #endif
+        
+        cells.append(
+            createRightSwitch(
+                .notificationsOn,
+                isSwitchOn: settings.isNotificationsEnabled,
+                switchHandler: response.switchValueChangedHandler
+            )
         )
         
         if settings.isNotificationsEnabled {

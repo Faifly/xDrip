@@ -30,15 +30,17 @@ enum AlertEventType: Int, CaseIterable {
              .calibrationRequest,
              .initialCalibrationRequest,
              .pairingRequest,
-             .fastRise,
-             .fastDrop:
-            return false
-            
-        case .urgentHigh,
+             .urgentHigh,
              .high,
              .low,
              .urgentLow:
+            return false
+            
+        case .fastRise,
+             .fastDrop:
             return true
         }
     }
+    
+    static let warningLevelAlerts: [AlertEventType] = [.urgentLow, .low, .high, .urgentHigh, .fastRise, .fastDrop]
 }

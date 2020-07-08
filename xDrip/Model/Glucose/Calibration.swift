@@ -100,7 +100,7 @@ final class Calibration: Object {
         date2: Date,
         adjustedReadingsAmount: Int = 5
     ) throws {
-        let last2Readings = GlucoseReading.latestMasterByCount(2)
+        let last2Readings = GlucoseReading.latestByCount(2, for: .main)
         guard last2Readings.count == 2 else { throw CalibrationError.notEnoughReadings }
         guard let sensorStarted = CGMDevice.current.sensorStartDate else { throw CalibrationError.sensorNotStarted }
         guard CGMDevice.current.isSensorStarted else { throw CalibrationError.sensorNotStarted }
@@ -229,7 +229,7 @@ final class Calibration: Object {
     
     static func adjustRecentReadings(_ amount: Int) {
         let calibrations = lastCalibrations(3)
-        let readings = GlucoseReading.latestMasterByCount(amount)
+        let readings = GlucoseReading.latestByCount(amount, for: .main)
         
         if calibrations.count >= 3 {
             let denom = Double(readings.count)

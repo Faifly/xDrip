@@ -383,7 +383,7 @@ final class CalibrationTests: AbstractRealmTest {
         
         try? Calibration.createRegularCalibration(glucoseLevel: 160.0, date: now)
         
-        let readings = GlucoseReading.lastMasterReadings(30)
+        let readings = GlucoseReading.lastReadings(30, for: .main)
         let calibrations = Calibration.lastCalibrations(30)
         
         XCTAssert(readings.count == 30)

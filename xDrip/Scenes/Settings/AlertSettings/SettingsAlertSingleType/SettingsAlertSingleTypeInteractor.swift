@@ -30,12 +30,16 @@ final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLo
         let alertSettings = User.current.settings.alert
         return alertSettings?.customConfiguration(for: eventType ?? .default) ?? AlertConfiguration()
     }()
+    private lazy var settings: Settings = {
+        return User.current.settings ?? Settings()
+    }()
     
     // MARK: Do something
     
     func doLoad(request: SettingsAlertSingleType.Load.Request) {
         let response = SettingsAlertSingleType.Load.Response(
             animated: request.animated,
+            settings: settings,
             configuration: configuration,
             switchValueChangedHandler: handleSwitchValueChanged(_:_:),
             textEditingChangedHandler: handleTextEditingChanged(_:),
@@ -80,6 +84,7 @@ final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLo
         switch field {
         case .highTreshold: configuration.updateHighThreshold(convertedValue)
         case .lowTreshold: configuration.updateLowThreshold(convertedValue)
+        case .minimumBGChange: configuration.updateMinimumBGChange(convertedValue)
         default: break
         }
     }
