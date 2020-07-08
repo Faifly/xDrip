@@ -19,7 +19,6 @@ import UserNotifications
     ) -> Bool {
         ApplicationLaunchController.runAppLaunchSequence()
         window = ApplicationLaunchController.createWindow()
-        UNUserNotificationCenter.current().delegate = self
         
         return true
     }
@@ -50,36 +49,4 @@ import UserNotifications
         MacMenuController.buildMenu(builder)
     }
     #endif
-}
-
-// MARK: - UNUserNotificationCenterDelegate
-extension AppDelegate: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
-    ) {
-        completionHandler([.alert, .badge, .sound])
-    }
-    
-    func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        didReceive response: UNNotificationResponse,
-        withCompletionHandler completionHandler: @escaping () -> Void
-    ) {
-        let identifier = response.notification.request.identifier
-        
-        if response.notification.request.content.categoryIdentifier == "SnoozableNotification" {
-            switch response.actionIdentifier {
-            case "snooze_action":
-                if let alertType = AlertEventType.allCases.first(where: { $0.alertID == identifier }) {
-                    NotificationController.shared.scheduleSnoozeForNotification(ofType: alertType)
-                }
-            default:
-                break
-            }
-        }
-        
-        completionHandler()
-    }
 }

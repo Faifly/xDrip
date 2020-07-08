@@ -9,18 +9,21 @@
 import UIKit
 import UserNotifications
 
-final class NotificationController {
+final class NotificationController: NSObject {
     private let defaultCategoryID = "AlertEvent"
     private let snoozableNotificationCategoryID = "SnoozableNotification"
     
     static let shared = NotificationController()
     private var glucoseNotificationWorker = GlucoseNotificationWorker()
     
-    private init() {
+    override private init() {
+        super.init()
         glucoseNotificationWorker.notificationRequest = { [weak self] alertType in
             guard let self = self else { return }
             self.sendNotification(ofType: alertType)
         }
+        
+        UNUserNotificationCenter.current().delegate = self
     }
     
     func requestAuthorization() {
@@ -149,5 +152,36 @@ final class NotificationController {
         }
         
         return content
+    }
+}
+
+extension NotificationController: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.alert, .badge, .sound])
+    }
+    
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        let identifier = response.notification.request.identifier
+        
+        if response.notification.request.content.categoryIdentifier == "SnoozableNotification" {
+            switch response.actionIdentifier {
+            case "snooze_action":
+                if let alertType = AlertEventType.allCases.first(where: { $0.alertID == identifier }) {
+                    NotificationController.shared.scheduleSnoozeForNotification(ofType: alertType)
+                }
+            default:
+                break
+            }
+        }
+        
+        completionHandler()
     }
 }

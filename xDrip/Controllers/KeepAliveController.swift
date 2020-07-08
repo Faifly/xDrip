@@ -10,8 +10,6 @@ import Foundation
 import AVKit
 
 final class KeepAliveController: NSObject {
-    static let shared = KeepAliveController()
-    
     private var player: AVAudioPlayer?
     private var task = UIBackgroundTaskIdentifier(rawValue: 0)
     
