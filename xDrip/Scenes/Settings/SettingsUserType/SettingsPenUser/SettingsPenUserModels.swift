@@ -25,12 +25,14 @@ enum SettingsPenUser {
         struct Response {
             let animated: Bool
             let basalRates: [BasalRate]
+            let totalValue: Double
             let pickerValueChangedHandler: (Int, TimeInterval, Float) -> Void
         }
         
         struct ViewModel {
             let animated: Bool
             let tableViewModel: BaseSettings.ViewModel
+            var addButtonEnabled: Bool
         }
     }
     

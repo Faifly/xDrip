@@ -25,7 +25,7 @@ protocol RootRoutingLogic {
     func routeToAddTraining()
     func routeToInitialSetup()
     
-    func showCalibrationError(title: String, message: String)
+    func showErrorAlert(title: String, message: String)
 }
 
 protocol RootDataPassing {
@@ -115,7 +115,7 @@ final class RootRouter: RootRoutingLogic, RootDataPassing {
         self.viewController?.present(viewController.embedInNavigation(), animated: true, completion: nil)
     }
     
-    func showCalibrationError(title: String, message: String) {
+    func showErrorAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK".localized, style: .cancel)
         alert.addAction(action)
