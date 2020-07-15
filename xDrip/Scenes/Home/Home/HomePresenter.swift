@@ -38,8 +38,9 @@ final class HomePresenter: HomePresentationLogic {
     
     func presentGlucoseData(response: Home.GlucoseDataUpdate.Response) {
         let values = glucoseFormattingWorker.formatEntries(response.glucoseData)
+        let basal = glucoseFormattingWorker.formatEntries(response.insulinData)
         let unit = User.current.settings.unit.label
-        let viewModel = Home.GlucoseDataUpdate.ViewModel(glucoseValues: values, unit: unit)
+        let viewModel = Home.GlucoseDataUpdate.ViewModel(glucoseValues: values, basalValues: basal, unit: unit)
         viewController?.displayGlucoseData(viewModel: viewModel)
     }
     

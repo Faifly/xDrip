@@ -20,7 +20,11 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
     
     @discardableResult static func addBasalEntry(amount: Double, date: Date) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .basal)
-        return add(entry: entry)
+        add(entry: entry)
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "basalEntryAdded"), object: nil)
+        
+        return entry
     }
     
     static func fetchAllBasalEntries() -> [InsulinEntry] {

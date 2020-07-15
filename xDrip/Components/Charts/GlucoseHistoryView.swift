@@ -20,6 +20,7 @@ final class GlucoseHistoryView: UIView {
     private weak var chartWidthConstraint: NSLayoutConstraint?
     
     private var glucoseEntries: [GlucoseChartGlucoseEntry] = []
+    private var basalEntries: [BasalChartEntry] = []
     
     private var globalDateRange = DateInterval()
     private var localDateRange = DateInterval()
@@ -127,9 +128,10 @@ final class GlucoseHistoryView: UIView {
     }
     
     /// Should be sorted by date ascending
-    func setup(with entries: [GlucoseChartGlucoseEntry], unit: String) {
+    func setup(with entries: [GlucoseChartGlucoseEntry], basal: [BasalChartEntry], unit: String) {
         self.unit = unit
         glucoseEntries = entries
+        basalEntries = basal
         updateIntervals()
         updateChart()
     }
@@ -153,6 +155,7 @@ final class GlucoseHistoryView: UIView {
         chartWidthConstraint?.constant = chartWidth
         
         chartView.entries = glucoseEntries
+        chartView.basalEntries = basalEntries
         chartView.dateInterval = globalDateRange
         chartView.setNeedsDisplay()
         

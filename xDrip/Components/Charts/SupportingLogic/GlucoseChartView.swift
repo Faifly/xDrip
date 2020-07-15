@@ -10,6 +10,7 @@ import UIKit
 
 final class GlucoseChartView: BaseChartView, GlucoseChartProvider {
     var entries: [GlucoseChartGlucoseEntry] = []
+    var basalEntries: [BasalChartEntry] = []
     let circleSide: CGFloat = 6.0
     var dateInterval = DateInterval()
     var yRange: ClosedRange<Double> = 0.0...0.0

@@ -27,6 +27,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     
     private let glucoseDataWorker: HomeGlucoseDataWorkerProtocol
     private let warmUpWorker: HomeWarmUpWorkerLogic
+    private var basalEntriesObserver: NSObjectProtocol?
     
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
@@ -37,6 +38,15 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             self.updateGlucoseCurrentInfo()
             self.updateGlucoseChartData()
         }
+        
+        basalEntriesObserver = NotificationCenter.default.addObserver(
+            forName: NSNotification.Name(rawValue: "basalEntryAdded"),
+            object: nil,
+            queue: nil,
+            using: { [weak self] _ in
+                self?.updateGlucoseChartData()
+            }
+        )
     }
     
     // MARK: Do something
@@ -73,7 +83,10 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     // MARK: Logic
     
     private func updateGlucoseChartData() {
-        let response = Home.GlucoseDataUpdate.Response(glucoseData: glucoseDataWorker.fetchGlucoseData())
+        let response = Home.GlucoseDataUpdate.Response(
+            glucoseData: glucoseDataWorker.fetchGlucoseData(),
+            insulinData: glucoseDataWorker.fetchBasalData()
+        )
         self.presenter?.presentGlucoseData(response: response)
     }
     
