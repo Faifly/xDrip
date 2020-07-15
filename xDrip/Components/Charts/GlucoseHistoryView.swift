@@ -8,6 +8,8 @@
 
 import UIKit
 
+// swiftlint:disable type_body_length
+
 final class GlucoseHistoryView: UIView {
     private let verticalLines: Int = 5
     private var forwardTimeOffset: TimeInterval = 600.0
@@ -29,7 +31,7 @@ final class GlucoseHistoryView: UIView {
     private var userRelativeSelection: CGFloat?
     private var unit = GlucoseUnit.default.label
     
-    private var rightLabelsViewAnchorConstraint: NSLayoutConstraint?
+    private var rightLegendAnchorConstraint: NSLayoutConstraint?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -70,7 +72,11 @@ final class GlucoseHistoryView: UIView {
         leftLabelsView.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
         
         setupRightLabelViewsAnchorConstraint()
-        rightLabelsView.heightAnchor.constraint(equalTo: scrollContainer.heightAnchor, multiplier: 1.0 / 4.0, constant: rightLabelsView.chartInsets.bottom).isActive = true
+        rightLabelsView.heightAnchor.constraint(
+            equalTo: scrollContainer.heightAnchor,
+            multiplier: 1.0 / 4.0,
+            constant: rightLabelsView.chartInsets.bottom
+        ).isActive = true
         rightLabelsView.leadingAnchor.constraint(equalTo: scrollContainer.trailingAnchor, constant: 8.0).isActive = true
         rightLabelsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         rightLabelsView.widthAnchor.constraint(equalToConstant: 70.0).isActive = true
@@ -91,13 +97,13 @@ final class GlucoseHistoryView: UIView {
     private func setupRightLabelViewsAnchorConstraint() {
         guard let displayMode = User.current.settings.chart?.basalDisplayMode else { return }
         
-        rightLabelsViewAnchorConstraint?.isActive = false
+        rightLegendAnchorConstraint?.isActive = false
         if displayMode == .onTop {
-            rightLabelsViewAnchorConstraint = rightLabelsView.topAnchor.constraint(equalTo: scrollContainer.topAnchor)
+            rightLegendAnchorConstraint = rightLabelsView.topAnchor.constraint(equalTo: scrollContainer.topAnchor)
         } else {
-            rightLabelsViewAnchorConstraint = rightLabelsView.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor)
+            rightLegendAnchorConstraint = rightLabelsView.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor)
         }
-        rightLabelsViewAnchorConstraint?.isActive = true
+        rightLegendAnchorConstraint?.isActive = true
     }
     
     private func setupSeparator(bottomView: UIView) {

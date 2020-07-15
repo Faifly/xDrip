@@ -52,6 +52,23 @@ extension GlucoseChartProvider where Self: UIView {
         return yInterval / (yRange.upperBound - yRange.lowerBound)
     }
     
+    private var basalRates: [BasalRate] {
+        return User.current.settings.sortedBasalRates
+    }
+    
+    private var extendedRates: [BasalRate] {
+        var rates = basalRates
+        let dayInterval = TimeInterval.hours(24.0)
+        for basalRate in basalRates {
+            let prevRate = BasalRate(startTime: basalRate.startTime - dayInterval, units: basalRate.units)
+            let nextRate = BasalRate(startTime: basalRate.startTime + dayInterval, units: basalRate.units)
+            rates.append(contentsOf: [prevRate, nextRate])
+        }
+        rates.sort(by: { $0.startTime < $1.startTime })
+        
+        return rates
+    }
+    
     func drawGlucoseChart() {
         guard let context = UIGraphicsGetCurrentContext() else { return }
         
@@ -106,7 +123,6 @@ extension GlucoseChartProvider where Self: UIView {
         var lastValue = 0.0
         func setReducedBasalValue(prevEntry: BasalChartEntry?, toDate: Date?, in context: CGContext) {
             guard let prevEntry = prevEntry else { return }
-            let basalRates = User.current.settings.sortedBasalRates
             var unitsPerHour = 0.0
             
             if basalRates.count == 1 {
@@ -159,33 +175,11 @@ extension GlucoseChartProvider where Self: UIView {
                 }
                 
                 // fill rates
-                var rates = basalRates
-                
-                let dayInterval = TimeInterval.hours(24.0)
-                for basalRate in basalRates {
-                    let prevRate = BasalRate(startTime: basalRate.startTime - dayInterval, units: basalRate.units)
-                    let nextRate = BasalRate(startTime: basalRate.startTime + dayInterval, units: basalRate.units)
-                    rates.append(contentsOf: [prevRate, nextRate])
-                }
-                rates.sort(by: { $0.startTime < $1.startTime })
-                
                 let startOfDay = Calendar.current.startOfDay(for: prevEntry.date)
                 let prevEntryStartTime = prevEntry.date.timeIntervalSince(startOfDay)
                 let currentEntryStartTime = (toDate ?? Date()).timeIntervalSince(startOfDay)
                 
-                var minIndex = 0
-                var maxIndex = rates.endIndex - 1
-                for index in 0 ..< rates.endIndex - 1 {
-                    if rates[index].startTime <= prevEntryStartTime && rates[index + 1].startTime > prevEntryStartTime {
-                        minIndex = index
-                    }
-                    if rates[index].startTime <= currentEntryStartTime,
-                        rates[index + 1].startTime > currentEntryStartTime {
-                        maxIndex = index
-                    }
-                }
-                
-                rates = Array(rates[minIndex ... maxIndex])
+                var rates = calculateRates(for: prevEntryStartTime, and: currentEntryStartTime)
                 
                 // construct path
                 unitsPerHour = Double(rates[0].units)
@@ -254,10 +248,32 @@ extension GlucoseChartProvider where Self: UIView {
         context.addPath(path)
         
         let strokeInset: CGFloat = displayMode == .onBottom ? 2.0 : -2.0
-        context.addLine(to: CGPoint(x: bounds.width - insets.left - insets.right, y: CGFloat(yMin) + insets.top + strokeInset))
+        context.addLine(to: CGPoint(
+                x: bounds.width - insets.left - insets.right,
+                y: CGFloat(yMin) + insets.top + strokeInset
+            )
+        )
         context.addLine(to: CGPoint(x: 0.0, y: CGFloat(yMin) + insets.top + strokeInset))
         
         context.setFillColor(UIColor.cyan.withAlphaComponent(0.2).cgColor)
         context.drawPath(using: .fill)
+    }
+    
+    private func calculateRates(for startTime: TimeInterval, and endTime: TimeInterval) -> [BasalRate] {
+        let rates = extendedRates
+        
+        var minIndex = 0
+        var maxIndex = rates.endIndex - 1
+        for index in 0 ..< rates.endIndex - 1 {
+            if rates[index].startTime <= startTime && rates[index + 1].startTime > startTime {
+                minIndex = index
+            }
+            if rates[index].startTime <= endTime,
+                rates[index + 1].startTime > endTime {
+                maxIndex = index
+            }
+        }
+        
+        return Array(rates[minIndex ... maxIndex])
     }
 }
