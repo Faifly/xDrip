@@ -56,7 +56,7 @@ final class ChartVerticalLabelsView: UIView {
         let lineDistance = (bounds.height - chartInsets.top - chartInsets.bottom) / CGFloat(formattedLabels.count - 1)
         
         for label in formattedLabels.reversed() {
-            label.draw(in: CGRect(x: 0.0, y: offset - 9.0, width: 32.0, height: 16.0))
+            label.draw(in: CGRect(x: 0.0, y: offset - 9.0, width: frame.width - 8, height: 16.0))
             offset += lineDistance
         }
     }

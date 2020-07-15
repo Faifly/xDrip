@@ -15,6 +15,7 @@ final class GlucoseHistoryView: UIView {
     private let scrollContainer = GlucoseChartScrollContainer()
     private let detailsView = ChartEntryDetailView()
     private let leftLabelsView = ChartVerticalLabelsView()
+    private let rightLabelsView = ChartVerticalLabelsView()
     private let chartView = GlucoseChartView()
     private let chartSliderView = ChartSliderView()
     private weak var chartWidthConstraint: NSLayoutConstraint?
@@ -27,6 +28,8 @@ final class GlucoseHistoryView: UIView {
     private var localInterval: TimeInterval = .secondsPerHour
     private var userRelativeSelection: CGFloat?
     private var unit = GlucoseUnit.default.label
+    
+    private var rightLabelsViewAnchorConstraint: NSLayoutConstraint?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -45,6 +48,7 @@ final class GlucoseHistoryView: UIView {
         
         addSubview(detailsView)
         addSubview(leftLabelsView)
+        addSubview(rightLabelsView)
         addSubview(scrollContainer)
         scrollContainer.scrollView.addSubview(chartView)
         addSubview(chartSliderView)
@@ -65,8 +69,13 @@ final class GlucoseHistoryView: UIView {
         leftLabelsView.trailingAnchor.constraint(equalTo: scrollContainer.leadingAnchor).isActive = true
         leftLabelsView.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
         
+        setupRightLabelViewsAnchorConstraint()
+        rightLabelsView.heightAnchor.constraint(equalTo: scrollContainer.heightAnchor, multiplier: 1.0 / 4.0, constant: rightLabelsView.chartInsets.bottom).isActive = true
+        rightLabelsView.leadingAnchor.constraint(equalTo: scrollContainer.trailingAnchor, constant: 8.0).isActive = true
+        rightLabelsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        rightLabelsView.widthAnchor.constraint(equalToConstant: 70.0).isActive = true
+        
         scrollContainer.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor).isActive = true
-        scrollContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0).isActive = true
         scrollContainer.topAnchor.constraint(equalTo: detailsView.bottomAnchor).isActive = true
         
         chartView.bindToSuperview()
@@ -77,6 +86,18 @@ final class GlucoseHistoryView: UIView {
         
         setupSeparator(bottomView: self)
         setupSeparator(bottomView: chartView)
+    }
+    
+    private func setupRightLabelViewsAnchorConstraint() {
+        guard let displayMode = User.current.settings.chart?.basalDisplayMode else { return }
+        
+        rightLabelsViewAnchorConstraint?.isActive = false
+        if displayMode == .onTop {
+            rightLabelsViewAnchorConstraint = rightLabelsView.topAnchor.constraint(equalTo: scrollContainer.topAnchor)
+        } else {
+            rightLabelsViewAnchorConstraint = rightLabelsView.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor)
+        }
+        rightLabelsViewAnchorConstraint?.isActive = true
     }
     
     private func setupSeparator(bottomView: UIView) {
@@ -148,6 +169,9 @@ final class GlucoseHistoryView: UIView {
         calculateVerticalLeftLabels()
         calculateHorizontalBottomLabels()
         
+        setupRightLabelViewsAnchorConstraint()
+        calculateVerticalRightLabels()
+        
         let scrollSegments = CGFloat(
             (globalDateRange.duration - forwardTimeOffset) / (localDateRange.duration - forwardTimeOffset)
         )
@@ -168,6 +192,24 @@ final class GlucoseHistoryView: UIView {
         
         scrollContainer.layoutIfNeeded()
         scrollContainer.scrollView.contentOffset = CGPoint(x: chartWidth - scrollContainer.bounds.width, y: 0.0)
+    }
+    
+    private func calculateVerticalRightLabels() {
+        let maxBasalValue = basalEntries.map({ $0.value }).max()
+        
+        var labels = ["0.00 U"]
+        
+        if let max = maxBasalValue {
+            let adjustedMaxValue = max.rounded(.up)
+            labels.append(String(format: "%0.02f U", adjustedMaxValue))
+        } else {
+            labels.append(" ")
+        }
+        
+        let displayMode = User.current.settings.chart?.basalDisplayMode
+        rightLabelsView.textAlignment = .left
+        rightLabelsView.labels = displayMode == .onBottom ? labels : labels.reversed()
+        rightLabelsView.setNeedsDisplay()
     }
     
     private func calculateVerticalLeftLabels() {

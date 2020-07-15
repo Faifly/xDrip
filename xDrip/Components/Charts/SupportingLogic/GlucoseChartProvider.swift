@@ -79,8 +79,8 @@ extension GlucoseChartProvider where Self: UIView {
         guard let context = UIGraphicsGetCurrentContext() else { return }
         guard let displayMode = User.current.settings.chart?.basalDisplayMode, displayMode != .notShown else { return }
         let yIntervalBasal = yInterval / 4.0
-        let yMax = displayMode == .onBottom ? yInterval - yIntervalBasal : 0
-        let yMin = displayMode == .onBottom ? yInterval : yIntervalBasal
+        let yMax = displayMode == .onBottom ? yInterval - yIntervalBasal : yIntervalBasal
+        let yMin = displayMode == .onBottom ? yInterval : 0
         
         guard var max = basalEntries.map({ $0.value }).max() else { return }
         
@@ -94,6 +94,9 @@ extension GlucoseChartProvider where Self: UIView {
         let pxlPerVal = yIntervalBasal / (max - min)
         
         func calcPoint(for date: Date, and value: Double) -> CGPoint {
+            let value = displayMode == .onBottom ? value : -value
+            let yMax = displayMode == .onBottom ? yMax : -yMax
+            
             let xPoint = CGFloat((date.timeIntervalSince1970 - minDate) * pixelsPerSecond) + insets.left
             let yPoint = CGFloat((max - value) * pxlPerVal) + insets.top + CGFloat(yMax)
             
@@ -101,7 +104,7 @@ extension GlucoseChartProvider where Self: UIView {
         }
         
         var lastValue = 0.0
-        func setReducedBasalValue(prevEntry: BasalChartEntry?, currentEntry: BasalChartEntry?, in context: CGContext) {
+        func setReducedBasalValue(prevEntry: BasalChartEntry?, toDate: Date?, in context: CGContext) {
             guard let prevEntry = prevEntry else { return }
             let basalRates = User.current.settings.sortedBasalRates
             var unitsPerHour = 0.0
@@ -109,14 +112,14 @@ extension GlucoseChartProvider where Self: UIView {
             if basalRates.count == 1 {
                 unitsPerHour = Double(basalRates[0].units)
                 
-                let date = currentEntry?.date ?? Date()
+                let date = toDate ?? Date()
                 let interval = date.timeIntervalSince(prevEntry.date)
                 let diff = unitsPerHour * interval.hours
                 
                 if lastValue - diff >= 0.0 {
                     context.addLine(to: calcPoint(for: date, and: prevEntry.value - diff))
                     
-                    if date != currentEntry?.date {
+                    if date != toDate {
                         context.addLine(to: calcPoint(for: date, and: 0.0))
                     }
                     lastValue -= diff
@@ -125,7 +128,7 @@ extension GlucoseChartProvider where Self: UIView {
                     let date = prevEntry.date.addingTimeInterval(interval)
                     context.addLine(to: calcPoint(for: date, and: 0.0))
                     
-                    if let toDate = currentEntry?.date {
+                    if let toDate = toDate {
                         context.addLine(to: calcPoint(for: toDate, and: 0.0))
                     }
                     
@@ -168,7 +171,7 @@ extension GlucoseChartProvider where Self: UIView {
                 
                 let startOfDay = Calendar.current.startOfDay(for: prevEntry.date)
                 let prevEntryStartTime = prevEntry.date.timeIntervalSince(startOfDay)
-                let currentEntryStartTime = (currentEntry?.date ?? Date()).timeIntervalSince(startOfDay)
+                let currentEntryStartTime = (toDate ?? Date()).timeIntervalSince(startOfDay)
                 
                 var minIndex = 0
                 var maxIndex = rates.endIndex - 1
@@ -194,14 +197,11 @@ extension GlucoseChartProvider where Self: UIView {
                 
                 addLine(for: currentEntryStartTime, context: context)
                 
-                if currentEntry == nil {
+                if toDate == nil {
                     context.addLine(to: calcPoint(for: Date(), and: 0.0))
                 }
             }
         }
-
-        context.setLineWidth(2.0)
-        context.setStrokeColor(UIColor.cyan.cgColor)
         
         lastValue = basalEntries[0].value
         context.move(to: CGPoint(x: 0.0, y: yMin + Double(insets.top)))
@@ -211,7 +211,7 @@ extension GlucoseChartProvider where Self: UIView {
         var prevEntry: BasalChartEntry?
         for (index, entry) in basalEntries.enumerated() {
             if index != 0 {
-                setReducedBasalValue(prevEntry: prevEntry, currentEntry: entry, in: context)
+                setReducedBasalValue(prevEntry: prevEntry, toDate: entry.date, in: context)
 
                 lastValue += entry.value
             }
@@ -237,9 +237,27 @@ extension GlucoseChartProvider where Self: UIView {
             
             prevEntry = entry
         }
-        setReducedBasalValue(prevEntry: prevEntry, currentEntry: nil, in: context)
+        setReducedBasalValue(prevEntry: prevEntry, toDate: nil, in: context)
+        
         context.addLine(to: CGPoint(x: bounds.width - insets.left - insets.right, y: CGFloat(yMin) + insets.top))
+        
+        context.setLineWidth(2.0)
+        context.setStrokeColor(UIColor.cyan.cgColor)
+        
+        let optPath = context.path
+        context.drawPath(using: .stroke)
+        
+        guard let path = optPath else {
+            return
+        }
+        
+        context.addPath(path)
+        
+        let strokeInset: CGFloat = displayMode == .onBottom ? 2.0 : -2.0
+        context.addLine(to: CGPoint(x: bounds.width - insets.left - insets.right, y: CGFloat(yMin) + insets.top + strokeInset))
+        context.addLine(to: CGPoint(x: 0.0, y: CGFloat(yMin) + insets.top + strokeInset))
+        
         context.setFillColor(UIColor.cyan.withAlphaComponent(0.2).cgColor)
-        context.drawPath(using: .fillStroke)
+        context.drawPath(using: .fill)
     }
 }
