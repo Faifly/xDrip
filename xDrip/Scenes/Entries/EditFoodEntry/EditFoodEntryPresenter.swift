@@ -173,6 +173,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         let picker = CustomDatePicker()
         picker.datePickerMode = .dateAndTime
         picker.date = date
+        picker.maximumDate = Date()
         
         picker.formatDate = { date in
             dateChangedHandler(field, date)

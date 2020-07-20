@@ -22,7 +22,7 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
         let entry = InsulinEntry(amount: amount, date: date, type: .basal)
         add(entry: entry)
         
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "basalEntryAdded"), object: nil)
+        NotificationCenter.default.post(name: .basalEntryAdded, object: nil)
         
         return entry
     }
@@ -34,4 +34,8 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
     static func fetchAllInsulinEntries() -> [InsulinEntry] {
         return super.fetchAllEntries(type: InsulinEntry.self)
     }
+}
+
+fileprivate extension NSNotification.Name {
+    static let basalEntryAdded = Notification.Name("basalEntryAddedNotification")
 }

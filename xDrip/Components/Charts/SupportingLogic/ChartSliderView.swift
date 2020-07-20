@@ -33,6 +33,13 @@ final class ChartSliderView: UIView, GlucoseChartProvider {
     var dateInterval = DateInterval()
     var yRange: ClosedRange<Double> = 0.0...0.0
     
+    var minDate: TimeInterval = 0.0
+    var maxDate: TimeInterval = 0.0
+    var timeInterval: TimeInterval = 0.0
+    var pixelsPerSecond: Double = 0.0
+    var pixelsPerValue: Double = 0.0
+    var yInterval: Double = 0.0
+    
     private var leftLimit: CGFloat = 0.0
     private var rightLimit: CGFloat = 0.0
     var sliderWidth: CGFloat {

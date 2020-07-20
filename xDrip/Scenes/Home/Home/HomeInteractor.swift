@@ -83,9 +83,11 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     // MARK: Logic
     
     private func updateGlucoseChartData() {
+        let rates = User.current.settings.sortedBasalRates
         let response = Home.GlucoseDataUpdate.Response(
             glucoseData: glucoseDataWorker.fetchGlucoseData(),
-            insulinData: glucoseDataWorker.fetchBasalData()
+            insulinData: glucoseDataWorker.fetchBasalData(),
+            basalRates: rates
         )
         self.presenter?.presentGlucoseData(response: response)
     }

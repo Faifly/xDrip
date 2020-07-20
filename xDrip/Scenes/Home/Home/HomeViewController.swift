@@ -104,7 +104,12 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel) {
         DispatchQueue.main.async { [weak self] in
-            self?.glucoseChart.setup(with: viewModel.glucoseValues, basal: viewModel.basalValues, unit: viewModel.unit)
+            self?.glucoseChart.setup(
+                with: viewModel.glucoseValues,
+                basalEntries: viewModel.basalValues,
+                basalRates: viewModel.basalRates,
+                unit: viewModel.unit
+            )
         }
     }
     

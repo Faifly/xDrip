@@ -40,7 +40,12 @@ final class HomePresenter: HomePresentationLogic {
         let values = glucoseFormattingWorker.formatEntries(response.glucoseData)
         let basal = glucoseFormattingWorker.formatEntries(response.insulinData)
         let unit = User.current.settings.unit.label
-        let viewModel = Home.GlucoseDataUpdate.ViewModel(glucoseValues: values, basalValues: basal, unit: unit)
+        let viewModel = Home.GlucoseDataUpdate.ViewModel(
+            glucoseValues: values,
+            basalValues: basal,
+            basalRates: response.basalRates,
+            unit: unit
+        )
         viewController?.displayGlucoseData(viewModel: viewModel)
     }
     

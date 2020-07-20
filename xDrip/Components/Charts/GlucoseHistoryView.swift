@@ -24,6 +24,7 @@ final class GlucoseHistoryView: UIView {
     
     private var glucoseEntries: [GlucoseChartGlucoseEntry] = []
     private var basalEntries: [BasalChartEntry] = []
+    private var basalRates: [BasalRate] = []
     
     private var globalDateRange = DateInterval()
     private var localDateRange = DateInterval()
@@ -155,10 +156,16 @@ final class GlucoseHistoryView: UIView {
     }
     
     /// Should be sorted by date ascending
-    func setup(with entries: [GlucoseChartGlucoseEntry], basal: [BasalChartEntry], unit: String) {
+    func setup(
+        with entries: [GlucoseChartGlucoseEntry],
+        basalEntries: [BasalChartEntry],
+        basalRates: [BasalRate],
+        unit: String
+    ) {
         self.unit = unit
         glucoseEntries = entries
-        basalEntries = basal
+        self.basalEntries = basalEntries
+        self.basalRates = basalRates
         updateIntervals()
         updateChart()
     }
@@ -186,6 +193,7 @@ final class GlucoseHistoryView: UIView {
         
         chartView.entries = glucoseEntries
         chartView.basalEntries = basalEntries
+        chartView.basalRates = basalRates
         chartView.dateInterval = globalDateRange
         chartView.setNeedsDisplay()
         
@@ -201,21 +209,24 @@ final class GlucoseHistoryView: UIView {
     }
     
     private func calculateVerticalRightLabels() {
-        let maxBasalValue = basalEntries.map({ $0.value }).max()
+        guard let maxBasalValue = basalEntries.max(by: { $0.value < $1.value })?.value else { return }
         
         var labels = ["0.00 U"]
         
-        if let max = maxBasalValue {
-            let adjustedMaxValue = max.rounded(.up)
-            labels.append(String(format: "%0.02f U", adjustedMaxValue))
-        } else {
-            labels.append(" ")
-        }
+        let adjustedMaxValue = maxBasalValue.rounded(.up)
+        labels.append(String(format: "%0.02f U", adjustedMaxValue))
         
         let displayMode = User.current.settings.chart?.basalDisplayMode
         rightLabelsView.textAlignment = .left
         rightLabelsView.labels = displayMode == .onBottom ? labels : labels.reversed()
         rightLabelsView.setNeedsDisplay()
+        
+        if adjustedMaxValue ~~ 0.0 {
+            chartView.yRangeBasal = 0.0...(adjustedMaxValue + 1.0)
+        } else {
+            chartView.yRangeBasal = 0.0...adjustedMaxValue
+        }
+        chartView.basalDisplayMode = displayMode ?? .notShown
     }
     
     private func calculateVerticalLeftLabels() {
