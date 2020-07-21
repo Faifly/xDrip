@@ -80,7 +80,7 @@ final class GlucoseHistoryView: UIView {
         ).isActive = true
         rightLabelsView.leadingAnchor.constraint(equalTo: scrollContainer.trailingAnchor, constant: 8.0).isActive = true
         rightLabelsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        rightLabelsView.widthAnchor.constraint(equalToConstant: 70.0).isActive = true
+        rightLabelsView.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
         
         scrollContainer.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor).isActive = true
         scrollContainer.topAnchor.constraint(equalTo: detailsView.bottomAnchor).isActive = true
@@ -195,6 +195,7 @@ final class GlucoseHistoryView: UIView {
         chartView.basalEntries = basalEntries
         chartView.basalRates = basalRates
         chartView.dateInterval = globalDateRange
+        chartView.basalDisplayMode = User.current.settings.chart?.basalDisplayMode ?? .notShown
         chartView.setNeedsDisplay()
         
         chartSliderView.currentRelativeOffset = (scrollSegments - 1.0) / scrollSegments
@@ -211,10 +212,11 @@ final class GlucoseHistoryView: UIView {
     private func calculateVerticalRightLabels() {
         guard let maxBasalValue = basalEntries.max(by: { $0.value < $1.value })?.value else { return }
         
-        var labels = ["0.00 U"]
+        var labels = ["0 U"]
         
-        let adjustedMaxValue = maxBasalValue.rounded(.up)
-        labels.append(String(format: "%0.02f U", adjustedMaxValue))
+        let initVal = InsulinEntriesWorker.getBasalValueForDate(date: chartView.dateInterval.start)
+        let adjustedMaxValue = max(initVal, maxBasalValue).rounded(.up)
+        labels.append(String(format: "%0.f U", adjustedMaxValue))
         
         let displayMode = User.current.settings.chart?.basalDisplayMode
         rightLabelsView.textAlignment = .left
@@ -226,7 +228,6 @@ final class GlucoseHistoryView: UIView {
         } else {
             chartView.yRangeBasal = 0.0...adjustedMaxValue
         }
-        chartView.basalDisplayMode = displayMode ?? .notShown
     }
     
     private func calculateVerticalLeftLabels() {
