@@ -11,18 +11,156 @@
 //
 
 import UIKit
+import AKUtils
 
 protocol StatsRootPresentationLogic {
     func presentLoad(response: StatsRoot.Load.Response)
+    func presentTableData(response: StatsRoot.UpdateTableData.Response)
+    func presentChartData(response: StatsRoot.UpdateChartData.Response)
 }
 
 final class StatsRootPresenter: StatsRootPresentationLogic {
     weak var viewController: StatsRootDisplayLogic?
+    private let calculationWorker: StatsRootCalculationWorkerLogic
+    
+    init() {
+        calculationWorker = StatsRootCalculationWorker()
+    }
     
     // MARK: Do something
     
     func presentLoad(response: StatsRoot.Load.Response) {
         let viewModel = StatsRoot.Load.ViewModel()
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    func presentTableData(response: StatsRoot.UpdateTableData.Response) {
+        calculationWorker.calculate(
+            with: response.readings,
+            lowThreshold: response.lowGlucoseThreshold,
+            highThreshold: response.highGlucoseThreshold
+        )
+        var cells: [StatsRoot.Cell] = []
+        
+        for cellType in StatsRoot.CellType.allCases {
+            let cell = StatsRoot.Cell(
+                title: cellType.title,
+                value: value(for: cellType, response: response)
+            )
+            cells.append(cell)
+        }
+        
+        let viewModel = StatsRoot.UpdateTableData.ViewModel(cells: cells)
+        viewController?.displayTableData(viewModel: viewModel)
+    }
+    
+    func presentChartData(response: StatsRoot.UpdateChartData.Response) {
+        var entries: [StatsChartEntry] = []
+        var currentOffset = response.interval.start
+        
+        while currentOffset.timeIntervalSince1970 ~~< response.interval.end.timeIntervalSince1970 {
+            let interval = DateInterval(start: currentOffset, duration: response.timeFrame.groupingInterval)
+            let readings = response.readings.filter { $0.date >=? interval.start && $0.date <=? interval.end }
+            
+            let values = readings.map { $0.filteredCalculatedValue }
+            let valuesRange: ClosedRange<Double>?
+            if let min = values.min(), let max = values.max() {
+                valuesRange = min...max
+            } else {
+                valuesRange = nil
+            }
+            
+            let entry = StatsChartEntry(
+                hasValue: !readings.isEmpty,
+                value: valuesRange,
+                descriptor: rangeDescriptor(for: currentOffset, timeFrame: response.timeFrame),
+                interval: interval
+            )
+            entries.append(entry)
+            
+            currentOffset += response.timeFrame.groupingInterval
+        }
+        
+        let viewModel = StatsRoot.UpdateChartData.ViewModel(entries: entries)
+        viewController?.displayChartData(viewModel: viewModel)
+    }
+    
+    // MARK: Logic
+    
+    private func value(for cellType: StatsRoot.CellType, response: StatsRoot.UpdateTableData.Response) -> String {
+        guard calculationWorker.isCalculated else { return "stats_value_na".localized }
+        
+        switch cellType {
+        case .range:
+            let normal = calculationWorker.normalPercentage
+            let high = calculationWorker.highPercentage
+            let low = calculationWorker.lowPercentage
+            return "\(normal)%/\(high)%/\(low)%"
+            
+        case .absolute:
+            let normal = calculationWorker.normalCount
+            let high = calculationWorker.highCount
+            let low = calculationWorker.lowCount
+            return "\(normal)/\(high)/\(low)"
+            
+        case .medianMeanBG:
+            let median = calculationWorker.median
+            let mean = calculationWorker.mean
+            return String(format: "%0.2f/%0.2f %@", median, mean, response.unit.label)
+            
+        case .hba1cEst:
+            let ifcc = calculationWorker.a1cIFCC
+            let dcct = calculationWorker.a1cDCCT
+            return String(format: "%0.2f %@ %0.1f%%", ifcc, response.unit.label, dcct)
+            
+        case .stdDev:
+            return String(format: "%0.2f %@", calculationWorker.stdDev, response.unit.label)
+            
+        case .relativeSD:
+            return "\(calculationWorker.relativeSD)%"
+            
+        case .gviPGS:
+            return String(format: "%0.2f/%0.2f", calculationWorker.gvi, calculationWorker.pgs)
+        }
+    }
+    
+    private func rangeDescriptor(for date: Date, timeFrame: StatsRoot.TimeFrame) -> String {
+        switch timeFrame {
+        case .today, .yesterday:
+            return "\(Calendar.current.component(.hour, from: date))"
+            
+        case .sevenDays:
+            let formatter = DateFormatter()
+            formatter.dateFormat = "EEEEE"
+            return formatter.string(from: date)
+            
+        case .thirtyDays, .nintyDays:
+            return "\(Calendar.current.component(.day, from: date))"
+        }
+    }
+}
+
+private extension StatsRoot.CellType {
+    var title: String {
+        switch self {
+        case .range: return "stats_range_label".localized
+        case .absolute: return "stats_absolute_label".localized
+        case .medianMeanBG: return "stats_median_mean_label".localized
+        case .hba1cEst: return "stats_hba1c_label".localized
+        case .stdDev: return "stats_std_dev_label".localized
+        case .relativeSD: return "stats_relative_sd_label".localized
+        case .gviPGS: return "stats_gvi_pgs_label".localized
+        }
+    }
+}
+
+private extension StatsRoot.TimeFrame {
+    var groupingInterval: TimeInterval {
+        switch self {
+        case .today, .yesterday: return .secondsPerHour
+        case .sevenDays: return .secondsPerDay
+        case .thirtyDays: return .secondsPerDay * 2.0
+        case .nintyDays: return .secondsPerDay * 5.0
+        }
     }
 }

@@ -9,14 +9,14 @@
 import UIKit
 
 class BaseChartView: UIView {
-    private(set) var chartInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: 26.0, right: 0.0)
+    var chartInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: 26.0, right: 0.0)
     
     var relativeHorizontalStartingOffset: CGFloat = 0.0
     private var absoluteHorizontalStartingOffset: CGFloat {
         return bounds.width * relativeHorizontalStartingOffset
     }
     
-    var relativeHorizontalInterval: CGFloat = 0.0
+    var relativeHorizontalInterval: CGFloat = 1.0
     private var absoluteHorizontalInterval: CGFloat {
         return bounds.width * relativeHorizontalInterval
     }
@@ -29,13 +29,15 @@ class BaseChartView: UIView {
             formatHorizontalLabels()
         }
     }
+    
+    var horizontalLabelsFont = UIFont.systemFont(ofSize: 14.0, weight: .regular)
     private var formattedHorizontalLabels: [NSAttributedString] = []
     
     private func formatHorizontalLabels() {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 14.0, weight: .regular),
+            .font: horizontalLabelsFont,
             .foregroundColor: UIColor.chartTextColor,
             .paragraphStyle: paragraphStyle
         ]

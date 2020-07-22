@@ -58,6 +58,9 @@ final class StatsRootViewControllerTests: XCTestCase {
         func doCancel(request: StatsRoot.Cancel.Request) {
             cancelCalled = true
         }
+        
+        func doSelectTimeFrame(request: StatsRoot.UpdateTimeFrame.Request) {
+        }
     }
     
     // MARK: Tests

@@ -45,6 +45,12 @@ final class StatsRootInteractorTests: XCTestCase {
         func presentLoad(response: StatsRoot.Load.Response) {
             presentLoadCalled = true
         }
+        
+        func presentChartData(response: StatsRoot.UpdateChartData.Response) {
+        }
+        
+        func presentTableData(response: StatsRoot.UpdateTableData.Response) {
+        }
     }
     
     final class StatsRootRoutingLogicSpy: StatsRootRoutingLogic {

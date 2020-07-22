@@ -9,7 +9,7 @@
 import UIKit
 
 final class ChartVerticalLabelsView: UIView {
-    private(set) var chartInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: 26.0, right: 0.0)
+    var chartInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: 26.0, right: 0.0)
     
     var textAlignment: NSTextAlignment = .right {
         didSet {
@@ -22,13 +22,16 @@ final class ChartVerticalLabelsView: UIView {
             formatLabels()
         }
     }
+    
+    var font: UIFont = .systemFont(ofSize: 14.0, weight: .regular)
+    
     private var formattedLabels: [NSAttributedString] = []
     
     private func formatLabels() {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = textAlignment
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 14.0, weight: .regular),
+            .font: font,
             .foregroundColor: UIColor.chartTextColor,
             .paragraphStyle: paragraphStyle
         ]

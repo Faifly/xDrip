@@ -498,6 +498,7 @@
 		584432B7243CFE1900282A6C /* SettingsChartInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584432B3243CFE1900282A6C /* SettingsChartInteractorTests.swift */; };
 		584432B8243CFE1900282A6C /* SettingsChartRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584432B4243CFE1900282A6C /* SettingsChartRouterTests.swift */; };
 		584432B9243CFE1900282A6C /* SettingsChartPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584432B5243CFE1900282A6C /* SettingsChartPresenterTests.swift */; };
+		584FE23F24C8728D0002F28B /* StatsRootCalculationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584FE23E24C8728D0002F28B /* StatsRootCalculationWorker.swift */; };
 		585531CE2494DAAE00CC80D6 /* NightscoutConnectionTestWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585531CD2494DAAE00CC80D6 /* NightscoutConnectionTestWorker.swift */; };
 		5860385B24462B64008D54B6 /* ChartVerticalLabelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860385A24462B64008D54B6 /* ChartVerticalLabelsView.swift */; };
 		5860389124488D8C008D54B6 /* TimeInterval+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860389024488D8C008D54B6 /* TimeInterval+Constants.swift */; };
@@ -546,6 +547,7 @@
 		58A9A397248274F500743D53 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9A396248274F500743D53 /* AlertPresenter.swift */; };
 		58A9A399248276D200743D53 /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9A398248276D200743D53 /* UIApplication+TopViewController.swift */; };
 		58AB0CEE2466F61100A2173C /* FloatingPoint+Comparison_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB0CED2466F61100A2173C /* FloatingPoint+Comparison_Tests.swift */; };
+		58B23C8D24BA33370033E6AD /* StatsBarsChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B23C8C24BA33370033E6AD /* StatsBarsChart.swift */; };
 		58B288FD2479726000D24A2B /* AlertEventType+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B288FC2479726000D24A2B /* AlertEventType+Data.swift */; };
 		58B4F67F24114938003C6D8F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 58B4F67E24114938003C6D8F /* GoogleService-Info.plist */; };
 		58B4F6AB24114D2D003C6D8F /* GoogleDataTransport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B4F68724114BCD003C6D8F /* GoogleDataTransport.framework */; platformFilter = ios; };
@@ -633,6 +635,7 @@
 		58E5A6722402B8A7002C2BE3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E5A6712402B8A7002C2BE3 /* SceneDelegate.swift */; };
 		58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58E5A6782402B8A8002C2BE3 /* Assets.xcassets */; };
 		58E5A67C2402B8A8002C2BE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58E5A67A2402B8A8002C2BE3 /* LaunchScreen.storyboard */; };
+		58E9159E24C4935900864DF5 /* StatsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E9159D24C4935900864DF5 /* StatsChartView.swift */; };
 		58F43BA1249130C2006C5F2C /* UploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F43BA0249130C2006C5F2C /* UploadRequest.swift */; };
 		58F4CC79243B9F470053D17C /* MacMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC78243B9F470053D17C /* MacMenuController.swift */; };
 		58F4CC7B243BA0CB0053D17C /* DebugController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC7A243BA0CB0053D17C /* DebugController.swift */; };
@@ -1163,6 +1166,7 @@
 		584432B3243CFE1900282A6C /* SettingsChartInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChartInteractorTests.swift; sourceTree = "<group>"; };
 		584432B4243CFE1900282A6C /* SettingsChartRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChartRouterTests.swift; sourceTree = "<group>"; };
 		584432B5243CFE1900282A6C /* SettingsChartPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsChartPresenterTests.swift; sourceTree = "<group>"; };
+		584FE23E24C8728D0002F28B /* StatsRootCalculationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsRootCalculationWorker.swift; sourceTree = "<group>"; };
 		585531CD2494DAAE00CC80D6 /* NightscoutConnectionTestWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutConnectionTestWorker.swift; sourceTree = "<group>"; };
 		5860385A24462B64008D54B6 /* ChartVerticalLabelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartVerticalLabelsView.swift; sourceTree = "<group>"; };
 		5860389024488D8C008D54B6 /* TimeInterval+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Constants.swift"; sourceTree = "<group>"; };
@@ -1210,6 +1214,7 @@
 		58A9A396248274F500743D53 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		58A9A398248276D200743D53 /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
 		58AB0CED2466F61100A2173C /* FloatingPoint+Comparison_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FloatingPoint+Comparison_Tests.swift"; sourceTree = "<group>"; };
+		58B23C8C24BA33370033E6AD /* StatsBarsChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsBarsChart.swift; sourceTree = "<group>"; };
 		58B288FC2479726000D24A2B /* AlertEventType+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertEventType+Data.swift"; sourceTree = "<group>"; };
 		58B4F674241015F0003C6D8F /* pull_request_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = pull_request_template.md; path = .github/pull_request_template.md; sourceTree = SOURCE_ROOT; };
 		58B4F67E24114938003C6D8F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1310,6 +1315,7 @@
 		58E5A67D2402B8A8002C2BE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58E5A6822402B8A9002C2BE3 /* xDripTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = xDripTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		58E5A6882402B8A9002C2BE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58E9159D24C4935900864DF5 /* StatsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsChartView.swift; sourceTree = "<group>"; };
 		58F43BA0249130C2006C5F2C /* UploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequest.swift; sourceTree = "<group>"; };
 		58F4CC78243B9F470053D17C /* MacMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMenuController.swift; sourceTree = "<group>"; };
 		58F4CC7A243BA0CB0053D17C /* DebugController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugController.swift; sourceTree = "<group>"; };
@@ -2971,6 +2977,14 @@
 			path = SettingsChart;
 			sourceTree = "<group>";
 		};
+		584FE23D24C872780002F28B /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				584FE23E24C8728D0002F28B /* StatsRootCalculationWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
 		585531CC2494DA9100CC80D6 /* SharedWorkers */ = {
 			isa = PBXGroup;
 			children = (
@@ -3130,6 +3144,15 @@
 			path = Workers;
 			sourceTree = "<group>";
 		};
+		58B23C8B24BA33130033E6AD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				58E9159D24C4935900864DF5 /* StatsChartView.swift */,
+				58B23C8C24BA33370033E6AD /* StatsBarsChart.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		58B4F68024114BCD003C6D8F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3238,6 +3261,8 @@
 		58B5FD2824190CD800DB857D /* StatsRoot */ = {
 			isa = PBXGroup;
 			children = (
+				584FE23D24C872780002F28B /* Workers */,
+				58B23C8B24BA33130033E6AD /* Views */,
 				58B5FD3724190E6700DB857D /* StatsRootPresenter.swift */,
 				58B5FD3824190E6700DB857D /* StatsRootRouter.swift */,
 				58B5FD3924190E6700DB857D /* StatsRootModels.swift */,
@@ -3982,6 +4007,7 @@
 				580E4B9C243F721500565EDE /* NightscoutCloudConfigurationViewController.swift in Sources */,
 				5805C9A324389230002AFA1B /* DexcomG6PairRequestTxMessage.swift in Sources */,
 				5805CA1D243892D6002AFA1B /* InitialSetupViewController.swift in Sources */,
+				58B23C8D24BA33370033E6AD /* StatsBarsChart.swift in Sources */,
 				5805C9A724389230002AFA1B /* DexcomG6TransmitterTimeTxMessage.swift in Sources */,
 				580E4B72243F716000565EDE /* SettingsAlertSingleTypeRouter.swift in Sources */,
 				580E4CE2243F802F00565EDE /* SettingsModeMasterViewController.swift in Sources */,
@@ -4052,6 +4078,7 @@
 				58DDC4552423C4F5008CB04D /* GlucoseWarningLevelSetting.swift in Sources */,
 				580E4BA8243F723200565EDE /* NightscoutCloudExtraOptionsModels.swift in Sources */,
 				5805CA1A243892D6002AFA1B /* InitialSetupGenericStepWorker.swift in Sources */,
+				584FE23F24C8728D0002F28B /* StatsRootCalculationWorker.swift in Sources */,
 				58E3B7C42493BFAD008738DF /* String+Encoding.swift in Sources */,
 				580E4C12243F748500565EDE /* SettingsPenUserModels.swift in Sources */,
 				580E4B5B243F711200565EDE /* SettingsAlertRootInteractor.swift in Sources */,
@@ -4166,6 +4193,7 @@
 				589EA8D02476F89300515BCC /* CGMDeviceVoltage.swift in Sources */,
 				5805C9D1243892B3002AFA1B /* String+Validation.swift in Sources */,
 				5805C9CF243892AE002AFA1B /* NibViewController.swift in Sources */,
+				58E9159E24C4935900864DF5 /* StatsChartView.swift in Sources */,
 				2CBE1A94243212C6003BE14E /* EntriesListCarbsFormattingWorker.swift in Sources */,
 				2C6DBE9F24A5F02B00B0F33A /* RepeatingTimer.swift in Sources */,
 				5805C9BA24389230002AFA1B /* CGMBluetoothService.swift in Sources */,

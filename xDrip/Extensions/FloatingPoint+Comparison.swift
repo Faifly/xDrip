@@ -12,6 +12,7 @@ infix operator ~ : ComparisonPrecedence
 infix operator !~ : ComparisonPrecedence
 infix operator ~~ : ComparisonPrecedence
 infix operator !~~ : ComparisonPrecedence
+infix operator ~~<: ComparisonPrecedence
 
 extension Double {
     static func ~ (lhs: Double, rhs: Double) -> Bool {
@@ -34,6 +35,12 @@ extension Double {
 extension Double {
     static func !~~ (lhs: Double, rhs: Double) -> Bool {
         return abs(lhs - rhs) > 1.0
+    }
+}
+
+extension Double {
+    static func ~~< (lhs: Double, rhs: Double) -> Bool {
+        return lhs.rounded(to: 2) < rhs.rounded(to: 2)
     }
 }
 
