@@ -97,10 +97,9 @@ final class GlucoseHistoryView: UIView {
     }
     
     private func setupRightLabelViewsAnchorConstraint() {
-        guard let displayMode = User.current.settings.chart?.basalDisplayMode else { return }
         
         rightLegendAnchorConstraint?.isActive = false
-        if displayMode == .onTop {
+        if basalDisplayMode == .onTop {
             rightLegendAnchorConstraint = rightLabelsView.topAnchor.constraint(equalTo: scrollContainer.topAnchor)
         } else {
             rightLegendAnchorConstraint = rightLabelsView.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor)
@@ -198,7 +197,7 @@ final class GlucoseHistoryView: UIView {
         chartView.basalEntries = basalEntries
         chartView.strokePoints = strokeChartEntries
         chartView.dateInterval = globalDateRange
-        chartView.basalDisplayMode = User.current.settings.chart?.basalDisplayMode ?? .notShown
+        chartView.basalDisplayMode = basalDisplayMode
         chartView.setNeedsDisplay()
         
         chartSliderView.currentRelativeOffset = (scrollSegments - 1.0) / scrollSegments
@@ -222,9 +221,8 @@ final class GlucoseHistoryView: UIView {
         labels.append(String(format: format, 0.0))
         labels.append(String(format: format, adjustedMaxValue))
         
-        let displayMode = User.current.settings.chart?.basalDisplayMode
         rightLabelsView.textAlignment = .left
-        rightLabelsView.labels = displayMode == .onBottom ? labels : labels.reversed()
+        rightLabelsView.labels = basalDisplayMode == .onBottom ? labels : labels.reversed()
         rightLabelsView.setNeedsDisplay()
         
         if adjustedMaxValue ~~ 0.0 {

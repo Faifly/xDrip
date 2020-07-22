@@ -118,7 +118,7 @@ enum BasalChartDataWorker {
         return Array(rates[minIndex ... maxIndex])
     }
     
-    static func calculateGraphValues() -> [InsulinEntry] {
+    static func calculateChartValues() -> [InsulinEntry] {
         let minimumDate = Date() - .secondsPerDay
         let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate })
         
