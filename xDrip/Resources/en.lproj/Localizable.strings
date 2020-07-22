@@ -24,6 +24,7 @@
 "home_warmingup_initial_label" = "Sensor is warming up, ";
 "home_warmingup_time_label_hours" = "%d hour %d minutes left";
 "home_warmingup_time_label_minutes" = "%d minutes left";
+"home_basal_units" = "%0.f U";
 
 // Root
 "root_add_entry_food" = "Food";

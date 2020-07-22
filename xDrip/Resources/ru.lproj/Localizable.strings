@@ -24,6 +24,7 @@
 "home_warmingup_initial_label" = "Сенсор разогревается, ";
 "home_warmingup_time_label_hours" = "%d час %d минут осталось";
 "home_warmingup_time_label_minutes" = "%d минут осталось";
+"home_basal_units" = "%0.f Ед";
 
 // Root
 "root_add_entry_food" = "Еда";

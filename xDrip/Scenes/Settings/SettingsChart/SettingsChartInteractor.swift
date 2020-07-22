@@ -48,5 +48,7 @@ final class SettingsChartInteractor: SettingsChartBusinessLogic, SettingsChartDa
         guard let mode = ChartSettings.BasalDisplayMode(rawValue: value) else { return }
         let settings = User.current.settings.chart
         settings?.updateBasalDispalyMode(mode)
+        
+        NotificationCenter.default.postSettingsChangeNotification(setting: .basalRelated)
     }
 }

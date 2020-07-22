@@ -37,20 +37,15 @@ private struct HomeGlucoseCurrentInfoEntry: GlucoseCurrentInfoEntry {
     }
 }
 
-private struct HomeBasalEntry: BasalChartEntry {
+private struct HomeBasalEntry: BasalChartBasalEntry {
     let value: Double
     let date: Date
-}
-
-protocol BasalChartEntry {
-    var value: Double { get }
-    var date: Date { get }
 }
 
 protocol HomeGlucoseFormattingWorkerProtocol {
     func formatEntries(_ entries: [GlucoseReading]) -> [GlucoseChartGlucoseEntry]
     func formatEntry(_ entry: GlucoseReading?) -> GlucoseCurrentInfoEntry
-    func formatEntries(_ entries: [InsulinEntry]) -> [BasalChartEntry]
+    func formatEntries(_ entries: [InsulinEntry]) -> [BasalChartBasalEntry]
 }
 
 final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
@@ -96,7 +91,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
             severityColor: color)
     }
     
-    func formatEntries(_ entries: [InsulinEntry]) -> [BasalChartEntry] {
+    func formatEntries(_ entries: [InsulinEntry]) -> [BasalChartBasalEntry] {
         return entries.compactMap { entry -> HomeBasalEntry? in
             guard entry.type == .basal else { return nil }
             return HomeBasalEntry(

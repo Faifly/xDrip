@@ -16,7 +16,6 @@ import AKUtils
 protocol HomeGlucoseDataWorkerProtocol: AnyObject {
     var glucoseDataHandler: (() -> Void)? { get set }
     func fetchGlucoseData() -> [GlucoseReading]
-    func fetchBasalData() -> [InsulinEntry]
     func fetchLastGlucoseReading() -> GlucoseReading?
 }
 
@@ -37,12 +36,6 @@ final class HomeGlucoseDataWorker: NSObject, HomeGlucoseDataWorkerProtocol {
         return Array(
             all.filter { $0.date >=? minimumDate && $0.filteredCalculatedValue > .ulpOfOne }
         )
-    }
-    
-    func fetchBasalData() -> [InsulinEntry] {
-        let minimumDate = Date() - .secondsPerDay
-        let all = InsulinEntriesWorker.fetchAllBasalEntries()
-        return all.filter { $0.date >=? minimumDate }
     }
     
     func fetchLastGlucoseReading() -> GlucoseReading? {

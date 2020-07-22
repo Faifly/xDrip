@@ -18,6 +18,8 @@ extension NotificationCenter {
         case followerAuthStatus
         case sensorStarted
         
+        case basalRelated
+        
         case alertRepeat
         case fastRise
         case fastDrop
@@ -71,6 +73,7 @@ fileprivate extension NotificationCenter.Setting {
         case .low: name = "repeatLow"
         case .sensorStarted: name = "sensorStarted"
         case .warmUp: name = "warmUp"
+        case .basalRelated: name = "basalRelated"
         }
         return Notification.Name(name)
     }

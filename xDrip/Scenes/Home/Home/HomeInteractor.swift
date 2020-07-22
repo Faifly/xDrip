@@ -21,13 +21,15 @@ protocol HomeBusinessLogic {
 protocol HomeDataStore: AnyObject {
 }
 
+// swiftlint:disable discouraged_optional_collection
+
 final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     var presenter: HomePresentationLogic?
     var router: HomeRoutingLogic?
     
     private let glucoseDataWorker: HomeGlucoseDataWorkerProtocol
     private let warmUpWorker: HomeWarmUpWorkerLogic
-    private var basalEntriesObserver: NSObjectProtocol?
+    private var basalEntriesObserver: [NSObjectProtocol]?
     
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
@@ -39,11 +41,9 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             self.updateGlucoseChartData()
         }
         
-        basalEntriesObserver = NotificationCenter.default.addObserver(
-            forName: NSNotification.Name(rawValue: "basalEntryAdded"),
-            object: nil,
-            queue: nil,
-            using: { [weak self] _ in
+        basalEntriesObserver = NotificationCenter.default.subscribe(
+            forSettingsChange: [.basalRelated],
+            notificationHandler: { [weak self] _ in
                 self?.updateGlucoseChartData()
             }
         )
@@ -83,11 +83,11 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     // MARK: Logic
     
     private func updateGlucoseChartData() {
-        let rates = User.current.settings.sortedBasalRates
         let response = Home.GlucoseDataUpdate.Response(
             glucoseData: glucoseDataWorker.fetchGlucoseData(),
-            insulinData: glucoseDataWorker.fetchBasalData(),
-            basalRates: rates
+            basalDisplayMode: User.current.settings.chart?.basalDisplayMode ?? .notShown,
+            insulinData: BasalChartDataWorker.fetchBasalData(),
+            chartPointsData: BasalChartDataWorker.calculateGraphValues()
         )
         self.presenter?.presentGlucoseData(response: response)
     }

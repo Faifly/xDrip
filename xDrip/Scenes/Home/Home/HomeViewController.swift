@@ -106,8 +106,9 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         DispatchQueue.main.async { [weak self] in
             self?.glucoseChart.setup(
                 with: viewModel.glucoseValues,
+                basalDisplayMode: viewModel.basalDisplayMode,
                 basalEntries: viewModel.basalValues,
-                basalRates: viewModel.basalRates,
+                strokeChartEntries: viewModel.strokeChartBasalValues,
                 unit: viewModel.unit
             )
         }

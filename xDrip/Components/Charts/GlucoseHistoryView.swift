@@ -23,8 +23,9 @@ final class GlucoseHistoryView: UIView {
     private weak var chartWidthConstraint: NSLayoutConstraint?
     
     private var glucoseEntries: [GlucoseChartGlucoseEntry] = []
-    private var basalEntries: [BasalChartEntry] = []
-    private var basalRates: [BasalRate] = []
+    private var basalDisplayMode: ChartSettings.BasalDisplayMode = .notShown
+    private var basalEntries: [BasalChartBasalEntry] = []
+    private var strokeChartEntries: [BasalChartBasalEntry] = []
     
     private var globalDateRange = DateInterval()
     private var localDateRange = DateInterval()
@@ -158,14 +159,16 @@ final class GlucoseHistoryView: UIView {
     /// Should be sorted by date ascending
     func setup(
         with entries: [GlucoseChartGlucoseEntry],
-        basalEntries: [BasalChartEntry],
-        basalRates: [BasalRate],
+        basalDisplayMode: ChartSettings.BasalDisplayMode,
+        basalEntries: [BasalChartBasalEntry],
+        strokeChartEntries: [BasalChartBasalEntry],
         unit: String
     ) {
         self.unit = unit
         glucoseEntries = entries
+        self.basalDisplayMode = basalDisplayMode
         self.basalEntries = basalEntries
-        self.basalRates = basalRates
+        self.strokeChartEntries = strokeChartEntries
         updateIntervals()
         updateChart()
     }
@@ -193,7 +196,7 @@ final class GlucoseHistoryView: UIView {
         
         chartView.entries = glucoseEntries
         chartView.basalEntries = basalEntries
-        chartView.basalRates = basalRates
+        chartView.strokePoints = strokeChartEntries
         chartView.dateInterval = globalDateRange
         chartView.basalDisplayMode = User.current.settings.chart?.basalDisplayMode ?? .notShown
         chartView.setNeedsDisplay()
@@ -210,13 +213,14 @@ final class GlucoseHistoryView: UIView {
     }
     
     private func calculateVerticalRightLabels() {
-        guard let maxBasalValue = basalEntries.max(by: { $0.value < $1.value })?.value else { return }
+        var labels = [String]()
+        let format = "home_basal_units".localized
         
-        var labels = ["0 U"]
-        
-        let initVal = InsulinEntriesWorker.getBasalValueForDate(date: chartView.dateInterval.start)
-        let adjustedMaxValue = max(initVal, maxBasalValue).rounded(.up)
-        labels.append(String(format: "%0.f U", adjustedMaxValue))
+        let initVal = BasalChartDataWorker.getBasalValueForDate(date: chartView.dateInterval.start)
+        let maxBasalValue = basalEntries.max(by: { $0.value < $1.value })?.value
+        let adjustedMaxValue = max(initVal, maxBasalValue ?? 0.0).rounded(.up)
+        labels.append(String(format: format, 0.0))
+        labels.append(String(format: format, adjustedMaxValue))
         
         let displayMode = User.current.settings.chart?.basalDisplayMode
         rightLabelsView.textAlignment = .left

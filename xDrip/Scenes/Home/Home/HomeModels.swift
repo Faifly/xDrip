@@ -39,14 +39,16 @@ enum Home {
         
         struct Response {
             let glucoseData: [GlucoseReading]
+            let basalDisplayMode: ChartSettings.BasalDisplayMode
             let insulinData: [InsulinEntry]
-            let basalRates: [BasalRate]
+            let chartPointsData: [InsulinEntry]
         }
         
         struct ViewModel {
             let glucoseValues: [GlucoseChartGlucoseEntry]
-            let basalValues: [BasalChartEntry]
-            let basalRates: [BasalRate]
+            let basalDisplayMode: ChartSettings.BasalDisplayMode
+            let basalValues: [BasalChartBasalEntry]
+            let strokeChartBasalValues: [BasalChartBasalEntry]
             let unit: String
         }
     }
