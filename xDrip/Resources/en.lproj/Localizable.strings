@@ -24,6 +24,7 @@
 "home_warmingup_initial_label" = "Sensor is warming up, ";
 "home_warmingup_time_label_hours" = "%d hour %d minutes left";
 "home_warmingup_time_label_minutes" = "%d minutes left";
+"home_basal_units" = "%0.f U";
 
 // Root
 "root_add_entry_food" = "Food";
@@ -535,3 +536,20 @@ This setting will be applied to all future sensors";
 "initial_transmitter_id_invalid_alert_title" = "Invalid format";
 "initial_transmitter_id_invalid_alert_message" = "Dexcom G6 serial number should contain 6 uppercased characters or digits";
 "initial_transmitter_id_invalid_alert_button" = "OK";
+
+// Statistics
+"stats_screen_title" = "Statistics";
+"stats_median_details_label" = "median";
+"stats_range_label" = "Range (in/high/low)";
+"stats_absolute_label" = "Absolute #s";
+"stats_median_mean_label" = "Median/Mean BG";
+"stats_hba1c_label" = "HbA1c est";
+"stats_std_dev_label" = "StdDev";
+"stats_relative_sd_label" = "Relative SD (CV)";
+"stats_gvi_pgs_label" = "GVI/PGS";
+"stats_value_na" = "N/A";
+"stats_timeframe_today" = "TD";
+"stats_timeframe_yesterday" = "YTD";
+"stats_timeframe_7_days" = "7D";
+"stats_timeframe_30_days" = "30D";
+"stats_timeframe_90_days" = "90D";
