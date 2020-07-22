@@ -81,10 +81,7 @@ final class GlucoseReading: Object {
     }
     
     static var allForCurrentMode: [GlucoseReading] {
-        return Array(
-            Realm.shared.objects(GlucoseReading.self)
-            .sorted(byKeyPath: "date", ascending: false)
-        )
+        return User.current.settings.deviceMode == .follower ? allFollower : allMaster
     }
     
     static var allMasterForCurrentSensor: [GlucoseReading] {
