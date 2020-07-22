@@ -45,6 +45,12 @@ final class StatsRootPresenterTests: XCTestCase {
         func displayLoad(viewModel: StatsRoot.Load.ViewModel) {
             displayLoadCalled = true
         }
+        
+        func displayChartData(viewModel: StatsRoot.UpdateChartData.ViewModel) {
+        }
+        
+        func displayTableData(viewModel: StatsRoot.UpdateTableData.ViewModel) {
+        }
     }
     
     // MARK: Tests

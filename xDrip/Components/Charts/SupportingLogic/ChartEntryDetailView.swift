@@ -11,7 +11,7 @@ import UIKit
 final class ChartEntryDetailView: UIView {
     private let labelInsets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
     
-    private let containerView: UIView = {
+    let containerView: UIView = {
         let view = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 1000.0, height: 58.0))
         view.backgroundColor = .chartSelectionLine
         view.layer.cornerRadius = 5.0
@@ -52,10 +52,18 @@ final class ChartEntryDetailView: UIView {
     }
     
     func set(value: Double, unit: String, date: Date) {
+        setText(
+            topLeft: String(format: "%0.2f", value),
+            topRight: unit,
+            bottom: DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
+        )
+    }
+    
+    func setText(topLeft: String, topRight: String, bottom: String) {
         let finalString = NSMutableAttributedString()
         
         let valueSubstring = NSAttributedString(
-            string: String(format: "%0.2f", value),
+            string: topLeft,
             attributes: [
                 .font: UIFont.systemFont(ofSize: 26.0, weight: .medium),
                 .foregroundColor: UIColor.highEmphasisText
@@ -64,7 +72,7 @@ final class ChartEntryDetailView: UIView {
         finalString.append(valueSubstring)
         
         let unitSubstring = NSAttributedString(
-            string: " \(unit)\n",
+            string: " \(topRight)\n",
             attributes: [
                 .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
                 .foregroundColor: UIColor.mediumEmphasisText
@@ -73,7 +81,7 @@ final class ChartEntryDetailView: UIView {
         finalString.append(unitSubstring)
         
         let dateSubstring = NSAttributedString(
-            string: DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short),
+            string: bottom,
             attributes: [
                 .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
                 .foregroundColor: UIColor.mediumEmphasisText
@@ -81,7 +89,11 @@ final class ChartEntryDetailView: UIView {
         )
         finalString.append(dateSubstring)
         
-        label.attributedText = finalString
+        setAttributtedText(finalString)
+    }
+    
+    func setAttributtedText(_ text: NSAttributedString) {
+        label.attributedText = text
         updateFrame()
     }
     

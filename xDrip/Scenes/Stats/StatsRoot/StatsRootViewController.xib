@@ -1,25 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StatsRootViewController" customModule="xDrip" customModuleProvider="target">
             <connections>
+                <outlet property="chartView" destination="8XE-r3-A9e" id="1KW-D5-Nca"/>
+                <outlet property="scrollView" destination="1iv-9d-zYh" id="6T5-41-PL9"/>
+                <outlet property="segmentedControl" destination="JrB-de-NEU" id="boJ-rV-Lb6"/>
+                <outlet property="tableView" destination="Jwy-AS-dWA" id="nAE-pS-LpG"/>
+                <outlet property="tableViewHeightConstraint" destination="Cb5-H5-sKJ" id="gia-Pu-Ksx"/>
                 <outlet property="view" destination="iN0-l3-epB" id="HWv-bf-nxe"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1iv-9d-zYh">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n9a-le-Bla">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
+                            <subviews>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="JrB-de-NEU">
+                                    <rect key="frame" x="122" y="16" width="131" height="32"/>
+                                    <segments>
+                                        <segment title="First"/>
+                                        <segment title="Second"/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="onSegmentedControlValueChanged" destination="-1" eventType="valueChanged" id="gBG-sT-TPP"/>
+                                    </connections>
+                                </segmentedControl>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8XE-r3-A9e" customClass="StatsChartView" customModule="xDrip" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="55" width="375" height="400"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="400" id="jBF-9x-jLD"/>
+                                    </constraints>
+                                </view>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" estimatedSectionHeaderHeight="1" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Jwy-AS-dWA">
+                                    <rect key="frame" x="0.0" y="463" width="375" height="128"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="128" id="Cb5-H5-sKJ"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-1" id="C0d-PG-vw6"/>
+                                        <outlet property="delegate" destination="-1" id="YcK-x9-Dj1"/>
+                                    </connections>
+                                </tableView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="JrB-de-NEU" firstAttribute="centerX" secondItem="n9a-le-Bla" secondAttribute="centerX" id="C3y-RG-PYo"/>
+                                <constraint firstItem="JrB-de-NEU" firstAttribute="top" secondItem="n9a-le-Bla" secondAttribute="top" constant="16" id="Fba-T5-TVX"/>
+                                <constraint firstAttribute="bottom" secondItem="Jwy-AS-dWA" secondAttribute="bottom" id="Hmz-ce-zeM"/>
+                                <constraint firstItem="Jwy-AS-dWA" firstAttribute="top" secondItem="8XE-r3-A9e" secondAttribute="bottom" constant="8" id="Ivn-e2-Ouc"/>
+                                <constraint firstItem="8XE-r3-A9e" firstAttribute="leading" secondItem="n9a-le-Bla" secondAttribute="leading" id="RJL-Bc-zrX"/>
+                                <constraint firstItem="8XE-r3-A9e" firstAttribute="top" secondItem="JrB-de-NEU" secondAttribute="bottom" constant="8" id="UdX-iB-d2R"/>
+                                <constraint firstAttribute="trailing" secondItem="8XE-r3-A9e" secondAttribute="trailing" id="bhA-ri-WPz"/>
+                                <constraint firstItem="JrB-de-NEU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="n9a-le-Bla" secondAttribute="leading" constant="16" id="tiA-JS-zbY"/>
+                                <constraint firstAttribute="trailing" secondItem="Jwy-AS-dWA" secondAttribute="trailing" id="vPt-3s-vyb"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="JrB-de-NEU" secondAttribute="trailing" constant="16" id="wS8-x1-H5t"/>
+                                <constraint firstItem="Jwy-AS-dWA" firstAttribute="leading" secondItem="n9a-le-Bla" secondAttribute="leading" id="zel-Bn-4iW"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="n9a-le-Bla" firstAttribute="bottom" secondItem="1iv-9d-zYh" secondAttribute="bottom" id="A8s-of-lIQ"/>
+                        <constraint firstItem="n9a-le-Bla" firstAttribute="top" secondItem="1iv-9d-zYh" secondAttribute="top" id="AhP-qM-gvs"/>
+                        <constraint firstItem="n9a-le-Bla" firstAttribute="leading" secondItem="1iv-9d-zYh" secondAttribute="leading" id="k2p-Tt-JzJ"/>
+                        <constraint firstItem="n9a-le-Bla" firstAttribute="trailing" secondItem="1iv-9d-zYh" secondAttribute="trailing" id="xxP-Ux-zNp"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="1iv-9d-zYh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="aTe-lQ-Had"/>
+                <constraint firstItem="n9a-le-Bla" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="bZv-qD-eKM"/>
+                <constraint firstItem="1iv-9d-zYh" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="bgk-cL-e9c"/>
+                <constraint firstAttribute="bottom" secondItem="1iv-9d-zYh" secondAttribute="bottom" id="mnw-TB-p69"/>
+                <constraint firstItem="1iv-9d-zYh" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="pXt-41-n6h"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="139" y="115"/>
+            <point key="canvasLocation" x="137.68115942028987" y="114.50892857142857"/>
         </view>
     </objects>
 </document>

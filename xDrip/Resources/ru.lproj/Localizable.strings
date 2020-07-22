@@ -24,6 +24,7 @@
 "home_warmingup_initial_label" = "Сенсор разогревается, ";
 "home_warmingup_time_label_hours" = "%d час %d минут осталось";
 "home_warmingup_time_label_minutes" = "%d минут осталось";
+"home_basal_units" = "%0.f Ед";
 
 // Root
 "root_add_entry_food" = "Еда";
@@ -534,3 +535,20 @@
 "initial_transmitter_id_invalid_alert_title" = "Неправильный формат";
 "initial_transmitter_id_invalid_alert_message" = "Серийный номер Dexcom G6 должен состоять из шести цифр или заглавных букв.";
 "initial_transmitter_id_invalid_alert_button" = "Хорошо";
+
+// Statistics
+"stats_screen_title" = "Статистика";
+"stats_median_details_label" = "медиана";
+"stats_range_label" = "Диапазон (норма/высоко/низко)";
+"stats_absolute_label" = "Абсолютных значений";
+"stats_median_mean_label" = "Медиана/Среднее значение";
+"stats_hba1c_label" = "Оценочный HbA1c";
+"stats_std_dev_label" = "Стандартное отклонение";
+"stats_relative_sd_label" = "Относительное отклонение (КВ)";
+"stats_gvi_pgs_label" = "ГИИ/ГСП";
+"stats_value_na" = "Н/Д";
+"stats_timeframe_today" = "СГДН";
+"stats_timeframe_yesterday" = "ВЧР";
+"stats_timeframe_7_days" = "7ДН";
+"stats_timeframe_30_days" = "30ДН";
+"stats_timeframe_90_days" = "90ДН";
