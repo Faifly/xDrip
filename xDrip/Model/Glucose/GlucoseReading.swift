@@ -80,6 +80,13 @@ final class GlucoseReading: Object {
         )
     }
     
+    static var allForCurrentMode: [GlucoseReading] {
+        return Array(
+            Realm.shared.objects(GlucoseReading.self)
+            .sorted(byKeyPath: "date", ascending: false)
+        )
+    }
+    
     static var allMasterForCurrentSensor: [GlucoseReading] {
         guard CGMDevice.current.isSensorStarted else { return [] }
         guard let sensorStartDate = CGMDevice.current.sensorStartDate else { return [] }
@@ -208,6 +215,10 @@ final class GlucoseReading: Object {
         return entry
     }
     
+    static func readingsForInterval(_ interval: DateInterval) -> [GlucoseReading] {
+        return allForCurrentMode.filter { $0.date >=? interval.start && $0.date <=? interval.end }
+    }
+    
     func updateCalculatedValue(_ value: Double) {
         Realm.shared.safeWrite {
             self.calculatedValue = value
@@ -252,6 +263,12 @@ final class GlucoseReading: Object {
     func updateCalibration(_ calibration: Calibration?) {
         Realm.shared.safeWrite {
             self.calibration = calibration
+        }
+    }
+    
+    func updateDate(_ date: Date) {
+        Realm.shared.safeWrite {
+            self.date = date
         }
     }
     

@@ -12,8 +12,37 @@
 
 import UIKit
 
+struct StatsChartEntry {
+    let hasValue: Bool
+    let value: ClosedRange<Double>?
+    let descriptor: String
+    let interval: DateInterval
+}
+
 enum StatsRoot {
     // MARK: Models
+    enum TimeFrame: CaseIterable {
+        case today
+        case yesterday
+        case sevenDays
+        case thirtyDays
+        case nintyDays
+    }
+    
+    enum CellType: CaseIterable {
+        case range
+        case absolute
+        case medianMeanBG
+        case hba1cEst
+        case stdDev
+        case relativeSD
+        case gviPGS
+    }
+    
+    struct Cell {
+        let title: String
+        let value: String
+    }
     
     // MARK: Use cases
     
@@ -25,6 +54,43 @@ enum StatsRoot {
         }
         
         struct ViewModel {
+        }
+    }
+    
+    enum UpdateTimeFrame {
+        struct Request {
+            let timeFrame: TimeFrame
+        }
+    }
+    
+    enum UpdateTableData {
+        struct Request {
+        }
+        
+        struct Response {
+            let readings: [GlucoseReading]
+            let lowGlucoseThreshold: Double
+            let highGlucoseThreshold: Double
+            let unit: GlucoseUnit
+        }
+        
+        struct ViewModel {
+            let cells: [Cell]
+        }
+    }
+    
+    enum UpdateChartData {
+        struct Request {
+        }
+        
+        struct Response {
+            let readings: [GlucoseReading]
+            let timeFrame: TimeFrame
+            let interval: DateInterval
+        }
+        
+        struct ViewModel {
+            let entries: [StatsChartEntry]
         }
     }
     

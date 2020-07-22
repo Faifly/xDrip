@@ -32,6 +32,7 @@ extension UIColor {
         case customBlue
         case diffTextColor
         case lastScanDateTextColor
+        case statsChartSelection
     }
     
     static var background1: UIColor {
@@ -120,6 +121,10 @@ extension UIColor {
     
     static var lastScanDateTextColor: UIColor {
         return color(withName: Colors.lastScanDateTextColor.rawValue)
+    }
+    
+    static var statsChartSelection: UIColor {
+        return color(withName: Colors.statsChartSelection.rawValue)
     }
     
     private static func color(withName name: String) -> UIColor {

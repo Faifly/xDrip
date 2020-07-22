@@ -24,6 +24,7 @@
 "home_warmingup_initial_label" = "Sensor is warming up, ";
 "home_warmingup_time_label_hours" = "%d hour %d minutes left";
 "home_warmingup_time_label_minutes" = "%d minutes left";
+"home_basal_units" = "%0.f U";
 
 // Root
 "root_add_entry_food" = "Food";
@@ -31,6 +32,8 @@
 "root_add_entry_carbs" = "Carbs";
 "root_add_entry_training" = "Training";
 "root_add_entry_basal" = "Basal";
+"root_add_basal_error_alert_title" = "Basal rates not set up";
+"root_add_basal_error_alert_message" = "Please set up basal rates in settings before start to enter basal data";
 
 // Entries List
 "entries_list_data_section_title" = "DATA";
@@ -374,8 +377,8 @@ This setting will be applied to all future sensors";
 
 // Settings Pen User
 "settings_pen_user_basal_rates_section_header" = "BASAL RATES";
-"settings_pen_user_units" = "units";
-"settings_pen_user_u" = "U";
+"settings_pen_user_units" = "units/hr";
+"settings_pen_user_u" = "U/hr";
 "settings_pen_user_total_daily" = "Total Daily";
 "settings_pen_user_start_time_rate" = "Start Time/Rate";
 "settings_pen_user_delete" = "Delete";
@@ -533,3 +536,20 @@ This setting will be applied to all future sensors";
 "initial_transmitter_id_invalid_alert_title" = "Invalid format";
 "initial_transmitter_id_invalid_alert_message" = "Dexcom G6 serial number should contain 6 uppercased characters or digits";
 "initial_transmitter_id_invalid_alert_button" = "OK";
+
+// Statistics
+"stats_screen_title" = "Statistics";
+"stats_median_details_label" = "median";
+"stats_range_label" = "Range (in/high/low)";
+"stats_absolute_label" = "Absolute #s";
+"stats_median_mean_label" = "Median/Mean BG";
+"stats_hba1c_label" = "HbA1c est";
+"stats_std_dev_label" = "StdDev";
+"stats_relative_sd_label" = "Relative SD (CV)";
+"stats_gvi_pgs_label" = "GVI/PGS";
+"stats_value_na" = "N/A";
+"stats_timeframe_today" = "TD";
+"stats_timeframe_yesterday" = "YTD";
+"stats_timeframe_7_days" = "7D";
+"stats_timeframe_30_days" = "30D";
+"stats_timeframe_90_days" = "90D";
