@@ -56,6 +56,7 @@ final class SettingsPenUserPresenterTests: XCTestCase {
         let response = SettingsPenUser.UpdateData.Response(
             animated: false,
             basalRates: [],
+            totalValue: 0.0,
             pickerValueChangedHandler: { _, _, _ in }
         )
         

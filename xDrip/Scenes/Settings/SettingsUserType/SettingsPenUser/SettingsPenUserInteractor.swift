@@ -32,9 +32,22 @@ final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPen
     // MARK: Do something
     
     func doUpdateData(request: SettingsPenUser.UpdateData.Request) {
+        var total: Double = 0
+
+        for (index, item) in basalRates.enumerated() {
+            var endTime = basalRates[0].startTime + .hours(24.0)
+
+            if index < basalRates.endIndex - 1 {
+                endTime = basalRates[index + 1].startTime
+            }
+
+            total += (endTime - item.startTime).hours * Double(item.units)
+        }
+        
         let response = SettingsPenUser.UpdateData.Response(
             animated: request.animated,
             basalRates: basalRates,
+            totalValue: total,
             pickerValueChangedHandler: handlePickerValueChanged(_:_:_:)
         )
         presenter?.presentUpdateData(response: response)
@@ -43,7 +56,12 @@ final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPen
     func doAdd(request: SettingsPenUser.Add.Request) {
         let settings = User.current.settings
         
-        if let rate = settings?.addBasalRate(startTime: 0.0, units: 0.0) {
+        var time = 0.0
+        if !basalRates.isEmpty {
+            time = (basalRates.last?.startTime ?? 0.0) + BasalRate.minimumTimeIntervalBetweenRates
+        }
+        
+        if let rate = settings?.addBasalRate(startTime: time, units: 0.0) {
             basalRates.append(rate)
             updateData(animated: true)
         }

@@ -100,6 +100,7 @@
 		2C6DBE9E24A5EC3C00B0F33A /* 500ms-of-silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2C6DBE9D24A5EC3C00B0F33A /* 500ms-of-silence.mp3 */; };
 		2C6DBE9F24A5F02B00B0F33A /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C55FEF624A23B62006BB3EF /* RepeatingTimer.swift */; };
 		2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C87F045243E69C0002CF3D8 /* UView+Tests.swift */; };
+		2C8F23CF24B478B5002B36A6 /* BasalRatesPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F23CE24B478B5002B36A6 /* BasalRatesPicker.swift */; };
 		2C8ADBBF24A0B98400827FF4 /* GlucoseNotificationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */; };
 		2C90528C24769D2100719793 /* UITableView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90528B24769D2100719793 /* UITableView+Tests.swift */; };
 		2C90528E2476CD0000719793 /* AudioControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90528D2476CD0000719793 /* AudioControllerTests.swift */; };
@@ -762,6 +763,7 @@
 		2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewControllerCoderTest.swift; sourceTree = "<group>"; };
 		2C6DBE9D24A5EC3C00B0F33A /* 500ms-of-silence.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "500ms-of-silence.mp3"; sourceTree = "<group>"; };
 		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
+		2C8F23CE24B478B5002B36A6 /* BasalRatesPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalRatesPicker.swift; sourceTree = "<group>"; };
 		2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseNotificationWorker.swift; sourceTree = "<group>"; };
 		2C90528B24769D2100719793 /* UITableView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Tests.swift"; sourceTree = "<group>"; };
 		2C90528D2476CD0000719793 /* AudioControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioControllerTests.swift; sourceTree = "<group>"; };
@@ -1524,6 +1526,7 @@
 			children = (
 				2C493C24244B164800F4A54B /* CustomPickerView.swift */,
 				2C493C29244B205800F4A54B /* CustomDatePicker.swift */,
+				2C8F23CE24B478B5002B36A6 /* BasalRatesPicker.swift */,
 			);
 			path = Pickers;
 			sourceTree = "<group>";
@@ -3947,6 +3950,7 @@
 				580E4C13243F748500565EDE /* SettingsPenUserViewController.swift in Sources */,
 				589FD948247065EB004C01A4 /* RealmUtils.swift in Sources */,
 				58B5FD53241910BD00DB857D /* SettingsRootRouter.swift in Sources */,
+				2C8F23CF24B478B5002B36A6 /* BasalRatesPicker.swift in Sources */,
 				58FFBC2F24A765F2003D2DE6 /* InitialSetupFinishViewController.swift in Sources */,
 				58B5FD4724190EB300DB857D /* HistoryRootPresenter.swift in Sources */,
 				584432AE243CFD9B00282A6C /* SettingsChartInteractor.swift in Sources */,

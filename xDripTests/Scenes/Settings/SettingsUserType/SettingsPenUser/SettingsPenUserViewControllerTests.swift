@@ -15,7 +15,7 @@ import XCTest
 
 // swiftlint:disable implicitly_unwrapped_optional
 
-final class SettingsPenUserViewControllerTests: XCTestCase {
+final class SettingsPenUserViewControllerTests: AbstractRealmTest {
     // MARK: Subject under test
     
     var sut: SettingsPenUserViewController!
@@ -31,7 +31,6 @@ final class SettingsPenUserViewControllerTests: XCTestCase {
     
     override func tearDown() {
         window = nil
-        clearBasalRates()
         super.tearDown()
     }
     
@@ -93,7 +92,8 @@ final class SettingsPenUserViewControllerTests: XCTestCase {
         // Given
         let viewModel = SettingsPenUser.UpdateData.ViewModel(
             animated: false,
-            tableViewModel: BaseSettings.ViewModel(sections: [])
+            tableViewModel: BaseSettings.ViewModel(sections: []),
+            addButtonEnabled: true
         )
         
         // When
@@ -234,39 +234,29 @@ final class SettingsPenUserViewControllerTests: XCTestCase {
         _ = button?.target?.perform(button?.action, with: nil)
         _ = button?.target?.perform(button?.action, with: nil)
         // Then
-        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 2)
         
-        let pickerType = PickerExpandableTableViewCell.self
-        guard let pickerCell = tableView.getCell(of: pickerType, at: IndexPath(row: 0, section: 0)) else {
-            XCTFail("Cannot obtain pickerCell")
-            return
-        }
-        
-        pickerCell.togglePickerVisibility()
-        
-        guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
-            let picker = stackView.arrangedSubviews.first as? CustomPickerView else {
+        guard let picker = getPicker(tableView, at: IndexPath(row: 1, section: 0)) as? BasalRatesPicker else {
             XCTFail("Cannot obtain picker")
             return
         }
         
-        XCTAssertTrue(picker.numberOfComponents == 6)
+        XCTAssertTrue(picker.numberOfComponents == 3)
         
         // When
-        picker.selectRow(10, inComponent: 0, animated: false)
-        picker.selectRow(5, inComponent: 2, animated: false)
-        picker.selectRow(2, inComponent: 4, animated: false)
-        picker.pickerView(picker, didSelectRow: 2, inComponent: 4)
+        picker.selectRow(20, inComponent: 0, animated: false)
+        picker.selectRow(2, inComponent: 1, animated: false)
+        picker.pickerView(picker, didSelectRow: 19, inComponent: 0)
         // Then
         let settings = User.current.settings
-        let rate = settings?.sortedBasalRates.first
-        XCTAssert(rate?.startTime == 36300) // 10*3600 + 5*60
+        let rate = settings?.sortedBasalRates.last
+        XCTAssert(rate?.startTime == 37800) // 10*3600 + 30*60
         XCTAssert(rate?.units == 0.1)
         
         // When
         _ = button?.target?.perform(button?.action, with: nil)
         // Then
-        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 2)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 3)
         
         let disclosureType = BaseSettingsDisclosureCell.self
         guard let infoCell = tableView.getCell(of: disclosureType, at: IndexPath(row: 0, section: 1)) else {
@@ -274,15 +264,38 @@ final class SettingsPenUserViewControllerTests: XCTestCase {
             return
         }
         
-        let text = "0.10" + "settings_pen_user_u".localized
+        let rates = settings?.sortedBasalRates ?? []
+        var total: Double = 0
+
+        for (index, item) in rates.enumerated() {
+            var endTime = rates[0].startTime + .hours(24.0)
+
+            if index < rates.endIndex - 1 {
+                endTime = rates[index + 1].startTime
+            }
+
+            total += (endTime - item.startTime).hours * Double(item.units)
+        }
+        
+        let text = String(format: "%.2f ", total) + "settings_pen_user_u".localized
         XCTAssertTrue(infoCell.detailTextLabel?.text == text)
     }
     
-    func clearBasalRates() {
-        let basalRates = User.current.settings.sortedBasalRates
-        
-        for rate in basalRates {
-            User.current.settings.deleteBasalRate(rate)
+    private func getPicker(_ tableView: UITableView, at indexPath: IndexPath) -> PickerView? {
+        let cellType = PickerExpandableTableViewCell.self
+        guard let pickerCell = tableView.getCell(of: cellType, at: indexPath) else {
+            XCTFail("Cannot obtain picker cell")
+            return nil
         }
+        
+        pickerCell.togglePickerVisibility()
+        
+        guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let picker = stackView.arrangedSubviews.first as? PickerView else {
+            XCTFail("Cannot obtain picker")
+            return nil
+        }
+        
+        return picker
     }
 }
