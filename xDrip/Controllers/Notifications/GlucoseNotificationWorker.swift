@@ -46,6 +46,7 @@ final class GlucoseNotificationWorker: NSObject {
         super.init()
         CGMController.shared.subscribeForGlucoseDataEvents(listener: self) { [weak self] reading in
             guard let reading = reading, let self = self else { return }
+            guard Calibration.allForCurrentSensor.count > 1 else { return }
             self.checkFastRise()
             self.checkFastDrop()
             self.checkWarningLevel(for: reading)
@@ -65,7 +66,7 @@ final class GlucoseNotificationWorker: NSObject {
     
     private func resetMissedReadingsTimer() {
         let readings = GlucoseReading.lastReadings(4, for: User.current.settings.deviceMode)
-        guard !readings.isEmpty else {
+        guard CGMDevice.current.isSensorStarted, !readings.isEmpty else {
             missedReadingsTimer = nil
             return
         }
