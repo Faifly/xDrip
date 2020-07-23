@@ -121,6 +121,7 @@
 		2CBE1A9B24323A58003BE14E /* EntriesListTableControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A9A24323A58003BE14E /* EntriesListTableControllerTests.swift */; };
 		2CBE1A9D2433718C003BE14E /* EntriesListSceneBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBE1A9C2433718C003BE14E /* EntriesListSceneBuilderTests.swift */; };
 		2CBF32A4242E030700DE944A /* EntriesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */; };
+		2CDA0D9C24C9CBBE001C5D6B /* BasalChartDataWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDA0D9B24C9CBBE001C5D6B /* BasalChartDataWorkerTests.swift */; };
 		2CDDFEBD24927A9C009505B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CDDFEBF24927A9C009505B0 /* InfoPlist.strings */; };
 		5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C97C243891CA002AFA1B /* HomeViewController.xib */; };
 		5805C9A024389230002AFA1B /* DexcomG6OutgoingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C98324389230002AFA1B /* DexcomG6OutgoingMessage.swift */; };
@@ -787,6 +788,7 @@
 		2CBE1A9A24323A58003BE14E /* EntriesListTableControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableControllerTests.swift; sourceTree = "<group>"; };
 		2CBE1A9C2433718C003BE14E /* EntriesListSceneBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListSceneBuilderTests.swift; sourceTree = "<group>"; };
 		2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableViewCell.swift; sourceTree = "<group>"; };
+		2CDA0D9B24C9CBBE001C5D6B /* BasalChartDataWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalChartDataWorkerTests.swift; sourceTree = "<group>"; };
 		2CDDFEBE24927A9C009505B0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5805C97C243891CA002AFA1B /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		5805C98324389230002AFA1B /* DexcomG6OutgoingMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DexcomG6OutgoingMessage.swift; sourceTree = "<group>"; };
@@ -1603,6 +1605,22 @@
 				58184A562438C64100E848C6 /* EntriesListTableViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		2CDA0D9724C9C594001C5D6B /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				2CDA0D9824C9C5A3001C5D6B /* SupportingLogic */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
+		2CDA0D9824C9C5A3001C5D6B /* SupportingLogic */ = {
+			isa = PBXGroup;
+			children = (
+				2CDA0D9B24C9CBBE001C5D6B /* BasalChartDataWorkerTests.swift */,
+			);
+			path = SupportingLogic;
 			sourceTree = "<group>";
 		};
 		5805C97E24389230002AFA1B /* Bluetooth */ = {
@@ -3065,6 +3083,7 @@
 		58788B8E24265961000EB113 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				2CDA0D9724C9C594001C5D6B /* Charts */,
 				2C493C2B244EFD1200F4A54B /* Pickers */,
 				2C493C38244EFF0400F4A54B /* PickerExpandableTableViewCellTests.swift */,
 				58788B8F2426597F000EB113 /* CenteredTitleButtonTests.swift */,
@@ -4262,6 +4281,7 @@
 				580E4CBC243F788D00565EDE /* SettingsUserTypeRootPresenterTests.swift in Sources */,
 				580E4C83243F77D900565EDE /* NightscoutCloudBackfillRouterTests.swift in Sources */,
 				584432B6243CFE1900282A6C /* SettingsChartViewControllerTests.swift in Sources */,
+				2CDA0D9C24C9CBBE001C5D6B /* BasalChartDataWorkerTests.swift in Sources */,
 				58B5FD872419287900DB857D /* StatsRootInteractorTests.swift in Sources */,
 				580EC7B3242151EB00C34948 /* EditTrainingInteractorTests.swift in Sources */,
 				5805CA2E24389EAA002AFA1B /* InitialSetupDexcomG6ConnectionWorkerTests.swift in Sources */,

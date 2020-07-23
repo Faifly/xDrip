@@ -97,7 +97,6 @@ final class GlucoseHistoryView: UIView {
     }
     
     private func setupRightLabelViewsAnchorConstraint() {
-        
         rightLegendAnchorConstraint?.isActive = false
         if basalDisplayMode == .onTop {
             rightLegendAnchorConstraint = rightLabelsView.topAnchor.constraint(equalTo: scrollContainer.topAnchor)
