@@ -51,7 +51,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
     }
     
     private func createCarbsSection(response: EditFoodEntry.Load.Response) -> BaseSettings.Section {
-        let carbsValue = response.carbEntry?.amount ?? 0.0
+        let carbsValue = response.carbEntry?.value ?? 0.0
         let valueString = carbsValue ~~ 0.0 ? nil : "\(carbsValue)"
         
         let foodTypes = FoodEmojiDataSource().sections.compactMap { $0.items.first }
@@ -80,7 +80,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
             ),
             createDatePickerCell(
                 .carbsDate,
-                date: response.carbEntry?.date,
+                date: response.carbEntry?.entryDate,
                 dateChangedHandler: response.dateChangedHandler
             )
         ]
@@ -93,7 +93,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
     }
     
     private func createBolusSection(response: EditFoodEntry.Load.Response) -> BaseSettings.Section {
-        let bolusValue = response.insulinEntry?.amount ?? 0.0
+        let bolusValue = response.bolusEntry?.value ?? 0.0
         let valueString = bolusValue ~~ 0.0 ? nil : "\(bolusValue)"
         
         let cells: [BaseSettings.Cell] = [
@@ -105,7 +105,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
             ),
             createDatePickerCell(
                 .insulinDate,
-                date: response.insulinEntry?.date,
+                date: response.insulinEntry?.entryDate,
                 dateChangedHandler: response.dateChangedHandler
             )
         ]

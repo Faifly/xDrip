@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A0CA75A24A2229E00C63857 /* EntriesChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA75924A2229E00C63857 /* EntriesChartView.swift */; };
+		0A0CA75C24A2232C00C63857 /* EntriesChartProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA75B24A2232C00C63857 /* EntriesChartProvider.swift */; };
+		0A0CA75E24A223F400C63857 /* EntriesHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA75D24A223F400C63857 /* EntriesHistoryView.swift */; };
+		0A0CA76224A3949200C63857 /* BaseHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA76124A3949200C63857 /* BaseHistoryView.swift */; };
 		0A216CC824A50BE4002DA0AF /* GlucoseCurrentInfoViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CC724A50BE4002DA0AF /* GlucoseCurrentInfoViewTests.swift */; };
 		0A216CCA24A52AE0002DA0AF /* NibViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CC924A52AE0002DA0AF /* NibViewTests.swift */; };
 		0A216CD124A5EBFF002DA0AF /* MirrorObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CD024A5EBFF002DA0AF /* MirrorObject.swift */; };
@@ -17,6 +21,8 @@
 		0A895424249CE71A0067601F /* GlucoseCurrentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */; };
 		0A895426249CE84E0067601F /* NibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A895425249CE84E0067601F /* NibView.swift */; };
 		0A89542824A0AC230067601F /* HomeGlucoseFormattingWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A89542724A0AC230067601F /* HomeGlucoseFormattingWorkerTests.swift */; };
+		0A94D7F924A654AD00D14AD2 /* HomeEntriesFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94D7F824A654AD00D14AD2 /* HomeEntriesFormattingWorker.swift */; };
+		0A94D7FB24A65A7600D14AD2 /* BaseHomeEntryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94D7FA24A65A7600D14AD2 /* BaseHomeEntryProtocol.swift */; };
 		2C09D21224410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */; };
 		2C09D21324410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */; };
 		2C09D2162441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */; };
@@ -615,7 +621,7 @@
 		58B85356244A021B0045F30A /* HomeGlucoseFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B85355244A021B0045F30A /* HomeGlucoseFormattingWorker.swift */; };
 		58B95B4E244A09E40005CA60 /* Settings+WarningLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B4D244A09E40005CA60 /* Settings+WarningLevels.swift */; };
 		58B95B50244B13400005CA60 /* ChartEntryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B4F244B13400005CA60 /* ChartEntryDetailView.swift */; };
-		58B95B52244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B51244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift */; };
+		58B95B52244B7B9E0005CA60 /* ChartScrollContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B95B51244B7B9E0005CA60 /* ChartScrollContainer.swift */; };
 		58B986DD2466B68200E38376 /* FloatingPoint+Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B986DC2466B68200E38376 /* FloatingPoint+Comparison.swift */; };
 		58D4FD3B2423B39C0044E687 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D4FD3A2423B39C0044E687 /* User.swift */; };
 		58D4FD3E2423B4130044E687 /* UserDeviceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D4FD3D2423B4130044E687 /* UserDeviceMode.swift */; };
@@ -674,6 +680,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A0CA75924A2229E00C63857 /* EntriesChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesChartView.swift; sourceTree = "<group>"; };
+		0A0CA75B24A2232C00C63857 /* EntriesChartProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesChartProvider.swift; sourceTree = "<group>"; };
+		0A0CA75D24A223F400C63857 /* EntriesHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesHistoryView.swift; sourceTree = "<group>"; };
+		0A0CA76124A3949200C63857 /* BaseHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHistoryView.swift; sourceTree = "<group>"; };
 		0A216CC724A50BE4002DA0AF /* GlucoseCurrentInfoViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoViewTests.swift; sourceTree = "<group>"; };
 		0A216CC924A52AE0002DA0AF /* NibViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibViewTests.swift; sourceTree = "<group>"; };
 		0A216CD024A5EBFF002DA0AF /* MirrorObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorObject.swift; sourceTree = "<group>"; };
@@ -684,6 +694,8 @@
 		0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlucoseCurrentInfoView.xib; sourceTree = "<group>"; };
 		0A895425249CE84E0067601F /* NibView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibView.swift; sourceTree = "<group>"; };
 		0A89542724A0AC230067601F /* HomeGlucoseFormattingWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGlucoseFormattingWorkerTests.swift; sourceTree = "<group>"; };
+		0A94D7F824A654AD00D14AD2 /* HomeEntriesFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEntriesFormattingWorker.swift; sourceTree = "<group>"; };
+		0A94D7FA24A65A7600D14AD2 /* BaseHomeEntryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHomeEntryProtocol.swift; sourceTree = "<group>"; };
 		2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsRightSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsRightSwitchTableViewCell.xib; sourceTree = "<group>"; };
 		2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsSingleSelectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -1293,7 +1305,7 @@
 		58B85355244A021B0045F30A /* HomeGlucoseFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGlucoseFormattingWorker.swift; sourceTree = "<group>"; };
 		58B95B4D244A09E40005CA60 /* Settings+WarningLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+WarningLevels.swift"; sourceTree = "<group>"; };
 		58B95B4F244B13400005CA60 /* ChartEntryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartEntryDetailView.swift; sourceTree = "<group>"; };
-		58B95B51244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseChartScrollContainer.swift; sourceTree = "<group>"; };
+		58B95B51244B7B9E0005CA60 /* ChartScrollContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartScrollContainer.swift; sourceTree = "<group>"; };
 		58B986DC2466B68200E38376 /* FloatingPoint+Comparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FloatingPoint+Comparison.swift"; sourceTree = "<group>"; };
 		58D4FD3A2423B39C0044E687 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		58D4FD3D2423B4130044E687 /* UserDeviceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDeviceMode.swift; sourceTree = "<group>"; };
@@ -1410,6 +1422,7 @@
 			isa = PBXGroup;
 			children = (
 				0A89541E249CE7060067601F /* GlucoseCurrentInfoEntry.swift */,
+				0A94D7FA24A65A7600D14AD2 /* BaseHomeEntryProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1875,6 +1888,7 @@
 			children = (
 				5805CA21243892E4002AFA1B /* HomeGlucoseDataWorker.swift */,
 				58B85355244A021B0045F30A /* HomeGlucoseFormattingWorker.swift */,
+				0A94D7F824A654AD00D14AD2 /* HomeEntriesFormattingWorker.swift */,
 				581013F424AF6B0B007E72EF /* HomeWarmUpWorker.swift */,
 			);
 			path = Workers;
@@ -2137,7 +2151,9 @@
 				580E4CF82441BF1E00565EDE /* GlucoseChartView.swift */,
 				58F72D872441BFF4007AB093 /* ChartSliderView.swift */,
 				58B95B4F244B13400005CA60 /* ChartEntryDetailView.swift */,
-				58B95B51244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift */,
+				58B95B51244B7B9E0005CA60 /* ChartScrollContainer.swift */,
+				0A0CA75924A2229E00C63857 /* EntriesChartView.swift */,
+				0A0CA75B24A2232C00C63857 /* EntriesChartProvider.swift */,
 				2C5C64A524C700E10026B439 /* BasalChartProvider.swift */,
 				2C53317524C87338005B3A6F /* BasalChartBasalEntry.swift */,
 				2C53317724C87751005B3A6F /* BasalChartDataWorker.swift */,
@@ -2707,6 +2723,8 @@
 				58B8533C2448CA0B0045F30A /* Protocols */,
 				5808DC0B2448C990000642FB /* SupportingLogic */,
 				580E4CF62441BED600565EDE /* GlucoseHistoryView.swift */,
+				0A0CA75D24A223F400C63857 /* EntriesHistoryView.swift */,
+				0A0CA76124A3949200C63857 /* BaseHistoryView.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -3936,6 +3954,7 @@
 				580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */,
 				58160DF32402C7F600C792F4 /* RootRouter.swift in Sources */,
 				580E4BA6243F723200565EDE /* NightscoutCloudExtraOptionsPresenter.swift in Sources */,
+				0A94D7F924A654AD00D14AD2 /* HomeEntriesFormattingWorker.swift in Sources */,
 				2C493C25244B164800F4A54B /* CustomPickerView.swift in Sources */,
 				58FFBC3224AA1A4A003D2DE6 /* LocalizedTextField.swift in Sources */,
 				5805C9A824389230002AFA1B /* DexcomG6FirmwareVersionTxMessage.swift in Sources */,
@@ -3975,6 +3994,7 @@
 				580E4B3B243E336000565EDE /* BaseSettingsModels.swift in Sources */,
 				580E4B71243F716000565EDE /* SettingsAlertSingleTypePresenter.swift in Sources */,
 				580E4B73243F716000565EDE /* SettingsAlertSingleTypeModels.swift in Sources */,
+				0A0CA76224A3949200C63857 /* BaseHistoryView.swift in Sources */,
 				580E4C13243F748500565EDE /* SettingsPenUserViewController.swift in Sources */,
 				589FD948247065EB004C01A4 /* RealmUtils.swift in Sources */,
 				58B5FD53241910BD00DB857D /* SettingsRootRouter.swift in Sources */,
@@ -4010,7 +4030,7 @@
 				580E4BC4243F733100565EDE /* SettingsModeRootInteractor.swift in Sources */,
 				5805C9B924389230002AFA1B /* CGMBluetoothServiceDelegate.swift in Sources */,
 				580E4B65243F713A00565EDE /* SettingsAlertTypesRouter.swift in Sources */,
-				58B95B52244B7B9E0005CA60 /* GlucoseChartScrollContainer.swift in Sources */,
+				58B95B52244B7B9E0005CA60 /* ChartScrollContainer.swift in Sources */,
 				2C5C64A624C700E10026B439 /* BasalChartProvider.swift in Sources */,
 				2C4ABEF9248A5AD8001ED694 /* FoodEmojiDataSource.swift in Sources */,
 				58161A43247931C70023FF76 /* DexcomG6Firmware.swift in Sources */,
@@ -4045,6 +4065,7 @@
 				58B5FD3224190E2F00DB857D /* HomePresenter.swift in Sources */,
 				580E4CE1243F802F00565EDE /* SettingsModeMasterModels.swift in Sources */,
 				580EC79124214CDD00C34948 /* EntriesListRouter.swift in Sources */,
+				0A94D7FB24A65A7600D14AD2 /* BaseHomeEntryProtocol.swift in Sources */,
 				580EC77E2421457600C34948 /* EditFoodEntryRouter.swift in Sources */,
 				580E4C05243F746F00565EDE /* SettingsUserTypeRootModels.swift in Sources */,
 				5805C9B724389230002AFA1B /* DexcomG6BluetoothService.swift in Sources */,
@@ -4069,6 +4090,7 @@
 				5805C9AB24389230002AFA1B /* DexcomG6AuthChallengeRxMessage.swift in Sources */,
 				580E4CF42440D24800565EDE /* BaseChartView.swift in Sources */,
 				580E4BE8243F73B200565EDE /* SettingsSensorPresenter.swift in Sources */,
+				0A0CA75E24A223F400C63857 /* EntriesHistoryView.swift in Sources */,
 				580E4C1D243F74A300565EDE /* SettingsPumpUserPresenter.swift in Sources */,
 				580E4B7E243F717E00565EDE /* SettingsAlertSoundPresenter.swift in Sources */,
 				2C4ABEEE248A5447001ED694 /* EmojiInputHeaderView.swift in Sources */,
@@ -4141,6 +4163,7 @@
 				58F4CC86243BA2110053D17C /* DebugLogViewController.swift in Sources */,
 				5805CA1B243892D6002AFA1B /* InitialSetupRouter.swift in Sources */,
 				2C493C2324489ABF00F4A54B /* Settings+Notifications.swift in Sources */,
+				0A0CA75C24A2232C00C63857 /* EntriesChartProvider.swift in Sources */,
 				580E4B8D243F71DC00565EDE /* SettingsCloudTypesRouter.swift in Sources */,
 				580E4B3F243E37E800565EDE /* BaseSettingsCellFactory.swift in Sources */,
 				580E4C11243F748500565EDE /* SettingsPenUserRouter.swift in Sources */,
@@ -4166,6 +4189,7 @@
 				5805C9B224389230002AFA1B /* DexcomG6MessageWorker.swift in Sources */,
 				2CBE1A8924320ED9003BE14E /* EntriesListEntryPersistenceWorker.swift in Sources */,
 				584432AC243CFD9B00282A6C /* SettingsChartModels.swift in Sources */,
+				0A0CA75A24A2229E00C63857 /* EntriesChartView.swift in Sources */,
 				588584A3248E76DF00C3F74C /* NightscoutService.swift in Sources */,
 				580E4BDC243F739C00565EDE /* SettingsTransmitterRouter.swift in Sources */,
 				58B5FD3324190E2F00DB857D /* HomeRouter.swift in Sources */,

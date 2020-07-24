@@ -19,7 +19,7 @@ final class TrainingEntriesWorkerTests: AbstractRealmTest {
         let entry = TrainingEntriesWorker.addTraining(duration: 1.1, intensity: .high, date: date)
         XCTAssertTrue(entry.duration ~ 1.1)
         XCTAssertTrue(entry.intensity == .high)
-        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 7.0)
+        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 7.0)
         
         XCTAssertTrue(realm.objects(TrainingEntry.self).count == 1)
     }

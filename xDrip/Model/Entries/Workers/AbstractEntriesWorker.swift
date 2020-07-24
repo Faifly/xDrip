@@ -21,7 +21,7 @@ class AbstractEntriesWorker {
     }
     
     static func fetchAllEntries<T: AbstractEntry>(type: T.Type) -> [T] {
-        return Array(Realm.shared.objects(T.self).sorted(byKeyPath: "date"))
+        return Array(Realm.shared.objects(T.self).sorted(byKeyPath: "entryDate"))
     }
     
     static func deleteEntry(_ entry: AbstractEntry) {

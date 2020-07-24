@@ -9,7 +9,21 @@
 import UIKit
 
 final class GlucoseChartView: BaseChartView, GlucoseChartProvider, BasalChartProvider {
-    var entries: [GlucoseChartGlucoseEntry] = []
+    var glucoseEntries: [GlucoseChartGlucoseEntry] = []
+    
+    override var entries: [BaseChartEntry] {
+        get {
+            return glucoseEntries
+        }
+        set {
+            if let newEntries = newValue as? [GlucoseChartGlucoseEntry] {
+                glucoseEntries = newEntries
+            } else {
+                print("incorrect entries type")
+            }
+        }
+    }
+
     var basalEntries: [BasalChartBasalEntry] = []
     var strokePoints: [BasalChartBasalEntry] = []
     let circleSide: CGFloat = 6.0

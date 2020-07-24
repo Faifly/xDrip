@@ -94,3 +94,22 @@ enum Root {
         }
     }
 }
+
+extension Root.EntryType {
+    var shortLabel: String {
+        switch self {
+        case .bolus:
+            return "entries_list_scene_carbs_bolus_unit".localized
+        case .calibration:
+            return ""
+        case .carbs:
+            return "entries_list_scene_carbs_amount_unit_grams".localized
+        case .food:
+            return ""
+        case .injection:
+            return ""
+        case .training:
+            return ""
+        }
+    }
+}

@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 class AbstractEntry: Object {
-    @objc private(set) dynamic var date: Date?
+    @objc private(set) dynamic var entryDate: Date?
     
     required init() {
         super.init()
@@ -18,12 +18,12 @@ class AbstractEntry: Object {
     
     init(date: Date) {
         super.init()
-        self.date = date
+        self.entryDate = date
     }
     
     func updateDate(_ date: Date) {
         Realm.shared.safeWrite {
-            self.date = date
+            self.entryDate = date
         }
     }
 }

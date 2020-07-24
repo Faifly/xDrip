@@ -16,8 +16,12 @@ import AKUtils
 protocol HomeDisplayLogic: AnyObject {
     func displayLoad(viewModel: Home.Load.ViewModel)
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel)
-    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel)
     func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel)
+    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
+    func displayBolusData(viewModel: Home.BolusDataUpdate.ViewModel)
+    func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
+    func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel)
+    func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
     func displayWarmUp(viewModel: Home.WarmUp.ViewModel)
 }
 
@@ -58,6 +62,8 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var glucoseCurrentInfoView: GlucoseCurrentInfoView!
     @IBOutlet private weak var timeLineSegmentView: UISegmentedControl!
     @IBOutlet private weak var glucoseChart: GlucoseHistoryView!
+    @IBOutlet private weak var bolusHistoryView: EntriesHistoryView!
+    @IBOutlet private weak var carbsHistoryView: EntriesHistoryView!
     @IBOutlet private weak var glucoseChartContainerView: UIView!
     @IBOutlet private weak var warmUpLabel: UILabel!
     @IBOutlet private weak var warmUpLabelTopConstraint: NSLayoutConstraint!
@@ -68,6 +74,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         super.viewDidLoad()
         doLoad()
         setupUI()
+        sibscribeToViewsButtonEvents()
     }
     
     // MARK: Do something
@@ -93,8 +100,10 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         default: hours = 0
         }
         
-        let request = Home.ChangeGlucoseChartTimeFrame.Request(hours: hours)
+        let request = Home.ChangeEntriesChartTimeFrame.Request(hours: hours)
         interactor?.doChangeGlucoseChartTimeFrame(request: request)
+        interactor?.doChangeBolusChartTimeFrame(request: request)
+        interactor?.doChangeCarbsChartTimeFrame(request: request)
     }
     
     // MARK: Display
@@ -114,12 +123,32 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         }
     }
     
-    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel) {
+    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
         glucoseChart.setTimeFrame(viewModel.timeInterval)
     }
     
     func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel) {
         glucoseCurrentInfoView.setup(with: viewModel)
+    }
+    
+    func displayBolusData(viewModel: Home.BolusDataUpdate.ViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            self?.bolusHistoryView.setup(with: viewModel)
+        }
+    }
+    
+    func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
+        bolusHistoryView.setTimeFrame(viewModel.timeInterval)
+    }
+    
+    func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            self?.carbsHistoryView.setup(with: viewModel)
+        }
+    }
+    
+    func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
+        carbsHistoryView.setTimeFrame(viewModel.timeInterval)
     }
     
     func displayWarmUp(viewModel: Home.WarmUp.ViewModel) {
@@ -189,5 +218,17 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
             )
         }
         timeLineSegmentView.selectedSegmentIndex = 0
+    }
+    
+    private func sibscribeToViewsButtonEvents() {
+        bolusHistoryView.onButtonClicked = { [weak self] in
+            let request = Home.ShowEntriesList.Request(entriesType: .bolus)
+            self?.interactor?.doShowEntriesList(request: request)
+        }
+        
+        carbsHistoryView.onButtonClicked = { [weak self] in
+               let request = Home.ShowEntriesList.Request(entriesType: .carbs)
+               self?.interactor?.doShowEntriesList(request: request)
+           }
     }
 }

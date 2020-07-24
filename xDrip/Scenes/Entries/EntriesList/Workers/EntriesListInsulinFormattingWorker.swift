@@ -21,7 +21,7 @@ final class EntriesListInsulinFormattingWorker: EntriesListAbstractFormattingWor
         let value = String(
             format: "%@ - " + "%.02f " + "entries_list_scene_carbs_insulin_unit".localized,
             (entry.type == .bolus ? "entries_list_bolus_entry_title" : "entries_list_basal_entry_title").localized,
-            entry.amount
+            entry.value
         )
         let date = getDateString(for: entry)
         

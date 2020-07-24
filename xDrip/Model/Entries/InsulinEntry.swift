@@ -9,8 +9,15 @@
 import Foundation
 import RealmSwift
 
-final class InsulinEntry: AbstractEntry {
-    @objc private(set) dynamic var amount: Double = 0.0
+
+
+    
+
+final class InsulinEntry: AbstractEntry, BaseChartEntry {
+var date: Date {
+return entryDate ?? Date()
+}
+    @objc private(set) dynamic var value: Double = 0.0
     @objc private dynamic var rawType: Int = InsulinType.bolus.rawValue
     
     var type: InsulinType {
@@ -28,13 +35,13 @@ final class InsulinEntry: AbstractEntry {
     
     init(amount: Double, date: Date, type: InsulinType) {
         super.init(date: date)
-        self.amount = amount
+        self.value = amount
         self.type = type
     }
     
     func update(amount: Double, date: Date) {
         Realm.shared.safeWrite {
-            self.amount = amount
+            self.value = amount
             self.updateDate(date)
         }
     }

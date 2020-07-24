@@ -32,6 +32,7 @@ extension UIColor {
         case customBlue
         case diffTextColor
         case lastScanDateTextColor
+        case chartButtonTextColor
         case statsChartSelection
     }
     
@@ -121,6 +122,10 @@ extension UIColor {
     
     static var lastScanDateTextColor: UIColor {
         return color(withName: Colors.lastScanDateTextColor.rawValue)
+    }
+    
+    static var chartButtonTextColor: UIColor {
+        return color(withName: Colors.chartButtonTextColor.rawValue)
     }
     
     static var statsChartSelection: UIColor {

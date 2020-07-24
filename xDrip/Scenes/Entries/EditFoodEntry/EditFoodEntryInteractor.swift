@@ -52,13 +52,13 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     
     func doLoad(request: EditFoodEntry.Load.Request) {
         if let carbEntry = carbEntry {
-            carbInput.amount = carbEntry.amount
+            carbInput.amount = carbEntry.value
             carbInput.foodType = carbEntry.foodType
-            carbInput.date = carbEntry.date ?? Date()
+            carbInput.date = carbEntry.entryDate ?? Date()
         }
         
         if let insulinEntry = insulinEntry {
-            insulinInput.amount = insulinEntry.amount
+            insulinInput.amount = insulinEntry.value
             insulinInput.date = insulinEntry.date ?? Date()
         }
         
@@ -79,8 +79,9 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     
     func doSave(request: EditFoodEntry.Save.Request) {
         if let insulinEntry = insulinEntry,
-            (insulinEntry.amount !~ insulinInput.amount || insulinEntry.date != insulinInput.date) {
+            (insulinEntry.value !~ insulinInput.amount || insulinEntry.date != insulinInput.date) {
             insulinEntry.update(amount: insulinInput.amount, date: insulinInput.date)
+            FoodEntriesWorker.updatedBolusEntry()
         } else if insulinEntry == nil, insulinInput.amount !~ 0.0 {
             if entryType == .basal {
                 InsulinEntriesWorker.addBasalEntry(amount: insulinInput.amount, date: insulinInput.date)
@@ -92,10 +93,11 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
         }
         
         if let carbEntry = carbEntry,
-            (carbEntry.amount !~ carbInput.amount ||
-            carbEntry.date != carbInput.date ||
+            (carbEntry.value !~ carbInput.amount ||
+            carbEntry.entryDate != carbInput.date ||
             carbEntry.foodType != carbInput.foodType) {
             carbEntry.update(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
+            FoodEntriesWorker.updatedCarbsEntry()
         } else if carbEntry == nil, carbInput.amount !~ 0.0 {
             FoodEntriesWorker.addCarbEntry(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
         }

@@ -18,6 +18,6 @@ final class EntriesListCarbsPersistenceWorker: EntriesListEntryPersistenceWorker
 
     func deleteEntry(_ index: Int) {
         let entry = carbs.remove(at: index)
-        FoodEntriesWorker.deleteEntry(entry)
+        FoodEntriesWorker.deleteCarbsEntry(entry)
     }
 }
