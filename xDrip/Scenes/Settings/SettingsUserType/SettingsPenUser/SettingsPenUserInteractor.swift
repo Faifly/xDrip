@@ -65,6 +65,8 @@ final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPen
             basalRates.append(rate)
             updateData(animated: true)
         }
+        
+        NotificationCenter.default.postSettingsChangeNotification(setting: .basalRelated)
     }
     
     func doDelete(request: SettingsPenUser.Delete.Request) {
@@ -73,6 +75,8 @@ final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPen
         
         User.current.settings.deleteBasalRate(rate)
         updateData(animated: true)
+        
+        NotificationCenter.default.postSettingsChangeNotification(setting: .basalRelated)
     }
     
     private func handlePickerValueChanged(_ index: Int, _ startTime: TimeInterval, _ units: Float) {
@@ -82,6 +86,8 @@ final class SettingsPenUserInteractor: SettingsPenUserBusinessLogic, SettingsPen
         basalRate.update(withStartTime: startTime, units: units)
         
         updateData(animated: false)
+        
+        NotificationCenter.default.postSettingsChangeNotification(setting: .basalRelated)
     }
     
     private func updateData(animated: Bool) {

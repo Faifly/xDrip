@@ -7,13 +7,21 @@
 //
 
 import UIKit
+import AKUtils
 
-protocol GlucoseChartProvider {
+protocol GlucoseChartProvider: AnyObject {
     var dateInterval: DateInterval { get }
     var yRange: ClosedRange<Double> { get }
     var entries: [GlucoseChartGlucoseEntry] { get }
+    var timeInterval: TimeInterval { get set }
+    var yInterval: Double { get set }
+    var pixelsPerSecond: Double { get set }
+    var pixelsPerValue: Double { get set }
     var insets: UIEdgeInsets { get }
     var circleSide: CGFloat { get }
+    
+    var minDate: TimeInterval { get set }
+    var maxDate: TimeInterval { get set }
     
     func drawGlucoseChart()
 }
@@ -21,14 +29,7 @@ protocol GlucoseChartProvider {
 extension GlucoseChartProvider where Self: UIView {
     func drawGlucoseChart() {
         guard let context = UIGraphicsGetCurrentContext() else { return }
-        
-        let minDate = dateInterval.start.timeIntervalSince1970
-        let maxDate = dateInterval.end.timeIntervalSince1970
-        
-        let timeInterval = maxDate - minDate
-        let pixelsPerSecond = Double(bounds.width - insets.left - insets.right) / timeInterval
-        let yInterval = Double(bounds.height - insets.bottom - insets.top)
-        let pixelsPerValue = yInterval / (yRange.upperBound - yRange.lowerBound)
+        calculateValues()
         
         context.setLineWidth(0.0)
         
@@ -46,5 +47,14 @@ extension GlucoseChartProvider where Self: UIView {
             context.setFillColor(color.cgColor)
             context.fillEllipse(in: circleRect)
         }
+    }
+    
+    private func calculateValues() {
+        minDate = dateInterval.start.timeIntervalSince1970
+        maxDate = dateInterval.end.timeIntervalSince1970
+        timeInterval = maxDate - minDate
+        pixelsPerSecond = Double(bounds.width - insets.left - insets.right) / timeInterval
+        yInterval = Double(bounds.height - insets.bottom - insets.top)
+        pixelsPerValue = yInterval / (yRange.upperBound - yRange.lowerBound)
     }
 }

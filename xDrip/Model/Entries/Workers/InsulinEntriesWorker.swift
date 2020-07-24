@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AKUtils
 
 final class InsulinEntriesWorker: AbstractEntriesWorker {
     @discardableResult static func addBolusEntry(amount: Double, date: Date) -> InsulinEntry {
@@ -20,7 +21,9 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
     
     @discardableResult static func addBasalEntry(amount: Double, date: Date) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .basal)
-        return add(entry: entry)
+        add(entry: entry)
+        
+        return entry
     }
     
     static func fetchAllBasalEntries() -> [InsulinEntry] {
