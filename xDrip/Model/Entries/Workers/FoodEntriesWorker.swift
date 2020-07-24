@@ -12,7 +12,7 @@ import RealmSwift
 //protocol FoodEntriesWorkerProtocol: AnyObject {
 //    static var bolusDataHandler: (() -> Void)? { get set }
 //    static var carbsDataHandler: (() -> Void)? { get set }
-//    static func fetchAllBolusEntries() -> [BolusEntry]
+//    static func fetchAllBolusEntries() -> [InsulinEntry]
 //    static func fetchAllCarbEntries() -> [CarbEntry]
 //}
 
@@ -34,8 +34,8 @@ final class FoodEntriesWorker: AbstractEntriesWorker {
         return addedEntry
     }
     
-    @discardableResult static func addBolusEntry(amount: Double, date: Date) -> BolusEntry {
-        let entry = BolusEntry(amount: amount, date: date)
+    @discardableResult static func addBolusEntry(amount: Double, date: Date) -> InsulinEntry {
+        let entry = InsulinEntry(amount: amount, date: date)
         let addedEntry = add(entry: entry)
         bolusDataHandler?()
         return addedEntry
@@ -45,8 +45,8 @@ final class FoodEntriesWorker: AbstractEntriesWorker {
         return super.fetchAllEntries(type: CarbEntry.self)
     }
     
-    static func fetchAllBolusEntries() -> [BolusEntry] {
-        return super.fetchAllEntries(type: BolusEntry.self)
+    static func fetchAllBolusEntries() -> [InsulinEntry] {
+        return super.fetchAllEntries(type: InsulinEntry.self)
     }
     
     static func deleteBolusEntry(_ entry: AbstractEntry) {

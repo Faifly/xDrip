@@ -110,6 +110,8 @@ extension Root.EntryType {
             return ""
         case .training:
             return ""
+        case .basal:
+            return ""
         }
     }
 }

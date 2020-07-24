@@ -44,7 +44,7 @@ final class EditTrainingInteractor: EditTrainingBusinessLogic, EditTrainingDataS
         case .edit(let entry):
             localTraining.duration = entry.duration
             localTraining.intensity = entry.intensity
-            localTraining.date = entry.date ?? Date()
+            localTraining.date = entry.entryDate ?? Date()
             trainingEntry = entry
         default:
             trainingEntry = nil
@@ -74,7 +74,7 @@ final class EditTrainingInteractor: EditTrainingBusinessLogic, EditTrainingDataS
         case .edit(let entry):
             if entry.duration !~ localTraining.duration ||
                 entry.intensity != localTraining.intensity ||
-                entry.date != localTraining.date {
+                entry.entryDate != localTraining.date {
                 entry.update(
                     duration: localTraining.duration,
                     intensity: localTraining.intensity,

@@ -23,13 +23,13 @@ enum BasalChartDataWorker {
         
         guard !all.isEmpty else { return 0.0 }
         
-        var lastValue = all[0].amount
+        var lastValue = all[0].value
         var prevEntry: InsulinEntry?
         for (index, entry) in all.enumerated() {
             if entry.date >? date { break }
             if index != 0 {
                 calculateValue(prevEntry: prevEntry, toDate: entry.date, lastValue: &lastValue)
-                lastValue += entry.amount
+                lastValue += entry.value
             }
             prevEntry = entry
         }
@@ -44,7 +44,7 @@ enum BasalChartDataWorker {
         toDate: Date?,
         lastValue: inout Double
     ) -> [InsulinEntry] {
-        guard let prevEntry = prevEntry, let prevDate = prevEntry.date else { return [] }
+        guard let prevEntry = prevEntry, let prevDate = prevEntry.entryDate else { return [] }
         let basalRates = User.current.settings.sortedBasalRates
         guard !basalRates.isEmpty else { return [] }
         
@@ -129,14 +129,14 @@ enum BasalChartDataWorker {
         points.append(prevEntry)
         for entry in all {
             points.append(contentsOf: calculateValue(prevEntry: prevEntry, toDate: entry.date, lastValue: &lastValue))
-            lastValue += entry.amount
+            lastValue += entry.value
             points.append(InsulinEntry(amount: lastValue, date: entry.date ?? Date(), type: .basal))
             prevEntry = entry
         }
         points.append(contentsOf: calculateValue(prevEntry: prevEntry, toDate: Date(), lastValue: &lastValue))
         points.sort { first, second -> Bool in
             if first.date == second.date {
-                return first.amount < second.amount
+                return first.value < second.value
             }
             return first.date <? second.date
         }

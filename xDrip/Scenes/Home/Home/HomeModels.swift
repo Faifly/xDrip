@@ -66,7 +66,7 @@ enum Home {
         }
         
         struct Response {
-            let bolusData: [BolusEntry]
+            let bolusData: [InsulinEntry]
         }
         
         struct ViewModel: BaseFoodEntryViewModel {

@@ -55,7 +55,7 @@ class StatsRootViewController: NibViewController, StatsRootDisplayLogic {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
     @IBOutlet private weak var tableViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var chartView: StatsChartView!
+//    @IBOutlet private weak var chartView: StatsChartView!
     @IBOutlet private weak var scrollView: UIScrollView!
     
     @IBAction private func onSegmentedControlValueChanged() {
@@ -119,7 +119,7 @@ class StatsRootViewController: NibViewController, StatsRootDisplayLogic {
     }
     
     func displayChartData(viewModel: StatsRoot.UpdateChartData.ViewModel) {
-        chartView.update(with: viewModel.entries)
+//        chartView.update(with: viewModel.entries)
     }
 }
 

@@ -31,6 +31,16 @@ final class GlucoseHistoryView: BaseHistoryView {
         }
     }
     
+    func setup(
+        entries: [BaseChartEntry],
+        basalDisplayMode: ChartSettings.BasalDisplayMode,
+        basalEntries: [BasalChartBasalEntry],
+        strokeChartEntries: [BasalChartBasalEntry],
+        unit: String
+    ) {
+        
+    }
+    
     override func setupViews() {
         super.setupViews()
         addSubview(chartSliderView)

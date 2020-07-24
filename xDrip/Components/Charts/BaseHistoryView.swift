@@ -112,23 +112,6 @@ class BaseHistoryView: UIView {
     
     /// Should be sorted by date ascending
     func setup(with entries: [BaseChartEntry], unit: String) {
-//        var entries : [HomeGlucoseEntry] = [
-//            HomeGlucoseEntry(
-//                value: 62,
-//                date:  Date() - 2000,
-//                severity: GlucoseChartSeverityLevel.normal
-//            ),
-//            HomeGlucoseEntry(
-//                value: 60,
-//                date:  Date() - 1000,
-//                severity: GlucoseChartSeverityLevel.normal
-//            ),
-//            /*HomeGlucoseEntry(
-//                value: 61,
-//                date:  Date(),
-//                severity: GlucoseChartSeverityLevel.normal
-//            )*/
-//        ]
         self.unit = unit
         self.entries = entries
         updateIntervals()
