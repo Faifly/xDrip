@@ -12,6 +12,11 @@ final class GlucoseHistoryView: BaseHistoryView {
     let chartSliderView = ChartSliderView()
     var glucoseChartView = GlucoseChartView()
     var glucoseEntries: [GlucoseChartGlucoseEntry] = []
+    private let rightLabelsView = ChartVerticalLabelsView()
+    private var basalDisplayMode: ChartSettings.BasalDisplayMode = .notShown
+    private var basalEntries: [BasalChartBasalEntry] = []
+    private var strokeChartEntries: [BasalChartBasalEntry] = []
+    private var rightLegendAnchorConstraint: NSLayoutConstraint?
 
     override var chartView: BaseChartView {
         get {
@@ -32,18 +37,22 @@ final class GlucoseHistoryView: BaseHistoryView {
     }
     
     func setup(
-        entries: [BaseChartEntry],
+        with entries: [BaseChartEntry],
         basalDisplayMode: ChartSettings.BasalDisplayMode,
         basalEntries: [BasalChartBasalEntry],
         strokeChartEntries: [BasalChartBasalEntry],
         unit: String
     ) {
-        
+        self.basalDisplayMode = basalDisplayMode
+        self.basalEntries = basalEntries
+        self.strokeChartEntries = strokeChartEntries
+        super.setup(with: entries, unit: unit)
     }
     
     override func setupViews() {
         super.setupViews()
         addSubview(chartSliderView)
+        addSubview(rightLabelsView)
         chartSliderView.heightAnchor.constraint(equalToConstant: 70.0).isActive = true
         chartSliderView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         chartSliderView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
@@ -52,7 +61,29 @@ final class GlucoseHistoryView: BaseHistoryView {
         scrollContainer.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor).isActive = true
         setupSeparator(bottomView: self)
         setupSeparator(bottomView: chartView)
+        setupRightLabelViewsAnchorConstraint()
+        rightLabelsView.heightAnchor.constraint(
+            equalTo: scrollContainer.heightAnchor,
+            multiplier: 1.0 / 4.0,
+            constant: rightLabelsView.chartInsets.bottom
+        ).isActive = true
+        rightLabelsView.leadingAnchor.constraint(equalTo: scrollContainer.trailingAnchor, constant: 8.0).isActive = true
+        rightLabelsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        rightLabelsView.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
+    
     }
+    
+    private func setupRightLabelViewsAnchorConstraint() {
+        rightLegendAnchorConstraint?.isActive = false
+        if basalDisplayMode == .onTop {
+            rightLegendAnchorConstraint = rightLabelsView.topAnchor.constraint(equalTo: scrollContainer.topAnchor)
+        } else {
+            rightLegendAnchorConstraint = rightLabelsView.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor)
+        }
+        rightLegendAnchorConstraint?.isActive = true
+    }
+    
+
     
     override func setupOnRelativeOffsetChanged() {
         chartSliderView.onRelativeOffsetChanged = { [weak self] offset in
@@ -75,4 +106,27 @@ final class GlucoseHistoryView: BaseHistoryView {
         chartSliderView.yRange = chartView.yRange
         chartSliderView.setNeedsDisplay()
     }
+    
+    private func calculateVerticalRightLabels() {
+        var labels = [String]()
+        let format = "home_basal_units".localized
+        
+        let initVal = BasalChartDataWorker.getBasalValueForDate(date: chartView.dateInterval.start)
+        let maxBasalValue = basalEntries.max(by: { $0.value < $1.value })?.value
+        let adjustedMaxValue = max(initVal, maxBasalValue ?? 0.0).rounded(.up)
+        labels.append(String(format: format, 0.0))
+        labels.append(String(format: format, adjustedMaxValue))
+        
+        rightLabelsView.textAlignment = .left
+        rightLabelsView.labels = basalDisplayMode == .onBottom ? labels : labels.reversed()
+        rightLabelsView.setNeedsDisplay()
+        
+        if adjustedMaxValue ~~ 0.0 {
+            chartView.yRangeBasal = 0.0...(adjustedMaxValue + 1.0)
+        } else {
+            chartView.yRangeBasal = 0.0...adjustedMaxValue
+        }
+    }
+    
+
 }
