@@ -162,7 +162,8 @@ final class NightscoutService {
             guard let entries = try? JSONDecoder().decode([CGlucoseReading].self, from: data) else { return }
             DispatchQueue.main.async {
                 GlucoseReading.parseFollowerEntries(entries)
-                CGMController.shared.notifyGlucoseChange()
+                let reading = GlucoseReading.allFollower.first
+                CGMController.shared.notifyGlucoseChange(reading)
             }
         }.resume()
     }
