@@ -11,6 +11,9 @@ import Foundation
 final class NightscoutService {
     static let shared = NightscoutService()
     
+    private var reachability = try? Reachability()
+    private var currentConnectType = Reachability.Connection.unavailable
+    
     private var requestQueue: [UploadRequest] = []
     
     private lazy var settingsObservers: [Any] = NotificationCenter.default.subscribe(
@@ -32,12 +35,29 @@ final class NightscoutService {
         if let settings = User.current.settings.nightscoutSync, settings.isFollowerAuthed {
             startFetchingFollowerData()
         }
+        
+        let onUpdate: (Reachability) -> Void = { [weak self] reachability in
+            self?.currentConnectType = reachability.connection
+        }
+        
+        reachability?.whenReachable = onUpdate
+        reachability?.whenUnreachable = onUpdate
+        
+        try? reachability?.startNotifier()
+    }
+    
+    deinit {
+        reachability?.stopNotifier()
     }
     
     func scanForNotUploadedEntries() {
         guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else { return }
         scanForGlucoseEntries()
         scanForCalibrations()
+        
+        if User.current.settings.nightscoutSync?.useCellularData == false {
+            guard self.currentConnectType != .cellular else { return }
+        }
         runQueue()
     }
     
@@ -45,6 +65,10 @@ final class NightscoutService {
         guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else { return }
         let requests = calibrations.compactMap { requestFactory.createDeleteCalibrationRequest($0) }
         requestQueue.append(contentsOf: requests)
+        
+        if User.current.settings.nightscoutSync?.useCellularData == false {
+            guard self.currentConnectType != .cellular else { return }
+        }
         runQueue()
     }
     

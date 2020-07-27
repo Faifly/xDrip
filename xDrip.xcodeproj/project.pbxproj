@@ -102,6 +102,7 @@
 		2C5C64A624C700E10026B439 /* BasalChartProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C64A524C700E10026B439 /* BasalChartProvider.swift */; };
 		2C6DBE9E24A5EC3C00B0F33A /* 500ms-of-silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2C6DBE9D24A5EC3C00B0F33A /* 500ms-of-silence.mp3 */; };
 		2C6DBE9F24A5F02B00B0F33A /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C55FEF624A23B62006BB3EF /* RepeatingTimer.swift */; };
+		2C824A5F24CEE8C4000578D2 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C824A5E24CEE8C4000578D2 /* ReachabilityService.swift */; };
 		2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C87F045243E69C0002CF3D8 /* UView+Tests.swift */; };
 		2C8ADBBF24A0B98400827FF4 /* GlucoseNotificationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */; };
 		2C8F23CF24B478B5002B36A6 /* BasalRatesPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F23CE24B478B5002B36A6 /* BasalRatesPicker.swift */; };
@@ -769,6 +770,7 @@
 		2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewControllerCoderTest.swift; sourceTree = "<group>"; };
 		2C5C64A524C700E10026B439 /* BasalChartProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalChartProvider.swift; sourceTree = "<group>"; };
 		2C6DBE9D24A5EC3C00B0F33A /* 500ms-of-silence.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "500ms-of-silence.mp3"; sourceTree = "<group>"; };
+		2C824A5E24CEE8C4000578D2 /* ReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
 		2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseNotificationWorker.swift; sourceTree = "<group>"; };
 		2C8F23CE24B478B5002B36A6 /* BasalRatesPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalRatesPicker.swift; sourceTree = "<group>"; };
@@ -3480,6 +3482,7 @@
 				588584A1248E76C700C3F74C /* CloudSync */,
 				5805C97E24389230002AFA1B /* Bluetooth */,
 				5826A60324698369009684E4 /* CalibrationService.swift */,
+				2C824A5E24CEE8C4000578D2 /* ReachabilityService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -3984,6 +3987,7 @@
 				584432AE243CFD9B00282A6C /* SettingsChartInteractor.swift in Sources */,
 				5805C9AE24389230002AFA1B /* DexcomG6TransmitterVersionRxMessage.swift in Sources */,
 				2CBE1A98243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift in Sources */,
+				2C824A5F24CEE8C4000578D2 /* ReachabilityService.swift in Sources */,
 				58F818ED246EFE44004CD2FE /* EditCalibrationSavingWorker.swift in Sources */,
 				580E4BD1243F736D00565EDE /* SettingsModeFollowerViewController.swift in Sources */,
 				580E4C2C243F74F000565EDE /* SettingsUnitsModels.swift in Sources */,
