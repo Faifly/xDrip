@@ -11,8 +11,8 @@ import Foundation
 final class NightscoutService {
     static let shared = NightscoutService()
     
-    private var reachability = try? Reachability()
-    private var currentConnectType = Reachability.Connection.unavailable
+    private var reachability = try? ReachabilityService()
+    private var currentConnectType = ReachabilityService.Connection.unavailable
     
     private var requestQueue: [UploadRequest] = []
     
@@ -36,7 +36,7 @@ final class NightscoutService {
             startFetchingFollowerData()
         }
         
-        let onUpdate: (Reachability) -> Void = { [weak self] reachability in
+        let onUpdate: (ReachabilityService) -> Void = { [weak self] reachability in
             self?.currentConnectType = reachability.connection
         }
         
