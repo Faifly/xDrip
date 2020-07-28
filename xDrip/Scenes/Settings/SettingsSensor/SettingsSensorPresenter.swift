@@ -141,7 +141,7 @@ final class SettingsSensorPresenter: SettingsSensorPresentationLogic {
         let unknown = "settings_sensor_last_calibration_unavailable".localized
         guard let calibration = calibrations.min(by: { $0.date >? $1.date }) else { return unknown }
         guard let date = calibration.date else { return unknown }
-        let level = GlucoseUnit.convertToUserDefined(calibration.glucoseLevel)
+        let level = GlucoseUnit.convertFromDefault(calibration.glucoseLevel)
         let unit = User.current.settings.unit.label
         let dateString = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
         return "\(level) \(unit), \(dateString)"

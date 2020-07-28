@@ -25,14 +25,6 @@ enum GlucoseUnit: Int, CaseIterable {
         }
     }
     
-    static func convertToUserDefined(_ value: Double) -> Double {
-        let userDefined = User.current.settings.unit
-        switch userDefined {
-        case .default: return value
-        default: return userDefined.convertToAnother(value)
-        }
-    }
-    
     static func convertToDefault(_ value: Double) -> Double {
         let current = User.current.settings.unit
         switch current {
