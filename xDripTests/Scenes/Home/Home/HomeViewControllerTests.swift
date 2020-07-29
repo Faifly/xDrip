@@ -59,7 +59,11 @@ final class HomeViewControllerTests: XCTestCase {
             doShowEntriesListCalled = true
         }
         
-        func doChangeGlucoseChartTimeFrame(request: Home.ChangeGlucoseChartTimeFrame.Request) {
+        func doChangeGlucoseChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request) {
+        }
+        func doChangeBolusChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request) {
+        }
+        func doChangeCarbsChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request) {
         }
     }
     

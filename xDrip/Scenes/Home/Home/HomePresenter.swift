@@ -17,7 +17,7 @@ protocol HomePresentationLogic {
     func presentGlucoseData(response: Home.GlucoseDataUpdate.Response)
     func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response)
     func presentGlucoseChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response)
-    func presentInsulinData(response: Home.BolusDataUpdate.Response)
+    func presentBolusData(response: Home.BolusDataUpdate.Response)
     func presentBolusChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response)
     func presentCarbsData(response: Home.CarbsDataUpdate.Response)
     func presentCarbsChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response)
@@ -74,7 +74,7 @@ final class HomePresenter: HomePresentationLogic {
         viewController?.displayGlucoseCurrentInfo(viewModel: viewModel)
     }
     
-    func presentInsulinData(response: Home.BolusDataUpdate.Response) {
+    func presentBolusData(response: Home.BolusDataUpdate.Response) {
         let entry = homeEntriesFormattingWorker.formatBolusResponse(response)
         let viewModel = Home.BolusDataUpdate.ViewModel(chartTitle: entry.title,
                                                        chartButtonTitle: entry.buttonTitle,

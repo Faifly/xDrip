@@ -81,7 +81,7 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
         if let insulinEntry = insulinEntry,
             (insulinEntry.amount !~ insulinInput.amount || insulinEntry.date != insulinInput.date) {
             insulinEntry.update(amount: insulinInput.amount, date: insulinInput.date)
-            InsulinEntriesWorker.updatedInsulinEntry()
+            if insulinEntry.type == .bolus { InsulinEntriesWorker.updatedBolusEntry() }
         } else if insulinEntry == nil, insulinInput.amount !~ 0.0 {
             if entryType == .basal {
                 InsulinEntriesWorker.addBasalEntry(amount: insulinInput.amount, date: insulinInput.date)

@@ -10,12 +10,12 @@ import Foundation
 import AKUtils
 
 final class InsulinEntriesWorker: AbstractEntriesWorker {
-    static var insulinDataHandler: (() -> Void)?
+    static var bolusDataHandler: (() -> Void)?
     
     @discardableResult static func addBolusEntry(amount: Double, date: Date) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .bolus)
         let addedEntry = add(entry: entry)
-        insulinDataHandler?()
+        bolusDataHandler?()
         return addedEntry
     }
     
@@ -26,9 +26,10 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
         return entry
     }
     
-    static func deleteBolusEntry(_ entry: AbstractEntry) {
+    static func deleteInsulinEntry(_ entry: InsulinEntry) {
+        let type = entry.type
         super.deleteEntry(entry)
-        insulinDataHandler?()
+        if type == .bolus { bolusDataHandler?() }
     }
     
     static func fetchAllBolusEntries() -> [InsulinEntry] {
@@ -43,7 +44,7 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
         return super.fetchAllEntries(type: InsulinEntry.self)
     }
     
-    static func updatedInsulinEntry() {
-        insulinDataHandler?()
+    static func updatedBolusEntry() {
+        bolusDataHandler?()
     }
 }

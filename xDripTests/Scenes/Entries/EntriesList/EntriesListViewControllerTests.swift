@@ -217,7 +217,7 @@ final class EntriesListViewControllerTests: XCTestCase {
     
     func testLoadWithCarbsWorkers() {
         CarbEntriesWorker.fetchAllCarbEntries().forEach { entry in
-            CarbEntriesWorker.deleteEntry(entry)
+            CarbEntriesWorker.deleteCarbsEntry(entry)
         }
         
         CarbEntriesWorker.addCarbEntry(amount: 0.0, foodType: nil, date: Date())
@@ -249,7 +249,7 @@ final class EntriesListViewControllerTests: XCTestCase {
     
     func testLoadWithBolusWorkers() {
         InsulinEntriesWorker.fetchAllBolusEntries().forEach { entry in
-            InsulinEntriesWorker.deleteEntry(entry)
+            InsulinEntriesWorker.deleteInsulinEntry(entry)
         }
         InsulinEntriesWorker.addBolusEntry(amount: 0.0, date: Date())
         

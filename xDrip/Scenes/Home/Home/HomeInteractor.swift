@@ -42,9 +42,9 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             self.updateGlucoseCurrentInfo()
             self.updateGlucoseChartData()
         }
-        InsulinEntriesWorker.insulinDataHandler = { [weak self] in
+        InsulinEntriesWorker.bolusDataHandler = { [weak self] in
             guard let self = self else { return }
-            self.updateInsulinChartData()
+            self.updateBolusChartData()
         }
         CarbEntriesWorker.carbsDataHandler = { [weak self] in
             guard let self = self else { return }
@@ -66,7 +66,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         presenter?.presentLoad(response: response)
         updateGlucoseCurrentInfo()
         updateGlucoseChartData()
-        updateInsulinChartData()
+        updateBolusChartData()
         updateCarbsChartData()
         warmUpWorker.subscribeForWarmUpStateChange { [weak self] state in
             let response = Home.WarmUp.Response(state: state)
@@ -123,9 +123,9 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         presenter?.presentCarbsChartTimeFrameChange(response: response)
     }
     
-    private func updateInsulinChartData() {
-        let response = Home.BolusDataUpdate.Response(insulinData: InsulinEntriesWorker.fetchAllInsulinEntries())
-        self.presenter?.presentInsulinData(response: response)
+    private func updateBolusChartData() {
+        let response = Home.BolusDataUpdate.Response(insulinData: InsulinEntriesWorker.fetchAllBolusEntries())
+        self.presenter?.presentBolusData(response: response)
     }
     
     private func updateCarbsChartData() {

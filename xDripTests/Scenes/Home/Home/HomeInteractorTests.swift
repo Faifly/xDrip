@@ -50,14 +50,21 @@ final class HomeInteractorTests: XCTestCase {
         func presentGlucoseData(response: Home.GlucoseDataUpdate.Response) {
         }
         
-        func presentGlucoseChartTimeFrameChange(response: Home.ChangeGlucoseChartTimeFrame.Response) {
+        func presentGlucoseChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
         }
         
         func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
             presentGlucoseCurrentInfoCalled = true
         }
-        
         func presentWarmUp(response: Home.WarmUp.Response) {
+        }
+        func presentBolusData(response: Home.BolusDataUpdate.Response) {
+        }
+        func presentBolusChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
+        }
+        func presentCarbsData(response: Home.CarbsDataUpdate.Response) {
+        }
+        func presentCarbsChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
         }
     }
     
