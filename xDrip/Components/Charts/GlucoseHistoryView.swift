@@ -37,7 +37,7 @@ final class GlucoseHistoryView: BaseHistoryView {
     }
     
     func setup(
-        with entries: [BaseChartEntry],
+        with entries: [GlucoseChartGlucoseEntry],
         basalDisplayMode: ChartSettings.BasalDisplayMode,
         basalEntries: [BasalChartBasalEntry],
         strokeChartEntries: [BasalChartBasalEntry],
@@ -46,6 +46,7 @@ final class GlucoseHistoryView: BaseHistoryView {
         self.basalDisplayMode = basalDisplayMode
         self.basalEntries = basalEntries
         self.strokeChartEntries = strokeChartEntries
+        self.glucoseChartView.glucoseEntries = entries
         super.setup(with: entries, unit: unit)
     }
     
@@ -70,7 +71,6 @@ final class GlucoseHistoryView: BaseHistoryView {
         rightLabelsView.leadingAnchor.constraint(equalTo: scrollContainer.trailingAnchor, constant: 8.0).isActive = true
         rightLabelsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         rightLabelsView.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
-    
     }
     
     private func setupRightLabelViewsAnchorConstraint() {
@@ -82,8 +82,6 @@ final class GlucoseHistoryView: BaseHistoryView {
         }
         rightLegendAnchorConstraint?.isActive = true
     }
-    
-
     
     override func setupOnRelativeOffsetChanged() {
         chartSliderView.onRelativeOffsetChanged = { [weak self] offset in
@@ -122,11 +120,9 @@ final class GlucoseHistoryView: BaseHistoryView {
         rightLabelsView.setNeedsDisplay()
         
         if adjustedMaxValue ~~ 0.0 {
-            chartView.yRangeBasal = 0.0...(adjustedMaxValue + 1.0)
+            glucoseChartView.yRangeBasal = 0.0...(adjustedMaxValue + 1.0)
         } else {
-            chartView.yRangeBasal = 0.0...adjustedMaxValue
+            glucoseChartView.yRangeBasal = 0.0...adjustedMaxValue
         }
     }
-    
-
 }

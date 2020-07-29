@@ -35,7 +35,7 @@ final class FoodEntriesWorker: AbstractEntriesWorker {
     }
     
     @discardableResult static func addBolusEntry(amount: Double, date: Date) -> InsulinEntry {
-        let entry = InsulinEntry(amount: amount, date: date)
+        let entry = InsulinEntry(amount: amount, date: date, type: .bolus)
         let addedEntry = add(entry: entry)
         bolusDataHandler?()
         return addedEntry

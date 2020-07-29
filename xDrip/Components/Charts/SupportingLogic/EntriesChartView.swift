@@ -11,6 +11,7 @@ import Foundation
 import UIKit
 
 final class EntriesChartView: BaseChartView, EntriesChartProvider {
+    var entries: [BaseChartEntry] = []
     var insets: UIEdgeInsets {
         return chartInsets
     }

@@ -64,6 +64,7 @@ final class EntriesHistoryView: BaseHistoryView {
     
     func setup(with viewModel: BaseFoodEntryViewModel) {
         super.setup(with: viewModel.entries, unit: viewModel.unit)
+        entriesChartView.entries = entries
         entriesChartView.color = viewModel.color
         chartTitleLabel.text = viewModel.chartTitle
         chartButton.setTitle(viewModel.chartButtonTitle, for: .normal)

@@ -136,7 +136,6 @@ class BaseHistoryView: UIView {
         let chartWidth = scrollContainer.bounds.width * scrollSegments
         chartWidthConstraint?.constant = chartWidth
         
-        chartView.entries = entries
         chartView.dateInterval = globalDateRange
         chartView.setNeedsDisplay()
         
