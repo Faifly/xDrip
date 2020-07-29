@@ -64,7 +64,6 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var glucoseChart: GlucoseHistoryView!
     @IBOutlet private weak var bolusHistoryView: EntriesHistoryView!
     @IBOutlet private weak var carbsHistoryView: EntriesHistoryView!
-    @IBOutlet private weak var glucoseChartContainerView: UIView!
     @IBOutlet private weak var warmUpLabel: UILabel!
     @IBOutlet private weak var warmUpLabelTopConstraint: NSLayoutConstraint!
     
