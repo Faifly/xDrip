@@ -9,10 +9,10 @@
 import UIKit
 
 final class EntriesHistoryView: BaseHistoryView {
-    var entriesChartView = EntriesChartView()
-    var chartEntries: [BaseChartEntry] = []
-    let chartTitleLabel = UILabel()
-    let chartButton = UIButton()
+    private var entriesChartView = EntriesChartView()
+    private var chartEntries: [BaseChartEntry] = []
+    private let chartTitleLabel = UILabel()
+    private let chartButton = UIButton()
     var onButtonClicked: () -> Void = {}
     
     override var chartView: BaseChartView {

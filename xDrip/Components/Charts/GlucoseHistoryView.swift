@@ -9,16 +9,16 @@
 import UIKit
 
 final class GlucoseHistoryView: BaseHistoryView {
-    let chartSliderView = ChartSliderView()
-    var glucoseChartView = GlucoseChartView()
-    let detailsView = ChartEntryDetailView()
-    var glucoseEntries: [GlucoseChartGlucoseEntry] = []
+    private let chartSliderView = ChartSliderView()
+    private var glucoseChartView = GlucoseChartView()
+    private let detailsView = ChartEntryDetailView()
+    private var glucoseEntries: [GlucoseChartGlucoseEntry] = []
     private let rightLabelsView = ChartVerticalLabelsView()
     private var basalDisplayMode: ChartSettings.BasalDisplayMode = .notShown
     private var basalEntries: [BasalChartBasalEntry] = []
     private var strokeChartEntries: [BasalChartBasalEntry] = []
     private var rightLegendAnchorConstraint: NSLayoutConstraint?
-    var unit = ""
+    private var unit = ""
 
     override var chartView: BaseChartView {
         get {
@@ -63,7 +63,7 @@ final class GlucoseHistoryView: BaseHistoryView {
         scrollContainer.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor).isActive = true
         scrollContainer.topAnchor.constraint(equalTo: detailsView.bottomAnchor).isActive = true
         setupSeparator(bottomView: self)
-        setupSeparator(bottomView: chartView)
+        setupSeparator(bottomView: glucoseChartView)
         setupRightLabelViewsAnchorConstraint()
         rightLabelsView.heightAnchor.constraint(
             equalTo: scrollContainer.heightAnchor,
@@ -103,7 +103,7 @@ final class GlucoseHistoryView: BaseHistoryView {
         chartSliderView.sliderRelativeWidth = 1.0 / scrollSegments
         chartSliderView.glucoseEntries = glucoseEntries
         chartSliderView.dateInterval = globalDateRange
-        chartSliderView.yRange = chartView.yRange
+        chartSliderView.yRange = glucoseChartView.yRange
         chartSliderView.setNeedsDisplay()
     }
     
@@ -111,7 +111,7 @@ final class GlucoseHistoryView: BaseHistoryView {
         var labels = [String]()
         let format = "home_basal_units".localized
         
-        let initVal = BasalChartDataWorker.getBasalValueForDate(date: chartView.dateInterval.start)
+        let initVal = BasalChartDataWorker.getBasalValueForDate(date: glucoseChartView.dateInterval.start)
         let maxBasalValue = basalEntries.max(by: { $0.value < $1.value })?.value
         let adjustedMaxValue = max(initVal, maxBasalValue ?? 0.0).rounded(.up)
         labels.append(String(format: format, 0.0))
@@ -151,9 +151,9 @@ final class GlucoseHistoryView: BaseHistoryView {
         calculateVerticalRightLabels()
         glucoseChartView.basalEntries = basalEntries
         glucoseChartView.strokePoints = strokeChartEntries
-        chartView.dateInterval = globalDateRange
+        glucoseChartView.dateInterval = globalDateRange
         glucoseChartView.basalDisplayMode = basalDisplayMode
-        chartView.setNeedsDisplay()
+        glucoseChartView.setNeedsDisplay()
     }
     
     func updateDetailLabel() {
