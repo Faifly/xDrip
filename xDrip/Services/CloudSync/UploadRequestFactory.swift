@@ -16,6 +16,7 @@ protocol UploadRequestFactoryLogic {
     func createDeleteCalibrationRequest(_ calibration: Calibration) -> UploadRequest?
     func createTestConnectionRequest(tryAuth: Bool) throws -> URLRequest
     func createFetchFollowerDataRequest() -> URLRequest?
+    func createDeviceStatusRequest() -> URLRequest?
 }
 
 final class UploadRequestFactory: UploadRequestFactoryLogic {
@@ -119,6 +120,34 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         } else {
             request.httpMethod = "GET"
         }
+        
+        return request
+    }
+    
+    func createDeviceStatusRequest() -> URLRequest? {
+        let settings = User.current.settings.nightscoutSync
+        guard settings?.uploadBridgeBattery == true else { return nil }
+        guard let baseURLString = settings?.baseURL else { return nil }
+        guard let baseURL = URL(string: baseURLString) else { return nil }
+        guard let apiSecret = settings?.apiSecret else { return nil }
+        
+        let url = baseURL.appendingPathComponent("/api/v1/devicestatus")
+        var request = URLRequest(url: url)
+        
+        request.allHTTPHeaderFields = [
+            "Content-Type": "application/json",
+            "API-SECRET": apiSecret.sha1
+        ]
+        
+        let data: [String: Any] = [
+            "device": "xDrip+ iPhone",
+            "uploader": [
+                "battery": BridgeBatteryService.getBatteryLevel()
+            ]
+        ]
+        
+        request.httpBody = try? JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+        request.httpMethod = "POST"
         
         return request
     }

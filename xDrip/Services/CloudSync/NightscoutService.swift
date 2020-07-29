@@ -130,7 +130,7 @@ final class NightscoutService {
                 switch first.type {
                 case .postGlucoseReading, .modifyGlucoseReading:
                     GlucoseReading.markEntryAsUploaded(externalID: first.itemID)
-                    
+                    self.sendDeviceStatus()
                 case .deleteGlucoseReading, .deleteCalibration:
                     break
                     
@@ -165,5 +165,10 @@ final class NightscoutService {
                 CGMController.shared.notifyGlucoseChange()
             }
         }.resume()
+    }
+    
+    func sendDeviceStatus() {
+        guard let request = requestFactory.createDeviceStatusRequest() else { return }
+        URLSession.shared.dataTask(with: request).resume()
     }
 }
