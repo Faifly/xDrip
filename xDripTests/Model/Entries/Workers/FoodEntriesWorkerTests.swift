@@ -16,11 +16,11 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
         XCTAssertTrue(realm.objects(CarbEntry.self).isEmpty)
         
         let date = Date(timeIntervalSince1970: 6.0)
-        let entry = FoodEntriesWorker.addCarbEntry(amount: 1.1, foodType: "2.2", date: date)
-        XCTAssertTrue(entry.value ~ 1.1)
+        let entry = CarbEntriesWorker.addCarbEntry(amount: 1.1, foodType: "2.2", date: date)
+        XCTAssertTrue(entry.amount ~ 1.1)
         XCTAssertTrue(entry.foodType == "2.2")
         XCTAssertTrue(entry.assimilationDuration ~ 0.0)
-        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 6.0)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 6.0)
         
         XCTAssertTrue(realm.objects(CarbEntry.self).count == 1)
     }
@@ -36,7 +36,7 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
             }
         }
         
-        let entries = FoodEntriesWorker.fetchAllCarbEntries()
+        let entries = CarbEntriesWorker.fetchAllCarbEntries()
         XCTAssertTrue(entries.count == 10)
         XCTAssertTrue(entries[0].foodType == "10")
         XCTAssertTrue(entries[9].foodType == "1")
@@ -47,8 +47,8 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
         
         let date = Date(timeIntervalSince1970: 7.0)
         let entry = InsulinEntriesWorker.addBolusEntry(amount: 2.2, date: date)
-        XCTAssertTrue(entry.value ~ 2.2)
-        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 7.0)
+        XCTAssertTrue(entry.amount ~ 2.2)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 7.0)
         
         XCTAssertTrue(realm.objects(InsulinEntry.self).count == 1)
     }
@@ -66,7 +66,7 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
         
         let entries = InsulinEntriesWorker.fetchAllBolusEntries()
         XCTAssertTrue(entries.count == 10)
-        XCTAssertTrue(entries[0].value ~ 10.0)
-        XCTAssertTrue(entries[9].value ~ 1.0)
+        XCTAssertTrue(entries[0].amount ~ 10.0)
+        XCTAssertTrue(entries[9].amount ~ 1.0)
     }
 }

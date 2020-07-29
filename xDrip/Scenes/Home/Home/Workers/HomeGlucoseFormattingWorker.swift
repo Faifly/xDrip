@@ -95,7 +95,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         return entries.compactMap { entry -> HomeBasalEntry? in
             guard entry.type == .basal else { return nil }
             return HomeBasalEntry(
-                value: entry.value,
+                value: entry.amount,
                 date: entry.date ?? Date()
             )
         }

@@ -20,7 +20,7 @@ final class EntriesListCarbsFormattingWorker: EntriesListAbstractFormattingWorke
         
         let value = String(
             format: "%.02f " + "entries_list_scene_carbs_amount_unit_grams".localized,
-            entry.value
+            entry.amount
         )
         let date = getDateString(for: entry)
         

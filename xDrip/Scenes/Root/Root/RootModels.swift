@@ -99,7 +99,7 @@ extension Root.EntryType {
     var shortLabel: String {
         switch self {
         case .bolus:
-            return "entries_list_scene_carbs_bolus_unit".localized
+            return "entries_list_scene_carbs_insulin_unit".localized
         case .calibration:
             return ""
         case .carbs:

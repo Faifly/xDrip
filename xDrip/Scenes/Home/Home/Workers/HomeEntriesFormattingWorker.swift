@@ -8,7 +8,7 @@
 
 import UIKit
 
- struct HomeEntry: BaseHomeEntryProtocol {
+struct InsulinCarbEntry: BaseHomeEntryProtocol {
     let title: String
     let buttonTitle: String
     let entries: [BaseChartEntry]
@@ -17,23 +17,25 @@ import UIKit
 }
 
 protocol HomeEntriesFormattingWorkerProtocol {
-    func formatBolusResponse(_ response: Home.BolusDataUpdate.Response) -> HomeEntry
-    func formatCarbsResponse(_ response: Home.CarbsDataUpdate.Response) -> HomeEntry
+    func formatBolusResponse(_ response: Home.BolusDataUpdate.Response) -> InsulinCarbEntry
+    func formatCarbsResponse(_ response: Home.CarbsDataUpdate.Response) -> InsulinCarbEntry
 }
 
 final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
-    func formatBolusResponse(_ response: Home.BolusDataUpdate.Response) -> HomeEntry {
-        return HomeEntry(title: "Active Insulin",
-                         buttonTitle: "14.49" + Root.EntryType.bolus.shortLabel + ">",
-                         entries: response.bolusData,
-                         unit: Root.EntryType.bolus.shortLabel,
-                         color: .red)
+    func formatBolusResponse(_ response: Home.BolusDataUpdate.Response) -> InsulinCarbEntry {
+        let entries = response.insulinData.map { BaseChartEntry(value: $0.amount, date: $0.date ?? Date()) }
+        return InsulinCarbEntry(title: "Active Insulin",
+                                buttonTitle: "14.49" + Root.EntryType.bolus.shortLabel + ">",
+                                entries: entries,
+                                unit: Root.EntryType.bolus.shortLabel,
+                                color: .red)
     }
-    func formatCarbsResponse(_ response: Home.CarbsDataUpdate.Response) -> HomeEntry {
-        return HomeEntry(title: "Active Carbohydrates",
-                         buttonTitle: "40" + Root.EntryType.carbs.shortLabel + ">",
-                         entries: response.carbsData,
-                         unit: Root.EntryType.carbs.shortLabel,
-                         color: .green)
+    func formatCarbsResponse(_ response: Home.CarbsDataUpdate.Response) -> InsulinCarbEntry {
+        let entries = response.carbsData.map { BaseChartEntry(value: $0.amount, date: $0.date ?? Date()) }
+        return InsulinCarbEntry(title: "Active Carbohydrates",
+                                buttonTitle: "40" + Root.EntryType.carbs.shortLabel + ">",
+                                entries: entries,
+                                unit: Root.EntryType.carbs.shortLabel,
+                                color: .green)
     }
 }

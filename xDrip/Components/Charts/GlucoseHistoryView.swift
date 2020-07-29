@@ -11,12 +11,14 @@ import UIKit
 final class GlucoseHistoryView: BaseHistoryView {
     let chartSliderView = ChartSliderView()
     var glucoseChartView = GlucoseChartView()
+    let detailsView = ChartEntryDetailView()
     var glucoseEntries: [GlucoseChartGlucoseEntry] = []
     private let rightLabelsView = ChartVerticalLabelsView()
     private var basalDisplayMode: ChartSettings.BasalDisplayMode = .notShown
     private var basalEntries: [BasalChartBasalEntry] = []
     private var strokeChartEntries: [BasalChartBasalEntry] = []
     private var rightLegendAnchorConstraint: NSLayoutConstraint?
+    var unit = ""
 
     override var chartView: BaseChartView {
         get {
@@ -26,16 +28,7 @@ final class GlucoseHistoryView: BaseHistoryView {
             glucoseChartView = newValue as? GlucoseChartView ?? GlucoseChartView()
         }
     }
-    
-    override var entries: [BaseChartEntry] {
-        get {
-            return glucoseEntries
-        }
-        set {
-            glucoseEntries = newValue as? [GlucoseChartGlucoseEntry] ?? []
-        }
-    }
-    
+        
     func setup(
         with entries: [GlucoseChartGlucoseEntry],
         basalDisplayMode: ChartSettings.BasalDisplayMode,
@@ -43,23 +36,32 @@ final class GlucoseHistoryView: BaseHistoryView {
         strokeChartEntries: [BasalChartBasalEntry],
         unit: String
     ) {
+        let entries = MockedEntries.glucoseEntries
+        self.glucoseEntries = entries
+        self.glucoseChartView.glucoseEntries = entries
         self.basalDisplayMode = basalDisplayMode
         self.basalEntries = basalEntries
         self.strokeChartEntries = strokeChartEntries
-        self.glucoseChartView.glucoseEntries = entries
-        super.setup(with: entries, unit: unit)
+        self.unit = unit
+        super.update()
     }
     
     override func setupViews() {
         super.setupViews()
         addSubview(chartSliderView)
         addSubview(rightLabelsView)
+        addSubview(detailsView)
+        detailsView.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor).isActive = true
+        detailsView.trailingAnchor.constraint(equalTo: scrollContainer.trailingAnchor).isActive = true
+        detailsView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        detailsView.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
         chartSliderView.heightAnchor.constraint(equalToConstant: 70.0).isActive = true
         chartSliderView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         chartSliderView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         chartSliderView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         leftLabelsView.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor).isActive = true
         scrollContainer.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor).isActive = true
+        scrollContainer.topAnchor.constraint(equalTo: detailsView.bottomAnchor).isActive = true
         setupSeparator(bottomView: self)
         setupSeparator(bottomView: chartView)
         setupRightLabelViewsAnchorConstraint()
@@ -124,5 +126,69 @@ final class GlucoseHistoryView: BaseHistoryView {
         } else {
             glucoseChartView.yRangeBasal = 0.0...adjustedMaxValue
         }
+    }
+    
+    override func updateDetailView(with relativeOffset: CGFloat) {
+        updateDetailLabel()
+        detailsView.setRelativeOffset(relativeOffset)
+      }
+    
+    override func setTimeFrame(_ localInterval: TimeInterval) {
+        super.setTimeFrame(localInterval)
+         detailsView.setHidden(true)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        detailsView.setHidden(true)
+    }
+    
+    override func updateChart() {
+        calculateVerticalLeftLabels(minValue: glucoseEntries.map({ $0.value }).min(),
+                                    maxValue: glucoseEntries.map({ $0.value }).max())
+        super.updateChart()
+        setupRightLabelViewsAnchorConstraint()
+        calculateVerticalRightLabels()
+    }
+    
+    func updateDetailLabel() {
+        guard let userRelativeSelection = userRelativeSelection else { return }
+        let scrollView = scrollContainer.scrollView
+        let currentRelativeOffset = scrollView.contentOffset.x / scrollView.contentSize.width
+        let scrollSegments = TimeInterval(
+            (globalDateRange.duration - forwardTimeOffset) / (localDateRange.duration - forwardTimeOffset)
+        )
+        let globalDurationOffset = globalDateRange.duration * TimeInterval(currentRelativeOffset)
+        let localOffsettedInterval = localInterval + forwardTimeOffset / scrollSegments
+        let localDurationOffset = localOffsettedInterval * TimeInterval(userRelativeSelection)
+        let currentRelativeStartTime = globalDurationOffset + localDurationOffset
+        let selectedDate = globalDateRange.start + currentRelativeStartTime
+        if let entry = nearestEntry(forDate: selectedDate) {
+            detailsView.set(value: entry.value, unit: unit, date: entry.date)
+            detailsView.setHidden(false)
+        } else {
+            detailsView.setHidden(true)
+        }
+    }
+    
+    private func nearestEntry(forDate date: Date) -> GlucoseChartGlucoseEntry? {
+        let maxDiff: TimeInterval = .secondsPerMinute * 5.0
+        
+        if glucoseEntries.isEmpty {
+            return nil
+        } else if glucoseEntries.count == 1 {
+            let diff = abs(date.timeIntervalSince1970 - glucoseEntries[0].date.timeIntervalSince1970)
+            return diff <= maxDiff ? glucoseEntries[0] : nil
+        }
+        
+        let diffs = glucoseEntries.map { abs(date.timeIntervalSince1970 - $0.date.timeIntervalSince1970) }
+        var minDiff = Double.greatestFiniteMagnitude
+        var minDiffIndex = 0
+        for (index, diff) in diffs.enumerated() where diff < minDiff {
+            minDiff = diff
+            minDiffIndex = index
+        }
+        
+        return minDiff <= maxDiff ? glucoseEntries[minDiffIndex] : nil
     }
 }

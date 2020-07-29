@@ -19,7 +19,7 @@ final class CalibrationEntriesWorkerTests: AbstractRealmTest {
         let entry = CalibrationEntriesWorker.addCalibrationEntry(firstValue: 1.1, secondValue: 2.2, date: date)
         XCTAssertTrue(entry.firstValue ~ 1.1)
         XCTAssertTrue(entry.secondValue ~ 2.2)
-        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~ 7.0)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~ 7.0)
         
         XCTAssertTrue(realm.objects(CalibrationEntry.self).count == 1)
     }

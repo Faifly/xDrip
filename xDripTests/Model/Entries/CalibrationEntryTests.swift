@@ -18,7 +18,7 @@ final class CalibrationEntryTests: AbstractRealmTest {
         
         XCTAssertTrue(entry.firstValue ~ 1.1)
         XCTAssertTrue(entry.secondValue ~ 2.2)
-        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 3.0)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 3.0)
     }
     
     func testUpdate() {
@@ -29,6 +29,6 @@ final class CalibrationEntryTests: AbstractRealmTest {
         
         XCTAssertTrue(entry.firstValue ~ 3.3)
         XCTAssertTrue(entry.secondValue ~ 5.5)
-        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 4.0)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 4.0)
     }
 }

@@ -41,7 +41,7 @@ final class EditTrainingPresenter: EditTrainingPresentationLogic {
                 intensityChangedHandler: response.trainingIntensityChangedHandler
             ),
             createDatePickerCell(
-                date: response.trainingEntry?.entryDate,
+                date: response.trainingEntry?.date,
                 dateChangedHandler: response.dateChangedHandler
             )
         ]

@@ -13,19 +13,15 @@ class BaseHistoryView: UIView {
     var forwardTimeOffset: TimeInterval = 600.0
     
     let scrollContainer = ChartScrollContainer()
-    let detailsView = ChartEntryDetailView()
     let leftLabelsView = ChartVerticalLabelsView()
     var chartView = BaseChartView()
     weak var chartWidthConstraint: NSLayoutConstraint?
-    
-    var entries: [BaseChartEntry] = []
     
     var globalDateRange = DateInterval()
     var localDateRange = DateInterval()
     var localInterval: TimeInterval = .secondsPerHour
     var userRelativeSelection: CGFloat?
-    var unit = ""
-    
+   
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
@@ -41,24 +37,14 @@ class BaseHistoryView: UIView {
         isOpaque = false
         backgroundColor = .background1
         
-        addSubview(detailsView)
         addSubview(leftLabelsView)
         addSubview(scrollContainer)
         scrollContainer.scrollView.addSubview(chartView)
-        
-        detailsView.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor).isActive = true
-        detailsView.trailingAnchor.constraint(equalTo: scrollContainer.trailingAnchor).isActive = true
-        detailsView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        detailsView.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
-
         leftLabelsView.topAnchor.constraint(equalTo: scrollContainer.topAnchor).isActive = true
         leftLabelsView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         leftLabelsView.trailingAnchor.constraint(equalTo: scrollContainer.leadingAnchor).isActive = true
         leftLabelsView.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
-        
-        scrollContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0).isActive = true
-        scrollContainer.topAnchor.constraint(equalTo: detailsView.bottomAnchor).isActive = true
-        
+    
         chartView.bindToSuperview()
         chartView.heightAnchor.constraint(equalTo: scrollContainer.heightAnchor, multiplier: 1.0).isActive = true
         let chartViewWidth = chartView.widthAnchor.constraint(equalToConstant: bounds.width)
@@ -89,16 +75,18 @@ class BaseHistoryView: UIView {
         scrollContainer.onSelectionChanged = { [weak self] relativeOffset in
             guard let self = self else { return }
             self.userRelativeSelection = relativeOffset
-            self.updateDetailLabel()
-            self.detailsView.setRelativeOffset(relativeOffset)
+            self.updateDetailView(with: relativeOffset)
         }
+    }
+    
+    func updateDetailView(with relativeOffset: CGFloat) {
     }
     
     func setTimeFrame(_ localInterval: TimeInterval) {
         self.localInterval = localInterval
         forwardTimeOffset = horizontalInterval(for: localInterval)
         scrollContainer.hideDetailView()
-        detailsView.setHidden(true)
+       
         updateIntervals()
         updateChart()
     }
@@ -107,13 +95,10 @@ class BaseHistoryView: UIView {
         super.layoutSubviews()
         updateChart()
         scrollContainer.hideDetailView()
-        detailsView.setHidden(true)
     }
     
     /// Should be sorted by date ascending
-    func setup(with entries: [BaseChartEntry], unit: String) {
-        self.unit = unit
-        self.entries = entries
+    func update() {
         updateIntervals()
         updateChart()
     }
@@ -127,7 +112,6 @@ class BaseHistoryView: UIView {
     }
     
     func updateChart() {
-        calculateVerticalLeftLabels()
         calculateHorizontalBottomLabels()
         
         let scrollSegments = CGFloat(
@@ -148,11 +132,11 @@ class BaseHistoryView: UIView {
     func updateChartSliderView(with scrollSegments: CGFloat) {
     }
     
-   private func calculateVerticalLeftLabels() {
-        guard let minGlucoseValue = entries.map({ $0.value }).min() else { return }
-        guard let maxGlucoseValue = entries.map({ $0.value }).max() else { return }
-        let adjustedMinValue = minGlucoseValue.rounded(.down)
-        let adjustedMaxValue = maxGlucoseValue.rounded(.up)
+    func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?) {
+        guard let minValue = minValue else { return }
+        guard let maxValue = maxValue else { return }
+        let adjustedMinValue = minValue.rounded(.down)
+        let adjustedMaxValue = maxValue.rounded(.up)
         let step = (adjustedMaxValue - adjustedMinValue) / Double(verticalLines - 1)
         
         var labels: [String] = []
@@ -219,46 +203,5 @@ class BaseHistoryView: UIView {
         case 24: return .secondsPerHour * 4.0
         default: return TimeInterval(hours) / 4.0 * .secondsPerHour
         }
-    }
-    
-    func updateDetailLabel() {
-        guard let userRelativeSelection = userRelativeSelection else { return }
-        let scrollView = scrollContainer.scrollView
-        let currentRelativeOffset = scrollView.contentOffset.x / scrollView.contentSize.width
-        let scrollSegments = TimeInterval(
-            (globalDateRange.duration - forwardTimeOffset) / (localDateRange.duration - forwardTimeOffset)
-        )
-        let globalDurationOffset = globalDateRange.duration * TimeInterval(currentRelativeOffset)
-        let localOffsettedInterval = localInterval + forwardTimeOffset / scrollSegments
-        let localDurationOffset = localOffsettedInterval * TimeInterval(userRelativeSelection)
-        let currentRelativeStartTime = globalDurationOffset + localDurationOffset
-        let selectedDate = globalDateRange.start + currentRelativeStartTime
-        if let entry = nearestEntry(forDate: selectedDate) {
-            detailsView.set(value: entry.value, unit: unit, date: entry.date)
-            detailsView.setHidden(false)
-        } else {
-            detailsView.setHidden(true)
-        }
-    }
-    
-    private func nearestEntry(forDate date: Date) -> BaseChartEntry? {
-        let maxDiff: TimeInterval = .secondsPerMinute * 5.0
-        
-        if entries.isEmpty {
-            return nil
-        } else if entries.count == 1 {
-            let diff = abs(date.timeIntervalSince1970 - entries[0].date.timeIntervalSince1970)
-            return diff <= maxDiff ? entries[0] : nil
-        }
-        
-        let diffs = entries.map { abs(date.timeIntervalSince1970 - $0.date.timeIntervalSince1970) }
-        var minDiff = Double.greatestFiniteMagnitude
-        var minDiffIndex = 0
-        for (index, diff) in diffs.enumerated() where diff < minDiff {
-            minDiff = diff
-            minDiffIndex = index
-        }
-        
-        return minDiff <= maxDiff ? entries[minDiffIndex] : nil
     }
 }

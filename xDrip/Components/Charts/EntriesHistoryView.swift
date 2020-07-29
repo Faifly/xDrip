@@ -24,17 +24,9 @@ final class EntriesHistoryView: BaseHistoryView {
         }
     }
     
-    override var entries: [BaseChartEntry] {
-        get {
-            return chartEntries
-        }
-        set {
-            chartEntries = newValue.count < 2 ? [] : newValue
-        }
-    }
-    
     override func setupViews() {
         super.setupViews()
+        scrollContainer.isUserInteractionEnabled = false
         leftLabelsView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         scrollContainer.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
@@ -45,7 +37,8 @@ final class EntriesHistoryView: BaseHistoryView {
         chartTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 14).isActive = true
         chartTitleLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         chartTitleLabel.bottomAnchor.constraint(equalTo: scrollContainer.topAnchor).isActive = true
-    
+        chartTitleLabel.heightAnchor.constraint(equalToConstant: 58.0).isActive = true
+        scrollContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0).isActive = true
         chartButton.translatesAutoresizingMaskIntoConstraints = false
         chartButton.setTitleColor(.chartButtonTextColor, for: .normal)
         chartButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
@@ -59,15 +52,18 @@ final class EntriesHistoryView: BaseHistoryView {
     }
     
     override func updateChart() {
+        calculateVerticalLeftLabels(minValue: chartEntries.map({ $0.value }).min(),
+                                    maxValue: chartEntries.map({ $0.value }).max())
         super.updateChart()
     }
     
     func setup(with viewModel: BaseFoodEntryViewModel) {
-        super.setup(with: viewModel.entries, unit: viewModel.unit)
-        entriesChartView.entries = entries
+        chartEntries = viewModel.entries
+        entriesChartView.entries = viewModel.entries
         entriesChartView.color = viewModel.color
         chartTitleLabel.text = viewModel.chartTitle
         chartButton.setTitle(viewModel.chartButtonTitle, for: .normal)
+        super.update()
     }
     
     @objc func buttonClicked() {

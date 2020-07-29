@@ -16,8 +16,8 @@ final class BolusEntryTests: AbstractRealmTest {
         let date = Date(timeIntervalSince1970: 2.0)
         let entry = InsulinEntry(amount: 1.1, date: date, type: .bolus)
         
-        XCTAssertTrue(entry.value ~ 1.1)
-        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 2.0)
+        XCTAssertTrue(entry.amount ~ 1.1)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 2.0)
     }
     
     func testUpdate() {
@@ -26,7 +26,7 @@ final class BolusEntryTests: AbstractRealmTest {
         let date = Date(timeIntervalSince1970: 3.0)
         entry.update(amount: 2.2, date: date)
         
-        XCTAssertTrue(entry.value ~ 2.2)
-        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 3.0)
+        XCTAssertTrue(entry.amount ~ 2.2)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 3.0)
     }
 }

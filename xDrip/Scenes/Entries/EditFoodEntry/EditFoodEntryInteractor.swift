@@ -52,13 +52,13 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     
     func doLoad(request: EditFoodEntry.Load.Request) {
         if let carbEntry = carbEntry {
-            carbInput.amount = carbEntry.value
+            carbInput.amount = carbEntry.amount
             carbInput.foodType = carbEntry.foodType
-            carbInput.date = carbEntry.entryDate ?? Date()
+            carbInput.date = carbEntry.date ?? Date()
         }
         
         if let insulinEntry = insulinEntry {
-            insulinInput.amount = insulinEntry.value
+            insulinInput.amount = insulinEntry.amount
             insulinInput.date = insulinEntry.date ?? Date()
         }
         
@@ -79,13 +79,12 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     
     func doSave(request: EditFoodEntry.Save.Request) {
         if let insulinEntry = insulinEntry,
-            (insulinEntry.value !~ insulinInput.amount || insulinEntry.date != insulinInput.date) {
+            (insulinEntry.amount !~ insulinInput.amount || insulinEntry.date != insulinInput.date) {
             insulinEntry.update(amount: insulinInput.amount, date: insulinInput.date)
-            FoodEntriesWorker.updatedBolusEntry()
+            InsulinEntriesWorker.updatedInsulinEntry()
         } else if insulinEntry == nil, insulinInput.amount !~ 0.0 {
             if entryType == .basal {
                 InsulinEntriesWorker.addBasalEntry(amount: insulinInput.amount, date: insulinInput.date)
-
                 NotificationCenter.default.postSettingsChangeNotification(setting: .basalRelated)
             } else {
                 InsulinEntriesWorker.addBolusEntry(amount: insulinInput.amount, date: insulinInput.date)
@@ -93,13 +92,13 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
         }
         
         if let carbEntry = carbEntry,
-            (carbEntry.value !~ carbInput.amount ||
-            carbEntry.entryDate != carbInput.date ||
+            (carbEntry.amount !~ carbInput.amount ||
+            carbEntry.date != carbInput.date ||
             carbEntry.foodType != carbInput.foodType) {
             carbEntry.update(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
-            FoodEntriesWorker.updatedCarbsEntry()
+            CarbEntriesWorker.updatedCarbsEntry()
         } else if carbEntry == nil, carbInput.amount !~ 0.0 {
-            FoodEntriesWorker.addCarbEntry(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
+            CarbEntriesWorker.addCarbEntry(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
         }
 
         router?.dismissScene()

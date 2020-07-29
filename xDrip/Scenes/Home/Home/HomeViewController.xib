@@ -15,6 +15,7 @@
                 <outlet property="glucoseChart" destination="fZx-6e-Ugl" id="UkI-o0-MmZ"/>
                 <outlet property="glucoseCurrentInfoView" destination="mbw-ZN-ydS" id="zfp-MX-hvX"/>
                 <outlet property="timeLineSegmentView" destination="Jxh-xc-P39" id="gr8-xT-aOH"/>
+                <outlet property="view" destination="RfY-ZW-nBO" id="bXh-BA-DT5"/>
                 <outlet property="warmUpLabel" destination="yid-de-t5U" id="R4Q-wu-HjU"/>
                 <outlet property="warmUpLabelTopConstraint" destination="uqd-QJ-IPd" id="7iY-6h-sqK"/>
             </connections>
@@ -25,7 +26,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Jxh-xc-P39">
-                    <rect key="frame" x="16" y="129.5" width="382" height="32"/>
+                    <rect key="frame" x="16" y="119" width="382" height="32"/>
                     <segments>
                         <segment title="First"/>
                         <segment title="Second"/>
@@ -34,14 +35,14 @@
                         <action selector="onTimeFrameSegmentSelected" destination="-1" eventType="valueChanged" id="fmq-iY-gXh"/>
                     </connections>
                 </segmentedControl>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yid-de-t5U">
-                    <rect key="frame" x="16" y="114" width="382" height="20.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yid-de-t5U">
+                    <rect key="frame" x="16" y="114" width="382" height="0.0"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5GJ-cn-Jfe">
-                    <rect key="frame" x="0.0" y="160.5" width="414" height="701.5"/>
+                    <rect key="frame" x="0.0" y="150" width="414" height="712"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="AYD-t2-A3I">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="670"/>
@@ -101,11 +102,11 @@
                 <constraint firstItem="mbw-ZN-ydS" firstAttribute="trailing" secondItem="wal-uu-dqz" secondAttribute="trailing" id="a56-ci-NBX"/>
                 <constraint firstItem="wal-uu-dqz" firstAttribute="trailing" secondItem="Jxh-xc-P39" secondAttribute="trailing" constant="16" id="c3f-Oy-o3H"/>
                 <constraint firstItem="yid-de-t5U" firstAttribute="leading" secondItem="wal-uu-dqz" secondAttribute="leading" constant="16" id="kQd-jk-O7j"/>
-                <constraint firstItem="yid-de-t5U" firstAttribute="bottom" secondItem="Jxh-xc-P39" secondAttribute="top" constant="5" id="oCA-Tu-Q0B"/>
                 <constraint firstItem="yid-de-t5U" firstAttribute="top" secondItem="mbw-ZN-ydS" secondAttribute="bottom" constant="5" id="uqd-QJ-IPd"/>
+                <constraint firstItem="Jxh-xc-P39" firstAttribute="top" secondItem="yid-de-t5U" secondAttribute="bottom" constant="5" id="w7n-bF-FRP"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="wal-uu-dqz"/>
-            <point key="canvasLocation" x="-790" y="-719"/>
+            <point key="canvasLocation" x="-1359" y="-617"/>
         </view>
     </objects>
 </document>

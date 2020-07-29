@@ -18,7 +18,7 @@ final class TrainingEntryTests: AbstractRealmTest {
         
         XCTAssertTrue(entry.duration ~ 1.1)
         XCTAssertTrue(entry.intensity == .low)
-        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 2.0)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 2.0)
     }
     
     func testIntensity() {
@@ -40,6 +40,6 @@ final class TrainingEntryTests: AbstractRealmTest {
         
         XCTAssertTrue(entry.duration ~ 2.2)
         XCTAssertTrue(entry.intensity == .high)
-        XCTAssertTrue(entry.entryDate!.timeIntervalSince1970 ~~ 3.0)
+        XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 3.0)
     }
 }

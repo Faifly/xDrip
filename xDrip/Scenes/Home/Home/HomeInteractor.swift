@@ -42,11 +42,11 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             self.updateGlucoseCurrentInfo()
             self.updateGlucoseChartData()
         }
-        FoodEntriesWorker.bolusDataHandler = { [weak self] in
+        InsulinEntriesWorker.insulinDataHandler = { [weak self] in
             guard let self = self else { return }
-            self.updateBolusChartData()
+            self.updateInsulinChartData()
         }
-        FoodEntriesWorker.carbsDataHandler = { [weak self] in
+        CarbEntriesWorker.carbsDataHandler = { [weak self] in
             guard let self = self else { return }
             self.updateCarbsChartData()
         }
@@ -66,7 +66,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         presenter?.presentLoad(response: response)
         updateGlucoseCurrentInfo()
         updateGlucoseChartData()
-        updateBolusChartData()
+        updateInsulinChartData()
         updateCarbsChartData()
         warmUpWorker.subscribeForWarmUpStateChange { [weak self] state in
             let response = Home.WarmUp.Response(state: state)
@@ -116,13 +116,6 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         presenter?.presentBolusChartTimeFrameChange(response: response)
     }
     
-    // MARK: Logic
-    
-    private func updateBolusChartData() {
-        let response = Home.BolusDataUpdate.Response(bolusData: FoodEntriesWorker.fetchAllBolusEntries())
-        self.presenter?.presentBolusData(response: response)
-    }
-    
     func doChangeCarbsChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request) {
         let response = Home.ChangeEntriesChartTimeFrame.Response(
             timeInterval: .secondsPerHour * TimeInterval(request.hours)
@@ -130,10 +123,13 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         presenter?.presentCarbsChartTimeFrameChange(response: response)
     }
     
-    // MARK: Logic
+    private func updateInsulinChartData() {
+        let response = Home.BolusDataUpdate.Response(insulinData: InsulinEntriesWorker.fetchAllInsulinEntries())
+        self.presenter?.presentInsulinData(response: response)
+    }
     
     private func updateCarbsChartData() {
-        let response = Home.CarbsDataUpdate.Response(carbsData: FoodEntriesWorker.fetchAllCarbEntries())
+        let response = Home.CarbsDataUpdate.Response(carbsData: CarbEntriesWorker.fetchAllCarbEntries())
         self.presenter?.presentCarbsData(response: response)
     }
 }

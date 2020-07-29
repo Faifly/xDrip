@@ -216,11 +216,11 @@ final class EntriesListViewControllerTests: XCTestCase {
     }
     
     func testLoadWithCarbsWorkers() {
-        FoodEntriesWorker.fetchAllCarbEntries().forEach { entry in
-            FoodEntriesWorker.deleteEntry(entry)
+        CarbEntriesWorker.fetchAllCarbEntries().forEach { entry in
+            CarbEntriesWorker.deleteEntry(entry)
         }
         
-        FoodEntriesWorker.addCarbEntry(amount: 0.0, foodType: nil, date: Date())
+        CarbEntriesWorker.addCarbEntry(amount: 0.0, foodType: nil, date: Date())
         
         sut = EntriesListViewController(
             persistenceWorker: EntriesListCarbsPersistenceWorker(),
