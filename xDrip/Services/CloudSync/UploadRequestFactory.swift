@@ -58,16 +58,42 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     }
     
     func createTestConnectionRequest(tryAuth: Bool) throws -> URLRequest {
-        guard var request = try createEntriesRequest(appendSecret: tryAuth) else {
-            throw NightscoutError.invalidURL
+        if !tryAuth {
+            guard var request = try createEntriesRequest(appendSecret: false) else {
+                throw NightscoutError.invalidURL
+            }
+            
+            request.timeoutInterval = 10.0
+
+            return request
+        } else {
+            guard let baseURLString = User.current.settings.nightscoutSync?.baseURL else {
+                throw NightscoutError.invalidURL
+            }
+            guard let baseURL = URL(string: baseURLString) else {
+                throw NightscoutError.invalidURL
+            }
+            
+            let url = baseURL.appendingPathComponent("/api/v1/experiments/test")
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            
+            guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret else {
+                throw NightscoutError.noAPISecret
+            }
+            guard !apiSecret.isEmpty else {
+                throw NightscoutError.noAPISecret
+            }
+            
+            request.allHTTPHeaderFields = [
+                "Content-Type": "application/json",
+                "API-SECRET": apiSecret.sha1
+            ]
+            
+            request.timeoutInterval = 10.0
+
+            return request
         }
-        
-        request.timeoutInterval = 10.0
-        if tryAuth {
-            request.httpBody = "[{\"date\":1}]".data(using: .utf8)
-        }
-        
-        return request
     }
     
     func createFetchFollowerDataRequest() -> URLRequest? {
