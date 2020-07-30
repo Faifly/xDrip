@@ -14,6 +14,7 @@ enum BridgeBatteryService {
         let device = UIDevice.current
         device.isBatteryMonitoringEnabled = true
         let level = Double(device.batteryLevel) * 100.0
+        device.isBatteryMonitoringEnabled = false
         return (level * 100.0).rounded() / 100.0
     }
 }

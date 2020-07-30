@@ -62,9 +62,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
             guard var request = try createEntriesRequest(appendSecret: false) else {
                 throw NightscoutError.invalidURL
             }
-            
             request.timeoutInterval = 10.0
-
             return request
         } else {
             guard let baseURLString = User.current.settings.nightscoutSync?.baseURL else {
@@ -73,10 +71,10 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
             guard let baseURL = URL(string: baseURLString) else {
                 throw NightscoutError.invalidURL
             }
-            
             let url = baseURL.appendingPathComponent("/api/v1/experiments/test")
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
+            request.timeoutInterval = 10.0
             
             guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret else {
                 throw NightscoutError.noAPISecret
@@ -84,13 +82,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
             guard !apiSecret.isEmpty else {
                 throw NightscoutError.noAPISecret
             }
-            
-            request.allHTTPHeaderFields = [
-                "Content-Type": "application/json",
-                "API-SECRET": apiSecret.sha1
-            ]
-            
-            request.timeoutInterval = 10.0
+            request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
 
             return request
         }
@@ -123,13 +115,9 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         guard let baseURL = URL(string: baseURLString) else {
             throw NightscoutError.invalidURL
         }
-        
         let url = baseURL.appendingPathComponent("/api/v1/entries.json")
         var request = URLRequest(url: url)
-        
-        request.allHTTPHeaderFields = [
-            "Content-Type": "application/json"
-        ]
+        request.allHTTPHeaderFields = createHeaders()
         
         if appendSecret {
             guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret else {
@@ -138,11 +126,8 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
             guard !apiSecret.isEmpty else {
                 throw NightscoutError.noAPISecret
             }
-            
             request.httpMethod = "POST"
-            var headers = request.allHTTPHeaderFields
-            headers?["API-SECRET"] = apiSecret.sha1
-            request.allHTTPHeaderFields = headers
+            request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
         } else {
             request.httpMethod = "GET"
         }
@@ -159,14 +144,10 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         
         let url = baseURL.appendingPathComponent("/api/v1/devicestatus")
         var request = URLRequest(url: url)
-        
-        request.allHTTPHeaderFields = [
-            "Content-Type": "application/json",
-            "API-SECRET": apiSecret.sha1
-        ]
+        request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
         
         let data: [String: Any] = [
-            "device": "xDrip+ iPhone",
+            "device": "xDrip iOS",
             "uploader": [
                 "battery": BridgeBatteryService.getBatteryLevel()
             ]
@@ -176,5 +157,17 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         request.httpMethod = "POST"
         
         return request
+    }
+    
+    private func createHeaders(apiSecret: String? = nil) -> [String: String]? {
+        var headers = [
+           "Content-Type": "application/json"
+        ]
+        
+        if let secret = apiSecret {
+            headers["API-SECRET"] = secret
+        }
+        
+        return headers
     }
 }
