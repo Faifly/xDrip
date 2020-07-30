@@ -36,12 +36,13 @@ final class NightscoutService {
             startFetchingFollowerData()
         }
         
-        let onUpdate: (ReachabilityService) -> Void = { [weak self] reachability in
+        reachability?.whenReachable = { [weak self] reachability in
+            self?.currentConnectType = reachability.connection
+            self?.scanForNotUploadedEntries()
+        }
+        reachability?.whenUnreachable = { [weak self] reachability in
             self?.currentConnectType = reachability.connection
         }
-        
-        reachability?.whenReachable = onUpdate
-        reachability?.whenUnreachable = onUpdate
         
         try? reachability?.startNotifier()
     }
