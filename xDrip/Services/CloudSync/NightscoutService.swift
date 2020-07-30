@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AKUtils
 
 final class NightscoutService {
     static let shared = NightscoutService()
@@ -150,7 +151,7 @@ final class NightscoutService {
                 switch first.type {
                 case .postGlucoseReading, .modifyGlucoseReading:
                     GlucoseReading.markEntryAsUploaded(externalID: first.itemID)
-                    
+                    self.sendDeviceStatus()
                 case .deleteGlucoseReading, .deleteCalibration:
                     break
                     
@@ -181,8 +182,12 @@ final class NightscoutService {
             guard let data = data, error == nil else { return }
             guard let entries = try? JSONDecoder().decode([CGlucoseReading].self, from: data) else { return }
             DispatchQueue.main.async {
-                GlucoseReading.parseFollowerEntries(entries)
-                CGMController.shared.notifyGlucoseChange()
+                let allFollower = GlucoseReading.allFollower
+                let readings = GlucoseReading.parseFollowerEntries(entries).sorted(by: { $0.date >? $1.date })
+                let newReadings = readings.filter { reading -> Bool in
+                    !allFollower.contains(where: { $0.externalID == reading.externalID })
+                }.sorted(by: { $0.date >? $1.date })
+                CGMController.shared.notifyGlucoseChange(newReadings.first)
             }
         }.resume()
     }
@@ -205,5 +210,10 @@ final class NightscoutService {
         }
         
         return true
+    }
+  
+    func sendDeviceStatus() {
+        guard let request = requestFactory.createDeviceStatusRequest() else { return }
+        URLSession.shared.dataTask(with: request).resume()
     }
 }
