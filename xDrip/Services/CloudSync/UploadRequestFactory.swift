@@ -159,7 +159,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         return request
     }
     
-    private func createHeaders(apiSecret: String? = nil) -> [String: String]? {
+    private func createHeaders(apiSecret: String? = nil) -> [String: String] {
         var headers = [
            "Content-Type": "application/json"
         ]
