@@ -39,6 +39,11 @@ final class User: Object {
         return user
     }
     
+    static var currentAsync: User? {
+        let realm = try? Realm()
+        return realm?.object(ofType: User.self, forPrimaryKey: User.singleUserID)
+    }
+    
     // MARK: Settings
     @objc private(set) dynamic var settings: Settings!
     

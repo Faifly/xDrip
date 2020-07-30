@@ -153,7 +153,7 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
         cellularSwitch.isOn = false
         cellularSwitch.sendActions(for: .valueChanged)
         // Then
-        XCTAssert(settings?.useCellularData == true)
+        XCTAssert(settings?.useCellularData == false)
     }
     
     func testGlucoseSwitchValueChanged() {

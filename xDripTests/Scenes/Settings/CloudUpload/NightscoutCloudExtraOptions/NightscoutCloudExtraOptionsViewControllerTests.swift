@@ -116,7 +116,7 @@ final class NightscoutCloudExtraOptionsViewControllerTests: XCTestCase {
         skipSwitch.isOn = true
         skipSwitch.sendActions(for: .valueChanged)
         // Then
-        XCTAssert(settings?.skipLANUploads == false)
+        XCTAssert(settings?.skipLANUploads == true)
         
         // When
         skipSwitch.isOn = false
