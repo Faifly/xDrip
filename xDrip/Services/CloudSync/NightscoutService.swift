@@ -38,7 +38,7 @@ final class NightscoutService {
         
         reachability?.whenReachable = { [weak self] reachability in
             self?.currentConnectType = reachability.connection
-            self?.scanForNotUploadedEntries()
+            self?.runQueue()
         }
         reachability?.whenUnreachable = { [weak self] reachability in
             self?.currentConnectType = reachability.connection
@@ -56,8 +56,6 @@ final class NightscoutService {
         scanForGlucoseEntries()
         scanForCalibrations()
         
-        guard checkUseCellular(), checkSkipLANUploads() else { return }
-        
         runQueue()
     }
     
@@ -65,8 +63,6 @@ final class NightscoutService {
         guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else { return }
         let requests = calibrations.compactMap { requestFactory.createDeleteCalibrationRequest($0) }
         requestQueue.append(contentsOf: requests)
-        
-        guard checkUseCellular(), checkSkipLANUploads() else { return }
         
         runQueue()
     }
@@ -141,6 +137,7 @@ final class NightscoutService {
     }
     
     private func runQueue() {
+        guard checkUseCellular(), checkSkipLANUploads() else { return }
         guard !requestQueue.isEmpty else { return }
         let request = requestQueue[0]
         URLSession.shared.dataTask(with: request.request) { [weak self] _, _, error in
@@ -191,7 +188,7 @@ final class NightscoutService {
     }
     
     private func checkUseCellular() -> Bool {
-        if User.current.settings.nightscoutSync?.useCellularData == false {
+        if User.currentAsync?.settings.nightscoutSync?.useCellularData == false {
             guard currentConnectType != .cellular else { return false }
         }
         
@@ -199,8 +196,8 @@ final class NightscoutService {
     }
     
     private func checkSkipLANUploads() -> Bool {
-        if User.current.settings.nightscoutSync?.skipLANUploads == true {
-            guard let baseURLString = User.current.settings.nightscoutSync?.baseURL else { return false }
+        if User.currentAsync?.settings.nightscoutSync?.skipLANUploads == true {
+            guard let baseURLString = User.currentAsync?.settings.nightscoutSync?.baseURL else { return false }
             guard let baseURL = URL(string: baseURLString) else { return false }
             if baseURL.host?.hasPrefix("192.168.") == true && currentConnectType != .wifi {
                 return false
