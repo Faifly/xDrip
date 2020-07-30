@@ -66,7 +66,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         guard let entry = entry else {
             return HomeGlucoseCurrentInfoEntry.emptyEntry
         }
-        let components = getComponentsForGlucoseValue(GlucoseUnit.convertToUserDefined(
+        let components = getComponentsForGlucoseValue(GlucoseUnit.convertFromDefault(
             entry.filteredCalculatedValue) )
         let glucoseIntValue = components.first ?? "-"
         let glucoseDecimalValue = components.last ?? "-"

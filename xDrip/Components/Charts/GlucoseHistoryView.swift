@@ -114,8 +114,11 @@ final class GlucoseHistoryView: BaseHistoryView {
         let initVal = BasalChartDataWorker.getBasalValueForDate(date: glucoseChartView.dateInterval.start)
         let maxBasalValue = basalEntries.max(by: { $0.value < $1.value })?.value
         let adjustedMaxValue = max(initVal, maxBasalValue ?? 0.0).rounded(.up)
+        
         labels.append(String(format: format, 0.0))
-        labels.append(String(format: format, adjustedMaxValue))
+        if adjustedMaxValue > 0.0 {
+            labels.append(String(format: format, adjustedMaxValue))
+        }
         
         rightLabelsView.textAlignment = .left
         rightLabelsView.labels = basalDisplayMode == .onBottom ? labels : labels.reversed()
