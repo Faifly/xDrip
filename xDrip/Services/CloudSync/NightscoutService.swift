@@ -56,9 +56,8 @@ final class NightscoutService {
         scanForGlucoseEntries()
         scanForCalibrations()
         
-        if User.current.settings.nightscoutSync?.useCellularData == false {
-            guard self.currentConnectType != .cellular else { return }
-        }
+        guard checkUseCellular(), checkSkipLANUploads() else { return }
+        
         runQueue()
     }
     
@@ -67,9 +66,8 @@ final class NightscoutService {
         let requests = calibrations.compactMap { requestFactory.createDeleteCalibrationRequest($0) }
         requestQueue.append(contentsOf: requests)
         
-        if User.current.settings.nightscoutSync?.useCellularData == false {
-            guard self.currentConnectType != .cellular else { return }
-        }
+        guard checkUseCellular(), checkSkipLANUploads() else { return }
+        
         runQueue()
     }
     
@@ -190,5 +188,25 @@ final class NightscoutService {
                 CGMController.shared.notifyGlucoseChange()
             }
         }.resume()
+    }
+    
+    private func checkUseCellular() -> Bool {
+        if User.current.settings.nightscoutSync?.useCellularData == false {
+            guard currentConnectType != .cellular else { return false }
+        }
+        
+        return true
+    }
+    
+    private func checkSkipLANUploads() -> Bool {
+        if User.current.settings.nightscoutSync?.skipLANUploads == true {
+            guard let baseURLString = User.current.settings.nightscoutSync?.baseURL else { return false }
+            guard let baseURL = URL(string: baseURLString) else { return false }
+            if baseURL.host?.hasPrefix("192.168.") == true && currentConnectType != .wifi {
+                return false
+            }
+        }
+        
+        return true
     }
 }
