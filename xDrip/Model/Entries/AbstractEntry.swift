@@ -9,6 +9,11 @@
 import Foundation
 import RealmSwift
 
+protocol AbstractEntryProtocol {
+    var amount: Double { get }
+    var date: Date? { get }
+}
+
 class AbstractEntry: Object {
     @objc private(set) dynamic var date: Date?
     
