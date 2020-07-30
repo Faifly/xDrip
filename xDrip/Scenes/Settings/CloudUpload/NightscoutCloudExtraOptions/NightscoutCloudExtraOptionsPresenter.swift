@@ -22,10 +22,15 @@ final class NightscoutCloudExtraOptionsPresenter: NightscoutCloudExtraOptionsPre
     // MARK: Do something
     
     func presentLoad(response: NightscoutCloudExtraOptions.Load.Response) {
-        let tableViewModel = BaseSettings.ViewModel(
-            sections: [
-                createSkipLANSection(response: response),
-                createBatterySection(response: response),
+        var sections = [BaseSettings.Section]()
+        sections.append(createSkipLANSection(response: response))
+        
+        #if !(targetEnvironment(simulator) || targetEnvironment(macCatalyst))
+        sections.append(createBatterySection(response: response))
+        #endif
+        
+        sections.append(
+            contentsOf: [
                 createTreatmentsSection(response: response),
                 createAlertSection(response: response),
                 createSourceInfoSection(response: response),
@@ -33,6 +38,7 @@ final class NightscoutCloudExtraOptionsPresenter: NightscoutCloudExtraOptionsPre
             ]
         )
         
+        let tableViewModel = BaseSettings.ViewModel(sections: sections)
         let viewModel = NightscoutCloudExtraOptions.Load.ViewModel(tableViewModel: tableViewModel)
         viewController?.displayLoad(viewModel: viewModel)
     }
