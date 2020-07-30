@@ -13,7 +13,7 @@ final class EntriesHistoryView: BaseHistoryView {
     private var chartEntries: [BaseChartEntry] = []
     private let chartTitleLabel = UILabel()
     private let chartButton = UIButton()
-    var onButtonClicked: () -> Void = {}
+    var onChartButtonClicked: () -> Void = {}
     
     override var chartView: BaseChartView {
         get {
@@ -42,7 +42,7 @@ final class EntriesHistoryView: BaseHistoryView {
         chartButton.translatesAutoresizingMaskIntoConstraints = false
         chartButton.setTitleColor(.chartButtonTextColor, for: .normal)
         chartButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        chartButton.addTarget(self, action: #selector(self.buttonClicked), for: .touchUpInside)
+        chartButton.addTarget(self, action: #selector(self.chartButtonClicked), for: .touchUpInside)
         addSubview(chartButton)
         chartButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -14).isActive = true
         chartButton.leadingAnchor.constraint(greaterThanOrEqualTo: chartTitleLabel.trailingAnchor,
@@ -52,7 +52,7 @@ final class EntriesHistoryView: BaseHistoryView {
     }
     
     override func updateChart() {
-        calculateVerticalLeftLabels(minValue: chartEntries.map({ $0.value }).min(),
+        super.calculateVerticalLeftLabels(minValue: chartEntries.map({ $0.value }).min(),
                                     maxValue: chartEntries.map({ $0.value }).max())
         super.updateChart()
     }
@@ -66,8 +66,7 @@ final class EntriesHistoryView: BaseHistoryView {
         super.update()
     }
     
-    @objc func buttonClicked() {
-        print("Button Clicked")
-        onButtonClicked()
+    @objc func chartButtonClicked() {
+        onChartButtonClicked()
     }
 }

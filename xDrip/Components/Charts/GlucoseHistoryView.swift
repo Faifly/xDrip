@@ -147,9 +147,9 @@ final class GlucoseHistoryView: BaseHistoryView {
     }
     
     override func updateChart() {
-        super.updateChart()
-        calculateVerticalLeftLabels(minValue: glucoseEntries.map({ $0.value }).min(),
+        super.calculateVerticalLeftLabels(minValue: glucoseEntries.map({ $0.value }).min(),
                                     maxValue: glucoseEntries.map({ $0.value }).max())
+        super.updateChart()
         setupRightLabelViewsAnchorConstraint()
         calculateVerticalRightLabels()
         glucoseChartView.basalEntries = basalEntries

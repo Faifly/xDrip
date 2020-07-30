@@ -21,13 +21,13 @@ class BaseHistoryView: UIView {
     var localDateRange = DateInterval()
     var localInterval: TimeInterval = .secondsPerHour
     var userRelativeSelection: CGFloat?
-   
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
     }
     
-   private func commonInit() {
+    private func commonInit() {
         setupViews()
         setupScrolling()
         setTimeFrame(.secondsPerHour)
@@ -36,7 +36,6 @@ class BaseHistoryView: UIView {
     func setupViews() {
         isOpaque = false
         backgroundColor = .background1
-        
         addSubview(leftLabelsView)
         addSubview(scrollContainer)
         scrollContainer.scrollView.addSubview(chartView)
@@ -44,7 +43,6 @@ class BaseHistoryView: UIView {
         leftLabelsView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         leftLabelsView.trailingAnchor.constraint(equalTo: scrollContainer.leadingAnchor).isActive = true
         leftLabelsView.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
-    
         chartView.bindToSuperview()
         chartView.heightAnchor.constraint(equalTo: scrollContainer.heightAnchor, multiplier: 1.0).isActive = true
         let chartViewWidth = chartView.widthAnchor.constraint(equalToConstant: bounds.width)
@@ -64,7 +62,7 @@ class BaseHistoryView: UIView {
         separator.bottomAnchor.constraint(equalTo: bottomView.bottomAnchor).isActive = true
     }
     
-   private func setupScrolling() {
+    private func setupScrolling() {
         setupOnRelativeOffsetChanged()
         setupOnSelectionChanged()
     }
@@ -86,7 +84,6 @@ class BaseHistoryView: UIView {
         self.localInterval = localInterval
         forwardTimeOffset = horizontalInterval(for: localInterval)
         scrollContainer.hideDetailView()
-       
         updateIntervals()
         updateChart()
     }
@@ -103,7 +100,7 @@ class BaseHistoryView: UIView {
         updateChart()
     }
     
-   private func updateIntervals() {
+    private func updateIntervals() {
         globalDateRange = DateInterval(
             endDate: Date() + forwardTimeOffset,
             duration: .secondsPerDay + forwardTimeOffset
@@ -119,12 +116,9 @@ class BaseHistoryView: UIView {
         )
         let chartWidth = scrollContainer.bounds.width * scrollSegments
         chartWidthConstraint?.constant = chartWidth
-        
         chartView.dateInterval = globalDateRange
         chartView.setNeedsDisplay()
-        
         updateChartSliderView(with: scrollSegments)
-        
         scrollContainer.layoutIfNeeded()
         scrollContainer.scrollView.contentOffset = CGPoint(x: chartWidth - scrollContainer.bounds.width, y: 0.0)
     }
@@ -194,7 +188,7 @@ class BaseHistoryView: UIView {
         chartView.relativeHorizontalInterval = CGFloat(interval / globalDateRange.duration)
     }
     
-     private func horizontalInterval(for localInterval: TimeInterval) -> TimeInterval {
+    private func horizontalInterval(for localInterval: TimeInterval) -> TimeInterval {
         let hours = Int((localInterval / .secondsPerHour).rounded())
         switch hours {
         case 0...1: return 10.0 * .secondsPerMinute

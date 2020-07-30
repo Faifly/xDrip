@@ -220,12 +220,12 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     }
     
     private func sibscribeToViewsButtonEvents() {
-        bolusHistoryView.onButtonClicked = { [weak self] in
+        bolusHistoryView.onChartButtonClicked = { [weak self] in
             let request = Home.ShowEntriesList.Request(entriesType: .bolus)
             self?.interactor?.doShowEntriesList(request: request)
         }
         
-        carbsHistoryView.onButtonClicked = { [weak self] in
+        carbsHistoryView.onChartButtonClicked = { [weak self] in
                let request = Home.ShowEntriesList.Request(entriesType: .carbs)
                self?.interactor?.doShowEntriesList(request: request)
            }
