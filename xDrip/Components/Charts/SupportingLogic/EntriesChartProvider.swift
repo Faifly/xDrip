@@ -29,7 +29,6 @@ extension EntriesChartProvider where Self: UIView {
         let pixelsPerSecond = Double(bounds.width - insets.left - insets.right) / timeInterval
         let yInterval = Double(bounds.height - insets.bottom - insets.top)
         let pixelsPerValue = yInterval / (yRange.upperBound - yRange.lowerBound)
-        var prevPoint: CGPoint?
         for (index, entry) in entries.enumerated() {
             let centerX = CGFloat((entry.date.timeIntervalSince1970 - minDate) * pixelsPerSecond) + insets.left
             let centerY = CGFloat((yRange.upperBound - entry.value) * pixelsPerValue) + insets.top
@@ -40,11 +39,7 @@ extension EntriesChartProvider where Self: UIView {
                 context.move(to: CGPoint(x: centerX, y: minY))
                 context.addLine(to: point)
             } else {
-                if let  prevPoint = prevPoint {
-                    let midPoint = self.midPointForPoints(from: prevPoint, to: point)
-                    context.addQuadCurve(to: point, control: controlPointForPoints(from: midPoint, to: point))
-                }
-                
+                context.addLine(to: point)
                 if index == entries.count - 1 {
                     context.addLine(to: CGPoint(x: centerX, y: minY))
                     context.closePath()
@@ -52,22 +47,6 @@ extension EntriesChartProvider where Self: UIView {
                     context.fillPath()
                 }
             }
-            prevPoint = point
         }
-    }
-    
-    func midPointForPoints(from point1: CGPoint, to point2: CGPoint) -> CGPoint {
-        return CGPoint(x: (point1.x + point2.x) / 2, y: (point1.y + point2.y) / 2)
-    }
-    
-    func controlPointForPoints(from point1: CGPoint, to point2: CGPoint) -> CGPoint {
-        var controlPoint = midPointForPoints(from: point1, to: point2)
-        let  diffY = abs(point2.y - controlPoint.y)
-        if point1.y < point2.y {
-            controlPoint.y += diffY
-        } else if point1.y > point2.y {
-            controlPoint.y += diffY
-        }
-        return controlPoint
     }
 }
