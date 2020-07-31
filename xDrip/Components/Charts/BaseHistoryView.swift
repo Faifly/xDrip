@@ -84,8 +84,7 @@ class BaseHistoryView: UIView {
         self.localInterval = localInterval
         forwardTimeOffset = horizontalInterval(for: localInterval)
         scrollContainer.hideDetailView()
-        updateIntervals()
-        updateChart()
+        update()
     }
     
     override func layoutSubviews() {
@@ -94,7 +93,6 @@ class BaseHistoryView: UIView {
         scrollContainer.hideDetailView()
     }
     
-    /// Should be sorted by date ascending
     func update() {
         updateIntervals()
         updateChart()

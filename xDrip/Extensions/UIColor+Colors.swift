@@ -34,6 +34,8 @@ extension UIColor {
         case lastScanDateTextColor
         case chartButtonTextColor
         case statsChartSelection
+        case bolusChartEntry
+        case carbsChartEntry
     }
     
     static var background1: UIColor {
@@ -130,6 +132,14 @@ extension UIColor {
     
     static var statsChartSelection: UIColor {
         return color(withName: Colors.statsChartSelection.rawValue)
+    }
+    
+    static var bolusChartEntry: UIColor {
+        return color(withName: Colors.bolusChartEntry.rawValue)
+    }
+    
+    static var carbsChartEntry: UIColor {
+        return color(withName: Colors.carbsChartEntry.rawValue)
     }
     
     private static func color(withName name: String) -> UIColor {

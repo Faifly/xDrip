@@ -102,7 +102,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             insulinData: BasalChartDataWorker.fetchBasalData(),
             chartPointsData: BasalChartDataWorker.calculateChartValues()
         )
-        self.presenter?.presentGlucoseData(response: response)
+        presenter?.presentGlucoseData(response: response)
     }
     
     private func updateGlucoseCurrentInfo() {
@@ -126,11 +126,11 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     
     private func updateBolusChartData() {
         let response = Home.BolusDataUpdate.Response(insulinData: InsulinEntriesWorker.fetchAllBolusEntries())
-        self.presenter?.presentBolusData(response: response)
+        presenter?.presentBolusData(response: response)
     }
     
     private func updateCarbsChartData() {
         let response = Home.CarbsDataUpdate.Response(carbsData: CarbEntriesWorker.fetchAllCarbEntries())
-        self.presenter?.presentCarbsData(response: response)
+        presenter?.presentCarbsData(response: response)
     }
 }

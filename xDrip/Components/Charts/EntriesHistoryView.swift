@@ -53,7 +53,7 @@ final class EntriesHistoryView: BaseHistoryView {
     
     override func updateChart() {
         super.calculateVerticalLeftLabels(minValue: chartEntries.map({ $0.value }).min(),
-                                    maxValue: chartEntries.map({ $0.value }).max())
+                                          maxValue: chartEntries.map({ $0.value }).max())
         super.updateChart()
     }
     
@@ -64,6 +64,11 @@ final class EntriesHistoryView: BaseHistoryView {
         chartTitleLabel.text = viewModel.chartTitle
         chartButton.setTitle(viewModel.chartButtonTitle, for: .normal)
         super.update()
+    }
+    
+     func setTimeFrame(_ localInterval: TimeInterval, chartButtonTitle: String) {
+        super.setTimeFrame(localInterval)
+        chartButton.setTitle(chartButtonTitle, for: .normal)
     }
     
     @objc func chartButtonClicked() {

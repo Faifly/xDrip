@@ -107,6 +107,21 @@ enum Home {
         }
     }
     
+    enum ChangeGlucoseEntriesChartTimeFrame {
+        struct Request {
+            let hours: Int
+        }
+
+        struct Response {
+            let timeInterval: TimeInterval
+        }
+
+        struct ViewModel {
+            let timeInterval: TimeInterval
+        }
+    }
+    
+    
     enum ChangeEntriesChartTimeFrame {
         struct Request {
             let hours: Int
@@ -118,6 +133,7 @@ enum Home {
         
         struct ViewModel {
             let timeInterval: TimeInterval
+            let buttonTitle: String
         }
     }
     

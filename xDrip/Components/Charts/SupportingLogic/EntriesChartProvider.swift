@@ -20,7 +20,7 @@ protocol EntriesChartProvider {
 
 extension EntriesChartProvider where Self: UIView {
     func drawChart() {
-        if entries.count < 2 { return }
+        guard entries.count > 2 else { return }
         guard let context = UIGraphicsGetCurrentContext() else { return }
         let minDate = dateInterval.start.timeIntervalSince1970
         let maxDate = dateInterval.end.timeIntervalSince1970

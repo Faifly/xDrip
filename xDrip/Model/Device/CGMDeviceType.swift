@@ -13,7 +13,7 @@ enum CGMDeviceType: Int {
     
     var warmUpInterval: TimeInterval {
         switch self {
-        case .dexcomG6: return .secondsPerHour * 2.0
+        case .dexcomG6: return 10//.secondsPerHour * 2.0
         }
     }
 }

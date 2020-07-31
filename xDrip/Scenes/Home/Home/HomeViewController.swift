@@ -17,7 +17,7 @@ protocol HomeDisplayLogic: AnyObject {
     func displayLoad(viewModel: Home.Load.ViewModel)
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel)
     func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel)
-    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
+    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseEntriesChartTimeFrame.ViewModel)
     func displayBolusData(viewModel: Home.BolusDataUpdate.ViewModel)
     func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
     func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel)
@@ -73,7 +73,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         super.viewDidLoad()
         doLoad()
         setupUI()
-        sibscribeToViewsButtonEvents()
+        subscribeToViewsButtonEvents()
     }
     
     // MARK: Do something
@@ -122,7 +122,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         }
     }
     
-    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
+    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseEntriesChartTimeFrame.ViewModel) {
         glucoseChart.setTimeFrame(viewModel.timeInterval)
     }
     
@@ -131,23 +131,19 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     }
     
     func displayBolusData(viewModel: Home.BolusDataUpdate.ViewModel) {
-        DispatchQueue.main.async { [weak self] in
-            self?.bolusHistoryView.setup(with: viewModel)
-        }
+        bolusHistoryView.setup(with: viewModel)
     }
     
     func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
-        bolusHistoryView.setTimeFrame(viewModel.timeInterval)
+        bolusHistoryView.setTimeFrame(viewModel.timeInterval, chartButtonTitle: viewModel.buttonTitle)
     }
     
     func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel) {
-        DispatchQueue.main.async { [weak self] in
-            self?.carbsHistoryView.setup(with: viewModel)
-        }
+        carbsHistoryView.setup(with: viewModel)
     }
     
     func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
-        carbsHistoryView.setTimeFrame(viewModel.timeInterval)
+        carbsHistoryView.setTimeFrame(viewModel.timeInterval, chartButtonTitle: viewModel.buttonTitle)
     }
     
     func displayWarmUp(viewModel: Home.WarmUp.ViewModel) {
@@ -219,15 +215,15 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         timeLineSegmentView.selectedSegmentIndex = 0
     }
     
-    private func sibscribeToViewsButtonEvents() {
+    private func subscribeToViewsButtonEvents() {
         bolusHistoryView.onChartButtonClicked = { [weak self] in
             let request = Home.ShowEntriesList.Request(entriesType: .bolus)
             self?.interactor?.doShowEntriesList(request: request)
         }
         
         carbsHistoryView.onChartButtonClicked = { [weak self] in
-               let request = Home.ShowEntriesList.Request(entriesType: .carbs)
-               self?.interactor?.doShowEntriesList(request: request)
-           }
+            let request = Home.ShowEntriesList.Request(entriesType: .carbs)
+            self?.interactor?.doShowEntriesList(request: request)
+        }
     }
 }

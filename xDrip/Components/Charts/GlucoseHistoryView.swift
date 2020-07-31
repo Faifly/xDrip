@@ -36,7 +36,6 @@ final class GlucoseHistoryView: BaseHistoryView {
         strokeChartEntries: [BasalChartBasalEntry],
         unit: String
     ) {
-//        let entries = MockedEntries.glucoseEntries
         self.glucoseEntries = entries
         self.glucoseChartView.glucoseEntries = entries
         self.basalDisplayMode = basalDisplayMode
