@@ -109,6 +109,7 @@
 		2C5C64A624C700E10026B439 /* BasalChartProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C64A524C700E10026B439 /* BasalChartProvider.swift */; };
 		2C6DBE9E24A5EC3C00B0F33A /* 500ms-of-silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2C6DBE9D24A5EC3C00B0F33A /* 500ms-of-silence.mp3 */; };
 		2C6DBE9F24A5F02B00B0F33A /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C55FEF624A23B62006BB3EF /* RepeatingTimer.swift */; };
+		2C824A5F24CEE8C4000578D2 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C824A5E24CEE8C4000578D2 /* ReachabilityService.swift */; };
 		2C87F047243E69C5002CF3D8 /* UView+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C87F045243E69C0002CF3D8 /* UView+Tests.swift */; };
 		2C8ADBBF24A0B98400827FF4 /* GlucoseNotificationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */; };
 		2C8F23CF24B478B5002B36A6 /* BasalRatesPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F23CE24B478B5002B36A6 /* BasalRatesPicker.swift */; };
@@ -130,6 +131,7 @@
 		2CBF32A4242E030700DE944A /* EntriesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */; };
 		2CDA0D9C24C9CBBE001C5D6B /* BasalChartDataWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDA0D9B24C9CBBE001C5D6B /* BasalChartDataWorkerTests.swift */; };
 		2CDDFEBD24927A9C009505B0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2CDDFEBF24927A9C009505B0 /* InfoPlist.strings */; };
+		2CEEA2B124D1702A0081D6ED /* BridgeBatteryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEEA2B024D1702A0081D6ED /* BridgeBatteryService.swift */; };
 		5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5805C97C243891CA002AFA1B /* HomeViewController.xib */; };
 		5805C9A024389230002AFA1B /* DexcomG6OutgoingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C98324389230002AFA1B /* DexcomG6OutgoingMessage.swift */; };
 		5805C9A124389230002AFA1B /* DexcomG6SensorDataTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5805C98424389230002AFA1B /* DexcomG6SensorDataTxMessage.swift */; };
@@ -783,6 +785,7 @@
 		2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewControllerCoderTest.swift; sourceTree = "<group>"; };
 		2C5C64A524C700E10026B439 /* BasalChartProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalChartProvider.swift; sourceTree = "<group>"; };
 		2C6DBE9D24A5EC3C00B0F33A /* 500ms-of-silence.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "500ms-of-silence.mp3"; sourceTree = "<group>"; };
+		2C824A5E24CEE8C4000578D2 /* ReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
 		2C8ADBBE24A0B98300827FF4 /* GlucoseNotificationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseNotificationWorker.swift; sourceTree = "<group>"; };
 		2C8F23CE24B478B5002B36A6 /* BasalRatesPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalRatesPicker.swift; sourceTree = "<group>"; };
@@ -804,6 +807,7 @@
 		2CBF32A3242E030700DE944A /* EntriesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTableViewCell.swift; sourceTree = "<group>"; };
 		2CDA0D9B24C9CBBE001C5D6B /* BasalChartDataWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalChartDataWorkerTests.swift; sourceTree = "<group>"; };
 		2CDDFEBE24927A9C009505B0 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2CEEA2B024D1702A0081D6ED /* BridgeBatteryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeBatteryService.swift; sourceTree = "<group>"; };
 		5805C97C243891CA002AFA1B /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		5805C98324389230002AFA1B /* DexcomG6OutgoingMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DexcomG6OutgoingMessage.swift; sourceTree = "<group>"; };
 		5805C98424389230002AFA1B /* DexcomG6SensorDataTxMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DexcomG6SensorDataTxMessage.swift; sourceTree = "<group>"; };
@@ -3501,6 +3505,8 @@
 				588584A1248E76C700C3F74C /* CloudSync */,
 				5805C97E24389230002AFA1B /* Bluetooth */,
 				5826A60324698369009684E4 /* CalibrationService.swift */,
+				2C824A5E24CEE8C4000578D2 /* ReachabilityService.swift */,
+				2CEEA2B024D1702A0081D6ED /* BridgeBatteryService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -4007,6 +4013,7 @@
 				584432AE243CFD9B00282A6C /* SettingsChartInteractor.swift in Sources */,
 				5805C9AE24389230002AFA1B /* DexcomG6TransmitterVersionRxMessage.swift in Sources */,
 				2CBE1A98243212F7003BE14E /* EntriesListAbstractFormattingWorker.swift in Sources */,
+				2C824A5F24CEE8C4000578D2 /* ReachabilityService.swift in Sources */,
 				58F818ED246EFE44004CD2FE /* EditCalibrationSavingWorker.swift in Sources */,
 				580E4BD1243F736D00565EDE /* SettingsModeFollowerViewController.swift in Sources */,
 				580E4C2C243F74F000565EDE /* SettingsUnitsModels.swift in Sources */,
@@ -4090,6 +4097,7 @@
 				580E4B80243F717E00565EDE /* SettingsAlertSoundModels.swift in Sources */,
 				58FFBC2124A5ED5F003D2DE6 /* ActionButton.swift in Sources */,
 				580EC7812421457700C34948 /* EditFoodEntryInteractor.swift in Sources */,
+				2CEEA2B124D1702A0081D6ED /* BridgeBatteryService.swift in Sources */,
 				5805C9AB24389230002AFA1B /* DexcomG6AuthChallengeRxMessage.swift in Sources */,
 				580E4CF42440D24800565EDE /* BaseChartView.swift in Sources */,
 				580E4BE8243F73B200565EDE /* SettingsSensorPresenter.swift in Sources */,

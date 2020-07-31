@@ -7,9 +7,13 @@
 //
 
 import Foundation
+import AKUtils
 
 final class NightscoutService {
     static let shared = NightscoutService()
+    
+    private var reachability = try? ReachabilityService()
+    private var currentConnectType = ReachabilityService.Connection.unavailable
     
     private var requestQueue: [UploadRequest] = []
     
@@ -32,12 +36,27 @@ final class NightscoutService {
         if let settings = User.current.settings.nightscoutSync, settings.isFollowerAuthed {
             startFetchingFollowerData()
         }
+        
+        reachability?.whenReachable = { [weak self] reachability in
+            self?.currentConnectType = reachability.connection
+            self?.runQueue()
+        }
+        reachability?.whenUnreachable = { [weak self] reachability in
+            self?.currentConnectType = reachability.connection
+        }
+        
+        try? reachability?.startNotifier()
+    }
+    
+    deinit {
+        reachability?.stopNotifier()
     }
     
     func scanForNotUploadedEntries() {
         guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else { return }
         scanForGlucoseEntries()
         scanForCalibrations()
+        
         runQueue()
     }
     
@@ -45,6 +64,7 @@ final class NightscoutService {
         guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else { return }
         let requests = calibrations.compactMap { requestFactory.createDeleteCalibrationRequest($0) }
         requestQueue.append(contentsOf: requests)
+        
         runQueue()
     }
     
@@ -118,6 +138,7 @@ final class NightscoutService {
     }
     
     private func runQueue() {
+        guard checkUseCellular(), checkSkipLANUploads() else { return }
         guard !requestQueue.isEmpty else { return }
         let request = requestQueue[0]
         URLSession.shared.dataTask(with: request.request) { [weak self] _, _, error in
@@ -130,7 +151,7 @@ final class NightscoutService {
                 switch first.type {
                 case .postGlucoseReading, .modifyGlucoseReading:
                     GlucoseReading.markEntryAsUploaded(externalID: first.itemID)
-                    
+                    self.sendDeviceStatus()
                 case .deleteGlucoseReading, .deleteCalibration:
                     break
                     
@@ -161,9 +182,38 @@ final class NightscoutService {
             guard let data = data, error == nil else { return }
             guard let entries = try? JSONDecoder().decode([CGlucoseReading].self, from: data) else { return }
             DispatchQueue.main.async {
-                GlucoseReading.parseFollowerEntries(entries)
-                CGMController.shared.notifyGlucoseChange()
+                let allFollower = GlucoseReading.allFollower
+                let readings = GlucoseReading.parseFollowerEntries(entries).sorted(by: { $0.date >? $1.date })
+                let newReadings = readings.filter { reading -> Bool in
+                    !allFollower.contains(where: { $0.externalID == reading.externalID })
+                }.sorted(by: { $0.date >? $1.date })
+                CGMController.shared.notifyGlucoseChange(newReadings.first)
             }
         }.resume()
+    }
+    
+    private func checkUseCellular() -> Bool {
+        if User.currentAsync?.settings.nightscoutSync?.useCellularData == false {
+            guard currentConnectType != .cellular else { return false }
+        }
+        
+        return true
+    }
+    
+    private func checkSkipLANUploads() -> Bool {
+        if User.currentAsync?.settings.nightscoutSync?.skipLANUploads == true {
+            guard let baseURLString = User.currentAsync?.settings.nightscoutSync?.baseURL else { return false }
+            guard let baseURL = URL(string: baseURLString) else { return false }
+            if baseURL.host?.hasPrefix("192.168.") == true && currentConnectType != .wifi {
+                return false
+            }
+        }
+        
+        return true
+    }
+  
+    func sendDeviceStatus() {
+        guard let request = requestFactory.createDeviceStatusRequest() else { return }
+        URLSession.shared.dataTask(with: request).resume()
     }
 }

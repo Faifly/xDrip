@@ -193,12 +193,14 @@ final class GlucoseReading: Object {
         }
     }
     
-    static func parseFollowerEntries(_ rawEntries: [CGlucoseReading]) {
+    static func parseFollowerEntries(_ rawEntries: [CGlucoseReading]) -> [GlucoseReading] {
         let readings = rawEntries.compactMap { createReading(from: $0) }
         let realm = Realm.shared
         realm.safeWrite {
             realm.add(readings, update: .all)
         }
+        
+        return readings
     }
     
     static func createReading(from rawEntry: CGlucoseReading) -> GlucoseReading? {
