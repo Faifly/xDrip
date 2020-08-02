@@ -37,8 +37,7 @@ final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBu
     private func handleSwitchValueChanged(_ field: NightscoutCloudExtraOptions.Field, _ value: Bool) {
         switch field {
         case .skipLANUploads:
-//            settings.updateSkipLANUploads(value)
-            router?.presentNotYetImplementedAlert()
+            settings.updateSkipLANUploads(value)
             updateData()
             
         case .uploadBattery:

@@ -116,7 +116,7 @@ final class NightscoutCloudExtraOptionsViewControllerTests: XCTestCase {
         skipSwitch.isOn = true
         skipSwitch.sendActions(for: .valueChanged)
         // Then
-        XCTAssert(settings?.skipLANUploads == false)
+        XCTAssert(settings?.skipLANUploads == true)
         
         // When
         skipSwitch.isOn = false
@@ -203,8 +203,13 @@ final class NightscoutCloudExtraOptionsViewControllerTests: XCTestCase {
     func testSourceInfoValueChanged() {
         loadView()
         
+        var indexPath = IndexPath(row: 0, section: 4)
+        #if targetEnvironment(simulator) || targetEnvironment(macCatalyst)
+        indexPath = IndexPath(row: 0, section: 3)
+        #endif
+        
         let cellType = BaseSettingsRightSwitchTableViewCell.self
-        guard let sourceInfoCell = tableView.getCell(of: cellType, at: IndexPath(row: 0, section: 4)),
+        guard let sourceInfoCell = tableView.getCell(of: cellType, at: indexPath),
             let sourceInfoSwitch = sourceInfoCell.accessoryView as? UISwitch else {
                 XCTFail("Cannot obtain switches")
                 return
@@ -233,8 +238,12 @@ final class NightscoutCloudExtraOptionsViewControllerTests: XCTestCase {
             interactor.router = spy
         }
         
+        var indexPath = IndexPath(row: 0, section: 5)
+        #if targetEnvironment(simulator) || targetEnvironment(macCatalyst)
+        indexPath = IndexPath(row: 0, section: 4)
+        #endif
         // When
-        tableView.callDidSelect(at: IndexPath(row: 0, section: 5))
+        tableView.callDidSelect(at: indexPath)
         // Then
 //        XCTAssertTrue(spy.routeToBackfillCalled)
     }

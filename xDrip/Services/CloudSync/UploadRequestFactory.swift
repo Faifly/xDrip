@@ -16,6 +16,7 @@ protocol UploadRequestFactoryLogic {
     func createDeleteCalibrationRequest(_ calibration: Calibration) -> UploadRequest?
     func createTestConnectionRequest(tryAuth: Bool) throws -> URLRequest
     func createFetchFollowerDataRequest() -> URLRequest?
+    func createDeviceStatusRequest() -> URLRequest?
 }
 
 final class UploadRequestFactory: UploadRequestFactoryLogic {
@@ -57,16 +58,34 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     }
     
     func createTestConnectionRequest(tryAuth: Bool) throws -> URLRequest {
-        guard var request = try createEntriesRequest(appendSecret: tryAuth) else {
-            throw NightscoutError.invalidURL
+        if !tryAuth {
+            guard var request = try createEntriesRequest(appendSecret: false) else {
+                throw NightscoutError.invalidURL
+            }
+            request.timeoutInterval = 10.0
+            return request
+        } else {
+            guard let baseURLString = User.current.settings.nightscoutSync?.baseURL else {
+                throw NightscoutError.invalidURL
+            }
+            guard let baseURL = URL(string: baseURLString) else {
+                throw NightscoutError.invalidURL
+            }
+            let url = baseURL.appendingPathComponent("/api/v1/experiments/test")
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            request.timeoutInterval = 10.0
+            
+            guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret else {
+                throw NightscoutError.noAPISecret
+            }
+            guard !apiSecret.isEmpty else {
+                throw NightscoutError.noAPISecret
+            }
+            request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
+
+            return request
         }
-        
-        request.timeoutInterval = 10.0
-        if tryAuth {
-            request.httpBody = "[{\"date\":1}]".data(using: .utf8)
-        }
-        
-        return request
     }
     
     func createFetchFollowerDataRequest() -> URLRequest? {
@@ -96,13 +115,9 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         guard let baseURL = URL(string: baseURLString) else {
             throw NightscoutError.invalidURL
         }
-        
         let url = baseURL.appendingPathComponent("/api/v1/entries.json")
         var request = URLRequest(url: url)
-        
-        request.allHTTPHeaderFields = [
-            "Content-Type": "application/json"
-        ]
+        request.allHTTPHeaderFields = createHeaders()
         
         if appendSecret {
             guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret else {
@@ -111,15 +126,48 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
             guard !apiSecret.isEmpty else {
                 throw NightscoutError.noAPISecret
             }
-            
             request.httpMethod = "POST"
-            var headers = request.allHTTPHeaderFields
-            headers?["API-SECRET"] = apiSecret.sha1
-            request.allHTTPHeaderFields = headers
+            request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
         } else {
             request.httpMethod = "GET"
         }
         
         return request
+    }
+    
+    func createDeviceStatusRequest() -> URLRequest? {
+        let settings = User.current.settings.nightscoutSync
+        guard settings?.uploadBridgeBattery == true else { return nil }
+        guard let baseURLString = settings?.baseURL else { return nil }
+        guard let baseURL = URL(string: baseURLString) else { return nil }
+        guard let apiSecret = settings?.apiSecret else { return nil }
+        
+        let url = baseURL.appendingPathComponent("/api/v1/devicestatus")
+        var request = URLRequest(url: url)
+        request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
+        
+        let data: [String: Any] = [
+            "device": "xDrip iOS",
+            "uploader": [
+                "battery": BridgeBatteryService.getBatteryLevel()
+            ]
+        ]
+        
+        request.httpBody = try? JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+        request.httpMethod = "POST"
+        
+        return request
+    }
+    
+    private func createHeaders(apiSecret: String? = nil) -> [String: String] {
+        var headers = [
+           "Content-Type": "application/json"
+        ]
+        
+        if let secret = apiSecret {
+            headers["API-SECRET"] = secret
+        }
+        
+        return headers
     }
 }

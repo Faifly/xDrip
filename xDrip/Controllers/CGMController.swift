@@ -72,8 +72,8 @@ final class CGMController {
         self.service = nil
     }
     
-    func notifyGlucoseChange() {
-        glucoseDataListeners.values.forEach { $0(nil) }
+    func notifyGlucoseChange(_ reading: GlucoseReading? = nil) {
+        glucoseDataListeners.values.forEach { $0(reading) }
     }
     
     func notifyMetadataChanged(_ metadata: CGMDeviceMetadataType) {

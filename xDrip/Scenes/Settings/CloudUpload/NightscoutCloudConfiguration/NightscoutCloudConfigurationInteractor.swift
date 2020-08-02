@@ -46,8 +46,7 @@ final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfiguration
             settings.updateIsEnabled(value)
             
         case .useCellularData:
-//            settings.updateUseCellularData(value)
-            router?.presentNotYetImplementedAlert()
+            settings.updateUseCellularData(value)
             
         case .sendDisplayGlucose:
             settings.updateSendDisplayGlucose(value)
