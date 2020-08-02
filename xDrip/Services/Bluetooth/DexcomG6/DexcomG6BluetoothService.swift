@@ -21,6 +21,7 @@ final class DexcomG6BluetoothService: NSObject {
             peripheral?.delegate = self
         }
     }
+    private var lastRSSI: Double = 100.0
     
     private var lastPeripheralReadingDate: Date?
     private var hasRecentlyConnected: Bool {
@@ -104,7 +105,8 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
         let firmware = CGMDevice.current.metadata(ofType: .firmwareVersion)?.value
         delegate?.serviceDidReceiveGlucoseReading(
             raw: DexcomG6Firmware.scaleRawValue(message.unfiltered, firmware: firmware),
-            filtered: DexcomG6Firmware.scaleRawValue(message.filtered, firmware: firmware)
+            filtered: DexcomG6Firmware.scaleRawValue(message.filtered, firmware: firmware),
+            rssi: lastRSSI
         )
     }
     
@@ -168,6 +170,7 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
             peripheral
         )
         self.peripheral = peripheral
+        lastRSSI = RSSI.doubleValue
         central.connect(peripheral, options: nil)
     }
     

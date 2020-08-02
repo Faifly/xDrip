@@ -50,8 +50,7 @@ final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfiguration
             router?.presentNotYetImplementedAlert()
             
         case .sendDisplayGlucose:
-//            settings.updateSendDisplayGlucose(value)
-            router?.presentNotYetImplementedAlert()
+            settings.updateSendDisplayGlucose(value)
             
         case .downloadData:
 //            settings.updateDownloadData(value)

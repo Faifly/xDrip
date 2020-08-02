@@ -58,7 +58,7 @@ final class MockedBluetoothService {
         case .abnormalDeviation: nextValue += deviation
         }
         
-        delegate?.serviceDidReceiveGlucoseReading(raw: nextValue, filtered: nextValue)
+        delegate?.serviceDidReceiveGlucoseReading(raw: nextValue, filtered: nextValue, rssi: 100.0)
         previousGlucoseValue = nextValue
     }
 }
