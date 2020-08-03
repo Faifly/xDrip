@@ -13,6 +13,10 @@ import AKUtils
 // swiftlint:disable identifier_name
 // swiftlint:disable large_tuple
 // swiftlint:disable type_body_length
+// swiftlint:disable file_length
+// swiftlint:disable cyclomatic_complexity
+// swiftlint:disable function_body_length
+
 final class GlucoseReading: Object {
     private static let ageAdjustmentTime = TimeInterval.secondsPerDay * 1.9
     private static let ageAdjustmentFactor = 0.45
@@ -35,6 +39,11 @@ final class GlucoseReading: Object {
     @objc private(set) dynamic var calculatedValueSlope: Double = 0.0
     @objc private(set) dynamic var timeSinceSensorStarted: TimeInterval = 0.0
     @objc private(set) dynamic var externalID: String?
+    @objc private(set) dynamic var noise: String = "1"
+    @objc private(set) dynamic var rssi: Double = 0.0
+    @objc private(set) dynamic var displayGlucose: Double = 0.0
+    @objc private(set) dynamic var displaySlope: Double = 0.0
+    @objc private(set) dynamic var displayDeltaName: String?
     @objc private dynamic var rawDeviceMode: Int = UserDeviceMode.default.rawValue
     @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notApplicable.rawValue
     
@@ -111,6 +120,7 @@ final class GlucoseReading: Object {
     
     @discardableResult static func create(filtered: Double,
                                           unfiltered: Double,
+                                          rssi: Double,
                                           date: Date = Date()) -> GlucoseReading? {
         LogController.log(message: "[Glucose] Trying to create reading...", type: .debug)
         guard let sensorStarted = CGMDevice.current.sensorStartDate, CGMDevice.current.isSensorStarted else {
@@ -125,6 +135,7 @@ final class GlucoseReading: Object {
         reading.filteredValue = filtered
         reading.date = date
         reading.timeSinceSensorStarted = date.timeIntervalSince1970 - sensorStarted.timeIntervalSince1970
+        reading.rssi = rssi
         reading.calculateAgeAdjustedRawValue()
         reading.findSlope()
         
@@ -140,6 +151,8 @@ final class GlucoseReading: Object {
         reading.findNewRawCurve()
         
         Calibration.adjustRecentReadings(1)
+        reading.calculateNoise()
+        reading.injectDisplayGlucose()
         
         LogController.log(
             message: "[Glucose] Created reading with calculated value: %@",
@@ -366,5 +379,110 @@ final class GlucoseReading: Object {
     
     func activeSlope(date: Date = Date()) -> Double {
         return 2 * a * date.timeIntervalSince1970 + b
+    }
+    
+    private func calculateNoise() {
+        let mode = User.current.settings.deviceMode
+        let maxRecords = 8
+        let minRecords = 4
+        
+        let readings = Array(GlucoseReading.lastReadings(maxRecords, for: mode).reversed())
+        if readings.count < minRecords {
+            Realm.shared.safeWrite {
+                noise = "1" // Clean
+            }
+            return
+        }
+        
+        let firstReading = readings[0]
+        let lastReading = readings[readings.count - 1]
+        
+        let firstCalculatedValue = firstReading.calculatedValue
+        let lastCalculatedValue = lastReading.calculatedValue
+        
+        if lastCalculatedValue > 400.0 {
+            Realm.shared.safeWrite {
+                noise = "3" // Medium
+            }
+            return
+        } else if lastCalculatedValue < 40.0 {
+            Realm.shared.safeWrite {
+                noise = "2" // Light
+            }
+            return
+        } else if abs(lastCalculatedValue - readings[readings.count - 2].calculatedValue) > 30.0 {
+            Realm.shared.safeWrite {
+                noise = "4" // Heavy
+            }
+            return
+        }
+        
+        guard let firstDate = firstReading.date else { return }
+        guard let lastDate = lastReading.date else { return }
+        
+        let firstSGV = firstCalculatedValue
+        let firstTime = firstDate.timeIntervalSince1970 * 30.0
+        
+        let lastSGV = lastCalculatedValue
+        let lastTime = lastDate.timeIntervalSince1970 * 30.0
+        
+        var xArray = [Double]()
+        
+        for reading in readings {
+            guard let date = reading.date else { continue }
+            xArray.append(date.timeIntervalSince1970 * 30.0 - firstTime)
+        }
+        
+        var sumOfDistances = 0.0
+        var lastDelta = 0.0
+        
+        for index in 1..<readings.count {
+            var y2y1Delta = (readings[index].calculatedValue - readings[index - 1].calculatedValue)
+                * (1.0 + Double(index) / Double(readings.count * 3))
+            let x2x1Delta = xArray[index] - xArray[index - 1]
+            if (lastDelta > 0.0 && y2y1Delta < 0.0) || (lastDelta < 0.0 && y2y1Delta > 0.0) {
+                y2y1Delta *= 1.4
+            }
+            
+            lastDelta = y2y1Delta
+            sumOfDistances += sqrt(pow(x2x1Delta, 2.0) + pow(y2y1Delta, 2.0))
+        }
+        
+        let overallSod = sqrt(pow(lastSGV - firstSGV, 2.0) + pow(lastTime - firstTime, 2.0))
+        
+        guard sumOfDistances !~ 0.0 else {
+            Realm.shared.safeWrite {
+                noise = "1"
+            }
+            return
+        }
+        
+        let internalNoise = 1.0 - (overallSod / sumOfDistances)
+        
+        Realm.shared.safeWrite {
+            if internalNoise < 0.15 {
+                noise = "1"
+            } else if internalNoise < 0.3 {
+                noise = "2"
+            } else if internalNoise < 0.5 {
+                noise = "3"
+            } else if internalNoise >= 0.5 {
+                noise = "4"
+            } else {
+                noise = "1"
+            }
+        }
+    }
+    
+    private func injectDisplayGlucose() {
+        guard let displayGlucose = DisplayGlucose(readings: GlucoseReading.lastReadings(2, for: .main)) else {
+            return
+        }
+        
+        Realm.shared.safeWrite {
+            self.displayGlucose = displayGlucose.mgDl
+            displaySlope = displayGlucose.slope
+            displayDeltaName = displayGlucose.deltaName
+        }
     }
 }

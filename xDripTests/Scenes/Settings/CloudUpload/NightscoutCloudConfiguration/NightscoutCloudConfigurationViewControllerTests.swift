@@ -172,7 +172,7 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
         glucoseSwitch.isOn = true
         glucoseSwitch.sendActions(for: .valueChanged)
         // Then
-        XCTAssert(settings?.sendDisplayGlucose == false)
+        XCTAssert(settings?.sendDisplayGlucose == true)
         
         // When
         glucoseSwitch.isOn = false

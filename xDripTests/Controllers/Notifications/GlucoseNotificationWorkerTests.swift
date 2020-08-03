@@ -18,8 +18,8 @@ final class GlucoseNotificationsWorkerTests: AbstractRealmTest {
         CGMDevice.current.sensorStartDate = Date().addingTimeInterval(-86400.0)
         CGMDevice.current.updateSensorIsStarted(true)
         
-        GlucoseReading.create(filtered: 120.0, unfiltered: 120.0, date: Date().addingTimeInterval(-600))
-        GlucoseReading.create(filtered: 135.0, unfiltered: 135.0, date: Date().addingTimeInterval(-300))
+        GlucoseReading.create(filtered: 120.0, unfiltered: 120.0, rssi: 0.0, date: Date().addingTimeInterval(-600))
+        GlucoseReading.create(filtered: 135.0, unfiltered: 135.0, rssi: 0.0, date: Date().addingTimeInterval(-300))
         
         try? Calibration.createInitialCalibration(
             glucoseLevel1: 80.0,
@@ -28,10 +28,10 @@ final class GlucoseNotificationsWorkerTests: AbstractRealmTest {
             date2: Date().addingTimeInterval(-3600.0)
         )
         
-        CGMController.shared.serviceDidReceiveGlucoseReading(raw: 150.0, filtered: 150.0)
-        CGMController.shared.serviceDidReceiveGlucoseReading(raw: 170.0, filtered: 170.0)
-        CGMController.shared.serviceDidReceiveGlucoseReading(raw: 150.0, filtered: 150.0)
-        CGMController.shared.serviceDidReceiveGlucoseReading(raw: 130.0, filtered: 130.0)
+        CGMController.shared.serviceDidReceiveGlucoseReading(raw: 150.0, filtered: 150.0, rssi: 0.0)
+        CGMController.shared.serviceDidReceiveGlucoseReading(raw: 170.0, filtered: 170.0, rssi: 0.0)
+        CGMController.shared.serviceDidReceiveGlucoseReading(raw: 150.0, filtered: 150.0, rssi: 0.0)
+        CGMController.shared.serviceDidReceiveGlucoseReading(raw: 130.0, filtered: 130.0, rssi: 0.0)
     }
     
     func testSetupRepeatAlerts() {
