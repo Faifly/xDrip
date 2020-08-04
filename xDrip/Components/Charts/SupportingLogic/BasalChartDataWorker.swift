@@ -26,7 +26,6 @@ enum BasalChartDataWorker {
         var lastValue = all[0].amount
         var prevEntry: InsulinEntry?
         for (index, entry) in all.enumerated() {
-            if entry.date >? date { break }
             if index != 0 {
                 calculateValue(prevEntry: prevEntry, toDate: entry.date, lastValue: &lastValue)
                 lastValue += entry.amount
