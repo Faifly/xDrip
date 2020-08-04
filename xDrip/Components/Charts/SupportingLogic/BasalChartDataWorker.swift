@@ -19,14 +19,13 @@ enum BasalChartDataWorker {
     static func getBasalValueForDate(date: Date) -> Double {
         let minimumDate = Date() - .secondsPerDay * 3.0
         guard date >= minimumDate else { return 0.0 }
-        let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate })
+        let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate && $0.date <=? date })
         
         guard !all.isEmpty else { return 0.0 }
         
         var lastValue = all[0].amount
         var prevEntry: InsulinEntry?
         for (index, entry) in all.enumerated() {
-            if entry.date >? date { break }
             if index != 0 {
                 calculateValue(prevEntry: prevEntry, toDate: entry.date, lastValue: &lastValue)
                 lastValue += entry.amount
