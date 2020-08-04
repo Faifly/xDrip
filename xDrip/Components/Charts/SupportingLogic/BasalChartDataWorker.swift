@@ -133,7 +133,9 @@ enum BasalChartDataWorker {
             points.append(InsulinEntry(amount: lastValue, date: entry.date ?? Date(), type: .basal))
             prevEntry = entry
         }
-        points.append(contentsOf: calculateValue(prevEntry: prevEntry, toDate: Date(), lastValue: &lastValue))
+        points.append(contentsOf:
+            calculateValue(prevEntry: prevEntry, toDate: Date() + .secondsPerHour * 6.0, lastValue: &lastValue)
+        )
         points.sort { first, second -> Bool in
             if first.date == second.date {
                 return first.amount < second.amount
