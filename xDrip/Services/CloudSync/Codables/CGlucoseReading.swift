@@ -15,13 +15,27 @@ struct CGlucoseReading: Codable {
     let sgv: Double?
     let filtered: Double?
     let unfiltered: Double?
+    let slope: Double?
+    let direction: String?
+    let rssi: Double?
+    let noise: String?
     
     init(reading: GlucoseReading) {
         identifier = reading.externalID
         type = "sgv"
         date = Int64((reading.date?.timeIntervalSince1970 ?? 0.0) * 1000.0)
-        sgv = reading.calculatedValue.rounded(to: 2)
+        if User.current.settings.nightscoutSync?.sendDisplayGlucose == true {
+            sgv = reading.displayGlucose.rounded(to: 2)
+            slope = reading.displaySlope * 5.0 * .secondsPerMinute
+            direction = reading.displayDeltaName
+        } else {
+            sgv = reading.calculatedValue.rounded(to: 2)
+            slope = reading.activeSlope() * 5.0 * .secondsPerMinute
+            direction = nil
+        }
         filtered = reading.rawValue.rounded(to: 2)
         unfiltered = reading.filteredValue.rounded(to: 2)
+        rssi = reading.rssi
+        noise = reading.noise
     }
 }

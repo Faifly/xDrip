@@ -185,9 +185,9 @@ final class EditCalibrationViewControllerTests: XCTestCase {
         CGMDevice.current.sensorStartDate = date
         CGMDevice.current.updateSensorIsStarted(true)
         date = date.addingTimeInterval(3600)
-        GlucoseReading.create(filtered: 1.0, unfiltered: 1.0, date: date)
+        GlucoseReading.create(filtered: 1.0, unfiltered: 1.0, rssi: 0.0, date: date)
         date = date.addingTimeInterval(3600)
-        GlucoseReading.create(filtered: 1.0, unfiltered: 1.0, date: date)
+        GlucoseReading.create(filtered: 1.0, unfiltered: 1.0, rssi: 0.0, date: date)
         
         let spy = EditCalibrationRoutingLogicSpy()
         if let interactor = sut.interactor as? EditCalibrationInteractor {

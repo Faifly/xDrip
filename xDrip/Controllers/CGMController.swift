@@ -95,9 +95,9 @@ extension CGMController: CGMBluetoothServiceDelegate {
         metadataListeners.values.forEach { $0(metadata) }
     }
     
-    func serviceDidReceiveGlucoseReading(raw: Double, filtered: Double) {
+    func serviceDidReceiveGlucoseReading(raw: Double, filtered: Double, rssi: Double) {
         guard !CGMDevice.current.isWarmingUp else { return }
-        if let reading = GlucoseReading.create(filtered: filtered, unfiltered: raw) {
+        if let reading = GlucoseReading.create(filtered: filtered, unfiltered: raw, rssi: rssi) {
             glucoseDataListeners.values.forEach { $0(reading) }
         }
     }
