@@ -31,6 +31,9 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
         insulinEntries = response.insulinData
         let insulinDuration = User.current.settings.insulinActionTime
         let baseChartEntries = formatEntries(insulinEntries, absorbtionDuration: insulinDuration)
+        for obj in baseChartEntries {
+            print("obj \(obj.value) \(obj.date)")
+        }
         return InsulinCarbEntry(title: "home_active_insulin".localized,
                                 entries: baseChartEntries,
                                 unit: Root.EntryType.bolus.shortLabel,
@@ -64,7 +67,7 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
                     let pointX = nextEntryDate.timeIntervalSince1970
                     let startX = entryDate.timeIntervalSince1970
                     let endX = entryEndDate.timeIntervalSince1970
-                    finalEntryAmount = ((pointX - startX) * (0 - entry.amount)) / (endX - startX) + entry.amount
+                    finalEntryAmount = ((pointX - startX) * (0.0 - entry.amount)) / (endX - startX) + entry.amount
                     finalEntryDate = nextEntryDate
                 }
             }
@@ -76,11 +79,12 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
                 if entryDate.timeIntervalSince1970 < endX {
                     let pointX = entryDate.timeIntervalSince1970
                     let startX = prevEntryDate.timeIntervalSince1970
-                    let lastAmount = ((pointX - startX) * (0 - prevEntry.amount)) / (endX - startX) + prevEntry.amount
+                    let lastAmount = ((pointX - startX) * (0.0 - prevEntry.amount)) / (endX - startX) + prevEntry.amount
                     entryAmount += lastAmount
                 }
             }
             
+            baseChartEntries.append(BaseChartEntry(value: 0.0, date: entryDate))
             baseChartEntries.append(BaseChartEntry(value: entryAmount, date: entryDate))
             baseChartEntries.append(BaseChartEntry(value: finalEntryAmount, date: finalEntryDate))
         }

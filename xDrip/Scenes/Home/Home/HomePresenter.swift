@@ -77,11 +77,13 @@ final class HomePresenter: HomePresentationLogic {
     func presentBolusData(response: Home.BolusDataUpdate.Response) {
         let entry = homeEntriesFormattingWorker.formatBolusResponse(response)
         let chartButtonTitle = homeEntriesFormattingWorker.getChartButtonTitle(.bolus)
+        let isShown = User.current.settings.chart?.showActiveInsulin ?? true
         let viewModel = Home.BolusDataUpdate.ViewModel(chartTitle: entry.title,
                                                        chartButtonTitle: chartButtonTitle,
                                                        entries: entry.entries,
                                                        unit: entry.unit,
-                                                       color: entry.color)
+                                                       color: entry.color,
+                                                       isShown: isShown)
         viewController?.displayBolusData(viewModel: viewModel)
     }
     
@@ -96,11 +98,13 @@ final class HomePresenter: HomePresentationLogic {
     func presentCarbsData(response: Home.CarbsDataUpdate.Response) {
         let entry = homeEntriesFormattingWorker.formatCarbsResponse(response)
         let chartButtonTitle = homeEntriesFormattingWorker.getChartButtonTitle(.carbs)
+        let isShown = User.current.settings.chart?.showActiveCarbs ?? true
         let viewModel = Home.CarbsDataUpdate.ViewModel(chartTitle: entry.title,
                                                        chartButtonTitle: chartButtonTitle,
                                                        entries: entry.entries,
                                                        unit: entry.unit,
-                                                       color: entry.color)
+                                                       color: entry.color,
+                                                       isShown: isShown)
         viewController?.displayCarbsData(viewModel: viewModel)
     }
     

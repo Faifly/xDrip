@@ -39,7 +39,9 @@ final class SettingsChartInteractor: SettingsChartBusinessLogic, SettingsChartDa
         
         switch field {
         case .activeInsulin: settings?.updateShowActiveInsulin(value)
+        NotificationCenter.default.postSettingsChangeNotification(setting: .activeInsulin)
         case .activeCarbs: settings?.updateShowActiveCarbs(value)
+        NotificationCenter.default.postSettingsChangeNotification(setting: .activeCarbs)
         case .data: settings?.updateShowData(value)
         }
     }

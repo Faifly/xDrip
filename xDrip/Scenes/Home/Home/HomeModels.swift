@@ -18,6 +18,7 @@ protocol BaseFoodEntryViewModel {
     var entries: [BaseChartEntry] { get }
     var unit: String { get }
     var color: UIColor { get }
+    var isShown: Bool { get }
 }
 
 enum Home {
@@ -75,6 +76,7 @@ enum Home {
             let entries: [BaseChartEntry]
             let unit: String
             let color: UIColor
+            let isShown: Bool
         }
     }
         
@@ -92,6 +94,7 @@ enum Home {
             let entries: [BaseChartEntry]
             let unit: String
             let color: UIColor
+            let isShown: Bool
         }
     }
     
@@ -120,7 +123,6 @@ enum Home {
             let timeInterval: TimeInterval
         }
     }
-    
     
     enum ChangeEntriesChartTimeFrame {
         struct Request {

@@ -24,12 +24,21 @@ final class EntriesHistoryView: BaseHistoryView {
         }
     }
     
+    override var verticalLines: Int {
+        get {
+            return 3
+        }
+        set {
+            super.verticalLines = newValue
+        }
+    }
+    
     override func setupViews() {
         super.setupViews()
         scrollContainer.isUserInteractionEnabled = false
         leftLabelsView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         scrollContainer.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        
+        backgroundColor = .clear
         chartTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         chartTitleLabel.backgroundColor = .clear
         chartTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
@@ -37,7 +46,7 @@ final class EntriesHistoryView: BaseHistoryView {
         chartTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 14).isActive = true
         chartTitleLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         chartTitleLabel.bottomAnchor.constraint(equalTo: scrollContainer.topAnchor).isActive = true
-        chartTitleLabel.heightAnchor.constraint(equalToConstant: 58.0).isActive = true
+        chartTitleLabel.heightAnchor.constraint(equalToConstant: 49.0).isActive = true
         scrollContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0).isActive = true
         chartButton.translatesAutoresizingMaskIntoConstraints = false
         chartButton.setTitleColor(.chartButtonTextColor, for: .normal)
@@ -58,6 +67,7 @@ final class EntriesHistoryView: BaseHistoryView {
     }
     
     func setup(with viewModel: BaseFoodEntryViewModel) {
+        isHidden = !viewModel.isShown
         chartEntries = viewModel.entries
         entriesChartView.entries = viewModel.entries
         entriesChartView.color = viewModel.color

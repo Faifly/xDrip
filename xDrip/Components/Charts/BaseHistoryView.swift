@@ -9,7 +9,7 @@
 import UIKit
 
 class BaseHistoryView: UIView {
-    let verticalLines: Int = 5
+    var verticalLines: Int = 5
     var forwardTimeOffset: TimeInterval = 600.0
     
     let scrollContainer = ChartScrollContainer()

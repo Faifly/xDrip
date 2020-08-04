@@ -66,7 +66,9 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var carbsHistoryView: EntriesHistoryView!
     @IBOutlet private weak var warmUpLabel: UILabel!
     @IBOutlet private weak var warmUpLabelTopConstraint: NSLayoutConstraint!
-    
+    @IBOutlet private weak var aboutGlucoseTitleLabel: UILabel!
+    @IBOutlet private weak var aboutGlucoseContentLabel: UILabel!
+    @IBOutlet private weak var bolusCarbsTopConstraint: NSLayoutConstraint!
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -132,6 +134,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     func displayBolusData(viewModel: Home.BolusDataUpdate.ViewModel) {
         bolusHistoryView.setup(with: viewModel)
+        updateBolusCarbsTopConstraint()
     }
     
     func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
@@ -140,6 +143,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel) {
         carbsHistoryView.setup(with: viewModel)
+        updateBolusCarbsTopConstraint()
     }
     
     func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
@@ -195,6 +199,14 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         }
     }
     
+    private func updateBolusCarbsTopConstraint() {
+        if bolusHistoryView.isHidden && carbsHistoryView.isHidden {
+            bolusCarbsTopConstraint.constant = 0
+        } else {
+            bolusCarbsTopConstraint.constant = 16
+        }
+    }
+    
     private func setupUI() {
         let titles = [
             "home_time_frame_1h".localized,
@@ -213,6 +225,8 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
             )
         }
         timeLineSegmentView.selectedSegmentIndex = 0
+        aboutGlucoseTitleLabel.text = "home_about_glucose_title".localized.uppercased()
+        aboutGlucoseContentLabel.text = "home_about_glucose_content".localized
     }
     
     private func subscribeToViewsButtonEvents() {

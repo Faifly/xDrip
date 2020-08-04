@@ -20,7 +20,7 @@ protocol EntriesChartProvider {
 
 extension EntriesChartProvider where Self: UIView {
     func drawChart() {
-        guard entries.count > 2 else { return }
+        guard entries.count > 1 else { return }
         guard let context = UIGraphicsGetCurrentContext() else { return }
         let minDate = dateInterval.start.timeIntervalSince1970
         let maxDate = dateInterval.end.timeIntervalSince1970
@@ -32,16 +32,13 @@ extension EntriesChartProvider where Self: UIView {
         for (index, entry) in entries.enumerated() {
             let centerX = CGFloat((entry.date.timeIntervalSince1970 - minDate) * pixelsPerSecond) + insets.left
             let centerY = CGFloat((yRange.upperBound - entry.value) * pixelsPerValue) + insets.top
-            let minY = CGFloat((yRange.upperBound - yRange.lowerBound) * pixelsPerValue) + insets.top
             let point = CGPoint(x: centerX, y: centerY)
             if index == 0 {
                 context.beginPath()
-                context.move(to: CGPoint(x: centerX, y: minY))
-                context.addLine(to: point)
+                context.move(to: point)
             } else {
                 context.addLine(to: point)
                 if index == entries.count - 1 {
-                    context.addLine(to: CGPoint(x: centerX, y: minY))
                     context.closePath()
                     context.setFillColor(color.cgColor)
                     context.fillPath()

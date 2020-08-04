@@ -32,6 +32,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private let glucoseDataWorker: HomeGlucoseDataWorkerProtocol
     private let warmUpWorker: HomeWarmUpWorkerLogic
     private var basalEntriesObserver: [NSObjectProtocol]?
+    private var activeInsulinCarbsObserver: [NSObjectProtocol]?
     
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
@@ -56,6 +57,14 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             notificationHandler: { [weak self] _ in
                 self?.updateGlucoseCurrentInfo()
                 self?.updateGlucoseChartData()
+            }
+        )
+        
+        activeInsulinCarbsObserver = NotificationCenter.default.subscribe(
+            forSettingsChange: [.activeInsulin, .activeCarbs],
+            notificationHandler: { [weak self] _ in
+                self?.updateBolusChartData()
+                self?.updateCarbsChartData()
             }
         )
     }
