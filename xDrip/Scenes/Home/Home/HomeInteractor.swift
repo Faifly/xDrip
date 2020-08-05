@@ -141,19 +141,21 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     
     private func updateBolusChartData() {
         var insulinData: [InsulinEntry] = []
-        if User.current.settings.chart?.showActiveInsulin ?? true {
+        let isShown = User.current.settings.chart?.showActiveInsulin ?? true
+        if isShown {
             insulinData = InsulinEntriesWorker.fetchAllBolusEntries()
         }
-        let response = Home.BolusDataUpdate.Response(insulinData: insulinData)
+        let response = Home.BolusDataUpdate.Response(insulinData: insulinData, isShown: isShown)
         presenter?.presentBolusData(response: response)
     }
     
     private func updateCarbsChartData() {
         var carbsData: [CarbEntry] = []
-        if User.current.settings.chart?.showActiveCarbs ?? true {
+        let isShown = User.current.settings.chart?.showActiveCarbs ?? true
+        if  isShown {
             carbsData = CarbEntriesWorker.fetchAllCarbEntries()
         }
-        let response = Home.CarbsDataUpdate.Response(carbsData: carbsData)
+        let response = Home.CarbsDataUpdate.Response(carbsData: carbsData, isShown: isShown)
         presenter?.presentCarbsData(response: response)
     }
 }
