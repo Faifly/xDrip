@@ -63,14 +63,16 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         activeInsulinObserver = NotificationCenter.default.subscribe(
             forSettingsChange: [.activeInsulin],
             notificationHandler: { [weak self] _ in
-                self?.updateBolusChartData()
+                guard let self = self else { return }
+                self.updateBolusChartData()
             }
         )
         
         activeCarbsObserver = NotificationCenter.default.subscribe(
             forSettingsChange: [.activeCarbs],
             notificationHandler: { [weak self] _ in
-                self?.updateCarbsChartData()
+                guard let self = self else { return }
+                self.updateCarbsChartData()
             }
         )
     }

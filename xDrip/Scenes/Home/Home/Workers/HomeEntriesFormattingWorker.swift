@@ -50,40 +50,45 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
         var baseChartEntries: [BaseChartEntry] = []
         for index in 0..<entries.count {
             let entry = entries[index]
-            guard let entryDate = entry.date else { continue }
+            guard let entryInterval = entry.date?.timeIntervalSince1970 else { continue }
             var entryAmount = entry.amount
             guard entryAmount > 0 else { continue }
-            let entryEndDate = entryDate.addingTimeInterval(absorbtionDuration)
+            let entryEndInterval = entryInterval + absorbtionDuration
             var finalEntryAmount = 0.0
-            var finalEntryDate = entryEndDate
+            var finalEntryInterval = entryEndInterval
             
             if index < entries.count - 1 {
                 let nextEntry = entries[index + 1]
-                guard let nextEntryDate = nextEntry.date else { continue }
-                if nextEntryDate < entryEndDate && nextEntry.amount > 0 {
-                    let pointX = nextEntryDate.timeIntervalSince1970
-                    let startX = entryDate.timeIntervalSince1970
-                    let endX = entryEndDate.timeIntervalSince1970
-                    finalEntryAmount = ((pointX - startX) * (0.0 - entry.amount)) / (endX - startX) + entry.amount
-                    finalEntryDate = nextEntryDate
+                guard let nextEntryInterval = nextEntry.date?.timeIntervalSince1970 else { continue }
+                if nextEntryInterval < entryEndInterval && nextEntry.amount > 0 {
+                    let pointX = nextEntryInterval
+                    let startX = entryInterval
+                    let startY = entry.amount
+                    let endX = entryEndInterval
+                    finalEntryAmount = calculatePointYFor(pointX: pointX, startX: startX, startY: startY, endX: endX)
+                    finalEntryInterval = nextEntryInterval
                 }
             }
             
             if index > 0 {
                 let prevEntry = entries[index - 1]
-                guard let prevEntryDate = prevEntry.date else { continue }
-                let endX = prevEntryDate.addingTimeInterval(absorbtionDuration).timeIntervalSince1970
-                if entryDate.timeIntervalSince1970 < endX {
-                    let pointX = entryDate.timeIntervalSince1970
-                    let startX = prevEntryDate.timeIntervalSince1970
-                    let lastAmount = ((pointX - startX) * (0.0 - prevEntry.amount)) / (endX - startX) + prevEntry.amount
+                guard let prevEntryInterval = prevEntry.date?.timeIntervalSince1970 else { continue }
+                let endX = prevEntryInterval + absorbtionDuration
+                if entryInterval < endX {
+                    let pointX = entryInterval
+                    let startX = prevEntryInterval
+                    let startY = prevEntry.amount
+                    let lastAmount = calculatePointYFor(pointX: pointX, startX: startX, startY: startY, endX: endX)
                     entryAmount += lastAmount
                 }
             }
             
-            baseChartEntries.append(BaseChartEntry(value: 0.0, date: entryDate))
-            baseChartEntries.append(BaseChartEntry(value: entryAmount, date: entryDate))
-            baseChartEntries.append(BaseChartEntry(value: finalEntryAmount, date: finalEntryDate))
+            baseChartEntries.append(BaseChartEntry(value: 0.0,
+                                                   date: Date(timeIntervalSince1970: entryInterval)))
+            baseChartEntries.append(BaseChartEntry(value: entryAmount,
+                                                   date: Date(timeIntervalSince1970: entryInterval)))
+            baseChartEntries.append(BaseChartEntry(value: finalEntryAmount,
+                                                   date: Date(timeIntervalSince1970: finalEntryInterval)))
         }
         return baseChartEntries
     }
@@ -109,28 +114,58 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
             return ""
         }
         
-        let startDate = Date().timeIntervalSince1970 - timeInterval
+        return makeButtonTitle(entries: entries, shortLabel: shortLabel, absorbtionDuration: absorbtionDuration)
+    }
+    
+    private func makeButtonTitle(entries: [AbstractEntryProtocol],
+                                 shortLabel: String,
+                                 absorbtionDuration: TimeInterval) -> String {
+        let startInterval = Date().timeIntervalSince1970 - timeInterval
         var totalAmount = 0.0
         for index in (0..<entries.count).reversed() {
             let entry = entries[index]
-            guard let entryDate = entry.date else { continue }
-            let entryAmount = entry.amount
+            guard let entryInterval = entry.date?.timeIntervalSince1970 else { continue }
+            var entryAmount = entry.amount
             guard entryAmount > 0 else { continue }
-            let entryEndDate = entryDate.addingTimeInterval(absorbtionDuration)
+            let entryEndInterval = entryInterval + absorbtionDuration
             
-            if entryDate.timeIntervalSince1970 >= startDate {
+            if entryInterval >= startInterval {
                 totalAmount += entryAmount
             } else {
-                if entryEndDate.timeIntervalSince1970 > startDate {
-                    let pointX = startDate
-                    let startX = entryDate.timeIntervalSince1970
-                    let endX = entryEndDate.timeIntervalSince1970
-                    totalAmount += ((pointX - startX) * (0 - entry.amount)) / (endX - startX) + entry.amount
+                if entryEndInterval > startInterval {
+                    if index > 0 {
+                        let prevEntry = entries[index - 1]
+                        guard let prevEntryInterval = prevEntry.date?.timeIntervalSince1970 else { continue }
+                        let endX = prevEntryInterval + absorbtionDuration
+                        if entryInterval < endX {
+                            let pointX = entryInterval
+                            let startX = prevEntryInterval
+                            let startY = prevEntry.amount
+                            let lastAmount = calculatePointYFor(pointX: pointX,
+                                                                startX: startX,
+                                                                startY: startY,
+                                                                endX: endX)
+                            entryAmount += lastAmount
+                        }
+                    }
+                
+                    let pointX = startInterval
+                    let startX = entryInterval
+                    let endX = entryEndInterval
+                    let startY = entryAmount
+                    totalAmount += calculatePointYFor(pointX: pointX, startX: startX, startY: startY, endX: endX)
                     break
                 }
             }
         }
         
         return String(format: "%.2f", totalAmount.rounded(to: 2)) + " \(shortLabel)"
+    }
+    
+    private func calculatePointYFor(pointX: TimeInterval,
+                                    startX: TimeInterval,
+                                    startY: Double,
+                                    endX: TimeInterval) -> Double {
+        return ((pointX - startX) * (0.0 - startY)) / (endX - startX) + startY
     }
 }
