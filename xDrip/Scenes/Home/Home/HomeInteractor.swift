@@ -32,8 +32,8 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private let glucoseDataWorker: HomeGlucoseDataWorkerProtocol
     private let warmUpWorker: HomeWarmUpWorkerLogic
     private var basalEntriesObserver: [NSObjectProtocol]?
-    private var activeInsulinCarbsObserver: [NSObjectProtocol]?
-    
+    private var activeInsulinObserver: [NSObjectProtocol]?
+    private var activeCarbsObserver: [NSObjectProtocol]?
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
         warmUpWorker = HomeWarmUpWorker()
@@ -60,10 +60,16 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             }
         )
         
-        activeInsulinCarbsObserver = NotificationCenter.default.subscribe(
-            forSettingsChange: [.activeInsulin, .activeCarbs],
+        activeInsulinObserver = NotificationCenter.default.subscribe(
+            forSettingsChange: [.activeInsulin],
             notificationHandler: { [weak self] _ in
                 self?.updateBolusChartData()
+            }
+        )
+        
+        activeCarbsObserver = NotificationCenter.default.subscribe(
+            forSettingsChange: [.activeCarbs],
+            notificationHandler: { [weak self] _ in
                 self?.updateCarbsChartData()
             }
         )
@@ -134,12 +140,20 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     }
     
     private func updateBolusChartData() {
-        let response = Home.BolusDataUpdate.Response(insulinData: InsulinEntriesWorker.fetchAllBolusEntries())
+        var insulinData: [InsulinEntry] = []
+        if User.current.settings.chart?.showActiveInsulin ?? true {
+            insulinData = InsulinEntriesWorker.fetchAllBolusEntries()
+        }
+        let response = Home.BolusDataUpdate.Response(insulinData: insulinData)
         presenter?.presentBolusData(response: response)
     }
     
     private func updateCarbsChartData() {
-        let response = Home.CarbsDataUpdate.Response(carbsData: CarbEntriesWorker.fetchAllCarbEntries())
+        var carbsData: [CarbEntry] = []
+        if User.current.settings.chart?.showActiveCarbs ?? true {
+            carbsData = CarbEntriesWorker.fetchAllCarbEntries()
+        }
+        let response = Home.CarbsDataUpdate.Response(carbsData: carbsData)
         presenter?.presentCarbsData(response: response)
     }
 }
