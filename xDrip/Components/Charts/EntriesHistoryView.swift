@@ -50,6 +50,7 @@ final class EntriesHistoryView: BaseHistoryView {
         scrollContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0).isActive = true
         chartButton.translatesAutoresizingMaskIntoConstraints = false
         chartButton.setTitleColor(.chartButtonTextColor, for: .normal)
+        chartButton.setTitleColor(.chartButtonHighlitedTextColor, for: .highlighted)
         chartButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         chartButton.addTarget(self, action: #selector(self.chartButtonClicked), for: .touchUpInside)
         addSubview(chartButton)

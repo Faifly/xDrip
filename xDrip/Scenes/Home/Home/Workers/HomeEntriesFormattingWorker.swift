@@ -31,9 +31,6 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
         insulinEntries = response.insulinData
         let insulinDuration = User.current.settings.insulinActionTime
         let baseChartEntries = formatEntries(insulinEntries, absorbtionDuration: insulinDuration)
-        for obj in baseChartEntries {
-            print("obj \(obj.value) \(obj.date)")
-        }
         return InsulinCarbEntry(title: "home_active_insulin".localized,
                                 entries: baseChartEntries,
                                 unit: Root.EntryType.bolus.shortLabel,

@@ -33,6 +33,7 @@ extension UIColor {
         case diffTextColor
         case lastScanDateTextColor
         case chartButtonTextColor
+        case chartButtonHighlitedTextColor
         case statsChartSelection
         case bolusChartEntry
         case carbsChartEntry
@@ -129,6 +130,10 @@ extension UIColor {
     static var chartButtonTextColor: UIColor {
         return color(withName: Colors.chartButtonTextColor.rawValue)
     }
+    
+    static var chartButtonHighlitedTextColor: UIColor {
+          return color(withName: Colors.chartButtonHighlitedTextColor.rawValue)
+      }
     
     static var statsChartSelection: UIColor {
         return color(withName: Colors.statsChartSelection.rawValue)
