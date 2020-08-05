@@ -21,7 +21,7 @@ final class EntriesChartView: BaseChartView, EntriesChartProvider {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         isOpaque = false
-        backgroundColor = .background1
+        backgroundColor = .clear
     }
     
     @available(*, unavailable)

@@ -34,11 +34,11 @@ final class EntriesHistoryView: BaseHistoryView {
     }
     
     override func setupViews() {
+        backgroundColor = .clear
         super.setupViews()
         scrollContainer.isUserInteractionEnabled = false
         leftLabelsView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         scrollContainer.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        backgroundColor = .clear
         chartTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         chartTitleLabel.backgroundColor = .clear
         chartTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)

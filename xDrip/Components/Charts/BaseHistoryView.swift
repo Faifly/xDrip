@@ -35,7 +35,6 @@ class BaseHistoryView: UIView {
     
     func setupViews() {
         isOpaque = false
-        backgroundColor = .background1
         addSubview(leftLabelsView)
         addSubview(scrollContainer)
         scrollContainer.scrollView.addSubview(chartView)

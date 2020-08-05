@@ -93,7 +93,7 @@
                                     </subviews>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" name="background_3"/>
                             <constraints>
                                 <constraint firstItem="AYD-t2-A3I" firstAttribute="leading" secondItem="Yuw-4A-lhx" secondAttribute="leading" id="45w-U2-enE"/>
                                 <constraint firstAttribute="trailing" secondItem="AYD-t2-A3I" secondAttribute="trailing" id="GDq-pa-VnD"/>
@@ -122,7 +122,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" name="background_3"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="UeT-CW-d7g" secondAttribute="trailing" constant="16" id="2OP-sG-G7e"/>
                                 <constraint firstAttribute="bottom" secondItem="UeT-CW-d7g" secondAttribute="bottom" constant="14" id="PDb-Kd-YFZ"/>
@@ -184,6 +184,9 @@
     <resources>
         <namedColor name="background_2">
             <color red="0.95294117647058818" green="0.94901960784313721" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="background_3">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="headerTitleColor">
             <color red="0.54900002479553223" green="0.54900002479553223" blue="0.54900002479553223" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

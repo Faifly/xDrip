@@ -46,6 +46,7 @@ final class GlucoseHistoryView: BaseHistoryView {
     }
     
     override func setupViews() {
+        backgroundColor = .background1
         super.setupViews()
         addSubview(chartSliderView)
         addSubview(rightLabelsView)
