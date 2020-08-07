@@ -69,6 +69,12 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var aboutGlucoseTitleLabel: UILabel!
     @IBOutlet private weak var aboutGlucoseContentLabel: UILabel!
     @IBOutlet private weak var bolusCarbsTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var carbsBolusStackView: UIStackView!
+    @IBOutlet private weak var mainStackView: UIStackView!
+    @IBOutlet private weak var supportingStackView: UIStackView!
+    @IBOutlet private weak var topViewPortraitHeigthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var topViewLandscapeWidthConstraint: NSLayoutConstraint!
+
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -202,8 +208,10 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     private func updateBolusCarbsTopConstraint() {
         if bolusHistoryView.isHidden && carbsHistoryView.isHidden {
             bolusCarbsTopConstraint.constant = 0
+            supportingStackView?.spacing = 0
         } else {
             bolusCarbsTopConstraint.constant = 16
+            supportingStackView?.spacing = 16
         }
     }
     
@@ -240,4 +248,53 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
             self?.interactor?.doShowEntriesList(request: request)
         }
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if view.bounds.width >= view.bounds.height {
+            mainStackView.axis = .horizontal
+            topViewPortraitHeigthConstraint.priority = .defaultLow
+            topViewLandscapeWidthConstraint.priority = .required
+//            NSLayoutConstraint.setMultiplier(0.7, of: &topViewLandscapeWidthConstraint)
+            carbsBolusStackView.axis = .vertical
+            supportingStackView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 32)
+        } else {
+            mainStackView.axis = .vertical
+            topViewPortraitHeigthConstraint.priority = .defaultHigh
+            topViewLandscapeWidthConstraint.priority = .defaultLow
+//            NSLayoutConstraint.setMultiplier(1, of: &topViewLandscapeWidthConstraint)
+            carbsBolusStackView.axis = .horizontal
+            supportingStackView.layoutMargins = UIEdgeInsets(top: 32, left: 32, bottom: 0, right: 32)
+        }
+    }
 }
+
+//extension NSLayoutConstraint {
+//    override public var description: String {
+//        if let id = identifier {
+//             return "id: \(id), constant: \(constant)"
+//        } else {
+//            return super.description
+//        }
+//        //you may print whatever you want here
+//    }
+//
+//    static func setMultiplier(_ multiplier: CGFloat, of constraint: inout NSLayoutConstraint) {
+//        NSLayoutConstraint.deactivate([constraint])
+//
+//        let newConstraint = NSLayoutConstraint(item: constraint.firstItem as Any,
+//                                               attribute: constraint.firstAttribute,
+//                                               relatedBy: constraint.relation,
+//                                               toItem: constraint.secondItem,
+//                                               attribute: constraint.secondAttribute,
+//                                               multiplier: multiplier,
+//                                               constant: constraint.constant)
+//
+//        newConstraint.priority = constraint.priority
+//        newConstraint.shouldBeArchived = constraint.shouldBeArchived
+//        newConstraint.identifier = constraint.identifier
+//
+//        NSLayoutConstraint.activate([newConstraint])
+//        constraint = newConstraint
+//    }
+//}
