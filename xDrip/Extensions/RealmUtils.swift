@@ -9,23 +9,19 @@ import Foundation
 import RealmSwift
 
 extension Realm {
-    private static var sharedRealm: Realm = {
+    static func encrypt(withKey key: Data) {
+    }
+    
+    static var shared: Realm {
         do {
             return try Realm()
         } catch let error {
             print("Realm initialization error: " + error.localizedDescription)
             exit(0)
         }
-    }()
-    
-    public static func encrypt(withKey key: Data) {
     }
     
-    public static var shared: Realm {
-        return self.sharedRealm
-    }
-    
-    public func finishWrite() {
+    func finishWrite() {
         do {
             try self.commitWrite()
         } catch let error {
@@ -33,7 +29,7 @@ extension Realm {
         }
     }
     
-    public func safeWrite(_ block: (() -> Void)) {
+    func safeWrite(_ block: (() -> Void)) {
         if self.isInWriteTransaction {
             block()
         } else {
@@ -47,11 +43,11 @@ extension Realm {
 }
 
 extension Object {
-    public func addToRealm(update: Realm.UpdatePolicy = .error) {
+    func addToRealm(update: Realm.UpdatePolicy = .error) {
         Realm.shared.add(self, update: update)
     }
     
-    @objc open func deleteFromRealm() {
+    @objc func deleteFromRealm() {
         Realm.shared.delete(self)
     }
 }

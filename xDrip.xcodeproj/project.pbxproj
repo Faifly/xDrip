@@ -529,6 +529,8 @@
 		58828B902492876C001D4C3E /* CGlucoseReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58828B8F2492876C001D4C3E /* CGlucoseReading.swift */; };
 		588584A3248E76DF00C3F74C /* NightscoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588584A2248E76DF00C3F74C /* NightscoutService.swift */; };
 		588584AC248E7A2800C3F74C /* CloudUploadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588584AB248E7A2800C3F74C /* CloudUploadStatus.swift */; };
+		5886D4B924DD885C00D6B732 /* SettingsTransmitterTestDataWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5886D4B824DD885C00D6B732 /* SettingsTransmitterTestDataWorker.swift */; };
+		5886D4BD24DE9BC900D6B732 /* SettingsTestBackfillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5886D4BB24DE9BC900D6B732 /* SettingsTestBackfillViewController.swift */; };
 		589B1A222497D17900C1DABD /* UploadRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589B1A212497D17900C1DABD /* UploadRequestFactory.swift */; };
 		589EA8D02476F89300515BCC /* CGMDeviceVoltage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589EA8CF2476F89200515BCC /* CGMDeviceVoltage.swift */; };
 		589EA8D3247700AF00515BCC /* BaseSettingsButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589EA8D1247700AF00515BCC /* BaseSettingsButtonCell.swift */; };
@@ -1201,6 +1203,8 @@
 		58828B8F2492876C001D4C3E /* CGlucoseReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGlucoseReading.swift; sourceTree = "<group>"; };
 		588584A2248E76DF00C3F74C /* NightscoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutService.swift; sourceTree = "<group>"; };
 		588584AB248E7A2800C3F74C /* CloudUploadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudUploadStatus.swift; sourceTree = "<group>"; };
+		5886D4B824DD885C00D6B732 /* SettingsTransmitterTestDataWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTransmitterTestDataWorker.swift; sourceTree = "<group>"; };
+		5886D4BB24DE9BC900D6B732 /* SettingsTestBackfillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTestBackfillViewController.swift; sourceTree = "<group>"; };
 		589B1A212497D17900C1DABD /* UploadRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequestFactory.swift; sourceTree = "<group>"; };
 		589EA8CF2476F89200515BCC /* CGMDeviceVoltage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMDeviceVoltage.swift; sourceTree = "<group>"; };
 		589EA8D1247700AF00515BCC /* BaseSettingsButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsButtonCell.swift; sourceTree = "<group>"; };
@@ -2326,6 +2330,8 @@
 		580E4BD4243F737900565EDE /* SettingsTransmitter */ = {
 			isa = PBXGroup;
 			children = (
+				5886D4BA24DE9B0900D6B732 /* SettingsTestBackfill */,
+				5886D4B724DD884300D6B732 /* Workers */,
 				580E4BD5243F739C00565EDE /* SettingsTransmitterPresenter.swift */,
 				580E4BD6243F739C00565EDE /* SettingsTransmitterRouter.swift */,
 				580E4BD7243F739C00565EDE /* SettingsTransmitterModels.swift */,
@@ -3107,6 +3113,22 @@
 				589B1A212497D17900C1DABD /* UploadRequestFactory.swift */,
 			);
 			path = CloudSync;
+			sourceTree = "<group>";
+		};
+		5886D4B724DD884300D6B732 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				5886D4B824DD885C00D6B732 /* SettingsTransmitterTestDataWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		5886D4BA24DE9B0900D6B732 /* SettingsTestBackfill */ = {
+			isa = PBXGroup;
+			children = (
+				5886D4BB24DE9BC900D6B732 /* SettingsTestBackfillViewController.swift */,
+			);
+			path = SettingsTestBackfill;
 			sourceTree = "<group>";
 		};
 		58A8A413242505BF00CCFCAC /* Model */ = {
@@ -4028,6 +4050,7 @@
 				0A895426249CE84E0067601F /* NibView.swift in Sources */,
 				580E4BC0243F733100565EDE /* SettingsModeRootPresenter.swift in Sources */,
 				580E4B9B243F721500565EDE /* NightscoutCloudConfigurationModels.swift in Sources */,
+				5886D4BD24DE9BC900D6B732 /* SettingsTestBackfillViewController.swift in Sources */,
 				2C09D2162441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift in Sources */,
 				58DDC4642423CAA3008CB04D /* CalibrationEntry.swift in Sources */,
 				580E4C20243F74A300565EDE /* SettingsPumpUserViewController.swift in Sources */,
@@ -4217,6 +4240,7 @@
 				580E4BF6243F73E200565EDE /* SettingsChartRangesRouter.swift in Sources */,
 				580E4BCE243F736D00565EDE /* SettingsModeFollowerPresenter.swift in Sources */,
 				580EC7AB242151BC00C34948 /* EditTrainingViewController.swift in Sources */,
+				5886D4B924DD885C00D6B732 /* SettingsTransmitterTestDataWorker.swift in Sources */,
 				58160DF42402C7F600C792F4 /* RootModels.swift in Sources */,
 				580E4C2A243F74F000565EDE /* SettingsUnitsPresenter.swift in Sources */,
 				581DBF8E24B1D8B900237CB5 /* InsulinEntriesWorker.swift in Sources */,

@@ -27,6 +27,8 @@
 "home_basal_units" = "%0.f U";
 "home_active_insulin" = "Active Insulin";
 "home_active_carbohydrates" = "Active Carbohydrates";
+"home_about_glucose_content" = "Blood Glucose - also called blood sugar - is the main sugar found in the blood and the main source of energy for your body";
+"home_about_glucose_title" = "About Blood Glucose";
 
 // Root
 "root_add_entry_food" = "Food";

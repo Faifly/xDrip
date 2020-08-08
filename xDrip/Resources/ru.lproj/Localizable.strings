@@ -27,6 +27,8 @@
 "home_basal_units" = "%0.f Ед";
 "home_active_insulin" = "Действующий инсулин";
 "home_active_carbohydrates" = "Действующие углеводы";
+"home_about_glucose_content" = "Глюкоза в крови - также называемая сахаром в крови - является основным сахаром в крови и основным источником энергии для вашего тела.";
+"home_about_glucose_title" = "О глюкозе крови";
 
 // Root
 "root_add_entry_food" = "Еда";

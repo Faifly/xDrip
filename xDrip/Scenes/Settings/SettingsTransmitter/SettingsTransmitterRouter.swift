@@ -17,6 +17,13 @@ protocol SettingsTransmitterRoutingLogic {
     func showStopTransmitterConfirmation(callback: @escaping () -> Void)
     func showTransmitterResetConfirmation(callback: @escaping () -> Void)
     func showResetUnsupportedWarning()
+    
+    func routeToTestDataBackfill(callback: @escaping (SettingsTransmitter.TestBackfillConfiguration) -> Void)
+    func dismissTestDataBackfill()
+    
+    func showTestDataAlert()
+    func updateTestDataAlert(text: String)
+    func hideTestDataAlert()
 }
 
 protocol SettingsTransmitterDataPassing {
@@ -26,6 +33,8 @@ protocol SettingsTransmitterDataPassing {
 final class SettingsTransmitterRouter: SettingsTransmitterRoutingLogic, SettingsTransmitterDataPassing {
     weak var viewController: SettingsTransmitterViewController?
     weak var dataStore: SettingsTransmitterDataStore?
+    
+    private weak var testDataAlert: UIAlertController?
     
     // MARK: Routing
     
@@ -89,5 +98,34 @@ final class SettingsTransmitterRouter: SettingsTransmitterRoutingLogic, Settings
         let okAction = UIAlertAction(title: "OK".localized, style: .cancel, handler: nil)
         alert.addAction(okAction)
         viewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showTestDataAlert() {
+        let alert = UIAlertController(
+            title: "Generating test data...",
+            message: nil,
+            preferredStyle: .alert
+        )
+        viewController?.present(alert, animated: true, completion: nil)
+        
+        testDataAlert = alert
+    }
+    
+    func updateTestDataAlert(text: String) {
+        testDataAlert?.message = text
+    }
+    
+    func hideTestDataAlert() {
+        testDataAlert?.dismiss(animated: true, completion: nil)
+    }
+    
+    func routeToTestDataBackfill(callback: @escaping (SettingsTransmitter.TestBackfillConfiguration) -> Void) {
+        let viewController = SettingsTestBackfillViewController()
+        viewController.callback = callback
+        self.viewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func dismissTestDataBackfill() {
+        self.viewController?.navigationController?.popViewController(animated: true)
     }
 }

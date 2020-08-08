@@ -121,7 +121,8 @@ final class GlucoseReading: Object {
     @discardableResult static func create(filtered: Double,
                                           unfiltered: Double,
                                           rssi: Double,
-                                          date: Date = Date()) -> GlucoseReading? {
+                                          date: Date = Date(),
+                                          requireCalibration: Bool = true) -> GlucoseReading? {
         LogController.log(message: "[Glucose] Trying to create reading...", type: .debug)
         guard let sensorStarted = CGMDevice.current.sensorStartDate, CGMDevice.current.isSensorStarted else {
             LogController.log(message: "[Glucose] Can't create reading, sensor not started", type: .error)
@@ -160,7 +161,9 @@ final class GlucoseReading: Object {
             "\(reading.calculatedValue)"
         )
         
-        if Calibration.allForCurrentSensor.isEmpty && GlucoseReading.allMasterForCurrentSensor.count >= 2 {
+        if Calibration.allForCurrentSensor.isEmpty
+            && GlucoseReading.allMasterForCurrentSensor.count >= 2
+            && requireCalibration {
             CalibrationController.shared.requestInitialCalibration()
         }
         
