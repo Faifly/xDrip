@@ -26,6 +26,8 @@ final class SettingsTransmitterInteractor: SettingsTransmitterBusinessLogic, Set
     var presenter: SettingsTransmitterPresentationLogic?
     var router: SettingsTransmitterRoutingLogic?
     
+    private let testDataWorker: SettingsTransmitterTestDataWorkerLogic
+    
     private var state: SettingsTransmitter.State = .notSetup {
         didSet {
             let response = SettingsTransmitter.ChangeStatus.Response(status: state)
@@ -36,6 +38,7 @@ final class SettingsTransmitterInteractor: SettingsTransmitterBusinessLogic, Set
     // MARK: Do something
     
     init() {
+        testDataWorker = SettingsTransmitterTestDataWorker()
         subscribeForCGMEvents()
     }
     
@@ -101,6 +104,9 @@ final class SettingsTransmitterInteractor: SettingsTransmitterBusinessLogic, Set
             },
             resetHandler: { [weak self] in
                 self?.handleReset()
+            },
+            generateTestDataHandler: { [weak self] in
+                self?.generateTestData()
             }
         )
         presenter?.presentData(response: response)
@@ -125,6 +131,29 @@ final class SettingsTransmitterInteractor: SettingsTransmitterBusinessLogic, Set
                 }
             } else {
                 router?.showResetUnsupportedWarning()
+            }
+        }
+    }
+    
+    private func generateTestData() {
+        router?.routeToTestDataBackfill(callback: { [weak self] configuration in
+            self?.startBackfill(configuration: configuration)
+        })
+    }
+    
+    private func startBackfill(configuration: SettingsTransmitter.TestBackfillConfiguration) {
+        router?.showTestDataAlert()
+        testDataWorker.generateTestData(configuration: configuration) { [weak self] current, total in
+            DispatchQueue.main.async {
+                if current < total - 1 {
+                    self?.router?.updateTestDataAlert(
+                        text: "\(current) of \(total) entries created"
+                    )
+                } else {
+                    self?.router?.hideTestDataAlert()
+                    self?.router?.dismissTestDataBackfill()
+                    CGMController.shared.notifyGlucoseChange()
+                }
             }
         }
     }

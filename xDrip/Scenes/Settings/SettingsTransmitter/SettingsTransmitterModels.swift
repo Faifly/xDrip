@@ -21,6 +21,15 @@ enum SettingsTransmitter {
         case running(isConnectionActive: Bool)
     }
     
+    struct TestBackfillConfiguration {
+        let days: Int
+        let minGlucose: Double
+        let maxGlucose: Double
+        let maxStepDeviation: Double
+        let isChaotic: Bool
+        let minutesBetweenReading: Int
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -40,6 +49,7 @@ enum SettingsTransmitter {
             let allowSerialNumberChange: Bool
             let serialNumberChangeHandler: (String?) -> Void
             let resetHandler: () -> Void
+            let generateTestDataHandler: () -> Void
         }
         
         struct ViewModel {

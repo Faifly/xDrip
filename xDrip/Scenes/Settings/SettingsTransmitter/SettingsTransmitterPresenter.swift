@@ -138,6 +138,16 @@ final class SettingsTransmitterPresenter: SettingsTransmitterPresentationLogic {
             )
         }
         
+        if CGMController.shared.service is MockedBluetoothService {
+            cells.append(
+                .button(
+                    title: "Generate test data",
+                    color: .customBlue,
+                    handler: response.generateTestDataHandler
+                )
+            )
+        }
+        
         return cells
     }
     

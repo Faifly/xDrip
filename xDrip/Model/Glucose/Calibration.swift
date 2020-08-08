@@ -108,7 +108,11 @@ final class Calibration: Object {
         clearAllExistingCalibrations()
         
         let highLevel = max(glucoseLevel1, glucoseLevel2)
-        let lowLevel = min(glucoseLevel1, glucoseLevel2)
+        var lowLevel = min(glucoseLevel1, glucoseLevel2)
+        
+        if lowLevel ~ highLevel {
+            lowLevel -= .ulpOfOne * 1000.0
+        }
         
         let highDate = highLevel ~ glucoseLevel1 ? date1 : date2
         let lowDate = highLevel ~ glucoseLevel2 ? date1 : date2
@@ -170,7 +174,7 @@ final class Calibration: Object {
                     + 36.7505) / 100.0
                 Realm.shared.add(calibration)
             }
-            Calibration.calculateWLS()
+            Calibration.calculateWLS(date: calibration.date ?? Date())
         }
         
         adjustRecentReadings(adjustedReadingsAmount)
@@ -288,9 +292,9 @@ final class Calibration: Object {
         }
     }
     
-    private static func calculateWLS() {
+    private static func calculateWLS(date: Date = Date()) {
         let slopeParameters = SlopeParameters.dex
-        let minDate = Date().timeIntervalSince1970 - .secondsPerDay * 4.0
+        let minDate = date.timeIntervalSince1970 - .secondsPerDay * 4.0
         let calibrations = all.filter {
             $0.date?.timeIntervalSince1970 >? minDate &&
             $0.sensorConfidence !~ 0 &&
@@ -380,6 +384,9 @@ final class Calibration: Object {
         guard all.count > 1 else { return 1.0 }
         let lastTimeStarted = all[0].sensorAge
         let firstTimeStarted = all[all.count - 1].sensorAge
+        if lastTimeStarted ~ firstTimeStarted {
+            return 1.0
+        }
         let timePercentage = min(((sensorAge - firstTimeStarted) / (lastTimeStarted - firstTimeStarted)) / 0.85, 1.0)
         return max((((((slopeConfidence + sensorConfidence) * timePercentage)) / 2.0) * 100.0), 1.0)
     }
