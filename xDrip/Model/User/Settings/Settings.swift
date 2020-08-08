@@ -109,12 +109,14 @@ final class Settings: Object {
         Realm.shared.safeWrite {
             self.carbsAbsorptionRate = rate
         }
+        NotificationCenter.default.postSettingsChangeNotification(setting: .activeCarbs)
     }
     
     func updateInsulinActionTime(_ time: TimeInterval) {
         Realm.shared.safeWrite {
             self.insulinActionTime = time
         }
+        NotificationCenter.default.postSettingsChangeNotification(setting: .activeInsulin)
     }
     
     // MARK: Basal rates

@@ -9,7 +9,9 @@
 import Foundation
 import RealmSwift
 
-final class FoodEntriesWorker: AbstractEntriesWorker {
+final class CarbEntriesWorker: AbstractEntriesWorker {
+    static var carbsDataHandler: (() -> Void)?
+    
     @discardableResult static func addCarbEntry(
         amount: Double,
         foodType: String?,
@@ -19,10 +21,21 @@ final class FoodEntriesWorker: AbstractEntriesWorker {
             foodType: foodType,
             date: date
         )
-        return add(entry: entry)
+        let addedEntry = add(entry: entry)
+        carbsDataHandler?()
+        return addedEntry
+    }
+    
+    static func deleteCarbsEntry(_ entry: AbstractEntry) {
+        super.deleteEntry(entry)
+        carbsDataHandler?()
     }
     
     static func fetchAllCarbEntries() -> [CarbEntry] {
         return super.fetchAllEntries(type: CarbEntry.self)
+    }
+    
+    static func updatedCarbsEntry() {
+        carbsDataHandler?()
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-final class InsulinEntry: AbstractEntry {
+final class InsulinEntry: AbstractEntry, AbstractEntryProtocol {
     @objc private(set) dynamic var amount: Double = 0.0
     @objc private dynamic var rawType: Int = InsulinType.bolus.rawValue
     

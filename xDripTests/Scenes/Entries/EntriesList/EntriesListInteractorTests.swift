@@ -91,7 +91,7 @@ final class EntriesListInteractorTests: XCTestCase {
     }
     
     func testRouteToEditEntryCalled() {
-        FoodEntriesWorker.addCarbEntry(amount: 0.0, foodType: nil, date: Date())
+        CarbEntriesWorker.addCarbEntry(amount: 0.0, foodType: nil, date: Date())
         
         let spy = EntriesListRoutingLogicSpy()
         sut.router = spy

@@ -42,6 +42,8 @@ final class HomeInteractorTests: XCTestCase {
     final class HomePresentationLogicSpy: HomePresentationLogic {
         var presentLoadCalled = false
         var presentGlucoseCurrentInfoCalled = false
+        var presentBolusDataCalled = false
+        var presentCarbsDataCalled = false
         
         func presentLoad(response: Home.Load.Response) {
             presentLoadCalled = true
@@ -50,14 +52,23 @@ final class HomeInteractorTests: XCTestCase {
         func presentGlucoseData(response: Home.GlucoseDataUpdate.Response) {
         }
         
-        func presentGlucoseChartTimeFrameChange(response: Home.ChangeGlucoseChartTimeFrame.Response) {
+        func presentGlucoseChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
         }
         
         func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
             presentGlucoseCurrentInfoCalled = true
         }
-        
         func presentWarmUp(response: Home.WarmUp.Response) {
+        }
+        func presentBolusData(response: Home.BolusDataUpdate.Response) {
+            presentBolusDataCalled = true
+        }
+        func presentBolusChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
+        }
+        func presentCarbsData(response: Home.CarbsDataUpdate.Response) {
+            presentCarbsDataCalled = true
+        }
+        func presentCarbsChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
         }
     }
     
@@ -109,5 +120,19 @@ final class HomeInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.toBolusCalled)
+    }
+    
+    func testUpdateBolusChartData() {
+      // Given
+      let spy = HomePresentationLogicSpy()
+      sut.presenter = spy
+      let request = Home.Load.Request()
+      
+      // When
+      sut.doLoad(request: request)
+      
+      // Then
+      XCTAssertTrue(spy.presentBolusDataCalled)
+      XCTAssertTrue(spy.presentCarbsDataCalled)
     }
 }

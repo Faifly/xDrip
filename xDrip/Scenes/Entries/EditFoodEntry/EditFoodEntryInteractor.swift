@@ -81,10 +81,10 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
         if let insulinEntry = insulinEntry,
             (insulinEntry.amount !~ insulinInput.amount || insulinEntry.date != insulinInput.date) {
             insulinEntry.update(amount: insulinInput.amount, date: insulinInput.date)
+            if insulinEntry.type == .bolus { InsulinEntriesWorker.updatedBolusEntry() }
         } else if insulinEntry == nil, insulinInput.amount !~ 0.0 {
             if entryType == .basal {
                 InsulinEntriesWorker.addBasalEntry(amount: insulinInput.amount, date: insulinInput.date)
-
                 NotificationCenter.default.postSettingsChangeNotification(setting: .basalRelated)
             } else {
                 InsulinEntriesWorker.addBolusEntry(amount: insulinInput.amount, date: insulinInput.date)
@@ -96,8 +96,9 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
             carbEntry.date != carbInput.date ||
             carbEntry.foodType != carbInput.foodType) {
             carbEntry.update(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
+            CarbEntriesWorker.updatedCarbsEntry()
         } else if carbEntry == nil, carbInput.amount !~ 0.0 {
-            FoodEntriesWorker.addCarbEntry(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
+            CarbEntriesWorker.addCarbEntry(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
         }
 
         router?.dismissScene()

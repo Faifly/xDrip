@@ -12,12 +12,12 @@ final class EntriesListCarbsPersistenceWorker: EntriesListEntryPersistenceWorker
     private var carbs: [CarbEntry] = []
     
     func fetchEntries() -> [AbstractEntry] {
-        carbs = FoodEntriesWorker.fetchAllCarbEntries()
+        carbs = CarbEntriesWorker.fetchAllCarbEntries()
         return carbs
     }
 
     func deleteEntry(_ index: Int) {
         let entry = carbs.remove(at: index)
-        FoodEntriesWorker.deleteEntry(entry)
+        CarbEntriesWorker.deleteCarbsEntry(entry)
     }
 }

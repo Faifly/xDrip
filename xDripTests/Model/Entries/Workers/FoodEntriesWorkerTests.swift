@@ -16,7 +16,7 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
         XCTAssertTrue(realm.objects(CarbEntry.self).isEmpty)
         
         let date = Date(timeIntervalSince1970: 6.0)
-        let entry = FoodEntriesWorker.addCarbEntry(amount: 1.1, foodType: "2.2", date: date)
+        let entry = CarbEntriesWorker.addCarbEntry(amount: 1.1, foodType: "2.2", date: date)
         XCTAssertTrue(entry.amount ~ 1.1)
         XCTAssertTrue(entry.foodType == "2.2")
         XCTAssertTrue(entry.assimilationDuration ~ 0.0)
@@ -36,7 +36,7 @@ final class FoodEntriesWorkerTests: AbstractRealmTest {
             }
         }
         
-        let entries = FoodEntriesWorker.fetchAllCarbEntries()
+        let entries = CarbEntriesWorker.fetchAllCarbEntries()
         XCTAssertTrue(entries.count == 10)
         XCTAssertTrue(entries[0].foodType == "10")
         XCTAssertTrue(entries[9].foodType == "1")

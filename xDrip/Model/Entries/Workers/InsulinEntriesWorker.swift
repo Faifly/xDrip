@@ -10,13 +10,13 @@ import Foundation
 import AKUtils
 
 final class InsulinEntriesWorker: AbstractEntriesWorker {
+    static var bolusDataHandler: (() -> Void)?
+    
     @discardableResult static func addBolusEntry(amount: Double, date: Date) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .bolus)
-        return add(entry: entry)
-    }
-    
-    static func fetchAllBolusEntries() -> [InsulinEntry] {
-        return super.fetchAllEntries(type: InsulinEntry.self).filter { $0.type == .bolus }
+        let addedEntry = add(entry: entry)
+        bolusDataHandler?()
+        return addedEntry
     }
     
     @discardableResult static func addBasalEntry(amount: Double, date: Date) -> InsulinEntry {
@@ -26,11 +26,25 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
         return entry
     }
     
+    static func deleteInsulinEntry(_ entry: InsulinEntry) {
+        let type = entry.type
+        super.deleteEntry(entry)
+        if type == .bolus { bolusDataHandler?() }
+    }
+    
+    static func fetchAllBolusEntries() -> [InsulinEntry] {
+        return super.fetchAllEntries(type: InsulinEntry.self).filter { $0.type == .bolus }
+    }
+    
     static func fetchAllBasalEntries() -> [InsulinEntry] {
         return super.fetchAllEntries(type: InsulinEntry.self).filter { $0.type == .basal }
     }
     
     static func fetchAllInsulinEntries() -> [InsulinEntry] {
         return super.fetchAllEntries(type: InsulinEntry.self)
+    }
+    
+    static func updatedBolusEntry() {
+        bolusDataHandler?()
     }
 }

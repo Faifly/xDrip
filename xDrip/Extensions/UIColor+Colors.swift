@@ -32,7 +32,11 @@ extension UIColor {
         case customBlue
         case diffTextColor
         case lastScanDateTextColor
+        case chartButtonTextColor
+        case chartButtonHighlitedTextColor
         case statsChartSelection
+        case bolusChartEntry
+        case carbsChartEntry
     }
     
     static var background1: UIColor {
@@ -123,8 +127,24 @@ extension UIColor {
         return color(withName: Colors.lastScanDateTextColor.rawValue)
     }
     
+    static var chartButtonTextColor: UIColor {
+        return color(withName: Colors.chartButtonTextColor.rawValue)
+    }
+    
+    static var chartButtonHighlitedTextColor: UIColor {
+          return color(withName: Colors.chartButtonHighlitedTextColor.rawValue)
+      }
+    
     static var statsChartSelection: UIColor {
         return color(withName: Colors.statsChartSelection.rawValue)
+    }
+    
+    static var bolusChartEntry: UIColor {
+        return color(withName: Colors.bolusChartEntry.rawValue)
+    }
+    
+    static var carbsChartEntry: UIColor {
+        return color(withName: Colors.carbsChartEntry.rawValue)
     }
     
     private static func color(withName name: String) -> UIColor {

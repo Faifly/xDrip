@@ -16,8 +16,12 @@ import AKUtils
 protocol HomeDisplayLogic: AnyObject {
     func displayLoad(viewModel: Home.Load.ViewModel)
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel)
-    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel)
     func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel)
+    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseEntriesChartTimeFrame.ViewModel)
+    func displayBolusData(viewModel: Home.BolusDataUpdate.ViewModel)
+    func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
+    func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel)
+    func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
     func displayWarmUp(viewModel: Home.WarmUp.ViewModel)
 }
 
@@ -58,16 +62,26 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var glucoseCurrentInfoView: GlucoseCurrentInfoView!
     @IBOutlet private weak var timeLineSegmentView: UISegmentedControl!
     @IBOutlet private weak var glucoseChart: GlucoseHistoryView!
-    @IBOutlet private weak var glucoseChartContainerView: UIView!
+    @IBOutlet private weak var bolusHistoryView: EntriesHistoryView!
+    @IBOutlet private weak var carbsHistoryView: EntriesHistoryView!
     @IBOutlet private weak var warmUpLabel: UILabel!
     @IBOutlet private weak var warmUpLabelTopConstraint: NSLayoutConstraint!
-    
+    @IBOutlet private weak var aboutGlucoseTitleLabel: UILabel!
+    @IBOutlet private weak var aboutGlucoseContentLabel: UILabel!
+    @IBOutlet private weak var bolusCarbsTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var carbsBolusStackView: UIStackView?
+    @IBOutlet private weak var mainStackView: UIStackView?
+    @IBOutlet private weak var supportingStackView: UIStackView?
+    @IBOutlet private weak var topViewPortraitHeigthConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var topViewLandscapeWidthConstraint: NSLayoutConstraint?
+
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         doLoad()
         setupUI()
+        subscribeToViewsButtonEvents()
     }
     
     // MARK: Do something
@@ -93,8 +107,10 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         default: hours = 0
         }
         
-        let request = Home.ChangeGlucoseChartTimeFrame.Request(hours: hours)
+        let request = Home.ChangeEntriesChartTimeFrame.Request(hours: hours)
         interactor?.doChangeGlucoseChartTimeFrame(request: request)
+        interactor?.doChangeBolusChartTimeFrame(request: request)
+        interactor?.doChangeCarbsChartTimeFrame(request: request)
     }
     
     // MARK: Display
@@ -114,12 +130,30 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         }
     }
     
-    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseChartTimeFrame.ViewModel) {
+    func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseEntriesChartTimeFrame.ViewModel) {
         glucoseChart.setTimeFrame(viewModel.timeInterval)
     }
     
     func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel) {
         glucoseCurrentInfoView.setup(with: viewModel)
+    }
+    
+    func displayBolusData(viewModel: Home.BolusDataUpdate.ViewModel) {
+        bolusHistoryView.setup(with: viewModel)
+        updateBolusCarbsTopConstraint()
+    }
+    
+    func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
+        bolusHistoryView.setTimeFrame(viewModel.timeInterval, chartButtonTitle: viewModel.buttonTitle)
+    }
+    
+    func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel) {
+        carbsHistoryView.setup(with: viewModel)
+        updateBolusCarbsTopConstraint()
+    }
+    
+    func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
+        carbsHistoryView.setTimeFrame(viewModel.timeInterval, chartButtonTitle: viewModel.buttonTitle)
     }
     
     func displayWarmUp(viewModel: Home.WarmUp.ViewModel) {
@@ -171,6 +205,16 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         }
     }
     
+    private func updateBolusCarbsTopConstraint() {
+        if bolusHistoryView.isHidden && carbsHistoryView.isHidden {
+            bolusCarbsTopConstraint.constant = 0
+            supportingStackView?.spacing = 0
+        } else {
+            bolusCarbsTopConstraint.constant = 16
+            supportingStackView?.spacing = 16
+        }
+    }
+    
     private func setupUI() {
         let titles = [
             "home_time_frame_1h".localized,
@@ -189,5 +233,66 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
             )
         }
         timeLineSegmentView.selectedSegmentIndex = 0
+        aboutGlucoseTitleLabel.text = "home_about_glucose_title".localized.uppercased()
+        aboutGlucoseContentLabel.text = "home_about_glucose_content".localized
+    }
+    
+    private func subscribeToViewsButtonEvents() {
+        bolusHistoryView.onChartButtonClicked = { [weak self] in
+            let request = Home.ShowEntriesList.Request(entriesType: .bolus)
+            self?.interactor?.doShowEntriesList(request: request)
+        }
+        
+        carbsHistoryView.onChartButtonClicked = { [weak self] in
+            let request = Home.ShowEntriesList.Request(entriesType: .carbs)
+            self?.interactor?.doShowEntriesList(request: request)
+        }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if view.bounds.width >= view.bounds.height {
+            mainStackView?.axis = .horizontal
+            topViewPortraitHeigthConstraint?.priority = .defaultLow
+            topViewLandscapeWidthConstraint?.priority = .required
+            carbsBolusStackView?.axis = .vertical
+            supportingStackView?.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 32)
+        } else {
+            mainStackView?.axis = .vertical
+            topViewPortraitHeigthConstraint?.priority = .defaultHigh
+            topViewLandscapeWidthConstraint?.priority = .defaultLow
+            carbsBolusStackView?.axis = .horizontal
+            supportingStackView?.layoutMargins = UIEdgeInsets(top: 32, left: 32, bottom: 0, right: 32)
+        }
     }
 }
+
+//extension NSLayoutConstraint {
+//    override public var description: String {
+//        if let id = identifier {
+//             return "id: \(id), constant: \(constant)"
+//        } else {
+//            return super.description
+//        }
+//        //you may print whatever you want here
+//    }
+//
+//    static func setMultiplier(_ multiplier: CGFloat, of constraint: inout NSLayoutConstraint) {
+//        NSLayoutConstraint.deactivate([constraint])
+//
+//        let newConstraint = NSLayoutConstraint(item: constraint.firstItem as Any,
+//                                               attribute: constraint.firstAttribute,
+//                                               relatedBy: constraint.relation,
+//                                               toItem: constraint.secondItem,
+//                                               attribute: constraint.secondAttribute,
+//                                               multiplier: multiplier,
+//                                               constant: constraint.constant)
+//
+//        newConstraint.priority = constraint.priority
+//        newConstraint.shouldBeArchived = constraint.shouldBeArchived
+//        newConstraint.identifier = constraint.identifier
+//
+//        NSLayoutConstraint.activate([newConstraint])
+//        constraint = newConstraint
+//    }
+//}

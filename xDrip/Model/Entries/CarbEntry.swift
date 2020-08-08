@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-final class CarbEntry: AbstractEntry {
+final class CarbEntry: AbstractEntry, AbstractEntryProtocol {
     @objc private(set) dynamic var amount: Double = 0.0
     @objc private(set) dynamic var foodType: String?
     @objc private(set) dynamic var assimilationDuration: TimeInterval = 0.0

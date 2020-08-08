@@ -9,6 +9,8 @@
 import UIKit
 
 class BaseChartView: UIView {
+    var yRange: ClosedRange<Double> = 0.0...0.0
+    var dateInterval = DateInterval()
     var chartInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: 26.0, right: 0.0)
     
     var relativeHorizontalStartingOffset: CGFloat = 0.0

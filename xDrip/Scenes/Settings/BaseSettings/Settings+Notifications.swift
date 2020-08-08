@@ -19,7 +19,8 @@ extension NotificationCenter {
         case sensorStarted
         
         case basalRelated
-        
+        case activeInsulin
+        case activeCarbs
         case alertRepeat
         case fastRise
         case fastDrop
@@ -74,6 +75,8 @@ fileprivate extension NotificationCenter.Setting {
         case .sensorStarted: name = "sensorStarted"
         case .warmUp: name = "warmUp"
         case .basalRelated: name = "basalRelated"
+        case .activeInsulin: name = "activeInsulin"
+        case .activeCarbs: name = "activeCarbs"
         }
         return Notification.Name(name)
     }

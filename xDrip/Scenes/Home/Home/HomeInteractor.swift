@@ -15,7 +15,9 @@ import UIKit
 protocol HomeBusinessLogic {
     func doLoad(request: Home.Load.Request)
     func doShowEntriesList(request: Home.ShowEntriesList.Request)
-    func doChangeGlucoseChartTimeFrame(request: Home.ChangeGlucoseChartTimeFrame.Request)
+    func doChangeGlucoseChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request)
+    func doChangeBolusChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request)
+    func doChangeCarbsChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request)
 }
 
 protocol HomeDataStore: AnyObject {
@@ -30,7 +32,8 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private let glucoseDataWorker: HomeGlucoseDataWorkerProtocol
     private let warmUpWorker: HomeWarmUpWorkerLogic
     private var basalEntriesObserver: [NSObjectProtocol]?
-    
+    private var activeInsulinObserver: [NSObjectProtocol]?
+    private var activeCarbsObserver: [NSObjectProtocol]?
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
         warmUpWorker = HomeWarmUpWorker()
@@ -40,12 +43,36 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             self.updateGlucoseCurrentInfo()
             self.updateGlucoseChartData()
         }
+        InsulinEntriesWorker.bolusDataHandler = { [weak self] in
+            guard let self = self else { return }
+            self.updateBolusChartData()
+        }
+        CarbEntriesWorker.carbsDataHandler = { [weak self] in
+            guard let self = self else { return }
+            self.updateCarbsChartData()
+        }
         
         basalEntriesObserver = NotificationCenter.default.subscribe(
             forSettingsChange: [.basalRelated, .unit],
             notificationHandler: { [weak self] _ in
                 self?.updateGlucoseCurrentInfo()
                 self?.updateGlucoseChartData()
+            }
+        )
+        
+        activeInsulinObserver = NotificationCenter.default.subscribe(
+            forSettingsChange: [.activeInsulin],
+            notificationHandler: { [weak self] _ in
+                guard let self = self else { return }
+                self.updateBolusChartData()
+            }
+        )
+        
+        activeCarbsObserver = NotificationCenter.default.subscribe(
+            forSettingsChange: [.activeCarbs],
+            notificationHandler: { [weak self] _ in
+                guard let self = self else { return }
+                self.updateCarbsChartData()
             }
         )
     }
@@ -57,6 +84,8 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         presenter?.presentLoad(response: response)
         updateGlucoseCurrentInfo()
         updateGlucoseChartData()
+        updateBolusChartData()
+        updateCarbsChartData()
         warmUpWorker.subscribeForWarmUpStateChange { [weak self] state in
             let response = Home.WarmUp.Response(state: state)
             self?.presenter?.presentWarmUp(response: response)
@@ -74,8 +103,8 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         }
     }
     
-    func doChangeGlucoseChartTimeFrame(request: Home.ChangeGlucoseChartTimeFrame.Request) {
-        let response = Home.ChangeGlucoseChartTimeFrame.Response(
+    func doChangeGlucoseChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request) {
+        let response = Home.ChangeEntriesChartTimeFrame.Response(
             timeInterval: .secondsPerHour * TimeInterval(request.hours)
         )
         presenter?.presentGlucoseChartTimeFrameChange(response: response)
@@ -90,11 +119,45 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             insulinData: BasalChartDataWorker.fetchBasalData(),
             chartPointsData: BasalChartDataWorker.calculateChartValues()
         )
-        self.presenter?.presentGlucoseData(response: response)
+        presenter?.presentGlucoseData(response: response)
     }
     
     private func updateGlucoseCurrentInfo() {
         let response = Home.GlucoseCurrentInfo.Response(lastGlucoseReading: glucoseDataWorker.fetchLastGlucoseReading())
         presenter?.presentGlucoseCurrentInfo(response: response)
+    }
+    
+    func doChangeBolusChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request) {
+        let response = Home.ChangeEntriesChartTimeFrame.Response(
+            timeInterval: .secondsPerHour * TimeInterval(request.hours)
+        )
+        presenter?.presentBolusChartTimeFrameChange(response: response)
+    }
+    
+    func doChangeCarbsChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request) {
+        let response = Home.ChangeEntriesChartTimeFrame.Response(
+            timeInterval: .secondsPerHour * TimeInterval(request.hours)
+        )
+        presenter?.presentCarbsChartTimeFrameChange(response: response)
+    }
+    
+    private func updateBolusChartData() {
+        var insulinData: [InsulinEntry] = []
+        let isShown = User.current.settings.chart?.showActiveInsulin ?? true
+        if isShown {
+            insulinData = InsulinEntriesWorker.fetchAllBolusEntries()
+        }
+        let response = Home.BolusDataUpdate.Response(insulinData: insulinData, isShown: isShown)
+        presenter?.presentBolusData(response: response)
+    }
+    
+    private func updateCarbsChartData() {
+        var carbsData: [CarbEntry] = []
+        let isShown = User.current.settings.chart?.showActiveCarbs ?? true
+        if  isShown {
+            carbsData = CarbEntriesWorker.fetchAllCarbEntries()
+        }
+        let response = Home.CarbsDataUpdate.Response(carbsData: carbsData, isShown: isShown)
+        presenter?.presentCarbsData(response: response)
     }
 }

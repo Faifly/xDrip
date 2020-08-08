@@ -12,6 +12,15 @@
 
 import UIKit
 
+protocol BaseFoodEntryViewModel {
+    var chartTitle: String { get }
+    var chartButtonTitle: String { get }
+    var entries: [BaseChartEntry] { get }
+    var unit: String { get }
+    var color: UIColor { get }
+    var isShown: Bool { get }
+}
+
 enum Home {
     // MARK: Models
     
@@ -53,6 +62,44 @@ enum Home {
         }
     }
     
+    enum BolusDataUpdate {
+        struct Request {
+        }
+        
+        struct Response {
+            let insulinData: [InsulinEntry]
+            let isShown: Bool
+        }
+        
+        struct ViewModel: BaseFoodEntryViewModel {
+            let chartTitle: String
+            let chartButtonTitle: String
+            let entries: [BaseChartEntry]
+            let unit: String
+            let color: UIColor
+            let isShown: Bool
+        }
+    }
+        
+    enum CarbsDataUpdate {
+        struct Request {
+        }
+        
+        struct Response {
+            let carbsData: [CarbEntry]
+            let isShown: Bool
+        }
+        
+        struct ViewModel: BaseFoodEntryViewModel {
+            let chartTitle: String
+            let chartButtonTitle: String
+            let entries: [BaseChartEntry]
+            let unit: String
+            let color: UIColor
+            let isShown: Bool
+        }
+    }
+    
     enum ShowEntriesList {
         struct Request {
             let entriesType: Root.EntryType
@@ -65,7 +112,21 @@ enum Home {
         }
     }
     
-    enum ChangeGlucoseChartTimeFrame {
+    enum ChangeGlucoseEntriesChartTimeFrame {
+        struct Request {
+            let hours: Int
+        }
+
+        struct Response {
+            let timeInterval: TimeInterval
+        }
+
+        struct ViewModel {
+            let timeInterval: TimeInterval
+        }
+    }
+    
+    enum ChangeEntriesChartTimeFrame {
         struct Request {
             let hours: Int
         }
@@ -76,6 +137,7 @@ enum Home {
         
         struct ViewModel {
             let timeInterval: TimeInterval
+            let buttonTitle: String
         }
     }
     

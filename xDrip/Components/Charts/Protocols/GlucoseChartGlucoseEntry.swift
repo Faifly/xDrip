@@ -19,3 +19,8 @@ protocol GlucoseChartGlucoseEntry {
     var date: Date { get }
     var severity: GlucoseChartSeverityLevel { get }
 }
+
+struct BaseChartEntry {
+    var value: Double
+    var date: Date
+}
