@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -26,7 +26,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="RfY-ZW-nBO">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="1000"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="1500"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="duk-7t-Fh3">
@@ -61,7 +61,7 @@
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5GJ-cn-Jfe">
-                    <rect key="frame" x="0.0" y="160" width="414" height="806"/>
+                    <rect key="frame" x="0.0" y="160" width="414" height="1306"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fZx-6e-Ugl" customClass="GlucoseHistoryView" customModule="xDrip" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="270"/>
@@ -107,13 +107,13 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Wm-cT-aYO">
-                            <rect key="frame" x="16" y="563" width="382" height="16"/>
+                            <rect key="frame" x="16" y="815" width="382" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" name="headerTitleColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A5z-Uu-tiy">
-                            <rect key="frame" x="16" y="586" width="382" height="45"/>
+                            <rect key="frame" x="16" y="838" width="382" height="45"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UeT-CW-d7g">
                                     <rect key="frame" x="16" y="14" width="350" height="17"/>
@@ -135,21 +135,40 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JSM-bc-NJh" customClass="GlucoseDataView" customModule="xDrip" customModuleProvider="target">
+                            <rect key="frame" x="16" y="586" width="382" height="213"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="213" id="M3A-6D-r3l"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DATA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9l-R3-gUI">
+                            <rect key="frame" x="16" y="563" width="382" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" name="headerTitleColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <constraints>
                         <constraint firstItem="Yuw-4A-lhx" firstAttribute="top" secondItem="fZx-6e-Ugl" secondAttribute="bottom" constant="16" id="0T5-ad-APU"/>
+                        <constraint firstItem="JSM-bc-NJh" firstAttribute="leading" secondItem="iBa-5E-yx3" secondAttribute="leading" constant="16" id="1yG-ZC-Tbp"/>
                         <constraint firstItem="5Wm-cT-aYO" firstAttribute="leading" secondItem="iBa-5E-yx3" secondAttribute="leading" constant="16" id="4ms-CX-wnY"/>
+                        <constraint firstItem="JSM-bc-NJh" firstAttribute="top" secondItem="Q9l-R3-gUI" secondAttribute="bottom" constant="7" id="7rD-ti-s0N"/>
                         <constraint firstItem="iBa-5E-yx3" firstAttribute="trailing" secondItem="5Wm-cT-aYO" secondAttribute="trailing" constant="16" id="AT3-qg-hiX"/>
                         <constraint firstItem="Yuw-4A-lhx" firstAttribute="leading" secondItem="5GJ-cn-Jfe" secondAttribute="leading" constant="16" id="CjQ-1b-Key"/>
                         <constraint firstItem="A5z-Uu-tiy" firstAttribute="leading" secondItem="5Wm-cT-aYO" secondAttribute="leading" id="DvB-Og-Fax"/>
                         <constraint firstAttribute="trailing" secondItem="fZx-6e-Ugl" secondAttribute="trailing" id="EtB-er-Okd"/>
+                        <constraint firstItem="iBa-5E-yx3" firstAttribute="trailing" secondItem="Q9l-R3-gUI" secondAttribute="trailing" constant="16" id="HI2-IP-f9F"/>
+                        <constraint firstItem="Q9l-R3-gUI" firstAttribute="leading" secondItem="iBa-5E-yx3" secondAttribute="leading" constant="16" id="K48-Mo-YC6"/>
                         <constraint firstAttribute="trailing" secondItem="Yuw-4A-lhx" secondAttribute="trailing" constant="16" id="Pvg-D6-Qbz"/>
-                        <constraint firstItem="5Wm-cT-aYO" firstAttribute="top" secondItem="Yuw-4A-lhx" secondAttribute="bottom" constant="15" id="QvO-bq-BNz"/>
                         <constraint firstItem="A5z-Uu-tiy" firstAttribute="trailing" secondItem="5Wm-cT-aYO" secondAttribute="trailing" id="Snh-Ka-pgh"/>
                         <constraint firstItem="fZx-6e-Ugl" firstAttribute="width" secondItem="5GJ-cn-Jfe" secondAttribute="width" id="e84-Iu-Ybe"/>
                         <constraint firstItem="fZx-6e-Ugl" firstAttribute="leading" secondItem="5GJ-cn-Jfe" secondAttribute="leading" id="kNy-y9-lGg"/>
+                        <constraint firstItem="5Wm-cT-aYO" firstAttribute="top" secondItem="JSM-bc-NJh" secondAttribute="bottom" constant="16" id="knr-GQ-eHP"/>
                         <constraint firstItem="fZx-6e-Ugl" firstAttribute="top" secondItem="5GJ-cn-Jfe" secondAttribute="top" id="ksA-Ix-eFN"/>
+                        <constraint firstItem="iBa-5E-yx3" firstAttribute="trailing" secondItem="JSM-bc-NJh" secondAttribute="trailing" constant="16" id="oPj-1g-dcw"/>
                         <constraint firstItem="A5z-Uu-tiy" firstAttribute="top" secondItem="5Wm-cT-aYO" secondAttribute="bottom" constant="7" id="oVn-oT-DVZ"/>
+                        <constraint firstItem="Q9l-R3-gUI" firstAttribute="top" secondItem="Yuw-4A-lhx" secondAttribute="bottom" constant="15" id="tRS-7h-ynA"/>
                         <constraint firstAttribute="bottom" secondItem="A5z-Uu-tiy" secondAttribute="bottom" constant="16" id="vX0-kB-4Gv"/>
                     </constraints>
                     <viewLayoutGuide key="contentLayoutGuide" id="iBa-5E-yx3"/>

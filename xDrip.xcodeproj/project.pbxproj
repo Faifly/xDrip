@@ -650,6 +650,8 @@
 		58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58E5A6782402B8A8002C2BE3 /* Assets.xcassets */; };
 		58E5A67C2402B8A8002C2BE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58E5A67A2402B8A8002C2BE3 /* LaunchScreen.storyboard */; };
 		58E9159E24C4935900864DF5 /* StatsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E9159D24C4935900864DF5 /* StatsChartView.swift */; };
+		58EB761924DEE70B00443948 /* GlucoseDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB761824DEE70B00443948 /* GlucoseDataView.swift */; };
+		58EB761B24DEE71600443948 /* GlucoseDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58EB761A24DEE71600443948 /* GlucoseDataView.xib */; };
 		58F43BA1249130C2006C5F2C /* UploadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F43BA0249130C2006C5F2C /* UploadRequest.swift */; };
 		58F4CC79243B9F470053D17C /* MacMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC78243B9F470053D17C /* MacMenuController.swift */; };
 		58F4CC7B243BA0CB0053D17C /* DebugController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F4CC7A243BA0CB0053D17C /* DebugController.swift */; };
@@ -1344,6 +1346,8 @@
 		58E5A6822402B8A9002C2BE3 /* xDripTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = xDripTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		58E5A6882402B8A9002C2BE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58E9159D24C4935900864DF5 /* StatsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsChartView.swift; sourceTree = "<group>"; };
+		58EB761824DEE70B00443948 /* GlucoseDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseDataView.swift; sourceTree = "<group>"; };
+		58EB761A24DEE71600443948 /* GlucoseDataView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GlucoseDataView.xib; sourceTree = "<group>"; };
 		58F43BA0249130C2006C5F2C /* UploadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequest.swift; sourceTree = "<group>"; };
 		58F4CC78243B9F470053D17C /* MacMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMenuController.swift; sourceTree = "<group>"; };
 		58F4CC7A243BA0CB0053D17C /* DebugController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugController.swift; sourceTree = "<group>"; };
@@ -1476,6 +1480,8 @@
 			children = (
 				0A895421249CE71A0067601F /* GlucoseCurrentInfoView.swift */,
 				0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */,
+				58EB761824DEE70B00443948 /* GlucoseDataView.swift */,
+				58EB761A24DEE71600443948 /* GlucoseDataView.xib */,
 			);
 			name = Views;
 			path = xDrip/Scenes/Home/Home/Views;
@@ -3895,6 +3901,7 @@
 				58E5A6792402B8A8002C2BE3 /* Assets.xcassets in Resources */,
 				2C4E7F0924694F440062D403 /* Swoosh.caf in Resources */,
 				2C467FCD247E6884006D651D /* ChartRangesHeaderView.xib in Resources */,
+				58EB761B24DEE71600443948 /* GlucoseDataView.xib in Resources */,
 				0A62DA8824DBF2F90064A85F /* HomeViewController~ipad.xib in Resources */,
 				58F4CC89243BA21D0053D17C /* DebugLogViewController.xib in Resources */,
 				2C4E7EF924694F440062D403 /* Bell.caf in Resources */,
@@ -4260,6 +4267,7 @@
 				580E4BDC243F739C00565EDE /* SettingsTransmitterRouter.swift in Sources */,
 				58B5FD3324190E2F00DB857D /* HomeRouter.swift in Sources */,
 				2CBE1A832430F6FA003BE14E /* EntriesListTableController.swift in Sources */,
+				58EB761924DEE70B00443948 /* GlucoseDataView.swift in Sources */,
 				58FFBC1F24A5ECEA003D2DE6 /* LocalizedButton.swift in Sources */,
 				58160DF52402C7F600C792F4 /* RootViewController.swift in Sources */,
 				2C09D21224410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift in Sources */,
