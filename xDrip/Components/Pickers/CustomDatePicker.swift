@@ -27,7 +27,7 @@ final class CustomDatePicker: UIDatePicker, PickerView {
         
         #if targetEnvironment(macCatalyst)
         if #available(macCatalyst 13.4, *) {
-            preferredDatePickerStyle = .wheels
+//            preferredDatePickerStyle = .wheels
         }
         #endif
     }

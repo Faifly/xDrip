@@ -145,7 +145,9 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     }
     
     func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
-        bolusHistoryView.setTimeFrame(viewModel.timeInterval, chartButtonTitle: viewModel.buttonTitle)
+        bolusHistoryView.setTimeFrame(viewModel.timeInterval,
+                                      chartButtonTitle: viewModel.buttonTitle,
+                                      showChart: viewModel.isChartShown)
     }
     
     func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel) {
@@ -154,7 +156,9 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     }
     
     func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
-        carbsHistoryView.setTimeFrame(viewModel.timeInterval, chartButtonTitle: viewModel.buttonTitle)
+        carbsHistoryView.setTimeFrame(viewModel.timeInterval,
+                                      chartButtonTitle: viewModel.buttonTitle,
+                                      showChart: viewModel.isChartShown)
     }
     
     func displayWarmUp(viewModel: Home.WarmUp.ViewModel) {
@@ -208,10 +212,10 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     private func updateBolusCarbsTopConstraint() {
         if bolusHistoryView.isHidden && carbsHistoryView.isHidden {
-            bolusCarbsTopConstraint.constant = 0
+            bolusCarbsTopConstraint?.constant = 0
             supportingStackView?.spacing = 0
         } else {
-            bolusCarbsTopConstraint.constant = 16
+            bolusCarbsTopConstraint?.constant = 16
             supportingStackView?.spacing = 16
         }
     }
@@ -269,33 +273,3 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         }
     }
 }
-
-//extension NSLayoutConstraint {
-//    override public var description: String {
-//        if let id = identifier {
-//             return "id: \(id), constant: \(constant)"
-//        } else {
-//            return super.description
-//        }
-//        //you may print whatever you want here
-//    }
-//
-//    static func setMultiplier(_ multiplier: CGFloat, of constraint: inout NSLayoutConstraint) {
-//        NSLayoutConstraint.deactivate([constraint])
-//
-//        let newConstraint = NSLayoutConstraint(item: constraint.firstItem as Any,
-//                                               attribute: constraint.firstAttribute,
-//                                               relatedBy: constraint.relation,
-//                                               toItem: constraint.secondItem,
-//                                               attribute: constraint.secondAttribute,
-//                                               multiplier: multiplier,
-//                                               constant: constraint.constant)
-//
-//        newConstraint.priority = constraint.priority
-//        newConstraint.shouldBeArchived = constraint.shouldBeArchived
-//        newConstraint.identifier = constraint.identifier
-//
-//        NSLayoutConstraint.activate([newConstraint])
-//        constraint = newConstraint
-//    }
-//}
