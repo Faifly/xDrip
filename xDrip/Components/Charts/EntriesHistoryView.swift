@@ -13,6 +13,8 @@ final class EntriesHistoryView: BaseHistoryView {
     private var chartEntries: [BaseChartEntry] = []
     private let chartTitleLabel = UILabel()
     private let chartButton = UIButton()
+    private let noDataView = UIView()
+    private let noDataLabel = UILabel()
     var onChartButtonClicked: () -> Void = {}
     
     override var chartView: BaseChartView {
@@ -59,7 +61,24 @@ final class EntriesHistoryView: BaseHistoryView {
                                              constant: 5).isActive = true
         chartButton.topAnchor.constraint(equalTo: topAnchor).isActive = true
         chartButton.bottomAnchor.constraint(equalTo: scrollContainer.topAnchor).isActive = true
-    }
+        
+        noDataView.translatesAutoresizingMaskIntoConstraints = false
+        noDataView.backgroundColor = .dimView
+        scrollContainer.addSubview(noDataView)
+        noDataView.bindToSuperview()
+        
+        noDataLabel.translatesAutoresizingMaskIntoConstraints = false
+        noDataLabel.backgroundColor = .clear
+        noDataLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        noDataLabel.textColor = .chartButtonTextColor
+        noDataLabel.textAlignment = .center
+        noDataLabel.text = "home_no_data_for_period".localized
+        noDataView.addSubview(noDataLabel)
+        noDataLabel.leadingAnchor.constraint(equalTo: noDataView.leadingAnchor).isActive = true
+        noDataLabel.trailingAnchor.constraint(equalTo: noDataView.trailingAnchor).isActive = true
+        noDataLabel.topAnchor.constraint(equalTo: noDataView.centerYAnchor,
+                                         constant: -bounds.height / 5).isActive = true
+            }
     
     override func updateChart() {
         super.calculateVerticalLeftLabels(minValue: chartEntries.map({ $0.value }).min(),
@@ -73,13 +92,19 @@ final class EntriesHistoryView: BaseHistoryView {
         entriesChartView.entries = viewModel.entries
         entriesChartView.color = viewModel.color
         chartTitleLabel.text = viewModel.chartTitle
-        chartButton.setTitle(viewModel.chartButtonTitle, for: .normal)
+        updateChartVisibilityAndButtonTitle(viewModel.chartButtonTitle, viewModel.isChartShown)
         super.update()
     }
     
-     func setTimeFrame(_ localInterval: TimeInterval, chartButtonTitle: String) {
+    func setTimeFrame(_ localInterval: TimeInterval, chartButtonTitle: String, showChart: Bool) {
         super.setTimeFrame(localInterval)
+        updateChartVisibilityAndButtonTitle(chartButtonTitle, showChart)
+    }
+    
+    private func updateChartVisibilityAndButtonTitle(_ chartButtonTitle: String, _ showChart: Bool) {
         chartButton.setTitle(chartButtonTitle, for: .normal)
+        noDataView.isHidden = showChart
+        leftLabelsView.isHidden = !showChart
     }
     
     @objc func chartButtonClicked() {

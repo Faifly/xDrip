@@ -12,6 +12,7 @@ extension UIColor {
     enum Colors: String {
         case background1 = "background_1"
         case background2 = "background_2"
+        case background3 = "background_3"
         case tabBarBackground
         case tabBarBlue
         case tabBarGray
@@ -37,6 +38,7 @@ extension UIColor {
         case statsChartSelection
         case bolusChartEntry
         case carbsChartEntry
+        case dimView
     }
     
     static var background1: UIColor {
@@ -45,6 +47,10 @@ extension UIColor {
     
     static var background2: UIColor {
         return color(withName: Colors.background2.rawValue)
+    }
+    
+    static var background3: UIColor {
+        return color(withName: Colors.background3.rawValue)
     }
     
     static var tabBarBackgroundColor: UIColor {
@@ -145,6 +151,10 @@ extension UIColor {
     
     static var carbsChartEntry: UIColor {
         return color(withName: Colors.carbsChartEntry.rawValue)
+    }
+    
+    static var dimView: UIColor {
+        return color(withName: Colors.dimView.rawValue)
     }
     
     private static func color(withName name: String) -> UIColor {

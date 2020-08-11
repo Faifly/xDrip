@@ -19,6 +19,7 @@ protocol HomeEntriesFormattingWorkerProtocol {
     func formatBolusResponse(_ response: Home.BolusDataUpdate.Response) -> InsulinCarbEntry
     func formatCarbsResponse(_ response: Home.CarbsDataUpdate.Response) -> InsulinCarbEntry
     func getChartButtonTitle(_ entryType: Root.EntryType) -> String
+    func getChartShouldBeShown() -> Bool
     func setTimeInterval(_ localInterval: TimeInterval)
 }
 
@@ -26,6 +27,7 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
     private var timeInterval: TimeInterval = .secondsPerHour
     private var insulinEntries: [InsulinEntry] = []
     private var carbEntries: [CarbEntry] = []
+    private var currentAmount = 0.0
     
     func formatBolusResponse(_ response: Home.BolusDataUpdate.Response) -> InsulinCarbEntry {
         insulinEntries = response.insulinData
@@ -48,12 +50,14 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
     
     func formatEntries(_ entries: [AbstractEntryProtocol], absorbtionDuration: TimeInterval) -> [BaseChartEntry] {
         var baseChartEntries: [BaseChartEntry] = []
+        let chartStartInterval = Date().timeIntervalSince1970 - .secondsPerDay
         for index in 0..<entries.count {
             let entry = entries[index]
             guard let entryInterval = entry.date?.timeIntervalSince1970 else { continue }
             var entryAmount = entry.amount
             guard entryAmount > 0 else { continue }
             let entryEndInterval = entryInterval + absorbtionDuration
+            guard entryEndInterval >= chartStartInterval else { continue }
             var finalEntryAmount = 0.0
             var finalEntryInterval = entryEndInterval
             
@@ -159,7 +163,13 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
             }
         }
         
+        currentAmount = totalAmount
+        
         return String(format: "%.2f", totalAmount.rounded(to: 2)) + " \(shortLabel)"
+    }
+    
+    func getChartShouldBeShown() -> Bool {
+        return currentAmount > 0.0
     }
     
     private func calculatePointYFor(pointX: TimeInterval,

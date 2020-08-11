@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,10 +25,10 @@
                     <rect key="frame" x="0.0" y="812" width="414" height="84"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rwJ-iT-LLK">
-                            <rect key="frame" x="16" y="8" width="382" height="22"/>
+                            <rect key="frame" x="16" y="8" width="382" height="42"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hh7-43-aSK" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="76.5" height="22"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="76.5" height="42"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                     <state key="normal" title="tabbar_calibration_title" image="icon_calibration">
                                         <color key="titleColor" name="tabBarGreen"/>
@@ -41,7 +41,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l6E-ty-g72" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
-                                    <rect key="frame" x="76.5" y="0.0" width="76.5" height="22"/>
+                                    <rect key="frame" x="76.5" y="0.0" width="76.5" height="42"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                     <state key="normal" title="tabbar_statistics_title" image="icon_chart">
                                         <color key="titleColor" name="tabBarOrange"/>
@@ -54,7 +54,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Hc-f0-08J" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
-                                    <rect key="frame" x="153" y="0.0" width="76" height="22"/>
+                                    <rect key="frame" x="153" y="0.0" width="76" height="42"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                     <state key="normal" title="tabbar_add_title" image="icon_plus">
                                         <color key="titleColor" name="tabBarBlue"/>
@@ -67,7 +67,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VEN-6h-2y3" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
-                                    <rect key="frame" x="229" y="0.0" width="76.5" height="22"/>
+                                    <rect key="frame" x="229" y="0.0" width="76.5" height="42"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                     <state key="normal" title="tabbar_history_title" image="icon_history">
                                         <color key="titleColor" name="tabBarRed"/>
@@ -80,7 +80,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ASH-Fs-V4k" customClass="CenteredTitleButton" customModule="xDrip" customModuleProvider="target">
-                                    <rect key="frame" x="305.5" y="0.0" width="76.5" height="22"/>
+                                    <rect key="frame" x="305.5" y="0.0" width="76.5" height="42"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                     <state key="normal" title="tabbar_settings_title" image="icon_settings">
                                         <color key="titleColor" name="tabBarGray"/>

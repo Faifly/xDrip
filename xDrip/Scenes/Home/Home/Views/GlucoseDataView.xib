@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,7 +17,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="142.5" height="46.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Low (&lt;=4.0)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MOf-Tl-Px6" customClass="LocalizedLabel" customModule="xDrip" customModuleProvider="target">
-                            <rect key="frame" x="16" y="13" width="110.5" height="21"/>
+                            <rect key="frame" x="16" y="13" width="93.5" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -34,7 +34,7 @@
                     <rect key="frame" x="142.5" y="0.0" width="143" height="46.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In Range" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXF-gv-5G6" customClass="LocalizedLabel" customModule="xDrip" customModuleProvider="target">
-                            <rect key="frame" x="16" y="13" width="111" height="21"/>
+                            <rect key="frame" x="16" y="13" width="67" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -68,7 +68,7 @@
                     <rect key="frame" x="0.0" y="46.5" width="142.5" height="46.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FtI-9Z-xAT">
-                            <rect key="frame" x="16" y="13" width="110.5" height="21"/>
+                            <rect key="frame" x="16" y="13" width="42" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -85,7 +85,7 @@
                     <rect key="frame" x="142.5" y="46.5" width="143" height="46.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNc-ND-Oba">
-                            <rect key="frame" x="16" y="13" width="111" height="21"/>
+                            <rect key="frame" x="16" y="13" width="42" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -119,7 +119,7 @@
                     <rect key="frame" x="0.0" y="93" width="142.5" height="46.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AVG Glucose" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blK-r6-A3h" customClass="LocalizedLabel" customModule="xDrip" customModuleProvider="target">
-                            <rect key="frame" x="16" y="13" width="110.5" height="21"/>
+                            <rect key="frame" x="16" y="13" width="100" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -170,7 +170,7 @@
                     <rect key="frame" x="0.0" y="139.5" width="142.5" height="46.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpx-fN-rkk">
-                            <rect key="frame" x="16" y="13" width="110.5" height="21"/>
+                            <rect key="frame" x="16" y="13" width="42" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -221,7 +221,7 @@
                     <rect key="frame" x="0.0" y="186" width="142.5" height="46.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Std Deviation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sD-P7-gSz" customClass="LocalizedLabel" customModule="xDrip" customModuleProvider="target">
-                            <rect key="frame" x="16" y="13" width="118.5" height="21"/>
+                            <rect key="frame" x="16" y="13" width="102.5" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -238,7 +238,7 @@
                     <rect key="frame" x="142.5" y="186" width="143" height="46.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GVI" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsE-sR-Lfj" customClass="LocalizedLabel" customModule="xDrip" customModuleProvider="target">
-                            <rect key="frame" x="16" y="13" width="111" height="21"/>
+                            <rect key="frame" x="16" y="13" width="28" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -289,7 +289,7 @@
                     <rect key="frame" x="142.5" y="232.5" width="143" height="46.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CXD-LM-NLA">
-                            <rect key="frame" x="16" y="13" width="111" height="21"/>
+                            <rect key="frame" x="16" y="13" width="42" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -522,7 +522,7 @@
                 <outletCollection property="containerViews" destination="lM8-Ke-0RX" collectionClass="NSMutableArray" id="lXj-Ww-U7O"/>
                 <outletCollection property="containerViews" destination="5AQ-IY-bfD" collectionClass="NSMutableArray" id="YWj-68-D2D"/>
             </connections>
-            <point key="canvasLocation" x="147.82608695652175" y="-93.415178571428569"/>
+            <point key="canvasLocation" x="117" y="-85"/>
         </view>
     </objects>
 </document>

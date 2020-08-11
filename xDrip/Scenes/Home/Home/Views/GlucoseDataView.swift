@@ -28,9 +28,9 @@ final class GlucoseDataView: NibView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         layer.cornerRadius = 5.0
-        
+
         titleLabels.forEach {
             $0.font = .systemFont(ofSize: 13.0, weight: .medium)
             $0.textColor = .highEmphasisText
@@ -39,6 +39,6 @@ final class GlucoseDataView: NibView {
             $0.font = .systemFont(ofSize: 14.0, weight: .medium)
             $0.textColor = .mediumEmphasisText
         }
-        containerViews.forEach { $0.backgroundColor = .background1 }
+        containerViews.forEach { $0.backgroundColor = .background3 }
     }
 }
