@@ -34,6 +34,8 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private var basalEntriesObserver: [NSObjectProtocol]?
     private var activeInsulinObserver: [NSObjectProtocol]?
     private var activeCarbsObserver: [NSObjectProtocol]?
+    private var hours: Int = 1
+    
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
         warmUpWorker = HomeWarmUpWorker()
@@ -104,17 +106,19 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     }
     
     func doChangeGlucoseChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request) {
+        hours = request.hours
         let response = Home.ChangeEntriesChartTimeFrame.Response(
             timeInterval: .secondsPerHour * TimeInterval(request.hours)
         )
         presenter?.presentGlucoseChartTimeFrameChange(response: response)
+        updateGlucoseChartData()
     }
     
     // MARK: Logic
     
     private func updateGlucoseChartData() {
         let response = Home.GlucoseDataUpdate.Response(
-            glucoseData: glucoseDataWorker.fetchGlucoseData(),
+            glucoseData: glucoseDataWorker.fetchGlucoseData(for: hours),
             basalDisplayMode: User.current.settings.chart?.basalDisplayMode ?? .notShown,
             insulinData: BasalChartDataWorker.fetchBasalData(),
             chartPointsData: BasalChartDataWorker.calculateChartValues()

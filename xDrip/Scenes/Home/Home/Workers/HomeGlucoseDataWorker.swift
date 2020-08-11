@@ -15,7 +15,7 @@ import AKUtils
 
 protocol HomeGlucoseDataWorkerProtocol: AnyObject {
     var glucoseDataHandler: (() -> Void)? { get set }
-    func fetchGlucoseData() -> [GlucoseReading]
+    func fetchGlucoseData(for hours: Int) -> [GlucoseReading]
     func fetchLastGlucoseReading() -> GlucoseReading?
 }
 
@@ -30,8 +30,8 @@ final class HomeGlucoseDataWorker: NSObject, HomeGlucoseDataWorkerProtocol {
         }
     }
     
-    func fetchGlucoseData() -> [GlucoseReading] {
-        let minimumDate = Date() - .secondsPerDay
+    func fetchGlucoseData(for hours: Int) -> [GlucoseReading] {
+        let minimumDate = Date() - TimeInterval(hours) * .secondsPerHour
         let all = User.current.settings.deviceMode == .main ? GlucoseReading.allMaster : GlucoseReading.allFollower
         return Array(
             all.filter { $0.date >=? minimumDate && $0.filteredCalculatedValue > .ulpOfOne }

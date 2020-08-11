@@ -50,6 +50,12 @@ protocol HomeGlucoseFormattingWorkerProtocol {
 }
 
 final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
+    private let statsCalculationWorker: StatsRootCalculationWorkerLogic
+    
+    init() {
+        statsCalculationWorker = StatsRootCalculationWorker()
+    }
+    
     func formatEntries(_ entries: [GlucoseReading]) -> [GlucoseChartGlucoseEntry] {
         let settings = User.current.settings
         return entries.map {
@@ -103,18 +109,39 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
     }
     
     func formatDataSection(_ entries: [GlucoseReading]) -> Home.DataSectionViewModel {
+        guard !entries.isEmpty else {
+            return Home.DataSectionViewModel(
+                lowValue: "N/A",
+                lowTitle: "Low",
+                inRange: "N/A",
+                highValue: "N/A",
+                highTitle: "High",
+                avgGlucose: "N/A",
+                a1c: "N/A",
+                reading: "N/A",
+                stdDeviation: "N/A",
+                gvi: "N/A",
+                pgs: "N/A"
+            )
+        }
+        let lowThreshold = User.current.settings.warningLevelValue(for: .low)
+        let highThreshold = User.current.settings.warningLevelValue(for: .high)
+        let unit = User.current.settings.unit.label
+        
+        statsCalculationWorker.calculate(with: entries, lowThreshold: lowThreshold, highThreshold: highThreshold)
+        
         return Home.DataSectionViewModel(
-            lowValue: "N/A",
-            lowTitle: "Low",
-            inRange: "N/A",
-            highValue: "N/A",
-            highTitle: "High",
-            avgGlucose: "N/A",
-            a1c: "N/A",
-            reading: "N/A",
-            stdDeviation: "N/A",
-            gvi: "N/A",
-            pgs: "N/A"
+            lowValue: String(format: "%0.1f%%", statsCalculationWorker.lowPercentage),
+            lowTitle: String(format: "Low (<%0.1f)", lowThreshold),
+            inRange: String(format: "%0.1f%%", statsCalculationWorker.normalPercentage),
+            highValue: String(format: "%0.1f%%", statsCalculationWorker.highPercentage),
+            highTitle: String(format: "High (>%0.1f)", highThreshold),
+            avgGlucose: String(format: "%0.1f \(unit)", statsCalculationWorker.mean),
+            a1c: String(format: "%0.1f%%", statsCalculationWorker.a1cDCCT),
+            reading: "\(entries.count)",
+            stdDeviation: String(format: "%0.1f \(unit)", statsCalculationWorker.stdDev),
+            gvi: String(format: "%0.2f", statsCalculationWorker.gvi),
+            pgs: String(format: "%0.2f", statsCalculationWorker.pgs)
         )
     }
     

@@ -59,9 +59,9 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
         highCount = nonZero.filter { $0.filteredCalculatedValue > highThreshold }.count
         normalCount = nonZero.count - lowCount - highCount
         
-        lowPercentage = (Float(lowCount) / Float(nonZero.count) * 100.0).rounded()
-        highPercentage = (Float(highCount) / Float(nonZero.count) * 100.0).rounded()
-        normalPercentage = (Float(normalCount) / Float(nonZero.count) * 100.0).rounded()
+        lowPercentage = (Float(lowCount) / Float(nonZero.count) * 100.0)
+        highPercentage = (Float(highCount) / Float(nonZero.count) * 100.0)
+        normalPercentage = (Float(normalCount) / Float(nonZero.count) * 100.0)
         
         let values = nonZero.map { $0.filteredCalculatedValue }
         mean = values.reduce(0.0, +) / Double(values.count)
