@@ -109,6 +109,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
     }
     
     func formatDataSection(_ entries: [GlucoseReading]) -> Home.DataSectionViewModel {
+         let isShown = User.current.settings.chart?.showData ?? true
         guard !entries.isEmpty else {
             return Home.DataSectionViewModel(
                 lowValue: "N/A",
@@ -121,7 +122,8 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
                 reading: "N/A",
                 stdDeviation: "N/A",
                 gvi: "N/A",
-                pgs: "N/A"
+                pgs: "N/A",
+                isShown: isShown
             )
         }
         let lowThreshold = User.current.settings.warningLevelValue(for: .low)
@@ -141,7 +143,8 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
             reading: "\(entries.count)",
             stdDeviation: String(format: "%0.1f \(unit)", statsCalculationWorker.stdDev),
             gvi: String(format: "%0.2f", statsCalculationWorker.gvi),
-            pgs: String(format: "%0.2f", statsCalculationWorker.pgs)
+            pgs: String(format: "%0.2f", statsCalculationWorker.pgs),
+            isShown: isShown
         )
     }
     

@@ -43,6 +43,7 @@ final class SettingsChartInteractor: SettingsChartBusinessLogic, SettingsChartDa
         case .activeCarbs: settings?.updateShowActiveCarbs(value)
         NotificationCenter.default.postSettingsChangeNotification(setting: .activeCarbs)
         case .data: settings?.updateShowData(value)
+        NotificationCenter.default.postSettingsChangeNotification(setting: .data)
         }
     }
     

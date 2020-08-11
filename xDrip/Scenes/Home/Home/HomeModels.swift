@@ -42,6 +42,7 @@ enum Home {
         let stdDeviation: String
         let gvi: String
         let pgs: String
+        let isShown: Bool
     }
     
     // MARK: Use cases

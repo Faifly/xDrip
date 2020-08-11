@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,6 +16,7 @@
                 <outlet property="bolusHistoryView" destination="QI9-dy-2xH" id="LLQ-ic-hx2"/>
                 <outlet property="carbsBolusStackView" destination="BIN-CQ-2MB" id="dUi-YE-TD4"/>
                 <outlet property="carbsHistoryView" destination="d0A-S3-GG6" id="eF1-gV-OQd"/>
+                <outlet property="dataContentView" destination="8zG-8D-c42" id="A5k-H7-PpX"/>
                 <outlet property="dataView" destination="LRO-sf-5Hm" id="hNf-Sr-QGG"/>
                 <outlet property="glucoseChart" destination="Cjs-Nl-Uxd" id="4mb-eo-MBn"/>
                 <outlet property="glucoseCurrentInfoView" destination="EH6-2h-HCR" id="YTO-38-QCz"/>
