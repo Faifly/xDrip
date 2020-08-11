@@ -47,7 +47,7 @@ final class HomePresenter: HomePresentationLogic {
         let basal = glucoseFormattingWorker.formatEntries(response.insulinData)
         let stroke = glucoseFormattingWorker.formatEntries(response.chartPointsData)
         let unit = User.current.settings.unit.label
-        let dataSection = glucoseFormattingWorker.formatDataSection(response.glucoseData)
+        let dataSection = glucoseFormattingWorker.formatDataSection(response.intervalGlucoseData)
         
         let viewModel = Home.GlucoseDataUpdate.ViewModel(
             glucoseValues: values,

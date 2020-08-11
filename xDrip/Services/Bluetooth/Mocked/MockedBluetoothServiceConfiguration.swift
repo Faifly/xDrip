@@ -62,7 +62,7 @@ extension MockedBluetoothServiceConfiguration.Predefined {
     private func createQuickUpdateConfiguration() -> MockedBluetoothServiceConfiguration {
         return MockedBluetoothServiceConfiguration(
             metadataReceiveDelay: 0.5,
-            glucoseReadingsInterval: 30.0,
+            glucoseReadingsInterval: 300.0,
             initialGlucose: 110.0,
             failProbability: 0.0,
             glucoseMaximumEpsilon: 3.0,
