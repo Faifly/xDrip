@@ -75,6 +75,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var topViewPortraitHeigthConstraint: NSLayoutConstraint?
     @IBOutlet private weak var topViewLandscapeWidthConstraint: NSLayoutConstraint?
     @IBOutlet private weak var glucoseDataStackView: UIStackView!
+    @IBOutlet private weak var dataView: GlucoseDataView!
     
     // MARK: View lifecycle
     
@@ -129,6 +130,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
                 unit: viewModel.unit
             )
         }
+        dataView.setup(with: viewModel.dataSection)
     }
     
     func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseEntriesChartTimeFrame.ViewModel) {

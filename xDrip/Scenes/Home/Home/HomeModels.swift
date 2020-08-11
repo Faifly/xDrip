@@ -30,6 +30,20 @@ enum Home {
         let minutesLeft: Int?
     }
     
+    struct DataSectionViewModel {
+        let lowValue: String
+        let lowTitle: String
+        let inRange: String
+        let highValue: String
+        let highTitle: String
+        let avgGlucose: String
+        let a1c: String
+        let reading: String
+        let stdDeviation: String
+        let gvi: String
+        let pgs: String
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -60,6 +74,7 @@ enum Home {
             let basalValues: [BasalChartBasalEntry]
             let strokeChartBasalValues: [BasalChartBasalEntry]
             let unit: String
+            let dataSection: DataSectionViewModel
         }
     }
     

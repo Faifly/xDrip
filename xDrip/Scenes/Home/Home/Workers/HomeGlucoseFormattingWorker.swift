@@ -46,6 +46,7 @@ protocol HomeGlucoseFormattingWorkerProtocol {
     func formatEntries(_ entries: [GlucoseReading]) -> [GlucoseChartGlucoseEntry]
     func formatEntry(_ entry: GlucoseReading?) -> GlucoseCurrentInfoEntry
     func formatEntries(_ entries: [InsulinEntry]) -> [BasalChartBasalEntry]
+    func formatDataSection(_ entries: [GlucoseReading]) -> Home.DataSectionViewModel
 }
 
 final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
@@ -99,6 +100,22 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
                 date: entry.date ?? Date()
             )
         }
+    }
+    
+    func formatDataSection(_ entries: [GlucoseReading]) -> Home.DataSectionViewModel {
+        return Home.DataSectionViewModel(
+            lowValue: "N/A",
+            lowTitle: "Low",
+            inRange: "N/A",
+            highValue: "N/A",
+            highTitle: "High",
+            avgGlucose: "N/A",
+            a1c: "N/A",
+            reading: "N/A",
+            stdDeviation: "N/A",
+            gvi: "N/A",
+            pgs: "N/A"
+        )
     }
     
     private func getComponentsForGlucoseValue(_ glucoseValue: Double) -> [String] {

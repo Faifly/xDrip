@@ -41,4 +41,18 @@ final class GlucoseDataView: NibView {
         }
         containerViews.forEach { $0.backgroundColor = .background3 }
     }
+    
+    func setup(with viewModel: Home.DataSectionViewModel) {
+        lowTitleLabel.text = viewModel.lowTitle
+        lowValueLabel.text = viewModel.lowValue
+        inRangeValueLabel.text = viewModel.inRange
+        highTitleLabel.text = viewModel.highTitle
+        highValueLabel.text = viewModel.highValue
+        averageGlucoseValueLabel.text = viewModel.avgGlucose
+        a1cValueLabel.text = viewModel.a1c
+        readingValueLabel.text = viewModel.reading
+        stdDeviationValueLabel.text = viewModel.stdDeviation
+        gviValueLabel.text = viewModel.gvi
+        pgsValueLabel.text = viewModel.pgs
+    }
 }
