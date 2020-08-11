@@ -257,16 +257,16 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     override func viewWillLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if view.bounds.width >= view.bounds.height {
-            mainStackView?.axis = .horizontal
             topViewPortraitHeigthConstraint?.priority = .defaultLow
             topViewLandscapeWidthConstraint?.priority = .required
+            mainStackView?.axis = .horizontal
             carbsBolusStackView?.axis = .vertical
             glucoseDataStackView?.axis = .vertical
             supportingStackView?.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 32)
         } else {
-            mainStackView?.axis = .vertical
-            topViewPortraitHeigthConstraint?.priority = .defaultHigh
+            topViewPortraitHeigthConstraint?.priority = .required
             topViewLandscapeWidthConstraint?.priority = .defaultLow
+            mainStackView?.axis = .vertical
             carbsBolusStackView?.axis = .horizontal
             glucoseDataStackView?.axis = .horizontal
             supportingStackView?.layoutMargins = UIEdgeInsets(top: 32, left: 32, bottom: 0, right: 32)

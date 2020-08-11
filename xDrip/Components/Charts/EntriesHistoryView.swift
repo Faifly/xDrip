@@ -63,7 +63,7 @@ final class EntriesHistoryView: BaseHistoryView {
         chartButton.bottomAnchor.constraint(equalTo: scrollContainer.topAnchor).isActive = true
         
         noDataView.translatesAutoresizingMaskIntoConstraints = false
-        noDataView.backgroundColor = UIColor(white: 1, alpha: 0.6)
+        noDataView.backgroundColor = .dimView
         scrollContainer.addSubview(noDataView)
         noDataView.bindToSuperview()
         

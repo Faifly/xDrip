@@ -18,6 +18,7 @@
 		0A216CD524A5F7BE002DA0AF /* HomeViewControllerMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CD424A5F7BE002DA0AF /* HomeViewControllerMirror.swift */; };
 		0A62B6A524DAC46C00A977BF /* HomeEntriesFormattingWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A62B6A424DAC46C00A977BF /* HomeEntriesFormattingWorkerTests.swift */; };
 		0A62DA8824DBF2F90064A85F /* HomeViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A62DA8724DBF2F90064A85F /* HomeViewController~ipad.xib */; };
+		0A64AF2724E29A3400EB5DC8 /* GlucoseDataView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A64AF2624E29A3400EB5DC8 /* GlucoseDataView~ipad.xib */; };
 		0A89541F249CE7060067601F /* GlucoseCurrentInfoEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A89541E249CE7060067601F /* GlucoseCurrentInfoEntry.swift */; };
 		0A895423249CE71A0067601F /* GlucoseCurrentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A895421249CE71A0067601F /* GlucoseCurrentInfoView.swift */; };
 		0A895424249CE71A0067601F /* GlucoseCurrentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */; };
@@ -700,6 +701,7 @@
 		0A216CD424A5F7BE002DA0AF /* HomeViewControllerMirror.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerMirror.swift; sourceTree = "<group>"; };
 		0A62B6A424DAC46C00A977BF /* HomeEntriesFormattingWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEntriesFormattingWorkerTests.swift; sourceTree = "<group>"; };
 		0A62DA8724DBF2F90064A85F /* HomeViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "HomeViewController~ipad.xib"; sourceTree = "<group>"; };
+		0A64AF2624E29A3400EB5DC8 /* GlucoseDataView~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "GlucoseDataView~ipad.xib"; sourceTree = "<group>"; };
 		0A89541E249CE7060067601F /* GlucoseCurrentInfoEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoEntry.swift; sourceTree = "<group>"; };
 		0A895421249CE71A0067601F /* GlucoseCurrentInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoView.swift; sourceTree = "<group>"; };
 		0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlucoseCurrentInfoView.xib; sourceTree = "<group>"; };
@@ -1482,6 +1484,7 @@
 				0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */,
 				58EB761824DEE70B00443948 /* GlucoseDataView.swift */,
 				58EB761A24DEE71600443948 /* GlucoseDataView.xib */,
+				0A64AF2624E29A3400EB5DC8 /* GlucoseDataView~ipad.xib */,
 			);
 			name = Views;
 			path = xDrip/Scenes/Home/Home/Views;
@@ -3914,6 +3917,7 @@
 				2C4E7EFC24694F440062D403 /* Suspense.caf in Resources */,
 				2C4E7F0024694F440062D403 /* Calypso.caf in Resources */,
 				2C4E7EF324694F440062D403 /* Sherwood_Forest.caf in Resources */,
+				0A64AF2724E29A3400EB5DC8 /* GlucoseDataView~ipad.xib in Resources */,
 				2C1D399624AB4AAF0063D157 /* mute.aiff in Resources */,
 				5805C97D243891CA002AFA1B /* HomeViewController.xib in Resources */,
 				2C4ABEFF248A5FEA001ED694 /* FoodTypeTableViewCell.xib in Resources */,
