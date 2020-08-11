@@ -34,6 +34,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private var basalEntriesObserver: [NSObjectProtocol]?
     private var activeInsulinObserver: [NSObjectProtocol]?
     private var activeCarbsObserver: [NSObjectProtocol]?
+    private var dataSectionObserver: [NSObjectProtocol]?
     private var hours: Int = 1
     
     init() {
@@ -75,6 +76,14 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             notificationHandler: { [weak self] _ in
                 guard let self = self else { return }
                 self.updateCarbsChartData()
+            }
+        )
+        
+        dataSectionObserver = NotificationCenter.default.subscribe(
+            forSettingsChange: [.data],
+            notificationHandler: { [weak self] _ in
+                guard let self = self else { return }
+                self.updateGlucoseChartData()
             }
         )
     }
