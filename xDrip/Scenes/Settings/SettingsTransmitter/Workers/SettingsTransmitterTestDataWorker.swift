@@ -61,10 +61,9 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
             )
             
             if index == 1 {
-                let glucose = Double.random(in: configuration.minGlucose...configuration.maxGlucose)
                 try? Calibration.createInitialCalibration(
-                    glucoseLevel1: glucose,
-                    glucoseLevel2: glucose + 1.0,
+                    glucoseLevel1: currentGlucose,
+                    glucoseLevel2: currentGlucose + 1.0,
                     date1: Date(timeIntervalSince1970: currentOffset),
                     date2: Date(timeIntervalSince1970: currentOffset)
                 )

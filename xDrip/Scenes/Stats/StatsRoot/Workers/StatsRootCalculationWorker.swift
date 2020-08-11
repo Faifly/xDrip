@@ -68,9 +68,18 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
         
         let sorted = values.sorted()
         if sorted.count.isMultiple(of: 2) {
-            median = (values[sorted.count / 2] + values[sorted.count / 2 + 1]) / 2.0
+            if values.count == 2 {
+                median = (values[0] + values[1]) / 2.0
+            } else {
+                median = (values[sorted.count / 2] + values[sorted.count / 2 + 1]) / 2.0
+            }
         } else {
-            median = values[(sorted.count - 1) / 2 + 1]
+            let index = (sorted.count - 1) / 2 + 1
+            if index < values.count {
+                median = values[index]
+            } else {
+                median = values[0]
+            }
         }
         
         a1cIFCC = ((mean + 46.7) / 28.7 - 2.15) * 10.929
@@ -110,6 +119,8 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
     }
     
     private func pass1DataCleaning(_ readings: [GlucoseReading]) -> [GlucoseReading] {
+        guard readings.count > 1 else { return readings }
+        
         var glucoseData: [GlucoseReading] = []
         for index in 0..<readings.count - 1 {
             let entry = readings[index]
@@ -140,7 +151,7 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
     }
     
     private func pass2DataCleaning(_ glucoseData: [GlucoseReading]) -> [GlucoseReading] {
-        guard glucoseData.count > 1 else { return glucoseData }
+        guard glucoseData.count > 2 else { return glucoseData }
         
         var glucoseData2: [GlucoseReading] = []
         var previousEntry: GlucoseReading?
