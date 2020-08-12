@@ -14,6 +14,9 @@ final class InitialSetupSettingsViewControllerTests: XCTestCase {
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
         var calledSave = false
+        var selectedUnit: GlucoseUnit?
+        var alertsEnabled = false
+        var enabledNightscout = false
         
         func doLoad(request: InitialSetup.Load.Request) { }
         func doBeginSetup(request: InitialSetup.BeginSetup.Request) { }
@@ -25,24 +28,60 @@ final class InitialSetupSettingsViewControllerTests: XCTestCase {
         
         func doSaveSettings(request: InitialSetup.SaveSettings.Request) {
             calledSave = true
+            selectedUnit = request.units
+            alertsEnabled = request.alertsEnabled
+            enabledNightscout = request.nightscoutEnabled
         }
         
         func doSelectDeviceType(request: InitialSetup.SelectDevice.Request) { }
         func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) { }
     }
-    /*
-    func testOnSaveSettings() {
+    
+    func testInitialSettings() {
+        User.current.settings.updateDeviceMode(.main)
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let button = sut.view.findView(with: "saveButton") as? UIButton else {
-            XCTFail("Cannot obtain button")
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
             return
         }
         
+        let button = sut.navigationItem.rightBarButtonItem
+        
+        XCTAssertTrue(tableView.numberOfSections == 3)
+        
         // When
-        button.sendActions(for: .touchUpInside)
+        tableView.callDidSelect(at: IndexPath(row: 0, section: 0))
+        tableView.callDidSelect(at: IndexPath(row: 0, section: 1))
+        tableView.callDidSelect(at: IndexPath(row: 1, section: 2))
+        _ = button?.target?.perform(button?.action, with: nil)
         // Then
-        XCTAssertTrue(spy.calledSave)
-    }*/
+        XCTAssert(spy.selectedUnit == .mgDl)
+        XCTAssertTrue(spy.alertsEnabled)
+        XCTAssertTrue(spy.enabledNightscout)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 1, section: 0))
+        tableView.callDidSelect(at: IndexPath(row: 1, section: 1))
+        tableView.callDidSelect(at: IndexPath(row: 0, section: 2))
+        _ = button?.target?.perform(button?.action, with: nil)
+        // Then
+        XCTAssert(spy.selectedUnit == .mmolL)
+        XCTAssertFalse(spy.alertsEnabled)
+        XCTAssertFalse(spy.enabledNightscout)
+    }
+    
+    func testFollowerMode() {
+        User.current.settings.updateDeviceMode(.follower)
+        let spy = InitialSetupBusinessLogicSpy()
+        sut.interactor = spy
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssertTrue(tableView.numberOfSections == 2)
+    }
 }

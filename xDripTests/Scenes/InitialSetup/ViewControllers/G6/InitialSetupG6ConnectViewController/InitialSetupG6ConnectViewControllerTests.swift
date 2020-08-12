@@ -13,16 +13,33 @@ import XCTest
 // swiftlint:disable implicitly_unwrapped_optional
 
 final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
+    // MARK: Subject under test
+    
     var sut: InitialSetupG6ConnectViewController!
+    var window: UIWindow!
+    
+    // MARK: Test lifecycle
     
     override func setUp() {
         super.setUp()
-        
-        setupInitialSetupG6ConnectionViewController()
+        window = UIWindow()
+        setupInitialSetupG6ConnectViewController()
     }
     
-    private func setupInitialSetupG6ConnectionViewController() {
+    override func tearDown() {
+        window = nil
+        super.tearDown()
+    }
+    
+    // MARK: Test setup
+    
+    func setupInitialSetupG6ConnectViewController() {
         sut = InitialSetupG6ConnectViewController()
+    }
+    
+    func loadView() {
+        window.addSubview(sut.view)
+        RunLoop.current.run(until: Date())
     }
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
@@ -45,70 +62,28 @@ final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
         }
     }
     
-    private class InitialSetupDexcomG6ConnectionWorkerSpy: InitialSetupDexcomG6ConnectionWorkerProtocol {
-        var calledStartConnectionProcess = false
-        
-        var onSuccessfulConnection: ((InitialSetupG6ConnectViewController.ViewModel) -> Void)?
-        
-        func startConnectionProcess() {
-            calledStartConnectionProcess = true
-            
-            let viewModel = InitialSetupG6ConnectViewController.ViewModel(
-                firmware: "firmware",
-                batteryA: "batteryA",
-                batteryB: "batteryB",
-                transmitterTime: "transmitterTime",
-                deviceName: "123"
-            )
-            
-            onSuccessfulConnection?(viewModel)
-        }
-    }
-    /*
     func testOnContinueButton() {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let continueButton = sut.view.findView(with: "continueButton") as? UIButton else {
-            XCTFail("Cannot obtain button")
-            return
-        }
+        loadView()
         
+        let button = sut.navigationItem.rightBarButtonItem
         // When
-        continueButton.sendActions(for: .touchUpInside)
+        _ = button?.target?.perform(button?.action, with: nil)
         // Then
         XCTAssertTrue(spy.calledCompleteSetup == true)
         XCTAssert(spy.moreStepsExpected == true)
     }
     
     func testUpdate() {
-        let view = sut.view
+        loadView()
         
-        guard let firmwareLabel = view?.findView(with: "firmwareLabel") as? UILabel else {
-            XCTFail("Cannot obtain firmware label")
-            return
-        }
-        guard let batteryALabel = view?.findView(with: "batteryALabel") as? UILabel else {
-            XCTFail("Cannot obtain batteryA label")
-            return
-        }
-        guard let batteryBLabel = view?.findView(with: "batteryBLabel") as? UILabel else {
-            XCTFail("Cannot obtain batteryB label")
-            return
-        }
-        guard let transmitterTimeLabel = view?.findView(with: "transmitterTimeLabel") as? UILabel else {
-            XCTFail("Cannot obtain transmitter time label")
-            return
-        }
-        guard let continueButton = view?.findView(with: "continueButton") as? UIButton else {
-            XCTFail("Cannot obtain continue button")
-            return
-        }
-        
-        XCTAssert(firmwareLabel.text == "firmware")
-        XCTAssert(batteryALabel.text == "batteryA")
-        XCTAssert(batteryBLabel.text == "batteryB")
-        XCTAssert(transmitterTimeLabel.text == "transmitterTime")
-        XCTAssert(continueButton.isEnabled == true)
-    }*/
+        let controller = CGMController.shared
+        controller.serviceDidUpdateMetadata(.firmwareVersion, value: "firmware")
+        controller.serviceDidUpdateMetadata(.batteryVoltageA, value: "batteryA")
+        controller.serviceDidUpdateMetadata(.batteryVoltageB, value: "batteryB")
+        controller.serviceDidUpdateMetadata(.transmitterTime, value: "transmitterTime")
+        controller.serviceDidUpdateMetadata(.deviceName, value: "testName")
+    }
 }
