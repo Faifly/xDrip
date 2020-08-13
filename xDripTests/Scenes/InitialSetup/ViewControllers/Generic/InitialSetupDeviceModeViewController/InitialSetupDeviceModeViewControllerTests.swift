@@ -38,17 +38,30 @@ final class InitialSetupDeviceModeViewControllerTests: XCTestCase {
         sut.interactor = spy
         sut.loadViewIfNeeded()
         
-        guard let mainButton = sut.navigationItem.rightBarButtonItem else {
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        guard let saveButton = sut.navigationItem.rightBarButtonItem else {
             XCTFail("Cannot obtain button")
             return
         }
-        guard let action = mainButton.action else {
+        guard let action = saveButton.action else {
             XCTFail("Cannot obtain action")
             return
         }
         
         // When
-        UIApplication.shared.sendAction(action, to: mainButton.target, from: self, for: nil)
+        tableView.callDidSelect(at: IndexPath(row: 1, section: 0))
+        UIApplication.shared.sendAction(action, to: saveButton.target, from: self, for: nil)
+        // Then
+        XCTAssertTrue(spy.calledSelectDeviceMode)
+        XCTAssert(spy.deviceMode == .follower)
+        
+        // When
+        tableView.callDidSelect(at: IndexPath(row: 0, section: 0))
+        UIApplication.shared.sendAction(action, to: saveButton.target, from: self, for: nil)
         // Then
         XCTAssertTrue(spy.calledSelectDeviceMode)
         XCTAssert(spy.deviceMode == .main)

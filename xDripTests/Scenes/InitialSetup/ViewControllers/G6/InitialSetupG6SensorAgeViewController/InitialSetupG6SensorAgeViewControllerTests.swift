@@ -33,20 +33,25 @@ final class InitialSetupG6SensorAgeViewControllerTests: XCTestCase {
             moreStepsExpected = request.moreStepsExpected
         }
     }
-    /*
-    func testOnContinueButton() {
+    
+    func testOnSaveButton() {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let continueButton = sut.view.findView(with: "continueButton") as? UIButton else {
-            XCTFail("Cannot obtain button")
+        guard let datePicker = sut.view.subviews.compactMap({ $0 as? UIDatePicker }).first else {
+            XCTFail("Cannot obtain datePicker")
             return
         }
         
+        let date = Date(timeIntervalSince1970: 1.0)
+        datePicker.date = date
+        
+        let button = sut.navigationItem.rightBarButtonItem
         // When
-        continueButton.sendActions(for: .touchUpInside)
+        _ = button?.target?.perform(button?.action, with: nil)
         // Then
         XCTAssertTrue(spy.calledCompleteSetup)
         XCTAssert(spy.moreStepsExpected == true)
-    }*/
+        XCTAssert(CGMDevice.current.sensorStartDate == date)
+    }
 }

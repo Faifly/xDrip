@@ -9,8 +9,36 @@
 import XCTest
 @testable import xDrip
 
-final class InitialSetupTransmitterTypeViewControllerTests: XCTestCase {    
-    let sut = InitialSetupTransmitterTypeViewController()
+// swiftlint:disable implicitly_unwrapped_optional
+final class InitialSetupTransmitterTypeViewControllerTests: XCTestCase {
+    // MARK: Subject under test
+    
+    var sut: InitialSetupTransmitterTypeViewController!
+    var window: UIWindow!
+    
+    // MARK: Test lifecycle
+    
+    override func setUp() {
+        super.setUp()
+        window = UIWindow()
+        setupInitialSetupTransmitterTypeViewController()
+    }
+    
+    override func tearDown() {
+        window = nil
+        super.tearDown()
+    }
+    
+    // MARK: Test setup
+    
+    func setupInitialSetupTransmitterTypeViewController() {
+        sut = InitialSetupTransmitterTypeViewController()
+    }
+    
+    func loadView() {
+        window.addSubview(sut.view)
+        RunLoop.current.run(until: Date())
+    }
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
         var calledSelectDeviceType = false
@@ -32,21 +60,20 @@ final class InitialSetupTransmitterTypeViewControllerTests: XCTestCase {
         
         func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) { }
     }
-    /*
+    
     func testOnDexcomG6Selected() {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let button = sut.view.findView(with: "dexcomG6Button") as? UIButton else {
-            XCTFail("Cannot obtain button")
-            return
-        }
+        loadView()
+        
+        let button = sut.navigationItem.rightBarButtonItem
         
         // When
-        button.sendActions(for: .touchUpInside)
+        _ = button?.target?.perform(button?.action, with: nil)
         
         // Then
         XCTAssertTrue(spy.calledSelectDeviceType)
         XCTAssert(spy.deviceType == .dexcomG6)
-    }*/
+    }
 }
