@@ -21,7 +21,11 @@ protocol UploadRequestFactoryLogic {
 
 final class UploadRequestFactory: UploadRequestFactoryLogic {
     func createNotUploadedGlucoseRequest(_ entry: GlucoseReading) -> UploadRequest? {
-        guard var request = try? createEntriesRequest() else { return nil }
+        LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
+        guard var request = try? createEntriesRequest() else {
+            LogController.log(message: "[UploadRequestFactory]: Failed to %@.", type: .info, #function)
+            return nil
+        }
         let codableEntry = CGlucoseReading(reading: entry)
         request.httpBody = try? JSONEncoder().encode([codableEntry])
         
@@ -29,12 +33,14 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     }
     
     func createModifiedGlucoseRequest(_ entry: GlucoseReading) -> UploadRequest? {
+        LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
         var request = createNotUploadedGlucoseRequest(entry)
         request?.type = .modifyGlucoseReading
         return request
     }
     
     func createDeleteReadingRequest(_ entry: GlucoseReading) -> UploadRequest? {
+        LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
         return createDeleteRequest(
             itemID: entry.externalID,
             date: entry.date,
@@ -43,13 +49,18 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     }
     
     func createCalibrationRequest(_ calibration: Calibration) -> UploadRequest? {
-        guard var request = try? createEntriesRequest() else { return nil }
+        LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
+        guard var request = try? createEntriesRequest() else {
+            LogController.log(message: "[UploadRequestFactory]: Failed to %@.", type: .info, #function)
+            return nil
+        }
         let codableEntry = CCalibration(calibration: calibration)
         request.httpBody = try? JSONEncoder().encode([codableEntry])
         return UploadRequest(request: request, itemID: calibration.externalID ?? "", type: .postCalibration)
     }
     
     func createDeleteCalibrationRequest(_ calibration: Calibration) -> UploadRequest? {
+        LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
         return createDeleteRequest(
             itemID: calibration.externalID,
             date: calibration.date,
@@ -58,17 +69,33 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     }
     
     func createTestConnectionRequest(tryAuth: Bool) throws -> URLRequest {
+        LogController.log(message: "[UploadRequestFactory]: Try to %@", type: .info, #function)
         if !tryAuth {
             guard var request = try createEntriesRequest(appendSecret: false) else {
+                LogController.log(
+                    message: "[UploadRequestFactory]: Failed to %@ because of invalid base URL.",
+                    type: .info,
+                    #function
+                )
                 throw NightscoutError.invalidURL
             }
             request.timeoutInterval = 10.0
             return request
         } else {
             guard let baseURLString = User.current.settings.nightscoutSync?.baseURL else {
+                LogController.log(
+                    message: "[UploadRequestFactory]: Failed to %@ because of no base URL provided.",
+                    type: .info,
+                    #function
+                )
                 throw NightscoutError.invalidURL
             }
             guard let baseURL = URL(string: baseURLString) else {
+                LogController.log(
+                    message: "[UploadRequestFactory]: Failed to %@ because of invalid base URL.",
+                    type: .info,
+                    #function
+                )
                 throw NightscoutError.invalidURL
             }
             let url = baseURL.appendingPathComponent("/api/v1/experiments/test")
@@ -76,10 +103,12 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
             request.httpMethod = "GET"
             request.timeoutInterval = 10.0
             
-            guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret else {
-                throw NightscoutError.noAPISecret
-            }
-            guard !apiSecret.isEmpty else {
+            guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret, !apiSecret.isEmpty else {
+                LogController.log(
+                    message: "[UploadRequestFactory]: Failed to %@ because of no API Secret provided.",
+                    type: .info,
+                    #function
+                )
                 throw NightscoutError.noAPISecret
             }
             request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
@@ -89,9 +118,31 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     }
     
     func createFetchFollowerDataRequest() -> URLRequest? {
-        guard let settings = User.current.settings.nightscoutSync else { return nil }
-        guard settings.isFollowerAuthed else { return nil }
-        guard var request = try? createEntriesRequest(appendSecret: false) else { return nil }
+        LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
+        guard let settings = User.current.settings.nightscoutSync else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Failed to %@ because sync is disabled.",
+                type: .info,
+                #function
+            )
+            return nil
+        }
+        guard settings.isFollowerAuthed else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Failed to %@ because follower is not authed.",
+                type: .info,
+                #function
+            )
+            return nil
+        }
+        guard var request = try? createEntriesRequest(appendSecret: false) else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Failed to %@.",
+                type: .info,
+                #function
+            )
+            return nil
+        }
         guard let url = request.url else { return nil }
         request.url = URL(string: url.absoluteString + "?count=50")
         request.httpMethod = "GET"
@@ -99,20 +150,49 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     }
     
     private func createDeleteRequest(itemID: String?, date: Date?, type: UploadRequestType) -> UploadRequest? {
-        guard var request = try? createEntriesRequest() else { return nil }
+        LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
+        guard var request = try? createEntriesRequest() else {
+            LogController.log(message: "[UploadRequestFactory]: Failed to %@.", type: .info, #function)
+            return nil
+        }
         guard let url = request.url else { return nil }
-        guard let itemID = itemID else { return nil }
-        guard let date = date else { return nil }
+        guard let itemID = itemID else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Failed to %@ because of no itemID provided.",
+                type: .info,
+                #function
+            )
+            return nil
+        }
+        guard let date = date else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Failed to %@ because of no date provided.",
+                type: .info,
+                #function
+            )
+            return nil
+        }
         request.url = URL(string: url.absoluteString + "?find[date]=\(Int64(date.timeIntervalSince1970 * 1000.0))")
         request.httpMethod = "DELETE"
         return UploadRequest(request: request, itemID: itemID, type: type)
     }
     
     private func createEntriesRequest(appendSecret: Bool = true) throws -> URLRequest? {
+        LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
         guard let baseURLString = User.current.settings.nightscoutSync?.baseURL else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Failed to %@ because no base url provided.",
+                type: .info,
+                #function
+            )
             throw NightscoutError.invalidURL
         }
         guard let baseURL = URL(string: baseURLString) else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Failed to %@ because of invalid base url.",
+                type: .info,
+                #function
+            )
             throw NightscoutError.invalidURL
         }
         let url = baseURL.appendingPathComponent("/api/v1/entries.json")
@@ -121,9 +201,19 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         
         if appendSecret {
             guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret else {
+                LogController.log(
+                    message: "[UploadRequestFactory]: Failed to %@ because of no api secret provided.",
+                    type: .info,
+                    #function
+                )
                 throw NightscoutError.noAPISecret
             }
             guard !apiSecret.isEmpty else {
+                LogController.log(
+                    message: "[UploadRequestFactory]: Failed to %@ because of no api secret provided.",
+                    type: .info,
+                    #function
+                )
                 throw NightscoutError.noAPISecret
             }
             request.httpMethod = "POST"
@@ -136,6 +226,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     }
     
     func createDeviceStatusRequest() -> URLRequest? {
+        LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
         let settings = User.current.settings.nightscoutSync
         guard settings?.uploadBridgeBattery == true else { return nil }
         guard let baseURLString = settings?.baseURL else { return nil }

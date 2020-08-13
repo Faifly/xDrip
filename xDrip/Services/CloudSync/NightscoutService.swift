@@ -53,7 +53,16 @@ final class NightscoutService {
     }
     
     func scanForNotUploadedEntries() {
-        guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else { return }
+        LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
+        guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else {
+            LogController.log(
+                message: "[NighscoutService]: Aborting %@ because sync is disabled.",
+                type: .info,
+                #function
+            )
+            return
+        }
+        
         scanForGlucoseEntries()
         scanForCalibrations()
         
@@ -61,7 +70,15 @@ final class NightscoutService {
     }
     
     func deleteCalibrations(_ calibrations: [Calibration]) {
-        guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else { return }
+        LogController.log(message: "[NighscoutService]: Try to %@.", type: .info, #function)
+        guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else {
+            LogController.log(
+                message: "[NighscoutService]: Failed to %@ because sync is disabled.",
+                type: .info,
+                #function
+            )
+            return
+        }
         let requests = calibrations.compactMap { requestFactory.createDeleteCalibrationRequest($0) }
         requestQueue.append(contentsOf: requests)
         
@@ -69,6 +86,7 @@ final class NightscoutService {
     }
     
     private func scanForGlucoseEntries() {
+        LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
         let all = GlucoseReading.allMaster
         let notUploaded = all.filter { $0.cloudUploadStatus == .notUploaded }
         let modified = all.filter { $0.cloudUploadStatus == .modified }
@@ -104,6 +122,7 @@ final class NightscoutService {
     }
     
     private func scanForCalibrations() {
+        LogController.log(message: "[NighscoutService]: Started %@", type: .info, #function)
         let notUploaded = Calibration.allForCurrentSensor.filter { !$0.isUploaded }
         for entry in notUploaded {
             guard !requestQueue.contains(where: {
@@ -115,10 +134,11 @@ final class NightscoutService {
     }
     
     func testNightscoutConnection(tryAuth: Bool, callback: @escaping (Bool, NightscoutError?) -> Void) {
+        LogController.log(message: "[NighscoutService]: Try to %@.", type: .info, #function)
         do {
             let request = try requestFactory.createTestConnectionRequest(tryAuth: tryAuth)
             
-            URLSession.shared.dataTask(with: request) { _, response, error in
+            URLSession.shared.loggableDataTask(with: request) { _, response, error in
                 DispatchQueue.main.async {
                     guard let response = response as? HTTPURLResponse else {
                         callback(false, NightscoutError.cantConnect)
@@ -141,7 +161,7 @@ final class NightscoutService {
         guard checkUseCellular(), checkSkipLANUploads() else { return }
         guard !requestQueue.isEmpty else { return }
         let request = requestQueue[0]
-        URLSession.shared.dataTask(with: request.request) { [weak self] _, _, error in
+        URLSession.shared.loggableDataTask(with: request.request) { [weak self] _, _, error in
             guard let self = self else { return }
             guard error == nil else { return }
             let first = self.requestQueue.removeFirst()
@@ -163,6 +183,7 @@ final class NightscoutService {
     }
     
     private func startFetchingFollowerData() {
+        LogController.log(message: "[NighscoutService]: Started fetching follower data.", type: .info)
         followerFetchTimer = Timer.scheduledTimer(
             withTimeInterval: 60.0,
             repeats: true) { _ in
@@ -172,13 +193,15 @@ final class NightscoutService {
     }
     
     private func stopFetchingFollowerData() {
+        LogController.log(message: "[NighscoutService]: Stopped fetching follower data.", type: .info)
         followerFetchTimer?.invalidate()
         followerFetchTimer = nil
     }
     
     private func fetchFollowerData() {
+        LogController.log(message: "[NighscoutService]: Try to %@.", type: .info, #function)
         guard let request = requestFactory.createFetchFollowerDataRequest() else { return }
-        URLSession.shared.dataTask(with: request) { data, _, error in
+        URLSession.shared.loggableDataTask(with: request) { data, _, error in
             guard let data = data, error == nil else { return }
             guard let entries = try? JSONDecoder().decode([CGlucoseReading].self, from: data) else { return }
             DispatchQueue.main.async {
@@ -213,7 +236,8 @@ final class NightscoutService {
     }
   
     func sendDeviceStatus() {
+        LogController.log(message: "[NighscoutService]: Try to %@.", type: .info, #function)
         guard let request = requestFactory.createDeviceStatusRequest() else { return }
-        URLSession.shared.dataTask(with: request).resume()
+        URLSession.shared.loggableDataTask(with: request).resume()
     }
 }

@@ -103,6 +103,8 @@
 		2C4FE9BD24ADD81500D2048B /* GlucoseNotificationWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FE9BC24ADD81500D2048B /* GlucoseNotificationWorkerTests.swift */; };
 		2C53317624C87338005B3A6F /* BasalChartBasalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C53317524C87338005B3A6F /* BasalChartBasalEntry.swift */; };
 		2C53317824C87751005B3A6F /* BasalChartDataWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C53317724C87751005B3A6F /* BasalChartDataWorker.swift */; };
+		2C5617E824E5683D00D7C9D1 /* Data+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5617E724E5683D00D7C9D1 /* Data+String.swift */; };
+		2C5617EA24E5688000D7C9D1 /* URLSession+Logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5617E924E5688000D7C9D1 /* URLSession+Logs.swift */; };
 		2C581C62248E5EAD008A1F34 /* EmojiInputFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C581C60248E5EAC008A1F34 /* EmojiInputFooterView.swift */; };
 		2C581C63248E5EAD008A1F34 /* EmojiInputFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C581C61248E5EAC008A1F34 /* EmojiInputFooterView.xib */; };
 		2C5A615C2473E02C00C6BD3D /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5A615B2473E02C00C6BD3D /* AudioController.swift */; };
@@ -787,6 +789,8 @@
 		2C53317524C87338005B3A6F /* BasalChartBasalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalChartBasalEntry.swift; sourceTree = "<group>"; };
 		2C53317724C87751005B3A6F /* BasalChartDataWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalChartDataWorker.swift; sourceTree = "<group>"; };
 		2C55FEF624A23B62006BB3EF /* RepeatingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingTimer.swift; sourceTree = "<group>"; };
+		2C5617E724E5683D00D7C9D1 /* Data+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+String.swift"; sourceTree = "<group>"; };
+		2C5617E924E5688000D7C9D1 /* URLSession+Logs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Logs.swift"; sourceTree = "<group>"; };
 		2C581C60248E5EAC008A1F34 /* EmojiInputFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiInputFooterView.swift; sourceTree = "<group>"; };
 		2C581C61248E5EAC008A1F34 /* EmojiInputFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiInputFooterView.xib; sourceTree = "<group>"; };
 		2C5A615B2473E02C00C6BD3D /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
@@ -2928,6 +2932,8 @@
 				58B986DC2466B68200E38376 /* FloatingPoint+Comparison.swift */,
 				58A9A398248276D200743D53 /* UIApplication+TopViewController.swift */,
 				58A92068249930200025C1C7 /* Double+Rounding.swift */,
+				2C5617E724E5683D00D7C9D1 /* Data+String.swift */,
+				2C5617E924E5688000D7C9D1 /* URLSession+Logs.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -4312,6 +4318,7 @@
 				580E4C2A243F74F000565EDE /* SettingsUnitsPresenter.swift in Sources */,
 				581DBF8E24B1D8B900237CB5 /* InsulinEntriesWorker.swift in Sources */,
 				5805CA1E243892D6002AFA1B /* InitialSetupStepProvidingWorker.swift in Sources */,
+				2C5617EA24E5688000D7C9D1 /* URLSession+Logs.swift in Sources */,
 				589EA8D02476F89300515BCC /* CGMDeviceVoltage.swift in Sources */,
 				5805C9D1243892B3002AFA1B /* String+Validation.swift in Sources */,
 				5805C9CF243892AE002AFA1B /* NibViewController.swift in Sources */,
@@ -4351,6 +4358,7 @@
 				580E4C1E243F74A300565EDE /* SettingsPumpUserRouter.swift in Sources */,
 				2CBE1A8B24320F94003BE14E /* EntriesListFormattingWorker.swift in Sources */,
 				580E4BB5243F725600565EDE /* NightscoutCloudBackfillModels.swift in Sources */,
+				2C5617E824E5683D00D7C9D1 /* Data+String.swift in Sources */,
 				58B853402448CA740045F30A /* DateInterval+Helpers.swift in Sources */,
 				5805C9B424389230002AFA1B /* DexcomG6CharacteristicType.swift in Sources */,
 				2CBE1A86243204CC003BE14E /* ViewModelConfigurable.swift in Sources */,
