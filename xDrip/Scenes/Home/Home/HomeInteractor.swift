@@ -56,7 +56,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         }
         
         basalEntriesObserver = NotificationCenter.default.subscribe(
-            forSettingsChange: [.basalRelated, .unit],
+            forSettingsChange: [.basalRelated, .unit, .chart],
             notificationHandler: { [weak self] _ in
                 self?.updateGlucoseCurrentInfo()
                 self?.updateGlucoseChartData()
