@@ -96,6 +96,13 @@ final class InitialSetupViewControllerTests: XCTestCase {
         XCTAssertTrue(spy.doLoadCalled, "viewDidLoad() should ask the interactor to do load")
     }
     
+    func testDoLoadWhenSetupInProgress() {
+        CGMDevice.current.updateSetupProgress(true)
+        
+        loadView()
+        CGMDevice.current.updateSetupProgress(false)
+    }
+    
     func testDisplayLoad() {
         // Given
         let viewModel = InitialSetup.Load.ViewModel()

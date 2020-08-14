@@ -38,6 +38,17 @@ final class InitialSetupGenericStepWorkerTests: XCTestCase {
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupTransmitterTypeViewController)
         
         // When
+        User.current.settings.nightscoutSync?.updateIsEnabled(true)
+        sut.completeStep(InitialSetup.GenericStep.settings)
+        // Then
+        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupNightscoutViewController)
+        
+        // When
+        sut.completeStep(InitialSetup.GenericStep.nightscoutSync)
+        // Then
+        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupTransmitterTypeViewController)
+        
+        // When
         sut.completeStep(InitialSetup.GenericStep.transmitterType)
         // Then
         XCTAssertTrue(sut.nextStep?.createViewController() == nil)
@@ -57,5 +68,25 @@ final class InitialSetupGenericStepWorkerTests: XCTestCase {
         sut.completeStep(InitialSetup.GenericStep.deviceMode)
         // Then
         XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupInjectionTypeViewController)
+        
+        // When
+        sut.completeStep(InitialSetup.GenericStep.injectionType)
+        // Then
+        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupSettingsViewController)
+        
+        // When
+        sut.completeStep(InitialSetup.GenericStep.settings)
+        // Then
+        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupNightscoutViewController)
+        
+        // When
+        sut.completeStep(InitialSetup.GenericStep.nightscoutSync)
+        // Then
+        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupFinishViewController)
+        
+        // When
+        sut.completeStep(InitialSetup.GenericStep.finish)
+        // Then
+        XCTAssertTrue(sut.nextStep?.createViewController() == nil)
     }
 }
