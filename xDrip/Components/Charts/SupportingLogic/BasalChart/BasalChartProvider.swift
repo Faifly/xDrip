@@ -50,7 +50,7 @@ extension BasalChartProvider where Self: GlucoseChartProvider & UIView {
         context.addLine(to: calcPoint(for: strokePoints.last?.date ?? Date(), and: 0.0))
         context.addLine(to: CGPoint(x: bounds.width - insets.left - insets.right, y: CGFloat(yMin) + insets.top))
         context.setLineWidth(2.0)
-        context.setStrokeColor(UIColor.cyan.cgColor)
+        context.setStrokeColor(UIColor.customBlue.cgColor)
         let path = context.path
         context.drawPath(using: .stroke)
         completeBasalChart(for: path)
@@ -59,6 +59,7 @@ extension BasalChartProvider where Self: GlucoseChartProvider & UIView {
     
     private func markBasalEntries() {
         guard let context = UIGraphicsGetCurrentContext() else { return }
+        let circleSide: CGFloat = 1.0
         
         for entry in basalEntries {
             let pointValue = strokePoints.filter({ $0.date == entry.date }).max(by: { $0.value < $1.value })?.value
@@ -71,7 +72,7 @@ extension BasalChartProvider where Self: GlucoseChartProvider & UIView {
                 height: circleSide
             )
     
-            context.setFillColor(UIColor.cyan.cgColor)
+            context.setFillColor(UIColor.customBlue.cgColor)
             context.fillEllipse(in: circleRect)
         }
     }
@@ -89,7 +90,7 @@ extension BasalChartProvider where Self: GlucoseChartProvider & UIView {
         )
         context.addLine(to: CGPoint(x: 0.0, y: CGFloat(yMin) + insets.top + strokeInset))
         
-        context.setFillColor(UIColor.cyan.withAlphaComponent(0.2).cgColor)
+        context.setFillColor(UIColor.customBlue.withAlphaComponent(0.3).cgColor)
         context.drawPath(using: .fill)
     }
     
