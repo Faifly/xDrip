@@ -16,6 +16,7 @@ final class NightscoutService {
     private var currentConnectType = ReachabilityService.Connection.unavailable
     
     private var requestQueue: [UploadRequest] = []
+    private var isRequestInProgress = false
     
     private lazy var settingsObservers: [Any] = NotificationCenter.default.subscribe(
         forSettingsChange: [.followerAuthStatus]) {
@@ -29,6 +30,8 @@ final class NightscoutService {
     private lazy var lastFollowerFetchTime = GlucoseReading.allFollower.last?.date
     private var followerFetchTimer: Timer?
     private let requestFactory: UploadRequestFactoryLogic
+    
+    var isPaused = false
     
     init() {
         requestFactory = UploadRequestFactory()
@@ -140,9 +143,14 @@ final class NightscoutService {
     private func runQueue() {
         guard checkUseCellular(), checkSkipLANUploads() else { return }
         guard !requestQueue.isEmpty else { return }
+        guard !isPaused else { return }
+        guard !isRequestInProgress else { return }
+        
+        isRequestInProgress = true
         let request = requestQueue[0]
         URLSession.shared.dataTask(with: request.request) { [weak self] _, _, error in
             guard let self = self else { return }
+            defer { self.isRequestInProgress = false }
             guard error == nil else { return }
             let first = self.requestQueue.removeFirst()
             self.runQueue()
