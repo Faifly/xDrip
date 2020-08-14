@@ -26,6 +26,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else if let window = UIApplication.shared.delegate?.window {
             self.window = window
             window?.windowScene = windowScene
+            window?.makeKeyAndVisible()
         }
     }
 }

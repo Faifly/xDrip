@@ -29,7 +29,9 @@ enum ApplicationLaunchController {
     static func createWindow() -> UIWindow {
         let window = UIWindow()
         window.rootViewController = RootViewController()
-        window.makeKeyAndVisible()
+        if #available(iOS 13.0, *) {} else {
+            window.makeKeyAndVisible()
+        }
         return window
     }
     
