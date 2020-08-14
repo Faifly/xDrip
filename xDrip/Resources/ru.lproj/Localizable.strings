@@ -39,6 +39,8 @@
 "root_add_entry_basal" = "Базал";
 "root_add_basal_error_alert_title" = "Базальные нормы не установлены";
 "root_add_basal_error_alert_message" = "Пожалуйста, установите базальные нормы в настройках перед началом ввода базальных данных";
+"root_add_basal_error_alert_cancel_button" = "Отмена";
+"root_add_basal_error_alert_settings_button" = "Настроить сейчас";
 
 // Entries List
 "entries_list_data_section_title" = "ДАННЫЕ";
@@ -93,7 +95,7 @@
 "settings_root_sensor_title" = "Детектор";
 "settings_root_transmitter_title" = "Передатчик";
 "settings_root_range_selection_title" = "Выбор диапазона";
-"settings_root_user_type_title" = "Тип пользователя";
+"settings_root_user_type_title" = "Тип пользователя / Базал";
 "settings_root_carbs_duration_time_title" = "Время углеводов";
 "settings_root_insulin_duration_time_title" = "Время инсулина";
 "settings_root_nightscout_pump_title" = "Nightscout (Помпа)";

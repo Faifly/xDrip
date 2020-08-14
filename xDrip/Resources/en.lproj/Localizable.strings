@@ -39,6 +39,8 @@
 "root_add_entry_basal" = "Basal";
 "root_add_basal_error_alert_title" = "Basal rates not set up";
 "root_add_basal_error_alert_message" = "Please set up basal rates in settings before start to enter basal data";
+"root_add_basal_error_alert_cancel_button" = "Cancel";
+"root_add_basal_error_alert_settings_button" = "Configure now";
 
 // Entries List
 "entries_list_data_section_title" = "DATA";
@@ -93,7 +95,7 @@
 "settings_root_sensor_title" = "Sensor";
 "settings_root_transmitter_title" = "Transmitter";
 "settings_root_range_selection_title" = "Range Selection";
-"settings_root_user_type_title" = "User Type";
+"settings_root_user_type_title" = "User Type / Basal rates";
 "settings_root_carbs_duration_time_title" = "Carbs Duration Time";
 "settings_root_insulin_duration_time_title" = "Insulin Duration Time";
 "settings_root_nightscout_pump_title" = "Nightscout (Pump)";
