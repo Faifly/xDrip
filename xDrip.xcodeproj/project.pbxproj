@@ -541,6 +541,7 @@
 		588584AC248E7A2800C3F74C /* CloudUploadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588584AB248E7A2800C3F74C /* CloudUploadStatus.swift */; };
 		5886D4B924DD885C00D6B732 /* SettingsTransmitterTestDataWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5886D4B824DD885C00D6B732 /* SettingsTransmitterTestDataWorker.swift */; };
 		5886D4BD24DE9BC900D6B732 /* SettingsTestBackfillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5886D4BB24DE9BC900D6B732 /* SettingsTestBackfillViewController.swift */; };
+		588CAB5624E6985800B49462 /* URL+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588CAB5524E6985800B49462 /* URL+Custom.swift */; };
 		589B1A222497D17900C1DABD /* UploadRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589B1A212497D17900C1DABD /* UploadRequestFactory.swift */; };
 		589EA8D02476F89300515BCC /* CGMDeviceVoltage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589EA8CF2476F89200515BCC /* CGMDeviceVoltage.swift */; };
 		589EA8D3247700AF00515BCC /* BaseSettingsButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589EA8D1247700AF00515BCC /* BaseSettingsButtonCell.swift */; };
@@ -1227,6 +1228,7 @@
 		588584AB248E7A2800C3F74C /* CloudUploadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudUploadStatus.swift; sourceTree = "<group>"; };
 		5886D4B824DD885C00D6B732 /* SettingsTransmitterTestDataWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTransmitterTestDataWorker.swift; sourceTree = "<group>"; };
 		5886D4BB24DE9BC900D6B732 /* SettingsTestBackfillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTestBackfillViewController.swift; sourceTree = "<group>"; };
+		588CAB5524E6985800B49462 /* URL+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Custom.swift"; sourceTree = "<group>"; };
 		589B1A212497D17900C1DABD /* UploadRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequestFactory.swift; sourceTree = "<group>"; };
 		589EA8CF2476F89200515BCC /* CGMDeviceVoltage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMDeviceVoltage.swift; sourceTree = "<group>"; };
 		589EA8D1247700AF00515BCC /* BaseSettingsButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsButtonCell.swift; sourceTree = "<group>"; };
@@ -2939,6 +2941,7 @@
 				58B986DC2466B68200E38376 /* FloatingPoint+Comparison.swift */,
 				58A9A398248276D200743D53 /* UIApplication+TopViewController.swift */,
 				58A92068249930200025C1C7 /* Double+Rounding.swift */,
+				588CAB5524E6985800B49462 /* URL+Custom.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -4214,6 +4217,7 @@
 				5805C9B624389230002AFA1B /* DexcomG6MessageWorkerDelegate.swift in Sources */,
 				58B5FD54241910BD00DB857D /* SettingsRootModels.swift in Sources */,
 				580E4C2D243F74F000565EDE /* SettingsUnitsViewController.swift in Sources */,
+				588CAB5624E6985800B49462 /* URL+Custom.swift in Sources */,
 				58B5FD3C24190E6700DB857D /* StatsRootPresenter.swift in Sources */,
 				58B95B50244B13400005CA60 /* ChartEntryDetailView.swift in Sources */,
 				584432AD243CFD9B00282A6C /* SettingsChartViewController.swift in Sources */,
