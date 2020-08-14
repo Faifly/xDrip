@@ -50,18 +50,18 @@ enum MacMenuController {
     
     private static func createInjectChildrenMenu() -> [UIMenuElement] {
         return [
-            UIAction(
+            /*UIAction(
                 title: "Dexcom G6 simulation",
                 handler: { _ in
                     self.injectMockedCGM(with: .dexcomG6Immitation)
                 }
-            ),
+            ),*/
             UIAction(
                 title: "Quick updates",
                 handler: { _ in
                     self.injectMockedCGM(with: .quickUpdate)
                 }
-            ),
+            )/*,
             UIAction(
                 title: "Fast rise",
                 handler: { _ in
@@ -85,7 +85,7 @@ enum MacMenuController {
                 handler: { _ in
                     self.injectMockedCGM(with: .faily)
                 }
-            )
+            )*/
         ] as [UIMenuElement]
     }
     
