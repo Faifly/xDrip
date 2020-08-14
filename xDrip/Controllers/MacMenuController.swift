@@ -90,9 +90,32 @@ enum MacMenuController {
     }
     
     private static func injectMockedCGM(with mode: MockedBluetoothServiceConfiguration.Predefined) {
+        guard CGMDevice.current.deviceType == nil else {
+            let alert = UIAlertController(
+                title: "Can't inject",
+                message: "Please unpair your current transmitter before injecting a new one.",
+                preferredStyle: .alert
+            )
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        CGMDevice.current.updateDeviceType(.mocked)
+        CGMDevice.current.updateMetadata(ofType: .serialNumber, value: "123456")
+        
         MockedBluetoothServiceConfiguration.current = mode.configuration
-        let service = MockedBluetoothService(delegate: CGMController.shared)
-        CGMController.shared.injectBluetoothService(service)
+        CGMController.shared.setupService(for: .mocked)
+        
+        let alert = UIAlertController(
+            title: "Success",
+            message: "Mocked service was successfully injected, please don't forget to start a sensor.",
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
     }
 }
 #endif

@@ -58,6 +58,7 @@ final class CGMController {
         #else
         switch type {
         case .dexcomG6: injectBluetoothService(DexcomG6BluetoothService(delegate: self))
+        case .mocked: injectBluetoothService(MockedBluetoothService(delegate: self))
         }
         #endif
     }

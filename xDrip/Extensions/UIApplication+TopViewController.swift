@@ -10,7 +10,14 @@ import UIKit
 
 public extension UIApplication {
     class func topViewController(controller: UIViewController? = nil) -> UIViewController? {
-        let rootVC = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController
+        let window: UIWindow?
+        if let firstKey = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
+            window = firstKey
+        } else {
+            window = UIApplication.shared.windows.first
+        }
+        
+        let rootVC = window?.rootViewController
         let searchFromVC = controller == nil ? rootVC : controller
         
         if let navigationController = searchFromVC as? UINavigationController {

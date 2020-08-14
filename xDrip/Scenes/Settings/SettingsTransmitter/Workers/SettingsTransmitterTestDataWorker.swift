@@ -20,7 +20,6 @@ protocol SettingsTransmitterTestDataWorkerLogic {
 
 final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorkerLogic {
     private let glucoseStepMin = 0.1
-//    private let glucoseStepMax = 10.0
     
     func generateTestData(configuration: SettingsTransmitter.TestBackfillConfiguration,
                           callback: @escaping (Int, Int) -> Void) {
@@ -31,6 +30,9 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
     
     private func startDataGeneration(configuration: SettingsTransmitter.TestBackfillConfiguration,
                                      callback: @escaping (Int, Int) -> Void) {
+        if let service = CGMController.shared.service as? MockedBluetoothService {
+            service.isPaused = true
+        }
         Calibration.deleteAll()
         Realm.shared.safeWrite {
             Realm.shared.delete(GlucoseReading.allMaster)
@@ -94,6 +96,10 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
                     increment = 1.0
                 }
             }
+        }
+        
+        if let service = CGMController.shared.service as? MockedBluetoothService {
+            service.isPaused = false
         }
     }
 }
