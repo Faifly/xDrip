@@ -193,7 +193,7 @@ final class Calibration: Object {
         calibration.date = date
         calibration.rawValue = reading.rawValue
         calibration.adjustedRawValue = reading.ageAdjustedRawValue
-        calibration.slopeConfidence = min(max(((4.0 - abs(reading.calculatedValueSlope * 60.0)) / 4.0), 0.0), 1.0)
+        calibration.slopeConfidence = min(max(((4.0 - abs(reading.calculatedValueSlope * 60.0)) / 4.0), 0.5), 1.0)
         calibration.externalID = UUID().uuidString
         
         let estimatedRawGlucoseLevel = GlucoseReading.estimatedRawGlucoseLevel(date: Date())
@@ -216,6 +216,8 @@ final class Calibration: Object {
         
         reading.updateCalibration(calibration)
         reading.updateIsCalibrated(true)
+        reading.updateCalculatedValue(glucoseLevel)
+        reading.updateFilteredCalculatedValue(glucoseLevel)
         calculateWLS()
         adjustRecentReadings(30)
         NightscoutService.shared.scanForNotUploadedEntries()
