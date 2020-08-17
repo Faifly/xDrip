@@ -63,9 +63,7 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
         case .training: router?.routeToAddTraining()
         case .basal:
             if User.current.settings.sortedBasalRates.isEmpty {
-                let errorTitle = "root_add_basal_error_alert_title".localized
-                let errorMessage = "root_add_basal_error_alert_message".localized
-                router?.showErrorAlert(title: errorTitle, message: errorMessage)
+                router?.showNoBasalRatesAlert()
             } else {
                 router?.routeToAddBasal()
             }

@@ -26,6 +26,7 @@ protocol RootRoutingLogic {
     func routeToInitialSetup()
     
     func showErrorAlert(title: String, message: String)
+    func showNoBasalRatesAlert()
 }
 
 protocol RootDataPassing {
@@ -120,5 +121,43 @@ final class RootRouter: RootRoutingLogic, RootDataPassing {
         let action = UIAlertAction(title: "OK".localized, style: .cancel)
         alert.addAction(action)
         viewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showNoBasalRatesAlert() {
+        let alert = UIAlertController(
+            title: "root_add_basal_error_alert_title".localized,
+            message: "root_add_basal_error_alert_message".localized,
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(
+            title: "root_add_basal_error_alert_cancel_button".localized,
+            style: .cancel,
+            handler: nil
+        )
+        alert.addAction(cancelAction)
+        
+        let settingsAction = UIAlertAction(
+            title: "root_add_basal_error_alert_settings_button".localized,
+            style: .default) { [weak self] _ in
+                self?.routeToBasalSettings()
+        }
+        alert.addAction(settingsAction)
+        
+        viewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    private func routeToBasalSettings() {
+        let viewController = SettingsUserTypeRootViewController()
+        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(dismissBasalSettings)
+        )
+        presentViewController(viewController)
+    }
+    
+    @objc private func dismissBasalSettings() {
+        viewController?.dismiss(animated: true, completion: nil)
     }
 }

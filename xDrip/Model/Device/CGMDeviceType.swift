@@ -10,10 +10,11 @@ import Foundation
 
 enum CGMDeviceType: Int {
     case dexcomG6
+    case mocked
     
     var warmUpInterval: TimeInterval {
         switch self {
-        case .dexcomG6: return .secondsPerHour * 2.0
+        case .dexcomG6, .mocked: return .secondsPerHour * 2.0
         }
     }
 }

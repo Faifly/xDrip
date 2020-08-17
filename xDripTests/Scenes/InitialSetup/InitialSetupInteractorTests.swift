@@ -15,7 +15,7 @@ import XCTest
 
 // swiftlint:disable implicitly_unwrapped_optional
 
-final class InitialSetupInteractorTests: XCTestCase {
+final class InitialSetupInteractorTests: AbstractRealmTest {
     // MARK: Subject under test
     
     var sut: InitialSetupInteractor!
@@ -48,10 +48,15 @@ final class InitialSetupInteractorTests: XCTestCase {
     }
     
     final class InitialSetupRoutingLogicSpy: InitialSetupRoutingLogic {
+        var dismissCalled = false
+        var nextScene: UIViewController?
+        
         func dismissScene() {
+            dismissCalled = true
         }
         
         func showNextScene(_ viewController: UIViewController) {
+            nextScene = viewController
         }
     }
     
@@ -68,5 +73,179 @@ final class InitialSetupInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+    }
+    
+    func testDoBeginSetup() {
+        let spy = InitialSetupRoutingLogicSpy()
+        sut.router = spy
+        
+        sut.doLoad(request: InitialSetup.Load.Request())
+        // When
+        sut.doBeginSetup(request: InitialSetup.BeginSetup.Request())
+        // Then
+        XCTAssert(spy.nextScene is InitialSetupDeviceModeViewController)
+    }
+    
+    func testDoSkipSetup() {
+        let spy = InitialSetupRoutingLogicSpy()
+        sut.router = spy
+        
+        sut.doLoad(request: InitialSetup.Load.Request())
+        sut.doSkipSetup(request: InitialSetup.SkipSetup.Request())
+        XCTAssertTrue(spy.dismissCalled)
+        XCTAssertTrue(User.current.isInitialSetupDone)
+    }
+    
+    func testDoSelectDeviceMode() {
+        let spy = InitialSetupRoutingLogicSpy()
+        sut.router = spy
+        
+        sut.doLoad(request: InitialSetup.Load.Request())
+        
+        // When
+        var request = InitialSetup.SelectDeviceMode.Request(deviceMode: .main)
+        sut.doSelectDeviceMode(request: request)
+        // Then
+        XCTAssert(User.current.settings.deviceMode == .main)
+        XCTAssert(spy.nextScene is InitialSetupInjectionTypeViewController)
+        
+        // When
+        request = InitialSetup.SelectDeviceMode.Request(deviceMode: .follower)
+        sut.doSelectDeviceMode(request: request)
+        // Then
+        XCTAssert(User.current.settings.deviceMode == .follower)
+    }
+    
+    func testDoSelectInjectionType() {
+        let spy = InitialSetupRoutingLogicSpy()
+        sut.router = spy
+        
+        sut.doLoad(request: InitialSetup.Load.Request())
+        
+        // When
+        var request = InitialSetup.SelectInjectionType.Request(injectionType: .pen)
+        sut.doSelectInjectionType(request: request)
+        // Then
+        XCTAssert(User.current.settings.injectionType == .pen)
+        XCTAssert(spy.nextScene is InitialSetupSettingsViewController)
+        
+        // When
+        request = InitialSetup.SelectInjectionType.Request(injectionType: .pump)
+        sut.doSelectInjectionType(request: request)
+        // Then
+        XCTAssert(User.current.settings.injectionType == .pump)
+    }
+    
+    func testDoSaveSettings() {
+        let spy = InitialSetupRoutingLogicSpy()
+        sut.router = spy
+        
+        sut.doLoad(request: InitialSetup.Load.Request())
+        
+        // When
+        var request = InitialSetup.SaveSettings.Request(alertsEnabled: false, units: .mmolL, nightscoutEnabled: true)
+        sut.doSaveSettings(request: request)
+        // Then
+        let settings = User.current.settings
+        XCTAssert(settings?.unit == .mmolL)
+        XCTAssert(settings?.alert?.isNotificationsEnabled == false)
+        XCTAssert(settings?.nightscoutSync?.isEnabled == true)
+        
+        XCTAssert(spy.nextScene is InitialSetupNightscoutViewController)
+        
+        // When
+        request = InitialSetup.SaveSettings.Request(alertsEnabled: true, units: .mgDl, nightscoutEnabled: false)
+        sut.doSaveSettings(request: request)
+        // Then
+        XCTAssert(settings?.unit == .mgDl)
+        XCTAssert(settings?.alert?.isNotificationsEnabled == true)
+        XCTAssert(settings?.nightscoutSync?.isEnabled == false)
+        
+        XCTAssert(spy.nextScene is InitialSetupTransmitterTypeViewController)
+    }
+    
+    func testDoSelectDeviceType() {
+        let spy = InitialSetupRoutingLogicSpy()
+        sut.router = spy
+        
+        sut.doLoad(request: InitialSetup.Load.Request())
+        
+        // When
+        let request = InitialSetup.SelectDevice.Request(deviceType: .dexcomG6)
+        sut.doSelectDeviceType(request: request)
+        // Then
+        XCTAssert(CGMDevice.current.deviceType == .dexcomG6)
+        XCTAssert(spy.nextScene is InitialSetupG6DeviceIDViewController)
+    }
+    
+    func testDoCompleteCustomDeviceStep() {
+        let spy = InitialSetupRoutingLogicSpy()
+        sut.router = spy
+        
+        sut.doSelectDeviceType(request: InitialSetup.SelectDevice.Request(deviceType: .dexcomG6))
+        
+        var request = InitialSetup.CompleteCustomDeviceStep.Request(
+            moreStepsExpected: true,
+            step: InitialSetupG6Step.deviceID
+        )
+        sut.doCompleteCustomDeviceStep(request: request)
+        
+        XCTAssert(spy.nextScene is InitialSetupG6SensorAgeViewController)
+        
+        request = InitialSetup.CompleteCustomDeviceStep.Request(
+            moreStepsExpected: true,
+            step: InitialSetupG6Step.sensorAge
+        )
+        sut.doCompleteCustomDeviceStep(request: request)
+        
+        XCTAssert(spy.nextScene is InitialSetupG6ConnectViewController)
+        
+        request = InitialSetup.CompleteCustomDeviceStep.Request(
+            moreStepsExpected: true,
+            step: InitialSetupG6Step.connect
+        )
+        sut.doCompleteCustomDeviceStep(request: request)
+        
+        XCTAssert(spy.nextScene is InitialSetupG6WarmUpViewController)
+        
+        request = InitialSetup.CompleteCustomDeviceStep.Request(
+            moreStepsExpected: false,
+            step: InitialSetupG6Step.warmUp
+        )
+        sut.doCompleteCustomDeviceStep(request: request)
+        
+        XCTAssertTrue(spy.dismissCalled)
+    }
+    
+    func testDoSaveNightscoutConnectionData() {
+        let spy = InitialSetupRoutingLogicSpy()
+        sut.router = spy
+        
+        sut.doLoad(request: InitialSetup.Load.Request())
+        
+        // When
+        User.current.settings.updateDeviceMode(.main)
+        sut.doSaveNightscoutConnectionData(request: InitialSetup.SaveNightscoutCredentials.Request())
+        // Then
+        XCTAssert(User.current.settings.nightscoutSync?.isFollowerAuthed == true)
+        XCTAssert(spy.nextScene is InitialSetupTransmitterTypeViewController)
+        
+        // When
+        User.current.settings.updateDeviceMode(.follower)
+        sut.doSaveNightscoutConnectionData(request: InitialSetup.SaveNightscoutCredentials.Request())
+        // Then
+        XCTAssert(spy.nextScene is InitialSetupFinishViewController)
+    }
+    
+    func testDoFinishSetup() {
+        let spy = InitialSetupRoutingLogicSpy()
+        sut.router = spy
+        
+        sut.doLoad(request: InitialSetup.Load.Request())
+        
+        // When
+        sut.doFinishSetup(request: InitialSetup.FinishSetup.Request())
+        // Then
+        XCTAssertTrue(spy.dismissCalled)
     }
 }

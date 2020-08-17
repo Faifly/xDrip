@@ -98,7 +98,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
                 )
                 throw NightscoutError.invalidURL
             }
-            let url = baseURL.appendingPathComponent("/api/v1/experiments/test")
+            let url = baseURL.safeAppendingPathComponent("/api/v1/experiments/test")
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
             request.timeoutInterval = 10.0
@@ -195,7 +195,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
             )
             throw NightscoutError.invalidURL
         }
-        let url = baseURL.appendingPathComponent("/api/v1/entries.json")
+        let url = baseURL.safeAppendingPathComponent("/api/v1/entries.json")
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = createHeaders()
         
@@ -233,7 +233,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         guard let baseURL = URL(string: baseURLString) else { return nil }
         guard let apiSecret = settings?.apiSecret else { return nil }
         
-        let url = baseURL.appendingPathComponent("/api/v1/devicestatus")
+        let url = baseURL.safeAppendingPathComponent("/api/v1/devicestatus")
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
         

@@ -119,7 +119,7 @@ final class InitialSetupInteractor: InitialSetupBusinessLogic, InitialSetupDataS
     private func injectDeviceSpecificStepProvider() {
         guard let type = CGMDevice.current.deviceType else { return }
         switch type {
-        case .dexcomG6: stepProvidingWorker = InitialSetupG6StepWorker()
+        case .dexcomG6, .mocked: stepProvidingWorker = InitialSetupG6StepWorker()
         }
     }
 }

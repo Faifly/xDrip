@@ -32,30 +32,23 @@ final class InitialSetupInjectionTypeViewControllerTests: XCTestCase {
         func doSelectDeviceType(request: InitialSetup.SelectDevice.Request) { }
         func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) { }
     }
-    /*
+    
     func testButtonsCallback() {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let penButton = sut.view.findView(with: "penButton") as? UIButton else {
-            XCTFail("Cannot obtain button")
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
             return
         }
         
+        let button = sut.navigationItem.rightBarButtonItem
+        
         // When
-        penButton.sendActions(for: .touchUpInside)
+        tableView.callDidSelect(at: IndexPath(row: 0, section: 0))
+        _ = button?.target?.perform(button?.action, with: nil)
         // Then
         XCTAssertTrue(spy.calledSelectInjectionType)
         XCTAssert(spy.injectionType == .pen)
-        
-        guard let pumpButton = sut.view.findView(with: "pumpButton") as? UIButton else {
-            XCTFail("Cannot obtain button")
-            return
-        }
-        
-        // When
-        pumpButton.sendActions(for: .touchUpInside)
-        // Then
-        XCTAssertTrue(spy.injectionType == .pump)
-    }*/
+    }
 }

@@ -245,6 +245,7 @@ private extension CGMDeviceType {
     var name: String {
         switch self {
         case .dexcomG6: return "settings_transmitter_type_dexcom_g6".localized
+        case .mocked: return "Mocked"
         }
     }
 }

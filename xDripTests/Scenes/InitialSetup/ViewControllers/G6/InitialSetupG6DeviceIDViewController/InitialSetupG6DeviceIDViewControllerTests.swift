@@ -34,32 +34,39 @@ final class InitialSetupG6DeviceIDViewControllerTests: XCTestCase {
         }
     }
     
-    /*
-    func testOnContinueButton() {
+    func testSaveButton() {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let textField = sut.view.findView(with: "deviceIDTextField") as? UITextField else {
+        guard let textField = sut.view.subviews.compactMap({ $0 as? UITextField }).first else {
             XCTFail("Cannot obtain textfield")
             return
         }
         
-        guard let continueButton = sut.view.findView(with: "continueButton") as? UIButton else {
-            XCTFail("Cannot obtain button")
-            return
-        }
-        
+        let button = sut.navigationItem.rightBarButtonItem
         // When
-        continueButton.sendActions(for: .touchUpInside)
+        _ = button?.target?.perform(button?.action, with: nil)
         // Then
         XCTAssertTrue(spy.calledCompleteSetup == false)
         XCTAssert(spy.moreStepsExpected == nil)
         
         // When
         textField.text = "123ABC"
-        continueButton.sendActions(for: .touchUpInside)
+        _ = button?.target?.perform(button?.action, with: nil)
         // Then
         XCTAssertTrue(spy.calledCompleteSetup == true)
         XCTAssert(spy.moreStepsExpected == true)
-    }*/
+        
+        let serialNumber = CGMDevice.current.metadata(ofType: .serialNumber)
+        XCTAssert(serialNumber?.value == "123ABC")
+    }
+    
+    func testOpenGuideButton() {
+        guard let button = sut.view.subviews.compactMap({ $0 as? UIButton }).first else {
+            XCTFail("Cannot obtain button")
+            return
+        }
+        
+        button.sendActions(for: .touchUpInside)
+    }
 }

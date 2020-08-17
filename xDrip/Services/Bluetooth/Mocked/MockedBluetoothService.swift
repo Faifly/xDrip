@@ -13,6 +13,8 @@ final class MockedBluetoothService {
     private var isStopped = false
     private var previousGlucoseValue: Double = 0.0
     
+    var isPaused = false
+    
     init(delegate: CGMBluetoothServiceDelegate) {
         self.delegate = delegate
     }
@@ -41,6 +43,8 @@ final class MockedBluetoothService {
                 self?.generateGlucoseReading()
             }
         }
+        
+        guard !isPaused else { return }
         
         let failed = Double.random(in: 0...100) < config.failProbability
         guard !failed else {

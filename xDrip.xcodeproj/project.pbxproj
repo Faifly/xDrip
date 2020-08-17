@@ -101,6 +101,7 @@
 		2C4E7F0C246ABF830062D403 /* ExpandableTableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4E7F0B246ABF830062D403 /* ExpandableTableContainer.swift */; };
 		2C4FE9BB24ADD7F000D2048B /* NotificationControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FE9BA24ADD7F000D2048B /* NotificationControllerTests.swift */; };
 		2C4FE9BD24ADD81500D2048B /* GlucoseNotificationWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FE9BC24ADD81500D2048B /* GlucoseNotificationWorkerTests.swift */; };
+		2C50AAD824E400040080B589 /* InitialSetupNightscoutViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C50AAD724E400040080B589 /* InitialSetupNightscoutViewControllerTests.swift */; };
 		2C53317624C87338005B3A6F /* BasalChartBasalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C53317524C87338005B3A6F /* BasalChartBasalEntry.swift */; };
 		2C53317824C87751005B3A6F /* BasalChartDataWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C53317724C87751005B3A6F /* BasalChartDataWorker.swift */; };
 		2C5617E824E5683D00D7C9D1 /* Data+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5617E724E5683D00D7C9D1 /* Data+String.swift */; };
@@ -542,6 +543,7 @@
 		588584AC248E7A2800C3F74C /* CloudUploadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588584AB248E7A2800C3F74C /* CloudUploadStatus.swift */; };
 		5886D4B924DD885C00D6B732 /* SettingsTransmitterTestDataWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5886D4B824DD885C00D6B732 /* SettingsTransmitterTestDataWorker.swift */; };
 		5886D4BD24DE9BC900D6B732 /* SettingsTestBackfillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5886D4BB24DE9BC900D6B732 /* SettingsTestBackfillViewController.swift */; };
+		588CAB5624E6985800B49462 /* URL+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588CAB5524E6985800B49462 /* URL+Custom.swift */; };
 		589B1A222497D17900C1DABD /* UploadRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589B1A212497D17900C1DABD /* UploadRequestFactory.swift */; };
 		589EA8D02476F89300515BCC /* CGMDeviceVoltage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589EA8CF2476F89200515BCC /* CGMDeviceVoltage.swift */; };
 		589EA8D3247700AF00515BCC /* BaseSettingsButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589EA8D1247700AF00515BCC /* BaseSettingsButtonCell.swift */; };
@@ -786,6 +788,7 @@
 		2C4E7F0B246ABF830062D403 /* ExpandableTableContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableContainer.swift; sourceTree = "<group>"; };
 		2C4FE9BA24ADD7F000D2048B /* NotificationControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationControllerTests.swift; sourceTree = "<group>"; };
 		2C4FE9BC24ADD81500D2048B /* GlucoseNotificationWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseNotificationWorkerTests.swift; sourceTree = "<group>"; };
+		2C50AAD724E400040080B589 /* InitialSetupNightscoutViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupNightscoutViewControllerTests.swift; sourceTree = "<group>"; };
 		2C53317524C87338005B3A6F /* BasalChartBasalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalChartBasalEntry.swift; sourceTree = "<group>"; };
 		2C53317724C87751005B3A6F /* BasalChartDataWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalChartDataWorker.swift; sourceTree = "<group>"; };
 		2C55FEF624A23B62006BB3EF /* RepeatingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingTimer.swift; sourceTree = "<group>"; };
@@ -1229,6 +1232,7 @@
 		588584AB248E7A2800C3F74C /* CloudUploadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudUploadStatus.swift; sourceTree = "<group>"; };
 		5886D4B824DD885C00D6B732 /* SettingsTransmitterTestDataWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTransmitterTestDataWorker.swift; sourceTree = "<group>"; };
 		5886D4BB24DE9BC900D6B732 /* SettingsTestBackfillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTestBackfillViewController.swift; sourceTree = "<group>"; };
+		588CAB5524E6985800B49462 /* URL+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Custom.swift"; sourceTree = "<group>"; };
 		589B1A212497D17900C1DABD /* UploadRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequestFactory.swift; sourceTree = "<group>"; };
 		589EA8CF2476F89200515BCC /* CGMDeviceVoltage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMDeviceVoltage.swift; sourceTree = "<group>"; };
 		589EA8D1247700AF00515BCC /* BaseSettingsButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsButtonCell.swift; sourceTree = "<group>"; };
@@ -1597,6 +1601,14 @@
 				2C4FE9BC24ADD81500D2048B /* GlucoseNotificationWorkerTests.swift */,
 			);
 			path = Notifications;
+			sourceTree = "<group>";
+		};
+		2C50AAD624E3FFE10080B589 /* InitialSetupNightscoutViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2C50AAD724E400040080B589 /* InitialSetupNightscoutViewControllerTests.swift */,
+			);
+			path = InitialSetupNightscoutViewController;
 			sourceTree = "<group>";
 		};
 		2C531F6F2445FE27006F4532 /* Pickers */ = {
@@ -2007,6 +2019,7 @@
 		5805CA3424389F3A002AFA1B /* Generic */ = {
 			isa = PBXGroup;
 			children = (
+				2C50AAD624E3FFE10080B589 /* InitialSetupNightscoutViewController */,
 				5805CA3524389F52002AFA1B /* InitialSetupIntroViewController */,
 				5805CA3824389FA8002AFA1B /* InitialSetupSettingsViewController */,
 				5805CA3B24389FD6002AFA1B /* InitialSetupTransmitterTypeViewController */,
@@ -2934,6 +2947,7 @@
 				58A92068249930200025C1C7 /* Double+Rounding.swift */,
 				2C5617E724E5683D00D7C9D1 /* Data+String.swift */,
 				2C5617E924E5688000D7C9D1 /* URLSession+Logs.swift */,
+				588CAB5524E6985800B49462 /* URL+Custom.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -4209,6 +4223,7 @@
 				5805C9B624389230002AFA1B /* DexcomG6MessageWorkerDelegate.swift in Sources */,
 				58B5FD54241910BD00DB857D /* SettingsRootModels.swift in Sources */,
 				580E4C2D243F74F000565EDE /* SettingsUnitsViewController.swift in Sources */,
+				588CAB5624E6985800B49462 /* URL+Custom.swift in Sources */,
 				58B5FD3C24190E6700DB857D /* StatsRootPresenter.swift in Sources */,
 				58B95B50244B13400005CA60 /* ChartEntryDetailView.swift in Sources */,
 				584432AD243CFD9B00282A6C /* SettingsChartViewController.swift in Sources */,
@@ -4576,6 +4591,7 @@
 				580E4CCE243F78B300565EDE /* SettingsPumpUserPresenterTests.swift in Sources */,
 				580E4CB9243F788D00565EDE /* SettingsUserTypeRootViewControllerTests.swift in Sources */,
 				5805CA732438A35A002AFA1B /* DexcomG6TransmitterVersionTxMessageTests.swift in Sources */,
+				2C50AAD824E400040080B589 /* InitialSetupNightscoutViewControllerTests.swift in Sources */,
 				580E4C8E243F780200565EDE /* SettingsModeRootPresenterTests.swift in Sources */,
 				2C90528C24769D2100719793 /* UITableView+Tests.swift in Sources */,
 				5805CA842438A480002AFA1B /* DexcomG6BatteryStatusRxMessageTests.swift in Sources */,
@@ -4788,7 +4804,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = xDrip/ApplicationSupport/xDrip.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 18;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = B2YEP8DDS6;
@@ -4817,7 +4833,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = xDrip/ApplicationSupport/xDrip.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 18;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = B2YEP8DDS6;

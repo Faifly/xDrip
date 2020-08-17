@@ -65,6 +65,7 @@ final class SettingsChartRangesInteractor: SettingsChartRangesBusinessLogic, Set
             break
         }
         
+        NotificationCenter.default.postSettingsChangeNotification(setting: .chart)
         doUpdateData(request: SettingsChartRanges.UpdateData.Request())
     }
 }

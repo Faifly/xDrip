@@ -95,7 +95,7 @@ final class StatsRootPresenter: StatsRootPresentationLogic {
             let normal = calculationWorker.normalPercentage
             let high = calculationWorker.highPercentage
             let low = calculationWorker.lowPercentage
-            return "\(normal)%/\(high)%/\(low)%"
+            return String(format: "%0.1f%%/%0.1f%%/%0.1f%%", normal, high, low)
             
         case .absolute:
             let normal = calculationWorker.normalCount
