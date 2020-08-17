@@ -78,7 +78,11 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
         let picker = CustomDatePicker()
         picker.datePickerMode = .dateAndTime
         
-        picker.minimumDate = CGMDevice.current.sensorStartDate
+        if let sensorStartDate = CGMDevice.current.sensorStartDate {
+            picker.minimumDate = max(sensorStartDate, Date() - .secondsPerHour)
+        } else {
+            picker.minimumDate = Date() - .secondsPerHour
+        }
         picker.maximumDate = date
         
         picker.formatDate = { date in
