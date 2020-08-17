@@ -14,15 +14,47 @@ import UIKit
 
 protocol HistoryRootPresentationLogic {
     func presentLoad(response: HistoryRoot.Load.Response)
+    func presentGlucoseData(response: HistoryRoot.GlucoseDataUpdate.Response)
+    func presentChartTimeFrameChange(response: HistoryRoot.ChangeEntriesChartTimeFrame.Response)
 }
 
 final class HistoryRootPresenter: HistoryRootPresentationLogic {
     weak var viewController: HistoryRootDisplayLogic?
     
+    private let glucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol
+    private let homeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol
+    
+    init() {
+        glucoseFormattingWorker = HomeGlucoseFormattingWorker()
+        homeEntriesFormattingWorker = HomeEntriesFormattingWorker()
+    }
     // MARK: Do something
     
     func presentLoad(response: HistoryRoot.Load.Response) {
-        let viewModel = HistoryRoot.Load.ViewModel()
+        let viewModel = HistoryRoot.Load.ViewModel(globalTimeInterval: response.globalTimeInterval)
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    func presentGlucoseData(response: HistoryRoot.GlucoseDataUpdate.Response) {
+        let values = glucoseFormattingWorker.formatEntries(response.glucoseData)
+        let basal = glucoseFormattingWorker.formatEntries(response.insulinData)
+        let stroke = glucoseFormattingWorker.formatEntries(response.chartPointsData)
+        let unit = User.current.settings.unit.label
+        let dataSection = glucoseFormattingWorker.formatDataSection(response.intervalGlucoseData)
+        
+        let viewModel = HistoryRoot.GlucoseDataUpdate.ViewModel(
+            glucoseValues: values,
+            basalDisplayMode: response.basalDisplayMode,
+            basalValues: basal,
+            strokeChartBasalValues: stroke,
+            unit: unit,
+            dataSection: dataSection
+        )
+        viewController?.displayGlucoseData(viewModel: viewModel)
+    }
+    
+    func presentChartTimeFrameChange(response: HistoryRoot.ChangeEntriesChartTimeFrame.Response) {
+        let viewModel = HistoryRoot.ChangeEntriesChartTimeFrame.ViewModel(timeInterval: response.timeInterval)
+        viewController?.displayChartTimeFrame(viewModel: viewModel)
     }
 }

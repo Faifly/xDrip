@@ -97,7 +97,7 @@ final class EntriesHistoryView: BaseHistoryView {
     }
     
     func setTimeFrame(_ localInterval: TimeInterval, chartButtonTitle: String, showChart: Bool) {
-        super.setTimeFrame(localInterval)
+        super.setLocalTimeFrame(localInterval)
         updateChartVisibilityAndButtonTitle(chartButtonTitle, showChart)
     }
     

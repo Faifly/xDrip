@@ -15,6 +15,7 @@ import UIKit
 protocol HistoryRootBusinessLogic {
     func doLoad(request: HistoryRoot.Load.Request)
     func doCancel(request: HistoryRoot.Cancel.Request)
+    func doChangeChartTimeFrame(request: HistoryRoot.ChangeEntriesChartTimeFrame.Request)
 }
 
 protocol HistoryRootDataStore: AnyObject {
@@ -24,14 +25,61 @@ final class HistoryRootInteractor: HistoryRootBusinessLogic, HistoryRootDataStor
     var presenter: HistoryRootPresentationLogic?
     var router: HistoryRootRoutingLogic?
     
+    private let glucoseDataWorker: HomeGlucoseDataWorkerProtocol
+    private var timeline: HistoryRoot.Timeline = .last14Days
+    private var selectedDate = Date()
+    
+    private var interval: TimeInterval {
+        return timeline == .last14Days ? TimeInterval(hours: 14.0 * 24.0) : .secondsPerDay
+    }
+    
+    init() {
+        glucoseDataWorker = HomeGlucoseDataWorker()
+    }
+    
     // MARK: Do something
     
     func doLoad(request: HistoryRoot.Load.Request) {
-        let response = HistoryRoot.Load.Response()
+        let response = HistoryRoot.Load.Response(globalTimeInterval: interval)
         presenter?.presentLoad(response: response)
+        updateGlucoseChartData()
     }
     
     func doCancel(request: HistoryRoot.Cancel.Request) {
         router?.dismissSelf()
+    }
+    
+    func doChangeChartTimeFrame(request: HistoryRoot.ChangeEntriesChartTimeFrame.Request) {
+        timeline = request.timeline
+        selectedDate = request.date
+        let response = HistoryRoot.ChangeEntriesChartTimeFrame.Response(timeInterval: interval)
+        presenter?.presentChartTimeFrameChange(response: response)
+        updateGlucoseChartData()
+    }
+    
+    // MARK: Logic
+    
+    private func updateGlucoseChartData() {
+        var glucoseData = [GlucoseReading]()
+        var basalValues = [InsulinEntry]()
+        var chartEntries = [InsulinEntry]()
+        if timeline == .last14Days {
+            glucoseData = glucoseDataWorker.fetchGlucoseData(for: 14 * 24)
+            basalValues = BasalChartDataWorker.fetchBasalData(for: 14 * 24)
+            chartEntries = BasalChartDataWorker.calculateChartValues(for: 14 * 24)
+        } else {
+            glucoseData = glucoseDataWorker.fetchGlucoseData(for: selectedDate)
+            basalValues = BasalChartDataWorker.fetchBasalData(for: selectedDate)
+            chartEntries = BasalChartDataWorker.calculateChartValues(for: selectedDate)
+        }
+        
+        let response = HistoryRoot.GlucoseDataUpdate.Response(
+            glucoseData: glucoseData,
+            intervalGlucoseData: glucoseData,
+            basalDisplayMode: User.current.settings.chart?.basalDisplayMode ?? .notShown,
+            insulinData: basalValues,
+            chartPointsData: chartEntries
+        )
+        presenter?.presentGlucoseData(response: response)
     }
 }

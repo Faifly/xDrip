@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -216,12 +216,12 @@
             <constraints>
                 <constraint firstItem="5GJ-cn-Jfe" firstAttribute="trailing" secondItem="wal-uu-dqz" secondAttribute="trailing" id="3ym-mw-YpX"/>
                 <constraint firstAttribute="trailing" secondItem="duk-7t-Fh3" secondAttribute="trailing" id="4Oy-LO-IRx"/>
+                <constraint firstItem="5GJ-cn-Jfe" firstAttribute="bottom" secondItem="wal-uu-dqz" secondAttribute="bottom" id="78Z-hP-lfb"/>
                 <constraint firstItem="duk-7t-Fh3" firstAttribute="top" secondItem="mbw-ZN-ydS" secondAttribute="bottom" id="8sL-6d-AOB"/>
                 <constraint firstItem="mbw-ZN-ydS" firstAttribute="top" secondItem="wal-uu-dqz" secondAttribute="top" constant="5" id="CRQ-E9-nSo"/>
                 <constraint firstItem="duk-7t-Fh3" firstAttribute="leading" secondItem="RfY-ZW-nBO" secondAttribute="leading" id="GZW-TB-p7T"/>
                 <constraint firstItem="mbw-ZN-ydS" firstAttribute="leading" secondItem="wal-uu-dqz" secondAttribute="leading" id="MoY-YQ-D9i"/>
                 <constraint firstItem="5GJ-cn-Jfe" firstAttribute="leading" secondItem="wal-uu-dqz" secondAttribute="leading" id="U5R-LY-Uh6"/>
-                <constraint firstItem="wal-uu-dqz" firstAttribute="bottom" secondItem="5GJ-cn-Jfe" secondAttribute="bottom" id="XIo-lz-e0c"/>
                 <constraint firstItem="mbw-ZN-ydS" firstAttribute="trailing" secondItem="wal-uu-dqz" secondAttribute="trailing" id="a56-ci-NBX"/>
                 <constraint firstItem="5GJ-cn-Jfe" firstAttribute="top" secondItem="duk-7t-Fh3" secondAttribute="bottom" id="tal-AL-hRm"/>
             </constraints>

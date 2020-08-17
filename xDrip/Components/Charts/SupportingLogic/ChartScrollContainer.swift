@@ -10,6 +10,7 @@ import UIKit
 
 final class ChartScrollContainer: UIView {
     var onSelectionChanged: ((CGFloat) -> Void)?
+    var shouldHandleTouches = true
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -70,12 +71,14 @@ final class ChartScrollContainer: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard shouldHandleTouches else { return }
         guard let location = touches.first?.location(in: self) else { return }
         updateFrame(forTouchX: location.x)
         selectionIndicator.isHidden = false
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard shouldHandleTouches else { return }
         guard let location = touches.first?.location(in: self) else { return }
         updateFrame(forTouchX: location.x)
     }

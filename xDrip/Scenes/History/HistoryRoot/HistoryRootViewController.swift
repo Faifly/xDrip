@@ -14,6 +14,8 @@ import UIKit
 
 protocol HistoryRootDisplayLogic: AnyObject {
     func displayLoad(viewModel: HistoryRoot.Load.ViewModel)
+    func displayGlucoseData(viewModel: HistoryRoot.GlucoseDataUpdate.ViewModel)
+    func displayChartTimeFrame(viewModel: HistoryRoot.ChangeEntriesChartTimeFrame.ViewModel)
 }
 
 class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
@@ -50,10 +52,35 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
     
     // MARK: IB
     
+    @IBOutlet private weak var timeLineSegmentView: UISegmentedControl!
+    @IBOutlet private weak var glucoseChart: GlucoseHistoryView!
+    @IBOutlet private weak var dataView: GlucoseDataView!
+    
+    @IBOutlet private weak var dateButtonsHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var datePickerStackView: UIStackView!
+    
+    @IBOutlet private weak var minMaxValuesLabel: UILabel!
+    @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var unitLabel: UILabel!
+    
+    @IBOutlet private weak var dateButton: UIButton!
+    private var selectedDate = Date() {
+        didSet {
+            let title = DateFormatter.localizedString(from: selectedDate, dateStyle: .short, timeStyle: .none)
+            dateButton.setTitle(title, for: .normal)
+            glucoseChart.globalDate = selectedDate
+            
+            let request = HistoryRoot.ChangeEntriesChartTimeFrame.Request(timeline: .date, date: selectedDate)
+            interactor?.doChangeChartTimeFrame(request: request)
+        }
+    }
+    private let datePicker = UIDatePicker()
+    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         doLoad()
     }
     
@@ -64,6 +91,18 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
         
         let request = HistoryRoot.Load.Request()
         interactor?.doLoad(request: request)
+    }
+    
+    @IBAction private func onTimeFrameSegmentSelected() {
+        let timeline: HistoryRoot.Timeline
+        switch timeLineSegmentView.selectedSegmentIndex {
+        case 0: timeline = .last14Days
+        case 1: timeline = .date
+        default: timeline = .last14Days
+        }
+        
+        let request = HistoryRoot.ChangeEntriesChartTimeFrame.Request(timeline: timeline, date: selectedDate)
+        interactor?.doChangeChartTimeFrame(request: request)
     }
     
     private func setupNavigationItems() {
@@ -82,5 +121,105 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
     // MARK: Display
     
     func displayLoad(viewModel: HistoryRoot.Load.ViewModel) {
+        glucoseChart.setGlobalTimeFrame(viewModel.globalTimeInterval)
+        glucoseChart.setLocalTimeFrame(.secondsPerDay)
+    }
+    
+    func displayGlucoseData(viewModel: HistoryRoot.GlucoseDataUpdate.ViewModel) {
+        glucoseChart.setup(
+            with: viewModel.glucoseValues,
+            basalDisplayMode: viewModel.basalDisplayMode,
+            basalEntries: viewModel.basalValues,
+            strokeChartEntries: viewModel.strokeChartBasalValues,
+            unit: viewModel.unit
+        )
+        dataView.setup(with: viewModel.dataSection)
+        unitLabel.text = viewModel.unit
+        
+        let values = viewModel.glucoseValues.compactMap({ $0.value })
+        
+        let min = values.min() ?? 0.0
+        let max = values.max() ?? 0.0
+        minMaxValuesLabel.text = String(format: "%.1f - %.1f", min, max)
+        
+        if timeLineSegmentView.selectedSegmentIndex == 0 {
+            let maxDate = Date()
+            let diff = TimeInterval(hours: 14.0 * 24.0)
+            let minDate = maxDate.addingTimeInterval(-diff)
+            let minString = DateFormatter.localizedString(from: minDate, dateStyle: .short, timeStyle: .none)
+            let maxString = DateFormatter.localizedString(from: maxDate, dateStyle: .short, timeStyle: .none)
+            
+            dateLabel.text = minString + " - " + maxString
+        } else {
+            dateLabel.text = ""
+        }
+    }
+    
+    func displayChartTimeFrame(viewModel: HistoryRoot.ChangeEntriesChartTimeFrame.ViewModel) {
+        glucoseChart.setGlobalTimeFrame(viewModel.timeInterval)
+        
+        if viewModel.timeInterval.hours > 24.0 {
+            dateButtonsHeightConstraint.constant = 0.0
+            glucoseChart.globalDate = Date()
+        } else {
+            dateButtonsHeightConstraint.constant = 30.0
+        }
+    }
+    
+    private func setupUI() {
+        title = "history_scene_title".localized
+        
+        let titles = [
+            "history_scene_timeframe_14_days".localized,
+            "history_scene_timeframe_date".localized
+        ]
+        
+        timeLineSegmentView.removeAllSegments()
+        titles.forEach {
+            timeLineSegmentView.insertSegment(
+                withTitle: $0,
+                at: timeLineSegmentView.numberOfSegments,
+                animated: false
+            )
+        }
+        timeLineSegmentView.selectedSegmentIndex = 0
+        glucoseChart.scrollContainer.shouldHandleTouches = false
+        glucoseChart.detailsEnabled = false
+        
+        #if targetEnvironment(macCatalyst)
+        if #available(macCatalyst 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        }
+        #endif
+        
+        datePicker.addTarget(self, action: #selector(didPickDate), for: .valueChanged)
+        datePicker.maximumDate = Date()
+        datePicker.datePickerMode = .date
+        datePicker.date = selectedDate
+        dateButtonsHeightConstraint.constant = 0.0
+        let title = DateFormatter.localizedString(from: selectedDate, dateStyle: .short, timeStyle: .none)
+        dateButton.setTitle(title, for: .normal)
+    }
+    
+    @IBAction private func onDateButtonsTap(_ sender: UIButton) {
+        if sender.tag == 0 {
+            selectedDate -= .secondsPerDay
+            datePicker.date = selectedDate
+        } else if sender.tag == 2 {
+            let nextDate = selectedDate + .secondsPerDay
+            guard nextDate <= Date() else { return }
+            selectedDate = nextDate
+            datePicker.date = selectedDate
+        } else if sender.tag == 1 {
+            if datePickerStackView.arrangedSubviews.contains(datePicker) {
+                datePicker.removeFromSuperview()
+            } else {
+                datePickerStackView.addArrangedSubview(datePicker)
+            }
+        }
+    }
+    
+    @objc private func didPickDate() {
+        selectedDate = datePicker.date
     }
 }

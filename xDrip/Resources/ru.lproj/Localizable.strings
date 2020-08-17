@@ -85,6 +85,11 @@
 "edit_food_entry_slow_carbs_title" = "Медленные";
 "edit_food_entry_other_carbs_title" = "Другие";
 
+// History
+"history_scene_title" = "История";
+"history_scene_timeframe_14_days" = "14 дней";
+"history_scene_timeframe_date" = "Дата";
+
 // Settings Root
 "settings_root_title" = "Настройки";
 "settings_root_units_title" = "Единицы измерения";

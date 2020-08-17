@@ -15,6 +15,11 @@ import UIKit
 enum HistoryRoot {
     // MARK: Models
     
+    enum Timeline {
+        case last14Days
+        case date
+    }
+    
     // MARK: Use cases
     
     enum Load {
@@ -22,9 +27,11 @@ enum HistoryRoot {
         }
         
         struct Response {
+            let globalTimeInterval: TimeInterval
         }
         
         struct ViewModel {
+            let globalTimeInterval: TimeInterval
         }
     }
     
@@ -36,6 +43,43 @@ enum HistoryRoot {
         }
         
         struct ViewModel {
+        }
+    }
+    
+    enum GlucoseDataUpdate {
+        struct Request {
+        }
+        
+        struct Response {
+            let glucoseData: [GlucoseReading]
+            let intervalGlucoseData: [GlucoseReading]
+            let basalDisplayMode: ChartSettings.BasalDisplayMode
+            let insulinData: [InsulinEntry]
+            let chartPointsData: [InsulinEntry]
+        }
+        
+        struct ViewModel {
+            let glucoseValues: [GlucoseChartGlucoseEntry]
+            let basalDisplayMode: ChartSettings.BasalDisplayMode
+            let basalValues: [BasalChartBasalEntry]
+            let strokeChartBasalValues: [BasalChartBasalEntry]
+            let unit: String
+            let dataSection: Home.DataSectionViewModel
+        }
+    }
+    
+    enum ChangeEntriesChartTimeFrame {
+        struct Request {
+            let timeline: Timeline
+            let date: Date
+        }
+
+        struct Response {
+            let timeInterval: TimeInterval
+        }
+
+        struct ViewModel {
+            let timeInterval: TimeInterval
         }
     }
 }

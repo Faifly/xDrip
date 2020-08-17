@@ -20,6 +20,8 @@ class BaseHistoryView: UIView {
     var globalDateRange = DateInterval()
     var localDateRange = DateInterval()
     var localInterval: TimeInterval = .secondsPerHour
+    var globalInterval: TimeInterval = .secondsPerDay
+    var globalDate = Date()
     var userRelativeSelection: CGFloat?
     
     required init?(coder: NSCoder) {
@@ -30,7 +32,7 @@ class BaseHistoryView: UIView {
     private func commonInit() {
         setupViews()
         setupScrolling()
-        setTimeFrame(.secondsPerHour)
+        setLocalTimeFrame(.secondsPerHour)
     }
     
     func setupViews() {
@@ -79,9 +81,15 @@ class BaseHistoryView: UIView {
     func updateDetailView(with relativeOffset: CGFloat) {
     }
     
-    func setTimeFrame(_ localInterval: TimeInterval) {
+    func setLocalTimeFrame(_ localInterval: TimeInterval) {
         self.localInterval = localInterval
         forwardTimeOffset = horizontalInterval(for: localInterval)
+        scrollContainer.hideDetailView()
+        update()
+    }
+    
+    func setGlobalTimeFrame(_ globalInterval: TimeInterval) {
+        self.globalInterval = globalInterval
         scrollContainer.hideDetailView()
         update()
     }
@@ -98,11 +106,18 @@ class BaseHistoryView: UIView {
     }
     
     private func updateIntervals() {
-        globalDateRange = DateInterval(
-            endDate: Date() + forwardTimeOffset,
-            duration: .secondsPerDay + forwardTimeOffset
-        )
-        localDateRange = DateInterval(endDate: globalDateRange.end, duration: localInterval + forwardTimeOffset)
+        var endDate = Date() + forwardTimeOffset
+        var globalDuration = globalInterval + forwardTimeOffset
+        var localDuration = localInterval + forwardTimeOffset
+        
+        if !Calendar.current.isDateInToday(globalDate) {
+            endDate = Calendar.current.startOfDay(for: globalDate) + .secondsPerDay
+            globalDuration = globalInterval
+            localDuration = localInterval
+        }
+        
+        globalDateRange = DateInterval(endDate: endDate, duration: globalDuration)
+        localDateRange = DateInterval(endDate: globalDateRange.end, duration: localDuration)
     }
     
     func updateChart() {
