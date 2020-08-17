@@ -228,10 +228,38 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     func createDeviceStatusRequest() -> URLRequest? {
         LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
         let settings = User.current.settings.nightscoutSync
-        guard settings?.uploadBridgeBattery == true else { return nil }
-        guard let baseURLString = settings?.baseURL else { return nil }
-        guard let baseURL = URL(string: baseURLString) else { return nil }
-        guard let apiSecret = settings?.apiSecret else { return nil }
+        guard settings?.uploadBridgeBattery == true else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Aborting %@ because upload bridge battery not enabled.",
+                type: .info,
+                #function
+            )
+            return nil
+        }
+        guard let baseURLString = settings?.baseURL else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Aborting %@ because no base URL string provided.",
+                type: .info,
+                #function
+            )
+            return nil
+        }
+        guard let baseURL = URL(string: baseURLString) else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Aborting %@ because can't create url from base URL string.",
+                type: .info,
+                #function
+            )
+            return nil
+        }
+        guard let apiSecret = settings?.apiSecret else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Aborting %@ because no API Secret provided.",
+                type: .info,
+                #function
+            )
+            return nil
+        }
         
         let url = baseURL.safeAppendingPathComponent("/api/v1/devicestatus")
         var request = URLRequest(url: url)

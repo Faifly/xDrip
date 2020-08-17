@@ -94,6 +94,13 @@ final class NightscoutService {
         let notUploaded = all.filter { $0.cloudUploadStatus == .notUploaded }
         let modified = all.filter { $0.cloudUploadStatus == .modified }
         
+        LogController.log(
+            message: "[NighscoutService]: Found %d not uploaded and %d modified entries",
+            type: .info,
+            notUploaded.count,
+            modified.count
+        )
+        
         for entry in notUploaded {
             guard !requestQueue.contains(where: {
                 $0.itemID == entry.externalID && $0.type == .postGlucoseReading
@@ -161,7 +168,20 @@ final class NightscoutService {
     }
     
     private func runQueue() {
-        guard checkUseCellular(), checkSkipLANUploads() else { return }
+        guard checkUseCellular() else {
+            LogController.log(
+                message: "[NighscoutService]: Aborting run queue because not allowed to use cellular data.",
+                type: .info
+            )
+            return
+        }
+        guard checkSkipLANUploads() else {
+            LogController.log(
+                message: "[NighscoutService]: Aborting run queue because skip LAN uploads enabled.",
+                type: .info
+            )
+            return
+        }
         guard !requestQueue.isEmpty else { return }
         guard !isPaused else { return }
         guard !isRequestInProgress else { return }
@@ -244,7 +264,7 @@ final class NightscoutService {
     }
   
     func sendDeviceStatus() {
-        LogController.log(message: "[NighscoutService]: Try to %@.", type: .info, #function)
+        LogController.log(message: "[NightscoutService]: Try to %@.", type: .info, #function)
         guard let request = requestFactory.createDeviceStatusRequest() else { return }
         URLSession.shared.loggableDataTask(with: request).resume()
     }
