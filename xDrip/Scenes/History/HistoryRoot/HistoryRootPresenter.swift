@@ -48,7 +48,8 @@ final class HistoryRootPresenter: HistoryRootPresentationLogic {
             basalValues: basal,
             strokeChartBasalValues: stroke,
             unit: unit,
-            dataSection: dataSection
+            dataSection: dataSection,
+            date: response.date
         )
         viewController?.displayGlucoseData(viewModel: viewModel)
     }

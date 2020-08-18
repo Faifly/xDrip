@@ -72,7 +72,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ioI-Yd-bjU">
-                                                    <rect key="frame" x="0.0" y="0.0" width="98" height="30"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="71" height="30"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <state key="normal" image="chevron.left"/>
@@ -81,7 +81,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qb7-Ae-GvK">
-                                                    <rect key="frame" x="98" y="0.0" width="250.5" height="30"/>
+                                                    <rect key="frame" x="71" y="0.0" width="272" height="30"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                     <state key="normal" title="24.03.2020"/>
@@ -90,7 +90,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="94S-kK-WAG">
-                                                    <rect key="frame" x="348.5" y="0.0" width="65.5" height="30"/>
+                                                    <rect key="frame" x="343" y="0.0" width="71" height="30"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <state key="normal" image="chevron.right"/>
                                                     <connections>
@@ -152,9 +152,6 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="270" id="r5v-qO-0Ea"/>
                             </constraints>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="detailsEnabled" value="NO"/>
-                            </userDefinedRuntimeAttributes>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="VaD-GH-ulw">
                             <rect key="frame" x="16" y="381" width="382" height="236"/>
@@ -200,7 +197,7 @@
                         <constraint firstItem="ouw-p1-Ff1" firstAttribute="leading" secondItem="Sds-Tc-w8J" secondAttribute="leading" id="SgE-o8-E8K"/>
                         <constraint firstItem="BcY-Uj-YF5" firstAttribute="top" secondItem="ouw-p1-Ff1" secondAttribute="bottom" id="W8Z-QY-pQu"/>
                         <constraint firstItem="zZT-1A-9fj" firstAttribute="top" secondItem="fS2-2B-58L" secondAttribute="top" id="cn6-Dk-Kn1"/>
-                        <constraint firstAttribute="bottom" secondItem="VaD-GH-ulw" secondAttribute="bottom" constant="5" id="dQd-U4-V7q"/>
+                        <constraint firstAttribute="bottom" secondItem="VaD-GH-ulw" secondAttribute="bottom" constant="32" id="dQd-U4-V7q"/>
                         <constraint firstItem="Sds-Tc-w8J" firstAttribute="trailing" secondItem="ouw-p1-Ff1" secondAttribute="trailing" id="ndw-22-vsr"/>
                         <constraint firstAttribute="trailing" secondItem="VaD-GH-ulw" secondAttribute="trailing" constant="16" id="rdV-lq-AK0"/>
                         <constraint firstItem="zZT-1A-9fj" firstAttribute="leading" secondItem="fS2-2B-58L" secondAttribute="leading" id="uSo-Ac-9Zs"/>
@@ -226,7 +223,7 @@
         </view>
     </objects>
     <resources>
-        <image name="chevron.left" width="36" height="36"/>
+        <image name="chevron.left" width="24" height="24"/>
         <image name="chevron.right" width="24" height="24"/>
         <namedColor name="background_2">
             <color red="0.95294117647058818" green="0.94901960784313721" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -56,6 +56,7 @@ enum HistoryRoot {
             let basalDisplayMode: ChartSettings.BasalDisplayMode
             let insulinData: [InsulinEntry]
             let chartPointsData: [InsulinEntry]
+            let date: Date?
         }
         
         struct ViewModel {
@@ -65,13 +66,13 @@ enum HistoryRoot {
             let strokeChartBasalValues: [BasalChartBasalEntry]
             let unit: String
             let dataSection: Home.DataSectionViewModel
+            let date: Date?
         }
     }
     
     enum ChangeEntriesChartTimeFrame {
         struct Request {
             let timeline: Timeline
-            let date: Date
         }
 
         struct Response {
@@ -80,6 +81,18 @@ enum HistoryRoot {
 
         struct ViewModel {
             let timeInterval: TimeInterval
+        }
+    }
+    
+    enum ChangeEntriesChartDate {
+        struct Request {
+            let date: Date
+        }
+
+        struct Response {
+        }
+
+        struct ViewModel {
         }
     }
 }

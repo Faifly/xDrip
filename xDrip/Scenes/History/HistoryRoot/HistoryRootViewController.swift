@@ -64,16 +64,7 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
     @IBOutlet private weak var unitLabel: UILabel!
     
     @IBOutlet private weak var dateButton: UIButton!
-    private var selectedDate = Date() {
-        didSet {
-            let title = DateFormatter.localizedString(from: selectedDate, dateStyle: .short, timeStyle: .none)
-            dateButton.setTitle(title, for: .normal)
-            glucoseChart.globalDate = selectedDate
-            
-            let request = HistoryRoot.ChangeEntriesChartTimeFrame.Request(timeline: .date, date: selectedDate)
-            interactor?.doChangeChartTimeFrame(request: request)
-        }
-    }
+    
     private let datePicker = UIDatePicker()
     
     // MARK: View lifecycle
@@ -101,7 +92,7 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
         default: timeline = .last14Days
         }
         
-        let request = HistoryRoot.ChangeEntriesChartTimeFrame.Request(timeline: timeline, date: selectedDate)
+        let request = HistoryRoot.ChangeEntriesChartTimeFrame.Request(timeline: timeline)
         interactor?.doChangeChartTimeFrame(request: request)
     }
     
@@ -126,6 +117,12 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
     }
     
     func displayGlucoseData(viewModel: HistoryRoot.GlucoseDataUpdate.ViewModel) {
+        if let date = viewModel.date {
+            let title = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .none)
+            dateButton.setTitle(title, for: .normal)
+        }
+        
+        glucoseChart.globalDate = viewModel.date
         glucoseChart.setup(
             with: viewModel.glucoseValues,
             basalDisplayMode: viewModel.basalDisplayMode,
@@ -160,7 +157,6 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
         
         if viewModel.timeInterval.hours > 24.0 {
             dateButtonsHeightConstraint.constant = 0.0
-            glucoseChart.globalDate = Date()
         } else {
             dateButtonsHeightConstraint.constant = 30.0
         }
@@ -195,21 +191,25 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
         datePicker.addTarget(self, action: #selector(didPickDate), for: .valueChanged)
         datePicker.maximumDate = Date()
         datePicker.datePickerMode = .date
-        datePicker.date = selectedDate
+        
         dateButtonsHeightConstraint.constant = 0.0
-        let title = DateFormatter.localizedString(from: selectedDate, dateStyle: .short, timeStyle: .none)
+        let title = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
         dateButton.setTitle(title, for: .normal)
     }
     
     @IBAction private func onDateButtonsTap(_ sender: UIButton) {
         if sender.tag == 0 {
-            selectedDate -= .secondsPerDay
-            datePicker.date = selectedDate
+            datePicker.date -= .secondsPerDay
+            
+            let request = HistoryRoot.ChangeEntriesChartDate.Request(date: datePicker.date)
+            interactor?.doChangeChartDate(request: request)
         } else if sender.tag == 2 {
-            let nextDate = selectedDate + .secondsPerDay
+            let nextDate = datePicker.date + .secondsPerDay
             guard nextDate <= Date() else { return }
-            selectedDate = nextDate
-            datePicker.date = selectedDate
+            datePicker.date = nextDate
+            
+            let request = HistoryRoot.ChangeEntriesChartDate.Request(date: datePicker.date)
+            interactor?.doChangeChartDate(request: request)
         } else if sender.tag == 1 {
             if datePickerStackView.arrangedSubviews.contains(datePicker) {
                 datePicker.removeFromSuperview()
@@ -220,6 +220,7 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
     }
     
     @objc private func didPickDate() {
-        selectedDate = datePicker.date
+        let request = HistoryRoot.ChangeEntriesChartDate.Request(date: datePicker.date)
+        interactor?.doChangeChartDate(request: request)
     }
 }

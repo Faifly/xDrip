@@ -21,7 +21,7 @@ class BaseHistoryView: UIView {
     var localDateRange = DateInterval()
     var localInterval: TimeInterval = .secondsPerHour
     var globalInterval: TimeInterval = .secondsPerDay
-    var globalDate = Date()
+    var globalDate: Date?
     var userRelativeSelection: CGFloat?
     
     required init?(coder: NSCoder) {
@@ -110,8 +110,8 @@ class BaseHistoryView: UIView {
         var globalDuration = globalInterval + forwardTimeOffset
         var localDuration = localInterval + forwardTimeOffset
         
-        if !Calendar.current.isDateInToday(globalDate) {
-            endDate = Calendar.current.startOfDay(for: globalDate) + .secondsPerDay
+        if let date = globalDate {
+            endDate = Calendar.current.startOfDay(for: date) + .secondsPerDay
             globalDuration = globalInterval
             localDuration = localInterval
         }
@@ -166,7 +166,7 @@ class BaseHistoryView: UIView {
         let interval = horizontalInterval(for: localDateRange.duration)
         
         let initialGridDate: Date
-        let now = Date()
+        let now = globalDate != nil ? globalDateRange.end : Date()
         
         if interval < .secondsPerHour {
             let currentMinute = Calendar.current.component(.minute, from: now)

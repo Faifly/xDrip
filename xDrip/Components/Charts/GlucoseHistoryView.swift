@@ -11,7 +11,7 @@ import UIKit
 final class GlucoseHistoryView: BaseHistoryView {
     private let chartSliderView = ChartSliderView()
     private var glucoseChartView = GlucoseChartView()
-    private let detailsView = ChartEntryDetailView()
+    private var detailsView: ChartEntryDetailView?
     private var glucoseEntries: [GlucoseChartGlucoseEntry] = []
     private let rightLabelsView = ChartVerticalLabelsView()
     private var basalDisplayMode: ChartSettings.BasalDisplayMode = .notShown
@@ -79,13 +79,16 @@ final class GlucoseHistoryView: BaseHistoryView {
     }
     
     func setupDetailsView() {
+        if let detailsView = detailsView {
+            NSLayoutConstraint.deactivate(detailsView.constraints)
+            detailsView.removeFromSuperview()
+        }
         scrollContainerTopConstraint?.isActive = false
-        NSLayoutConstraint.deactivate(detailsView.constraints)
-        detailsView.removeFromSuperview()
         scrollContainerTopConstraint = scrollContainer.topAnchor.constraint(equalTo: topAnchor, constant: 8.0)
         scrollContainerTopConstraint?.isActive = true
         
         if detailsEnabled {
+            let detailsView = ChartEntryDetailView()
             addSubview(detailsView)
             detailsView.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor).isActive = true
             detailsView.trailingAnchor.constraint(equalTo: scrollContainer.trailingAnchor).isActive = true
@@ -94,6 +97,8 @@ final class GlucoseHistoryView: BaseHistoryView {
             scrollContainerTopConstraint?.isActive = false
             scrollContainerTopConstraint = scrollContainer.topAnchor.constraint(equalTo: detailsView.bottomAnchor)
             scrollContainerTopConstraint?.isActive = true
+            
+            self.detailsView = detailsView
         }
     }
     
@@ -155,22 +160,22 @@ final class GlucoseHistoryView: BaseHistoryView {
     
     override func updateDetailView(with relativeOffset: CGFloat) {
         updateDetailLabel()
-        detailsView.setRelativeOffset(relativeOffset)
+        detailsView?.setRelativeOffset(relativeOffset)
       }
     
     override func setLocalTimeFrame(_ localInterval: TimeInterval) {
         super.setLocalTimeFrame(localInterval)
-        detailsView.setHidden(true)
+        detailsView?.setHidden(true)
     }
     
     override func setGlobalTimeFrame(_ globalInterval: TimeInterval) {
         super.setGlobalTimeFrame(globalInterval)
-        detailsView.setHidden(true)
+        detailsView?.setHidden(true)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        detailsView.setHidden(true)
+        detailsView?.setHidden(true)
     }
     
     override func updateChart() {
@@ -200,10 +205,10 @@ final class GlucoseHistoryView: BaseHistoryView {
         let currentRelativeStartTime = globalDurationOffset + localDurationOffset
         let selectedDate = globalDateRange.start + currentRelativeStartTime
         if let entry = nearestEntry(forDate: selectedDate) {
-            detailsView.set(value: entry.value, unit: unit, date: entry.date)
-            detailsView.setHidden(false)
+            detailsView?.set(value: entry.value, unit: unit, date: entry.date)
+            detailsView?.setHidden(false)
         } else {
-            detailsView.setHidden(true)
+            detailsView?.setHidden(true)
         }
     }
     

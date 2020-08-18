@@ -16,6 +16,7 @@ protocol HistoryRootBusinessLogic {
     func doLoad(request: HistoryRoot.Load.Request)
     func doCancel(request: HistoryRoot.Cancel.Request)
     func doChangeChartTimeFrame(request: HistoryRoot.ChangeEntriesChartTimeFrame.Request)
+    func doChangeChartDate(request: HistoryRoot.ChangeEntriesChartDate.Request)
 }
 
 protocol HistoryRootDataStore: AnyObject {
@@ -28,6 +29,10 @@ final class HistoryRootInteractor: HistoryRootBusinessLogic, HistoryRootDataStor
     private let glucoseDataWorker: HomeGlucoseDataWorkerProtocol
     private var timeline: HistoryRoot.Timeline = .last14Days
     private var selectedDate = Date()
+    
+    private var chartDate: Date? {
+        return timeline == .last14Days ? nil : selectedDate
+    }
     
     private var interval: TimeInterval {
         return timeline == .last14Days ? TimeInterval(hours: 14.0 * 24.0) : .secondsPerDay
@@ -51,9 +56,14 @@ final class HistoryRootInteractor: HistoryRootBusinessLogic, HistoryRootDataStor
     
     func doChangeChartTimeFrame(request: HistoryRoot.ChangeEntriesChartTimeFrame.Request) {
         timeline = request.timeline
-        selectedDate = request.date
         let response = HistoryRoot.ChangeEntriesChartTimeFrame.Response(timeInterval: interval)
         presenter?.presentChartTimeFrameChange(response: response)
+        updateGlucoseChartData()
+    }
+    
+    func doChangeChartDate(request: HistoryRoot.ChangeEntriesChartDate.Request) {
+        selectedDate = request.date
+        
         updateGlucoseChartData()
     }
     
@@ -78,7 +88,8 @@ final class HistoryRootInteractor: HistoryRootBusinessLogic, HistoryRootDataStor
             intervalGlucoseData: glucoseData,
             basalDisplayMode: User.current.settings.chart?.basalDisplayMode ?? .notShown,
             insulinData: basalValues,
-            chartPointsData: chartEntries
+            chartPointsData: chartEntries,
+            date: chartDate
         )
         presenter?.presentGlucoseData(response: response)
     }
