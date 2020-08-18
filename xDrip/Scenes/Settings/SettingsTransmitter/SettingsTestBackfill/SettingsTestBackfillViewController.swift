@@ -8,6 +8,8 @@
 
 import UIKit
 
+// swiftlint:disable function_body_length
+
 final class SettingsTestBackfillViewController: BaseSettingsViewController {
     var callback: ((SettingsTransmitter.TestBackfillConfiguration) -> Void)?
     
