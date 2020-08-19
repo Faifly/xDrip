@@ -46,6 +46,7 @@ final class GlucoseReading: Object {
     @objc private(set) dynamic var displayDeltaName: String?
     @objc private dynamic var rawDeviceMode: Int = UserDeviceMode.default.rawValue
     @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notApplicable.rawValue
+    @objc private(set) dynamic var sourceInfo: String?
     
     override class func primaryKey() -> String? {
         return "externalID"
@@ -139,6 +140,7 @@ final class GlucoseReading: Object {
         reading.rssi = rssi
         reading.calculateAgeAdjustedRawValue()
         reading.findSlope()
+        reading.sourceInfo = CGMDevice.current.deviceType?.title
         
         if let settings = User.current.settings.nightscoutSync, settings.isEnabled {
             reading.cloudUploadStatus = .notUploaded
@@ -227,6 +229,7 @@ final class GlucoseReading: Object {
         entry.date = Date(timeIntervalSince1970: TimeInterval(rawEntry.date ?? 0) / 1000.0)
         entry.deviceMode = .follower
         entry.externalID = rawEntry.identifier
+        entry.sourceInfo = "Nightscout Follower"
         return entry
     }
     
@@ -252,6 +255,32 @@ final class GlucoseReading: Object {
     func updateIsCalibrated(_ isCalibrated: Bool) {
         Realm.shared.safeWrite {
             self.isCalibrated = isCalibrated
+        }
+    }
+    
+    func updateSourceInfo(_ info: String?) {
+        Realm.shared.safeWrite {
+            self.sourceInfo = info
+        }
+    }
+    
+    func appendSourceInfo(_ info: String?) {
+        if sourceInfo == nil || sourceInfo?.isEmpty == true {
+            updateSourceInfo(info)
+        } else {
+            guard let info = info, !info.isEmpty else { return }
+            guard let sourceInfo = sourceInfo else { return }
+            
+            if !sourceInfo.hasPrefix(info) && !sourceInfo.contains("::\(info)") {
+                self.updateSourceInfo(sourceInfo + "::" + info)
+            } else {
+                LogController.log(
+                    message: "[GlucoseReading]: Ignoring duplicating source info %@ with -> %@",
+                    type: .info,
+                    sourceInfo,
+                    info
+                )
+            }
         }
     }
     
