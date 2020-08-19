@@ -105,7 +105,8 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     }
     
     private func handleTextChanged(_ field: EditFoodEntry.Field, _ string: String?) {
-        guard let stringValue = string, let value = Double(stringValue) else {
+        guard let stringValue = string?.replacingOccurrences(of: ",", with: "."),
+            let value = Double(stringValue) else {
             return
         }
         

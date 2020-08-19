@@ -63,7 +63,7 @@ final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfiguration
     
     private func handleTextEditingChanged(_ field: NightscoutCloudConfiguration.Field, _ string: String?) {
         if field == .baseURL {
-            settings.updateBaseURL(string)
+            settings.updateBaseURL(string?.trimmingCharacters(in: .whitespacesAndNewlines))
         } else if field == .apiSecret {
             settings.updateAPISecret(string)
         }
