@@ -136,7 +136,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     }
     
     func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseEntriesChartTimeFrame.ViewModel) {
-        glucoseChart.setTimeFrame(viewModel.timeInterval)
+        glucoseChart.setLocalTimeFrame(viewModel.timeInterval)
     }
     
     func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel) {
