@@ -277,3 +277,15 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         }
     }
 }
+
+extension NSLayoutConstraint {
+    override public var description: String {
+        if let id = identifier {
+             return "id: \(id), constant: \(constant)"
+        } else {
+            return super.description
+        }
+        //you may print whatever you want here
+    }
+}
+

@@ -41,6 +41,10 @@
 "root_add_basal_error_alert_message" = "Пожалуйста, установите базальные нормы в настройках перед началом ввода базальных данных";
 "root_add_basal_error_alert_cancel_button" = "Отмена";
 "root_add_basal_error_alert_settings_button" = "Настроить сейчас";
+"root_calibration_follower_mode_error_title" = "Невозможно откалибровать";
+"root_calibration_follower_mode_error_message" = "Калибровки не поддерживаются в режиме подписчика";
+"root_entry_follower_error_title" = "Невозможно добавить запись";
+"root_entry_follower_error_message" = "Добавление данных в режиме подписчика недоступно";
 
 // Entries List
 "entries_list_data_section_title" = "ДАННЫЕ";
@@ -84,6 +88,11 @@
 "edit_food_entry_medium_carbs_title" = "Средние";
 "edit_food_entry_slow_carbs_title" = "Медленные";
 "edit_food_entry_other_carbs_title" = "Другие";
+
+// History
+"history_scene_title" = "История";
+"history_scene_timeframe_14_days" = "14 дней";
+"history_scene_timeframe_date" = "Дата";
 
 // Settings Root
 "settings_root_title" = "Настройки";
