@@ -50,6 +50,8 @@ final class HistoryRootViewControllerTests: XCTestCase {
     final class HistoryRootBusinessLogicSpy: HistoryRootBusinessLogic {
         var doLoadCalled = false
         var cancelCalled = false
+        var changeChartDateCalled = false
+        var changeChartTimeFrameCalled = false
         
         func doLoad(request: HistoryRoot.Load.Request) {
             doLoadCalled = true
@@ -57,6 +59,14 @@ final class HistoryRootViewControllerTests: XCTestCase {
         
         func doCancel(request: HistoryRoot.Cancel.Request) {
             cancelCalled = true
+        }
+        
+        func doChangeChartDate(request: HistoryRoot.ChangeEntriesChartDate.Request) {
+            changeChartDateCalled = true
+        }
+        
+        func doChangeChartTimeFrame(request: HistoryRoot.ChangeEntriesChartTimeFrame.Request) {
+            changeChartTimeFrameCalled = true
         }
     }
     
@@ -76,7 +86,7 @@ final class HistoryRootViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = HistoryRoot.Load.ViewModel()
+        let viewModel = HistoryRoot.Load.ViewModel(globalTimeInterval: TimeInterval.zero)
         
         // When
         loadView()
@@ -103,5 +113,77 @@ final class HistoryRootViewControllerTests: XCTestCase {
         
         // Given
         XCTAssertTrue(spy.cancelCalled)
+    }
+    
+    func testTimeFrameValueChanged() {
+        let spy = HistoryRootBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        
+        guard let segmentControl = sut.view.subviews.compactMap({ $0 as? UISegmentedControl }).first else {
+            XCTFail("Cannot obtain segment control")
+            return
+        }
+        
+        segmentControl.selectedSegmentIndex = 1
+        segmentControl.sendActions(for: .valueChanged)
+        
+        XCTAssertTrue(spy.changeChartTimeFrameCalled)
+    }
+    
+    func testDisplayChartTimeFrameChange() {
+        loadView()
+        
+        guard let segmentControl = sut.view.subviews.compactMap({ $0 as? UISegmentedControl }).first else {
+            XCTFail("Cannot obtain segment control")
+            return
+        }
+        
+        segmentControl.selectedSegmentIndex = 1
+        segmentControl.sendActions(for: .valueChanged)
+        
+        segmentControl.selectedSegmentIndex = 0
+        segmentControl.sendActions(for: .valueChanged)
+    }
+    
+    func testDateButtonsCallBack() {
+        let spy = HistoryRootBusinessLogicSpy()
+        sut.interactor = spy
+        loadView()
+        
+        guard
+            let view = sut.view.findView(with: "buttonsStackViewContainer"),
+            let stackView = view.subviews.first as? UIStackView
+        else {
+            XCTFail("Cannot obtain buttons stack view")
+            return
+        }
+        
+        let leftArrowButton = stackView.arrangedSubviews.first(where: { $0.tag == 0 }) as? UIButton
+        let toggleButton = stackView.arrangedSubviews.first(where: { $0.tag == 1 }) as? UIButton
+        let rightArrowButton = stackView.arrangedSubviews.first(where: { $0.tag == 2 }) as? UIButton
+        
+        leftArrowButton?.sendActions(for: .touchUpInside)
+        XCTAssertTrue(spy.changeChartDateCalled)
+        spy.changeChartDateCalled = false
+        
+        rightArrowButton?.sendActions(for: .touchUpInside)
+        XCTAssertTrue(spy.changeChartDateCalled)
+        spy.changeChartDateCalled = false
+        
+        toggleButton?.sendActions(for: .touchUpInside)
+        
+        guard
+            let scrollView = sut.view.subviews.compactMap({ $0 as? UIScrollView }).first,
+            let container = scrollView.subviews.compactMap({ $0 as? UIStackView }).first,
+            let datePicker = container.arrangedSubviews.compactMap({ $0 as? UIDatePicker }).first
+        else {
+            XCTFail("Cannot obtain date picker")
+            return
+        }
+        
+        datePicker.sendActions(for: .valueChanged)
+        XCTAssertTrue(spy.changeChartDateCalled)
+        toggleButton?.sendActions(for: .touchUpInside)
     }
 }

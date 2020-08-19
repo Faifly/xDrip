@@ -15,7 +15,7 @@ import UIKit
 protocol HistoryRootDisplayLogic: AnyObject {
     func displayLoad(viewModel: HistoryRoot.Load.ViewModel)
     func displayGlucoseData(viewModel: HistoryRoot.GlucoseDataUpdate.ViewModel)
-    func displayChartTimeFrame(viewModel: HistoryRoot.ChangeEntriesChartTimeFrame.ViewModel)
+    func displayChartTimeFrameChange(viewModel: HistoryRoot.ChangeEntriesChartTimeFrame.ViewModel)
 }
 
 class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
@@ -152,7 +152,7 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
         }
     }
     
-    func displayChartTimeFrame(viewModel: HistoryRoot.ChangeEntriesChartTimeFrame.ViewModel) {
+    func displayChartTimeFrameChange(viewModel: HistoryRoot.ChangeEntriesChartTimeFrame.ViewModel) {
         glucoseChart.setGlobalTimeFrame(viewModel.timeInterval)
         
         if viewModel.timeInterval.hours > 24.0 {

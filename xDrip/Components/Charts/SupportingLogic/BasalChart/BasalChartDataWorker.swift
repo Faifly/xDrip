@@ -153,7 +153,6 @@ enum BasalChartDataWorker {
     }
     
     static func calculateChartValues(for date: Date) -> [InsulinEntry] {
-        guard !Calendar.current.isDateInToday(date) else { return calculateChartValues(for: 24) }
         let minimumDate = Calendar.current.startOfDay(for: date)
         let maximumDate = minimumDate + .secondsPerDay
         let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({

@@ -41,9 +41,19 @@ final class HistoryRootPresenterTests: XCTestCase {
     
     final class HistoryRootDisplayLogicSpy: HistoryRootDisplayLogic {
         var displayLoadCalled = false
+        var displayGlucoseDataCalled = false
+        var displayChartTimeFrameCalled = false
         
         func displayLoad(viewModel: HistoryRoot.Load.ViewModel) {
             displayLoadCalled = true
+        }
+        
+        func displayGlucoseData(viewModel: HistoryRoot.GlucoseDataUpdate.ViewModel) {
+            displayGlucoseDataCalled = true
+        }
+        
+        func displayChartTimeFrameChange(viewModel: HistoryRoot.ChangeEntriesChartTimeFrame.ViewModel) {
+            displayChartTimeFrameCalled = true
         }
     }
     
@@ -53,7 +63,7 @@ final class HistoryRootPresenterTests: XCTestCase {
         // Given
         let spy = HistoryRootDisplayLogicSpy()
         sut.viewController = spy
-        let response = HistoryRoot.Load.Response()
+        let response = HistoryRoot.Load.Response(globalTimeInterval: .zero)
         
         // When
         sut.presentLoad(response: response)
@@ -63,5 +73,35 @@ final class HistoryRootPresenterTests: XCTestCase {
             spy.displayLoadCalled,
             "presentLoad(response:) should ask the view controller to display the result"
         )
+    }
+    
+    func testPresentChangeChartTimeFrame() {
+        let spy = HistoryRootDisplayLogicSpy()
+        sut.viewController = spy
+        
+        let response = HistoryRoot.GlucoseDataUpdate.Response(
+            glucoseData: [],
+            intervalGlucoseData: [],
+            basalDisplayMode: .notShown,
+            insulinData: [],
+            chartPointsData: [],
+            date: nil
+        )
+        
+        // When
+        sut.presentGlucoseData(response: response)
+        // Then
+        XCTAssertTrue(spy.displayGlucoseDataCalled)
+    }
+    
+    func testPresentChartTimeFrameChange() {
+        let spy = HistoryRootDisplayLogicSpy()
+        sut.viewController = spy
+        
+        let response = HistoryRoot.ChangeEntriesChartTimeFrame.Response(timeInterval: .secondsPerDay)
+        // When
+        sut.presentChartTimeFrameChange(response: response)
+        // Then
+        XCTAssertTrue(spy.displayChartTimeFrameCalled)
     }
 }

@@ -56,6 +56,6 @@ final class HistoryRootPresenter: HistoryRootPresentationLogic {
     
     func presentChartTimeFrameChange(response: HistoryRoot.ChangeEntriesChartTimeFrame.Response) {
         let viewModel = HistoryRoot.ChangeEntriesChartTimeFrame.ViewModel(timeInterval: response.timeInterval)
-        viewController?.displayChartTimeFrame(viewModel: viewModel)
+        viewController?.displayChartTimeFrameChange(viewModel: viewModel)
     }
 }
