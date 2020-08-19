@@ -113,6 +113,23 @@ extension CGMController: CGMBluetoothServiceDelegate {
         let confirmAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(confirmAction)
         
+        switch error {
+        case .bluetoothIsUnauthorized:
+            let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                    return
+                }
+                
+                if UIApplication.shared.canOpenURL(settingsUrl) {
+                    UIApplication.shared.open(settingsUrl, completionHandler: nil)
+                }
+            }
+            alert.addAction(settingsAction)
+        default:
+            break
+        }
+        
         AlertPresenter.shared.presentAlert(alert)
+        serviceDidDisconnect()
     }
 }
