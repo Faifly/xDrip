@@ -115,7 +115,10 @@ extension CGMController: CGMBluetoothServiceDelegate {
         
         switch error {
         case .bluetoothIsUnauthorized:
-            let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
+            let settingsAction = UIAlertAction(
+                title: "bluetooth_error_alert_settings_button_title".localized,
+                style: .default
+            ) { _ in
                 guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                     return
                 }

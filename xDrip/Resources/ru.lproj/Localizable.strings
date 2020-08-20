@@ -408,6 +408,7 @@
 "bluetooth_error_powered_off" = "Bluetooth выключен";
 "bluetooth_error_unauthorized" = "Доступ к Bluetooth запрещён";
 "bluetooth_error_unsupported" = "Bluetooth не поддерживается этим устройством";
+"bluetooth_error_alert_settings_button_title" = "Настройки";
 
 // Dexcom Errors
 "dexcom_error_invalid_serial" = "Неправильный серийный номер";
