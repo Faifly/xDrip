@@ -72,7 +72,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var carbsBolusStackView: UIStackView?
     @IBOutlet private weak var mainStackView: UIStackView?
     @IBOutlet private weak var supportingStackView: UIStackView?
-    @IBOutlet private weak var topViewPortraitHeigthConstraint: NSLayoutConstraint?
+//    @IBOutlet private weak var topViewPortraitHeigthConstraint: NSLayoutConstraint?
     @IBOutlet private weak var topViewLandscapeWidthConstraint: NSLayoutConstraint?
     @IBOutlet private weak var glucoseDataStackView: UIStackView!
     @IBOutlet private weak var dataView: GlucoseDataView!
@@ -258,34 +258,45 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         }
     }
     
-    override func viewWillLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if view.bounds.width >= view.bounds.height {
-            topViewPortraitHeigthConstraint?.priority = .defaultLow
-            topViewLandscapeWidthConstraint?.priority = .required
-            mainStackView?.axis = .horizontal
             carbsBolusStackView?.axis = .vertical
             glucoseDataStackView?.axis = .vertical
             supportingStackView?.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 32)
+            
+            mainStackView?.axis = .horizontal
+            mainStackView?.updateConstraintsIfNeeded()
+            carbsBolusStackView?.updateConstraintsIfNeeded()
+            glucoseDataStackView?.updateConstraintsIfNeeded()
+            supportingStackView?.updateConstraintsIfNeeded()
+            
+            DispatchQueue.main.async {
+                self.topViewLandscapeWidthConstraint?.priority = .required
+            }
         } else {
-            topViewPortraitHeigthConstraint?.priority = .required
             topViewLandscapeWidthConstraint?.priority = .defaultLow
             mainStackView?.axis = .vertical
             carbsBolusStackView?.axis = .horizontal
             glucoseDataStackView?.axis = .horizontal
             supportingStackView?.layoutMargins = UIEdgeInsets(top: 32, left: 32, bottom: 0, right: 32)
+            
+            mainStackView?.updateConstraintsIfNeeded()
+            carbsBolusStackView?.updateConstraintsIfNeeded()
+            glucoseDataStackView?.updateConstraintsIfNeeded()
+            supportingStackView?.updateConstraintsIfNeeded()
         }
     }
 }
 
-extension NSLayoutConstraint {
-    override public var description: String {
-        if let id = identifier {
-             return "id: \(id), constant: \(constant)"
-        } else {
-            return super.description
-        }
-        //you may print whatever you want here
-    }
-}
+//extension NSLayoutConstraint {
+//    override public var description: String {
+//        if let id = identifier {
+//             return "id: \(id), constant: \(constant)"
+//        } else {
+//            return super.description
+//        }
+//        //you may print whatever you want here
+//    }
+//}
 
