@@ -133,6 +133,10 @@ final class ChartSliderView: UIView, GlucoseChartProvider {
         onRelativeOffsetChanged?(currentRelativeOffset)
     }
     
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
+    }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {}
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {}
     override func touchesEstimatedPropertiesUpdated(_ touches: Set<UITouch>) {}

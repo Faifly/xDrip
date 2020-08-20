@@ -56,8 +56,7 @@ final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBu
             updateData()
             
         case .appendSourceInfo:
-//            settings.updateAppendSourceInfoToDevices(value)
-            router?.presentNotYetImplementedAlert()
+            settings.updateAppendSourceInfoToDevices(value)
             updateData()
             
         default: break

@@ -10,11 +10,11 @@ import UIKit
 
 extension UIView {
     func findView(with accessibilityID: String) -> UIView? {
-        if self.accessibilityIdentifier == accessibilityID {
+        if accessibilityIdentifier == accessibilityID {
             return self
         }
         
-        for subview in self.subviews {
+        for subview in subviews {
             if let view = subview.findView(with: accessibilityID) {
                 return view
             }

@@ -71,7 +71,7 @@ final class SettingsModeFollowerInteractor: SettingsModeFollowerBusinessLogic, S
     private func handleTextEditingChanged(_ field: SettingsModeFollower.Field, _ string: String?) {
         switch field {
         case .nightscoutUrl:
-            User.current.settings.nightscoutSync?.updateBaseURL(string)
+            User.current.settings.nightscoutSync?.updateBaseURL(string?.trimmingCharacters(in: .whitespacesAndNewlines))
             
         case .apiSecret:
             User.current.settings.nightscoutSync?.updateAPISecret(string)

@@ -12,6 +12,8 @@
 
 import UIKit
 
+// swiftlint:disable function_body_length
+
 protocol SettingsTransmitterPresentationLogic {
     func presentLoad(response: SettingsTransmitter.Load.Response)
     func presentData(response: SettingsTransmitter.UpdateData.Response)

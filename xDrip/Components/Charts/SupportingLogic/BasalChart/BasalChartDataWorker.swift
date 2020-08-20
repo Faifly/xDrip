@@ -10,14 +10,21 @@ import Foundation
 import AKUtils
 
 enum BasalChartDataWorker {
-    static func fetchBasalData() -> [InsulinEntry] {
-        let minimumDate = Date() - .secondsPerDay
+    static func fetchBasalData(for hours: Int) -> [InsulinEntry] {
+        let minimumDate = Date() - TimeInterval(hours) * .secondsPerHour
         let all = InsulinEntriesWorker.fetchAllBasalEntries()
         return all.filter { $0.date >=? minimumDate }
     }
     
+    static func fetchBasalData(for date: Date) -> [InsulinEntry] {
+        let minimumDate = Calendar.current.startOfDay(for: date)
+        let maximumDate = minimumDate + .secondsPerDay
+        let all = InsulinEntriesWorker.fetchAllBasalEntries()
+        return all.filter { $0.date >=? minimumDate && $0.date <=? maximumDate }
+    }
+    
     static func getBasalValueForDate(date: Date) -> Double {
-        let minimumDate = Date() - .secondsPerDay * 3.0
+        let minimumDate = date - .secondsPerDay * 3.0
         guard date >= minimumDate else { return 0.0 }
         let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate && $0.date <=? date })
         
@@ -117,8 +124,8 @@ enum BasalChartDataWorker {
         return Array(rates[minIndex ... maxIndex])
     }
     
-    static func calculateChartValues() -> [InsulinEntry] {
-        let minimumDate = Date() - .secondsPerDay
+    static func calculateChartValues(for hours: Int) -> [InsulinEntry] {
+        let minimumDate = Date() - TimeInterval(hours) * .secondsPerHour
         let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate })
         
         var points = [InsulinEntry]()
@@ -134,6 +141,37 @@ enum BasalChartDataWorker {
         }
         points.append(contentsOf:
             calculateValue(prevEntry: prevEntry, toDate: Date() + .secondsPerHour * 6.0, lastValue: &lastValue)
+        )
+        points.sort { first, second -> Bool in
+            if first.date == second.date {
+                return first.amount < second.amount
+            }
+            return first.date <? second.date
+        }
+        
+        return points
+    }
+    
+    static func calculateChartValues(for date: Date) -> [InsulinEntry] {
+        let minimumDate = Calendar.current.startOfDay(for: date)
+        let maximumDate = minimumDate + .secondsPerDay
+        let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({
+            $0.date >=? minimumDate && $0.date <=? maximumDate
+        })
+        
+        var points = [InsulinEntry]()
+        
+        var lastValue = getBasalValueForDate(date: minimumDate)
+        var prevEntry = InsulinEntry(amount: lastValue, date: minimumDate, type: .basal)
+        points.append(prevEntry)
+        for entry in all {
+            points.append(contentsOf: calculateValue(prevEntry: prevEntry, toDate: entry.date, lastValue: &lastValue))
+            lastValue += entry.amount
+            points.append(InsulinEntry(amount: lastValue, date: entry.date ?? Date(), type: .basal))
+            prevEntry = entry
+        }
+        points.append(contentsOf:
+            calculateValue(prevEntry: prevEntry, toDate: maximumDate, lastValue: &lastValue)
         )
         points.sort { first, second -> Bool in
             if first.date == second.date {

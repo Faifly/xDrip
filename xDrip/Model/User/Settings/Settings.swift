@@ -99,8 +99,8 @@ final class Settings: Object {
         }
     }
     
-    private static let defaultCarbsAbsorptionLevel: TimeInterval = 1200.0 // 20 minutes
-    private static let defaultInsulinActionTime: TimeInterval = 21600.0 // 6 hours
+    private static let defaultCarbsAbsorptionLevel: TimeInterval = .secondsPerHour * 4.0
+    private static let defaultInsulinActionTime: TimeInterval = .secondsPerHour * 6.0
     
     @objc private(set) dynamic var carbsAbsorptionRate: TimeInterval = Settings.defaultCarbsAbsorptionLevel
     @objc private(set) dynamic var insulinActionTime: TimeInterval = Settings.defaultInsulinActionTime

@@ -13,6 +13,8 @@
 import UIKit
 import RealmSwift
 
+// swiftlint:disable function_body_length
+
 protocol SettingsTransmitterTestDataWorkerLogic {
     func generateTestData(configuration: SettingsTransmitter.TestBackfillConfiguration,
                           callback: @escaping (Int, Int) -> Void)
