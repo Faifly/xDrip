@@ -35,26 +35,37 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="C5Q-ZC-Bol">
-                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="1008"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EH6-2h-HCR" customClass="GlucoseCurrentInfoView" customModule="xDrip" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gws-l7-JnO">
                             <rect key="frame" x="0.0" y="0.0" width="768" height="60"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EH6-2h-HCR" customClass="GlucoseCurrentInfoView" customModule="xDrip" customModuleProvider="target">
+                                    <rect key="frame" x="32" y="0.0" width="704" height="60"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="60" identifier="id8" id="YuY-a1-ZuI"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
                             <constraints>
-                                <constraint firstAttribute="height" constant="60" identifier="id8" id="YuY-a1-ZuI"/>
+                                <constraint firstAttribute="trailing" secondItem="EH6-2h-HCR" secondAttribute="trailing" constant="32" id="Cfs-RE-xYx"/>
+                                <constraint firstItem="EH6-2h-HCR" firstAttribute="top" secondItem="gws-l7-JnO" secondAttribute="top" id="WZa-4L-qBc"/>
+                                <constraint firstItem="EH6-2h-HCR" firstAttribute="leading" secondItem="gws-l7-JnO" secondAttribute="leading" constant="32" id="qh2-Cj-YuD"/>
+                                <constraint firstAttribute="bottom" secondItem="EH6-2h-HCR" secondAttribute="bottom" id="xrc-gj-E0X"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T9b-o2-JRb">
-                            <rect key="frame" x="0.0" y="60" width="768" height="964"/>
+                            <rect key="frame" x="0.0" y="60" width="768" height="948"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Mhi-pN-wJh">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="964"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="948"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dbk-Iw-Sgu" userLabel="TopView">
-                                            <rect key="frame" x="0.0" y="0.0" width="768" height="482"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="474"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="o1f-cj-Xid">
-                                                    <rect key="frame" x="0.0" y="0.0" width="768" height="482"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="768" height="474"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mbY-jb-4Zt">
                                                             <rect key="frame" x="0.0" y="0.0" width="768" height="51"/>
@@ -88,7 +99,7 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cjs-Nl-Uxd" customClass="GlucoseHistoryView" customModule="xDrip" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="51" width="768" height="431"/>
+                                                            <rect key="frame" x="0.0" y="51" width="768" height="423"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </view>
                                                     </subviews>
@@ -103,23 +114,23 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dpc-I7-Bgl" userLabel="BottomView">
-                                            <rect key="frame" x="0.0" y="482" width="768" height="482"/>
+                                            <rect key="frame" x="0.0" y="474" width="768" height="474"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KHP-PR-cu1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="768" height="482"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="768" height="474"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pT9-la-ZlK">
-                                                            <rect key="frame" x="0.0" y="0.0" width="768" height="143"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="768" height="141"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="BIN-CQ-2MB">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="768" height="143"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="768" height="141"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QI9-dy-2xH" customClass="EntriesHistoryView" customModule="xDrip" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="143"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="141"/>
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0A-S3-GG6" customClass="EntriesHistoryView" customModule="xDrip" customModuleProvider="target">
-                                                                            <rect key="frame" x="384" y="0.0" width="384" height="143"/>
+                                                                            <rect key="frame" x="384" y="0.0" width="384" height="141"/>
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         </view>
                                                                     </subviews>
@@ -139,16 +150,16 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M0d-Ok-MS2">
-                                                            <rect key="frame" x="0.0" y="143" width="768" height="234.5"/>
+                                                            <rect key="frame" x="0.0" y="141" width="768" height="230"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="UOO-my-yFy">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="768" height="234.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="768" height="230"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8zG-8D-c42">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="376" height="234.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="376" height="230"/>
                                                                             <subviews>
                                                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="LRO-sf-5Hm" customClass="GlucoseDataView" customModule="xDrip" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="23" width="376" height="211.5"/>
+                                                                                    <rect key="frame" x="0.0" y="23" width="376" height="207"/>
                                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                                 </view>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="DATA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1CT-hz-aU4">
@@ -170,7 +181,7 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E4b-Ow-Odz">
-                                                                            <rect key="frame" x="392" y="0.0" width="376" height="234.5"/>
+                                                                            <rect key="frame" x="392" y="0.0" width="376" height="230"/>
                                                                             <subviews>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DKp-C5-rh2">
                                                                                     <rect key="frame" x="0.0" y="23" width="376" height="45"/>
@@ -224,7 +235,7 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wR5-Bl-t4G">
-                                                            <rect key="frame" x="0.0" y="377.5" width="768" height="104.5"/>
+                                                            <rect key="frame" x="0.0" y="371" width="768" height="103"/>
                                                         </view>
                                                     </subviews>
                                                     <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
@@ -261,7 +272,7 @@
             </subviews>
             <color key="backgroundColor" name="background_2"/>
             <constraints>
-                <constraint firstItem="rCE-RV-2Js" firstAttribute="bottom" secondItem="C5Q-ZC-Bol" secondAttribute="bottom" id="IPZ-Kb-Je9"/>
+                <constraint firstItem="rCE-RV-2Js" firstAttribute="bottom" secondItem="C5Q-ZC-Bol" secondAttribute="bottom" constant="16" id="IPZ-Kb-Je9"/>
                 <constraint firstItem="rCE-RV-2Js" firstAttribute="trailing" secondItem="C5Q-ZC-Bol" secondAttribute="trailing" id="SD0-Wi-E7L"/>
                 <constraint firstItem="C5Q-ZC-Bol" firstAttribute="top" secondItem="rCE-RV-2Js" secondAttribute="top" id="g1r-Qt-MHe"/>
                 <constraint firstItem="C5Q-ZC-Bol" firstAttribute="leading" secondItem="rCE-RV-2Js" secondAttribute="leading" id="xFn-Tg-odl"/>
