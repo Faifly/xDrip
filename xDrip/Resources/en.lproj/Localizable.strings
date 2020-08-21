@@ -409,6 +409,7 @@ This setting will be applied to all future sensors";
 "bluetooth_error_powered_off" = "Bluetooth is powerered off";
 "bluetooth_error_unauthorized" = "No Bluetooth access permissions";
 "bluetooth_error_unsupported" = "Bluetooth is not supported on this device";
+"bluetooth_error_alert_settings_button_title" = "Settings";
 
 // Dexcom Errors
 "dexcom_error_invalid_serial" = "Serial number is invalid";
