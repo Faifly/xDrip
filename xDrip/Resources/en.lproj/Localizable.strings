@@ -41,6 +41,10 @@
 "root_add_basal_error_alert_message" = "Please set up basal rates in settings before start to enter basal data";
 "root_add_basal_error_alert_cancel_button" = "Cancel";
 "root_add_basal_error_alert_settings_button" = "Configure now";
+"root_calibration_follower_mode_error_title" = "Can't calibrate";
+"root_calibration_follower_mode_error_message" = "Calibrations are not allowed in follower mode";
+"root_entry_follower_error_title" = "Can't add entry";
+"root_entry_follower_error_message" = "Adding entries in follower mode is not supported";
 
 // Entries List
 "entries_list_data_section_title" = "DATA";
