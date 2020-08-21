@@ -133,6 +133,7 @@ final class Calibration: Object {
         let highCalibration = Calibration()
         highCalibration.date = highDate
         highCalibration.glucoseLevel = highLevel
+        highCalibration.slope = 1.0
         highCalibration.intercept = highLevel
         highCalibration.estimatedRawAtTimeOfCalibration = highReading.ageAdjustedRawValue
         highCalibration.adjustedRawValue = highReading.ageAdjustedRawValue
@@ -148,6 +149,7 @@ final class Calibration: Object {
         let lowCalibration = Calibration()
         lowCalibration.date = lowDate
         lowCalibration.glucoseLevel = lowLevel
+        lowCalibration.slope = 1.0
         lowCalibration.intercept = lowLevel
         lowCalibration.estimatedRawAtTimeOfCalibration = lowReading.ageAdjustedRawValue
         lowCalibration.adjustedRawValue = lowReading.ageAdjustedRawValue
@@ -193,7 +195,7 @@ final class Calibration: Object {
         calibration.date = date
         calibration.rawValue = reading.rawValue
         calibration.adjustedRawValue = reading.ageAdjustedRawValue
-        calibration.slopeConfidence = min(max(((4.0 - abs(reading.calculatedValueSlope * 60.0)) / 4.0), 0.5), 1.0)
+        calibration.slopeConfidence = min(max(((4.0 - abs(reading.calculatedValueSlope * 60.0)) / 4.0), 0.0), 1.0)
         calibration.externalID = UUID().uuidString
         
         let estimatedRawGlucoseLevel = GlucoseReading.estimatedRawGlucoseLevel(date: Date())
