@@ -159,7 +159,17 @@ final class SettingsTransmitterInteractor: SettingsTransmitterBusinessLogic, Set
     }
     
     private func onConnectionStateChanged(_ connected: Bool) {
-        state = .running(isConnectionActive: connected)
+        switch state {
+        case .notSetup, .initialSearch:
+            if !connected {
+                stopScanning()
+            } else {
+                state = .running(isConnectionActive: connected)
+            }
+            
+        case .running:
+            state = .running(isConnectionActive: connected)
+        }
     }
     
     private func onMetadataUpdated() {
