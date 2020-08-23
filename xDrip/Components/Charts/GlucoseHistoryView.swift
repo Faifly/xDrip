@@ -11,7 +11,7 @@ import UIKit
 final class GlucoseHistoryView: BaseHistoryView {
     private let chartSliderView = ChartSliderView()
     private var glucoseChartView = GlucoseChartView()
-    private let detailsView = ChartEntryDetailView()
+    private var detailsView: ChartEntryDetailView?
     private var glucoseEntries: [GlucoseChartGlucoseEntry] = []
     private let rightLabelsView = ChartVerticalLabelsView()
     private var basalDisplayMode: ChartSettings.BasalDisplayMode = .notShown
@@ -19,6 +19,14 @@ final class GlucoseHistoryView: BaseHistoryView {
     private var strokeChartEntries: [BasalChartBasalEntry] = []
     private var rightLegendAnchorConstraint: NSLayoutConstraint?
     private var unit = ""
+    
+    private var scrollContainerTopConstraint: NSLayoutConstraint?
+    
+    var detailsEnabled: Bool = true {
+        didSet {
+            setupDetailsView()
+        }
+    }
 
     override var chartView: BaseChartView {
         get {
@@ -50,18 +58,13 @@ final class GlucoseHistoryView: BaseHistoryView {
         super.setupViews()
         addSubview(chartSliderView)
         addSubview(rightLabelsView)
-        addSubview(detailsView)
-        detailsView.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor).isActive = true
-        detailsView.trailingAnchor.constraint(equalTo: scrollContainer.trailingAnchor).isActive = true
-        detailsView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        detailsView.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
+        setupDetailsView()
         chartSliderView.heightAnchor.constraint(equalToConstant: 70.0).isActive = true
         chartSliderView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         chartSliderView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         chartSliderView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         leftLabelsView.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor).isActive = true
         scrollContainer.bottomAnchor.constraint(equalTo: chartSliderView.topAnchor).isActive = true
-        scrollContainer.topAnchor.constraint(equalTo: detailsView.bottomAnchor).isActive = true
         setupSeparator(bottomView: self)
         setupSeparator(bottomView: glucoseChartView)
         setupRightLabelViewsAnchorConstraint()
@@ -73,6 +76,30 @@ final class GlucoseHistoryView: BaseHistoryView {
         rightLabelsView.leadingAnchor.constraint(equalTo: scrollContainer.trailingAnchor, constant: 8.0).isActive = true
         rightLabelsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         rightLabelsView.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
+    }
+    
+    func setupDetailsView() {
+        if let detailsView = detailsView {
+            NSLayoutConstraint.deactivate(detailsView.constraints)
+            detailsView.removeFromSuperview()
+        }
+        scrollContainerTopConstraint?.isActive = false
+        scrollContainerTopConstraint = scrollContainer.topAnchor.constraint(equalTo: topAnchor, constant: 8.0)
+        scrollContainerTopConstraint?.isActive = true
+        
+        if detailsEnabled {
+            let detailsView = ChartEntryDetailView()
+            addSubview(detailsView)
+            detailsView.leadingAnchor.constraint(equalTo: scrollContainer.leadingAnchor).isActive = true
+            detailsView.trailingAnchor.constraint(equalTo: scrollContainer.trailingAnchor).isActive = true
+            detailsView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+            detailsView.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
+            scrollContainerTopConstraint?.isActive = false
+            scrollContainerTopConstraint = scrollContainer.topAnchor.constraint(equalTo: detailsView.bottomAnchor)
+            scrollContainerTopConstraint?.isActive = true
+            
+            self.detailsView = detailsView
+        }
     }
     
     private func setupRightLabelViewsAnchorConstraint() {
@@ -133,17 +160,22 @@ final class GlucoseHistoryView: BaseHistoryView {
     
     override func updateDetailView(with relativeOffset: CGFloat) {
         updateDetailLabel()
-        detailsView.setRelativeOffset(relativeOffset)
+        detailsView?.setRelativeOffset(relativeOffset)
       }
     
-    override func setTimeFrame(_ localInterval: TimeInterval) {
-        super.setTimeFrame(localInterval)
-         detailsView.setHidden(true)
+    override func setLocalTimeFrame(_ localInterval: TimeInterval) {
+        super.setLocalTimeFrame(localInterval)
+        detailsView?.setHidden(true)
+    }
+    
+    override func setGlobalTimeFrame(_ globalInterval: TimeInterval) {
+        super.setGlobalTimeFrame(globalInterval)
+        detailsView?.setHidden(true)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        detailsView.setHidden(true)
+        detailsView?.setHidden(true)
     }
     
     override func updateChart() {
@@ -160,6 +192,7 @@ final class GlucoseHistoryView: BaseHistoryView {
     }
     
     func updateDetailLabel() {
+        guard detailsEnabled else { return }
         guard let userRelativeSelection = userRelativeSelection else { return }
         let scrollView = scrollContainer.scrollView
         let currentRelativeOffset = scrollView.contentOffset.x / scrollView.contentSize.width
@@ -172,10 +205,10 @@ final class GlucoseHistoryView: BaseHistoryView {
         let currentRelativeStartTime = globalDurationOffset + localDurationOffset
         let selectedDate = globalDateRange.start + currentRelativeStartTime
         if let entry = nearestEntry(forDate: selectedDate) {
-            detailsView.set(value: entry.value, unit: unit, date: entry.date)
-            detailsView.setHidden(false)
+            detailsView?.set(value: entry.value, unit: unit, date: entry.date)
+            detailsView?.setHidden(false)
         } else {
-            detailsView.setHidden(true)
+            detailsView?.setHidden(true)
         }
     }
     

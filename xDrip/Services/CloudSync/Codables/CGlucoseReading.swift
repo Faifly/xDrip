@@ -9,6 +9,7 @@
 import Foundation
 
 struct CGlucoseReading: Codable {
+    let device: String?
     let identifier: String?
     let type: String?
     let date: Int64?
@@ -37,5 +38,13 @@ struct CGlucoseReading: Codable {
         unfiltered = reading.filteredValue.rounded(to: 2)
         rssi = reading.rssi
         noise = reading.noise
+        
+        var deviceString = "xDrip iOS"
+        if User.current.settings.nightscoutSync?.appendSourceInfoToDevices == true,
+            let info = reading.sourceInfo, !info.isEmpty {
+            deviceString += " " + info
+        }
+        
+        device = deviceString
     }
 }

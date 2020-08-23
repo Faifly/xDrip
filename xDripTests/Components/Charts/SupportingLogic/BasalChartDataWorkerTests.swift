@@ -17,7 +17,7 @@ final class BasalChartDataWorkerTests: AbstractRealmTest {
         InsulinEntriesWorker.addBasalEntry(amount: 24.0, date: minimumDate - .secondsPerHour)
         InsulinEntriesWorker.addBolusEntry(amount: 12.0, date: minimumDate + .secondsPerHour)
         
-        let basals = BasalChartDataWorker.fetchBasalData()
+        let basals = BasalChartDataWorker.fetchBasalData(for: 24)
         
         XCTAssert(basals.count == 1)
     }

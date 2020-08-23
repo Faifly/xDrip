@@ -142,8 +142,8 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             glucoseData: glucoseDataWorker.fetchGlucoseData(for: 24),
             intervalGlucoseData: glucoseDataWorker.fetchGlucoseData(for: hours),
             basalDisplayMode: User.current.settings.chart?.basalDisplayMode ?? .notShown,
-            insulinData: BasalChartDataWorker.fetchBasalData(),
-            chartPointsData: BasalChartDataWorker.calculateChartValues()
+            insulinData: BasalChartDataWorker.fetchBasalData(for: 24),
+            chartPointsData: BasalChartDataWorker.calculateChartValues(for: 24)
         )
         presenter?.presentGlucoseData(response: response)
     }

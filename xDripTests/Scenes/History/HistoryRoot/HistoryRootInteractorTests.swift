@@ -41,9 +41,21 @@ final class HistoryRootInteractorTests: XCTestCase {
     
     final class HistoryRootPresentationLogicSpy: HistoryRootPresentationLogic {
         var presentLoadCalled = false
+        var presentGlucoseDataCalled = false
+        var presentChartTimeFrameChangeCalled = false
+        var timeInterval = 0.0
         
         func presentLoad(response: HistoryRoot.Load.Response) {
             presentLoadCalled = true
+        }
+        
+        func presentGlucoseData(response: HistoryRoot.GlucoseDataUpdate.Response) {
+            presentGlucoseDataCalled = true
+        }
+        
+        func presentChartTimeFrameChange(response: HistoryRoot.ChangeEntriesChartTimeFrame.Response) {
+            presentChartTimeFrameChangeCalled = true
+            timeInterval = response.timeInterval
         }
     }
     
@@ -68,6 +80,7 @@ final class HistoryRootInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+        XCTAssertTrue(spy.presentGlucoseDataCalled)
     }
     
     func testDoCancel() {
@@ -81,5 +94,31 @@ final class HistoryRootInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.dismissSelfCalled)
+    }
+    
+    func testDoChangeChartDate() {
+        let spy = HistoryRootPresentationLogicSpy()
+        sut.presenter = spy
+        
+        // When
+        sut.doChangeChartDate(request: HistoryRoot.ChangeEntriesChartDate.Request(date: Date()))
+        // Then
+        XCTAssertTrue(spy.presentGlucoseDataCalled)
+    }
+    
+    func testDoChangeChartTimeFrame() {
+        let spy = HistoryRootPresentationLogicSpy()
+        sut.presenter = spy
+        
+        // When
+        sut.doChangeChartTimeFrame(request: HistoryRoot.ChangeEntriesChartTimeFrame.Request(timeline: .date))
+        // Then
+        XCTAssertTrue(spy.presentGlucoseDataCalled)
+        XCTAssertTrue(spy.timeInterval == .secondsPerDay)
+        
+        // When
+        sut.doChangeChartTimeFrame(request: HistoryRoot.ChangeEntriesChartTimeFrame.Request(timeline: .last14Days))
+        // Then
+        XCTAssertTrue(spy.timeInterval == TimeInterval(hours: 14.0 * 24.0))
     }
 }

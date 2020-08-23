@@ -72,7 +72,6 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var carbsBolusStackView: UIStackView?
     @IBOutlet private weak var mainStackView: UIStackView?
     @IBOutlet private weak var supportingStackView: UIStackView?
-    @IBOutlet private weak var topViewPortraitHeigthConstraint: NSLayoutConstraint?
     @IBOutlet private weak var topViewLandscapeWidthConstraint: NSLayoutConstraint?
     @IBOutlet private weak var glucoseDataStackView: UIStackView!
     @IBOutlet private weak var dataView: GlucoseDataView!
@@ -136,7 +135,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     }
     
     func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseEntriesChartTimeFrame.ViewModel) {
-        glucoseChart.setTimeFrame(viewModel.timeInterval)
+        glucoseChart.setLocalTimeFrame(viewModel.timeInterval)
     }
     
     func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel) {
@@ -259,16 +258,16 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     }
     
     override func viewWillLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+        super.viewWillLayoutSubviews()
         if view.bounds.width >= view.bounds.height {
-            topViewPortraitHeigthConstraint?.priority = .defaultLow
-            topViewLandscapeWidthConstraint?.priority = .required
-            mainStackView?.axis = .horizontal
             carbsBolusStackView?.axis = .vertical
             glucoseDataStackView?.axis = .vertical
             supportingStackView?.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 32)
+            mainStackView?.axis = .horizontal
+            DispatchQueue.main.async {
+                self.topViewLandscapeWidthConstraint?.priority = .required
+            }
         } else {
-            topViewPortraitHeigthConstraint?.priority = .required
             topViewLandscapeWidthConstraint?.priority = .defaultLow
             mainStackView?.axis = .vertical
             carbsBolusStackView?.axis = .horizontal
