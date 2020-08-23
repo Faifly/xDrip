@@ -89,8 +89,8 @@ final class MuteChecker: NSObject {
         let elapsed = Date.timeIntervalSinceReferenceDate - self.interval
         let isMute = elapsed < 0.1
 
-        DispatchQueue.main.async {
-            self.notify?(isMute)
+        DispatchQueue.main.async { [weak self] in
+            self?.notify?(isMute)
         }
     }
 }

@@ -13,7 +13,7 @@ import MediaPlayer
 final class AudioController: NSObject {
     static let shared = AudioController()
     
-    private var audioPlayer = AVAudioPlayer()
+    private var audioPlayer: AVAudioPlayer?
     private var previousVolume: Float = 0.0
     
     override init() {
@@ -54,23 +54,25 @@ final class AudioController: NSObject {
     }
     
     private func playFile(with url: URL) {
-        audioPlayer.stop()
+        audioPlayer?.stop()
 
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer.delegate = self
-            audioPlayer.prepareToPlay()
+            let player = try AVAudioPlayer(contentsOf: url)
+            player.delegate = self
+            player.prepareToPlay()
             
             do {
                 try AVAudioSession.sharedInstance().setActive(true)
             } catch {
                 LogController.log(message: "Failed to activate audio session", type: .error, error: error)
             }
+            
+            audioPlayer = player
         } catch {
             LogController.log(message: "Failed to instantiate audio player", type: .error, error: error)
         }
         
-        audioPlayer.play()
+        audioPlayer?.play()
     }
     
     private func setupVolume(isSystemVolumeOverriden: Bool, overridenVolume: Float) {

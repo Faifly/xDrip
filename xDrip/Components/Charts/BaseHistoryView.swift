@@ -123,8 +123,11 @@ class BaseHistoryView: UIView {
     func updateChart() {
         calculateHorizontalBottomLabels()
         
-        let scrollSegments = CGFloat(
-            (globalDateRange.duration - forwardTimeOffset) / (localDateRange.duration - forwardTimeOffset)
+        let scrollSegments = max(
+            CGFloat(
+                (globalDateRange.duration - forwardTimeOffset) / (localDateRange.duration - forwardTimeOffset)
+            ),
+            1.0
         )
         let chartWidth = scrollContainer.bounds.width * scrollSegments
         chartWidthConstraint?.constant = chartWidth
