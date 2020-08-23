@@ -41,6 +41,10 @@
 "root_add_basal_error_alert_message" = "Пожалуйста, установите базальные нормы в настройках перед началом ввода базальных данных";
 "root_add_basal_error_alert_cancel_button" = "Отмена";
 "root_add_basal_error_alert_settings_button" = "Настроить сейчас";
+"root_calibration_follower_mode_error_title" = "Невозможно откалибровать";
+"root_calibration_follower_mode_error_message" = "Калибровки не поддерживаются в режиме подписчика";
+"root_entry_follower_error_title" = "Невозможно добавить запись";
+"root_entry_follower_error_message" = "Добавление данных в режиме подписчика недоступно";
 
 // Entries List
 "entries_list_data_section_title" = "ДАННЫЕ";
@@ -408,6 +412,7 @@
 "bluetooth_error_powered_off" = "Bluetooth выключен";
 "bluetooth_error_unauthorized" = "Доступ к Bluetooth запрещён";
 "bluetooth_error_unsupported" = "Bluetooth не поддерживается этим устройством";
+"bluetooth_error_alert_settings_button_title" = "Настройки";
 
 // Dexcom Errors
 "dexcom_error_invalid_serial" = "Неправильный серийный номер";

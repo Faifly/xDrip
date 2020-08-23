@@ -36,23 +36,28 @@ final class SettingsChartPresenter: SettingsChartPresentationLogic {
     private func createNormalSection(response: SettingsChart.Load.Response) -> BaseSettings.Section {
         let settings = User.current.settings.chart
         
-        let cells: [BaseSettings.Cell] = [
-            createRightSwitchCell(
-                .activeInsulin,
-                isSwitchOn: settings?.showActiveInsulin ?? false,
-                switchHandler: response.switchValueChangedHandler
-            ),
-            createRightSwitchCell(
-                .activeCarbs,
-                isSwitchOn: settings?.showActiveCarbs ?? false,
-                switchHandler: response.switchValueChangedHandler
-            ),
+        var cells: [BaseSettings.Cell] = [
             createRightSwitchCell(
                 .data,
                 isSwitchOn: settings?.showData ?? false,
                 switchHandler: response.switchValueChangedHandler
             )
         ]
+        
+        if User.current.settings.deviceMode == .main {
+            cells.append(contentsOf: [
+                createRightSwitchCell(
+                    .activeInsulin,
+                    isSwitchOn: settings?.showActiveInsulin ?? false,
+                    switchHandler: response.switchValueChangedHandler
+                ),
+                createRightSwitchCell(
+                    .activeCarbs,
+                    isSwitchOn: settings?.showActiveCarbs ?? false,
+                    switchHandler: response.switchValueChangedHandler
+                )
+            ])
+        }
         
         return BaseSettings.Section.normal(
             cells: cells,

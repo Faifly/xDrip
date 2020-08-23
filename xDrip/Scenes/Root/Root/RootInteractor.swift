@@ -48,6 +48,14 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
         case .history: router?.routeToHistory()
         case .settings: router?.routeToSettings()
         case .plus:
+            guard User.current.settings.deviceMode == .main else {
+                router?.showErrorAlert(
+                    title: "root_entry_follower_error_title".localized,
+                    message: "root_entry_follower_error_message".localized
+                )
+                return
+            }
+            
             let response = Root.ShowAddEntryOptionsList.Response(types: entryTypes)
             presenter?.presentAddEntry(response: response)
         }

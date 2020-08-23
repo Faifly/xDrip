@@ -83,7 +83,7 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
                 } else if currentGlucose - configuration.maxStepDeviation < configuration.minGlucose {
                     currentGlucose += step
                 } else {
-                    if .random() {
+                    if Bool.random() {
                         currentGlucose += step
                     } else {
                         currentGlucose -= step

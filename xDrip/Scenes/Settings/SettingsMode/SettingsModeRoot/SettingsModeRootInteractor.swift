@@ -45,6 +45,9 @@ final class SettingsModeRootInteractor: SettingsModeRootBusinessLogic, SettingsM
         } else {
             let settings = User.current.settings
             settings?.updateDeviceMode(request.mode)
+            if request.mode == .follower {
+                CGMController.shared.service?.disconnect()
+            }
             
             NotificationCenter.default.postSettingsChangeNotification(setting: .deviceMode)
         }

@@ -25,6 +25,12 @@ final class RootCalibrationValidatorWorker: RootCalibrationValidatorProtocol {
     }
     
     var isAllowedToCalibrate: Result {
+        guard User.current.settings.deviceMode == .main else {
+            return .notAllowed(
+                errorTitle: "root_calibration_follower_mode_error_title".localized,
+                errorMessage: "root_calibration_follower_mode_error_message".localized
+            )
+        }
         let readyState = calibrationService.isReadyForCalibration()
         
         if readyState.0 {
