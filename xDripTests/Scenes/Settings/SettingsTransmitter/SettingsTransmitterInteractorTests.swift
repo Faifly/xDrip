@@ -65,6 +65,21 @@ final class SettingsTransmitterInteractorTests: XCTestCase {
         
         func showTransmitterResetConfirmation(callback: @escaping () -> Void) {
         }
+        
+        func dismissTestDataBackfill() {
+        }
+        
+        func hideTestDataAlert() {
+        }
+        
+        func routeToTestDataBackfill(callback: @escaping (SettingsTransmitter.TestBackfillConfiguration) -> Void) {
+        }
+        
+        func showTestDataAlert() {
+        }
+        
+        func updateTestDataAlert(text: String) {
+        }
     }
     
     // MARK: Tests

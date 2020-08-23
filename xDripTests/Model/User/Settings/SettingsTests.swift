@@ -47,7 +47,7 @@ final class SettingsTests: AbstractRealmTest {
     
     func testAbsorptionRateSetting() {
         let settings = User.current.settings!
-        XCTAssertTrue(settings.carbsAbsorptionRate ~ 1200.0)
+        XCTAssertTrue(settings.carbsAbsorptionRate ~ .secondsPerHour * 4.0)
         
         settings.updateCarbsAbsorptionRate(1.1)
         XCTAssertTrue(settings.carbsAbsorptionRate ~ 1.1)

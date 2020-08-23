@@ -221,7 +221,7 @@ final class NightscoutCloudExtraOptionsViewControllerTests: XCTestCase {
         sourceInfoSwitch.isOn = true
         sourceInfoSwitch.sendActions(for: .valueChanged)
         // Then
-        XCTAssert(settings?.appendSourceInfoToDevices == false)
+        XCTAssert(settings?.appendSourceInfoToDevices == true)
         
         // When
         sourceInfoSwitch.isOn = false
