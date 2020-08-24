@@ -12,4 +12,7 @@ iOS version of [Nightscout's xDrip+](https://github.com/NightscoutFoundation/xDr
 - Various alerts.
 - Tons of settings and configurations.
 
-## 
+## Installation instructions
+
+## Collaboration
+All collaborations are welcome. Don't hesitate to contact us if you want to get involved into the development process. If you find any bugs or just have some suggestion - you are welcome to create an issue.
