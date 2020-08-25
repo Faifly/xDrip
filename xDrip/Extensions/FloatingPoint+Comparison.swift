@@ -44,6 +44,11 @@ extension Double {
     }
 }
 
+func ~ (lhs: Double?, rhs: Double) -> Bool {
+    guard let lhs = lhs else { return false }
+    return lhs ~ rhs
+}
+
 extension CGFloat {
     static func ~ (lhs: CGFloat, rhs: CGFloat) -> Bool {
         return abs(lhs - rhs) <= .ulpOfOne * 1000.0
@@ -66,4 +71,25 @@ extension CGFloat {
     static func !~~ (lhs: CGFloat, rhs: CGFloat) -> Bool {
         return abs(lhs - rhs) > 1.0
     }
+}
+
+extension Date {
+    static func ~~ (lhs: Date, rhs: Date) -> Bool {
+        return lhs.timeIntervalSince1970 ~~ rhs.timeIntervalSince1970
+    }
+}
+
+func ~~ (lhs: Date?, rhs: Date?) -> Bool {
+    guard let lhs = lhs, let rhs = rhs else { return false }
+    return lhs.timeIntervalSince1970 ~~ rhs.timeIntervalSince1970
+}
+
+func ~~ (lhs: Date, rhs: Date?) -> Bool {
+    guard let rhs = rhs else { return false }
+    return lhs.timeIntervalSince1970 ~~ rhs.timeIntervalSince1970
+}
+
+func ~~ (lhs: Date?, rhs: Date) -> Bool {
+    guard let lhs = lhs else { return false }
+    return lhs.timeIntervalSince1970 ~~ rhs.timeIntervalSince1970
 }

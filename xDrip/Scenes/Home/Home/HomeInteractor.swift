@@ -35,6 +35,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private var activeInsulinObserver: [NSObjectProtocol]?
     private var activeCarbsObserver: [NSObjectProtocol]?
     private var dataSectionObserver: [NSObjectProtocol]?
+    private var deviceModeObserver: [NSObjectProtocol]?
     private var hours: Int = 1
     
     init() {
@@ -84,6 +85,17 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             notificationHandler: { [weak self] _ in
                 guard let self = self else { return }
                 self.updateGlucoseChartData()
+            }
+        )
+        
+        deviceModeObserver = NotificationCenter.default.subscribe(
+            forSettingsChange: [.deviceMode],
+            notificationHandler: { [weak self] _ in
+                guard let self = self else { return }
+                self.updateGlucoseChartData()
+                self.updateGlucoseCurrentInfo()
+                self.updateBolusChartData()
+                self.updateCarbsChartData()
             }
         )
     }
@@ -157,7 +169,8 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     
     private func updateBolusChartData() {
         var insulinData: [InsulinEntry] = []
-        let isShown = User.current.settings.chart?.showActiveInsulin ?? true
+        let isShown = User.current.settings.chart?.showActiveInsulin == true
+            && User.current.settings.deviceMode != .follower
         if isShown {
             insulinData = InsulinEntriesWorker.fetchAllBolusEntries()
         }
@@ -167,7 +180,8 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     
     private func updateCarbsChartData() {
         var carbsData: [CarbEntry] = []
-        let isShown = User.current.settings.chart?.showActiveCarbs ?? true
+        let isShown = User.current.settings.chart?.showActiveCarbs == true
+            && User.current.settings.deviceMode != .follower
         if  isShown {
             carbsData = CarbEntriesWorker.fetchAllCarbEntries()
         }

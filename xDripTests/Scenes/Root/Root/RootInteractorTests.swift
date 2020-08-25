@@ -96,6 +96,9 @@ final class RootInteractorTests: XCTestCase {
         
         func routeToAddBasal() {
         }
+        
+        func showNoBasalRatesAlert() {
+        }
     }
     
     // MARK: Tests
