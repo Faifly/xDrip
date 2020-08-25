@@ -259,6 +259,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        guard UIApplication.shared.applicationState != .background else { return }
         if view.bounds.width >= view.bounds.height {
             carbsBolusStackView?.axis = .vertical
             glucoseDataStackView?.axis = .vertical
