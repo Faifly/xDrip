@@ -40,10 +40,10 @@ final class EditCalibrationInteractorTests: XCTestCase {
     // MARK: Test doubles
     
     final class EditCalibrationPresentationLogicSpy: EditCalibrationPresentationLogic {
-        var presentLoadCalled = false
+        var presentUpdateDataCalled = false
         
-        func presentLoad(response: EditCalibration.Load.Response) {
-            presentLoadCalled = true
+        func presentUpdateData(response: EditCalibration.UpdateData.Response) {
+            presentUpdateDataCalled = true
         }
     }
     
@@ -64,12 +64,12 @@ final class EditCalibrationInteractorTests: XCTestCase {
         // Given
         let spy = EditCalibrationPresentationLogicSpy()
         sut.presenter = spy
-        let request = EditCalibration.Load.Request()
+        let request = EditCalibration.UpdateData.Request()
         
         // When
-        sut.doLoad(request: request)
+        sut.doUpdateData(request: request)
         
         // Then
-        XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+        XCTAssertTrue(spy.presentUpdateDataCalled, "doLoad(request:) should ask the presenter to format the result")
     }
 }
