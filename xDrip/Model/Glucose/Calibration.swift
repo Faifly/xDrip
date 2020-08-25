@@ -310,7 +310,7 @@ final class Calibration: Object {
             let calibration = calibrations[0]
             Realm.shared.safeWrite {
                 calibration.slope = 1.0
-                calibration.intercept = calibration.glucoseLevel - (calibration.adjustedRawValue * calibration.slope)
+                calibration.intercept = calibration.glucoseLevel - (calibration.rawValue * calibration.slope)
             }
             return
         }
@@ -391,7 +391,8 @@ final class Calibration: Object {
         if lastTimeStarted ~ firstTimeStarted {
             return 1.0
         }
-        let timePercentage = min(((sensorAge - firstTimeStarted) / (lastTimeStarted - firstTimeStarted)) / 0.85, 1.0)
+        var timePercentage = min(((sensorAge - firstTimeStarted) / (lastTimeStarted - firstTimeStarted)) / 0.85, 1.0)
+        timePercentage += 0.01
         return max((((((slopeConfidence + sensorConfidence) * timePercentage)) / 2.0) * 100.0), 1.0)
     }
     

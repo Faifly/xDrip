@@ -309,7 +309,7 @@ final class CalibrationTests: AbstractRealmTest {
         XCTAssert(calibration2.sensorConfidence ~ 0.907145)
         XCTAssert(calibration2.slopeConfidence ~ 0.5)
         XCTAssert(calibration2.slope ~ 1.0)
-        XCTAssert(calibration2.intercept ~ -68.5)
+        XCTAssert(calibration2.intercept ~ -10.0)
         XCTAssert(calibration2.distanceFromEstimate ~ 0.0)
         XCTAssert(calibration2.estimatedRawAtTimeOfCalibration ~ 188.5)
         XCTAssert(calibration2.estimatedGlucoseAtTimeOfCalibration ~ 0.0)
@@ -424,7 +424,7 @@ final class CalibrationTests: AbstractRealmTest {
         XCTAssert(calibrations[1].glucoseLevel ~ 140.0)
         XCTAssert(calibrations[1].rawValue ~ 130.0)
         XCTAssert(calibrations[1].slope ~ 1.0)
-        XCTAssert(calibrations[1].intercept ~ 9.9)
+        XCTAssert(calibrations[1].intercept ~ 10.0)
     }
     
     func testInitialCalibrationFalling() {
@@ -456,7 +456,7 @@ final class CalibrationTests: AbstractRealmTest {
         XCTAssert(calibrations[1].glucoseLevel ~ 140.0)
         XCTAssert(calibrations[1].rawValue ~ 125.0)
         XCTAssert(calibrations[1].slope ~ 1.0)
-        XCTAssert(calibrations[1].intercept ~ 14.9)
+        XCTAssert(calibrations[1].intercept ~ 15.0)
     }
     
     func testPlainCalibration() {
@@ -476,9 +476,9 @@ final class CalibrationTests: AbstractRealmTest {
             date2: Date()
         )
         
-//        let readings = GlucoseReading.lastReadings(2, for: .main)
-//        XCTAssert(readings[0].filteredCalculatedValue ~ 100.0)
-//        XCTAssert(readings[1].filteredCalculatedValue ~ 110.0)
+        let readings = GlucoseReading.lastReadings(2, for: .main)
+        XCTAssert(readings[0].filteredCalculatedValue ~ 89.48)
+        XCTAssert(readings[1].filteredCalculatedValue ~ 100.0)
     }
     
     private func addMockReading(rawData: Double, minutes: Double) {
