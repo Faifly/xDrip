@@ -31,7 +31,7 @@ enum EditCalibration {
     
     // MARK: Use cases
     
-    enum Load {
+    enum UpdateData {
         struct Request {
         }
         
@@ -39,6 +39,8 @@ enum EditCalibration {
             let hasInitialCalibrations: Bool
             let datePickerValueChanged: (Field, Date) -> Void
             let glucosePickerValueChanged: (Field, String?) -> Void
+            let date1: Date
+            let date2: Date
         }
         
         struct ViewModel {
