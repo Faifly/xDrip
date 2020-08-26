@@ -172,6 +172,7 @@ final class GlucoseReading: Object {
             && requireCalibration {
             CalibrationController.shared.requestInitialCalibration()
         } else if !Calibration.allForCurrentSensor.isEmpty &&
+            isOptimalConditionToCalibrate() &&
             masterForCurrentSensorInLast30Minutes.count >= 2 {
             CalibrationController.shared.requestRegularCalibration()
         }
@@ -525,55 +526,55 @@ final class GlucoseReading: Object {
         }
     }
     
-//    static func isOptimalConditionToCalibrate() -> Bool {
-//        var optimalCalibrationCondition = false
-//        let masterReadings = GlucoseReading.allMasterForCurrentSensor
-//        if masterReadings.count >= 3 {
-//            //We have at least 3 readings
-//            let lastReading = masterReadings[masterReadings.count - 1]
-//            let middleReading = masterReadings[masterReadings.count - 2]
-//            let firstReading = masterReadings[masterReadings.count - 3]
-//            
-//            if lastReading.calculatedValue != 0 &&
-//                middleReading.calculatedValue != 0 &&
-//                firstReading.calculatedValue != 0 {
-//                //Last 3 readings are valid
-//                if let lastReadingDate = lastReading.date,
-//                    let middleReadingDate = middleReading.date,
-//                    let firstReadingDate = firstReading.date {
-//                    let presentTimeInterval = Date().timeIntervalSince1970
-//                    let lastReadingTimeInterval = lastReadingDate.timeIntervalSince1970
-//                    let middleReadingTimeInterval = middleReadingDate.timeIntervalSince1970
-//                    let firstReadingTimeInterval = firstReadingDate.timeIntervalSince1970
-//                    let sixMinutesInterval = 360.0
-//
-//                    if presentTimeInterval - lastReadingTimeInterval < sixMinutesInterval &&
-//                        lastReadingTimeInterval - middleReadingTimeInterval < sixMinutesInterval &&
-//                        middleReadingTimeInterval - firstReadingTimeInterval < sixMinutesInterval {
-//                        //All readings are not more than 6 minutes apart
-//                        let lastReadingSlope = abs(lastReading.calculatedValue - middleReading.calculatedValue)
-//                        let middleReadingSlope = abs(middleReading.calculatedValue - firstReading.calculatedValue)
-//
-//                        if lastReadingSlope <= 3 && middleReadingSlope <= 3 {
-//                            //Not going up or down by more than 3mg/dL
-//                            let highThreshold = User.current.settings.warningLevelValue(for: .high) * 1.25
-//                            let lowThreshold = User.current.settings.warningLevelValue(for: .low)
-//
-//                            if (lastReading.calculatedValue < highThreshold &&
-//                                lastReading.calculatedValue > lowThreshold) &&
-//                                (middleReading.calculatedValue < highThreshold &&
-//                                    middleReading.calculatedValue > lowThreshold) &&
-//                                (firstReading.calculatedValue < highThreshold &&
-//                                    firstReading.calculatedValue > lowThreshold) {
-//                                //All readings are within "in-range" threshold.
-//                                //Optimal calibration condition has been reached!
-//                                optimalCalibrationCondition = true
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return optimalCalibrationCondition
-//    }
+    static func isOptimalConditionToCalibrate() -> Bool {
+        var optimalCalibrationCondition = false
+        let masterReadings = GlucoseReading.allMasterForCurrentSensor
+        if masterReadings.count >= 3 {
+            //We have at least 3 readings
+            let lastReading = masterReadings[masterReadings.count - 1]
+            let middleReading = masterReadings[masterReadings.count - 2]
+            let firstReading = masterReadings[masterReadings.count - 3]
+            
+            if lastReading.calculatedValue != 0 &&
+                middleReading.calculatedValue != 0 &&
+                firstReading.calculatedValue != 0 {
+                //Last 3 readings are valid
+                if let lastReadingDate = lastReading.date,
+                    let middleReadingDate = middleReading.date,
+                    let firstReadingDate = firstReading.date {
+                    let presentTimeInterval = Date().timeIntervalSince1970
+                    let lastReadingTimeInterval = lastReadingDate.timeIntervalSince1970
+                    let middleReadingTimeInterval = middleReadingDate.timeIntervalSince1970
+                    let firstReadingTimeInterval = firstReadingDate.timeIntervalSince1970
+                    let sixMinutesInterval = 360.0
+
+                    if presentTimeInterval - lastReadingTimeInterval < sixMinutesInterval &&
+                        lastReadingTimeInterval - middleReadingTimeInterval < sixMinutesInterval &&
+                        middleReadingTimeInterval - firstReadingTimeInterval < sixMinutesInterval {
+                        //All readings are not more than 6 minutes apart
+                        let lastReadingSlope = abs(lastReading.calculatedValue - middleReading.calculatedValue)
+                        let middleReadingSlope = abs(middleReading.calculatedValue - firstReading.calculatedValue)
+
+                        if lastReadingSlope <= 3 && middleReadingSlope <= 3 {
+                            //Not going up or down by more than 3mg/dL
+                            let highThreshold = User.current.settings.warningLevelValue(for: .high) * 1.25
+                            let lowThreshold = User.current.settings.warningLevelValue(for: .low)
+
+                            if (lastReading.calculatedValue < highThreshold &&
+                                lastReading.calculatedValue > lowThreshold) &&
+                                (middleReading.calculatedValue < highThreshold &&
+                                    middleReading.calculatedValue > lowThreshold) &&
+                                (firstReading.calculatedValue < highThreshold &&
+                                    firstReading.calculatedValue > lowThreshold) {
+                                //All readings are within "in-range" threshold.
+                                //Optimal calibration condition has been reached!
+                                optimalCalibrationCondition = true
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return optimalCalibrationCondition
+    }
 }
