@@ -40,10 +40,10 @@ final class EditCalibrationPresenterTests: XCTestCase {
     // MARK: Test doubles
     
     final class EditCalibrationDisplayLogicSpy: EditCalibrationDisplayLogic {
-        var displayLoadCalled = false
+        var displayUpdateDataCalled = false
         
-        func displayLoad(viewModel: EditCalibration.Load.ViewModel) {
-            displayLoadCalled = true
+        func displayUpdateData(viewModel: EditCalibration.UpdateData.ViewModel) {
+            displayUpdateDataCalled = true
         }
     }
     
@@ -53,18 +53,20 @@ final class EditCalibrationPresenterTests: XCTestCase {
         // Given
         let spy = EditCalibrationDisplayLogicSpy()
         sut.viewController = spy
-        let response = EditCalibration.Load.Response(
+        let response = EditCalibration.UpdateData.Response(
             hasInitialCalibrations: false,
             datePickerValueChanged: { _, _ in },
-            glucosePickerValueChanged: { _, _ in }
+            glucosePickerValueChanged: { _, _ in },
+            date1: Date(),
+            date2: Date()
         )
         
         // When
-        sut.presentLoad(response: response)
+        sut.presentUpdateData(response: response)
         
         // Then
         XCTAssertTrue(
-            spy.displayLoadCalled,
+            spy.displayUpdateDataCalled,
             "presentLoad(response:) should ask the view controller to display the result"
         )
     }

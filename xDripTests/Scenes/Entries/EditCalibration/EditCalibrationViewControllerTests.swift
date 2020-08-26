@@ -48,12 +48,12 @@ final class EditCalibrationViewControllerTests: XCTestCase {
     // MARK: Test doubles
     
     final class EditCalibrationBusinessLogicSpy: EditCalibrationBusinessLogic {
-        var doLoadCalled = false
+        var doUpdateDataCalled = false
         var doSaveCalled = false
         var doDismissCalled = false
         
-        func doLoad(request: EditCalibration.Load.Request) {
-            doLoadCalled = true
+        func doUpdateData(request: EditCalibration.UpdateData.Request) {
+            doUpdateDataCalled = true
         }
         
         func doSave(request: EditCalibration.Save.Request) {
@@ -94,17 +94,17 @@ final class EditCalibrationViewControllerTests: XCTestCase {
         loadView()
         
         // Then
-        XCTAssertTrue(spy.doLoadCalled, "viewDidLoad() should ask the interactor to do load")
+        XCTAssertTrue(spy.doUpdateDataCalled, "viewDidLoad() should ask the interactor to do load")
     }
     
     func testDisplayLoad() {
         // Given
         let tableViewModel = BaseSettings.ViewModel(sections: [])
-        let viewModel = EditCalibration.Load.ViewModel(tableViewModel: tableViewModel)
+        let viewModel = EditCalibration.UpdateData.ViewModel(tableViewModel: tableViewModel)
         
         // When
         loadView()
-        sut.displayLoad(viewModel: viewModel)
+        sut.displayUpdateData(viewModel: viewModel)
         
         // Then
     }

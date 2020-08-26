@@ -13,7 +13,7 @@
 import UIKit
 
 protocol EditCalibrationPresentationLogic {
-    func presentLoad(response: EditCalibration.Load.Response)
+    func presentUpdateData(response: EditCalibration.UpdateData.Response)
 }
 
 final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
@@ -21,7 +21,7 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
     
     // MARK: Do something
     
-    func presentLoad(response: EditCalibration.Load.Response) {
+    func presentUpdateData(response: EditCalibration.UpdateData.Response) {
         var sections: [BaseSettings.Section] = [
             createSection(.firstInput, response: response)
         ]
@@ -33,17 +33,17 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
         }
         
         let tableViewModel = BaseSettings.ViewModel(sections: sections)
-        let viewModel = EditCalibration.Load.ViewModel(tableViewModel: tableViewModel)
-        viewController?.displayLoad(viewModel: viewModel)
+        let viewModel = EditCalibration.UpdateData.ViewModel(tableViewModel: tableViewModel)
+        viewController?.displayUpdateData(viewModel: viewModel)
     }
     
     private func createSection(
         _ field: EditCalibration.Field,
-        response: EditCalibration.Load.Response
+        response: EditCalibration.UpdateData.Response
     ) -> BaseSettings.Section {
         let cells: [BaseSettings.Cell] = [
             createGlucosePickerCell(field, glucoseValueChangedPicker: response.glucosePickerValueChanged),
-            createDatePickerCell(field, dateValueChagedHandler: response.datePickerValueChanged)
+            createDatePickerCell(field, response: response)
         ]
         
         let header: String
@@ -71,10 +71,8 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
     
     private func createDatePickerCell(
         _ field: EditCalibration.Field,
-        dateValueChagedHandler: @escaping (EditCalibration.Field, Date) -> Void
+        response: EditCalibration.UpdateData.Response
     ) -> BaseSettings.Cell {
-        let date = Date()
-        
         let picker = CustomDatePicker()
         picker.datePickerMode = .dateAndTime
         
@@ -83,14 +81,30 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
         } else {
             picker.minimumDate = Date() - .secondsPerHour
         }
-        picker.maximumDate = date
+        picker.maximumDate = Date()
+        
+        if !response.hasInitialCalibrations {
+            let date1 = response.date1
+            let date2 = response.date2
+            
+            if field == .firstInput {
+                picker.date = date1
+                picker.maximumDate = date2
+                if date1 == date2 {
+                    picker.date = date1 - .secondsPerMinute
+                    response.datePickerValueChanged(field, picker.date)
+                }
+            } else {
+                picker.date = date2
+            }
+        }
         
         picker.formatDate = { date in
-            dateValueChagedHandler(field, date)
+            response.datePickerValueChanged(field, date)
             return DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
         }
         
-        let formattedDate = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
+        let formattedDate = DateFormatter.localizedString(from: picker.date, dateStyle: .short, timeStyle: .short)
         
         return .pickerExpandable(
             mainText: "edit_calibration_date_picker_title".localized,

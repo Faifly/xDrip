@@ -13,7 +13,7 @@
 import UIKit
 
 protocol EditCalibrationBusinessLogic {
-    func doLoad(request: EditCalibration.Load.Request)
+    func doUpdateData(request: EditCalibration.UpdateData.Request)
     func doSave(request: EditCalibration.Save.Request)
     func doDismiss(request: EditCalibration.Dismiss.Request)
 }
@@ -24,7 +24,9 @@ protocol EditCalibrationDataStore: AnyObject {
 final class EditCalibrationInteractor: EditCalibrationBusinessLogic, EditCalibrationDataStore {
     private struct Input {
         var value: String?
-        var date = Date()
+        var date = Calendar.current.date(
+            from: Calendar.current.dateComponents([.year, .day, .month, .hour, .minute], from: Date())
+        ) ?? Date()
     }
     
     var presenter: EditCalibrationPresentationLogic?
@@ -43,13 +45,15 @@ final class EditCalibrationInteractor: EditCalibrationBusinessLogic, EditCalibra
     
     // MARK: Do something
     
-    func doLoad(request: EditCalibration.Load.Request) {
-        let response = EditCalibration.Load.Response(
+    func doUpdateData(request: EditCalibration.UpdateData.Request) {
+        let response = EditCalibration.UpdateData.Response(
             hasInitialCalibrations: statusWorker.hasInitialCalibrations,
             datePickerValueChanged: handleDatePickerValueChanged(_:_:),
-            glucosePickerValueChanged: handleGlucosePickerValueChanged(_:_:)
+            glucosePickerValueChanged: handleGlucosePickerValueChanged(_:_:),
+            date1: firstInput.date,
+            date2: secondInput.date
         )
-        presenter?.presentLoad(response: response)
+        presenter?.presentUpdateData(response: response)
     }
     
     func doDismiss(request: EditCalibration.Dismiss.Request) {
@@ -76,6 +80,11 @@ final class EditCalibrationInteractor: EditCalibrationBusinessLogic, EditCalibra
         switch field {
         case .firstInput: firstInput.date = date
         case .secondInput: secondInput.date = date
+        }
+        
+        if firstInput.date == secondInput.date {
+            let request = EditCalibration.UpdateData.Request()
+            doUpdateData(request: request)
         }
     }
     

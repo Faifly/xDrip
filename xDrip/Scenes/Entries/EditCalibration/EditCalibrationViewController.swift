@@ -13,7 +13,7 @@
 import UIKit
 
 protocol EditCalibrationDisplayLogic: AnyObject {
-    func displayLoad(viewModel: EditCalibration.Load.ViewModel)
+    func displayUpdateData(viewModel: EditCalibration.UpdateData.ViewModel)
 }
 
 class EditCalibrationViewController: BaseSettingsViewController, EditCalibrationDisplayLogic {
@@ -72,8 +72,8 @@ class EditCalibrationViewController: BaseSettingsViewController, EditCalibration
     // MARK: Do something
     
     private func doLoad() {
-        let request = EditCalibration.Load.Request()
-        interactor?.doLoad(request: request)
+        let request = EditCalibration.UpdateData.Request()
+        interactor?.doUpdateData(request: request)
     }
     
     private func setupNavigationItems() {
@@ -98,7 +98,7 @@ class EditCalibrationViewController: BaseSettingsViewController, EditCalibration
     
     // MARK: Display
     
-    func displayLoad(viewModel: EditCalibration.Load.ViewModel) {
+    func displayUpdateData(viewModel: EditCalibration.UpdateData.ViewModel) {
         update(with: viewModel.tableViewModel)
     }
 }
