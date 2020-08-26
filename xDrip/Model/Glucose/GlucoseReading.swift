@@ -171,8 +171,7 @@ final class GlucoseReading: Object {
             && GlucoseReading.allMasterForCurrentSensor.count >= 2
             && requireCalibration {
             CalibrationController.shared.requestInitialCalibration()
-        } else if !Calibration.allForCurrentSensor.isEmpty &&
-            CalibrationController.shared.isOptimalConditionToCalibrate() &&
+        } else if CalibrationController.shared.canShowNextRegularCalibrationRequest() &&
             masterForCurrentSensorInLast30Minutes.count >= 2 {
             CalibrationController.shared.requestRegularCalibration()
         }
