@@ -66,7 +66,7 @@ final class EditCalibrationInteractor: EditCalibrationBusinessLogic, EditCalibra
                 entry1: firstInput.value,
                 entry2: secondInput.value,
                 date1: firstInput.date,
-                date2: secondInput.date
+                date2: firstInput.date
             )
         } catch {
             router?.showError(error.localizedDescription)

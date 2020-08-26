@@ -23,8 +23,8 @@ final class EditCalibrationSavingWorker: EditCalibrationSavingWorkerLogic {
         let requiresInitialCalibration = Calibration.allForCurrentSensor.isEmpty
         do {
             if requiresInitialCalibration {
-                guard let entry2 = entry2 else { throw EditCalibration.ValidationError.noGlucose2Input }
-                guard var value2 = Double(entry2) else { throw EditCalibration.ValidationError.noGlucose2Input }
+                let entry2 = entry2 ?? entry1
+                var value2 = Double(entry2) ?? value1
                 value2 = GlucoseUnit.convertToDefault(value2)
                 
                 try Calibration.createInitialCalibration(

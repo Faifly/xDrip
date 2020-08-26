@@ -59,16 +59,18 @@
 // Edit Calibration
 "edit_calibration_scene_title" = "Calibration";
 "edit_calibration_single_section_header" = "ENTER THE VALUE BELOW";
-"edit_calibration_first_section_header" = "ENTER THE FIRST VALUE BELOW";
-"edit_calibration_second_section_header" = "ENTER THE SECOND VALUE BELOW";
 "edit_calibration_single_section_footer" = "Please perform one finger prick test and enter the value here";
 "edit_calibration_second_section_footer" = "In order to get started, please perform one or two finger prick tests and enter the values here";
 "edit_calibration_date_picker_title" = "Date/Time";
 "edit_calibration_value_picker_title" = "BG Value";
 "edit_calibration_success_input_alert_title" = "Success";
 "edit_calibration_success_input_alert_message" = "Your input was successfully saved!";
+"edit_calibration_error_no_readings_near_calibration" = "There are no readings close to the specified date";
+"edit_calibration_error_no_glucose1_input" = "Please enter a blood glucose value";
+"edit_calibration_error_invalid_glucose1_input" = "Invalid blood glucose value";
+"edit_calibration_error_sensor_not_started" = "Sensor is not started";
 
-// Edit Calibration
+// Edit Food
 "edit_food_entry_food_scene_title" = "Food";
 "edit_food_entry_bolus_scene_title" = "Bolus";
 "edit_food_entry_basal_scene_title" = "Basal";
@@ -447,6 +449,11 @@ This setting will be applied to all future sensors";
 "calibration_initial_alert_message" = "Initial calibration is required to proceed with readings";
 "calibration_initial_alert_proceed_button" = "Provide Now";
 "calibration_initial_alert_cancel_button" = "Cancel";
+
+"calibration_regular_alert_title" = "Regular Calibration";
+"calibration_regular_alert_message" = "Regular calibration is required to proceed with readings";
+"calibration_regular_alert_proceed_button" = "Provide Now";
+"calibration_regular_alert_cancel_button" = "Cancel";
 
 // Custom Picker
 "custom_picker_hours" = "hours";
