@@ -26,7 +26,7 @@ final class RootInteractor: RootBusinessLogic, RootDataStore {
     var presenter: RootPresentationLogic?
     var router: RootRoutingLogic?
     
-    private let entryTypes: [Root.EntryType] = [.food, .bolus, .basal, .carbs, .training]
+    private let entryTypes: [Root.EntryType] = [.food, .basal, .carbs, .training]
     
     private let calibrationWorker: RootCalibrationValidatorProtocol
     
