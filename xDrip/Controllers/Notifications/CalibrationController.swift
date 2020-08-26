@@ -37,6 +37,16 @@ final class CalibrationController {
     }
     
     func requestRegularCalibration() {
+        if UIApplication.shared.applicationState != .active {
+            NotificationController.shared.sendNotification(ofType: .calibrationRequest)
+        }
+        guard !NotificationController.shared.isNotificationSnoozed(ofType: .calibrationRequest) else { return }        
+        guard !initialCalibrationRequested && !regularCalibrationRequested else { return }
+        regularCalibrationRequested = true
+        
+        if UIApplication.shared.applicationState == .active {
+            showActiveAppRegularCalibrationAlert()
+        }
     }
     
     func initialCalibrationCompleted() {
@@ -44,6 +54,7 @@ final class CalibrationController {
     }
     
     func regularCalibrationCompleted() {
+        regularCalibrationRequested = false
     }
     
     private func showActiveAppInitialCalibrationAlert() {
@@ -55,9 +66,10 @@ final class CalibrationController {
         
         let cancelAction = UIAlertAction(
             title: "calibration_initial_alert_cancel_button".localized,
-            style: .cancel,
-            handler: nil
-        )
+            style: .cancel) { _ in
+                self.initialCalibrationCompleted()
+        }
+        
         alert.addAction(cancelAction)
         
         let confirmAction = UIAlertAction(
@@ -65,6 +77,41 @@ final class CalibrationController {
             style: .default
         ) { _ in
             let calibrationController = EditCalibrationViewController()
+            calibrationController.dismissHandler = {
+                self.initialCalibrationCompleted()
+            }
+            let navigationController = UINavigationController(rootViewController: calibrationController)
+            UIApplication.topViewController()?.present(navigationController, animated: true)
+        }
+        alert.addAction(confirmAction)
+        
+        AlertPresenter.shared.presentAlert(alert)
+    }
+    
+    private func showActiveAppRegularCalibrationAlert() {
+        let alert = UIAlertController(
+            title: "calibration_regular_alert_title".localized,
+            message: "calibration_regular_alert_message".localized,
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(
+            title: "calibration_regular_alert_cancel_button".localized,
+            style: .cancel
+        ) { _ in
+            NotificationController.shared.scheduleSnoozeForNotification(ofType: .calibrationRequest)
+            self.regularCalibrationCompleted()
+        }
+        alert.addAction(cancelAction)
+        
+        let confirmAction = UIAlertAction(
+            title: "calibration_regular_alert_proceed_button".localized,
+            style: .default
+        ) { _ in
+            let calibrationController = EditCalibrationViewController()
+            calibrationController.dismissHandler = {
+                self.regularCalibrationCompleted()
+            }
             let navigationController = UINavigationController(rootViewController: calibrationController)
             UIApplication.topViewController()?.present(navigationController, animated: true)
         }
@@ -76,6 +123,10 @@ final class CalibrationController {
     @objc private func applicationDidBecomeActive() {
         if initialCalibrationRequested {
             showActiveAppInitialCalibrationAlert()
+        }
+        
+        if regularCalibrationRequested {
+            showActiveAppRegularCalibrationAlert()
         }
     }
 }

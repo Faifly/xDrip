@@ -19,6 +19,7 @@ protocol EditCalibrationDisplayLogic: AnyObject {
 class EditCalibrationViewController: BaseSettingsViewController, EditCalibrationDisplayLogic {
     var interactor: EditCalibrationBusinessLogic?
     var router: EditCalibrationDataPassing?
+    var dismissHandler: (() -> Void)?
     
     // MARK: Object lifecycle
     
@@ -67,6 +68,11 @@ class EditCalibrationViewController: BaseSettingsViewController, EditCalibration
         doLoad()
         setupUI()
         setupNavigationItems()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        dismissHandler?()
     }
     
     // MARK: Do something

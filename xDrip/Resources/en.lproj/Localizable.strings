@@ -59,8 +59,6 @@
 // Edit Calibration
 "edit_calibration_scene_title" = "Calibration";
 "edit_calibration_single_section_header" = "ENTER THE VALUE BELOW";
-"edit_calibration_first_section_header" = "ENTER THE FIRST VALUE BELOW";
-"edit_calibration_second_section_header" = "ENTER THE SECOND VALUE BELOW";
 "edit_calibration_single_section_footer" = "Please perform one finger prick test and enter the value here";
 "edit_calibration_second_section_footer" = "In order to get started, please perform one or two finger prick tests and enter the values here";
 "edit_calibration_date_picker_title" = "Date/Time";
@@ -447,6 +445,11 @@ This setting will be applied to all future sensors";
 "calibration_initial_alert_message" = "Initial calibration is required to proceed with readings";
 "calibration_initial_alert_proceed_button" = "Provide Now";
 "calibration_initial_alert_cancel_button" = "Cancel";
+
+"calibration_regular_alert_title" = "Regular Calibration";
+"calibration_regular_alert_message" = "Regular calibration is required to proceed with readings";
+"calibration_regular_alert_proceed_button" = "Provide Now";
+"calibration_regular_alert_cancel_button" = "Cancel";
 
 // Custom Picker
 "custom_picker_hours" = "hours";

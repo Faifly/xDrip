@@ -77,16 +77,16 @@ final class GlucoseReading: Object {
     static var allMaster: [GlucoseReading] {
         return Array(
             Realm.shared.objects(GlucoseReading.self)
-            .filter("rawDeviceMode = \(UserDeviceMode.main.rawValue)")
-            .sorted(byKeyPath: "date", ascending: false)
+                .filter("rawDeviceMode = \(UserDeviceMode.main.rawValue)")
+                .sorted(byKeyPath: "date", ascending: false)
         )
     }
     
     static var allFollower: [GlucoseReading] {
         return Array(
             Realm.shared.objects(GlucoseReading.self)
-            .filter("rawDeviceMode = \(UserDeviceMode.follower.rawValue)")
-            .sorted(byKeyPath: "date", ascending: false)
+                .filter("rawDeviceMode = \(UserDeviceMode.follower.rawValue)")
+                .sorted(byKeyPath: "date", ascending: false)
         )
     }
     
@@ -117,6 +117,10 @@ final class GlucoseReading: Object {
         }
         
         return Array(allReadings)
+    }
+    
+    static var masterForCurrentSensorInLast30Minutes: [GlucoseReading] {
+        return allMasterForCurrentSensor.filter { $0.date >? Date().addingTimeInterval(-(.secondsPerHour / 2)) }
     }
     
     @discardableResult static func create(filtered: Double,
@@ -167,6 +171,9 @@ final class GlucoseReading: Object {
             && GlucoseReading.allMasterForCurrentSensor.count >= 2
             && requireCalibration {
             CalibrationController.shared.requestInitialCalibration()
+        } else if !Calibration.allForCurrentSensor.isEmpty &&
+            masterForCurrentSensorInLast30Minutes.count >= 2 {
+            CalibrationController.shared.requestRegularCalibration()
         }
         
         NightscoutService.shared.scanForNotUploadedEntries()
@@ -517,4 +524,56 @@ final class GlucoseReading: Object {
             displayDeltaName = displayGlucose.deltaName
         }
     }
+    
+//    static func isOptimalConditionToCalibrate() -> Bool {
+//        var optimalCalibrationCondition = false
+//        let masterReadings = GlucoseReading.allMasterForCurrentSensor
+//        if masterReadings.count >= 3 {
+//            //We have at least 3 readings
+//            let lastReading = masterReadings[masterReadings.count - 1]
+//            let middleReading = masterReadings[masterReadings.count - 2]
+//            let firstReading = masterReadings[masterReadings.count - 3]
+//            
+//            if lastReading.calculatedValue != 0 &&
+//                middleReading.calculatedValue != 0 &&
+//                firstReading.calculatedValue != 0 {
+//                //Last 3 readings are valid
+//                if let lastReadingDate = lastReading.date,
+//                    let middleReadingDate = middleReading.date,
+//                    let firstReadingDate = firstReading.date {
+//                    let presentTimeInterval = Date().timeIntervalSince1970
+//                    let lastReadingTimeInterval = lastReadingDate.timeIntervalSince1970
+//                    let middleReadingTimeInterval = middleReadingDate.timeIntervalSince1970
+//                    let firstReadingTimeInterval = firstReadingDate.timeIntervalSince1970
+//                    let sixMinutesInterval = 360.0
+//
+//                    if presentTimeInterval - lastReadingTimeInterval < sixMinutesInterval &&
+//                        lastReadingTimeInterval - middleReadingTimeInterval < sixMinutesInterval &&
+//                        middleReadingTimeInterval - firstReadingTimeInterval < sixMinutesInterval {
+//                        //All readings are not more than 6 minutes apart
+//                        let lastReadingSlope = abs(lastReading.calculatedValue - middleReading.calculatedValue)
+//                        let middleReadingSlope = abs(middleReading.calculatedValue - firstReading.calculatedValue)
+//
+//                        if lastReadingSlope <= 3 && middleReadingSlope <= 3 {
+//                            //Not going up or down by more than 3mg/dL
+//                            let highThreshold = User.current.settings.warningLevelValue(for: .high) * 1.25
+//                            let lowThreshold = User.current.settings.warningLevelValue(for: .low)
+//
+//                            if (lastReading.calculatedValue < highThreshold &&
+//                                lastReading.calculatedValue > lowThreshold) &&
+//                                (middleReading.calculatedValue < highThreshold &&
+//                                    middleReading.calculatedValue > lowThreshold) &&
+//                                (firstReading.calculatedValue < highThreshold &&
+//                                    firstReading.calculatedValue > lowThreshold) {
+//                                //All readings are within "in-range" threshold.
+//                                //Optimal calibration condition has been reached!
+//                                optimalCalibrationCondition = true
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return optimalCalibrationCondition
+//    }
 }

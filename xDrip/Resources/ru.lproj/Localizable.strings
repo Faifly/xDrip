@@ -59,8 +59,6 @@
 // Edit Calibration
 "edit_calibration_scene_title" = "Калибровка";
 "edit_calibration_single_section_header" = "ВВЕДИТЕ ЗНАЧЕНИЕ НИЖЕ";
-"edit_calibration_first_section_header" = "ВВЕДИТЕ ПЕРВОЕ ЗНАЧЕНИЕ НИЖЕ";
-"edit_calibration_second_section_header" = "ВВЕДИТЕ ВТОРОЕ ЗНАЧЕНИЕ НИЖЕ";
 "edit_calibration_single_section_footer" = "Пожалуйста, сделайте тест и введите значение";
 "edit_calibration_second_section_footer" = "Для того чтобы начать, пожалуйста, сделайте один или два теста и введите значения";
 "edit_calibration_date_picker_title" = "Дата/Время";
@@ -446,6 +444,11 @@
 "calibration_initial_alert_message" = "Для нормального функционирования сенсора требуется начальная калибровка";
 "calibration_initial_alert_proceed_button" = "Продолжить";
 "calibration_initial_alert_cancel_button" = "Отмена";
+
+"calibration_regular_alert_title" = "Очередная Калибровка";
+"calibration_regular_alert_message" = "Для нормального функционирования сенсора требуется очередная калибровка";
+"calibration_regular_alert_proceed_button" = "Продолжить";
+"calibration_regular_alert_cancel_button" = "Отмена";
 
 // Custom Picker
 "custom_picker_hours" = "ч";
