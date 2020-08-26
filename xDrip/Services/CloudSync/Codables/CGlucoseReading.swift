@@ -8,7 +8,12 @@
 
 import Foundation
 
+// swiftlint:disable identifier_name
+// swiftlint:disable cyclomatic_complexity
+// swiftlint:disable function_body_length
+
 struct CGlucoseReading: Codable {
+    let id: String?
     let device: String?
     let identifier: String?
     let type: String?
@@ -21,7 +26,23 @@ struct CGlucoseReading: Codable {
     let rssi: Double?
     let noise: String?
     
+    enum CodingKeys: String, CodingKey {
+        case device
+        case identifier
+        case id = "_id"
+        case type
+        case date
+        case sgv
+        case filtered
+        case unfiltered
+        case slope
+        case direction
+        case rssi
+        case noise
+    }
+    
     init(reading: GlucoseReading) {
+        id = nil
         identifier = reading.externalID
         type = "sgv"
         date = Int64((reading.date?.timeIntervalSince1970 ?? 0.0) * 1000.0)
@@ -46,5 +67,66 @@ struct CGlucoseReading: Codable {
         }
         
         device = deviceString
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        device = try? container.decode(String.self, forKey: .device)
+        id = try? container.decode(String.self, forKey: .id)
+        
+        if let identifier = try? container.decode(String.self, forKey: .identifier) {
+            self.identifier = identifier
+        } else if let identifier = try? container.decode(String.self, forKey: .id) {
+            self.identifier = identifier
+        } else {
+            identifier = UUID().uuidString
+        }
+        
+        type = try? container.decode(String.self, forKey: .type)
+        date = try? container.decode(Int64.self, forKey: .date)
+
+        if let sgv = try? container.decode(Double.self, forKey: .sgv) {
+            self.sgv = sgv
+        } else if let sgv = try? container.decode(Int.self, forKey: .sgv) {
+            self.sgv = Double(sgv)
+        } else {
+            sgv = nil
+        }
+
+        if let filtered = try? container.decode(Double.self, forKey: .filtered) {
+            self.filtered = filtered
+        } else if let filtered = try? container.decode(Int.self, forKey: .filtered) {
+            self.filtered = Double(filtered)
+        } else {
+            filtered = nil
+        }
+
+        if let unfiltered = try? container.decode(Double.self, forKey: .unfiltered) {
+            self.unfiltered = unfiltered
+        } else if let unfiltered = try? container.decode(Int.self, forKey: .unfiltered) {
+            self.unfiltered = Double(unfiltered)
+        } else {
+            unfiltered = nil
+        }
+
+        slope = try? container.decode(Double.self, forKey: .slope)
+        direction = try? container.decode(String.self, forKey: .direction)
+
+        if let rssi = try? container.decode(Double.self, forKey: .rssi) {
+            self.rssi = rssi
+        } else if let rssi = try? container.decode(Int.self, forKey: .rssi) {
+            self.rssi = Double(rssi)
+        } else {
+            rssi = nil
+        }
+
+        if let noise = try? container.decode(String.self, forKey: .noise) {
+            self.noise = noise
+        } else if let noise = try? container.decode(Int.self, forKey: .noise) {
+            self.noise = "\(noise)"
+        } else {
+            noise = nil
+        }
     }
 }
