@@ -65,8 +65,12 @@
 "edit_calibration_value_picker_title" = "BG Value";
 "edit_calibration_success_input_alert_title" = "Success";
 "edit_calibration_success_input_alert_message" = "Your input was successfully saved!";
+"edit_calibration_error_no_readings_near_calibration" = "There are no readings close to the specified date";
+"edit_calibration_error_no_glucose1_input" = "Please enter a blood glucose value";
+"edit_calibration_error_invalid_glucose1_input" = "Invalid blood glucose value";
+"edit_calibration_error_sensor_not_started" = "Sensor is not started";
 
-// Edit Calibration
+// Edit Food
 "edit_food_entry_food_scene_title" = "Food";
 "edit_food_entry_bolus_scene_title" = "Bolus";
 "edit_food_entry_basal_scene_title" = "Basal";

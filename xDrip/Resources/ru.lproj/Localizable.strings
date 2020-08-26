@@ -65,8 +65,12 @@
 "edit_calibration_value_picker_title" = "Уровень Глюкозы";
 "edit_calibration_success_input_alert_title" = "Успех";
 "edit_calibration_success_input_alert_message" = "Ваши данные были успешно сохранен!";
+"edit_calibration_error_no_readings_near_calibration" = "Рядом с указанной датой нет ниодного показания";
+"edit_calibration_error_no_glucose1_input" = "Пожалуйста, введите значение глюкозы";
+"edit_calibration_error_invalid_glucose1_input" = "Неправильное значение глюкозы";
+"edit_calibration_error_sensor_not_started" = "Сенсор не запущен";
 
-// Edit Calibration
+// Edit Food
 "edit_food_entry_food_scene_title" = "Еда";
 "edit_food_entry_bolus_scene_title" = "Болюс";
 "edit_food_entry_basal_scene_title" = "Базал";

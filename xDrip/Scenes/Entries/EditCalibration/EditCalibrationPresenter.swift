@@ -22,15 +22,9 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
     // MARK: Do something
     
     func presentUpdateData(response: EditCalibration.UpdateData.Response) {
-        var sections: [BaseSettings.Section] = [
+        let sections: [BaseSettings.Section] = [
             createSection(.firstInput, response: response)
         ]
-        
-        if !response.hasInitialCalibrations {
-            sections.append(
-                createSection(.secondInput, response: response)
-            )
-        }
         
         let tableViewModel = BaseSettings.ViewModel(sections: sections)
         let viewModel = EditCalibration.UpdateData.ViewModel(tableViewModel: tableViewModel)
@@ -41,26 +35,26 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
         _ field: EditCalibration.Field,
         response: EditCalibration.UpdateData.Response
     ) -> BaseSettings.Section {
-        let cells: [BaseSettings.Cell] = [
+        var cells: [BaseSettings.Cell] = [
             createGlucosePickerCell(field, glucoseValueChangedPicker: response.glucosePickerValueChanged),
             createDatePickerCell(field, response: response)
         ]
         
-        let header: String
+        if !response.hasInitialCalibrations {
+            let cell = createGlucosePickerCell(
+                .secondInput,
+                glucoseValueChangedPicker: response.glucosePickerValueChanged
+            )
+            cells.insert(cell, at: 1)
+        }
+        
+        let header = "edit_calibration_single_section_header".localized
         let footer: String?
         
         if response.hasInitialCalibrations {
-            header = "edit_calibration_single_section_header".localized
             footer = "edit_calibration_single_section_footer".localized
         } else {
-            switch field {
-            case .firstInput:
-                header = "edit_calibration_first_section_header".localized
-                footer = nil
-            case .secondInput:
-                header = "edit_calibration_second_section_header".localized
-                footer = "edit_calibration_second_section_footer".localized
-            }
+            footer = "edit_calibration_second_section_footer".localized
         }
         
         return .normal(
@@ -133,8 +127,15 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
         
         let detail = "0.0 " + unit.title
         
+        let title: String
+        if field == .firstInput {
+            title = "edit_calibration_value_picker_title".localized
+        } else {
+            title = "edit_calibration_value_picker_title".localized + " #2"
+        }
+        
         return .pickerExpandable(
-            mainText: "edit_calibration_value_picker_title".localized,
+            mainText: title,
             detailText: detail,
             picker: picker
         )

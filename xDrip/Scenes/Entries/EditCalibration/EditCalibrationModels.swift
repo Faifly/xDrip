@@ -19,9 +19,24 @@ enum EditCalibration {
         case noReadingsNearCalibration
         case noGlucose1Input
         case invalidGlucose1Input
-        case noGlucose2Input
-        case invalidGlucose2Input
         case sensorNotStarted
+        
+        var localizedDescription: String {
+            switch self {
+            case .noReadingsNearCalibration:
+                return "edit_calibration_error_no_readings_near_calibration".localized
+            case .noGlucose1Input:
+                return "edit_calibration_error_no_glucose1_input".localized
+            case .invalidGlucose1Input:
+                return "edit_calibration_error_invalid_glucose1_input".localized
+            case .sensorNotStarted:
+                return "edit_calibration_error_sensor_not_started".localized
+            }
+        }
+        
+        var errorDescription: String? {
+            return localizedDescription
+        }
     }
     
     enum Field {
