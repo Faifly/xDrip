@@ -77,16 +77,16 @@ final class GlucoseReading: Object {
     static var allMaster: [GlucoseReading] {
         return Array(
             Realm.shared.objects(GlucoseReading.self)
-            .filter("rawDeviceMode = \(UserDeviceMode.main.rawValue)")
-            .sorted(byKeyPath: "date", ascending: false)
+                .filter("rawDeviceMode = \(UserDeviceMode.main.rawValue)")
+                .sorted(byKeyPath: "date", ascending: false)
         )
     }
     
     static var allFollower: [GlucoseReading] {
         return Array(
             Realm.shared.objects(GlucoseReading.self)
-            .filter("rawDeviceMode = \(UserDeviceMode.follower.rawValue)")
-            .sorted(byKeyPath: "date", ascending: false)
+                .filter("rawDeviceMode = \(UserDeviceMode.follower.rawValue)")
+                .sorted(byKeyPath: "date", ascending: false)
         )
     }
     
@@ -117,6 +117,10 @@ final class GlucoseReading: Object {
         }
         
         return Array(allReadings)
+    }
+    
+    static var masterForCurrentSensorInLast30Minutes: [GlucoseReading] {
+        return allMasterForCurrentSensor.filter { $0.date >? Date().addingTimeInterval(-(.secondsPerHour / 2)) }
     }
     
     @discardableResult static func create(filtered: Double,
@@ -167,6 +171,10 @@ final class GlucoseReading: Object {
             && GlucoseReading.allMasterForCurrentSensor.count >= 2
             && requireCalibration {
             CalibrationController.shared.requestInitialCalibration()
+        } else if CalibrationController.shared.canShowNextRegularCalibrationRequest() &&
+            CalibrationController.shared.isOptimalConditionToCalibrate() &&
+            masterForCurrentSensorInLast30Minutes.count >= 2 {
+            CalibrationController.shared.requestRegularCalibration()
         }
         
         NightscoutService.shared.scanForNotUploadedEntries()
