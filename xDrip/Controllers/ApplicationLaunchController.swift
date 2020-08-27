@@ -39,7 +39,7 @@ enum ApplicationLaunchController {
         Realm.Configuration.defaultConfiguration = Realm.Configuration(
             schemaVersion: 1,
             migrationBlock: { _, _ in },
-            deleteRealmIfMigrationNeeded: true
+            deleteRealmIfMigrationNeeded: false
         )
     }
     
