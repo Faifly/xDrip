@@ -17,3 +17,7 @@ Please follow [this wiki page](https://github.com/Faifly/xDrip/wiki/Installation
 
 ## Collaboration
 All collaborations are welcome. Don't hesitate to contact us if you want to get involved into the development process. If you find any bugs or just have some suggestion - you are welcome to create an issue.
+
+## Contact us
+
+alexey@faifly.com
