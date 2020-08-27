@@ -122,6 +122,12 @@ final class NotificationController: NSObject {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [type.alertID])
     }
     
+    func isNotificationSnoozed(ofType type: AlertEventType) -> Bool {
+        guard let settings = User.current.settings.alert else { return false }
+        let config = settings.customConfiguration(for: type)
+        return config.snoozedUntilDate >= Date()
+    }
+    
     private func createContentForNotification(ofType type: AlertEventType) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.title = type.alertTitle

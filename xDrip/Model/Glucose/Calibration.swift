@@ -181,7 +181,6 @@ final class Calibration: Object {
         
         adjustRecentReadings(adjustedReadingsAmount)
         
-        CalibrationController.shared.initialCalibrationCompleted()
         NightscoutService.shared.scanForNotUploadedEntries()
     }
     
