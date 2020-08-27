@@ -112,6 +112,9 @@ final class DexcomG6MessageWorker {
     
     private func handleAuthResponse(_ response: DexcomG6AuthChallengeRxMessage) throws {
         guard response.authenticated else { throw DexcomG6Error.notAuthenticated }
+        #if targetEnvironment(macCatalyst)
+        isPaired = true
+        #else
         if response.paired {
             isPaired = true
         } else {
@@ -123,6 +126,7 @@ final class DexcomG6MessageWorker {
             delegate?.workerDidRequestPairing()
             subscribeForPairingApplicationState()
         }
+        #endif
     }
     
     private func subscribeForPairingApplicationState() {
