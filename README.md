@@ -35,6 +35,7 @@ iOS version of [Nightscout's xDrip+](https://github.com/NightscoutFoundation/xDr
 - [x] Follower mode.
 - [x] Various alerts.
 - [x] Tons of settings and configurations.
+- [x] 73% code coverage (aiming for 100%).
 - [ ] Bolus tracking.
 - [ ] Transmitter resetting.
 
