@@ -154,15 +154,14 @@ final class RootInteractorTests: XCTestCase {
         // Then
         XCTAssertTrue(presenterSpy.presentAddEntryCalled)
         
-        guard presenterSpy.entryTypes.count == 5 else {
-            XCTFail("Expected entry types count: 5, found: \(presenterSpy.entryTypes.count)")
+        guard presenterSpy.entryTypes.count == 4 else {
+            XCTFail("Expected entry types count: 4, found: \(presenterSpy.entryTypes.count)")
             return
         }
         
         XCTAssertTrue(presenterSpy.entryTypes[0] == .food)
-        XCTAssertTrue(presenterSpy.entryTypes[1] == .bolus)
-        XCTAssertTrue(presenterSpy.entryTypes[2] == .basal)
-        XCTAssertTrue(presenterSpy.entryTypes[3] == .carbs)
-        XCTAssertTrue(presenterSpy.entryTypes[4] == .training)
+        XCTAssertTrue(presenterSpy.entryTypes[1] == .basal)
+        XCTAssertTrue(presenterSpy.entryTypes[2] == .carbs)
+        XCTAssertTrue(presenterSpy.entryTypes[3] == .training)
     }
 }
