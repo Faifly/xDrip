@@ -3,6 +3,20 @@ iOS version of [Nightscout's xDrip+](https://github.com/NightscoutFoundation/xDr
 
 ## Description
 
+### Screenshots
+
+#### iPhone
+
+<img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_1.png" width="200"/> <img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_2.png" width="200"/> <img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_3.png" width="200"/> <img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_4.png" width="200"/>
+
+#### iPad
+<img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_1.png" width="400"/> <img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_4.png" width="400"/>
+
+<img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_2.png" width="400"/> <img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_3.png" width="400"/>
+
+#### And even macOS!
+<img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/macOS/mac_1.png" width="600"/>
+
 #### Supported platforms:
 - [x] iPhone.
 - [x] iPad.
@@ -21,6 +35,7 @@ iOS version of [Nightscout's xDrip+](https://github.com/NightscoutFoundation/xDr
 - [x] Follower mode.
 - [x] Various alerts.
 - [x] Tons of settings and configurations.
+- [x] 73% code coverage (aiming for 100%).
 - [ ] Bolus tracking.
 - [ ] Transmitter resetting.
 
