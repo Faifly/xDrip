@@ -132,16 +132,19 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         
         statsCalculationWorker.calculate(with: entries, lowThreshold: lowThreshold, highThreshold: highThreshold)
         
+        let avgGlucose = GlucoseUnit.convertFromDefault(statsCalculationWorker.mean)
+        let stdDeviation = GlucoseUnit.convertFromDefault(statsCalculationWorker.stdDev)
+        
         return Home.DataSectionViewModel(
             lowValue: String(format: "%0.1f%%", statsCalculationWorker.lowPercentage),
             lowTitle: String(format: "Low (<%0.1f)", lowThreshold),
             inRange: String(format: "%0.1f%%", statsCalculationWorker.normalPercentage),
             highValue: String(format: "%0.1f%%", statsCalculationWorker.highPercentage),
             highTitle: String(format: "High (>%0.1f)", highThreshold),
-            avgGlucose: String(format: "%0.1f \(unit)", statsCalculationWorker.mean),
+            avgGlucose: String(format: "%0.1f \(unit)", avgGlucose),
             a1c: String(format: "%0.1f%%", statsCalculationWorker.a1cDCCT),
             reading: "\(entries.count)",
-            stdDeviation: String(format: "%0.1f \(unit)", statsCalculationWorker.stdDev),
+            stdDeviation: String(format: "%0.1f \(unit)", stdDeviation),
             gvi: String(format: "%0.2f", statsCalculationWorker.gvi),
             pgs: String(format: "%0.2f", statsCalculationWorker.pgs),
             isShown: isShown

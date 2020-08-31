@@ -104,17 +104,21 @@ final class StatsRootPresenter: StatsRootPresentationLogic {
             return "\(normal)/\(high)/\(low)"
             
         case .medianMeanBG:
-            let median = calculationWorker.median
-            let mean = calculationWorker.mean
+            let median = GlucoseUnit.convertFromDefault(calculationWorker.median)
+            let mean = GlucoseUnit.convertFromDefault(calculationWorker.mean)
             return String(format: "%0.2f/%0.2f %@", median, mean, response.unit.label)
             
         case .hba1cEst:
-            let ifcc = calculationWorker.a1cIFCC
+            let ifcc = GlucoseUnit.convertFromDefault(calculationWorker.a1cIFCC)
             let dcct = calculationWorker.a1cDCCT
             return String(format: "%0.2f %@ %0.1f%%", ifcc, response.unit.label, dcct)
             
         case .stdDev:
-            return String(format: "%0.2f %@", calculationWorker.stdDev, response.unit.label)
+            return String(
+                format: "%0.2f %@",
+                GlucoseUnit.convertFromDefault(calculationWorker.stdDev),
+                response.unit.label
+            )
             
         case .relativeSD:
             return "\(calculationWorker.relativeSD)%"
