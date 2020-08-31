@@ -176,6 +176,7 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         central.stopScan()
+        guard isConnectionRequested else { return }
         LogController.log(
             message: "[Dexcom G6] Did connect to peripheral, discovering services...",
             type: .debug
@@ -220,9 +221,11 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
             )
             DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) { [weak self] in
                 guard let self = self else { return }
+                guard self.isConnectionRequested else { return }
                 self.startConnectionFlow()
             }
         } else {
+            guard isConnectionRequested else { return }
             LogController.log(message: "[Dexcom G6] Reconnecting...", type: .debug)
             central.connect(peripheral, options: nil)
         }
@@ -299,5 +302,11 @@ extension DexcomG6BluetoothService: CGMBluetoothService {
     }
     
     func disconnect() {
+        guard let peripheral = peripheral else { return }
+        if peripheral.state == .connected {
+            centralManager.cancelPeripheralConnection(peripheral)
+        }
+        self.isConnectionRequested = false
+        self.lastPeripheralReadingDate = nil
     }
 }

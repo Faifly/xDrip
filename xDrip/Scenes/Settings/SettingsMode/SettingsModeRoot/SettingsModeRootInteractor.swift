@@ -32,16 +32,23 @@ final class SettingsModeRootInteractor: SettingsModeRootBusinessLogic, SettingsM
     
     func doChangeMode(request: SettingsModeRoot.ChangeMode.Request) {
         guard let nightscoutSettings = User.current.settings.nightscoutSync else { return }
-        if request.mode == .main && nightscoutSettings.isFollowerAuthed {
-            router?.presentSwitchingFromAuthorizedFollower { [weak self] confirmed in
-                guard let self = self else { return }
-                if confirmed {
-                    User.current.settings.updateDeviceMode(.main)
-                    User.current.settings.nightscoutSync?.updateIsFollowerAuthed(false)
-                    NotificationCenter.default.postSettingsChangeNotification(setting: .deviceMode)
-                }
-                self.updateData()
+        if request.mode == .main {
+            func switchToMain() {
+                User.current.settings.updateDeviceMode(.main)
+                NotificationCenter.default.postSettingsChangeNotification(setting: .deviceMode)
+                CGMController.shared.service?.connect()
             }
+            if nightscoutSettings.isFollowerAuthed {
+                router?.presentSwitchingFromAuthorizedFollower { confirmed in
+                    if confirmed {
+                        User.current.settings.nightscoutSync?.updateIsFollowerAuthed(false)
+                        switchToMain()
+                    }
+                }
+            } else {
+                switchToMain()
+            }
+            updateData()
         } else {
             let settings = User.current.settings
             settings?.updateDeviceMode(request.mode)

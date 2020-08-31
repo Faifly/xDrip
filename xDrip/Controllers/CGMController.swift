@@ -65,7 +65,10 @@ final class CGMController {
     
     func injectBluetoothService(_ service: CGMBluetoothService) {
         self.service = service
-        service.connect()
+        
+        if User.current.settings.deviceMode == .main {
+            service.connect()
+        }
     }
     
     func stopService() {
