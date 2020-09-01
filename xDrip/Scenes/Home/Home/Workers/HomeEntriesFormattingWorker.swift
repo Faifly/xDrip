@@ -50,49 +50,52 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
     
     func formatEntries(_ entries: [AbstractEntryProtocol], absorbtionDuration: TimeInterval) -> [BaseChartEntry] {
         var baseChartEntries: [BaseChartEntry] = []
-        let chartStartInterval = Date().timeIntervalSince1970 - .secondsPerDay
+        let chartStartDate = Date().timeIntervalSince1970 - .secondsPerDay
+        var amountsArray: [Double] = entries.map { $0.amount }
+    
         for index in 0..<entries.count {
             let entry = entries[index]
-            guard let entryInterval = entry.date?.timeIntervalSince1970 else { continue }
-            var entryAmount = entry.amount
-            guard entryAmount > 0 else { continue }
-            let entryEndInterval = entryInterval + absorbtionDuration
-            guard entryEndInterval >= chartStartInterval else { continue }
-            var finalEntryAmount = 0.0
-            var finalEntryInterval = entryEndInterval
-            
-            if index < entries.count - 1 {
-                let nextEntry = entries[index + 1]
-                guard let nextEntryInterval = nextEntry.date?.timeIntervalSince1970 else { continue }
-                if nextEntryInterval < entryEndInterval && nextEntry.amount > 0 {
-                    let pointX = nextEntryInterval
-                    let startX = entryInterval
-                    let startY = entry.amount
-                    let endX = entryEndInterval
-                    finalEntryAmount = calculatePointYFor(pointX: pointX, startX: startX, startY: startY, endX: endX)
-                    finalEntryInterval = nextEntryInterval
+    
+            guard let entryStartDate = entry.date?.timeIntervalSince1970 else { continue }
+            var entryEndDate = entryStartDate + absorbtionDuration
+            var entryEndAmount = 0.0
+          
+            guard amountsArray[index] > 0 else { continue }
+            guard entryEndDate >= chartStartDate else { continue }
+         
+            if index > 0 {
+                let prevEntry = entries[index - 1]
+                guard let prevEntryDate = prevEntry.date?.timeIntervalSince1970 else { continue }
+                let prevEntryEndDate = prevEntryDate + absorbtionDuration
+                if entryStartDate < prevEntryEndDate {
+                    let pointX = entryStartDate
+                    let startX = prevEntryDate
+                    let startY = amountsArray[index - 1]
+                    let endX = prevEntryEndDate
+                    let lastAmount = calculatePointYFor(pointX: pointX, startX: startX, startY: startY, endX: endX)
+                    amountsArray[index] += lastAmount
                 }
             }
             
-            if index > 0 {
-                let prevEntry = entries[index - 1]
-                guard let prevEntryInterval = prevEntry.date?.timeIntervalSince1970 else { continue }
-                let endX = prevEntryInterval + absorbtionDuration
-                if entryInterval < endX {
-                    let pointX = entryInterval
-                    let startX = prevEntryInterval
-                    let startY = prevEntry.amount
-                    let lastAmount = calculatePointYFor(pointX: pointX, startX: startX, startY: startY, endX: endX)
-                    entryAmount += lastAmount
+            if index < entries.count - 1 {
+                let nextEntry = entries[index + 1]
+                guard let nextEntryStartDate = nextEntry.date?.timeIntervalSince1970 else { continue }
+                if nextEntryStartDate < entryEndDate && amountsArray[index + 1] > 0 {
+                    let pointX = nextEntryStartDate
+                    let startX = entryStartDate
+                    let startY = amountsArray[index]
+                    let endX = entryEndDate
+                    entryEndAmount = calculatePointYFor(pointX: pointX, startX: startX, startY: startY, endX: endX)
+                    entryEndDate = nextEntryStartDate
                 }
             }
             
             baseChartEntries.append(BaseChartEntry(value: 0.0,
-                                                   date: Date(timeIntervalSince1970: entryInterval)))
-            baseChartEntries.append(BaseChartEntry(value: entryAmount,
-                                                   date: Date(timeIntervalSince1970: entryInterval)))
-            baseChartEntries.append(BaseChartEntry(value: finalEntryAmount,
-                                                   date: Date(timeIntervalSince1970: finalEntryInterval)))
+                                                   date: Date(timeIntervalSince1970: entryStartDate)))
+            baseChartEntries.append(BaseChartEntry(value: amountsArray[index],
+                                                   date: Date(timeIntervalSince1970: entryStartDate)))
+            baseChartEntries.append(BaseChartEntry(value: entryEndAmount,
+                                                   date: Date(timeIntervalSince1970: entryEndDate)))
         }
         return baseChartEntries
     }
