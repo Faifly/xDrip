@@ -59,6 +59,10 @@ final class FoodTextInputTableViewCell: UITableViewCell {
     @IBAction private func textFieldEditingChanged(_ sender: Any) {
         didEditingChange?(textField.text)
     }
+    
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
+    }
 }
 
 extension FoodTextInputTableViewCell: UITextFieldDelegate {
