@@ -236,7 +236,7 @@ final class StatsBarsChart: BaseChartView {
         minValue = values.min(by: { $0.lowerBound < $1.lowerBound })?.lowerBound ?? 0.0
         maxValue = values.max(by: { $0.upperBound < $1.upperBound })?.upperBound ?? 0.0
         
-        visualMinValue = (minValue * (1.0 - visualCorrelationFactor)).rounded(.down)
+        visualMinValue = max((minValue * (1.0 - visualCorrelationFactor)).rounded(.down), 0.0)
         visualMaxValue = (maxValue * (1.0 + visualCorrelationFactor)).rounded(.up)
     }
     
