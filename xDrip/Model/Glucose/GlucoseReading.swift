@@ -133,6 +133,10 @@ final class GlucoseReading: Object {
             LogController.log(message: "[Glucose] Can't create reading, sensor not started", type: .error)
             return nil
         }
+        guard filtered > .ulpOfOne && unfiltered > .ulpOfOne else {
+            LogController.log(message: "[Glucose] Can't create reading, value is below zero", type: .error)
+            return nil
+        }
         
         let reading = GlucoseReading()
         reading.externalID = UUID().uuidString
