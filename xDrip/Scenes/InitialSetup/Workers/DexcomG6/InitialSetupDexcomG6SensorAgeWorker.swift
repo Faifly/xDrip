@@ -20,5 +20,6 @@ final class InitialSetupDexcomG6SensorAgeWorker {
     func saveSensorAge(_ date: Date) {
         CGMDevice.current.sensorStartDate = date
         CGMDevice.current.updateSensorIsStarted(true)
+        NotificationCenter.default.postSettingsChangeNotification(setting: .warmUp)
     }
 }
