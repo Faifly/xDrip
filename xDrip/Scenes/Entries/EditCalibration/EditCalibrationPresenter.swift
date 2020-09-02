@@ -76,6 +76,7 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
             picker.minimumDate = Date() - .secondsPerHour
         }
         picker.maximumDate = Date()
+        picker.date = field == .firstInput ? response.date1 : response.date2
         
         if !response.hasInitialCalibrations {
             let date1 = response.date1
