@@ -13,20 +13,25 @@ enum BasalChartDataWorker {
     static func fetchBasalData(for hours: Int) -> [InsulinEntry] {
         let minimumDate = Date() - TimeInterval(hours) * .secondsPerHour
         let all = InsulinEntriesWorker.fetchAllBasalEntries()
-        return all.filter { $0.date >=? minimumDate }
+        return all.filter { $0.date >=? minimumDate && $0.cloudUploadStatus != .waitingForDeletion }
     }
     
     static func fetchBasalData(for date: Date) -> [InsulinEntry] {
         let minimumDate = Calendar.current.startOfDay(for: date)
         let maximumDate = minimumDate + .secondsPerDay
         let all = InsulinEntriesWorker.fetchAllBasalEntries()
-        return all.filter { $0.date >=? minimumDate && $0.date <=? maximumDate }
+        return all.filter {
+            $0.date >=? minimumDate &&
+            $0.date <=? maximumDate &&
+            $0.cloudUploadStatus != .waitingForDeletion
+        }
     }
     
     static func getBasalValueForDate(date: Date) -> Double {
         let minimumDate = date - .secondsPerDay * 3.0
         guard date >= minimumDate else { return 0.0 }
-        let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate && $0.date <=? date })
+        let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate &&
+            $0.date <=? date && $0.cloudUploadStatus != .waitingForDeletion })
         
         guard !all.isEmpty else { return 0.0 }
         
@@ -126,7 +131,8 @@ enum BasalChartDataWorker {
     
     static func calculateChartValues(for hours: Int) -> [InsulinEntry] {
         let minimumDate = Date() - TimeInterval(hours) * .secondsPerHour
-        let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate })
+        let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate &&
+            $0.cloudUploadStatus != .waitingForDeletion })
         
         var points = [InsulinEntry]()
         
@@ -156,7 +162,7 @@ enum BasalChartDataWorker {
         let minimumDate = Calendar.current.startOfDay(for: date)
         let maximumDate = minimumDate + .secondsPerDay
         let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({
-            $0.date >=? minimumDate && $0.date <=? maximumDate
+            $0.date >=? minimumDate && $0.date <=? maximumDate && $0.cloudUploadStatus != .waitingForDeletion
         })
         
         var points = [InsulinEntry]()

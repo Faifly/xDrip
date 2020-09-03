@@ -25,6 +25,7 @@
 		0A89542824A0AC230067601F /* HomeGlucoseFormattingWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A89542724A0AC230067601F /* HomeGlucoseFormattingWorkerTests.swift */; };
 		0A94D7F924A654AD00D14AD2 /* HomeEntriesFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94D7F824A654AD00D14AD2 /* HomeEntriesFormattingWorker.swift */; };
 		0A94D7FB24A65A7600D14AD2 /* BaseHomeEntryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94D7FA24A65A7600D14AD2 /* BaseHomeEntryProtocol.swift */; };
+		0AAE030C24FCF66E003CF50B /* CTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE030B24FCF66D003CF50B /* CTreatment.swift */; };
 		2C09D21224410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */; };
 		2C09D21324410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */; };
 		2C09D2162441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */; };
@@ -711,6 +712,7 @@
 		0A89542724A0AC230067601F /* HomeGlucoseFormattingWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGlucoseFormattingWorkerTests.swift; sourceTree = "<group>"; };
 		0A94D7F824A654AD00D14AD2 /* HomeEntriesFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEntriesFormattingWorker.swift; sourceTree = "<group>"; };
 		0A94D7FA24A65A7600D14AD2 /* BaseHomeEntryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHomeEntryProtocol.swift; sourceTree = "<group>"; };
+		0AAE030B24FCF66D003CF50B /* CTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTreatment.swift; sourceTree = "<group>"; };
 		2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsRightSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsRightSwitchTableViewCell.xib; sourceTree = "<group>"; };
 		2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsSingleSelectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -3746,6 +3748,7 @@
 			children = (
 				58828B8F2492876C001D4C3E /* CGlucoseReading.swift */,
 				58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */,
+				0AAE030B24FCF66D003CF50B /* CTreatment.swift */,
 			);
 			path = Codables;
 			sourceTree = "<group>";
@@ -4368,6 +4371,7 @@
 				58F818EB246EFC82004CD2FE /* EditCalibrationStatusWorker.swift in Sources */,
 				580E4C1E243F74A300565EDE /* SettingsPumpUserRouter.swift in Sources */,
 				2CBE1A8B24320F94003BE14E /* EntriesListFormattingWorker.swift in Sources */,
+				0AAE030C24FCF66E003CF50B /* CTreatment.swift in Sources */,
 				580E4BB5243F725600565EDE /* NightscoutCloudBackfillModels.swift in Sources */,
 				2C5617E824E5683D00D7C9D1 /* Data+String.swift in Sources */,
 				58B853402448CA740045F30A /* DateInterval+Helpers.swift in Sources */,

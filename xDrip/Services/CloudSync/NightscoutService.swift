@@ -8,6 +8,7 @@
 
 import Foundation
 import AKUtils
+import RealmSwift
 
 final class NightscoutService {
     static let shared = NightscoutService()
@@ -19,16 +20,17 @@ final class NightscoutService {
     private var isRequestInProgress = false
     
     private lazy var settingsObservers: [Any] = NotificationCenter.default.subscribe(
-        forSettingsChange: [.followerAuthStatus]) {
-            guard let settings = User.current.settings.nightscoutSync else { return }
-            if settings.isFollowerAuthed {
-                self.startFetchingFollowerData()
-            } else {
-                self.stopFetchingFollowerData()
-            }
+    forSettingsChange: [.followerAuthStatus]) {
+        guard let settings = User.current.settings.nightscoutSync else { return }
+        if settings.isFollowerAuthed {
+            self.startFetchingFollowerData()
+        } else {
+            self.stopFetchingFollowerData()
+        }
     }
     private lazy var lastFollowerFetchTime = GlucoseReading.allFollower.last?.date
     private var followerFetchTimer: Timer?
+    private var treatmentsFetchTimer: Timer?
     private let requestFactory: UploadRequestFactoryLogic
     
     var isPaused = false
@@ -36,8 +38,12 @@ final class NightscoutService {
     init() {
         requestFactory = UploadRequestFactory()
         _ = settingsObservers
-        if let settings = User.current.settings.nightscoutSync, settings.isFollowerAuthed {
-            startFetchingFollowerData()
+        //        if let settings = User.current.settings.nightscoutSync, settings.isFollowerAuthed {
+        //            startFetchingFollowerData()
+        //        }
+        
+        if let settings = User.current.settings.nightscoutSync, settings.downloadData {
+                      startFetchingTreatments()
         }
         
         reachability?.whenReachable = { [weak self] reachability in
@@ -56,18 +62,37 @@ final class NightscoutService {
     }
     
     func scanForNotUploadedEntries() {
+        //        LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
+        //        guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else {
+        //            LogController.log(
+        //                message: "[NighscoutService]: Aborting %@ because sync is disabled.",
+        //                type: .info,
+        //                #function
+        //            )
+        //            return
+        //        }
+        //
+        //        scanForGlucoseEntries()
+        //        scanForCalibrations()
+        //
+        //        runQueue()
+    }
+    
+    func scanForNotUploadedTreatments() {
         LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
-        guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else {
-            LogController.log(
-                message: "[NighscoutService]: Aborting %@ because sync is disabled.",
-                type: .info,
-                #function
-            )
-            return
+        guard let settings = User.current.settings.nightscoutSync,
+            settings.isEnabled, settings.uploadTreatments else {
+                LogController.log(
+                    message: "[NighscoutService]: Aborting %@ because sync or uploadTreatments is disabled.",
+                    type: .info,
+                    #function
+                )
+                return
         }
         
-        scanForGlucoseEntries()
-        scanForCalibrations()
+        scanForTreatments(treatmentType: .carbs)
+        scanForTreatments(treatmentType: .bolus)
+        scanForTreatments(treatmentType: .basal)
         
         runQueue()
     }
@@ -143,6 +168,108 @@ final class NightscoutService {
         }
     }
     
+    private func scanForTreatments(treatmentType: TreatmentType) {
+        LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
+        let all: [TreatmentEntryProtocol]
+        
+        switch treatmentType {
+        case .carbs:
+            all = CarbEntriesWorker.fetchAllCarbEntries()
+        case .bolus:
+            all = InsulinEntriesWorker.fetchAllBolusEntries()
+        case .basal:
+            all = InsulinEntriesWorker.fetchAllBasalEntries()
+        default:
+            return
+        }
+        
+        let notUploaded = all.filter { $0.cloudUploadStatus == .notUploaded }
+        let modified = all.filter { $0.cloudUploadStatus == .modified }
+        let deleted = all.filter { $0.cloudUploadStatus == .waitingForDeletion }
+        
+        LogController.log(
+            message: "[NighscoutService]: Found %d not uploaded and %d modified treatments and %d deleted treatments",
+            type: .info,
+            notUploaded.count,
+            modified.count,
+            deleted.count
+        )
+        
+        checkNotUploadedTreatments(notUploaded, treatmentType)
+        
+        checkModifiedTreatments(modified, treatmentType)
+        
+        checkDeletedTreatments(deleted, treatmentType)
+    }
+    
+    private func checkNotUploadedTreatments(_ notUploaded: [TreatmentEntryProtocol], _ treatmentType: TreatmentType) {
+        let postRequestType = treatmentType.getUploadRequestTypeFor(requestType: .post)
+        for entry in notUploaded {
+            guard !requestQueue.contains(where: {
+                $0.itemID == entry.externalID && $0.type == postRequestType
+            }) else { continue }
+            
+            guard let request = requestFactory.createNotUploadedTreatmentRequest(
+                CTreatment(entry: entry, treatmentType: treatmentType), requestType: postRequestType) else {
+                    return }
+            requestQueue.append(request)
+        }
+    }
+    
+    private func checkModifiedTreatments(_ modified: [TreatmentEntryProtocol], _ treatmentType: TreatmentType) {
+        let postRequestType = treatmentType.getUploadRequestTypeFor(requestType: .post)
+        let modifyRequestType = treatmentType.getUploadRequestTypeFor(requestType: .modify)
+        for entry in modified {
+            if let index = requestQueue.firstIndex(where: {
+                $0.itemID == entry.externalID && $0.type == postRequestType
+            }) {
+                requestQueue.remove(at: index)
+            }
+            
+            if !requestQueue.contains(where: {
+                $0.itemID == entry.externalID && $0.type == modifyRequestType
+            }), let request = requestFactory.createModifiedTreatmentRequest(
+                CTreatment(entry: entry, treatmentType: treatmentType), requestType: modifyRequestType) {
+                requestQueue.append(request)
+            }
+        }
+    }
+    
+    private func checkDeletedTreatments(_ deleted: [TreatmentEntryProtocol], _ treatmentType: TreatmentType) {
+        let postRequestType = treatmentType.getUploadRequestTypeFor(requestType: .post)
+        let deleteRequestType = treatmentType.getUploadRequestTypeFor(requestType: .delete)
+        for entry in deleted {
+            if let index = requestQueue.firstIndex(where: {
+                $0.itemID == entry.externalID && $0.type == postRequestType
+            }) {
+                requestQueue.remove(at: index)
+            }
+            
+            if !requestQueue.contains(where: { $0.itemID == entry.externalID && $0.type == deleteRequestType
+            }), let uuid = entry.externalID {
+                guard let findRequest = requestFactory.createFindTreatmentRequest(uuid: uuid) else { return }
+                URLSession.shared.loggableDataTask(with: findRequest) { data, _, error in
+                    guard let data = data, error == nil else { return }
+                    guard let entries = try? JSONDecoder().decode([CTreatment].self, from: data) else { return }
+                    if !entries.isEmpty {
+                        guard let request = self.requestFactory.createDeleteTreatmentRequest(uuid, requestType: deleteRequestType) else { return }
+                        self.requestQueue.append(request)
+                        self.runQueue()
+                    } else {
+                        switch treatmentType {
+                        case .carbs:
+                            CarbEntriesWorker.deleteEntryWith(externalID: uuid)
+                        case .bolus, .basal:
+                            InsulinEntriesWorker.deleteEntryWith(externalID: uuid)
+                        default:
+                            break
+                        }
+                    }
+                }.resume()
+            }
+        }
+    }
+    
     func testNightscoutConnection(tryAuth: Bool, callback: @escaping (Bool, NightscoutError?) -> Void) {
         LogController.log(message: "[NighscoutService]: Try to %@.", type: .info, #function)
         do {
@@ -168,6 +295,9 @@ final class NightscoutService {
     }
     
     private func runQueue() {
+        print("requestQueue.count \(requestQueue.count)")
+        print("requestQueue.isPaused \(isPaused)")
+        print("requestQueue.isRequestInProgress \(isRequestInProgress)")
         guard checkUseCellular() else {
             LogController.log(
                 message: "[NighscoutService]: Aborting run queue because not allowed to use cellular data.",
@@ -190,24 +320,40 @@ final class NightscoutService {
         let request = requestQueue[0]
         URLSession.shared.loggableDataTask(with: request.request) { [weak self] _, _, error in
             guard let self = self else { return }
-            defer { self.isRequestInProgress = false }
             guard error == nil else { return }
             let first = self.requestQueue.removeFirst()
+            self.performRequestCompleteActions(first)
+            self.isRequestInProgress = false
             self.runQueue()
-            
-            DispatchQueue.main.async {
-                switch first.type {
-                case .postGlucoseReading, .modifyGlucoseReading:
-                    GlucoseReading.markEntryAsUploaded(externalID: first.itemID)
-                    self.sendDeviceStatus()
-                case .deleteGlucoseReading, .deleteCalibration:
-                    break
-                    
-                case .postCalibration:
-                    Calibration.markCalibrationAsUploaded(itemID: first.itemID)
-                }
-            }
         }.resume()
+    }
+    
+    fileprivate func performRequestCompleteActions(_ request: UploadRequest) {
+        DispatchQueue.main.async {
+            switch request.type {
+            case .postGlucoseReading, .modifyGlucoseReading:
+                GlucoseReading.markEntryAsUploaded(externalID: request.itemID)
+                self.sendDeviceStatus()
+            case .deleteGlucoseReading, .deleteCalibration:
+                break
+            case .postCalibration:
+                Calibration.markCalibrationAsUploaded(itemID: request.itemID)
+            case .postCarbs, .modifyCarbs:
+                CarbEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
+            case .deleteCarbs:
+                CarbEntriesWorker.deleteEntryWith(externalID: request.itemID)
+                
+            case .postBolus, .modifyBolus:
+                InsulinEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
+            case .deleteBolus:
+                InsulinEntriesWorker.deleteEntryWith(externalID: request.itemID)
+                
+            case .postBasal, .modifyBasal:
+                InsulinEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
+            case .deleteBasal:
+                InsulinEntriesWorker.deleteEntryWith(externalID: request.itemID)
+            }
+        }
     }
     
     private func startFetchingFollowerData() {
@@ -218,6 +364,18 @@ final class NightscoutService {
                 self.fetchFollowerData()
         }
         fetchFollowerData()
+    }
+    
+    private func startFetchingTreatments() {
+        LogController.log(message: "[NighscoutService]: Started fetching follower data.", type: .info)
+        treatmentsFetchTimer = Timer.scheduledTimer(
+            withTimeInterval: 60.0,
+            repeats: true) { _ in
+                if let settings = User.current.settings.nightscoutSync, settings.downloadData {
+                    self.fetchTreatments()
+                }
+        }
+        fetchTreatments()
     }
     
     private func stopFetchingFollowerData() {
@@ -243,6 +401,22 @@ final class NightscoutService {
         }.resume()
     }
     
+    private func fetchTreatments() {
+        LogController.log(message: "[NighscoutService]: Try to %@.", type: .info, #function)
+        guard let request = requestFactory.createFetchTreatmentsRequest() else { return }
+        URLSession.shared.loggableDataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else { return }
+            guard let entries = try? JSONDecoder().decode([CTreatment].self, from: data) else { return }
+             DispatchQueue.main.async {
+            for obj in entries {
+                print("obj.id \(String(describing: obj.treatmentID))")
+            }
+            
+            CTreatment.parseTreatmentsToEntries(treatments: entries)
+             }
+        }.resume()
+    }
+    
     private func checkUseCellular() -> Bool {
         if User.currentAsync?.settings.nightscoutSync?.useCellularData == false {
             guard currentConnectType != .cellular else { return false }
@@ -262,7 +436,7 @@ final class NightscoutService {
         
         return true
     }
-  
+    
     func sendDeviceStatus() {
         LogController.log(message: "[NightscoutService]: Try to %@.", type: .info, #function)
         guard let request = requestFactory.createDeviceStatusRequest() else { return }

@@ -9,15 +9,27 @@
 import Foundation
 import RealmSwift
 
-final class CarbEntry: AbstractEntry, AbstractEntryProtocol {
+final class CarbEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryProtocol {
     @objc private(set) dynamic var amount: Double = 0.0
     @objc private(set) dynamic var foodType: String?
     @objc private(set) dynamic var assimilationDuration: TimeInterval = 0.0
+    @objc private(set) dynamic var externalID: String?
+    @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notApplicable.rawValue
+
+    var cloudUploadStatus: CloudUploadStatus {
+        get {
+            return CloudUploadStatus(rawValue: rawCloudUploadStatus) ?? .notApplicable
+        }
+        set {
+            rawCloudUploadStatus = newValue.rawValue
+        }
+    }
     
-    init(amount: Double, foodType: String?, date: Date) {
+    init(amount: Double, foodType: String?, date: Date, externalID: String? = nil) {
         super.init(date: date)
         self.amount = amount
         self.foodType = foodType
+        self.externalID = externalID ?? UUID().uuidString.lowercased()
     }
     
     required init() {
@@ -29,6 +41,9 @@ final class CarbEntry: AbstractEntry, AbstractEntryProtocol {
             self.amount = amount
             self.foodType = foodType
             self.updateDate(date)
+            if self.cloudUploadStatus == .uploaded {
+                 self.cloudUploadStatus = .modified
+             }
         }
     }
 }

@@ -12,7 +12,7 @@ final class EntriesListCarbsPersistenceWorker: EntriesListEntryPersistenceWorker
     private var carbs: [CarbEntry] = []
     
     func fetchEntries() -> [AbstractEntry] {
-        carbs = CarbEntriesWorker.fetchAllCarbEntries()
+        carbs = CarbEntriesWorker.fetchAllCarbEntries().filter { $0.cloudUploadStatus != .waitingForDeletion }
         return carbs
     }
 

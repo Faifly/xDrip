@@ -12,7 +12,9 @@ final class EntriesListInsulinPersistenceWorker: EntriesListEntryPersistenceWork
     private var insulinEntries: [InsulinEntry] = []
     
     func fetchEntries() -> [AbstractEntry] {
-        insulinEntries = InsulinEntriesWorker.fetchAllInsulinEntries()
+        insulinEntries = InsulinEntriesWorker.fetchAllInsulinEntries().filter {
+            $0.cloudUploadStatus != .waitingForDeletion
+        }
         return insulinEntries
     }
 

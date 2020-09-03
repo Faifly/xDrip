@@ -20,6 +20,21 @@ enum UploadRequestType {
     case deleteGlucoseReading
     case postCalibration
     case deleteCalibration
+    case postCarbs
+    case modifyCarbs
+    case deleteCarbs
+    case postBolus
+    case modifyBolus
+    case deleteBolus
+    case postBasal
+    case modifyBasal
+    case deleteBasal
+}
+
+enum RequestType {
+    case post
+    case modify
+    case delete
 }
 
 extension UploadRequest: Equatable {

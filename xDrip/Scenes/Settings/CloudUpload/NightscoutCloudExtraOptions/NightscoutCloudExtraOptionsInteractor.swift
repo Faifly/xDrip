@@ -46,8 +46,7 @@ final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBu
             updateData()
             
         case .uploadTreatments:
-//            settings.updateUploadTreatments(value)
-            router?.presentNotYetImplementedAlert()
+            settings.updateUploadTreatments(value)
             updateData()
             
         case .alertOnFailures:
