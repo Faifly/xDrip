@@ -144,7 +144,7 @@ class BaseHistoryView: UIView {
     func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?) {
         guard let minValue = minValue else { return }
         guard let maxValue = maxValue else { return }
-        let adjustedMinValue = minValue.rounded(.down)
+        let adjustedMinValue = max(minValue.rounded(.down), 0.0)
         let adjustedMaxValue = maxValue.rounded(.up)
         let step = (adjustedMaxValue - adjustedMinValue) / Double(verticalLines - 1)
         
@@ -157,7 +157,7 @@ class BaseHistoryView: UIView {
         leftLabelsView.setNeedsDisplay()
         chartView.verticalLinesCount = labels.count
         if adjustedMinValue ~~ adjustedMaxValue {
-            chartView.yRange = (adjustedMinValue - 1.0)...(adjustedMaxValue + 1.0)
+            chartView.yRange = (max(adjustedMinValue - 1.0, 0.0))...(adjustedMaxValue + 1.0)
         } else {
             chartView.yRange = adjustedMinValue...adjustedMaxValue
         }
