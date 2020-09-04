@@ -20,12 +20,12 @@ final class EntriesListInsulinPersistenceWorker: EntriesListEntryPersistenceWork
         switch type {
         case .bolus:
             insulinEntries = InsulinEntriesWorker.fetchAllBolusEntries()
-            case .basal:
+        case .basal:
             insulinEntries = InsulinEntriesWorker.fetchAllBasalEntries()
         }
         return insulinEntries
     }
-
+    
     func deleteEntry(_ index: Int) {
         let entry = insulinEntries.remove(at: index)
         InsulinEntriesWorker.deleteInsulinEntry(entry)

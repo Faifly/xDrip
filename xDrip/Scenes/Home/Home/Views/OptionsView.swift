@@ -22,58 +22,47 @@ enum Option: Int {
     }
 }
 
-class OptionsView: NibView, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet private weak var optionsTableView: UITableView!
-    
-    private let cellFactory = BaseSettingsCellFactory()
-    
-    private let cells: [Option] = [.allTrainings, .allBasals]
+class OptionsView: NibView {
+    @IBOutlet private weak var contentView: UIView!
+    @IBOutlet private weak var allTrainingsGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet private weak var allBasalsGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet private weak var allTrainingsTilteLabel: UILabel!
+    @IBOutlet private weak var allBasalsTitleLabel: UILabel!
+    @IBOutlet private weak var allTrainingsContentView: UIView!
+    @IBOutlet private weak var allBasalsContentView: UIView!
     
     var itemSelectionHandler: ((Option) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        allTrainingsTilteLabel.text = Option.allTrainings.title
+        allBasalsTitleLabel.text = Option.allBasals.title
         
-        optionsTableView.delegate = self
-        optionsTableView.dataSource = self
-        
-        optionsTableView.registerNib(type: BaseSettingsDisclosureCell.self)
-        cellFactory.tableView = optionsTableView
-        optionsTableView.layer.cornerRadius = 5.0
+        allTrainingsGestureRecognizer.addTarget(self, action: #selector (self.onAllTrainingsTapped))
+        allBasalsGestureRecognizer.addTarget(self, action: #selector (self.onAllBasalTapped))
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    @objc func onAllTrainingsTapped(sender: UITapGestureRecognizer) {
+        highliteView(allTrainingsContentView)
+        itemSelectionHandler?(.allTrainings)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cells.count
+    @objc func onAllBasalTapped(sender: UITapGestureRecognizer) {
+        highliteView(allBasalsContentView)
+        itemSelectionHandler?(.allBasals)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cellType: BaseSettings.Cell
-        switch cells[indexPath.row] {
-        case .allTrainings:
-            cellType = .disclosure(mainText: Option.allTrainings.title, detailText: nil, selectionHandler: {})
-        case .allBasals:
-            cellType = .disclosure(mainText: Option.allBasals.title, detailText: nil, selectionHandler: {})
-        }
-                
-        let cell = cellFactory.createCell(
-            ofType: cellType,
-            indexPath: indexPath,
-            expandedCell: nil
-        )
-        
-        if indexPath.row == cells.count - 1 {
-            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        itemSelectionHandler?(cells[indexPath.row])
+    func highliteView(_ view: UIView) {
+        let bgcolor = view.backgroundColor
+        UIView.animate(withDuration: 0.1,
+                       delay: 0,
+                       options: [.allowUserInteraction, .curveLinear],
+                       animations: {
+                        view.backgroundColor = .borderColor
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.1, delay: 0, options: [.allowUserInteraction, .curveLinear], animations: {
+                view.backgroundColor = bgcolor
+            })
+        })
     }
 }

@@ -56,10 +56,13 @@ final class EditFoodEntryPresenterTests: XCTestCase {
         let response = EditFoodEntry.Load.Response(
             insulinEntry: nil,
             carbEntry: nil,
+            trainingEntry: nil,
             entryType: .food,
             textChangedHandler: { _, _ in },
             dateChangedHandler: { _, _ in },
-            foodTypeChangedHandler: { _ in }
+            foodTypeChangedHandler: { _ in },
+            trainingIntensityChangedHandler: { _ in },
+            timeIntervalChangedHandler: { _ in }
         )
         
         // When

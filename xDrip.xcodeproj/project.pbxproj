@@ -456,10 +456,6 @@
 		580EC79B24214D1200C34948 /* EntriesListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC79724214D1200C34948 /* EntriesListInteractorTests.swift */; };
 		580EC79C24214D1200C34948 /* EntriesListRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC79824214D1200C34948 /* EntriesListRouterTests.swift */; };
 		580EC79D24214D1200C34948 /* EntriesListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC79924214D1200C34948 /* EntriesListPresenterTests.swift */; };
-		580EC7B2242151EB00C34948 /* EditTrainingViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7AE242151EB00C34948 /* EditTrainingViewControllerTests.swift */; };
-		580EC7B3242151EB00C34948 /* EditTrainingInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7AF242151EB00C34948 /* EditTrainingInteractorTests.swift */; };
-		580EC7B4242151EB00C34948 /* EditTrainingRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7B0242151EB00C34948 /* EditTrainingRouterTests.swift */; };
-		580EC7B5242151EB00C34948 /* EditTrainingPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7B1242151EB00C34948 /* EditTrainingPresenterTests.swift */; };
 		580EC7BC2421521C00C34948 /* EditCalibrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7B72421521C00C34948 /* EditCalibrationPresenter.swift */; };
 		580EC7BD2421521C00C34948 /* EditCalibrationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7B82421521C00C34948 /* EditCalibrationRouter.swift */; };
 		580EC7BE2421521C00C34948 /* EditCalibrationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580EC7B92421521C00C34948 /* EditCalibrationModels.swift */; };
@@ -1141,10 +1137,6 @@
 		580EC79724214D1200C34948 /* EntriesListInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListInteractorTests.swift; sourceTree = "<group>"; };
 		580EC79824214D1200C34948 /* EntriesListRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListRouterTests.swift; sourceTree = "<group>"; };
 		580EC79924214D1200C34948 /* EntriesListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListPresenterTests.swift; sourceTree = "<group>"; };
-		580EC7AE242151EB00C34948 /* EditTrainingViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingViewControllerTests.swift; sourceTree = "<group>"; };
-		580EC7AF242151EB00C34948 /* EditTrainingInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingInteractorTests.swift; sourceTree = "<group>"; };
-		580EC7B0242151EB00C34948 /* EditTrainingRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingRouterTests.swift; sourceTree = "<group>"; };
-		580EC7B1242151EB00C34948 /* EditTrainingPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainingPresenterTests.swift; sourceTree = "<group>"; };
 		580EC7B72421521C00C34948 /* EditCalibrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCalibrationPresenter.swift; sourceTree = "<group>"; };
 		580EC7B82421521C00C34948 /* EditCalibrationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCalibrationRouter.swift; sourceTree = "<group>"; };
 		580EC7B92421521C00C34948 /* EditCalibrationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCalibrationModels.swift; sourceTree = "<group>"; };
@@ -2839,21 +2831,9 @@
 			children = (
 				58B5FDB0241933BE00DB857D /* EditFoodEntry */,
 				580EC79524214D0200C34948 /* EntriesList */,
-				580EC7AD242151DA00C34948 /* EditTraining */,
 				580EC7C12421524000C34948 /* EditCalibration */,
 			);
 			path = Entries;
-			sourceTree = "<group>";
-		};
-		580EC7AD242151DA00C34948 /* EditTraining */ = {
-			isa = PBXGroup;
-			children = (
-				580EC7AE242151EB00C34948 /* EditTrainingViewControllerTests.swift */,
-				580EC7AF242151EB00C34948 /* EditTrainingInteractorTests.swift */,
-				580EC7B0242151EB00C34948 /* EditTrainingRouterTests.swift */,
-				580EC7B1242151EB00C34948 /* EditTrainingPresenterTests.swift */,
-			);
-			path = EditTraining;
 			sourceTree = "<group>";
 		};
 		580EC7B62421520900C34948 /* EditCalibration */ = {
@@ -4393,7 +4373,6 @@
 				584432B6243CFE1900282A6C /* SettingsChartViewControllerTests.swift in Sources */,
 				2CDA0D9C24C9CBBE001C5D6B /* BasalChartDataWorkerTests.swift in Sources */,
 				58B5FD872419287900DB857D /* StatsRootInteractorTests.swift in Sources */,
-				580EC7B3242151EB00C34948 /* EditTrainingInteractorTests.swift in Sources */,
 				5805CA2E24389EAA002AFA1B /* InitialSetupDexcomG6ConnectionWorkerTests.swift in Sources */,
 				2CBE1A9B24323A58003BE14E /* EntriesListTableControllerTests.swift in Sources */,
 				0A89542824A0AC230067601F /* HomeGlucoseFormattingWorkerTests.swift in Sources */,
@@ -4464,7 +4443,6 @@
 				5844326C243CF96B00282A6C /* AlertConfigurationTests.swift in Sources */,
 				580E4CEA243F805C00565EDE /* SettingsModeMasterViewControllerTests.swift in Sources */,
 				2C48E6EE242909F4006B63B0 /* UIView+Bindings_Tests.swift in Sources */,
-				580EC7B4242151EB00C34948 /* EditTrainingRouterTests.swift in Sources */,
 				584432B7243CFE1900282A6C /* SettingsChartInteractorTests.swift in Sources */,
 				5805CA992438A650002AFA1B /* CGMDeviceMetadataTypeTests.swift in Sources */,
 				5844326E243CF98400282A6C /* AlertEventTypeTests.swift in Sources */,
@@ -4518,7 +4496,6 @@
 				5805CAA82438A760002AFA1B /* String+Validation_Tests.swift in Sources */,
 				58443272243CF9B300282A6C /* BasalRateTests.swift in Sources */,
 				580E4C35243F769700565EDE /* BaseSettingsViewControllerTests.swift in Sources */,
-				580EC7B5242151EB00C34948 /* EditTrainingPresenterTests.swift in Sources */,
 				580E4C4D243F773500565EDE /* SettingsAlertTypesPresenterTests.swift in Sources */,
 				580E4C8C243F780200565EDE /* SettingsModeRootInteractorTests.swift in Sources */,
 				2C4FE9BD24ADD81500D2048B /* GlucoseNotificationWorkerTests.swift in Sources */,
@@ -4570,7 +4547,6 @@
 				5805CA632438A269002AFA1B /* DexcomG6OpCodeTests.swift in Sources */,
 				58B5FD9924192E5A00DB857D /* SettingsRootViewControllerTests.swift in Sources */,
 				58788B8524265235000EB113 /* CarbEntryTests.swift in Sources */,
-				580EC7B2242151EB00C34948 /* EditTrainingViewControllerTests.swift in Sources */,
 				580E4C5D243F776700565EDE /* SettingsAlertSoundInteractorTests.swift in Sources */,
 				580E4CCE243F78B300565EDE /* SettingsPumpUserPresenterTests.swift in Sources */,
 				580E4CB9243F788D00565EDE /* SettingsUserTypeRootViewControllerTests.swift in Sources */,
