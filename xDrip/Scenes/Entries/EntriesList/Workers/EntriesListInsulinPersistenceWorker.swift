@@ -9,10 +9,20 @@
 import Foundation
 
 final class EntriesListInsulinPersistenceWorker: EntriesListEntryPersistenceWorker {
+    let type: InsulinType
+    
+    init(type: InsulinType) {
+        self.type = type
+    }
     private var insulinEntries: [InsulinEntry] = []
     
     func fetchEntries() -> [AbstractEntry] {
-        insulinEntries = InsulinEntriesWorker.fetchAllInsulinEntries()
+        switch type {
+        case .bolus:
+            insulinEntries = InsulinEntriesWorker.fetchAllBolusEntries()
+            case .basal:
+            insulinEntries = InsulinEntriesWorker.fetchAllBasalEntries()
+        }
         return insulinEntries
     }
 

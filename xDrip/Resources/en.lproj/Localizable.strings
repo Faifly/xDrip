@@ -30,6 +30,9 @@
 "home_about_glucose_content" = "Blood Glucose - also called blood sugar - is the main sugar found in the blood and the main source of energy for your body";
 "home_about_glucose_title" = "About Blood Glucose";
 "home_no_data_for_period" = "No data for the period";
+"home_all_trainings" = "All Trainings";
+"home_all_basals" = "All Basals";
+"home_options_title" = "Options";
 
 // Root
 "root_add_entry_food" = "Food";
@@ -50,6 +53,8 @@
 "entries_list_data_section_title" = "DATA";
 "entries_list_scene_title_carbs" = "Active Carbohydrates";
 "entries_list_scene_title_bolus" = "Active insulin";
+"entries_list_scene_title_basals" = "All Basals";
+"entries_list_scene_title_trainings" = "All Trainings";
 "entries_list_cell_no_date" = "No date specified";
 "entries_list_scene_carbs_amount_unit_grams" = "g";
 "entries_list_scene_carbs_insulin_unit" = "U";
@@ -70,26 +75,37 @@
 "edit_calibration_error_invalid_glucose1_input" = "Invalid blood glucose value";
 "edit_calibration_error_sensor_not_started" = "Sensor is not started";
 
-// Edit Food
-"edit_food_entry_food_scene_title" = "Food";
-"edit_food_entry_bolus_scene_title" = "Bolus";
-"edit_food_entry_basal_scene_title" = "Basal";
-"edit_food_entry_carbs_scene_title" = "Carbs";
-"edit_food_entry_section_header" = "ENTER THE VALUES BELOW";
-"edit_food_entry_carbs_section_footer" = "Provide an exact number of amount consumed in grams, date and type of food to have a better overview of your diet.";
-"edit_food_entry_bolus_section_footer" = "Choose bolus units amount and select the precise date of the injection";
-"edit_food_entry_basal_section_footer" = "Choose basal units amount and select the precise date of the injection";
-"edit_food_entry_carbs_amount_title" = "Amount consumed";
-"edit_food_entry_type_of_food" = "Type of food";
-"edit_food_entry_type_of_food_textfield_placeholder" = "Enter food type...";
-"edit_food_entry_insulin_amount_title" = "Units";
-"edit_food_entry_date_and_time" = "Date/Time";
-"edit_food_entry_carbs_amount_unit_grams" = "g";
-"edit_food_entry_insulin_unit_milligrams" = "mg";
-"edit_food_entry_fast_carbs_title" = "Fast";
-"edit_food_entry_medium_carbs_title" = "Medium";
-"edit_food_entry_slow_carbs_title" = "Slow";
-"edit_food_entry_other_carbs_title" = "Other";
+// Edit Entry
+"edit_entry_food_scene_title" = "Food";
+"edit_entry_bolus_scene_title" = "Bolus";
+"edit_entry_basal_scene_title" = "Basal";
+"edit_entry_carbs_scene_title" = "Carbs";
+"edit_entry_section_header" = "ENTER THE VALUES BELOW";
+"edit_entry_carbs_section_footer" = "Provide an exact number of amount consumed in grams, date and type of food to have a better overview of your diet.";
+"edit_entry_bolus_section_footer" = "Choose bolus units amount and select the precise date of the injection";
+"edit_entry_basal_section_footer" = "Choose basal units amount and select the precise date of the injection";
+"edit_entry_carbs_amount_title" = "Amount consumed";
+"edit_entry_type_of_food" = "Type of food";
+"edit_entry_type_of_food_textfield_placeholder" = "Enter food type...";
+"edit_entry_insulin_amount_title" = "Units";
+"edit_entry_date_and_time" = "Date/Time";
+"edit_entry_carbs_amount_unit_grams" = "g";
+"edit_entry_insulin_unit_milligrams" = "mg";
+"edit_entry_fast_carbs_title" = "Fast";
+"edit_entry_medium_carbs_title" = "Medium";
+"edit_entry_slow_carbs_title" = "Slow";
+"edit_entry_other_carbs_title" = "Other";
+"edit_entry_trainings_scene_title" = "Training";
+"edit_entry_trainings_cell_duration" = "Duration";
+"edit_entry_trainings_cell_intensity" = "Intensity";
+"edit_entry_trainings_cell_dateTime" = "Date/Time";
+"edit_entry_trainings_section_title" = "Enter the values ​​below";
+"edit_entry_trainings_intensity_low" = "Low";
+"edit_entry_trainings_intensity_normal" = "Normal";
+"edit_entry_trainings_intensity_high" = "High";
+"edit_entry_trainings_m" = "m";
+
+
 
 // History
 "history_scene_title" = "History";
@@ -428,17 +444,6 @@ This setting will be applied to all future sensors";
 "dexcom_error_invalid_transmitter_version_response" = "Received invalid transmitter version response";
 "dexcom_error_invalid_battery_status_response" = "Received invalid battery status response";
 "dexcom_error_invalid_transmitter_time_response" = "Received invalid transmitter time response";
-
-// Edit Training
-"edit_training_title" = "Training";
-"edit_training_cell_duration" = "Duration";
-"edit_training_cell_intensity" = "Intensity";
-"edit_training_cell_dateTime" = "Date/Time";
-"edit_training_section_title" = "Enter the values ​​below";
-"edit_training_intensity_low" = "Low";
-"edit_training_intensity_normal" = "Normal";
-"edit_training_intensity_high" = "High";
-"edit_training_m" = "m";
 
 // Calibration
 "calibration_not_ready_error_title" = "Not ready for calibration";

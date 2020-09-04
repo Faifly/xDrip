@@ -206,8 +206,8 @@ final class EditTrainingViewControllerTests: XCTestCase {
         }
         
         // Then
-        XCTAssertTrue(durationDetailLabel.text == "60 \("edit_training_m".localized)")
-        XCTAssertTrue(intensityDetailLabel.text == "edit_training_intensity_high".localized)
+        XCTAssertTrue(durationDetailLabel.text == "60 \("edit_entry_trainings_m".localized)")
+        XCTAssertTrue(intensityDetailLabel.text == "edit_entry_trainings_intensity_high".localized)
         XCTAssertTrue(dateDetailLabel.text == DateFormatter.localizedString(
             from: specificDate ?? Date(),
             dateStyle: .short,

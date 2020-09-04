@@ -21,6 +21,9 @@ enum EditFoodEntry {
         case foodType
         case insulinAmount
         case insulinDate
+        case trainingDate
+        case trainingDuration
+        case trainingIntensity
     }
     
     enum EntryType {
@@ -28,6 +31,7 @@ enum EditFoodEntry {
         case bolus
         case basal
         case carbs
+        case training
     }
     
     enum Mode {
@@ -44,10 +48,13 @@ enum EditFoodEntry {
         struct Response {
             let insulinEntry: InsulinEntry?
             let carbEntry: CarbEntry?
+            let trainingEntry: TrainingEntry?
             let entryType: EntryType
             let textChangedHandler: (Field, String?) -> Void
             let dateChangedHandler: (Field, Date) -> Void
             let foodTypeChangedHandler: (String?) -> Void
+            let trainingIntensityChangedHandler: (TrainingIntensity) -> Void
+            let timeIntervalChangedHandler: (TimeInterval) -> Void
         }
         
         struct ViewModel {

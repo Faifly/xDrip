@@ -42,6 +42,10 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
             sections = [
                 createCarbsSection(response: response)
             ]
+        case .training:
+            sections = [
+                createTrainingsSection(response: response)
+            ]
         }
         
         let tableViewModel = BaseSettings.ViewModel(sections: sections)
@@ -69,7 +73,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
                 .carbsAmount,
-                detail: "edit_food_entry_carbs_amount_unit_grams".localized,
+                detail: "edit_entry_carbs_amount_unit_grams".localized,
                 textFieldText: valueString,
                 textChangeHandler: response.textChangedHandler
             ),
@@ -87,8 +91,8 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         
         return .normal(
             cells: cells,
-            header: "edit_food_entry_section_header".localized,
-            footer: "edit_food_entry_carbs_section_footer".localized
+            header: "edit_entry_section_header".localized,
+            footer: "edit_entry_carbs_section_footer".localized
         )
     }
     
@@ -99,7 +103,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
                 .insulinAmount,
-                detail: "edit_food_entry_insulin_unit_milligrams".localized,
+                detail: "edit_entry_insulin_unit_milligrams".localized,
                 textFieldText: valueString,
                 textChangeHandler: response.textChangedHandler
             ),
@@ -112,13 +116,13 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         
         var header: String?
         if response.entryType == .bolus {
-            header = "edit_food_entry_section_header".localized
+            header = "edit_entry_section_header".localized
         }
         
         return .normal(
             cells: cells,
             header: header,
-            footer: "edit_food_entry_bolus_section_footer".localized
+            footer: "edit_entry_bolus_section_footer".localized
         )
     }
     
@@ -129,7 +133,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
                 .insulinAmount,
-                detail: "edit_food_entry_insulin_unit_milligrams".localized,
+                detail: "edit_entry_insulin_unit_milligrams".localized,
                 textFieldText: valueString,
                 textChangeHandler: response.textChangedHandler
             ),
@@ -142,8 +146,32 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         
         return .normal(
             cells: cells,
-            header: "edit_food_entry_section_header".localized,
-            footer: "edit_food_entry_basal_section_footer".localized
+            header: "edit_entry_section_header".localized,
+            footer: "edit_entry_basal_section_footer".localized
+        )
+    }
+    
+    private func createTrainingsSection(response: EditFoodEntry.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createDurationPickerCell(
+                duration: response.trainingEntry?.duration,
+                durationChangedHandler: response.timeIntervalChangedHandler
+            ),
+            createIntensityPickerCell(
+                intensity: response.trainingEntry?.intensity,
+                intensityChangedHandler: response.trainingIntensityChangedHandler
+            ),
+            createDatePickerCell(
+                .trainingDate,
+                date: response.trainingEntry?.date,
+                dateChangedHandler: response.dateChangedHandler
+            )
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: "edit_entry_trainings_section_title".localized,
+            footer: nil
         )
     }
     
@@ -184,16 +212,102 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         let detail = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
         return .pickerExpandable(mainText: field.title, detailText: detail, picker: picker)
     }
+    
+    private func createDurationPickerCell(
+        duration: TimeInterval?,
+        durationChangedHandler: @escaping (TimeInterval) -> Void
+    ) -> BaseSettings.Cell {
+        var detail = ""
+        let duration = duration ?? TimeInterval.secondsPerMinute
+        let picker = CustomPickerView(mode: .countDown)
+        
+        let hours = Int(duration / TimeInterval.secondsPerHour)
+        let mins = Int((duration - Double(hours) * TimeInterval.secondsPerHour) / TimeInterval.secondsPerMinute)
+        
+        picker.selectRow(hours, inComponent: 0, animated: false)
+        picker.selectRow(mins, inComponent: 2, animated: false)
+        
+        detail = String(format: "%.0f %@", duration / TimeInterval.secondsPerMinute, "edit_entry_trainings_m".localized)
+        
+        picker.formatValues = { values in
+            guard let hour = Double(values[0]), let min = Double(values[2]) else { return "" }
+            
+            var totalSec = hour * TimeInterval.secondsPerHour + min * TimeInterval.secondsPerMinute
+            
+            if totalSec < TimeInterval.secondsPerMinute {
+                totalSec = TimeInterval.secondsPerMinute
+                picker.selectRow(1, inComponent: 2, animated: true)
+            }
+            
+            durationChangedHandler(totalSec)
+            
+            let totalMins = totalSec / TimeInterval.secondsPerMinute
+            
+            return String(format: "%.0f %@", totalMins, "edit_entry_trainings_m".localized)
+        }
+        
+        return .pickerExpandable(
+            mainText: EditFoodEntry.Field.trainingDuration.title,
+            detailText: detail,
+            picker: picker
+        )
+    }
+    
+    private func createIntensityPickerCell(
+        intensity: TrainingIntensity?,
+        intensityChangedHandler: @escaping (TrainingIntensity) -> Void
+    ) -> BaseSettings.Cell {
+        var detail = ""
+        let intensity = intensity ?? TrainingIntensity.default
+        let data = TrainingIntensity.allCases.map({ $0.localizedTitle })
+        
+        let picker = CustomPickerView(data: [data])
+        
+        if let index = data.firstIndex(of: intensity.localizedTitle) {
+            detail = intensity.localizedTitle
+            picker.selectRow(index, inComponent: 0, animated: false)
+        }
+        
+        picker.formatValues = { values in
+            guard let intensityString = values.first else { return "" }
+            
+            let trainings = TrainingIntensity.allCases
+            
+            if let intensity = trainings.first(where: { $0.localizedTitle == intensityString }) {
+                intensityChangedHandler(intensity)
+            }
+            return intensityString
+        }
+        
+        return .pickerExpandable(
+            mainText: EditFoodEntry.Field.trainingIntensity.title,
+            detailText: detail,
+            picker: picker
+        )
+    }
 }
 
 private extension EditFoodEntry.Field {
     var title: String {
         switch self {
-        case .carbsAmount: return "edit_food_entry_carbs_amount_title".localized
-        case .carbsDate: return "edit_food_entry_date_and_time".localized
-        case .foodType: return "edit_food_entry_type_of_food".localized
-        case .insulinAmount: return "edit_food_entry_insulin_amount_title".localized
-        case .insulinDate: return "edit_food_entry_date_and_time".localized
+        case .carbsAmount: return "edit_entry_carbs_amount_title".localized
+        case .carbsDate: return "edit_entry_date_and_time".localized
+        case .foodType: return "edit_entry_type_of_food".localized
+        case .insulinAmount: return "edit_entry_insulin_amount_title".localized
+        case .insulinDate: return "edit_entry_date_and_time".localized
+        case .trainingDate: return "edit_entry_trainings_cell_dateTime".localized
+        case .trainingDuration: return "edit_entry_trainings_cell_duration".localized
+        case .trainingIntensity: return "edit_entry_trainings_cell_intensity".localized
+        }
+    }
+}
+
+private extension TrainingIntensity {
+    var localizedTitle: String {
+        switch self {
+        case .low: return "edit_entry_trainings_intensity_low".localized
+        case .normal: return "edit_entry_trainings_intensity_normal".localized
+        case .high: return "edit_entry_trainings_intensity_high".localized
         }
     }
 }

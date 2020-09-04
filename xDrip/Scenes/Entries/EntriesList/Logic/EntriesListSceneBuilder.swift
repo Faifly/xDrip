@@ -22,7 +22,7 @@ final class EntriesListSceneBuilder {
     }
     
     func createSceneForBolus() -> EntriesListViewController {
-        let persistenceWorker = EntriesListInsulinPersistenceWorker()
+        let persistenceWorker = EntriesListInsulinPersistenceWorker(type: .bolus)
         let formattingWorker = EntriesListInsulinFormattingWorker()
         
         let viewController = EntriesListViewController(
@@ -30,6 +30,30 @@ final class EntriesListSceneBuilder {
             formattingWorker: formattingWorker
         )
         viewController.title = "entries_list_scene_title_bolus".localized
+        return viewController
+    }
+    
+    func createSceneForTraining() -> EntriesListViewController {
+        let persistenceWorker = EntriesListTrainingsPersistenceWorker()
+        let formattingWorker = EntriesListTrainingsFormattingWorker()
+        
+        let viewController = EntriesListViewController(
+            persistenceWorker: persistenceWorker,
+            formattingWorker: formattingWorker
+        )
+        viewController.title = "entries_list_scene_title_trainings".localized
+        return viewController
+    }
+    
+    func createSceneForBasal() -> EntriesListViewController {
+        let persistenceWorker = EntriesListInsulinPersistenceWorker(type: .basal)
+        let formattingWorker = EntriesListInsulinFormattingWorker()
+        
+        let viewController = EntriesListViewController(
+            persistenceWorker: persistenceWorker,
+            formattingWorker: formattingWorker
+        )
+        viewController.title = "entries_list_scene_title_basals".localized
         return viewController
     }
 }

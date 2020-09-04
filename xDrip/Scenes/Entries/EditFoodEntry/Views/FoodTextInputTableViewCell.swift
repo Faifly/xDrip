@@ -20,8 +20,8 @@ final class FoodTextInputTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleLabel.text = "edit_food_entry_type_of_food".localized
-        textField.placeholder = "edit_food_entry_type_of_food_textfield_placeholder".localized
+        titleLabel.text = "edit_entry_type_of_food".localized
+        textField.placeholder = "edit_entry_type_of_food_textfield_placeholder".localized
         textField.delegate = self
         
         setupCollectionView()
