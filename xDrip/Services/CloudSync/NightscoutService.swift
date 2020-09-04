@@ -43,7 +43,7 @@ final class NightscoutService {
         //        }
         
         if let settings = User.current.settings.nightscoutSync, settings.downloadData {
-                      startFetchingTreatments()
+            startFetchingTreatments()
         }
         
         reachability?.whenReachable = { [weak self] reachability in
@@ -295,9 +295,6 @@ final class NightscoutService {
     }
     
     private func runQueue() {
-        print("requestQueue.count \(requestQueue.count)")
-        print("requestQueue.isPaused \(isPaused)")
-        print("requestQueue.isRequestInProgress \(isRequestInProgress)")
         guard checkUseCellular() else {
             LogController.log(
                 message: "[NighscoutService]: Aborting run queue because not allowed to use cellular data.",
@@ -371,7 +368,7 @@ final class NightscoutService {
         treatmentsFetchTimer = Timer.scheduledTimer(
             withTimeInterval: 60.0,
             repeats: true) { _ in
-                if let settings = User.current.settings.nightscoutSync, settings.downloadData {
+                if let settings = User.current.settings.nightscoutSync, settings.isEnabled, settings.downloadData {
                     self.fetchTreatments()
                 }
         }
@@ -407,13 +404,9 @@ final class NightscoutService {
         URLSession.shared.loggableDataTask(with: request) { data, _, error in
             guard let data = data, error == nil else { return }
             guard let entries = try? JSONDecoder().decode([CTreatment].self, from: data) else { return }
-             DispatchQueue.main.async {
-            for obj in entries {
-                print("obj.id \(String(describing: obj.treatmentID))")
+            DispatchQueue.main.async {
+                CTreatment.parseTreatmentsToEntries(treatments: entries)
             }
-            
-            CTreatment.parseTreatmentsToEntries(treatments: entries)
-             }
         }.resume()
     }
     

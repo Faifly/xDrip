@@ -12,8 +12,6 @@ import RealmSwift
 protocol AbstractEntryProtocol {
     var amount: Double { get }
     var date: Date? { get }
-    var externalID: String? { get }
-    var cloudUploadStatus: CloudUploadStatus { get }
 }
 
 class AbstractEntry: Object {
