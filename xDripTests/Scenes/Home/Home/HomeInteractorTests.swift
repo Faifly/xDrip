@@ -83,6 +83,14 @@ final class HomeInteractorTests: XCTestCase {
         func routeToBolusEntriesList() {
             toBolusCalled = true
         }
+        
+        func routeToTrainingEntriesList() {
+            
+        }
+        
+        func routeToBasalEntriesList() {
+            
+        }
     }
     
     // MARK: Tests

@@ -254,7 +254,7 @@ final class EntriesListViewControllerTests: XCTestCase {
         InsulinEntriesWorker.addBolusEntry(amount: 0.0, date: Date())
         
         sut = EntriesListViewController(
-            persistenceWorker: EntriesListInsulinPersistenceWorker(),
+            persistenceWorker: EntriesListInsulinPersistenceWorker(type: .bolus),
             formattingWorker: EntriesListInsulinFormattingWorker()
         )
         
