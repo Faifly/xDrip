@@ -28,6 +28,12 @@ final class HomeGlucoseDataWorkerTests: AbstractRealmTest {
         CGMController.shared.serviceDidReceiveGlucoseReading(raw: 0.0, filtered: 0.0, rssi: 0.0)
         
         // Then
+        XCTAssertFalse(calledDataHandler)
+        
+        // When
+        CGMController.shared.serviceDidReceiveGlucoseReading(raw: 10.0, filtered: 10.0, rssi: 0.0)
+        
+        // Then
         XCTAssertTrue(calledDataHandler)
     }
     
