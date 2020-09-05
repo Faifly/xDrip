@@ -38,7 +38,7 @@ final class StatsChartView: UIView {
             detailsView.topAnchor.constraint(equalTo: topAnchor),
             detailsView.bottomAnchor.constraint(equalTo: linesChart.topAnchor),
             detailsView.heightAnchor.constraint(equalToConstant: 60.0),
-            verticalLabelsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -6.0),
+            verticalLabelsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 6.0),
             verticalLabelsView.trailingAnchor.constraint(equalTo: linesChart.leadingAnchor, constant: -4.0),
             verticalLabelsView.topAnchor.constraint(equalTo: detailsView.bottomAnchor),
             verticalLabelsView.bottomAnchor.constraint(equalTo: bottomAnchor),
