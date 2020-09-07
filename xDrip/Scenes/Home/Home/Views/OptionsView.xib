@@ -48,9 +48,6 @@
                                             <integer key="value" value="5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <outletCollection property="gestureRecognizers" destination="JBk-C1-use" appends="YES" id="pnf-5l-3PM"/>
-                                    </connections>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9a-Hv-i80">
                                     <rect key="frame" x="0.0" y="44" width="522" height="1"/>
@@ -96,9 +93,6 @@
                                             <integer key="value" value="5"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <outletCollection property="gestureRecognizers" destination="a8R-tz-jBB" appends="YES" id="a9j-zy-aKS"/>
-                                    </connections>
                                 </view>
                             </subviews>
                             <constraints>
@@ -130,17 +124,13 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="allBasalsContentView" destination="zzj-7W-Uxk" id="GQ0-Ok-oQ5"/>
-                <outlet property="allBasalsGestureRecognizer" destination="a8R-tz-jBB" id="ywZ-lI-1aA"/>
                 <outlet property="allBasalsTitleLabel" destination="fwH-kw-p1N" id="air-3H-Q10"/>
                 <outlet property="allTrainingsContentView" destination="GD6-nH-Y4O" id="wRi-vy-QE1"/>
-                <outlet property="allTrainingsGestureRecognizer" destination="JBk-C1-use" id="cCy-Eg-7cT"/>
                 <outlet property="allTrainingsTilteLabel" destination="vbK-yB-GF3" id="wfX-HZ-So0"/>
                 <outlet property="contentView" destination="tqr-gy-0XO" id="MrN-vl-FhY"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="-242.07589285714283"/>
         </view>
-        <tapGestureRecognizer id="JBk-C1-use"/>
-        <tapGestureRecognizer id="a8R-tz-jBB"/>
     </objects>
     <resources>
         <image name="chevron.right" width="24" height="24"/>
