@@ -22,7 +22,7 @@ enum Option: Int {
     }
 }
 
-class OptionsView: NibView {
+final class OptionsView: NibView {
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var allTrainingsGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet private weak var allBasalsGestureRecognizer: UITapGestureRecognizer!
@@ -52,7 +52,7 @@ class OptionsView: NibView {
         itemSelectionHandler?(.allBasals)
     }
     
-    func highliteView(_ view: UIView) {
+    private func highliteView(_ view: UIView) {
         let bgcolor = view.backgroundColor
         UIView.animate(withDuration: 0.1,
                        delay: 0,

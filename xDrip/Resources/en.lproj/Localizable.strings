@@ -5,6 +5,7 @@
 "nyi_alert_title" = "Not Yet Implemented";
 "nyi_alert_message" = "This feature is still under development, please follow the updates.";
 "nyi_alert_ok_button" = "OK";
+"not_available" = "N/A";
 
 // Tabbar
 "tabbar_calibration_title" = "Calibration";
@@ -422,8 +423,14 @@ This setting will be applied to all future sensors";
 "settings_pen_user_delete_alert_cancel_button" = "No";
 
 // Settings Pump User
-"settings_pump_user_info_label_text" = "The Nightscout system allows you to attach (or pair) a device to the Dexcom receiver that transmits the glucose readings to the Internet, where any web-connected device can view the numbers. It's that simple";
+"settings_pump_user_info_label_text" = "If you have a pump connected to Nightscout, you can sync it with xDrip to display basal insulin.";
 "settings_pump_user_sync_button_title" = "Synchronise with NightScout";
+"settings_pump_user_unpair_button_title" = "Unpair pump";
+
+
+
+
+
 
 // Bluetooth Errors
 "bluetooth_error_title" = "Transmitter Service Error";

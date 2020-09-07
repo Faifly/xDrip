@@ -113,4 +113,52 @@ final class EntriesListRouterTests: XCTestCase {
         XCTAssertTrue(pushedController.router?.dataStore?.insulinEntry == entry)
         XCTAssertTrue(pushedController.router?.dataStore?.carbEntry == nil)
     }
+    
+    func testShowEditControllerForBasalEntry() {
+        let spy = NavigationControllerSpy()
+        let controller = createSpy()
+        sut.viewController = controller
+        spy.viewControllers = [controller]
+        
+        sut.dataStore = controller.interactor as? EntriesListInteractor
+        
+        let entry = InsulinEntry(amount: 0.0, date: Date(), type: .basal)
+        sut.dataStore?.entry = entry
+        
+        sut.routeToEditEntry()
+        
+        guard let pushedController = spy.lastPushedViewController as? EditFoodEntryViewController else {
+            XCTFail("Cannot obtain edit controller")
+            return
+        }
+        
+        XCTAssertTrue(pushedController.router?.dataStore?.mode == .edit)
+        XCTAssertTrue(pushedController.router?.dataStore?.entryType == .basal)
+        XCTAssertTrue(pushedController.router?.dataStore?.insulinEntry == entry)
+        XCTAssertTrue(pushedController.router?.dataStore?.carbEntry == nil)
+    }
+    
+    func testShowEditControllerForTrainingEntry() {
+        let spy = NavigationControllerSpy()
+        let controller = createSpy()
+        sut.viewController = controller
+        spy.viewControllers = [controller]
+        
+        sut.dataStore = controller.interactor as? EntriesListInteractor
+        
+        let entry = TrainingEntry(duration: 1.1, intensity: .high, date: Date())
+        sut.dataStore?.entry = entry
+        
+        sut.routeToEditEntry()
+        
+        guard let pushedController = spy.lastPushedViewController as? EditFoodEntryViewController else {
+            XCTFail("Cannot obtain edit controller")
+            return
+        }
+        
+        XCTAssertTrue(pushedController.router?.dataStore?.mode == .edit)
+        XCTAssertTrue(pushedController.router?.dataStore?.entryType == .training)
+        XCTAssertTrue(pushedController.router?.dataStore?.trainingEntry == entry)
+        XCTAssertTrue(pushedController.router?.dataStore?.carbEntry == nil)
+    }
 }

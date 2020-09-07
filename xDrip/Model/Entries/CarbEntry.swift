@@ -30,5 +30,6 @@ final class CarbEntry: AbstractEntry, AbstractEntryProtocol {
             self.foodType = foodType
             self.updateDate(date)
         }
+        CarbEntriesWorker.updatedCarbsEntry()
     }
 }

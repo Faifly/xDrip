@@ -37,5 +37,12 @@ final class InsulinEntry: AbstractEntry, AbstractEntryProtocol {
             self.amount = amount
             self.updateDate(date)
         }
+        
+        switch type {
+        case .bolus:
+            InsulinEntriesWorker.updatedBolusEntry()
+        case .basal:
+            InsulinEntriesWorker.updatedBasalEntry()
+        }
     }
 }

@@ -278,6 +278,68 @@ final class EntriesListViewControllerTests: XCTestCase {
         XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 0)
     }
     
+    func testLoadWithTrainingsWorkers() {
+        TrainingEntriesWorker.fetchAllTrainings().forEach { entry in
+            TrainingEntriesWorker.deleteTrainingEntry(entry)
+        }
+        TrainingEntriesWorker.addTraining(duration: 1.1, intensity: .high, date: Date())
+        
+        sut = EntriesListViewController(
+            persistenceWorker: EntriesListTrainingsPersistenceWorker(),
+            formattingWorker: EntriesListTrainingsFormattingWorker()
+        )
+        
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssertTrue(tableView.numberOfSections == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 1)
+        
+        guard let tableController = tableView.delegate as? EntriesListTableController else {
+            XCTFail("Cannot obtaint table controller")
+            return
+        }
+        
+        tableController.tableView(tableView, commit: .delete, forRowAt: IndexPath(row: 0, section: 0))
+        
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 0)
+    }
+    
+    func testLoadWithBasalsWorkers() {
+        InsulinEntriesWorker.fetchAllBasalEntries().forEach { entry in
+            InsulinEntriesWorker.deleteInsulinEntry(entry)
+        }
+        InsulinEntriesWorker.addBasalEntry(amount: 0.0, date: Date())
+        
+        sut = EntriesListViewController(
+            persistenceWorker: EntriesListInsulinPersistenceWorker(type: .basal),
+            formattingWorker: EntriesListInsulinFormattingWorker()
+        )
+        
+        loadView()
+        
+        guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
+            XCTFail("Cannot obtain tableView")
+            return
+        }
+        
+        XCTAssertTrue(tableView.numberOfSections == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 1)
+        
+        guard let tableController = tableView.delegate as? EntriesListTableController else {
+            XCTFail("Cannot obtaint table controller")
+            return
+        }
+        
+        tableController.tableView(tableView, commit: .delete, forRowAt: IndexPath(row: 0, section: 0))
+        
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 0)
+    }
+    
     // Helpers
     
     func generateDummyData(sectionCount: Int = 1, rowCount: Int = 20) -> [EntriesList.SectionViewModel] {

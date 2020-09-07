@@ -57,7 +57,7 @@ final class EditFoodEntryInteractorTests: XCTestCase {
     
     // MARK: Tests
     
-    func testDoLoad() {
+    func testDoLoadOnCreateMode() {
         // Given
         let spy = EditFoodEntryPresentationLogicSpy()
         sut.presenter = spy
@@ -70,6 +70,21 @@ final class EditFoodEntryInteractorTests: XCTestCase {
         XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
     }
     
+    func testDoLoadOnEditMode() {
+        // Given
+        let spy = EditFoodEntryPresentationLogicSpy()
+        let request = EditFoodEntry.Load.Request()
+        sut.trainingEntry = TrainingEntry(duration: 0.0, intensity: .default, date: Date())
+        sut.presenter = spy
+        
+        // When
+        sut.mode = .edit
+        sut.doLoad(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+    }
+
     func testDoCancel() {
         let spy = EditFoodEntryRoutingLogicSpy()
         sut.router = spy
@@ -79,5 +94,29 @@ final class EditFoodEntryInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.dismissCalled)
+    }
+    
+    func testTrainingEntrySaving() {
+        // Given
+        let guess = TrainingEntriesWorker.fetchAllTrainings().count + 1
+     
+        sut.trainingEntry = TrainingEntry(duration: 5.0, intensity: .default, date: Date())
+        
+        // When
+        sut.doLoad(request: EditFoodEntry.Load.Request())
+        sut.trainingEntry = nil
+        sut.doSave(request: EditFoodEntry.Save.Request())
+        
+        // Than
+        let entries = TrainingEntriesWorker.fetchAllTrainings()
+        
+        XCTAssertTrue(guess == entries.count)
+        
+        guard let lastEntry = entries.last else {
+            XCTFail("Cannot get the last entry")
+            return
+        }
+        
+        TrainingEntriesWorker.deleteEntry(lastEntry)
     }
 }
