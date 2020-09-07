@@ -21,7 +21,7 @@ protocol HomePresentationLogic {
     func presentBolusChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response)
     func presentCarbsData(response: Home.CarbsDataUpdate.Response)
     func presentCarbsChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response)
-    func presentWarmUp(response: Home.WarmUp.Response)
+    func presentUpdateSensorState(response: Home.UpdateSensorState.Response)
 }
 
 final class HomePresenter: HomePresentationLogic {
@@ -125,11 +125,14 @@ final class HomePresenter: HomePresentationLogic {
         viewController?.displayCarbsChartTimeFrame(viewModel: viewModel)
     }
     
-    func presentWarmUp(response: Home.WarmUp.Response) {
-        let hours: Int
-        let minutes: Int
-        
-        if let totalMinutes = response.state.minutesLeft {
+    func presentUpdateSensorState(response: Home.UpdateSensorState.Response) {
+        let string: NSMutableAttributedString
+        switch response.state {
+        case let .warmingUp(minutesLeft):
+            let hours: Int
+            let minutes: Int
+            
+            let totalMinutes = minutesLeft
             if totalMinutes > 60 {
                 hours = totalMinutes / 60
                 minutes = totalMinutes - hours * 60
@@ -137,16 +140,74 @@ final class HomePresenter: HomePresentationLogic {
                 hours = 0
                 minutes = totalMinutes
             }
-        } else {
-            hours = 0
-            minutes = 0
+            
+            let timeLabel: String
+            if hours > 0 {
+                timeLabel = String(
+                    format: "home_warmingup_time_label_hours".localized,
+                    hours,
+                    minutes
+                )
+            } else {
+                timeLabel = String(
+                    format: "home_warmingup_time_label_minutes".localized,
+                    minutes
+                )
+            }
+            
+            string = NSMutableAttributedString()
+            string.append(
+                NSAttributedString(
+                    string: "home_warmingup_initial_label".localized,
+                    attributes: [
+                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                        .foregroundColor: UIColor.highEmphasisText
+                    ]
+                )
+            )
+            string.append(
+                NSAttributedString(
+                    string: timeLabel,
+                    attributes: [
+                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                        .foregroundColor: UIColor.tabBarRedColor
+                    ]
+                )
+            )
+            
+        case .started:
+            let viewModel = Home.UpdateSensorState.ViewModel(
+                shouldShow: false,
+                text: NSMutableAttributedString(string: "")
+            )
+            
+            viewController?.displayUpdateSensorState(viewModel: viewModel)
+            return
+            
+        case .waitingReadings:
+            string = NSMutableAttributedString(
+                string: "home_sensor_waiting_readings".localized,
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                    .foregroundColor: UIColor.tabBarBlueColor
+                ]
+            )
+            
+        case .stopped:
+            string = NSMutableAttributedString(
+                string: "home_sensor_stopped".localized,
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                    .foregroundColor: UIColor.tabBarRedColor
+                ]
+            )
         }
         
-        let viewModel = Home.WarmUp.ViewModel(
-            shouldShowWarmUp: response.state.isWarmingUp,
-            warmUpLeftHours: hours,
-            warmUpLeftMinutes: minutes
+        let viewModel = Home.UpdateSensorState.ViewModel(
+            shouldShow: true,
+            text: string
         )
-        viewController?.displayWarmUp(viewModel: viewModel)
+        
+        viewController?.displayUpdateSensorState(viewModel: viewModel)
     }
 }

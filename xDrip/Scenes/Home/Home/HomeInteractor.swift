@@ -30,7 +30,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     var router: HomeRoutingLogic?
     
     private let glucoseDataWorker: HomeGlucoseDataWorkerProtocol
-    private let warmUpWorker: HomeWarmUpWorkerLogic
+    private let sensorStateWorker: HomeSensorStateWorkerLogic
     private var basalEntriesObserver: [NSObjectProtocol]?
     private var activeInsulinObserver: [NSObjectProtocol]?
     private var activeCarbsObserver: [NSObjectProtocol]?
@@ -40,7 +40,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
-        warmUpWorker = HomeWarmUpWorker()
+        sensorStateWorker = HomeSensorStateWorker()
         
         glucoseDataWorker.glucoseDataHandler = { [weak self] in
             guard let self = self else { return }
@@ -109,9 +109,9 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         updateGlucoseChartData()
         updateBolusChartData()
         updateCarbsChartData()
-        warmUpWorker.subscribeForWarmUpStateChange { [weak self] state in
-            let response = Home.WarmUp.Response(state: state)
-            self?.presenter?.presentWarmUp(response: response)
+        sensorStateWorker.subscribeForSensorStateChange { [weak self] state in
+            let response = Home.UpdateSensorState.Response(state: state)
+            self?.presenter?.presentUpdateSensorState(response: response)
         }
     }
     
