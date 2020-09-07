@@ -91,4 +91,47 @@ final class HomeViewControllerTests: XCTestCase {
         
         // Then
     }
+    
+    func testSubscribeToViewsButtonEvents() {
+        // Given
+        let mirror = HomeViewControllerMirror(viewController: sut)
+        
+        var carbsButtonClicked = false
+        var bolusButtonClicked = false
+        var allTrainingsButtonClicked = false
+        var allBasalButtonClicked = false
+        
+        // When
+        loadView()
+        mirror.carbsHistoryView?.onChartButtonClicked = {
+            carbsButtonClicked = true
+        }
+        
+        mirror.bolusHistoryView?.onChartButtonClicked = {
+            bolusButtonClicked = true
+        }
+        
+        mirror.optionsView?.itemSelectionHandler = { option in
+            if option == .allTrainings { allTrainingsButtonClicked = true }
+        }
+        
+        mirror.optionsView?.itemSelectionHandler = { option in
+            if option == .allTrainings {
+                allTrainingsButtonClicked = true
+            } else if option == .allBasals {
+                allBasalButtonClicked = true
+            }
+        }
+        
+        mirror.carbsHistoryView?.chartButtonClicked()
+        mirror.bolusHistoryView?.chartButtonClicked()
+        mirror.optionsView?.onAllTrainingsTapped(sender: UITapGestureRecognizer())
+        mirror.optionsView?.onAllBasalTapped(sender: UITapGestureRecognizer())
+        // Then
+        
+        XCTAssertTrue(carbsButtonClicked)
+        XCTAssertTrue(bolusButtonClicked)
+        XCTAssertTrue(allTrainingsButtonClicked)
+        XCTAssertTrue(allBasalButtonClicked)
+    }
 }

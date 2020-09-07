@@ -39,7 +39,7 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     }
     
     private struct TrainingInput {
-        var duration: TimeInterval = 0.0
+        var duration: TimeInterval = .secondsPerMinute
         var intensity: TrainingIntensity = .default
         var date = Date()
     }

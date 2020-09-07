@@ -99,12 +99,8 @@ final class EditFoodEntryInteractorTests: XCTestCase {
     func testTrainingEntrySaving() {
         // Given
         let guess = TrainingEntriesWorker.fetchAllTrainings().count + 1
-     
-        sut.trainingEntry = TrainingEntry(duration: 5.0, intensity: .default, date: Date())
         
         // When
-        sut.doLoad(request: EditFoodEntry.Load.Request())
-        sut.trainingEntry = nil
         sut.doSave(request: EditFoodEntry.Save.Request())
         
         // Than
