@@ -450,6 +450,7 @@ This setting will be applied to all future sensors";
 "calibration_not_ready_error_general_message" = "Not all conditions for calibration are met";
 "calibration_not_ready_error_no_initial_readings" = "Not enough readings for initial calibration";
 "calibration_not_ready_error_warming_up" = "Cannot calibration while sensor is warming up";
+"calibration_not_ready_error_sensor_stopped" = "Calibration can not be performed when sensor isn't running. Please, start sensor in the app Settings";
 "calibration_initial_alert_title" = "Initial Calibration";
 "calibration_initial_alert_message" = "Initial calibration is required to proceed with readings";
 "calibration_initial_alert_proceed_button" = "Provide Now";
