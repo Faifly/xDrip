@@ -129,51 +129,7 @@ final class HomePresenter: HomePresentationLogic {
         let string: NSMutableAttributedString
         switch response.state {
         case let .warmingUp(minutesLeft):
-            let hours: Int
-            let minutes: Int
-            
-            let totalMinutes = minutesLeft
-            if totalMinutes > 60 {
-                hours = totalMinutes / 60
-                minutes = totalMinutes - hours * 60
-            } else {
-                hours = 0
-                minutes = totalMinutes
-            }
-            
-            let timeLabel: String
-            if hours > 0 {
-                timeLabel = String(
-                    format: "home_warmingup_time_label_hours".localized,
-                    hours,
-                    minutes
-                )
-            } else {
-                timeLabel = String(
-                    format: "home_warmingup_time_label_minutes".localized,
-                    minutes
-                )
-            }
-            
-            string = NSMutableAttributedString()
-            string.append(
-                NSAttributedString(
-                    string: "home_warmingup_initial_label".localized,
-                    attributes: [
-                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
-                        .foregroundColor: UIColor.highEmphasisText
-                    ]
-                )
-            )
-            string.append(
-                NSAttributedString(
-                    string: timeLabel,
-                    attributes: [
-                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
-                        .foregroundColor: UIColor.tabBarRedColor
-                    ]
-                )
-            )
+            string = createWarmUpMessage(for: minutesLeft)
             
         case .started:
             let viewModel = Home.UpdateSensorState.ViewModel(
@@ -209,5 +165,46 @@ final class HomePresenter: HomePresentationLogic {
         )
         
         viewController?.displayUpdateSensorState(viewModel: viewModel)
+    }
+    
+    private func createWarmUpMessage(for minutesLeft: Int) -> NSMutableAttributedString {
+        let timeLabel: String
+        if minutesLeft > 60 {
+            let hours = minutesLeft / 60
+            let minutes = minutesLeft - hours * 60
+            
+            timeLabel = String(
+                format: "home_warmingup_time_label_hours".localized,
+                hours,
+                minutes
+            )
+        } else {
+            timeLabel = String(
+                format: "home_warmingup_time_label_minutes".localized,
+                minutesLeft
+            )
+        }
+        
+        let string = NSMutableAttributedString()
+        string.append(
+            NSAttributedString(
+                string: "home_warmingup_initial_label".localized,
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                    .foregroundColor: UIColor.highEmphasisText
+                ]
+            )
+        )
+        string.append(
+            NSAttributedString(
+                string: timeLabel,
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                    .foregroundColor: UIColor.tabBarRedColor
+                ]
+            )
+        )
+        
+        return string
     }
 }

@@ -187,14 +187,6 @@ enum Home {
         }
     }
     
-    enum WarmUp {
-        struct ViewModel {
-            let shouldShowWarmUp: Bool
-            let warmUpLeftHours: Int
-            let warmUpLeftMinutes: Int
-        }
-    }
-    
     enum UpdateSensorState {
         struct Response {
             let state: Home.SensorState

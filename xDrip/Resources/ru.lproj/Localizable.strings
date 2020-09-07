@@ -33,6 +33,8 @@
 "home_all_trainings" = "Все Тренировки";
 "home_all_basals" = "Все Базалы";
 "home_options_title" = "Опции";
+"home_sensor_stopped" = "Сенсор остановлен";
+"home_sensor_waiting_readings" = "Сенсор получает первые считывания, чтобы отобразить их";
 
 // Root
 "root_add_entry_food" = "Еда";
