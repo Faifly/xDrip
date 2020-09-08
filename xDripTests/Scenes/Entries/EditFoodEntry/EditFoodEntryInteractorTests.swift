@@ -101,6 +101,7 @@ final class EditFoodEntryInteractorTests: XCTestCase {
         let guess = TrainingEntriesWorker.fetchAllTrainings().count + 1
         
         // When
+        sut.entryType = .training
         sut.doSave(request: EditFoodEntry.Save.Request())
         
         // Than
