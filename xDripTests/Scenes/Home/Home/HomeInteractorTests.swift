@@ -58,7 +58,7 @@ final class HomeInteractorTests: XCTestCase {
         func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
             presentGlucoseCurrentInfoCalled = true
         }
-        func presentWarmUp(response: Home.WarmUp.Response) {
+        func presentUpdateSensorState(response: Home.UpdateSensorState.Response) {
         }
         func presentBolusData(response: Home.BolusDataUpdate.Response) {
             presentBolusDataCalled = true
@@ -75,6 +75,8 @@ final class HomeInteractorTests: XCTestCase {
     final class HomeRoutingLogicSpy: HomeRoutingLogic {
         var toCarbsCalled = false
         var toBolusCalled = false
+        var toTrainingCalled = false
+        var toBasalCalled = false
         
         func routeToCarbsEntriesList() {
             toCarbsCalled = true
@@ -82,6 +84,14 @@ final class HomeInteractorTests: XCTestCase {
         
         func routeToBolusEntriesList() {
             toBolusCalled = true
+        }
+        
+        func routeToTrainingEntriesList() {
+            toTrainingCalled = true
+        }
+        
+        func routeToBasalEntriesList() {
+            toBasalCalled = true
         }
     }
     
@@ -120,19 +130,35 @@ final class HomeInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.toBolusCalled)
+        
+        request = Home.ShowEntriesList.Request(entriesType: .basal)
+        
+        //When
+        sut.doShowEntriesList(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.toBasalCalled)
+        
+        request = Home.ShowEntriesList.Request(entriesType: .training)
+        
+        //When
+        sut.doShowEntriesList(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.toTrainingCalled)
     }
     
     func testUpdateBolusChartData() {
-      // Given
-      let spy = HomePresentationLogicSpy()
-      sut.presenter = spy
-      let request = Home.Load.Request()
-      
-      // When
-      sut.doLoad(request: request)
-      
-      // Then
-      XCTAssertTrue(spy.presentBolusDataCalled)
-      XCTAssertTrue(spy.presentCarbsDataCalled)
+        // Given
+        let spy = HomePresentationLogicSpy()
+        sut.presenter = spy
+        let request = Home.Load.Request()
+        
+        // When
+        sut.doLoad(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.presentBolusDataCalled)
+        XCTAssertTrue(spy.presentCarbsDataCalled)
     }
 }

@@ -57,9 +57,10 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
             super.deleteEntry(entry)
         }
         
-        if type == .bolus {
+        switch type {
+        case .bolus:
             bolusDataHandler?()
-        } else if type == .basal {
+        case .basal:
             basalDataHandler?()
         }
         NightscoutService.shared.scanForNotUploadedTreatments()

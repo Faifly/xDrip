@@ -51,24 +51,31 @@ final class EditFoodEntryPresenterTests: XCTestCase {
     
     func testPresentLoad() {
         // Given
+        let types: [EditFoodEntry.EntryType] = [.food, .carbs, .bolus, .basal, .training]
         let spy = EditFoodEntryDisplayLogicSpy()
-        sut.viewController = spy
-        let response = EditFoodEntry.Load.Response(
-            insulinEntry: nil,
-            carbEntry: nil,
-            entryType: .food,
-            textChangedHandler: { _, _ in },
-            dateChangedHandler: { _, _ in },
-            foodTypeChangedHandler: { _ in }
-        )
         
-        // When
-        sut.presentLoad(response: response)
-        
-        // Then
-        XCTAssertTrue(
-            spy.displayLoadCalled,
-            "presentLoad(response:) should ask the view controller to display the result"
-        )
+        for type in types {
+            sut.viewController = spy
+            let response = EditFoodEntry.Load.Response(
+                insulinEntry: nil,
+                carbEntry: nil,
+                trainingEntry: nil,
+                entryType: type,
+                textChangedHandler: { _, _ in },
+                dateChangedHandler: { _, _ in },
+                foodTypeChangedHandler: { _ in },
+                trainingIntensityChangedHandler: { _ in },
+                timeIntervalChangedHandler: { _ in }
+            )
+            
+            // When
+            sut.presentLoad(response: response)
+            
+            // Then
+            XCTAssertTrue(
+                spy.displayLoadCalled,
+                "presentLoad(response:) should ask \(type) the view controller to display the result"
+            )
+        }
     }
 }

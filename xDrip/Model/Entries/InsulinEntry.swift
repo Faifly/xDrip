@@ -52,5 +52,12 @@ final class InsulinEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryPr
                  self.cloudUploadStatus = .modified
              }
         }
+        
+        switch type {
+        case .bolus:
+            InsulinEntriesWorker.updatedBolusEntry()
+        case .basal:
+            InsulinEntriesWorker.updatedBasalEntry()
+        }
     }
 }

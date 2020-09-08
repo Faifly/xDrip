@@ -17,4 +17,16 @@ final class HomeViewControllerMirror: MirrorObject {
     var glucoseCurrentInfoView: GlucoseCurrentInfoView? {
         return extract()
     }
+    
+    var optionsView: OptionsView? {
+        return extract()
+    }
+    
+    var carbsHistoryView: EntriesHistoryView? {
+        return extract()
+    }
+    
+    var bolusHistoryView: EntriesHistoryView? {
+        return extract()
+    }
 }

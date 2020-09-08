@@ -16,16 +16,19 @@ final class CalibrationService: CalibrationServiceInterface {
     enum CalibrationError: LocalizedError {
         case noInitialReadings
         case warmingUp
+        case sensorStopped
         
         var localizedDescription: String {
             switch self {
             case .noInitialReadings: return "calibration_not_ready_error_no_initial_readings".localized
             case .warmingUp: return "calibration_not_ready_error_warming_up".localized
+            case .sensorStopped: return "calibration_not_ready_error_sensor_stopped".localized
             }
         }
     }
     
     func isReadyForCalibration() -> (Bool, CalibrationError?) {
+        guard CGMDevice.current.sensorStartDate != nil else { return (false, .sensorStopped) }
         guard !CGMDevice.current.isWarmingUp else { return (false, .warmingUp) }
         
         let all = Calibration.allForCurrentSensor

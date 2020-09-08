@@ -45,5 +45,6 @@ final class CarbEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryProto
                  self.cloudUploadStatus = .modified
              }
         }
+        CarbEntriesWorker.updatedCarbsEntry()
     }
 }

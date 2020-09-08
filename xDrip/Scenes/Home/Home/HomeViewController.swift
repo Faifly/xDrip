@@ -22,7 +22,7 @@ protocol HomeDisplayLogic: AnyObject {
     func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
     func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel)
     func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
-    func displayWarmUp(viewModel: Home.WarmUp.ViewModel)
+    func displayUpdateSensorState(viewModel: Home.UpdateSensorState.ViewModel)
 }
 
 class HomeViewController: NibViewController, HomeDisplayLogic {
@@ -64,8 +64,8 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var glucoseChart: GlucoseHistoryView!
     @IBOutlet private weak var bolusHistoryView: EntriesHistoryView!
     @IBOutlet private weak var carbsHistoryView: EntriesHistoryView!
-    @IBOutlet private weak var warmUpLabel: UILabel!
-    @IBOutlet private weak var warmUpLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var sensorStateLabel: UILabel!
+    @IBOutlet private weak var sensorStateLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var aboutGlucoseTitleLabel: UILabel!
     @IBOutlet private weak var aboutGlucoseContentLabel: UILabel!
     @IBOutlet private weak var bolusCarbsTopConstraint: NSLayoutConstraint!
@@ -76,6 +76,8 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var glucoseDataStackView: UIStackView!
     @IBOutlet private weak var dataView: GlucoseDataView!
     @IBOutlet private weak var dataContentView: UIView!
+    @IBOutlet private weak var optionsView: OptionsView!
+    @IBOutlet private weak var optionsTitleLabel: UILabel!
     
     // MARK: View lifecycle
     
@@ -91,11 +93,6 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     private func doLoad() {
         let request = Home.Load.Request()
         interactor?.doLoad(request: request)
-    }
-    
-    @IBAction private func toEntriesList(_ sender: UIButton) {
-        let request = Home.ShowEntriesList.Request(entriesType: sender.tag == 1 ? .carbs : .bolus)
-        interactor?.doShowEntriesList(request: request)
     }
     
     @IBAction private func onTimeFrameSegmentSelected() {
@@ -164,52 +161,18 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
                                       showChart: viewModel.isChartShown)
     }
     
-    func displayWarmUp(viewModel: Home.WarmUp.ViewModel) {
-        if viewModel.shouldShowWarmUp {
-            if warmUpLabel.isHidden {
-                warmUpLabel.isHidden = false
-                warmUpLabelTopConstraint.constant = 8.0
+    func displayUpdateSensorState(viewModel: Home.UpdateSensorState.ViewModel) {
+        if viewModel.shouldShow {
+            if sensorStateLabel.isHidden {
+                sensorStateLabel.isHidden = false
+                sensorStateLabelTopConstraint.constant = 8.0
             }
             
-            let timeLabel: String
-            if viewModel.warmUpLeftHours > 0 {
-                timeLabel = String(
-                    format: "home_warmingup_time_label_hours".localized,
-                    viewModel.warmUpLeftHours,
-                    viewModel.warmUpLeftMinutes
-                )
-            } else {
-                timeLabel = String(
-                    format: "home_warmingup_time_label_minutes".localized,
-                    viewModel.warmUpLeftMinutes
-                )
-            }
-            
-            let string = NSMutableAttributedString()
-            string.append(
-                NSAttributedString(
-                    string: "home_warmingup_initial_label".localized,
-                    attributes: [
-                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
-                        .foregroundColor: UIColor.highEmphasisText
-                    ]
-                )
-            )
-            string.append(
-                NSAttributedString(
-                    string: timeLabel,
-                    attributes: [
-                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
-                        .foregroundColor: UIColor.tabBarRedColor
-                    ]
-                )
-            )
-            
-            warmUpLabel.attributedText = string
+            sensorStateLabel.attributedText = viewModel.text
         } else {
-            warmUpLabel.isHidden = true
-            warmUpLabel.attributedText = nil
-            warmUpLabelTopConstraint.constant = 0.0
+            sensorStateLabel.isHidden = true
+            sensorStateLabel.attributedText = nil
+            sensorStateLabelTopConstraint.constant = 0.0
         }
     }
     
@@ -243,6 +206,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         timeLineSegmentView.selectedSegmentIndex = 0
         aboutGlucoseTitleLabel.text = "home_about_glucose_title".localized.uppercased()
         aboutGlucoseContentLabel.text = "home_about_glucose_content".localized
+        optionsTitleLabel.text = "home_options_title".localized.uppercased()
     }
     
     private func subscribeToViewsButtonEvents() {
@@ -253,6 +217,18 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         
         carbsHistoryView.onChartButtonClicked = { [weak self] in
             let request = Home.ShowEntriesList.Request(entriesType: .carbs)
+            self?.interactor?.doShowEntriesList(request: request)
+        }
+        
+        optionsView.itemSelectionHandler = { [weak self] option in
+            var entriesType: Root.EntryType
+            switch option {
+            case .allTrainings:
+                entriesType = .training
+            case .allBasals:
+                entriesType = .basal
+            }
+            let request = Home.ShowEntriesList.Request(entriesType: entriesType)
             self?.interactor?.doShowEntriesList(request: request)
         }
     }

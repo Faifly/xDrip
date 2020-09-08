@@ -66,5 +66,6 @@ final class TrainingEntry: AbstractEntry, TreatmentEntryProtocol {
                 self.cloudUploadStatus = .modified
             }
         }
+        TrainingEntriesWorker.updatedTrainingEntry()
     }
 }

@@ -30,6 +30,13 @@ enum Home {
         let minutesLeft: Int?
     }
     
+    enum SensorState {
+        case stopped
+        case warmingUp(minutesLeft: Int)
+        case waitingReadings
+        case started
+    }
+    
     struct DataSectionViewModel {
         let lowValue: String
         let lowTitle: String
@@ -180,15 +187,14 @@ enum Home {
         }
     }
     
-    enum WarmUp {
+    enum UpdateSensorState {
         struct Response {
-            let state: Home.WarmUpState
+            let state: Home.SensorState
         }
         
         struct ViewModel {
-            let shouldShowWarmUp: Bool
-            let warmUpLeftHours: Int
-            let warmUpLeftMinutes: Int
+            let shouldShow: Bool
+            let text: NSAttributedString
         }
     }
 }

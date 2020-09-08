@@ -9,15 +9,23 @@
 import Foundation
 
 final class EntriesListInsulinPersistenceWorker: EntriesListEntryPersistenceWorker {
+    let type: InsulinType
+    
+    init(type: InsulinType) {
+        self.type = type
+    }
     private var insulinEntries: [InsulinEntry] = []
     
     func fetchEntries() -> [AbstractEntry] {
-        insulinEntries = InsulinEntriesWorker.fetchAllInsulinEntries().filter {
-            $0.cloudUploadStatus != .waitingForDeletion
+        switch type {
+        case .bolus:
+            insulinEntries = InsulinEntriesWorker.fetchAllBolusEntries()
+        case .basal:
+            insulinEntries = InsulinEntriesWorker.fetchAllBasalEntries()
         }
         return insulinEntries
     }
-
+    
     func deleteEntry(_ index: Int) {
         let entry = insulinEntries.remove(at: index)
         InsulinEntriesWorker.deleteInsulinEntry(entry)

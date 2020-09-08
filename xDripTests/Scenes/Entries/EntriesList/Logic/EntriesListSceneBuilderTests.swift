@@ -15,7 +15,7 @@ class EntriesListSceneBuilderTests: XCTestCase {
     var window: UIWindow!
     var viewController: EntriesListViewController!
     let sut = EntriesListSceneBuilder()
-
+    
     override func setUp() {
         super.setUp()
         
@@ -78,14 +78,40 @@ class EntriesListSceneBuilderTests: XCTestCase {
         XCTAssertTrue(presenter?.formattingWorker is EntriesListCarbsFormattingWorker)
     }
     
-    func testConfigurateForBolus() {
+    func testConfigurateForBolus() throws {
         let builder = EntriesListSceneBuilder()
         let viewController = builder.createSceneForBolus()
         
         let interactor = viewController.interactor as? EntriesListInteractor
         let presenter = interactor?.presenter as? EntriesListPresenter
         
-        XCTAssertTrue(interactor?.entriesWorker is EntriesListInsulinPersistenceWorker)
+        let entriesPersistenceWorker = try XCTUnwrap(interactor?.entriesWorker as? EntriesListInsulinPersistenceWorker)
+        
+        XCTAssertTrue(entriesPersistenceWorker.type == .bolus)
+        XCTAssertTrue(presenter?.formattingWorker is EntriesListInsulinFormattingWorker)
+    }
+    
+    func testConfigurateForTrainings() {
+        let builder = EntriesListSceneBuilder()
+        let viewController = builder.createSceneForTraining()
+        
+        let interactor = viewController.interactor as? EntriesListInteractor
+        let presenter = interactor?.presenter as? EntriesListPresenter
+        
+        XCTAssertTrue(interactor?.entriesWorker is EntriesListTrainingsPersistenceWorker)
+        XCTAssertTrue(presenter?.formattingWorker is EntriesListTrainingsFormattingWorker)
+    }
+    
+    func testConfigurateForBasals() throws {
+        let builder = EntriesListSceneBuilder()
+        let viewController = builder.createSceneForBasal()
+        
+        let interactor = viewController.interactor as? EntriesListInteractor
+        let presenter = interactor?.presenter as? EntriesListPresenter
+        
+        let entriesPersistenceWorker = try XCTUnwrap(interactor?.entriesWorker as? EntriesListInsulinPersistenceWorker)
+        
+        XCTAssertTrue(entriesPersistenceWorker.type == .basal)
         XCTAssertTrue(presenter?.formattingWorker is EntriesListInsulinFormattingWorker)
     }
 }
