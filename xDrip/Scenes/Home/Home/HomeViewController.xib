@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -32,7 +34,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="duk-7t-Fh3">
-                    <rect key="frame" x="0.0" y="65" width="414" height="51"/>
+                    <rect key="frame" x="0.0" y="109" width="414" height="51"/>
                     <subviews>
                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Jxh-xc-P39">
                             <rect key="frame" x="16" y="10" width="382" height="32"/>
@@ -63,7 +65,7 @@
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5GJ-cn-Jfe">
-                    <rect key="frame" x="0.0" y="116" width="414" height="1384"/>
+                    <rect key="frame" x="0.0" y="160" width="414" height="1306"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fZx-6e-Ugl" customClass="GlucoseHistoryView" customModule="xDrip" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="270"/>
@@ -109,7 +111,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cPc-Gn-HBN">
-                            <rect key="frame" x="16" y="564" width="382" height="447"/>
+                            <rect key="frame" x="16" y="564" width="382" height="448"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wrq-Ft-2bG">
                                     <rect key="frame" x="0.0" y="0.0" width="382" height="236"/>
@@ -186,7 +188,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gKc-JT-urV">
-                                    <rect key="frame" x="0.0" y="336" width="382" height="111"/>
+                                    <rect key="frame" x="0.0" y="336" width="382" height="112"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHz-Xh-dYD">
                                             <rect key="frame" x="0.0" y="0.0" width="382" height="16"/>
@@ -195,10 +197,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UMn-9j-Pts" customClass="OptionsView" customModule="xDrip" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="23" width="382" height="88"/>
+                                            <rect key="frame" x="0.0" y="23" width="382" height="89"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="88" id="CvT-3W-OxI"/>
+                                                <constraint firstAttribute="height" constant="89" id="CvT-3W-OxI"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -232,7 +234,7 @@
                     <viewLayoutGuide key="frameLayoutGuide" id="ZiU-dl-xRq"/>
                 </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mbw-ZN-ydS" customClass="GlucoseCurrentInfoView" customModule="xDrip" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="5" width="414" height="60"/>
+                    <rect key="frame" x="0.0" y="49" width="414" height="60"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="IY3-yl-G5z"/>
