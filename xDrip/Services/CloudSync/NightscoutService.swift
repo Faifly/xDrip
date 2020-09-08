@@ -273,7 +273,10 @@ final class NightscoutService {
                     guard let data = data, error == nil else { return }
                     guard let entries = try? JSONDecoder().decode([CTreatment].self, from: data) else { return }
                     if !entries.isEmpty {
-                        guard let request = self.requestFactory.createDeleteTreatmentRequest(uuid, requestType: deleteRequestType) else { return }
+                        guard let request = self.requestFactory.createDeleteTreatmentRequest(uuid,
+                                                                                             requestType: deleteRequestType) else {
+                                                                                                return
+                        }
                         self.requestQueue.append(request)
                         self.runQueue()
                     } else {
@@ -361,14 +364,9 @@ final class NightscoutService {
             case .deleteCarbs:
                 CarbEntriesWorker.deleteEntryWith(externalID: request.itemID)
                 
-            case .postBolus, .modifyBolus:
+            case .postBolus, .modifyBolus, .postBasal, .modifyBasal:
                 InsulinEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
-            case .deleteBolus:
-                InsulinEntriesWorker.deleteEntryWith(externalID: request.itemID)
-                
-            case .postBasal, .modifyBasal:
-                InsulinEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
-            case .deleteBasal:
+            case .deleteBolus, .deleteBasal:
                 InsulinEntriesWorker.deleteEntryWith(externalID: request.itemID)
                 
             case .postTraining, .modifyTraining:
