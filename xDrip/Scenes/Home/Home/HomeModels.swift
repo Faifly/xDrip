@@ -87,6 +87,20 @@ enum Home {
         }
     }
     
+    enum GlucoseDataViewUpdate {
+        struct Request {
+            let dateInterval: DateInterval
+        }
+        
+        struct Response {
+            let intervalGlucoseData: [GlucoseReading]
+        }
+        
+        struct ViewModel {
+            let dataSection: DataSectionViewModel
+        }
+    }
+    
     enum BolusDataUpdate {
         struct Request {
         }
