@@ -330,7 +330,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     
     func createFetchTreatmentsRequest() -> URLRequest? {
         LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
-        guard let settings = User.current.settings.nightscoutSync else {
+        guard let settings = User.current.settings.nightscoutSync, settings.isEnabled else {
             LogController.log(
                 message: "[UploadRequestFactory]: Failed to %@ because sync is disabled.",
                 type: .info,
@@ -459,7 +459,6 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         
         return request
     }
-    
     
     private func deleteTreatmentRequest() throws -> URLRequest? {
         LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)

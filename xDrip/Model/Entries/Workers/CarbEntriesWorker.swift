@@ -15,7 +15,8 @@ final class CarbEntriesWorker: AbstractEntriesWorker {
     @discardableResult static func addCarbEntry(
         amount: Double,
         foodType: String?,
-        date: Date, externalID: String? = nil) -> CarbEntry {
+        date: Date,
+        externalID: String? = nil) -> CarbEntry {
         let entry = CarbEntry(
             amount: amount,
             foodType: foodType,

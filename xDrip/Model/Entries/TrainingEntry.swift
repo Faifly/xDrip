@@ -9,9 +9,33 @@
 import Foundation
 import RealmSwift
 
-final class TrainingEntry: AbstractEntry {
+final class TrainingEntry: AbstractEntry, TreatmentEntryProtocol {
     @objc private(set) dynamic var duration: TimeInterval = 0.0
     @objc private dynamic var rawIntensity: Int = TrainingIntensity.default.rawValue
+    @objc private(set) dynamic var externalID: String?
+    @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notApplicable.rawValue
+    
+    var cloudUploadStatus: CloudUploadStatus {
+        get {
+            return CloudUploadStatus(rawValue: rawCloudUploadStatus) ?? .notApplicable
+        }
+        set {
+            rawCloudUploadStatus = newValue.rawValue
+        }
+    }
+    
+    internal var amount: Double {
+        return duration
+    }
+    
+    var exerciseIntensity: Int? {
+        get {
+            return rawIntensity
+        }
+        set {
+            rawIntensity = newValue ?? 1
+        }
+    }
     
     private(set) var intensity: TrainingIntensity {
         get {
@@ -26,10 +50,11 @@ final class TrainingEntry: AbstractEntry {
         super.init()
     }
     
-    init(duration: TimeInterval, intensity: TrainingIntensity, date: Date) {
+    init(duration: TimeInterval, intensity: TrainingIntensity, date: Date, externalID: String? = nil) {
         super.init(date: date)
         self.duration = duration
         self.intensity = intensity
+        self.externalID = externalID ?? UUID().uuidString.lowercased()
     }
     
     func update(duration: TimeInterval, intensity: TrainingIntensity, date: Date) {
@@ -37,6 +62,9 @@ final class TrainingEntry: AbstractEntry {
             self.duration = duration
             self.intensity = intensity
             self.updateDate(date)
+            if self.cloudUploadStatus == .uploaded {
+                self.cloudUploadStatus = .modified
+            }
         }
     }
 }

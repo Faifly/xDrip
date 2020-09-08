@@ -29,6 +29,9 @@ enum UploadRequestType {
     case postBasal
     case modifyBasal
     case deleteBasal
+    case postTraining
+    case modifyTraining
+    case deleteTraining
 }
 
 enum RequestType {

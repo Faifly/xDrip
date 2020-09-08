@@ -1,10 +1,12 @@
 // AUTO-GENERATED
 // General
 "cancel" = "Отмена";
+"close" = "Закрыть";
 "error" = "Ошибка";
 "nyi_alert_title" = "Ещё Не Внедрено";
 "nyi_alert_message" = "Эта функция ещё не разработана. Следите за обновлениями!";
 "nyi_alert_ok_button" = "Хорошо";
+"not_available" = "Н/Д";
 
 // Tabbar
 "tabbar_calibration_title" = "Калибровка";
@@ -30,6 +32,11 @@
 "home_about_glucose_content" = "Глюкоза в крови - также называемая сахаром в крови - является основным сахаром в крови и основным источником энергии для вашего тела.";
 "home_about_glucose_title" = "О глюкозе крови";
 "home_no_data_for_period" = "Нет данных за период";
+"home_all_trainings" = "Все Тренировки";
+"home_all_basals" = "Все Базалы";
+"home_options_title" = "Опции";
+"home_sensor_stopped" = "Сенсор остановлен";
+"home_sensor_waiting_readings" = "Сенсор получает первые считывания, чтобы отобразить их";
 
 // Root
 "root_add_entry_food" = "Еда";
@@ -50,6 +57,8 @@
 "entries_list_data_section_title" = "ДАННЫЕ";
 "entries_list_scene_title_carbs" = "Активные углеводы";
 "entries_list_scene_title_bolus" = "Активный инсулин";
+"entries_list_scene_title_basals" = "Все Базалы";
+"entries_list_scene_title_trainings" = "Все Тренировки";
 "entries_list_cell_no_date" = "Дата не указана";
 "entries_list_scene_carbs_amount_unit_grams" = "г";
 "entries_list_scene_carbs_insulin_unit" = "Ед";
@@ -70,26 +79,37 @@
 "edit_calibration_error_invalid_glucose1_input" = "Неправильное значение глюкозы";
 "edit_calibration_error_sensor_not_started" = "Сенсор не запущен";
 
-// Edit Food
-"edit_food_entry_food_scene_title" = "Еда";
-"edit_food_entry_bolus_scene_title" = "Болюс";
-"edit_food_entry_basal_scene_title" = "Базал";
-"edit_food_entry_carbs_scene_title" = "Углеводы";
-"edit_food_entry_section_header" = "ВВЕДИТЕ ЗНАЧЕНИЯ НИЖЕ";
-"edit_food_entry_carbs_section_footer" = "Укажите точное количество потребляемого количества в граммах, дату и тип пищи, чтобы лучше понять ваш рацион";
-"edit_food_entry_bolus_section_footer" = "Выберите дозировку и выберите точную дату инъекции";
-"edit_food_entry_basal_section_footer" = "Выберите дозировку и выберите точную дату инъекции";
-"edit_food_entry_carbs_amount_title" = "Потребленное кол-во";
-"edit_food_entry_type_of_food" = "Тип пищи";
-"edit_food_entry_type_of_food_textfield_placeholder" = "Введите тип пищи...";
-"edit_food_entry_insulin_amount_title" = "Дозировка";
-"edit_food_entry_date_and_time" = "Дата/Время";
-"edit_food_entry_carbs_amount_unit_grams" = "г";
-"edit_food_entry_insulin_unit_milligrams" = "мг";
-"edit_food_entry_fast_carbs_title" = "Быстрые";
-"edit_food_entry_medium_carbs_title" = "Средние";
-"edit_food_entry_slow_carbs_title" = "Медленные";
-"edit_food_entry_other_carbs_title" = "Другие";
+// Edit Entry
+"edit_entry_food_scene_title" = "Еда";
+"edit_entry_bolus_scene_title" = "Болюс";
+"edit_entry_basal_scene_title" = "Базал";
+"edit_entry_carbs_scene_title" = "Углеводы";
+"edit_entry_section_header" = "ВВЕДИТЕ ЗНАЧЕНИЯ НИЖЕ";
+"edit_entry_carbs_section_footer" = "Укажите точное количество потребляемого количества в граммах, дату и тип пищи, чтобы лучше понять ваш рацион";
+"edit_entry_bolus_section_footer" = "Выберите дозировку и выберите точную дату инъекции";
+"edit_entry_basal_section_footer" = "Выберите дозировку и выберите точную дату инъекции";
+"edit_entry_carbs_amount_title" = "Потребленное кол-во";
+"edit_entry_type_of_food" = "Тип пищи";
+"edit_entry_type_of_food_textfield_placeholder" = "Введите тип пищи...";
+"edit_entry_insulin_amount_title" = "Дозировка";
+"edit_entry_date_and_time" = "Дата/Время";
+"edit_entry_carbs_amount_unit_grams" = "г";
+"edit_entry_insulin_unit_milligrams" = "мг";
+"edit_entry_fast_carbs_title" = "Быстрые";
+"edit_entry_medium_carbs_title" = "Средние";
+"edit_entry_slow_carbs_title" = "Медленные";
+"edit_entry_other_carbs_title" = "Другие";
+"edit_entry_trainings_scene_title" = "Тренировка";
+"edit_entry_trainings_cell_duration" = "Продолжительность";
+"edit_entry_trainings_cell_intensity" = "Интенсивность";
+"edit_entry_trainings_cell_dateTime" = "Дата/Время";
+"edit_entry_trainings_section_title" = "Введите значения ниже";
+"edit_entry_trainings_intensity_low" = "Низкая";
+"edit_entry_trainings_intensity_normal" = "Нормальная";
+"edit_entry_trainings_intensity_high" = "Высокая";
+"edit_entry_trainings_m" = "мин";
+
+
 
 // History
 "history_scene_title" = "История";
@@ -405,8 +425,14 @@
 "settings_pen_user_delete_alert_cancel_button" = "Нет";
 
 // Settings Pump User
-"settings_pump_user_info_label_text" = "Система Nightscout позволяет подключить (или присоединить) устройство к приемнику Dexcom, который передает показания глюкозы в Интернет, где любое подключенное к сети устройство может просматривать цифры. Это так просто";
+"settings_pump_user_info_label_text" = "Если у вас есть помпа, подключенная к сервису Nightscout, вы можете синхронизовать его с приложением, чтобы отобразить базальный инсулин.";
 "settings_pump_user_sync_button_title" = "Синхронизировать с NightScout";
+"settings_pump_user_unpair_button_title" = "Разорвать синхронизацию";
+
+
+
+
+
 
 // Bluetooth Errors
 "bluetooth_error_title" = "Ошибка Сервиса Датчиков";
@@ -428,22 +454,12 @@
 "dexcom_error_invalid_battery_status_response" = "Получен неправильный ответ о статусе батареи";
 "dexcom_error_invalid_transmitter_time_response" = "Получен неправильный ответ о времени датчика";
 
-// Edit Training
-"edit_training_title" = "Тренировка";
-"edit_training_cell_duration" = "Продолжительность";
-"edit_training_cell_intensity" = "Интенсивность";
-"edit_training_cell_dateTime" = "Дата/Время";
-"edit_training_section_title" = "Введите значения ниже";
-"edit_training_intensity_low" = "Низкая";
-"edit_training_intensity_normal" = "Нормальная";
-"edit_training_intensity_high" = "Высокая";
-"edit_training_m" = "мин";
-
 // Calibration
 "calibration_not_ready_error_title" = "Калибровка не доступна";
 "calibration_not_ready_error_general_message" = "Не достигнуты все условия для калибровки";
 "calibration_not_ready_error_no_initial_readings" = "Недостаточно показаний для первичной калибровки";
 "calibration_not_ready_error_warming_up" = "Во время разогрева сенсора калибровка невозможна";
+"calibration_not_ready_error_sensor_stopped" = "Калибровка не может быть выполнена, если сенсор не работает. Пожалуйста, запустите сенсор в настройках приложения";
 "calibration_initial_alert_title" = "Начальная Калибровка";
 "calibration_initial_alert_message" = "Для нормального функционирования сенсора требуется начальная калибровка";
 "calibration_initial_alert_proceed_button" = "Продолжить";

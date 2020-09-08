@@ -93,6 +93,7 @@ final class NightscoutService {
         scanForTreatments(treatmentType: .carbs)
         scanForTreatments(treatmentType: .bolus)
         scanForTreatments(treatmentType: .basal)
+        scanForTreatments(treatmentType: .training)
         
         runQueue()
     }
@@ -179,8 +180,8 @@ final class NightscoutService {
             all = InsulinEntriesWorker.fetchAllBolusEntries()
         case .basal:
             all = InsulinEntriesWorker.fetchAllBasalEntries()
-        default:
-            return
+        case .training:
+            all = TrainingEntriesWorker.fetchAllTrainings()
         }
         
         let notUploaded = all.filter { $0.cloudUploadStatus == .notUploaded }
@@ -349,6 +350,11 @@ final class NightscoutService {
                 InsulinEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
             case .deleteBasal:
                 InsulinEntriesWorker.deleteEntryWith(externalID: request.itemID)
+                
+            case .postTraining, .modifyTraining:
+                TrainingEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
+            case .deleteTraining:
+                TrainingEntriesWorker.deleteEntryWith(externalID: request.itemID)
             }
         }
     }

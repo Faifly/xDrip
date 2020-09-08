@@ -14,7 +14,9 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
     static var bolusDataHandler: (() -> Void)?
     static var basalDataHandler: (() -> Void)?
     
-    @discardableResult static func addBolusEntry(amount: Double, date: Date, externalID: String? = nil) -> InsulinEntry {
+    @discardableResult static func addBolusEntry(amount: Double,
+                                                 date: Date,
+                                                 externalID: String? = nil) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .bolus, externalID: externalID)
         if externalID != nil {
             entry.cloudUploadStatus = .uploaded
@@ -28,7 +30,9 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
         return addedEntry
     }
     
-    @discardableResult static func addBasalEntry(amount: Double, date: Date, externalID: String? = nil) -> InsulinEntry {
+    @discardableResult static func addBasalEntry(amount: Double,
+                                                 date: Date,
+                                                 externalID: String? = nil) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .basal, externalID: externalID)
         if externalID != nil {
             entry.cloudUploadStatus = .uploaded

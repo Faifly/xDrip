@@ -13,6 +13,14 @@ protocol TreatmentEntryProtocol {
     var date: Date? { get }
     var externalID: String? { get }
     var cloudUploadStatus: CloudUploadStatus { get }
+    var exerciseIntensity: Int? { get set }
+}
+
+extension TreatmentEntryProtocol {
+    var exerciseIntensity: Int? {
+        get { return nil }
+        set { exerciseIntensity = newValue }
+      }
 }
 
 enum TreatmentType: String {
@@ -20,7 +28,6 @@ enum TreatmentType: String {
     case bolus
     case basal
     case training
-    case unknown
     
     func getUploadRequestTypeFor(requestType: RequestType) -> UploadRequestType {
         var postrequestType: UploadRequestType
@@ -40,10 +47,10 @@ enum TreatmentType: String {
             postrequestType = .postBasal
             modifyRequestType = .modifyBasal
             deleteRequestType = .deleteBasal
-        default:
-            postrequestType = .postCarbs
-            modifyRequestType = .modifyCarbs
-            deleteRequestType = .deleteCarbs
+        case .training:
+            postrequestType = .postTraining
+            modifyRequestType = .modifyTraining
+            deleteRequestType = .deleteTraining
         }
         
         switch requestType {
@@ -61,6 +68,8 @@ struct CTreatment: Codable {
     var type: TreatmentType?
     let treatmentID: String?
     let carbs: Double?
+    let duration: Double?
+    let exerciseIntensity: String?
     let eventType: String?
     let insulin: Double?
     let uuid: String?
@@ -85,6 +94,8 @@ struct CTreatment: Codable {
         case enteredBy
         case insulinInjections
         case foodType
+        case duration
+        case exerciseIntensity
     }
     
     init(entry: TreatmentEntryProtocol, treatmentType: TreatmentType) {
@@ -93,15 +104,28 @@ struct CTreatment: Codable {
         uuid = entry.externalID
         treatmentID = CTreatment.getIDFromUUID(uuid: uuid)
         
-        if treatmentType == .carbs {
+        switch treatmentType {
+        case .carbs:
             carbs = entry.amount
-            insulin = 0
-        } else if treatmentType == .bolus || treatmentType == .basal {
-            carbs = 0
+            insulin = nil
+            duration = nil
+            exerciseIntensity = nil
+        case .bolus, .basal:
+            carbs = nil
             insulin = entry.amount
-        } else {
-            carbs = 0
-            insulin = 0
+            duration = nil
+            exerciseIntensity = nil
+        case .training:
+            carbs = nil
+            insulin = nil
+            duration = entry.amount / .secondsPerMinute
+            
+            if let intensityValue = entry.exerciseIntensity,
+               let intensityString = TrainingIntensity(rawValue: intensityValue)?.paramValue() {
+                exerciseIntensity = intensityString
+            } else {
+                exerciseIntensity = nil
+            }
         }
         
         eventType = treatmentType.rawValue.capitalized
@@ -141,6 +165,8 @@ struct CTreatment: Codable {
         enteredBy = try? container.decode(String.self, forKey: .enteredBy)
         insulinInjections = try? container.decode(String.self, forKey: .insulinInjections)
         foodType = try? container.decode(String.self, forKey: .foodType)
+        duration = try? container.decode(Double.self, forKey: .duration)
+        exerciseIntensity = try? container.decode(String.self, forKey: .exerciseIntensity)
         
         switch eventType?.lowercased() {
         case TreatmentType.carbs.rawValue.lowercased():
@@ -149,8 +175,10 @@ struct CTreatment: Codable {
             type = .bolus
         case TreatmentType.basal.rawValue.lowercased():
             type = .basal
+        case TreatmentType.training.rawValue.lowercased():
+            type = .training
         default:
-            type = .unknown
+            type = .carbs
         }
     }
     
@@ -171,6 +199,7 @@ struct CTreatment: Codable {
         let allCarbs = CarbEntriesWorker.fetchAllCarbEntries()
         let allBolus = InsulinEntriesWorker.fetchAllBolusEntries()
         let allBasal = InsulinEntriesWorker.fetchAllBasalEntries()
+        let allTrainings = TrainingEntriesWorker.fetchAllTrainings()
         
         for treatment in treatments {
             let treatmentDate = CTreatment.getTreatmentDate(treatment)
@@ -178,7 +207,9 @@ struct CTreatment: Codable {
             switch treatment.type {
             case .carbs:
                 if !allCarbs.contains(where: { $0.externalID == treatment.uuid }), let amount = treatment.carbs {
-                    CarbEntriesWorker.addCarbEntry(amount: amount, foodType: treatment.foodType, date: treatmentDate,
+                    CarbEntriesWorker.addCarbEntry(amount: amount,
+                                                   foodType: treatment.foodType,
+                                                   date: treatmentDate,
                                                    externalID: treatment.uuid)
                 }
             case .bolus:
@@ -189,7 +220,15 @@ struct CTreatment: Codable {
                 if !allBasal.contains(where: { $0.externalID == treatment.uuid }), let amount = treatment.insulin {
                     InsulinEntriesWorker.addBasalEntry(amount: amount, date: treatmentDate, externalID: treatment.uuid)
                 }
-                
+            case .training:
+                if !allTrainings.contains(where: { $0.externalID == treatment.uuid }),
+                    let duration = treatment.duration,
+                    let intensity = treatment.exerciseIntensity {
+                    TrainingEntriesWorker.addTraining(duration: duration * .secondsPerMinute,
+                                                      intensity: TrainingIntensity.getValue(paramValue: intensity),
+                                                      date: treatmentDate,
+                                                      externalID: treatment.uuid)
+                }
             default:
                 break
             }
