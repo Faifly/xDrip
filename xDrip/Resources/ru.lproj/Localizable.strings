@@ -1,6 +1,7 @@
 // AUTO-GENERATED
 // General
 "cancel" = "Отмена";
+"close" = "Закрыть";
 "error" = "Ошибка";
 "nyi_alert_title" = "Ещё Не Внедрено";
 "nyi_alert_message" = "Эта функция ещё не разработана. Следите за обновлениями!";
