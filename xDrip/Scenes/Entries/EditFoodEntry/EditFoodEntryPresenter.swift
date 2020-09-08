@@ -42,6 +42,10 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
             sections = [
                 createCarbsSection(response: response)
             ]
+        case .training:
+            sections = [
+                createTrainingsSection(response: response)
+            ]
         }
         
         let tableViewModel = BaseSettings.ViewModel(sections: sections)
@@ -147,6 +151,30 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         )
     }
     
+    private func createTrainingsSection(response: EditFoodEntry.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createDurationPickerCell(
+                duration: response.trainingEntry?.duration,
+                durationChangedHandler: response.timeIntervalChangedHandler
+            ),
+            createIntensityPickerCell(
+                intensity: response.trainingEntry?.intensity,
+                intensityChangedHandler: response.trainingIntensityChangedHandler
+            ),
+            createDatePickerCell(
+                .trainingDate,
+                date: response.trainingEntry?.date,
+                dateChangedHandler: response.dateChangedHandler
+            )
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: "edit_entry_trainings_section_title".localized,
+            footer: nil
+        )
+    }
+    
     private func createTextInputCell(
         _ field: EditFoodEntry.Field,
         detail: String?,
@@ -184,6 +212,79 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         let detail = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
         return .pickerExpandable(mainText: field.title, detailText: detail, picker: picker)
     }
+    
+    private func createDurationPickerCell(
+        duration: TimeInterval?,
+        durationChangedHandler: @escaping (TimeInterval) -> Void
+    ) -> BaseSettings.Cell {
+        var detail = ""
+        let duration = duration ?? TimeInterval.secondsPerMinute
+        let picker = CustomPickerView(mode: .countDown)
+        
+        let hours = Int(duration / TimeInterval.secondsPerHour)
+        let mins = Int((duration - Double(hours) * TimeInterval.secondsPerHour) / TimeInterval.secondsPerMinute)
+        
+        picker.selectRow(hours, inComponent: 0, animated: false)
+        picker.selectRow(mins, inComponent: 2, animated: false)
+        
+        detail = String(format: "%.0f %@", duration / TimeInterval.secondsPerMinute, "edit_entry_trainings_m".localized)
+        
+        picker.formatValues = { values in
+            guard let hour = Double(values[0]), let min = Double(values[2]) else { return "" }
+            
+            var totalSec = hour * TimeInterval.secondsPerHour + min * TimeInterval.secondsPerMinute
+            
+            if totalSec < TimeInterval.secondsPerMinute {
+                totalSec = TimeInterval.secondsPerMinute
+                picker.selectRow(1, inComponent: 2, animated: true)
+            }
+            
+            durationChangedHandler(totalSec)
+            
+            let totalMins = totalSec / TimeInterval.secondsPerMinute
+            
+            return String(format: "%.0f %@", totalMins, "edit_entry_trainings_m".localized)
+        }
+        
+        return .pickerExpandable(
+            mainText: EditFoodEntry.Field.trainingDuration.title,
+            detailText: detail,
+            picker: picker
+        )
+    }
+    
+    private func createIntensityPickerCell(
+        intensity: TrainingIntensity?,
+        intensityChangedHandler: @escaping (TrainingIntensity) -> Void
+    ) -> BaseSettings.Cell {
+        var detail = ""
+        let intensity = intensity ?? TrainingIntensity.default
+        let data = TrainingIntensity.allCases.map({ $0.localizedTitle })
+        
+        let picker = CustomPickerView(data: [data])
+        
+        if let index = data.firstIndex(of: intensity.localizedTitle) {
+            detail = intensity.localizedTitle
+            picker.selectRow(index, inComponent: 0, animated: false)
+        }
+        
+        picker.formatValues = { values in
+            guard let intensityString = values.first else { return "" }
+            
+            let trainings = TrainingIntensity.allCases
+            
+            if let intensity = trainings.first(where: { $0.localizedTitle == intensityString }) {
+                intensityChangedHandler(intensity)
+            }
+            return intensityString
+        }
+        
+        return .pickerExpandable(
+            mainText: EditFoodEntry.Field.trainingIntensity.title,
+            detailText: detail,
+            picker: picker
+        )
+    }
 }
 
 private extension EditFoodEntry.Field {
@@ -194,6 +295,19 @@ private extension EditFoodEntry.Field {
         case .foodType: return "edit_entry_type_of_food".localized
         case .insulinAmount: return "edit_entry_insulin_amount_title".localized
         case .insulinDate: return "edit_entry_date_and_time".localized
+        case .trainingDate: return "edit_entry_trainings_cell_dateTime".localized
+        case .trainingDuration: return "edit_entry_trainings_cell_duration".localized
+        case .trainingIntensity: return "edit_entry_trainings_cell_intensity".localized
+        }
+    }
+}
+
+private extension TrainingIntensity {
+    var localizedTitle: String {
+        switch self {
+        case .low: return "edit_entry_trainings_intensity_low".localized
+        case .normal: return "edit_entry_trainings_intensity_normal".localized
+        case .high: return "edit_entry_trainings_intensity_high".localized
         }
     }
 }

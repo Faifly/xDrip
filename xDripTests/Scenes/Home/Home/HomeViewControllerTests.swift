@@ -49,14 +49,28 @@ final class HomeViewControllerTests: XCTestCase {
     
     final class HomeBusinessLogicSpy: HomeBusinessLogic {
         var doLoadCalled = false
-        var doShowEntriesListCalled = false
+        var doShowBolusListCalled = false
+        var doShowCarbsListCalled = false
+        var doShowBasalsListCalled = false
+        var doShowTrainingsListCalled = false
         
         func doLoad(request: Home.Load.Request) {
             doLoadCalled = true
         }
         
         func doShowEntriesList(request: Home.ShowEntriesList.Request) {
-            doShowEntriesListCalled = true
+            switch request.entriesType {
+            case .bolus:
+                doShowBolusListCalled = true
+            case .carbs:
+                doShowCarbsListCalled = true
+            case .basal:
+                doShowBasalsListCalled = true
+            case .training:
+                doShowTrainingsListCalled = true
+            default:
+                break
+            }
         }
         
         func doChangeGlucoseChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request) {
@@ -90,5 +104,26 @@ final class HomeViewControllerTests: XCTestCase {
         sut.displayLoad(viewModel: viewModel)
         
         // Then
+    }
+    
+    func testSubscribeToViewsButtonEvents() {
+        // Given
+        let spy = HomeBusinessLogicSpy()
+        sut.interactor = spy
+        let mirror = HomeViewControllerMirror(viewController: sut)
+        
+        // When
+        loadView()
+        
+        mirror.carbsHistoryView?.chartButtonClicked()
+        mirror.bolusHistoryView?.chartButtonClicked()
+        mirror.optionsView?.onAllTrainingsTapped(sender: UITapGestureRecognizer())
+        mirror.optionsView?.onAllBasalTapped(sender: UITapGestureRecognizer())
+        // Then
+        
+        XCTAssertTrue(spy.doShowCarbsListCalled)
+        XCTAssertTrue(spy.doShowBolusListCalled)
+        XCTAssertTrue(spy.doShowTrainingsListCalled)
+        XCTAssertTrue(spy.doShowBasalsListCalled)
     }
 }

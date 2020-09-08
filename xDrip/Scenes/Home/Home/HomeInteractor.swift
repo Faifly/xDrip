@@ -121,6 +121,10 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             router?.routeToBolusEntriesList()
         case .carbs:
             router?.routeToCarbsEntriesList()
+        case .training:
+            router?.routeToTrainingEntriesList()
+        case .basal:
+            router?.routeToBasalEntriesList()
         default:
             break
         }

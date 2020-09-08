@@ -38,5 +38,6 @@ final class TrainingEntry: AbstractEntry {
             self.intensity = intensity
             self.updateDate(date)
         }
+        TrainingEntriesWorker.updatedTrainingEntry()
     }
 }

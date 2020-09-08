@@ -18,6 +18,8 @@
                 <outlet property="dataView" destination="JSM-bc-NJh" id="faB-jb-TdC"/>
                 <outlet property="glucoseChart" destination="fZx-6e-Ugl" id="UkI-o0-MmZ"/>
                 <outlet property="glucoseCurrentInfoView" destination="mbw-ZN-ydS" id="zfp-MX-hvX"/>
+                <outlet property="optionsTitleLabel" destination="UHz-Xh-dYD" id="iy6-Io-eNP"/>
+                <outlet property="optionsView" destination="UMn-9j-Pts" id="yOW-ZQ-SUs"/>
                 <outlet property="sensorStateLabel" destination="yid-de-t5U" id="R4Q-wu-HjU"/>
                 <outlet property="sensorStateLabelTopConstraint" destination="b34-53-bpm" id="Yig-gz-rG9"/>
                 <outlet property="timeLineSegmentView" destination="Jxh-xc-P39" id="gr8-xT-aOH"/>
@@ -107,7 +109,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cPc-Gn-HBN">
-                            <rect key="frame" x="16" y="564" width="382" height="340"/>
+                            <rect key="frame" x="16" y="564" width="382" height="447"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wrq-Ft-2bG">
                                     <rect key="frame" x="0.0" y="0.0" width="382" height="236"/>
@@ -138,7 +140,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ztf-ab-tGY">
-                                    <rect key="frame" x="0.0" y="252" width="382" height="88"/>
+                                    <rect key="frame" x="0.0" y="252" width="382" height="68"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Wm-cT-aYO">
                                             <rect key="frame" x="0.0" y="0.0" width="382" height="16"/>
@@ -178,9 +180,36 @@
                                         <constraint firstAttribute="trailing" secondItem="A5z-Uu-tiy" secondAttribute="trailing" id="b0m-SM-fxq"/>
                                         <constraint firstAttribute="trailing" secondItem="5Wm-cT-aYO" secondAttribute="trailing" id="fZf-3B-tDW"/>
                                         <constraint firstItem="A5z-Uu-tiy" firstAttribute="leading" secondItem="ztf-ab-tGY" secondAttribute="leading" id="hZt-VC-5Q1"/>
-                                        <constraint firstAttribute="bottom" secondItem="A5z-Uu-tiy" secondAttribute="bottom" constant="20" id="nMe-aQ-Aap"/>
+                                        <constraint firstAttribute="bottom" secondItem="A5z-Uu-tiy" secondAttribute="bottom" id="nMe-aQ-Aap"/>
                                         <constraint firstItem="A5z-Uu-tiy" firstAttribute="top" secondItem="5Wm-cT-aYO" secondAttribute="bottom" constant="7" id="qWE-Ut-0Wx"/>
                                         <constraint firstItem="5Wm-cT-aYO" firstAttribute="leading" secondItem="ztf-ab-tGY" secondAttribute="leading" id="xTX-wH-dx7"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gKc-JT-urV">
+                                    <rect key="frame" x="0.0" y="336" width="382" height="111"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHz-Xh-dYD">
+                                            <rect key="frame" x="0.0" y="0.0" width="382" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" name="headerTitleColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UMn-9j-Pts" customClass="OptionsView" customModule="xDrip" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="23" width="382" height="88"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="88" id="CvT-3W-OxI"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="UMn-9j-Pts" secondAttribute="bottom" id="3OZ-Tb-cdp"/>
+                                        <constraint firstItem="UHz-Xh-dYD" firstAttribute="top" secondItem="gKc-JT-urV" secondAttribute="top" id="CbA-zl-jQT"/>
+                                        <constraint firstAttribute="trailing" secondItem="UMn-9j-Pts" secondAttribute="trailing" id="KlP-Xj-PV9"/>
+                                        <constraint firstItem="UMn-9j-Pts" firstAttribute="top" secondItem="UHz-Xh-dYD" secondAttribute="bottom" constant="7" id="Nhe-HI-BZF"/>
+                                        <constraint firstItem="UMn-9j-Pts" firstAttribute="leading" secondItem="gKc-JT-urV" secondAttribute="leading" id="SmJ-1F-fsn"/>
+                                        <constraint firstItem="UHz-Xh-dYD" firstAttribute="leading" secondItem="gKc-JT-urV" secondAttribute="leading" id="goJ-5u-GeU"/>
+                                        <constraint firstAttribute="trailing" secondItem="UHz-Xh-dYD" secondAttribute="trailing" id="tTn-bd-Jc3"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -197,7 +226,7 @@
                         <constraint firstItem="fZx-6e-Ugl" firstAttribute="leading" secondItem="5GJ-cn-Jfe" secondAttribute="leading" id="kNy-y9-lGg"/>
                         <constraint firstItem="fZx-6e-Ugl" firstAttribute="top" secondItem="5GJ-cn-Jfe" secondAttribute="top" id="ksA-Ix-eFN"/>
                         <constraint firstItem="ZiU-dl-xRq" firstAttribute="trailing" secondItem="cPc-Gn-HBN" secondAttribute="trailing" constant="16" id="nG2-sl-wN1"/>
-                        <constraint firstAttribute="bottom" secondItem="cPc-Gn-HBN" secondAttribute="bottom" constant="5" id="tU5-GD-RzO"/>
+                        <constraint firstAttribute="bottom" secondItem="cPc-Gn-HBN" secondAttribute="bottom" constant="10" id="tU5-GD-RzO"/>
                     </constraints>
                     <viewLayoutGuide key="contentLayoutGuide" id="iBa-5E-yx3"/>
                     <viewLayoutGuide key="frameLayoutGuide" id="ZiU-dl-xRq"/>

@@ -15,6 +15,8 @@ import UIKit
 protocol HomeRoutingLogic {
     func routeToCarbsEntriesList()
     func routeToBolusEntriesList()
+    func routeToTrainingEntriesList()
+    func routeToBasalEntriesList()
 }
 
 protocol HomeDataPassing {
@@ -35,6 +37,13 @@ final class HomeRouter: HomeRoutingLogic, HomeDataPassing {
         routeToEntriesList(for: .carbs)
     }
     
+    func routeToTrainingEntriesList() {
+        routeToEntriesList(for: .training)
+    }
+    func routeToBasalEntriesList() {
+        routeToEntriesList(for: .basal)
+    }
+    
     private func routeToEntriesList(for type: Root.EntryType) {
         let builder = EntriesListSceneBuilder()
         let viewController: UIViewController?
@@ -43,6 +52,10 @@ final class HomeRouter: HomeRoutingLogic, HomeDataPassing {
             viewController = builder.createSceneForCarbs()
         case .bolus:
             viewController = builder.createSceneForBolus()
+        case .training:
+            viewController = builder.createSceneForTraining()
+        case .basal:
+            viewController = builder.createSceneForBasal()
         default:
             viewController = nil
         }

@@ -11,6 +11,7 @@ import AKUtils
 
 final class InsulinEntriesWorker: AbstractEntriesWorker {
     static var bolusDataHandler: (() -> Void)?
+    static var basalDataHandler: (() -> Void)?
     
     @discardableResult static func addBolusEntry(amount: Double, date: Date) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .bolus)
@@ -29,7 +30,12 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
     static func deleteInsulinEntry(_ entry: InsulinEntry) {
         let type = entry.type
         super.deleteEntry(entry)
-        if type == .bolus { bolusDataHandler?() }
+        switch type {
+        case .bolus:
+            InsulinEntriesWorker.updatedBolusEntry()
+        case .basal:
+            InsulinEntriesWorker.updatedBasalEntry()
+        }
     }
     
     static func fetchAllBolusEntries() -> [InsulinEntry] {
@@ -46,5 +52,9 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
     
     static func updatedBolusEntry() {
         bolusDataHandler?()
+    }
+    
+    static func updatedBasalEntry() {
+        basalDataHandler?()
     }
 }

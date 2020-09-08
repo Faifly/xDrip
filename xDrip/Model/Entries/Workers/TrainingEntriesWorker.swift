@@ -9,6 +9,8 @@
 import Foundation
 
 final class TrainingEntriesWorker: AbstractEntriesWorker {
+    static var trainingDataHandler: (() -> Void)?
+    
     @discardableResult static func addTraining(
         duration: TimeInterval,
         intensity: TrainingIntensity,
@@ -19,5 +21,14 @@ final class TrainingEntriesWorker: AbstractEntriesWorker {
     
     static func fetchAllTrainings() -> [TrainingEntry] {
         return super.fetchAllEntries(type: TrainingEntry.self)
+    }
+    
+    static func deleteTrainingEntry(_ entry: AbstractEntry) {
+        super.deleteEntry(entry)
+        trainingDataHandler?()
+    }
+    
+    static func updatedTrainingEntry() {
+        trainingDataHandler?()
     }
 }

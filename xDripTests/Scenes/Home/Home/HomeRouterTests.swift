@@ -66,4 +66,30 @@ final class HomeRouterTests: XCTestCase {
         let entriesListNavController = spy.lastPresentedViewController as? UINavigationController
         XCTAssert(entriesListNavController?.viewControllers[0] is EntriesListViewController)
     }
+    
+    func testRootToTrainingsEntriesList() {
+        // Given
+        let spy = ViewControllerSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.routeToTrainingEntriesList()
+        
+        // Then
+        let entriesListNavController = spy.lastPresentedViewController as? UINavigationController
+        XCTAssert(entriesListNavController?.viewControllers[0] is EntriesListViewController)
+    }
+    
+    func testRootToBasalsEntriesList() {
+        // Given
+        let spy = ViewControllerSpy()
+        sut.viewController = spy
+        
+        // When
+        sut.routeToBasalEntriesList()
+        
+        // Then
+        let entriesListNavController = spy.lastPresentedViewController as? UINavigationController
+        XCTAssert(entriesListNavController?.viewControllers[0] is EntriesListViewController)
+    }
 }

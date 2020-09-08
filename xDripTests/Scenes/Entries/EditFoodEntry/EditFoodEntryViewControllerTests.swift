@@ -14,6 +14,8 @@
 import XCTest
 
 // swiftlint:disable implicitly_unwrapped_optional
+// swiftlint:disable type_body_length
+// swiftlint:disable file_length
 
 final class EditFoodEntryViewControllerTests: XCTestCase {
     // MARK: Subject under test
@@ -162,9 +164,9 @@ final class EditFoodEntryViewControllerTests: XCTestCase {
             let bolusAmountCell = tableView.getCell(of: cellType, at: IndexPath(row: 0, section: 1)),
             let carbsTextField = carbsAmountCell.contentView.findView(with: "textField") as? UITextField,
             let bolusTextField = bolusAmountCell.contentView.findView(with: "textField") as? UITextField
-        else {
-            XCTFail("Cannot obtain textfields")
-            return
+            else {
+                XCTFail("Cannot obtain textfields")
+                return
         }
         
         carbsTextField.text = "123"
@@ -196,9 +198,9 @@ final class EditFoodEntryViewControllerTests: XCTestCase {
         guard
             let carbsPicker = getPicker(tableView, at: IndexPath(row: 2, section: 0)) as? CustomDatePicker,
             let bolusPicker = getPicker(tableView, at: IndexPath(row: 1, section: 1)) as? CustomDatePicker
-        else {
-            XCTFail("Cannot obtain picker")
-            return
+            else {
+                XCTFail("Cannot obtain picker")
+                return
         }
         
         carbsPicker.date = Date().addingTimeInterval(-84600)
@@ -229,9 +231,9 @@ final class EditFoodEntryViewControllerTests: XCTestCase {
         }
         
         guard let stackView = cell.contentView.subviews.compactMap({ $0 as? UIStackView }).first
-        else {
-            XCTFail("Cannot obtain buttons")
-            return
+            else {
+                XCTFail("Cannot obtain buttons")
+                return
         }
         
         let buttons = stackView.arrangedSubviews.compactMap({ $0 as? UIButton })
@@ -309,6 +311,94 @@ final class EditFoodEntryViewControllerTests: XCTestCase {
         textField.sendActions(for: .editingChanged)
     }
     
+    func testTrainingsDataChangedHandlers() {
+        // Given
+        let trainingEntry = TrainingEntry(duration: TimeInterval.secondsPerHour, intensity: .default, date: Date())
+        
+        // When
+        sut.router?.dataStore?.mode = .edit
+        sut.router?.dataStore?.trainingEntry = trainingEntry
+        sut.router?.dataStore?.entryType = .training
+        loadView()
+        let tableView = getTableView()
+        
+        guard
+            let durationPicker = getPicker(tableView, at: IndexPath(row: 0, section: 0)) as? CustomPickerView,
+            let intensityPicker = getPicker(tableView, at: IndexPath(row: 1, section: 0)) as? CustomPickerView
+            else {
+                XCTFail("Cannot obtain intensity picker")
+                return
+        }
+        
+        durationPicker.selectRow(1, inComponent: 0, animated: false)
+        durationPicker.pickerView(durationPicker, didSelectRow: 1, inComponent: 0)
+        
+        durationPicker.selectRow(0, inComponent: 0, animated: false)
+        durationPicker.pickerView(durationPicker, didSelectRow: 0, inComponent: 0)
+        
+        intensityPicker.selectRow(1, inComponent: 0, animated: false)
+        intensityPicker.pickerView(intensityPicker, didSelectRow: 1, inComponent: 0)
+        
+        let button = sut.navigationItem.rightBarButtonItem
+        _ = button?.target?.perform(button?.action, with: nil)
+    }
+    
+    func testDetailTextChanges() {
+        // Given
+        let cellType = PickerExpandableTableViewCell.self
+        let accessibilityID = "detailLabel"
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        let specificDate = formatter.date(from: "2000/10/01 09:41")
+        
+        let trainingEntry = TrainingEntry(
+            duration: TimeInterval.secondsPerHour,
+            intensity: .high,
+            date: specificDate ?? Date()
+        )
+        
+        // When
+        sut.router?.dataStore?.mode = .edit
+        sut.router?.dataStore?.trainingEntry = trainingEntry
+        sut.router?.dataStore?.entryType = .training
+        loadView()
+        let tableView = getTableView()
+        
+        guard
+            let durationPickerCell = tableView.getCell(of: cellType, at: IndexPath(row: 0, section: 0)),
+            let durationDetailLabel = durationPickerCell.findView(with: accessibilityID) as? UILabel
+            else {
+                XCTFail("Cannot obtain duration picker cell")
+                return
+        }
+        
+        guard
+            let intensityPickerCell = tableView.getCell(of: cellType, at: IndexPath(row: 1, section: 0)),
+            let intensityDetailLabel = intensityPickerCell.findView(with: accessibilityID) as? UILabel
+            else {
+                XCTFail("Cannot obtain intensity picker cell")
+                return
+        }
+        
+        guard
+            let datePickerCell = tableView.getCell(of: cellType, at: IndexPath(row: 2, section: 0)),
+            let dateDetailLabel = datePickerCell.findView(with: accessibilityID) as? UILabel
+            else {
+                XCTFail("Cannot obtain date picker cell")
+                return
+        }
+        
+        // Then
+        XCTAssertTrue(durationDetailLabel.text == "60 \("edit_entry_trainings_m".localized)")
+        XCTAssertTrue(intensityDetailLabel.text == "edit_entry_trainings_intensity_high".localized)
+        XCTAssertTrue(dateDetailLabel.text == DateFormatter.localizedString(
+            from: specificDate ?? Date(),
+            dateStyle: .short,
+            timeStyle: .short
+            ))
+    }
+    
     private func getTableView() -> UITableView {
         guard let tableView = sut.view.subviews.compactMap({ $0 as? UITableView }).first else {
             XCTFail("Cannot obtain tableView")
@@ -329,8 +419,8 @@ final class EditFoodEntryViewControllerTests: XCTestCase {
         
         guard let stackView = pickerCell.contentView.subviews.compactMap({ $0 as? UIStackView }).first,
             let picker = stackView.arrangedSubviews.first as? PickerView else {
-            XCTFail("Cannot obtain picker")
-            return nil
+                XCTFail("Cannot obtain picker")
+                return nil
         }
         
         return picker

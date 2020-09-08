@@ -40,4 +40,42 @@ final class TrainingEntriesWorkerTests: AbstractRealmTest {
         XCTAssertTrue(entries[0].duration ~ 10.0)
         XCTAssertTrue(entries[9].duration ~ 1.0)
     }
+    
+    func testDeleteEntry() throws {
+        XCTAssertTrue(realm.objects(TrainingEntry.self).isEmpty)
+        
+        TrainingEntriesWorker.addTraining(duration: 1.1, intensity: .high, date: Date())
+        
+        let entries = TrainingEntriesWorker.fetchAllTrainings()
+        
+        XCTAssertTrue(!entries.isEmpty)
+        
+        let entry = try XCTUnwrap(entries.first)
+        
+        TrainingEntriesWorker.deleteTrainingEntry(entry)
+        
+        XCTAssertTrue(TrainingEntriesWorker.fetchAllTrainings().isEmpty)
+    }
+    
+    func testUpdatedEntry() throws {
+        var ispdatedCalled = false
+        
+        TrainingEntriesWorker.trainingDataHandler = {
+            ispdatedCalled = true
+        }
+        
+        TrainingEntriesWorker.addTraining(duration: 1.1, intensity: .high, date: Date())
+        
+        ispdatedCalled = false
+        
+        let entries = TrainingEntriesWorker.fetchAllTrainings()
+        
+        let entry = try XCTUnwrap(entries.first)
+        
+        entry.update(duration: 2,
+                     intensity: .low,
+                     date: Date())
+        
+        XCTAssertTrue(ispdatedCalled)
+    }
 }

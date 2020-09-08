@@ -82,6 +82,7 @@ class EditFoodEntryViewController: BaseSettingsViewController, EditFoodEntryDisp
             case .bolus: title = "edit_entry_bolus_scene_title".localized
             case .carbs: title = "edit_entry_carbs_scene_title".localized
             case .basal: title = "edit_entry_basal_scene_title".localized
+            case .training: title = "edit_entry_trainings_scene_title".localized
             }
         }
         

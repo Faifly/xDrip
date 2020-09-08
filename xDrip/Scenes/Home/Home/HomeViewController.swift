@@ -76,6 +76,8 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var glucoseDataStackView: UIStackView!
     @IBOutlet private weak var dataView: GlucoseDataView!
     @IBOutlet private weak var dataContentView: UIView!
+    @IBOutlet private weak var optionsView: OptionsView!
+    @IBOutlet private weak var optionsTitleLabel: UILabel!
     
     // MARK: View lifecycle
     
@@ -204,6 +206,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         timeLineSegmentView.selectedSegmentIndex = 0
         aboutGlucoseTitleLabel.text = "home_about_glucose_title".localized.uppercased()
         aboutGlucoseContentLabel.text = "home_about_glucose_content".localized
+        optionsTitleLabel.text = "home_options_title".localized.uppercased()
     }
     
     private func subscribeToViewsButtonEvents() {
@@ -214,6 +217,18 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         
         carbsHistoryView.onChartButtonClicked = { [weak self] in
             let request = Home.ShowEntriesList.Request(entriesType: .carbs)
+            self?.interactor?.doShowEntriesList(request: request)
+        }
+        
+        optionsView.itemSelectionHandler = { [weak self] option in
+            var entriesType: Root.EntryType
+            switch option {
+            case .allTrainings:
+                entriesType = .training
+            case .allBasals:
+                entriesType = .basal
+            }
+            let request = Home.ShowEntriesList.Request(entriesType: entriesType)
             self?.interactor?.doShowEntriesList(request: request)
         }
     }
