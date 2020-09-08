@@ -36,13 +36,22 @@ final class TrainingEntriesWorker: AbstractEntriesWorker {
         return super.fetchAllEntries(type: TrainingEntry.self)
     }
     
-    static func deleteTrainingEntry(_ entry: AbstractEntry) {
-        super.deleteEntry(entry)
+    static func deleteTrainingEntry(_ entry: TrainingEntry) {
+        if let settings = User.current.settings.nightscoutSync,
+        settings.isEnabled, settings.uploadTreatments {
+            Realm.shared.safeWrite {
+                entry.cloudUploadStatus = .waitingForDeletion
+            }
+        } else {
+            super.deleteEntry(entry)
+        }
         trainingDataHandler?()
+        NightscoutService.shared.scanForNotUploadedTreatments()
     }
     
     static func updatedTrainingEntry() {
         trainingDataHandler?()
+        NightscoutService.shared.scanForNotUploadedTreatments()
     }
     
     static func deleteEntryWith(externalID: String) {
