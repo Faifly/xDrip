@@ -277,6 +277,8 @@ final class Calibration: Object {
         realm.safeWrite {
             realm.delete(last)
         }
+        
+        NotificationCenter.default.postSettingsChangeNotification(setting: .warmUp)
     }
     
     static func deleteAll() {
@@ -286,6 +288,8 @@ final class Calibration: Object {
         realm.safeWrite {
             realm.delete(all)
         }
+        
+        NotificationCenter.default.postSettingsChangeNotification(setting: .warmUp)
     }
     
     static func markCalibrationAsUploaded(itemID: String) {
