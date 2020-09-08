@@ -19,13 +19,31 @@ final class NightscoutService {
     private var requestQueue: [UploadRequest] = []
     private var isRequestInProgress = false
     
-    private lazy var settingsObservers: [Any] = NotificationCenter.default.subscribe(
+    private lazy var followerSettingsObserver: [Any] = NotificationCenter.default.subscribe(
     forSettingsChange: [.followerAuthStatus]) {
         guard let settings = User.current.settings.nightscoutSync else { return }
         if settings.isFollowerAuthed {
             self.startFetchingFollowerData()
         } else {
             self.stopFetchingFollowerData()
+        }
+    }
+    
+    private lazy var downloadDataSettingsObserver: [Any] = NotificationCenter.default.subscribe(
+    forSettingsChange: [.downloadData]) {
+        guard let settings = User.current.settings.nightscoutSync else { return }
+        if settings.downloadData {
+            self.startFetchingTreatments()
+        } else {
+            self.stopFetchingTreatments()
+        }
+    }
+    
+    private lazy var uploadTreatmentsSettingsObserver: [Any] = NotificationCenter.default.subscribe(
+    forSettingsChange: [.uploadTreatments]) {
+        guard let settings = User.current.settings.nightscoutSync else { return }
+        if settings.uploadTreatments {
+            self.scanForNotUploadedTreatments()
         }
     }
     private lazy var lastFollowerFetchTime = GlucoseReading.allFollower.last?.date
@@ -37,7 +55,9 @@ final class NightscoutService {
     
     init() {
         requestFactory = UploadRequestFactory()
-        _ = settingsObservers
+        _ = followerSettingsObserver
+        _ = downloadDataSettingsObserver
+        _ = uploadTreatmentsSettingsObserver
         //        if let settings = User.current.settings.nightscoutSync, settings.isFollowerAuthed {
         //            startFetchingFollowerData()
         //        }
@@ -385,6 +405,12 @@ final class NightscoutService {
         LogController.log(message: "[NighscoutService]: Stopped fetching follower data.", type: .info)
         followerFetchTimer?.invalidate()
         followerFetchTimer = nil
+    }
+    
+    private func stopFetchingTreatments() {
+        LogController.log(message: "[NighscoutService]: Stopped fetching treatments.", type: .info)
+        treatmentsFetchTimer?.invalidate()
+        treatmentsFetchTimer = nil
     }
     
     private func fetchFollowerData() {

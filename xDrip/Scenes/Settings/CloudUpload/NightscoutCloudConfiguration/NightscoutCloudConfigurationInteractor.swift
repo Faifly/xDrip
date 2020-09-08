@@ -53,6 +53,7 @@ final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfiguration
             
         case .downloadData:
             settings.updateDownloadData(value)
+            NotificationCenter.default.postSettingsChangeNotification(setting: .downloadData)
             
         default: break
         }

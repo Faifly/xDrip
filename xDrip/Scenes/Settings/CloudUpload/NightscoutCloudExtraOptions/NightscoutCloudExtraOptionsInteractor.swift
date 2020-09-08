@@ -48,6 +48,7 @@ final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBu
         case .uploadTreatments:
             settings.updateUploadTreatments(value)
             updateData()
+            NotificationCenter.default.postSettingsChangeNotification(setting: .uploadTreatments)
             
         case .alertOnFailures:
 //            settings.updateAlertOnFailures(value)
