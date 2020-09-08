@@ -59,7 +59,6 @@ final class HomeViewControllerTests: XCTestCase {
         }
         
         func doShowEntriesList(request: Home.ShowEntriesList.Request) {
-            
             switch request.entriesType {
             case .bolus:
                 doShowBolusListCalled = true

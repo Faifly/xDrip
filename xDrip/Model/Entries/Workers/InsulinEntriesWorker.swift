@@ -31,11 +31,11 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
         let type = entry.type
         super.deleteEntry(entry)
         switch type {
-         case .bolus:
-             InsulinEntriesWorker.updatedBolusEntry()
-         case .basal:
-             InsulinEntriesWorker.updatedBasalEntry()
-         }
+        case .bolus:
+            InsulinEntriesWorker.updatedBolusEntry()
+        case .basal:
+            InsulinEntriesWorker.updatedBasalEntry()
+        }
     }
     
     static func fetchAllBolusEntries() -> [InsulinEntry] {
