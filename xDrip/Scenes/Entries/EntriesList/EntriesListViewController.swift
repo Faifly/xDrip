@@ -107,7 +107,8 @@ class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
         setupRightBarButtonItem()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
+            title: "close".localized,
+            style: .plain,
             target: self,
             action: #selector(onCancelButtonTap)
         )

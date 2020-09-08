@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol HomeWarmUpWorkerLogic {
+protocol HomeSensorStateWorkerLogic {
     func subscribeForSensorStateChange(callback: @escaping (Home.SensorState) -> Void)
 }
 
-final class HomeSensorStateWorker: HomeWarmUpWorkerLogic {
+final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
     private var callback: ((Home.SensorState) -> Void)?
     private var isWarmingUp = false
     private var timer: Timer?
@@ -26,7 +26,9 @@ final class HomeSensorStateWorker: HomeWarmUpWorkerLogic {
                 self?.checkWarmUpState()
             }
         }
-        settingsObservers = NotificationCenter.default.subscribe(forSettingsChange: [.warmUp]) { [weak self] in
+        settingsObservers = NotificationCenter.default.subscribe(
+            forSettingsChange: [.warmUp, .sensorStarted]
+        ) { [weak self] in
             self?.checkWarmUpState()
         }
     }
@@ -44,10 +46,6 @@ final class HomeSensorStateWorker: HomeWarmUpWorkerLogic {
             guard let type = CGMDevice.current.deviceType else { return }
             let age = Date().timeIntervalSince1970 - intervalAge
             let minutesLeft = Int((type.warmUpInterval - age) / 60.0)
-//            let state = Home.WarmUpState(
-//                isWarmingUp: true,
-//                minutesLeft: Int((type.warmUpInterval - age) / 60.0)
-//            )
             callback?(.warmingUp(minutesLeft: minutesLeft))
             
             if timer == nil {
@@ -59,7 +57,27 @@ final class HomeSensorStateWorker: HomeWarmUpWorkerLogic {
             isWarmingUp = false
             timer?.invalidate()
             timer = nil
-            let state: Home.SensorState = CGMDevice.current.sensorStartDate != nil ? .started : .stopped
+            let state: Home.SensorState
+            
+            if CGMDevice.current.sensorStartDate != nil {
+                state = Calibration.allForCurrentSensor.count > 1 ? .started : .waitingReadings
+            } else {
+                state = .stopped
+            }
+            
+            callback?(state)
+        } else {
+            isWarmingUp = false
+            timer?.invalidate()
+            timer = nil
+            let state: Home.SensorState
+            
+            if CGMDevice.current.sensorStartDate != nil {
+                state = Calibration.allForCurrentSensor.count > 1 ? .started : .waitingReadings
+            } else {
+                state = .stopped
+            }
+            
             callback?(state)
         }
     }

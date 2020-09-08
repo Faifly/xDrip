@@ -181,6 +181,9 @@ class BaseHistoryView: UIView {
             initialGridDate = Calendar.current.date(from: components) ?? now
         } else {
             var components = Calendar.current.dateComponents(in: .current, from: now)
+            let currentHour = Calendar.current.component(.hour, from: now)
+            let targetHour = Int((Double(currentHour) / interval.hours).rounded(.down) * interval.hours)
+            components.hour = targetHour
             components.minute = 0
             components.second = 0
             components.nanosecond = 0
@@ -188,11 +191,21 @@ class BaseHistoryView: UIView {
         }
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
+        dateFormatter.dateFormat = "MMM dd"
+        let hoursFormatter = DateFormatter()
+        hoursFormatter.dateFormat = "HH:mm"
+        
         var endGridTime = initialGridDate.timeIntervalSince1970
         while endGridTime > globalDateRange.start.timeIntervalSince1970 {
             let date = Date(timeIntervalSince1970: endGridTime)
-            globalHorizontalLabels.append(dateFormatter.string(from: date))
+            let stringDate = hoursFormatter.string(from: date)
+            
+            if stringDate == "00:00" {
+                globalHorizontalLabels.append(dateFormatter.string(from: date))
+            } else {
+                globalHorizontalLabels.append(stringDate)
+            }
+            
             endGridTime -= interval
         }
         
@@ -208,9 +221,7 @@ class BaseHistoryView: UIView {
         switch hours {
         case 0...1: return 10.0 * .secondsPerMinute
         case 2...11: return .secondsPerHour
-        case 12...23: return .secondsPerHour * 3.0
-        case 24: return .secondsPerHour * 4.0
-        default: return TimeInterval(hours) / 4.0 * .secondsPerHour
+        default: return .secondsPerHour * 3.0
         }
     }
 }

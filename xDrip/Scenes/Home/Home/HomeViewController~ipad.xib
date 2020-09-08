@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -24,12 +22,12 @@
                 <outlet property="mainStackView" destination="Mhi-pN-wJh" id="2du-sk-6sG"/>
                 <outlet property="optionsTitleLabel" destination="1q6-PH-SuO" id="ObS-hd-L67"/>
                 <outlet property="optionsView" destination="uTD-Gc-qdH" id="Ump-FW-KRz"/>
+                <outlet property="sensorStateLabel" destination="r5r-IT-q4j" id="KZk-TG-ovp"/>
+                <outlet property="sensorStateLabelTopConstraint" destination="Ezf-l3-X4k" id="gbj-k5-ffk"/>
                 <outlet property="supportingStackView" destination="KHP-PR-cu1" id="fqY-Kp-2Wu"/>
                 <outlet property="timeLineSegmentView" destination="EOS-Ma-RIS" id="9rp-9X-e2z"/>
                 <outlet property="topViewLandscapeWidthConstraint" destination="3RR-mx-qxu" id="qyc-pH-2vT"/>
                 <outlet property="view" destination="wV0-fb-IeG" id="SHv-6D-bZq"/>
-                <outlet property="warmUpLabel" destination="r5r-IT-q4j" id="KZk-TG-ovp"/>
-                <outlet property="warmUpLabelTopConstraint" destination="Ezf-l3-X4k" id="gbj-k5-ffk"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

@@ -58,7 +58,7 @@ final class HomeInteractorTests: XCTestCase {
         func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
             presentGlucoseCurrentInfoCalled = true
         }
-        func presentWarmUp(response: Home.WarmUp.Response) {
+        func presentUpdateSensorState(response: Home.UpdateSensorState.Response) {
         }
         func presentBolusData(response: Home.BolusDataUpdate.Response) {
             presentBolusDataCalled = true
