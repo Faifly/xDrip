@@ -78,10 +78,10 @@ class EditFoodEntryViewController: BaseSettingsViewController, EditFoodEntryDisp
     private func setupNavigationBar() {
         if let entryType = router?.dataStore?.entryType {
             switch entryType {
-            case .food: title = "edit_food_entry_food_scene_title".localized
-            case .bolus: title = "edit_food_entry_bolus_scene_title".localized
-            case .carbs: title = "edit_food_entry_carbs_scene_title".localized
-            case .basal: title = "edit_food_entry_basal_scene_title".localized
+            case .food: title = "edit_entry_food_scene_title".localized
+            case .bolus: title = "edit_entry_bolus_scene_title".localized
+            case .carbs: title = "edit_entry_carbs_scene_title".localized
+            case .basal: title = "edit_entry_basal_scene_title".localized
             }
         }
         

@@ -1,6 +1,7 @@
 // AUTO-GENERATED
 // General
 "cancel" = "Cancel";
+"close" = "Close";
 "error" = "Error";
 "nyi_alert_title" = "Not Yet Implemented";
 "nyi_alert_message" = "This feature is still under development, please follow the updates.";

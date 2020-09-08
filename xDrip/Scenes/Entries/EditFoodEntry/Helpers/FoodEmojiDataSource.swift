@@ -48,19 +48,19 @@ final class FoodEmojiDataSource {
     init() {
         sections = [
             EmojiSection(
-                title: "edit_food_entry_fast_carbs_title".localized,
+                title: "edit_entry_fast_carbs_title".localized,
                 items: FoodEmojiDataSource.fast
             ),
             EmojiSection(
-                title: "edit_food_entry_medium_carbs_title".localized,
+                title: "edit_entry_medium_carbs_title".localized,
                 items: FoodEmojiDataSource.medium
             ),
             EmojiSection(
-                title: "edit_food_entry_slow_carbs_title".localized,
+                title: "edit_entry_slow_carbs_title".localized,
                 items: FoodEmojiDataSource.slow
             ),
             EmojiSection(
-                title: "edit_food_entry_other_carbs_title".localized,
+                title: "edit_entry_other_carbs_title".localized,
                 items: FoodEmojiDataSource.other
             )
         ]
