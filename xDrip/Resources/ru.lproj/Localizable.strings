@@ -451,6 +451,7 @@
 "calibration_not_ready_error_general_message" = "Не достигнуты все условия для калибровки";
 "calibration_not_ready_error_no_initial_readings" = "Недостаточно показаний для первичной калибровки";
 "calibration_not_ready_error_warming_up" = "Во время разогрева сенсора калибровка невозможна";
+"calibration_not_ready_error_sensor_stopped" = "Калибровка не может быть выполнена, если сенсор не работает. Пожалуйста, запустите сенсор в настройках приложения";
 "calibration_initial_alert_title" = "Начальная Калибровка";
 "calibration_initial_alert_message" = "Для нормального функционирования сенсора требуется начальная калибровка";
 "calibration_initial_alert_proceed_button" = "Продолжить";
