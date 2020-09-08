@@ -69,7 +69,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
                 .carbsAmount,
-                detail: "edit_food_entry_carbs_amount_unit_grams".localized,
+                detail: "edit_entry_carbs_amount_unit_grams".localized,
                 textFieldText: valueString,
                 textChangeHandler: response.textChangedHandler
             ),
@@ -87,8 +87,8 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         
         return .normal(
             cells: cells,
-            header: "edit_food_entry_section_header".localized,
-            footer: "edit_food_entry_carbs_section_footer".localized
+            header: "edit_entry_section_header".localized,
+            footer: "edit_entry_carbs_section_footer".localized
         )
     }
     
@@ -99,7 +99,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
                 .insulinAmount,
-                detail: "edit_food_entry_insulin_unit_milligrams".localized,
+                detail: "edit_entry_insulin_unit_milligrams".localized,
                 textFieldText: valueString,
                 textChangeHandler: response.textChangedHandler
             ),
@@ -112,13 +112,13 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         
         var header: String?
         if response.entryType == .bolus {
-            header = "edit_food_entry_section_header".localized
+            header = "edit_entry_section_header".localized
         }
         
         return .normal(
             cells: cells,
             header: header,
-            footer: "edit_food_entry_bolus_section_footer".localized
+            footer: "edit_entry_bolus_section_footer".localized
         )
     }
     
@@ -129,7 +129,7 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
                 .insulinAmount,
-                detail: "edit_food_entry_insulin_unit_milligrams".localized,
+                detail: "edit_entry_insulin_unit_milligrams".localized,
                 textFieldText: valueString,
                 textChangeHandler: response.textChangedHandler
             ),
@@ -142,8 +142,8 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
         
         return .normal(
             cells: cells,
-            header: "edit_food_entry_section_header".localized,
-            footer: "edit_food_entry_basal_section_footer".localized
+            header: "edit_entry_section_header".localized,
+            footer: "edit_entry_basal_section_footer".localized
         )
     }
     
@@ -189,11 +189,11 @@ final class EditFoodEntryPresenter: EditFoodEntryPresentationLogic {
 private extension EditFoodEntry.Field {
     var title: String {
         switch self {
-        case .carbsAmount: return "edit_food_entry_carbs_amount_title".localized
-        case .carbsDate: return "edit_food_entry_date_and_time".localized
-        case .foodType: return "edit_food_entry_type_of_food".localized
-        case .insulinAmount: return "edit_food_entry_insulin_amount_title".localized
-        case .insulinDate: return "edit_food_entry_date_and_time".localized
+        case .carbsAmount: return "edit_entry_carbs_amount_title".localized
+        case .carbsDate: return "edit_entry_date_and_time".localized
+        case .foodType: return "edit_entry_type_of_food".localized
+        case .insulinAmount: return "edit_entry_insulin_amount_title".localized
+        case .insulinDate: return "edit_entry_date_and_time".localized
         }
     }
 }
