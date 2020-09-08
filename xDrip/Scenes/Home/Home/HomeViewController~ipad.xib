@@ -235,16 +235,16 @@
                                                                                             <rect key="frame" x="0.0" y="84" width="376" height="111"/>
                                                                                             <subviews>
                                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1q6-PH-SuO">
-                                                                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="16"/>
+                                                                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="15"/>
                                                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                                     <color key="textColor" name="headerTitleColor"/>
                                                                                                     <nil key="highlightedColor"/>
                                                                                                 </label>
                                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uTD-Gc-qdH" customClass="OptionsView" customModule="xDrip" customModuleProvider="target">
-                                                                                                    <rect key="frame" x="0.0" y="23" width="376" height="88"/>
+                                                                                                    <rect key="frame" x="0.0" y="22" width="376" height="89"/>
                                                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                                                     <constraints>
-                                                                                                        <constraint firstAttribute="height" constant="88" id="oZI-5c-ujI"/>
+                                                                                                        <constraint firstAttribute="height" constant="89" id="oZI-5c-ujI"/>
                                                                                                     </constraints>
                                                                                                 </view>
                                                                                             </subviews>
