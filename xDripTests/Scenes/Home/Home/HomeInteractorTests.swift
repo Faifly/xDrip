@@ -72,6 +72,8 @@ final class HomeInteractorTests: XCTestCase {
         }
         func presentCarbsChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
         }
+        func presentUpdateGlucoseDataView(response: Home.GlucoseDataViewUpdate.Response) {
+        }
     }
     
     final class HomeRoutingLogicSpy: HomeRoutingLogic {

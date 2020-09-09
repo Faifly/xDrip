@@ -23,6 +23,7 @@ protocol HomeDisplayLogic: AnyObject {
     func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel)
     func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel)
     func displayUpdateSensorState(viewModel: Home.UpdateSensorState.ViewModel)
+    func displayUpdateGlucoseDataView(viewModel: Home.GlucoseDataViewUpdate.ViewModel)
 }
 
 class HomeViewController: NibViewController, HomeDisplayLogic {
@@ -176,6 +177,11 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         }
     }
     
+    func displayUpdateGlucoseDataView(viewModel: Home.GlucoseDataViewUpdate.ViewModel) {
+        dataView.setup(with: viewModel.dataSection)
+        dataContentView.isHidden = !viewModel.dataSection.isShown
+    }
+    
     private func updateBolusCarbsTopConstraint() {
         if bolusHistoryView.isHidden && carbsHistoryView.isHidden {
             bolusCarbsTopConstraint?.constant = 0
@@ -207,6 +213,11 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         aboutGlucoseTitleLabel.text = "home_about_glucose_title".localized.uppercased()
         aboutGlucoseContentLabel.text = "home_about_glucose_content".localized
         optionsTitleLabel.text = "home_options_title".localized.uppercased()
+        
+        glucoseChart.updateGlucoseDataViewCallback = { [weak self] dateInterval in
+            let request = Home.GlucoseDataViewUpdate.Request(dateInterval: dateInterval)
+            self?.interactor?.doUpdateGlucoseDataView(request: request)
+        }
     }
     
     private func subscribeToViewsButtonEvents() {
