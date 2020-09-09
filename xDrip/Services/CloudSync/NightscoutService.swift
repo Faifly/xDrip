@@ -58,9 +58,9 @@ final class NightscoutService {
         _ = followerSettingsObserver
         _ = downloadDataSettingsObserver
         _ = uploadTreatmentsSettingsObserver
-        //        if let settings = User.current.settings.nightscoutSync, settings.isFollowerAuthed {
-        //            startFetchingFollowerData()
-        //        }
+        if let settings = User.current.settings.nightscoutSync, settings.isFollowerAuthed {
+            startFetchingFollowerData()
+        }
         
         if let settings = User.current.settings.nightscoutSync, settings.downloadData {
             startFetchingTreatments()
@@ -82,20 +82,20 @@ final class NightscoutService {
     }
     
     func scanForNotUploadedEntries() {
-        //        LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
-        //        guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else {
-        //            LogController.log(
-        //                message: "[NighscoutService]: Aborting %@ because sync is disabled.",
-        //                type: .info,
-        //                #function
-        //            )
-        //            return
-        //        }
-        //
-        //        scanForGlucoseEntries()
-        //        scanForCalibrations()
-        //
-        //        runQueue()
+        LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
+        guard let isEnabled = User.current.settings.nightscoutSync?.isEnabled, isEnabled else {
+            LogController.log(
+                message: "[NighscoutService]: Aborting %@ because sync is disabled.",
+                type: .info,
+                #function
+            )
+            return
+        }
+        
+        scanForGlucoseEntries()
+        scanForCalibrations()
+        
+        runQueue()
     }
     
     func scanForNotUploadedTreatments() {
