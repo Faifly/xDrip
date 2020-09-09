@@ -17,6 +17,7 @@ protocol HomeGlucoseDataWorkerProtocol: AnyObject {
     var glucoseDataHandler: (() -> Void)? { get set }
     func fetchGlucoseData(for hours: Int) -> [GlucoseReading]
     func fetchGlucoseData(for date: Date) -> [GlucoseReading]
+    func fetchGlucoseData(for dateInterval: DateInterval) -> [GlucoseReading]
     func fetchLastGlucoseReading() -> GlucoseReading?
 }
 
@@ -32,11 +33,11 @@ final class HomeGlucoseDataWorker: NSObject, HomeGlucoseDataWorkerProtocol {
     }
     
     func fetchGlucoseData(for hours: Int) -> [GlucoseReading] {
-        let minimumDate = Date() - TimeInterval(hours) * .secondsPerHour
-        let all = User.current.settings.deviceMode == .main ? GlucoseReading.allMaster : GlucoseReading.allFollower
-        return Array(
-            all.filter { $0.date >=? minimumDate && $0.filteredCalculatedValue > .ulpOfOne }
+        let dateInterval = DateInterval(
+            endDate: Date(),
+            duration: TimeInterval(hours: Double(hours))
         )
+        return fetchGlucoseData(for: dateInterval)
     }
     
     func fetchLastGlucoseReading() -> GlucoseReading? {
@@ -53,6 +54,14 @@ final class HomeGlucoseDataWorker: NSObject, HomeGlucoseDataWorkerProtocol {
     func fetchGlucoseData(for date: Date) -> [GlucoseReading] {
         let minimumDate = Calendar.current.startOfDay(for: date)
         let maximumDate = minimumDate + .secondsPerDay
+        
+        let dateInterval = DateInterval(endDate: maximumDate, duration: .secondsPerDay)
+        return fetchGlucoseData(for: dateInterval)
+    }
+    
+    func fetchGlucoseData(for dateInterval: DateInterval) -> [GlucoseReading] {
+        let minimumDate = dateInterval.start
+        let maximumDate = dateInterval.end
         
         let all = User.current.settings.deviceMode == .main ? GlucoseReading.allMaster : GlucoseReading.allFollower
         

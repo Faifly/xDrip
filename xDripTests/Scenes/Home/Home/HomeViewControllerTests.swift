@@ -79,6 +79,8 @@ final class HomeViewControllerTests: XCTestCase {
         }
         func doChangeCarbsChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request) {
         }
+        func doUpdateGlucoseDataView(request: Home.GlucoseDataViewUpdate.Request) {
+        }
     }
     
     // MARK: Tests

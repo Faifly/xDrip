@@ -18,6 +18,7 @@ protocol HomeBusinessLogic {
     func doChangeGlucoseChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request)
     func doChangeBolusChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request)
     func doChangeCarbsChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request)
+    func doUpdateGlucoseDataView(request: Home.GlucoseDataViewUpdate.Request)
 }
 
 protocol HomeDataStore: AnyObject {
@@ -137,6 +138,13 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         )
         presenter?.presentGlucoseChartTimeFrameChange(response: response)
         updateGlucoseChartData()
+    }
+    
+    func doUpdateGlucoseDataView(request: Home.GlucoseDataViewUpdate.Request) {
+        let response = Home.GlucoseDataViewUpdate.Response(
+            intervalGlucoseData: glucoseDataWorker.fetchGlucoseData(for: request.dateInterval)
+        )
+        presenter?.presentUpdateGlucoseDataView(response: response)
     }
     
     // MARK: Logic
