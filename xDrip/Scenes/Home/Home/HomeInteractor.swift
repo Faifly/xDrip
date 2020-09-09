@@ -152,7 +152,6 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private func updateGlucoseChartData() {
         let response = Home.GlucoseDataUpdate.Response(
             glucoseData: glucoseDataWorker.fetchGlucoseData(for: 24),
-            intervalGlucoseData: glucoseDataWorker.fetchGlucoseData(for: hours),
             basalDisplayMode: User.current.settings.chart?.basalDisplayMode ?? .notShown,
             insulinData: BasalChartDataWorker.fetchBasalData(for: 24),
             chartPointsData: BasalChartDataWorker.calculateChartValues(for: 24)

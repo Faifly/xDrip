@@ -185,6 +185,7 @@ final class GlucoseHistoryView: BaseHistoryView {
         super.calculateVerticalLeftLabels(minValue: glucoseEntries.map({ $0.value }).min(),
                                           maxValue: glucoseEntries.map({ $0.value }).max())
         super.updateChart()
+        updateGlucoseDataView()
         setupRightLabelViewsAnchorConstraint()
         calculateVerticalRightLabels()
         glucoseChartView.basalEntries = basalEntries

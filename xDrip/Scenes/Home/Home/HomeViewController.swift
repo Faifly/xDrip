@@ -128,8 +128,6 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
                 unit: viewModel.unit
             )
         }
-        dataView.setup(with: viewModel.dataSection)
-        dataContentView.isHidden = !viewModel.dataSection.isShown
     }
     
     func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseEntriesChartTimeFrame.ViewModel) {
@@ -163,17 +161,19 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     }
     
     func displayUpdateSensorState(viewModel: Home.UpdateSensorState.ViewModel) {
-        if viewModel.shouldShow {
-            if sensorStateLabel.isHidden {
-                sensorStateLabel.isHidden = false
-                sensorStateLabelTopConstraint.constant = 8.0
+        DispatchQueue.main.async {
+            if viewModel.shouldShow {
+                if self.sensorStateLabel.isHidden {
+                    self.sensorStateLabel.isHidden = false
+                    self.sensorStateLabelTopConstraint.constant = 8.0
+                }
+                
+                self.sensorStateLabel.attributedText = viewModel.text
+            } else {
+                self.sensorStateLabel.isHidden = true
+                self.sensorStateLabel.attributedText = nil
+                self.sensorStateLabelTopConstraint.constant = 0.0
             }
-            
-            sensorStateLabel.attributedText = viewModel.text
-        } else {
-            sensorStateLabel.isHidden = true
-            sensorStateLabel.attributedText = nil
-            sensorStateLabelTopConstraint.constant = 0.0
         }
     }
     
