@@ -42,6 +42,12 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         glucoseDataWorker = HomeGlucoseDataWorker()
         sensorStateWorker = HomeSensorStateWorker()
         
+        subscribeToEntriesWorkersEvents()
+        
+        subscribeToNotifications()
+    }
+    
+    private func subscribeToEntriesWorkersEvents() {
         glucoseDataWorker.glucoseDataHandler = { [weak self] in
             guard let self = self else { return }
             self.updateGlucoseCurrentInfo()
@@ -51,11 +57,17 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             guard let self = self else { return }
             self.updateBolusChartData()
         }
+        InsulinEntriesWorker.basalDataHandler = { [weak self] in
+            guard let self = self else { return }
+            self.updateGlucoseChartData()
+        }
         CarbEntriesWorker.carbsDataHandler = { [weak self] in
             guard let self = self else { return }
             self.updateCarbsChartData()
         }
-        
+    }
+    
+    private func subscribeToNotifications() {
         basalEntriesObserver = NotificationCenter.default.subscribe(
             forSettingsChange: [.basalRelated, .unit, .chart],
             notificationHandler: { [weak self] _ in

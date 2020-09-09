@@ -44,12 +44,14 @@ final class HomeInteractorTests: XCTestCase {
         var presentGlucoseCurrentInfoCalled = false
         var presentBolusDataCalled = false
         var presentCarbsDataCalled = false
+        var presentGlucoseDataCalled = false
         
         func presentLoad(response: Home.Load.Response) {
             presentLoadCalled = true
         }
         
         func presentGlucoseData(response: Home.GlucoseDataUpdate.Response) {
+            presentGlucoseDataCalled = true
         }
         
         func presentGlucoseChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
@@ -160,5 +162,31 @@ final class HomeInteractorTests: XCTestCase {
         // Then
         XCTAssertTrue(spy.presentBolusDataCalled)
         XCTAssertTrue(spy.presentCarbsDataCalled)
+    }
+    
+    func testSubscribeToEntriesWorkersEvents() throws {
+        // Given
+        let spy = HomePresentationLogicSpy()
+        sut.presenter = spy
+        let request = Home.Load.Request()
+        
+        // When
+        sut.doLoad(request: request)
+        InsulinEntriesWorker.addBasalEntry(amount: 1.0, date: Date())
+        XCTAssertTrue(spy.presentGlucoseDataCalled)
+        
+        spy.presentGlucoseDataCalled = false
+        
+        let lastEntry = try XCTUnwrap(InsulinEntriesWorker.fetchAllBasalEntries().last)
+        
+        lastEntry.update(amount: 2.0, date: Date())
+        
+        XCTAssertTrue(spy.presentGlucoseDataCalled)
+        
+        spy.presentGlucoseDataCalled = false
+        
+        InsulinEntriesWorker.deleteInsulinEntry(lastEntry)
+        
+        XCTAssertTrue(spy.presentGlucoseDataCalled)
     }
 }
