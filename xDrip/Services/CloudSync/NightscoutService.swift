@@ -285,8 +285,8 @@ final class NightscoutService {
                             CarbEntriesWorker.deleteEntryWith(externalID: uuid)
                         case .bolus, .basal:
                             InsulinEntriesWorker.deleteEntryWith(externalID: uuid)
-                        default:
-                            break
+                        case .training:
+                            TrainingEntriesWorker.deleteEntryWith(externalID: uuid)
                         }
                     }
                 }.resume()
