@@ -40,9 +40,9 @@ final class GlucoseCurrentInfoViewTests: XCTestCase {
         XCTAssertEqual(mirror.slopeArrowLabel?.textColor, .green)
         XCTAssertEqual(mirror.lastScanTitleLabel?.text, "home_last_scan_title".localized)
         XCTAssertEqual(mirror.lastScanTitleLabel?.textColor, .lastScanDateTextColor)
-        XCTAssertEqual(mirror.lastScanValueLabel?.text, "- lastScanDate")
+        XCTAssertEqual(mirror.lastScanValueLabel?.text, "lastScanDate")
         XCTAssertEqual(mirror.difTitleLabel?.text, "home_last_diff_title".localized)
         XCTAssertEqual(mirror.difTitleLabel?.textColor, .diffTextColor)
-        XCTAssertEqual(mirror.difValueLabel?.text, "- difValue")
+        XCTAssertEqual(mirror.difValueLabel?.text, "difValue")
     }
 }

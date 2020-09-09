@@ -124,7 +124,7 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
             trainingEntry.update(duration: trainingInput.duration,
                                  intensity: trainingInput.intensity,
                                  date: trainingInput.date)
-        } else if trainingEntry == nil, trainingInput.duration !~ 0.0 {
+        } else if entryType == .training, trainingEntry == nil, trainingInput.duration !~ 0.0 {
             TrainingEntriesWorker.addTraining(duration: trainingInput.duration,
                                               intensity: trainingInput.intensity,
                                               date: trainingInput.date)
