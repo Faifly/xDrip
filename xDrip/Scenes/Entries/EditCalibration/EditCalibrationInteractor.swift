@@ -50,6 +50,8 @@ final class EditCalibrationInteractor: EditCalibrationBusinessLogic, EditCalibra
             hasInitialCalibrations: statusWorker.hasInitialCalibrations,
             datePickerValueChanged: handleDatePickerValueChanged(_:_:),
             glucosePickerValueChanged: handleGlucosePickerValueChanged(_:_:),
+            value1: firstInput.value,
+            value2: secondInput.value,
             date1: firstInput.date,
             date2: secondInput.date
         )
