@@ -290,6 +290,9 @@
 "settings_nightscout_cloud_backfill_send" = "Send";
 "settings_nightscout_cloud_backfill_date_title" = "Date";
 "settings_nightscout_cloud_backfill_section_footer" = "Choose the date for the oldest record to send to Nightscout. Use with care";
+"settings_nightscout_cloud_backfill_no_glucose_readings_found" = "Didn't find any glucose readings in that time period";
+"settings_nightscout_cloud_backfill_found_readings_and_treatments" = "Queued %d glucose readings and %d  treatments!";
+
 
 // Settings Units
 "settings_units_mgdl" = "mg/dL";
@@ -429,10 +432,6 @@ This setting will be applied to all future sensors";
 "settings_pump_user_info_label_text" = "If you have a pump connected to Nightscout, you can sync it with xDrip to display basal insulin.";
 "settings_pump_user_sync_button_title" = "Synchronise with NightScout";
 "settings_pump_user_unpair_button_title" = "Unpair pump";
-
-
-
-
 
 
 // Bluetooth Errors
