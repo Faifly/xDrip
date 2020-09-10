@@ -12,17 +12,6 @@ import RealmSwift
 final class TrainingEntry: AbstractEntry, TreatmentEntryProtocol {
     @objc private(set) dynamic var duration: TimeInterval = 0.0
     @objc private dynamic var rawIntensity: Int = TrainingIntensity.default.rawValue
-    @objc private(set) dynamic var externalID: String?
-    @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notApplicable.rawValue
-    
-    var cloudUploadStatus: CloudUploadStatus {
-        get {
-            return CloudUploadStatus(rawValue: rawCloudUploadStatus) ?? .notApplicable
-        }
-        set {
-            rawCloudUploadStatus = newValue.rawValue
-        }
-    }
     
     internal var amount: Double {
         return duration
@@ -33,7 +22,9 @@ final class TrainingEntry: AbstractEntry, TreatmentEntryProtocol {
             return rawIntensity
         }
         set {
-            rawIntensity = newValue ?? 1
+            Realm.shared.safeWrite {
+                rawIntensity = newValue ?? 1
+            }
         }
     }
     
@@ -51,10 +42,9 @@ final class TrainingEntry: AbstractEntry, TreatmentEntryProtocol {
     }
     
     init(duration: TimeInterval, intensity: TrainingIntensity, date: Date, externalID: String? = nil) {
-        super.init(date: date)
+        super.init(date: date, externalID: externalID ?? UUID().uuidString.lowercased())
         self.duration = duration
         self.intensity = intensity
-        self.externalID = externalID ?? UUID().uuidString.lowercased()
     }
     
     func update(duration: TimeInterval, intensity: TrainingIntensity, date: Date) {

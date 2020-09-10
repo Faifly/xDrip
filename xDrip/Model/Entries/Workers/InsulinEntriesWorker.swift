@@ -8,7 +8,6 @@
 
 import Foundation
 import AKUtils
-import RealmSwift
 
 final class InsulinEntriesWorker: AbstractEntriesWorker {
     static var bolusDataHandler: (() -> Void)?
@@ -50,9 +49,7 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
         let type = entry.type
         if let settings = User.current.settings.nightscoutSync,
             settings.isEnabled, settings.uploadTreatments {
-            Realm.shared.safeWrite {
-                entry.cloudUploadStatus = .waitingForDeletion
-            }
+            entry.updateCloudUploadStatus(.waitingForDeletion)
         } else {
             super.deleteEntry(entry)
         }
@@ -99,8 +96,6 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
         guard let entry = fetchAllInsulinEntries().first(where: { $0.externalID == externalID }) else {
             return
         }
-        Realm.shared.safeWrite {
-            entry.cloudUploadStatus = .uploaded
-        }
+        entry.updateCloudUploadStatus(.uploaded)
     }
 }

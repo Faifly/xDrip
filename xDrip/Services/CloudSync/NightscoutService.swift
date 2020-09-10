@@ -20,31 +20,31 @@ final class NightscoutService {
     private var isRequestInProgress = false
     
     private lazy var followerSettingsObserver: [Any] = NotificationCenter.default.subscribe(
-    forSettingsChange: [.followerAuthStatus]) {
-        guard let settings = User.current.settings.nightscoutSync else { return }
-        if settings.isFollowerAuthed {
-            self.startFetchingFollowerData()
-        } else {
-            self.stopFetchingFollowerData()
-        }
+        forSettingsChange: [.followerAuthStatus]) {
+            guard let settings = User.current.settings.nightscoutSync else { return }
+            if settings.isFollowerAuthed {
+                self.startFetchingFollowerData()
+            } else {
+                self.stopFetchingFollowerData()
+            }
     }
     
     private lazy var downloadDataSettingsObserver: [Any] = NotificationCenter.default.subscribe(
-    forSettingsChange: [.downloadData]) {
-        guard let settings = User.current.settings.nightscoutSync else { return }
-        if settings.downloadData {
-            self.startFetchingTreatments()
-        } else {
-            self.stopFetchingTreatments()
-        }
+        forSettingsChange: [.downloadData]) {
+            guard let settings = User.current.settings.nightscoutSync else { return }
+            if settings.downloadData {
+                self.startFetchingTreatments()
+            } else {
+                self.stopFetchingTreatments()
+            }
     }
     
     private lazy var uploadTreatmentsSettingsObserver: [Any] = NotificationCenter.default.subscribe(
-    forSettingsChange: [.uploadTreatments]) {
-        guard let settings = User.current.settings.nightscoutSync else { return }
-        if settings.uploadTreatments {
-            self.scanForNotUploadedTreatments()
-        }
+        forSettingsChange: [.uploadTreatments]) {
+            guard let settings = User.current.settings.nightscoutSync else { return }
+            if settings.uploadTreatments {
+                self.scanForNotUploadedTreatments()
+            }
     }
     private lazy var lastFollowerFetchTime = GlucoseReading.allFollower.last?.date
     private var followerFetchTimer: Timer?

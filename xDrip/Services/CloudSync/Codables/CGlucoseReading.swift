@@ -60,7 +60,7 @@ struct CGlucoseReading: Codable {
         rssi = reading.rssi
         noise = reading.noise
         
-        var deviceString = "xDrip iOS"
+        var deviceString = Constants.Nightscout.appIdentifierName
         if User.current.settings.nightscoutSync?.appendSourceInfoToDevices == true,
             let info = reading.sourceInfo, !info.isEmpty {
             deviceString += " " + info

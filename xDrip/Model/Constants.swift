@@ -20,4 +20,8 @@ enum Constants {
     enum Notifications {
         static let maximumRepeatCount = 9
     }
+    
+    enum Nightscout {
+        static let appIdentifierName = "xDrip iOS"
+    }
 }

@@ -270,7 +270,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
         
         let data: [String: Any] = [
-            "device": "xDrip iOS",
+            "device": Constants.Nightscout.appIdentifierName,
             "uploader": [
                 "battery": BridgeBatteryService.getBatteryLevel()
             ]

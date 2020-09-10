@@ -177,7 +177,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             && User.current.settings.deviceMode != .follower
         if isShown {
             insulinData = InsulinEntriesWorker.fetchAllBolusEntries().filter {
-                $0.cloudUploadStatus != .waitingForDeletion
+                $0.isValid
             }
         }
         let response = Home.BolusDataUpdate.Response(insulinData: insulinData, isShown: isShown)
@@ -189,7 +189,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         let isShown = User.current.settings.chart?.showActiveCarbs == true
             && User.current.settings.deviceMode != .follower
         if  isShown {
-            carbsData = CarbEntriesWorker.fetchAllCarbEntries().filter { $0.cloudUploadStatus != .waitingForDeletion }
+            carbsData = CarbEntriesWorker.fetchAllCarbEntries().filter { $0.isValid }
         }
         let response = Home.CarbsDataUpdate.Response(carbsData: carbsData, isShown: isShown)
         presenter?.presentCarbsData(response: response)

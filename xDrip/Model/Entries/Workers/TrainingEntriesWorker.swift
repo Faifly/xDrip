@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RealmSwift
 
 final class TrainingEntriesWorker: AbstractEntriesWorker {
     static var trainingDataHandler: (() -> Void)?
@@ -38,10 +37,8 @@ final class TrainingEntriesWorker: AbstractEntriesWorker {
     
     static func deleteTrainingEntry(_ entry: TrainingEntry) {
         if let settings = User.current.settings.nightscoutSync,
-        settings.isEnabled, settings.uploadTreatments {
-            Realm.shared.safeWrite {
-                entry.cloudUploadStatus = .waitingForDeletion
-            }
+            settings.isEnabled, settings.uploadTreatments {
+            entry.updateCloudUploadStatus(.waitingForDeletion)
         } else {
             super.deleteEntry(entry)
         }
@@ -65,8 +62,6 @@ final class TrainingEntriesWorker: AbstractEntriesWorker {
         guard let entry = fetchAllTrainings().first(where: { $0.externalID == externalID }) else {
             return
         }
-        Realm.shared.safeWrite {
-            entry.cloudUploadStatus = .uploaded
-        }
+        entry.updateCloudUploadStatus(.uploaded)
     }
 }

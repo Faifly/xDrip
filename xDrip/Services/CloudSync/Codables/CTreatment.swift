@@ -20,7 +20,7 @@ extension TreatmentEntryProtocol {
     var exerciseIntensity: Int? {
         get { return nil }
         set { exerciseIntensity = newValue }
-      }
+    }
 }
 
 enum TreatmentType: String {
@@ -121,7 +121,7 @@ struct CTreatment: Codable {
             duration = entry.amount / .secondsPerMinute
             
             if let intensityValue = entry.exerciseIntensity,
-               let intensityString = TrainingIntensity(rawValue: intensityValue)?.paramValue() {
+                let intensityString = TrainingIntensity(rawValue: intensityValue)?.paramValue {
                 exerciseIntensity = intensityString
             } else {
                 exerciseIntensity = nil
@@ -140,7 +140,7 @@ struct CTreatment: Codable {
         
         utcOffset = nil
         timestamp = Int((entry.date ?? Date()).timeIntervalSince1970)
-        enteredBy = "xdrip iOS"
+        enteredBy = Constants.Nightscout.appIdentifierName
         insulinInjections = "[]"
         
         if treatmentType == .carbs, let carbEntry = entry as? CarbEntry {
@@ -192,6 +192,7 @@ struct CTreatment: Codable {
             let subStr = str[..<endIndex]
             return String(subStr)
         }
+        //Server doesn't accept ids with length more than 24 symbols
     }
     
     static func parseTreatmentsToEntries(treatments: [CTreatment]) {
@@ -202,7 +203,7 @@ struct CTreatment: Codable {
         let allTrainings = TrainingEntriesWorker.fetchAllTrainings()
         
         for treatment in treatments {
-            let treatmentDate = CTreatment.getTreatmentDate(treatment)
+            let treatmentDate = treatment.getDate()
             
             switch treatment.type {
             case .carbs:
@@ -225,7 +226,7 @@ struct CTreatment: Codable {
                     let duration = treatment.duration,
                     let intensity = treatment.exerciseIntensity {
                     TrainingEntriesWorker.addTraining(duration: duration * .secondsPerMinute,
-                                                      intensity: TrainingIntensity.getValue(paramValue: intensity),
+                                                      intensity: TrainingIntensity(paramValue: intensity),
                                                       date: treatmentDate,
                                                       externalID: treatment.uuid)
                 }
@@ -235,19 +236,19 @@ struct CTreatment: Codable {
         }
     }
     
-    private static func getTreatmentDate(_ treatment: CTreatment) -> Date {
+    private func getDate() -> Date {
         let treatmentDate: Date
-        if let sysTime = treatment.sysTime {
+        if let sysTime = sysTime {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
             treatmentDate = dateFormatter.date(from: sysTime) ?? Date()
-        } else if let timestamp = treatment.timestamp {
+        } else if let timestamp = timestamp {
             treatmentDate = Date(timeIntervalSince1970: TimeInterval(timestamp))
         } else {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
             dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-            if let createdAt = treatment.createdAt {
+            if let createdAt = createdAt {
                 treatmentDate = dateFormatter.date(from: createdAt) ?? Date()
             } else {
                 treatmentDate = Date()
