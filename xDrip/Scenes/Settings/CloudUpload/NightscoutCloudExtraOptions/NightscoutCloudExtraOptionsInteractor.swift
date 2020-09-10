@@ -73,7 +73,6 @@ final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBu
     }
     
     private func handleSingleSelection() {
-//        router?.routeToBackfillData()
-        router?.presentNotYetImplementedAlert()
+        router?.routeToBackfillData()
     }
 }

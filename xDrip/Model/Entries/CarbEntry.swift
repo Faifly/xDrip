@@ -47,4 +47,10 @@ final class CarbEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryProto
         }
         CarbEntriesWorker.updatedCarbsEntry()
     }
+    
+    func markAsNotUploaded() {
+        Realm.shared.safeWrite {
+            self.cloudUploadStatus = .notUploaded
+        }
+    }
 }

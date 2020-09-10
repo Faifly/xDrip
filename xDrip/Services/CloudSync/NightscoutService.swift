@@ -98,18 +98,20 @@ final class NightscoutService {
         runQueue()
     }
     
-    func scanForNotUploadedTreatments() {
+    func scanForNotUploadedTreatments(respectSettings: Bool = true) {
         LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
-        guard let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments else {
-                LogController.log(
-                    message: "[NighscoutService]: Aborting %@ because sync or uploadTreatments is disabled.",
-                    type: .info,
-                    #function
-                )
-                return
+        if respectSettings {
+            guard let settings = User.current.settings.nightscoutSync,
+                settings.isEnabled, settings.uploadTreatments else {
+                    LogController.log(
+                        message: "[NighscoutService]: Aborting %@ because sync or uploadTreatments is disabled.",
+                        type: .info,
+                        #function
+                    )
+                    return
+            }
         }
-        
+
         scanForTreatments(treatmentType: .carbs)
         scanForTreatments(treatmentType: .bolus)
         scanForTreatments(treatmentType: .basal)
@@ -268,28 +270,28 @@ final class NightscoutService {
             
             if !requestQueue.contains(where: { $0.itemID == entry.externalID && $0.type == deleteRequestType
             }), let uuid = entry.externalID {
-                guard let findRequest = requestFactory.createFindTreatmentRequest(uuid: uuid) else { return }
-                URLSession.shared.loggableDataTask(with: findRequest) { data, _, error in
-                    guard let data = data, error == nil else { return }
-                    guard let entries = try? JSONDecoder().decode([CTreatment].self, from: data) else { return }
-                    if !entries.isEmpty {
+//                guard let findRequest = requestFactory.createFindTreatmentRequest(uuid: uuid) else { return }
+//                URLSession.shared.loggableDataTask(with: findRequest) { data, _, error in
+//                    guard let data = data, error == nil else { return }
+//                    guard let entries = try? JSONDecoder().decode([CTreatment].self, from: data) else { return }
+//                    if !entries.isEmpty {
                         guard let request = self.requestFactory.createDeleteTreatmentRequest(uuid,
                                                                                              requestType: deleteRequestType) else {
                                                                                                 return
                         }
                         self.requestQueue.append(request)
                         self.runQueue()
-                    } else {
-                        switch treatmentType {
-                        case .carbs:
-                            CarbEntriesWorker.deleteEntryWith(externalID: uuid)
-                        case .bolus, .basal:
-                            InsulinEntriesWorker.deleteEntryWith(externalID: uuid)
-                        case .training:
-                            TrainingEntriesWorker.deleteEntryWith(externalID: uuid)
-                        }
-                    }
-                }.resume()
+//                    } else {
+//                        switch treatmentType {
+//                        case .carbs:
+//                            CarbEntriesWorker.deleteEntryWith(externalID: uuid)
+//                        case .bolus, .basal:
+//                            InsulinEntriesWorker.deleteEntryWith(externalID: uuid)
+//                        case .training:
+//                            TrainingEntriesWorker.deleteEntryWith(externalID: uuid)
+//                        }
+//                    }
+//                }.resume()
             }
         }
     }

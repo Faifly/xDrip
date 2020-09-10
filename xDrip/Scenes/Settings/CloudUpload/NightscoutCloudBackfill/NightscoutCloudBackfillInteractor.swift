@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import AKUtils
 
 protocol NightscoutCloudBackfillBusinessLogic {
     func doLoad(request: NightscoutCloudBackfill.Load.Request)
@@ -34,9 +35,59 @@ final class NightscoutCloudBackfillInteractor: NightscoutCloudBackfillBusinessLo
     }
     
     func doSend(request: NightscoutCloudBackfill.Send.Request) {
-        // TO DO: - add API works
+        var allGlucoseReadingsCount = 0
+        var allTreatmentsCount = 0
         
-        router?.presentPopUp()
+        let allGlucoseReadings = GlucoseReading.allMaster.filter({ $0.date >? date &&
+            $0.calculatedValue !~ 0.0 &&
+            $0.rawValue !~ 0.0}).prefix(500000)
+        
+        if allGlucoseReadings.isEmpty {
+            router?.presentPopUp(message: "settings_nightscout_cloud_backfill_no_glucose_readings_found".localized,
+                                 success: false)
+            return
+        }
+        
+        allGlucoseReadingsCount = allGlucoseReadings.count
+        
+        for entry in allGlucoseReadings {
+            entry.markAsNotUploaded()
+        }
+        
+        NightscoutService.shared.scanForNotUploadedEntries()
+        
+        
+        let allCarbEntries = CarbEntriesWorker.fetchAllCarbEntries().filter({ $0.date >? date }).prefix(50000)
+        let allBolusEntries = InsulinEntriesWorker.fetchAllBolusEntries().filter({ $0.date >? date }).prefix(50000)
+        let allBasalEntries = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >? date }).prefix(50000)
+        let allTrainings = TrainingEntriesWorker.fetchAllTrainings().filter({ $0.date >? date }).prefix(50000)
+        
+        allTreatmentsCount = allCarbEntries.count +
+            allBolusEntries.count +
+            allBasalEntries.count +
+            allTrainings.count
+        
+        for entry in allCarbEntries {
+            entry.markAsNotUploaded()
+        }
+        for entry in allBolusEntries {
+            entry.markAsNotUploaded()
+        }
+        for entry in allBasalEntries {
+            entry.markAsNotUploaded()
+        }
+        for entry in allTrainings {
+            entry.markAsNotUploaded()
+        }
+        
+        NightscoutService.shared.scanForNotUploadedTreatments(respectSettings: false)
+        
+        
+        let message = String(format: "settings_nightscout_cloud_backfill_found_readings_and_treatments".localized,
+                             allGlucoseReadingsCount,
+                             allTreatmentsCount)
+        
+        router?.presentPopUp(message: message, success: true)
     }
     
     private func handleDateChanged(_ date: Date) {

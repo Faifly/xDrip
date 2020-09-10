@@ -42,7 +42,7 @@ struct CGlucoseReading: Codable {
     }
     
     init(reading: GlucoseReading) {
-        id = nil
+        id = CGlucoseReading.getIDFromUUID(uuid: reading.externalID)
         identifier = reading.externalID
         type = "sgv"
         date = Int64((reading.date?.timeIntervalSince1970 ?? 0.0) * 1000.0)
@@ -127,6 +127,18 @@ struct CGlucoseReading: Codable {
             self.noise = "\(noise)"
         } else {
             noise = nil
+        }
+    }
+    
+    static func getIDFromUUID(uuid: String?) -> String {
+        guard let externalID = uuid else { return "" }
+        if externalID.count <= 24 {
+            return externalID
+        } else {
+            let str = externalID.replacingOccurrences(of: "-", with: "")
+            let endIndex = str.index(str.startIndex, offsetBy: 24)
+            let subStr = str[..<endIndex]
+            return String(subStr)
         }
     }
 }

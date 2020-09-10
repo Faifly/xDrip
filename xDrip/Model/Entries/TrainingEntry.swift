@@ -68,4 +68,10 @@ final class TrainingEntry: AbstractEntry, TreatmentEntryProtocol {
         }
         TrainingEntriesWorker.updatedTrainingEntry()
     }
+    
+    func markAsNotUploaded() {
+        Realm.shared.safeWrite {
+            self.cloudUploadStatus = .notUploaded
+        }
+    }
 }
