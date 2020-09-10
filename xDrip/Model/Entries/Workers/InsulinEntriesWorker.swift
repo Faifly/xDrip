@@ -23,7 +23,7 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
     @discardableResult static func addBasalEntry(amount: Double, date: Date) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .basal)
         add(entry: entry)
-        
+        basalDataHandler?()
         return entry
     }
     
