@@ -47,7 +47,6 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         
         subscribeToEntriesWorkersEvents()
         subscribeToNotifications()
-        subscribeForSensorStateChangeEvents()
     }
     
     private func subscribeToEntriesWorkersEvents() {
@@ -115,14 +114,6 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         )
     }
     
-    private func subscribeForSensorStateChangeEvents() {
-        sensorStateWorker.subscribeForSensorStateChange { [weak self] state in
-            let response = Home.UpdateSensorState.Response(state: state)
-            self?.presenter?.presentUpdateSensorState(response: response)
-            self?.setupUpdateTimer(with: state)
-        }
-    }
-    
     private func setupUpdateTimer(with state: Home.SensorState) {
         switch state {
         case .started:
@@ -151,6 +142,12 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         updateGlucoseChartData()
         updateBolusChartData()
         updateCarbsChartData()
+        
+        sensorStateWorker.subscribeForSensorStateChange { [weak self] state in
+            let response = Home.UpdateSensorState.Response(state: state)
+            self?.presenter?.presentUpdateSensorState(response: response)
+            self?.setupUpdateTimer(with: state)
+        }
     }
     
     func doShowEntriesList(request: Home.ShowEntriesList.Request) {
