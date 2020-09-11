@@ -27,7 +27,7 @@ final class InsulinEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryPr
     }
     
     init(amount: Double, date: Date, type: InsulinType, externalID: String? = nil) {
-        super.init(date: date, externalID: externalID ?? UUID().uuidString.lowercased())
+        super.init(date: date, externalID: externalID)
         self.amount = amount
         self.type = type
         if externalID != nil {

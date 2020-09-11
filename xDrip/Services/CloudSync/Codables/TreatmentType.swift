@@ -11,7 +11,7 @@ import Foundation
 protocol TreatmentEntryProtocol {
     var amount: Double { get }
     var date: Date? { get }
-    var externalID: String? { get }
+    var externalID: String { get }
     var cloudUploadStatus: CloudUploadStatus { get }
     var exerciseIntensity: Int? { get set }
 }

@@ -42,7 +42,7 @@ final class TrainingEntry: AbstractEntry, TreatmentEntryProtocol {
     }
     
     init(duration: TimeInterval, intensity: TrainingIntensity, date: Date, externalID: String? = nil) {
-        super.init(date: date, externalID: externalID ?? UUID().uuidString.lowercased())
+        super.init(date: date, externalID: externalID)
         self.duration = duration
         self.intensity = intensity
         if externalID != nil {

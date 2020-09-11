@@ -15,7 +15,7 @@ final class CarbEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryProto
     @objc private(set) dynamic var assimilationDuration: TimeInterval = 0.0
     
     init(amount: Double, foodType: String?, date: Date, externalID: String? = nil) {
-        super.init(date: date, externalID: externalID ?? UUID().uuidString.lowercased())
+        super.init(date: date, externalID: externalID)
         self.amount = amount
         self.foodType = foodType
         if externalID != nil {

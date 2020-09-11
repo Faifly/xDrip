@@ -267,8 +267,8 @@ final class NightscoutService {
             }
             
             if !requestQueue.contains(where: { $0.itemID == entry.externalID && $0.type == deleteRequestType
-            }), let uuid = entry.externalID {
-                guard let request = requestFactory.createDeleteTreatmentRequest(uuid,
+            }) {
+                guard let request = requestFactory.createDeleteTreatmentRequest(entry.externalID,
                                                                                 requestType: deleteRequestType) else {
                                                                                     return }
                 self.requestQueue.append(request)

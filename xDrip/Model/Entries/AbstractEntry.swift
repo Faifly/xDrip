@@ -16,7 +16,7 @@ protocol AbstractEntryProtocol {
 
 class AbstractEntry: Object {
     @objc private(set) dynamic var date: Date?
-    @objc private(set) dynamic var externalID: String?
+    @objc private(set) dynamic var externalID: String = UUID().uuidString.lowercased()
     @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notApplicable.rawValue
     
     override class func primaryKey() -> String? {
@@ -39,7 +39,9 @@ class AbstractEntry: Object {
     init(date: Date, externalID: String? = nil) {
         super.init()
         self.date = date
-        self.externalID = externalID
+        if let idString = externalID {
+           self.externalID = idString
+        }
     }
     
     func updateDate(_ date: Date) {
