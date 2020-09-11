@@ -290,6 +290,9 @@
 "settings_nightscout_cloud_backfill_send" = "Отправить";
 "settings_nightscout_cloud_backfill_date_title" = "Дата";
 "settings_nightscout_cloud_backfill_section_footer" = "Выберите дату самой старой записи для отправки на Nightscout. Используйте с осторожностью";
+"settings_nightscout_cloud_backfill_no_glucose_readings_found" = "Значений глюкозы на указанный период времени не найдено";
+"settings_nightscout_cloud_backfill_found_readings_and_treatments" = "%d  значений глюкозы и %d тритментов поставлены в очередь!";
+
 
 // Settings Units
 "settings_units_mgdl" = "мг/дл";
@@ -428,10 +431,6 @@
 "settings_pump_user_info_label_text" = "Если у вас есть помпа, подключенная к сервису Nightscout, вы можете синхронизовать его с приложением, чтобы отобразить базальный инсулин.";
 "settings_pump_user_sync_button_title" = "Синхронизировать с NightScout";
 "settings_pump_user_unpair_button_title" = "Разорвать синхронизацию";
-
-
-
-
 
 
 // Bluetooth Errors

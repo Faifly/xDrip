@@ -128,4 +128,33 @@ final class HomeViewControllerTests: XCTestCase {
         XCTAssertTrue(spy.doShowTrainingsListCalled)
         XCTAssertTrue(spy.doShowBasalsListCalled)
     }
+    
+    func testUpdateIntervals() throws {
+        // Given
+        let spy = HomeBusinessLogicSpy()
+        sut.interactor = spy
+        let mirror = HomeViewControllerMirror(viewController: sut)
+        
+        // When
+        loadView()
+        let view = try XCTUnwrap(mirror.carbsHistoryView)
+        view.setLocalTimeFrame(.secondsPerHour)
+        
+        // Then
+        XCTAssertTrue(view.localDateRange.duration == view.localInterval + 2 * view.forwardTimeOffset)
+        
+        // When
+        
+        view.setLocalTimeFrame(12 * .secondsPerHour)
+        
+        // Then
+        XCTAssertTrue(view.localDateRange.duration == view.localInterval + 2 * view.forwardTimeOffset)
+        
+        // When
+        
+        view.setLocalTimeFrame(.secondsPerDay)
+        
+        // Then
+        XCTAssertTrue(view.localDateRange.duration == view.localInterval + view.forwardTimeOffset)
+    }
 }
