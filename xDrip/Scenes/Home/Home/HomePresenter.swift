@@ -22,6 +22,7 @@ protocol HomePresentationLogic {
     func presentCarbsData(response: Home.CarbsDataUpdate.Response)
     func presentCarbsChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response)
     func presentUpdateSensorState(response: Home.UpdateSensorState.Response)
+    func presentUpdateGlucoseDataView(response: Home.GlucoseDataViewUpdate.Response)
 }
 
 final class HomePresenter: HomePresentationLogic {
@@ -47,15 +48,13 @@ final class HomePresenter: HomePresentationLogic {
         let basal = glucoseFormattingWorker.formatEntries(response.insulinData)
         let stroke = glucoseFormattingWorker.formatEntries(response.chartPointsData)
         let unit = User.current.settings.unit.label
-        let dataSection = glucoseFormattingWorker.formatDataSection(response.intervalGlucoseData)
         
         let viewModel = Home.GlucoseDataUpdate.ViewModel(
             glucoseValues: values,
             basalDisplayMode: response.basalDisplayMode,
             basalValues: basal,
             strokeChartBasalValues: stroke,
-            unit: unit,
-            dataSection: dataSection
+            unit: unit
         )
         viewController?.displayGlucoseData(viewModel: viewModel)
     }
@@ -206,5 +205,14 @@ final class HomePresenter: HomePresentationLogic {
         )
         
         return string
+    }
+    
+    func presentUpdateGlucoseDataView(response: Home.GlucoseDataViewUpdate.Response) {
+        let dataSection = glucoseFormattingWorker.formatDataSection(response.intervalGlucoseData)
+        
+        let viewModel = Home.GlucoseDataViewUpdate.ViewModel(
+            dataSection: dataSection
+        )
+        viewController?.displayUpdateGlucoseDataView(viewModel: viewModel)
     }
 }

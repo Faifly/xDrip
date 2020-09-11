@@ -7,62 +7,7 @@
 //
 
 import Foundation
-
-protocol TreatmentEntryProtocol {
-    var amount: Double { get }
-    var date: Date? { get }
-    var externalID: String? { get }
-    var cloudUploadStatus: CloudUploadStatus { get }
-    var exerciseIntensity: Int? { get set }
-}
-
-extension TreatmentEntryProtocol {
-    var exerciseIntensity: Int? {
-        get { return nil }
-        set { exerciseIntensity = newValue }
-      }
-}
-
-enum TreatmentType: String {
-    case carbs
-    case bolus
-    case basal
-    case training
-    
-    func getUploadRequestTypeFor(requestType: RequestType) -> UploadRequestType {
-        var postrequestType: UploadRequestType
-        var modifyRequestType: UploadRequestType
-        var deleteRequestType: UploadRequestType
-        
-        switch self {
-        case .carbs:
-            postrequestType = .postCarbs
-            modifyRequestType = .modifyCarbs
-            deleteRequestType = .deleteCarbs
-        case .bolus:
-            postrequestType = .postBolus
-            modifyRequestType = .modifyBolus
-            deleteRequestType = .deleteBolus
-        case .basal:
-            postrequestType = .postBasal
-            modifyRequestType = .modifyBasal
-            deleteRequestType = .deleteBasal
-        case .training:
-            postrequestType = .postTraining
-            modifyRequestType = .modifyTraining
-            deleteRequestType = .deleteTraining
-        }
-        
-        switch requestType {
-        case .post:
-            return postrequestType
-        case .modify:
-            return modifyRequestType
-        case .delete:
-            return deleteRequestType
-        }
-    }
-}
+import RealmSwift
 
 struct CTreatment: Codable {
     var type: TreatmentType?
@@ -121,7 +66,7 @@ struct CTreatment: Codable {
             duration = entry.amount / .secondsPerMinute
             
             if let intensityValue = entry.exerciseIntensity,
-               let intensityString = TrainingIntensity(rawValue: intensityValue)?.paramValue() {
+                let intensityString = TrainingIntensity(rawValue: intensityValue)?.paramValue {
                 exerciseIntensity = intensityString
             } else {
                 exerciseIntensity = nil
@@ -140,7 +85,7 @@ struct CTreatment: Codable {
         
         utcOffset = nil
         timestamp = Int((entry.date ?? Date()).timeIntervalSince1970)
-        enteredBy = "xdrip iOS"
+        enteredBy = Constants.Nightscout.appIdentifierName
         insulinInjections = "[]"
         
         if treatmentType == .carbs, let carbEntry = entry as? CarbEntry {
@@ -192,62 +137,89 @@ struct CTreatment: Codable {
             let subStr = str[..<endIndex]
             return String(subStr)
         }
+        //Server doesn't accept ids with length more than 24 symbols
     }
     
     static func parseTreatmentsToEntries(treatments: [CTreatment]) {
         guard !treatments.isEmpty else { return }
-        let allCarbs = CarbEntriesWorker.fetchAllCarbEntries()
-        let allBolus = InsulinEntriesWorker.fetchAllBolusEntries()
-        let allBasal = InsulinEntriesWorker.fetchAllBasalEntries()
-        let allTrainings = TrainingEntriesWorker.fetchAllTrainings()
+        
+        var allObjects: [Object] = []
+        var types: [TreatmentType?] = []
         
         for treatment in treatments {
-            let treatmentDate = CTreatment.getTreatmentDate(treatment)
-            
-            switch treatment.type {
-            case .carbs:
-                if !allCarbs.contains(where: { $0.externalID == treatment.uuid }), let amount = treatment.carbs {
-                    CarbEntriesWorker.addCarbEntry(amount: amount,
-                                                   foodType: treatment.foodType,
-                                                   date: treatmentDate,
-                                                   externalID: treatment.uuid)
+            if let object = createRealmObjectFrom(treatment: treatment) {
+                allObjects.append(object)
+                if !types.contains(treatment.type) {
+                    types.append(treatment.type)
                 }
-            case .bolus:
-                if !allBolus.contains(where: { $0.externalID == treatment.uuid }), let amount = treatment.insulin {
-                    InsulinEntriesWorker.addBolusEntry(amount: amount, date: treatmentDate, externalID: treatment.uuid)
-                }
-            case .basal:
-                if !allBasal.contains(where: { $0.externalID == treatment.uuid }), let amount = treatment.insulin {
-                    InsulinEntriesWorker.addBasalEntry(amount: amount, date: treatmentDate, externalID: treatment.uuid)
-                }
-            case .training:
-                if !allTrainings.contains(where: { $0.externalID == treatment.uuid }),
-                    let duration = treatment.duration,
-                    let intensity = treatment.exerciseIntensity {
-                    TrainingEntriesWorker.addTraining(duration: duration * .secondsPerMinute,
-                                                      intensity: TrainingIntensity.getValue(paramValue: intensity),
-                                                      date: treatmentDate,
-                                                      externalID: treatment.uuid)
-                }
-            default:
-                break
             }
         }
+        
+        let realm = Realm.shared
+        realm.safeWrite {
+            realm.add(allObjects, update: .all)
+        }
+        
+        if types.contains(.carbs) { CarbEntriesWorker.updatedCarbsEntry() }
+        if types.contains(.bolus) { InsulinEntriesWorker.updatedBolusEntry() }
+        if types.contains(.basal) { InsulinEntriesWorker.updatedBasalEntry() }
+        if types.contains(.training) { TrainingEntriesWorker.updatedTrainingEntry() }
     }
     
-    private static func getTreatmentDate(_ treatment: CTreatment) -> Date {
+    private static func createRealmObjectFrom(treatment: CTreatment) -> Object? {
+        var object: Object?
+        
+        let treatmentDate = treatment.getDate()
+        
+        switch treatment.type {
+        case .carbs:
+            if let amount = treatment.carbs {
+                object = CarbEntry(amount: amount,
+                                   foodType: treatment.foodType,
+                                   date: treatmentDate,
+                                   externalID: treatment.uuid)
+            }
+        case .bolus:
+            if let amount = treatment.insulin {
+                object = InsulinEntry(amount: amount,
+                                      date: treatmentDate,
+                                      type: .bolus,
+                                      externalID: treatment.uuid)
+            }
+        case .basal:
+            if let amount = treatment.insulin {
+                object = InsulinEntry(amount: amount,
+                                      date: treatmentDate,
+                                      type: .basal,
+                                      externalID: treatment.uuid)
+            }
+        case .training:
+            if let duration = treatment.duration, let intensity = treatment.exerciseIntensity {
+                object = TrainingEntry(duration: duration * .secondsPerMinute,
+                                       intensity: TrainingIntensity(paramValue: intensity),
+                                       date: treatmentDate,
+                                       externalID: treatment.uuid)
+            }
+        default:
+            break
+        }
+        
+        return object
+    }
+    
+    private func getDate() -> Date {
         let treatmentDate: Date
-        if let sysTime = treatment.sysTime {
+        if let sysTime = sysTime {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
             treatmentDate = dateFormatter.date(from: sysTime) ?? Date()
-        } else if let timestamp = treatment.timestamp {
+        } else if let timestamp = timestamp {
             treatmentDate = Date(timeIntervalSince1970: TimeInterval(timestamp))
         } else {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
             dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-            if let createdAt = treatment.createdAt {
+            if let createdAt = createdAt {
                 treatmentDate = dateFormatter.date(from: createdAt) ?? Date()
             } else {
                 treatmentDate = Date()

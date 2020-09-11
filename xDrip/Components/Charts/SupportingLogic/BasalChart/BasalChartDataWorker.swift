@@ -13,7 +13,7 @@ enum BasalChartDataWorker {
     static func fetchBasalData(for hours: Int) -> [InsulinEntry] {
         let minimumDate = Date() - TimeInterval(hours) * .secondsPerHour
         let all = InsulinEntriesWorker.fetchAllBasalEntries()
-        return all.filter { $0.date >=? minimumDate && $0.cloudUploadStatus != .waitingForDeletion }
+        return all.filter { $0.date >=? minimumDate && $0.isValid }
     }
     
     static func fetchBasalData(for date: Date) -> [InsulinEntry] {
@@ -23,7 +23,7 @@ enum BasalChartDataWorker {
         return all.filter {
             $0.date >=? minimumDate &&
             $0.date <=? maximumDate &&
-            $0.cloudUploadStatus != .waitingForDeletion
+            $0.isValid
         }
     }
     
@@ -31,7 +31,7 @@ enum BasalChartDataWorker {
         let minimumDate = date - .secondsPerDay * 3.0
         guard date >= minimumDate else { return 0.0 }
         let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate &&
-            $0.date <=? date && $0.cloudUploadStatus != .waitingForDeletion })
+            $0.date <=? date && $0.isValid })
         
         guard !all.isEmpty else { return 0.0 }
         
@@ -132,7 +132,7 @@ enum BasalChartDataWorker {
     static func calculateChartValues(for hours: Int) -> [InsulinEntry] {
         let minimumDate = Date() - TimeInterval(hours) * .secondsPerHour
         let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate &&
-            $0.cloudUploadStatus != .waitingForDeletion })
+            $0.isValid })
         
         var points = [InsulinEntry]()
         
@@ -162,7 +162,7 @@ enum BasalChartDataWorker {
         let minimumDate = Calendar.current.startOfDay(for: date)
         let maximumDate = minimumDate + .secondsPerDay
         let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({
-            $0.date >=? minimumDate && $0.date <=? maximumDate && $0.cloudUploadStatus != .waitingForDeletion
+            $0.date >=? minimumDate && $0.date <=? maximumDate && $0.isValid
         })
         
         var points = [InsulinEntry]()

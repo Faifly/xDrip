@@ -20,6 +20,6 @@ struct CCalibration: Codable {
         type = "mbg"
         date = Int64((calibration.date?.timeIntervalSince1970 ?? 0.0) * 1000.0)
         mbg = calibration.glucoseLevel.rounded(to: 2)
-        device = "xDrip iOS"
+        device = Constants.Nightscout.appIdentifierName
     }
 }

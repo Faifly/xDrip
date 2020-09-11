@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RealmSwift
 
 final class CarbEntriesWorker: AbstractEntriesWorker {
     static var carbsDataHandler: (() -> Void)?
@@ -23,12 +22,7 @@ final class CarbEntriesWorker: AbstractEntriesWorker {
             date: date,
             externalID: externalID
         )
-        if externalID != nil {
-            entry.cloudUploadStatus = .uploaded
-        } else if let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments {
-            entry.cloudUploadStatus = .notUploaded
-        }
+
         let addedEntry = add(entry: entry)
         carbsDataHandler?()
         NightscoutService.shared.scanForNotUploadedTreatments()
@@ -37,10 +31,8 @@ final class CarbEntriesWorker: AbstractEntriesWorker {
     
     static func deleteCarbsEntry(_ entry: CarbEntry) {
         if let settings = User.current.settings.nightscoutSync,
-        settings.isEnabled, settings.uploadTreatments {
-            Realm.shared.safeWrite {
-                entry.cloudUploadStatus = .waitingForDeletion
-            }
+            settings.isEnabled, settings.uploadTreatments {
+            entry.updateCloudUploadStatus(.waitingForDeletion)
         } else {
             super.deleteEntry(entry)
         }
@@ -69,8 +61,6 @@ final class CarbEntriesWorker: AbstractEntriesWorker {
         guard let entry = fetchAllCarbEntries().first(where: { $0.externalID == externalID }) else {
             return
         }
-        Realm.shared.safeWrite {
-            entry.cloudUploadStatus = .uploaded
-        }
+        entry.updateCloudUploadStatus(.uploaded)
     }
 }

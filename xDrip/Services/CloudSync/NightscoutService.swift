@@ -20,31 +20,31 @@ final class NightscoutService {
     private var isRequestInProgress = false
     
     private lazy var followerSettingsObserver: [Any] = NotificationCenter.default.subscribe(
-    forSettingsChange: [.followerAuthStatus]) {
-        guard let settings = User.current.settings.nightscoutSync else { return }
-        if settings.isFollowerAuthed {
-            self.startFetchingFollowerData()
-        } else {
-            self.stopFetchingFollowerData()
-        }
+        forSettingsChange: [.followerAuthStatus]) {
+            guard let settings = User.current.settings.nightscoutSync else { return }
+            if settings.isFollowerAuthed {
+                self.startFetchingFollowerData()
+            } else {
+                self.stopFetchingFollowerData()
+            }
     }
     
     private lazy var downloadDataSettingsObserver: [Any] = NotificationCenter.default.subscribe(
-    forSettingsChange: [.downloadData]) {
-        guard let settings = User.current.settings.nightscoutSync else { return }
-        if settings.downloadData {
-            self.startFetchingTreatments()
-        } else {
-            self.stopFetchingTreatments()
-        }
+        forSettingsChange: [.downloadData]) {
+            guard let settings = User.current.settings.nightscoutSync else { return }
+            if settings.downloadData {
+                self.startFetchingTreatments()
+            } else {
+                self.stopFetchingTreatments()
+            }
     }
     
     private lazy var uploadTreatmentsSettingsObserver: [Any] = NotificationCenter.default.subscribe(
-    forSettingsChange: [.uploadTreatments]) {
-        guard let settings = User.current.settings.nightscoutSync else { return }
-        if settings.uploadTreatments {
-            self.scanForNotUploadedTreatments()
-        }
+        forSettingsChange: [.uploadTreatments]) {
+            guard let settings = User.current.settings.nightscoutSync else { return }
+            if settings.uploadTreatments {
+                self.scanForNotUploadedTreatments()
+            }
     }
     private lazy var lastFollowerFetchTime = GlucoseReading.allFollower.last?.date
     private var followerFetchTimer: Timer?
@@ -269,29 +269,12 @@ final class NightscoutService {
             }
             
             if !requestQueue.contains(where: { $0.itemID == entry.externalID && $0.type == deleteRequestType
-            }), let uuid = entry.externalID {
-//                guard let findRequest = requestFactory.createFindTreatmentRequest(uuid: uuid) else { return }
-//                URLSession.shared.loggableDataTask(with: findRequest) { data, _, error in
-//                    guard let data = data, error == nil else { return }
-//                    guard let entries = try? JSONDecoder().decode([CTreatment].self, from: data) else { return }
-//                    if !entries.isEmpty {
-                        guard let request = self.requestFactory.createDeleteTreatmentRequest(uuid,
-                                                                                             requestType: deleteRequestType) else {
-                                                                                                return
-                        }
-                        self.requestQueue.append(request)
-                        self.runQueue()
-//                    } else {
-//                        switch treatmentType {
-//                        case .carbs:
-//                            CarbEntriesWorker.deleteEntryWith(externalID: uuid)
-//                        case .bolus, .basal:
-//                            InsulinEntriesWorker.deleteEntryWith(externalID: uuid)
-//                        case .training:
-//                            TrainingEntriesWorker.deleteEntryWith(externalID: uuid)
-//                        }
-//                    }
-//                }.resume()
+            }) {
+                guard let request = requestFactory.createDeleteTreatmentRequest(entry.externalID,
+                                                                                requestType: deleteRequestType) else {
+                                                                                    return }
+                self.requestQueue.append(request)
+                self.runQueue()
             }
         }
     }
@@ -345,38 +328,10 @@ final class NightscoutService {
             guard let self = self else { return }
             guard error == nil else { return }
             let first = self.requestQueue.removeFirst()
-            self.performRequestCompleteActions(first)
+            NightscoutRequestCompleter.completeRequest(first)
             self.isRequestInProgress = false
             self.runQueue()
         }.resume()
-    }
-    
-    fileprivate func performRequestCompleteActions(_ request: UploadRequest) {
-        DispatchQueue.main.async {
-            switch request.type {
-            case .postGlucoseReading, .modifyGlucoseReading:
-                GlucoseReading.markEntryAsUploaded(externalID: request.itemID)
-                self.sendDeviceStatus()
-            case .deleteGlucoseReading, .deleteCalibration:
-                break
-            case .postCalibration:
-                Calibration.markCalibrationAsUploaded(itemID: request.itemID)
-            case .postCarbs, .modifyCarbs:
-                CarbEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
-            case .deleteCarbs:
-                CarbEntriesWorker.deleteEntryWith(externalID: request.itemID)
-                
-            case .postBolus, .modifyBolus, .postBasal, .modifyBasal:
-                InsulinEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
-            case .deleteBolus, .deleteBasal:
-                InsulinEntriesWorker.deleteEntryWith(externalID: request.itemID)
-                
-            case .postTraining, .modifyTraining:
-                TrainingEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
-            case .deleteTraining:
-                TrainingEntriesWorker.deleteEntryWith(externalID: request.itemID)
-            }
-        }
     }
     
     private func startFetchingFollowerData() {

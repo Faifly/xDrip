@@ -17,7 +17,7 @@ enum TrainingIntensity: Int, CaseIterable {
         return .normal
     }
     
-    func paramValue() -> String {
+    var paramValue: String {
         switch self {
         case .low:
             return "low"
@@ -28,16 +28,16 @@ enum TrainingIntensity: Int, CaseIterable {
         }
     }
     
-    static func getValue(paramValue: String) -> TrainingIntensity {
+    init(paramValue: String) {
         switch paramValue {
         case "low":
-            return TrainingIntensity.low
+            self = .low
         case "moderate":
-            return TrainingIntensity.normal
+            self = .normal
         case "high":
-            return TrainingIntensity.high
+            self = .high
         default:
-            return TrainingIntensity.default
+            self = .default
         }
     }
 }

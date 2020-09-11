@@ -12,17 +12,6 @@ import RealmSwift
 final class InsulinEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryProtocol {
     @objc private(set) dynamic var amount: Double = 0.0
     @objc private dynamic var rawType: Int = InsulinType.bolus.rawValue
-    @objc private(set) dynamic var externalID: String?
-    @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notApplicable.rawValue
-
-    var cloudUploadStatus: CloudUploadStatus {
-        get {
-            return CloudUploadStatus(rawValue: rawCloudUploadStatus) ?? .notApplicable
-        }
-        set {
-            rawCloudUploadStatus = newValue.rawValue
-        }
-    }
     
     var type: InsulinType {
         get {
@@ -38,10 +27,15 @@ final class InsulinEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryPr
     }
     
     init(amount: Double, date: Date, type: InsulinType, externalID: String? = nil) {
-        super.init(date: date)
+        super.init(date: date, externalID: externalID)
         self.amount = amount
         self.type = type
-        self.externalID = externalID ?? UUID().uuidString.lowercased()
+        if externalID != nil {
+            self.cloudUploadStatus = .uploaded
+        } else if let settings = User.current.settings.nightscoutSync,
+            settings.isEnabled, settings.uploadTreatments {
+            self.cloudUploadStatus = .notUploaded
+        }
     }
     
     func update(amount: Double, date: Date) {

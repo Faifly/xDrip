@@ -8,7 +8,6 @@
 
 import Foundation
 import AKUtils
-import RealmSwift
 
 final class InsulinEntriesWorker: AbstractEntriesWorker {
     static var bolusDataHandler: (() -> Void)?
@@ -18,30 +17,18 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
                                                  date: Date,
                                                  externalID: String? = nil) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .bolus, externalID: externalID)
-        if externalID != nil {
-            entry.cloudUploadStatus = .uploaded
-        } else if let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments {
-            entry.cloudUploadStatus = .notUploaded
-        }
-        let addedEntry = add(entry: entry)
+        add(entry: entry)
         bolusDataHandler?()
         NightscoutService.shared.scanForNotUploadedTreatments()
-        return addedEntry
+        return entry
     }
     
     @discardableResult static func addBasalEntry(amount: Double,
                                                  date: Date,
                                                  externalID: String? = nil) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .basal, externalID: externalID)
-        if externalID != nil {
-            entry.cloudUploadStatus = .uploaded
-        } else if let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments {
-            entry.cloudUploadStatus = .notUploaded
-        }
         add(entry: entry)
-        NotificationCenter.default.postSettingsChangeNotification(setting: .basalRelated)
+        basalDataHandler?()
         NightscoutService.shared.scanForNotUploadedTreatments()
         return entry
     }
@@ -50,9 +37,7 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
         let type = entry.type
         if let settings = User.current.settings.nightscoutSync,
             settings.isEnabled, settings.uploadTreatments {
-            Realm.shared.safeWrite {
-                entry.cloudUploadStatus = .waitingForDeletion
-            }
+            entry.updateCloudUploadStatus(.waitingForDeletion)
         } else {
             super.deleteEntry(entry)
         }
@@ -99,8 +84,6 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
         guard let entry = fetchAllInsulinEntries().first(where: { $0.externalID == externalID }) else {
             return
         }
-        Realm.shared.safeWrite {
-            entry.cloudUploadStatus = .uploaded
-        }
+        entry.updateCloudUploadStatus(.uploaded)
     }
 }

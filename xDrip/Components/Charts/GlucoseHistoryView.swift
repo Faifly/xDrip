@@ -22,6 +22,8 @@ final class GlucoseHistoryView: BaseHistoryView {
     
     private var scrollContainerTopConstraint: NSLayoutConstraint?
     
+    var updateGlucoseDataViewCallback: ((DateInterval) -> Void)?
+    
     var detailsEnabled: Bool = true {
         didSet {
             setupDetailsView()
@@ -122,6 +124,7 @@ final class GlucoseHistoryView: BaseHistoryView {
                 y: 0.0
             )
             self.updateDetailLabel()
+            self.updateGlucoseDataView()
         }
     }
     
@@ -182,6 +185,7 @@ final class GlucoseHistoryView: BaseHistoryView {
         super.calculateVerticalLeftLabels(minValue: glucoseEntries.map({ $0.value }).min(),
                                           maxValue: glucoseEntries.map({ $0.value }).max())
         super.updateChart()
+        updateGlucoseDataView()
         setupRightLabelViewsAnchorConstraint()
         calculateVerticalRightLabels()
         glucoseChartView.basalEntries = basalEntries
@@ -189,6 +193,17 @@ final class GlucoseHistoryView: BaseHistoryView {
         glucoseChartView.dateInterval = globalDateRange
         glucoseChartView.basalDisplayMode = basalDisplayMode
         glucoseChartView.setNeedsDisplay()
+    }
+    
+    private func updateGlucoseDataView() {
+        guard let callback = updateGlucoseDataViewCallback else { return }
+        let scrollView = scrollContainer.scrollView
+        let currentRelativeOffset = scrollView.contentOffset.x / scrollView.contentSize.width
+        let globalDurationOffset = globalDateRange.duration * TimeInterval(currentRelativeOffset)
+        let localOffsettedInterval = localInterval
+        let endDate = globalDateRange.start + globalDurationOffset + localOffsettedInterval
+        let dateInterval = DateInterval(endDate: endDate, duration: localInterval)
+        callback(dateInterval)
     }
     
     func updateDetailLabel() {

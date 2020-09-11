@@ -24,6 +24,8 @@
 		0A62DA8824DBF2F90064A85F /* HomeViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A62DA8724DBF2F90064A85F /* HomeViewController~ipad.xib */; };
 		0A68E567250661DB00F70366 /* OptionsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68E566250661DB00F70366 /* OptionsViewTests.swift */; };
 		0A68E569250665EE00F70366 /* OptionsViewMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68E568250665EE00F70366 /* OptionsViewMirror.swift */; };
+		0A6B05D8250B69B300F8238E /* NightscoutRequestCompleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6B05D7250B69B300F8238E /* NightscoutRequestCompleter.swift */; };
+		0A6B05DA250B6BC800F8238E /* TreatmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6B05D9250B6BC800F8238E /* TreatmentType.swift */; };
 		0A89541F249CE7060067601F /* GlucoseCurrentInfoEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A89541E249CE7060067601F /* GlucoseCurrentInfoEntry.swift */; };
 		0A895423249CE71A0067601F /* GlucoseCurrentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A895421249CE71A0067601F /* GlucoseCurrentInfoView.swift */; };
 		0A895424249CE71A0067601F /* GlucoseCurrentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */; };
@@ -708,6 +710,8 @@
 		0A62DA8724DBF2F90064A85F /* HomeViewController~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "HomeViewController~ipad.xib"; sourceTree = "<group>"; };
 		0A68E566250661DB00F70366 /* OptionsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewTests.swift; sourceTree = "<group>"; };
 		0A68E568250665EE00F70366 /* OptionsViewMirror.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewMirror.swift; sourceTree = "<group>"; };
+		0A6B05D7250B69B300F8238E /* NightscoutRequestCompleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutRequestCompleter.swift; sourceTree = "<group>"; };
+		0A6B05D9250B6BC800F8238E /* TreatmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreatmentType.swift; sourceTree = "<group>"; };
 		0A89541E249CE7060067601F /* GlucoseCurrentInfoEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoEntry.swift; sourceTree = "<group>"; };
 		0A895421249CE71A0067601F /* GlucoseCurrentInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoView.swift; sourceTree = "<group>"; };
 		0A895422249CE71A0067601F /* GlucoseCurrentInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlucoseCurrentInfoView.xib; sourceTree = "<group>"; };
@@ -3158,6 +3162,7 @@
 			children = (
 				58FFBC1924A49EAD003D2DE6 /* Codables */,
 				588584A2248E76DF00C3F74C /* NightscoutService.swift */,
+				0A6B05D7250B69B300F8238E /* NightscoutRequestCompleter.swift */,
 				58E3B7C12493BDBB008738DF /* NightscoutError.swift */,
 				58F43BA0249130C2006C5F2C /* UploadRequest.swift */,
 				589B1A212497D17900C1DABD /* UploadRequestFactory.swift */,
@@ -3724,6 +3729,7 @@
 				58828B8F2492876C001D4C3E /* CGlucoseReading.swift */,
 				58FFBC1A24A49EBC003D2DE6 /* CCalibration.swift */,
 				0AAE030B24FCF66D003CF50B /* CTreatment.swift */,
+				0A6B05D9250B6BC800F8238E /* TreatmentType.swift */,
 			);
 			path = Codables;
 			sourceTree = "<group>";
@@ -4048,6 +4054,7 @@
 				580EC7802421457700C34948 /* EditFoodEntryViewController.swift in Sources */,
 				58443263243CEB4700282A6C /* BasalRate.swift in Sources */,
 				58B5FDC224193C2200DB857D /* GlucoseReading.swift in Sources */,
+				0A6B05D8250B69B300F8238E /* NightscoutRequestCompleter.swift in Sources */,
 				580E4C10243F748500565EDE /* SettingsPenUserPresenter.swift in Sources */,
 				5860385B24462B64008D54B6 /* ChartVerticalLabelsView.swift in Sources */,
 				5805CA05243892D6002AFA1B /* InitialSetupG6ConnectViewController.swift in Sources */,
@@ -4191,6 +4198,7 @@
 				580E4BA8243F723200565EDE /* NightscoutCloudExtraOptionsModels.swift in Sources */,
 				0A616E9C25027B9500157E9E /* EntriesListTrainingsFormattingWorker.swift in Sources */,
 				5805CA1A243892D6002AFA1B /* InitialSetupGenericStepWorker.swift in Sources */,
+				0A6B05DA250B6BC800F8238E /* TreatmentType.swift in Sources */,
 				584FE23F24C8728D0002F28B /* StatsRootCalculationWorker.swift in Sources */,
 				58E3B7C42493BFAD008738DF /* String+Encoding.swift in Sources */,
 				580E4C12243F748500565EDE /* SettingsPenUserModels.swift in Sources */,

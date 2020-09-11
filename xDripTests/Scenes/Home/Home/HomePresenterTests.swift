@@ -67,6 +67,8 @@ final class HomePresenterTests: XCTestCase {
         }
         func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseEntriesChartTimeFrame.ViewModel) {
         }
+        func displayUpdateGlucoseDataView(viewModel: Home.GlucoseDataViewUpdate.ViewModel) {
+        }
     }
     
     // MARK: Tests

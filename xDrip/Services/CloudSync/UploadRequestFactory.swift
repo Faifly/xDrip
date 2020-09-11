@@ -21,7 +21,6 @@ protocol UploadRequestFactoryLogic {
     func createNotUploadedTreatmentRequest(_ entry: CTreatment, requestType: UploadRequestType) -> UploadRequest?
     func createDeleteTreatmentRequest(_ uuid: String, requestType: UploadRequestType) -> UploadRequest?
     func createModifiedTreatmentRequest(_ entry: CTreatment, requestType: UploadRequestType) -> UploadRequest?
-    func createFindTreatmentRequest(uuid: String) -> URLRequest?
 }
 
 final class UploadRequestFactory: UploadRequestFactoryLogic {
@@ -271,7 +270,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
         
         let data: [String: Any] = [
-            "device": "xDrip iOS",
+            "device": Constants.Nightscout.appIdentifierName,
             "uploader": [
                 "battery": BridgeBatteryService.getBatteryLevel()
             ]
@@ -350,68 +349,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         
         return request
     }
-    
-    func createFindTreatmentRequest(uuid: String) -> URLRequest? {
-        LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
-        guard let settings = User.current.settings.nightscoutSync, settings.isEnabled else {
-            LogController.log(
-                message: "[UploadRequestFactory]: Failed to %@ because sync is disabled.",
-                type: .info,
-                #function
-            )
-            return nil
-        }
         
-        guard let request = try? findTreatmentRequest(uuid: uuid) else {
-            LogController.log(
-                message: "[UploadRequestFactory]: Failed to %@.",
-                type: .info,
-                #function
-            )
-            return nil
-        }
-        
-        return request
-    }
-    
-    func findTreatmentRequest(uuid: String) throws -> URLRequest? {
-        guard let baseURLString = User.current.settings.nightscoutSync?.baseURL else {
-            LogController.log(
-                message: "[UploadRequestFactory]: Failed to %@ because no base url provided.",
-                type: .info,
-                #function
-            )
-            throw NightscoutError.invalidURL
-        }
-        guard var url = URLComponents(string: baseURLString + "/api/v1/treatments/") else {
-            LogController.log(
-                message: "[UploadRequestFactory]: Failed to %@ because of invalid base url.",
-                type: .info,
-                #function
-            )
-            throw NightscoutError.invalidURL
-        }
-        
-        url.queryItems = [
-            URLQueryItem(name: "find[uuid]", value: "\(uuid)")
-        ]
-        
-        guard let finalURL = url.url else {
-            LogController.log(
-                message: "[UploadRequestFactory]: Failed to %@ because of invalid base url.",
-                type: .info,
-                #function
-            )
-            throw NightscoutError.invalidURL
-        }
-        
-        var request = URLRequest(url: finalURL)
-        request.allHTTPHeaderFields = createHeaders()
-        request.httpMethod = "GET"
-        
-        return request
-    }
-    
     private func createTreatmentsRequest(appendSecret: Bool = true) throws -> URLRequest? {
         LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
         guard let baseURLString = User.current.settings.nightscoutSync?.baseURL else {
