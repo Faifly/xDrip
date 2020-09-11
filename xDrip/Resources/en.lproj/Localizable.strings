@@ -497,6 +497,8 @@ This setting will be applied to all future sensors";
 "notification_missed_readings_body" = "Seems like you have one or more missed BG readings";
 "notification_phone_muted_title" = "Phone Muted";
 "notification_phone_muted_body" = "Your device in Ring/Silent mode";
+"notification_transmitter_connection_title" = "Transmitter Connection";
+"notification_transmitter_connection_body" = "Transmitter successfully connected and ready to send readings";
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Greetings";

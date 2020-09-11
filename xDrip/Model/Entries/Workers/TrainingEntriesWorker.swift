@@ -20,12 +20,6 @@ final class TrainingEntriesWorker: AbstractEntriesWorker {
                                   intensity: intensity,
                                   date: date,
                                   externalID: externalID)
-        if externalID != nil {
-            entry.cloudUploadStatus = .uploaded
-        } else if let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments {
-            entry.cloudUploadStatus = .notUploaded
-        }
         let addedEntry = add(entry: entry)
         NightscoutService.shared.scanForNotUploadedTreatments()
         return addedEntry

@@ -7,62 +7,7 @@
 //
 
 import Foundation
-
-protocol TreatmentEntryProtocol {
-    var amount: Double { get }
-    var date: Date? { get }
-    var externalID: String? { get }
-    var cloudUploadStatus: CloudUploadStatus { get }
-    var exerciseIntensity: Int? { get set }
-}
-
-extension TreatmentEntryProtocol {
-    var exerciseIntensity: Int? {
-        get { return nil }
-        set { exerciseIntensity = newValue }
-    }
-}
-
-enum TreatmentType: String {
-    case carbs
-    case bolus
-    case basal
-    case training
-    
-    func getUploadRequestTypeFor(requestType: RequestType) -> UploadRequestType {
-        var postrequestType: UploadRequestType
-        var modifyRequestType: UploadRequestType
-        var deleteRequestType: UploadRequestType
-        
-        switch self {
-        case .carbs:
-            postrequestType = .postCarbs
-            modifyRequestType = .modifyCarbs
-            deleteRequestType = .deleteCarbs
-        case .bolus:
-            postrequestType = .postBolus
-            modifyRequestType = .modifyBolus
-            deleteRequestType = .deleteBolus
-        case .basal:
-            postrequestType = .postBasal
-            modifyRequestType = .modifyBasal
-            deleteRequestType = .deleteBasal
-        case .training:
-            postrequestType = .postTraining
-            modifyRequestType = .modifyTraining
-            deleteRequestType = .deleteTraining
-        }
-        
-        switch requestType {
-        case .post:
-            return postrequestType
-        case .modify:
-            return modifyRequestType
-        case .delete:
-            return deleteRequestType
-        }
-    }
-}
+import RealmSwift
 
 struct CTreatment: Codable {
     var type: TreatmentType?
@@ -197,43 +142,69 @@ struct CTreatment: Codable {
     
     static func parseTreatmentsToEntries(treatments: [CTreatment]) {
         guard !treatments.isEmpty else { return }
-        let allCarbs = CarbEntriesWorker.fetchAllCarbEntries()
-        let allBolus = InsulinEntriesWorker.fetchAllBolusEntries()
-        let allBasal = InsulinEntriesWorker.fetchAllBasalEntries()
-        let allTrainings = TrainingEntriesWorker.fetchAllTrainings()
+        
+        var allObjects: [Object] = []
+        var types: [TreatmentType?] = []
         
         for treatment in treatments {
-            let treatmentDate = treatment.getDate()
-            
-            switch treatment.type {
-            case .carbs:
-                if !allCarbs.contains(where: { $0.externalID == treatment.uuid }), let amount = treatment.carbs {
-                    CarbEntriesWorker.addCarbEntry(amount: amount,
-                                                   foodType: treatment.foodType,
-                                                   date: treatmentDate,
-                                                   externalID: treatment.uuid)
+            if let object = createRealmObjectFrom(treatment: treatment) {
+                allObjects.append(object)
+                if !types.contains(treatment.type) {
+                    types.append(treatment.type)
                 }
-            case .bolus:
-                if !allBolus.contains(where: { $0.externalID == treatment.uuid }), let amount = treatment.insulin {
-                    InsulinEntriesWorker.addBolusEntry(amount: amount, date: treatmentDate, externalID: treatment.uuid)
-                }
-            case .basal:
-                if !allBasal.contains(where: { $0.externalID == treatment.uuid }), let amount = treatment.insulin {
-                    InsulinEntriesWorker.addBasalEntry(amount: amount, date: treatmentDate, externalID: treatment.uuid)
-                }
-            case .training:
-                if !allTrainings.contains(where: { $0.externalID == treatment.uuid }),
-                    let duration = treatment.duration,
-                    let intensity = treatment.exerciseIntensity {
-                    TrainingEntriesWorker.addTraining(duration: duration * .secondsPerMinute,
-                                                      intensity: TrainingIntensity(paramValue: intensity),
-                                                      date: treatmentDate,
-                                                      externalID: treatment.uuid)
-                }
-            default:
-                break
             }
         }
+        
+        let realm = Realm.shared
+        realm.safeWrite {
+            realm.add(allObjects, update: .all)
+        }
+        
+        if types.contains(.carbs) { CarbEntriesWorker.updatedCarbsEntry() }
+        if types.contains(.bolus) { InsulinEntriesWorker.updatedBolusEntry() }
+        if types.contains(.basal) { InsulinEntriesWorker.updatedBasalEntry() }
+        if types.contains(.training) { TrainingEntriesWorker.updatedTrainingEntry() }
+    }
+    
+    private static func createRealmObjectFrom(treatment: CTreatment) -> Object? {
+        var object: Object?
+        
+        let treatmentDate = treatment.getDate()
+        
+        switch treatment.type {
+        case .carbs:
+            if let amount = treatment.carbs {
+                object = CarbEntry(amount: amount,
+                                   foodType: treatment.foodType,
+                                   date: treatmentDate,
+                                   externalID: treatment.uuid)
+            }
+        case .bolus:
+            if let amount = treatment.insulin {
+                object = InsulinEntry(amount: amount,
+                                      date: treatmentDate,
+                                      type: .bolus,
+                                      externalID: treatment.uuid)
+            }
+        case .basal:
+            if let amount = treatment.insulin {
+                object = InsulinEntry(amount: amount,
+                                      date: treatmentDate,
+                                      type: .basal,
+                                      externalID: treatment.uuid)
+            }
+        case .training:
+            if let duration = treatment.duration, let intensity = treatment.exerciseIntensity {
+                object = TrainingEntry(duration: duration * .secondsPerMinute,
+                                       intensity: TrainingIntensity(paramValue: intensity),
+                                       date: treatmentDate,
+                                       externalID: treatment.uuid)
+            }
+        default:
+            break
+        }
+        
+        return object
     }
     
     private func getDate() -> Date {

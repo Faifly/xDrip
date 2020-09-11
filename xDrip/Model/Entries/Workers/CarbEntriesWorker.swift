@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 final class CarbEntriesWorker: AbstractEntriesWorker {
     static var carbsDataHandler: (() -> Void)?
     
@@ -23,12 +22,7 @@ final class CarbEntriesWorker: AbstractEntriesWorker {
             date: date,
             externalID: externalID
         )
-        if externalID != nil {
-            entry.cloudUploadStatus = .uploaded
-        } else if let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments {
-            entry.cloudUploadStatus = .notUploaded
-        }
+
         let addedEntry = add(entry: entry)
         carbsDataHandler?()
         NightscoutService.shared.scanForNotUploadedTreatments()

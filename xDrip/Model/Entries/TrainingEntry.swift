@@ -45,6 +45,12 @@ final class TrainingEntry: AbstractEntry, TreatmentEntryProtocol {
         super.init(date: date, externalID: externalID ?? UUID().uuidString.lowercased())
         self.duration = duration
         self.intensity = intensity
+        if externalID != nil {
+            self.cloudUploadStatus = .uploaded
+        } else if let settings = User.current.settings.nightscoutSync,
+            settings.isEnabled, settings.uploadTreatments {
+            self.cloudUploadStatus = .notUploaded
+        }
     }
     
     func update(duration: TimeInterval, intensity: TrainingIntensity, date: Date) {

@@ -496,6 +496,8 @@
 "notification_missed_readings_body" = "Похоже, что у вас есть одно или более пропущеных считываний";
 "notification_phone_muted_title" = "Включен беззвучный режим";
 "notification_phone_muted_body" = "Ваше устройство находится в беззвучном режиме";
+"notification_transmitter_connection_title" = "Подключение передатчика";
+"notification_transmitter_connection_body" = "Передатчик успешно подключен и готов к отправке считываний";
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Приветствуем!";

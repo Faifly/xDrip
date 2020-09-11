@@ -17,28 +17,16 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
                                                  date: Date,
                                                  externalID: String? = nil) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .bolus, externalID: externalID)
-        if externalID != nil {
-            entry.cloudUploadStatus = .uploaded
-        } else if let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments {
-            entry.cloudUploadStatus = .notUploaded
-        }
-        let addedEntry = add(entry: entry)
+        add(entry: entry)
         bolusDataHandler?()
         NightscoutService.shared.scanForNotUploadedTreatments()
-        return addedEntry
+        return entry
     }
     
     @discardableResult static func addBasalEntry(amount: Double,
                                                  date: Date,
                                                  externalID: String? = nil) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .basal, externalID: externalID)
-        if externalID != nil {
-            entry.cloudUploadStatus = .uploaded
-        } else if let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments {
-            entry.cloudUploadStatus = .notUploaded
-        }
         add(entry: entry)
         NotificationCenter.default.postSettingsChangeNotification(setting: .basalRelated)
         NightscoutService.shared.scanForNotUploadedTreatments()

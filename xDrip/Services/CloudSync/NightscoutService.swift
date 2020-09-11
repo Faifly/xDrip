@@ -268,10 +268,9 @@ final class NightscoutService {
             
             if !requestQueue.contains(where: { $0.itemID == entry.externalID && $0.type == deleteRequestType
             }), let uuid = entry.externalID {
-                guard let request = self.requestFactory.createDeleteTreatmentRequest(uuid,
-                                                                                     requestType: deleteRequestType) else {
-                                                                                        return
-                }
+                guard let request = requestFactory.createDeleteTreatmentRequest(uuid,
+                                                                                requestType: deleteRequestType) else {
+                                                                                    return }
                 self.requestQueue.append(request)
                 self.runQueue()
             }
@@ -327,38 +326,10 @@ final class NightscoutService {
             guard let self = self else { return }
             guard error == nil else { return }
             let first = self.requestQueue.removeFirst()
-            self.performRequestCompleteActions(first)
+            NightscoutRequestCompleter.completeRequest(first)
             self.isRequestInProgress = false
             self.runQueue()
         }.resume()
-    }
-    
-    fileprivate func performRequestCompleteActions(_ request: UploadRequest) {
-        DispatchQueue.main.async {
-            switch request.type {
-            case .postGlucoseReading, .modifyGlucoseReading:
-                GlucoseReading.markEntryAsUploaded(externalID: request.itemID)
-                self.sendDeviceStatus()
-            case .deleteGlucoseReading, .deleteCalibration:
-                break
-            case .postCalibration:
-                Calibration.markCalibrationAsUploaded(itemID: request.itemID)
-            case .postCarbs, .modifyCarbs:
-                CarbEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
-            case .deleteCarbs:
-                CarbEntriesWorker.deleteEntryWith(externalID: request.itemID)
-                
-            case .postBolus, .modifyBolus, .postBasal, .modifyBasal:
-                InsulinEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
-            case .deleteBolus, .deleteBasal:
-                InsulinEntriesWorker.deleteEntryWith(externalID: request.itemID)
-                
-            case .postTraining, .modifyTraining:
-                TrainingEntriesWorker.markEntryAsUploaded(externalID: request.itemID)
-            case .deleteTraining:
-                TrainingEntriesWorker.deleteEntryWith(externalID: request.itemID)
-            }
-        }
     }
     
     private func startFetchingFollowerData() {

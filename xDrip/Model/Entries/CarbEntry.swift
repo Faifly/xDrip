@@ -18,6 +18,12 @@ final class CarbEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryProto
         super.init(date: date, externalID: externalID ?? UUID().uuidString.lowercased())
         self.amount = amount
         self.foodType = foodType
+        if externalID != nil {
+            self.cloudUploadStatus = .uploaded
+        } else if let settings = User.current.settings.nightscoutSync,
+            settings.isEnabled, settings.uploadTreatments {
+            self.cloudUploadStatus = .notUploaded
+        }
     }
     
     required init() {

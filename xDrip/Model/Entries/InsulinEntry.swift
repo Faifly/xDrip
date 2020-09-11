@@ -30,6 +30,12 @@ final class InsulinEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryPr
         super.init(date: date, externalID: externalID ?? UUID().uuidString.lowercased())
         self.amount = amount
         self.type = type
+        if externalID != nil {
+            self.cloudUploadStatus = .uploaded
+        } else if let settings = User.current.settings.nightscoutSync,
+            settings.isEnabled, settings.uploadTreatments {
+            self.cloudUploadStatus = .notUploaded
+        }
     }
     
     func update(amount: Double, date: Date) {
