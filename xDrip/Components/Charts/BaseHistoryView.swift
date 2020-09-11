@@ -105,7 +105,7 @@ class BaseHistoryView: UIView {
         updateChart()
     }
     
-    private func updateIntervals() {
+    func updateIntervals() {
         var endDate = Date() + forwardTimeOffset
         var globalDuration = globalInterval + forwardTimeOffset
         var localDuration = localInterval + forwardTimeOffset

@@ -290,6 +290,9 @@
 "settings_nightscout_cloud_backfill_send" = "Send";
 "settings_nightscout_cloud_backfill_date_title" = "Date";
 "settings_nightscout_cloud_backfill_section_footer" = "Choose the date for the oldest record to send to Nightscout. Use with care";
+"settings_nightscout_cloud_backfill_no_glucose_readings_found" = "Didn't find any glucose readings in that time period";
+"settings_nightscout_cloud_backfill_found_readings_and_treatments" = "Queued %d glucose readings and %d  treatments!";
+
 
 // Settings Units
 "settings_units_mgdl" = "mg/dL";
@@ -431,10 +434,6 @@ This setting will be applied to all future sensors";
 "settings_pump_user_unpair_button_title" = "Unpair pump";
 
 
-
-
-
-
 // Bluetooth Errors
 "bluetooth_error_title" = "Transmitter Service Error";
 "bluetooth_error_unknown" = "Unknown bluetooth error happened";
@@ -498,6 +497,8 @@ This setting will be applied to all future sensors";
 "notification_missed_readings_body" = "Seems like you have one or more missed BG readings";
 "notification_phone_muted_title" = "Phone Muted";
 "notification_phone_muted_body" = "Your device in Ring/Silent mode";
+"notification_transmitter_connection_title" = "Transmitter Connection";
+"notification_transmitter_connection_body" = "Transmitter successfully connected and ready to send readings";
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Greetings";
