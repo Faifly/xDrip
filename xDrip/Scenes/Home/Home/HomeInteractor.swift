@@ -39,13 +39,15 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private var deviceModeObserver: [NSObjectProtocol]?
     private var hours: Int = 1
     
+    private var timer: Timer?
+    
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
         sensorStateWorker = HomeSensorStateWorker()
         
         subscribeToEntriesWorkersEvents()
-        
         subscribeToNotifications()
+        subscribeForSensorStateChangeEvents()
     }
     
     private func subscribeToEntriesWorkersEvents() {
@@ -113,6 +115,33 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         )
     }
     
+    private func subscribeForSensorStateChangeEvents() {
+        sensorStateWorker.subscribeForSensorStateChange { [weak self] state in
+            let response = Home.UpdateSensorState.Response(state: state)
+            self?.presenter?.presentUpdateSensorState(response: response)
+            self?.setupUpdateTimer(with: state)
+        }
+    }
+    
+    private func setupUpdateTimer(with state: Home.SensorState) {
+        switch state {
+        case .started:
+            timer?.invalidate()
+            timer = nil
+        case .stopped:
+            if timer == nil {
+                timer = Timer.scheduledTimer(
+                    withTimeInterval: 60.0,
+                    repeats: true) { [weak self] _ in
+                        guard let self = self else { return }
+                        self.doLoad(request: Home.Load.Request())
+                }
+            }
+        default:
+            break
+        }
+    }
+    
     // MARK: Do something
     
     func doLoad(request: Home.Load.Request) {
@@ -122,10 +151,6 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         updateGlucoseChartData()
         updateBolusChartData()
         updateCarbsChartData()
-        sensorStateWorker.subscribeForSensorStateChange { [weak self] state in
-            let response = Home.UpdateSensorState.Response(state: state)
-            self?.presenter?.presentUpdateSensorState(response: response)
-        }
     }
     
     func doShowEntriesList(request: Home.ShowEntriesList.Request) {
