@@ -53,6 +53,7 @@ final class InitialSetupDexcomG6ConnectionWorker: NSObject, InitialSetupDexcomG6
             transmitterTime: transmitterTime,
             deviceName: deviceName
         )
+        NotificationController.shared.sendSuccessfulConnectionNotification()
         onSuccessfulConnection?(viewModel)
     }
 }
