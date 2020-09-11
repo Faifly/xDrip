@@ -23,7 +23,7 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
     
     func presentUpdateData(response: EditCalibration.UpdateData.Response) {
         let sections: [BaseSettings.Section] = [
-            createSection(.firstInput, response: response)
+            createSection(response: response)
         ]
         
         let tableViewModel = BaseSettings.ViewModel(sections: sections)
@@ -32,17 +32,21 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
     }
     
     private func createSection(
-        _ field: EditCalibration.Field,
         response: EditCalibration.UpdateData.Response
     ) -> BaseSettings.Section {
         var cells: [BaseSettings.Cell] = [
-            createGlucosePickerCell(field, glucoseValueChangedPicker: response.glucosePickerValueChanged),
-            createDatePickerCell(field, response: response)
+            createGlucosePickerCell(
+                .firstInput,
+                value: response.value1,
+                glucoseValueChangedPicker: response.glucosePickerValueChanged
+            ),
+            createDatePickerCell(.firstInput, response: response)
         ]
         
         if !response.hasInitialCalibrations {
             let cell = createGlucosePickerCell(
                 .secondInput,
+                value: response.value2,
                 glucoseValueChangedPicker: response.glucosePickerValueChanged
             )
             cells.insert(cell, at: 1)
@@ -110,6 +114,7 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
     
     private func createGlucosePickerCell(
         _ field: EditCalibration.Field,
+        value: String?,
         glucoseValueChangedPicker: @escaping (EditCalibration.Field, String?) -> Void
     ) -> BaseSettings.Cell {
         let unit = User.current.settings.unit
@@ -126,7 +131,11 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
            return strings[0] + " " + strings[1]
         }
         
-        let detail = "0.0 " + unit.title
+        let detail = "\(value ?? "0.0") " + unit.title
+        
+        if let value = value, let index = strings.firstIndex(of: value) {
+            picker.selectRow(index, inComponent: 0, animated: false)
+        }
         
         let title: String
         if field == .firstInput {

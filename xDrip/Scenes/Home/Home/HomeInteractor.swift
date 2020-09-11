@@ -18,6 +18,7 @@ protocol HomeBusinessLogic {
     func doChangeGlucoseChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request)
     func doChangeBolusChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request)
     func doChangeCarbsChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request)
+    func doUpdateGlucoseDataView(request: Home.GlucoseDataViewUpdate.Request)
 }
 
 protocol HomeDataStore: AnyObject {
@@ -42,6 +43,12 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         glucoseDataWorker = HomeGlucoseDataWorker()
         sensorStateWorker = HomeSensorStateWorker()
         
+        subscribeToEntriesWorkersEvents()
+        
+        subscribeToNotifications()
+    }
+    
+    private func subscribeToEntriesWorkersEvents() {
         glucoseDataWorker.glucoseDataHandler = { [weak self] in
             guard let self = self else { return }
             self.updateGlucoseCurrentInfo()
@@ -51,11 +58,17 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             guard let self = self else { return }
             self.updateBolusChartData()
         }
+        InsulinEntriesWorker.basalDataHandler = { [weak self] in
+            guard let self = self else { return }
+            self.updateGlucoseChartData()
+        }
         CarbEntriesWorker.carbsDataHandler = { [weak self] in
             guard let self = self else { return }
             self.updateCarbsChartData()
         }
-        
+    }
+    
+    private func subscribeToNotifications() {
         basalEntriesObserver = NotificationCenter.default.subscribe(
             forSettingsChange: [.basalRelated, .unit, .chart],
             notificationHandler: { [weak self] _ in
@@ -139,12 +152,18 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         updateGlucoseChartData()
     }
     
+    func doUpdateGlucoseDataView(request: Home.GlucoseDataViewUpdate.Request) {
+        let response = Home.GlucoseDataViewUpdate.Response(
+            intervalGlucoseData: glucoseDataWorker.fetchGlucoseData(for: request.dateInterval)
+        )
+        presenter?.presentUpdateGlucoseDataView(response: response)
+    }
+    
     // MARK: Logic
     
     private func updateGlucoseChartData() {
         let response = Home.GlucoseDataUpdate.Response(
             glucoseData: glucoseDataWorker.fetchGlucoseData(for: 24),
-            intervalGlucoseData: glucoseDataWorker.fetchGlucoseData(for: hours),
             basalDisplayMode: User.current.settings.chart?.basalDisplayMode ?? .notShown,
             insulinData: BasalChartDataWorker.fetchBasalData(for: 24),
             chartPointsData: BasalChartDataWorker.calculateChartValues(for: 24)

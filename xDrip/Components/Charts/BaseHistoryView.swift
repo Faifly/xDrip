@@ -173,7 +173,7 @@ class BaseHistoryView: UIView {
         
         if interval < .secondsPerHour {
             let currentMinute = Calendar.current.component(.minute, from: now)
-            let targetMinute = Int((Double(currentMinute) / 10.0).rounded(.down) * 10.0)
+            let targetMinute = Int((Double(currentMinute) / 10.0).rounded(.up) * 10.0)
             var components = Calendar.current.dateComponents(in: .current, from: now)
             components.minute = targetMinute
             components.second = 0
@@ -182,7 +182,7 @@ class BaseHistoryView: UIView {
         } else {
             var components = Calendar.current.dateComponents(in: .current, from: now)
             let currentHour = Calendar.current.component(.hour, from: now)
-            let targetHour = Int((Double(currentHour) / interval.hours).rounded(.down) * interval.hours)
+            let targetHour = Int((Double(currentHour + 1) / interval.hours).rounded(.up) * interval.hours)
             components.hour = targetHour
             components.minute = 0
             components.second = 0

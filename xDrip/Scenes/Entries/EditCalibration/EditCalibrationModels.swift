@@ -54,6 +54,8 @@ enum EditCalibration {
             let hasInitialCalibrations: Bool
             let datePickerValueChanged: (Field, Date) -> Void
             let glucosePickerValueChanged: (Field, String?) -> Void
+            let value1: String?
+            let value2: String?
             let date1: Date
             let date2: Date
         }

@@ -28,7 +28,7 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
                                                  externalID: String? = nil) -> InsulinEntry {
         let entry = InsulinEntry(amount: amount, date: date, type: .basal, externalID: externalID)
         add(entry: entry)
-        NotificationCenter.default.postSettingsChangeNotification(setting: .basalRelated)
+        basalDataHandler?()
         NightscoutService.shared.scanForNotUploadedTreatments()
         return entry
     }
