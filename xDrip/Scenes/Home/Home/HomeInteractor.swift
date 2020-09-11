@@ -125,7 +125,10 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
                     withTimeInterval: 60.0,
                     repeats: true) { [weak self] _ in
                         guard let self = self else { return }
-                        self.doLoad(request: Home.Load.Request())
+                        self.updateGlucoseChartData()
+                        self.updateGlucoseCurrentInfo()
+                        self.updateBolusChartData()
+                        self.updateCarbsChartData()
                 }
             }
         default:
