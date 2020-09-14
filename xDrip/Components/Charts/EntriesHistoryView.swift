@@ -107,6 +107,13 @@ final class EntriesHistoryView: BaseHistoryView {
         leftLabelsView.isHidden = !showChart
     }
     
+    override func updateIntervals() {
+        super.updateIntervals()
+        if localInterval < .secondsPerDay {
+         localDateRange.duration += forwardTimeOffset
+        }
+    }
+    
     @objc func chartButtonClicked() {
         onChartButtonClicked()
     }
