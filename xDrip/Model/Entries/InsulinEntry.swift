@@ -54,10 +54,4 @@ final class InsulinEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryPr
             InsulinEntriesWorker.updatedBasalEntry()
         }
     }
-    
-    func markAsNotUploaded() {
-        Realm.shared.safeWrite {
-            self.cloudUploadStatus = .notUploaded
-        }
-    }
 }

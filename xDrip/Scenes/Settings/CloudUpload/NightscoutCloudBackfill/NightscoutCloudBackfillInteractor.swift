@@ -35,9 +35,6 @@ final class NightscoutCloudBackfillInteractor: NightscoutCloudBackfillBusinessLo
     }
     
     func doSend(request: NightscoutCloudBackfill.Send.Request) {
-        var allGlucoseReadingsCount = 0
-        var allTreatmentsCount = 0
-        
         let allGlucoseReadings = GlucoseReading.allMaster.filter({ $0.date >? date &&
             $0.calculatedValue !~ 0.0 &&
             $0.rawValue !~ 0.0}).prefix(500000)
@@ -48,44 +45,30 @@ final class NightscoutCloudBackfillInteractor: NightscoutCloudBackfillBusinessLo
             return
         }
         
-        allGlucoseReadingsCount = allGlucoseReadings.count
-        
         for entry in allGlucoseReadings {
-            entry.markAsNotUploaded()
+            entry.updateCloudUploadStatus(.notUploaded)
         }
         
         NightscoutService.shared.scanForNotUploadedEntries()
         
+        let allCarbEntries = CarbEntriesWorker.fetchAllCarbEntries()
+        let allBolusEntries = InsulinEntriesWorker.fetchAllBolusEntries()
+        let allBasalEntries = InsulinEntriesWorker.fetchAllBasalEntries()
+        let allTrainings = TrainingEntriesWorker.fetchAllTrainings()
+    
+        var allTreatments: [AbstractEntry] = allCarbEntries + allBolusEntries + allBasalEntries + allTrainings
         
-        let allCarbEntries = CarbEntriesWorker.fetchAllCarbEntries().filter({ $0.date >? date }).prefix(50000)
-        let allBolusEntries = InsulinEntriesWorker.fetchAllBolusEntries().filter({ $0.date >? date }).prefix(50000)
-        let allBasalEntries = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >? date }).prefix(50000)
-        let allTrainings = TrainingEntriesWorker.fetchAllTrainings().filter({ $0.date >? date }).prefix(50000)
+        allTreatments = Array(allTreatments.filter({ $0.date >? date }).prefix(50000))
         
-        allTreatmentsCount = allCarbEntries.count +
-            allBolusEntries.count +
-            allBasalEntries.count +
-            allTrainings.count
-        
-        for entry in allCarbEntries {
-            entry.markAsNotUploaded()
+        for entry in allTreatments {
+            entry.updateCloudUploadStatus(.notUploaded)
         }
-        for entry in allBolusEntries {
-            entry.markAsNotUploaded()
-        }
-        for entry in allBasalEntries {
-            entry.markAsNotUploaded()
-        }
-        for entry in allTrainings {
-            entry.markAsNotUploaded()
-        }
-        
+
         NightscoutService.shared.scanForNotUploadedTreatments(respectSettings: false)
         
-        
         let message = String(format: "settings_nightscout_cloud_backfill_found_readings_and_treatments".localized,
-                             allGlucoseReadingsCount,
-                             allTreatmentsCount)
+                             allGlucoseReadings.count,
+                             allTreatments.count)
         
         router?.presentPopUp(message: message, success: true)
     }

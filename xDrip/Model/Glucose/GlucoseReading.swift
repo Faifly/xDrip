@@ -223,11 +223,11 @@ final class GlucoseReading: Object {
         }
     }
     
-     func markAsNotUploaded() {
-        Realm.shared.safeWrite {
-            self.cloudUploadStatus = .notUploaded
-        }
-    }
+    func updateCloudUploadStatus(_ status: CloudUploadStatus) {
+         Realm.shared.safeWrite {
+             self.cloudUploadStatus = status
+         }
+     }
     
     static func parseFollowerEntries(_ rawEntries: [CGlucoseReading]) -> [GlucoseReading] {
         let readings = rawEntries.compactMap { createReading(from: $0) }
