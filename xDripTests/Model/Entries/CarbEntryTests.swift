@@ -12,14 +12,26 @@ import XCTest
 // swiftlint:disable force_unwrapping
 
 final class CarbEntryTests: AbstractRealmTest {
-    func testInit() {
+    func testInit() throws {
+        let settings = try XCTUnwrap(User.current.settings.nightscoutSync)
         let date = Date(timeIntervalSince1970: 5.0)
+        settings.updateIsEnabled(true)
+        settings.updateUploadTreatments(true)
         let entry = CarbEntry(amount: 1.1, foodType: "2.2", date: date)
         
         XCTAssertTrue(entry.amount ~ 1.1)
         XCTAssertTrue(entry.foodType == "2.2")
         XCTAssertTrue(entry.assimilationDuration ~ 0)
         XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 5.0)
+        XCTAssertTrue(entry.cloudUploadStatus == .notUploaded)
+        
+        settings.updateUploadTreatments(false)
+        let entry1 = CarbEntry(amount: 5.1, foodType: "2.2", date: Date())
+        XCTAssertTrue(entry1.cloudUploadStatus == .notApplicable)
+        
+        settings.updateUploadTreatments(true)
+        let entry2 = CarbEntry(amount: 6.1, foodType: "2.2", date: Date(), externalID: "12345")
+        XCTAssertTrue(entry2.cloudUploadStatus == .uploaded)
     }
     
     func testUpdate() {
@@ -31,5 +43,10 @@ final class CarbEntryTests: AbstractRealmTest {
         XCTAssertTrue(entry.foodType == "2.2")
         XCTAssertTrue(entry.assimilationDuration ~ 0)
         XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 6.0)
+        
+        let entry1 = CarbEntry(amount: 5.1, foodType: "1.1", date: Date())
+        entry1.updateCloudUploadStatus(.uploaded)
+        entry1.update(amount: 2.3, foodType: "2.2", date: date)
+        XCTAssertTrue(entry1.cloudUploadStatus == .modified)
     }
 }
