@@ -63,8 +63,8 @@ final class NightscoutCloudBackfillInteractor: NightscoutCloudBackfillBusinessLo
         for entry in allTreatments {
             entry.updateCloudUploadStatus(.notUploaded)
         }
-
-        NightscoutService.shared.scanForNotUploadedTreatments()
+        
+        NightscoutService.shared.scanForNotUploadedTreatments(respectSettings: false)
         
         let message = String(format: "settings_nightscout_cloud_backfill_found_readings_and_treatments".localized,
                              allGlucoseReadings.count,
