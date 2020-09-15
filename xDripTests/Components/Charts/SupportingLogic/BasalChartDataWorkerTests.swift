@@ -10,7 +10,7 @@ import XCTest
 @testable import xDrip
 
 final class BasalChartDataWorkerTests: AbstractRealmTest {
-    func testFetchBasalData() {
+    func testFetchBasalData() throws {
         let minimumDate = Date() - .secondsPerDay
         
         InsulinEntriesWorker.addBasalEntry(amount: 12.0, date: minimumDate + .secondsPerHour)
@@ -20,6 +20,16 @@ final class BasalChartDataWorkerTests: AbstractRealmTest {
         let basals = BasalChartDataWorker.fetchBasalData(for: 24)
         
         XCTAssert(basals.count == 1)
+        
+        let entry = try XCTUnwrap(basals.first)
+        
+        entry.updateCloudUploadStatus(.waitingForDeletion)
+        
+        XCTAssert(!entry.isValid)
+        
+        let basals1 = BasalChartDataWorker.fetchBasalData(for: 24)
+               
+        XCTAssert(basals1.isEmpty)
     }
     
     func testGetBasalValueForDate() {
@@ -41,5 +51,20 @@ final class BasalChartDataWorkerTests: AbstractRealmTest {
         let calculatedValue3 = BasalChartDataWorker.getBasalValueForDate(date: minimumDate + .secondsPerHour)
         
         XCTAssert(calculatedValue3 ~ 10.0)
+    }
+    
+    func testFetchBasalDataForDate() throws {
+        InsulinEntriesWorker.addBasalEntry(amount: 12.0, date: Date())
+        let basals = BasalChartDataWorker.fetchBasalData(for: 24)
+        
+        let entry = try XCTUnwrap(basals.first)
+        XCTAssert(entry.isValid)
+        
+        entry.updateCloudUploadStatus(.waitingForDeletion)
+        XCTAssert(!entry.isValid)
+        
+        let basals1 = BasalChartDataWorker.fetchBasalData(for: 24)
+                     
+        XCTAssert(basals1.isEmpty)
     }
 }
