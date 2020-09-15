@@ -49,25 +49,25 @@ final class EditCalibrationPresenterTests: XCTestCase {
     
     // MARK: Tests
     
-//    func testPresentLoad() {
-//        // Given
-//        let spy = EditCalibrationDisplayLogicSpy()
-//        sut.viewController = spy
-//        let response = EditCalibration.UpdateData.Response(
-//            hasInitialCalibrations: false,
-//            datePickerValueChanged: { _, _ in },
-//            glucosePickerValueChanged: { _, _ in },
-//            date1: Date(),
-//            date2: Date()
-//        )
-//        
-//        // When
-//        sut.presentUpdateData(response: response)
-//        
-//        // Then
-//        XCTAssertTrue(
-//            spy.displayUpdateDataCalled,
-//            "presentLoad(response:) should ask the view controller to display the result"
-//        )
-//    }
+    func testPresentLoad() {
+        // Given
+        let spy = EditCalibrationDisplayLogicSpy()
+        sut.viewController = spy
+        let response = EditCalibration.UpdateData.Response(
+            hasInitialCalibrations: false,
+            datePickerValueChanged: { _, _ in },
+            glucosePickerValueChanged: { _, _ in },
+            date1: Date(),
+            date2: Date()
+        )
+        
+        // When
+        sut.presentUpdateData(response: response)
+        
+        // Then
+        XCTAssertTrue(
+            spy.displayUpdateDataCalled,
+            "presentLoad(response:) should ask the view controller to display the result"
+        )
+    }
 }
