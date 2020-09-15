@@ -40,7 +40,7 @@ final class PopUpViewController: NibViewController {
     }
     
     func presentFinishAlert(message: String, icon: UIImage) {
-        activityIndicatorContainerView.isHidden = true
+        activityIndicatorContainerView?.isHidden = true
         
         #if targetEnvironment(macCatalyst)
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)

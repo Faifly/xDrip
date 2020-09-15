@@ -42,7 +42,7 @@ struct CGlucoseReading: Codable {
     }
     
     init(reading: GlucoseReading) {
-        id = CGlucoseReading.getIDFromUUID(uuid: reading.externalID)
+        id = nil
         identifier = reading.externalID
         type = "sgv"
         date = Int64((reading.date?.timeIntervalSince1970 ?? 0.0) * 1000.0)
