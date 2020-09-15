@@ -18,6 +18,8 @@
 		0A216CD524A5F7BE002DA0AF /* HomeViewControllerMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CD424A5F7BE002DA0AF /* HomeViewControllerMirror.swift */; };
 		0A5A382D250FB10F0008790F /* UploadRequestFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5A382C250FB10F0008790F /* UploadRequestFactoryTests.swift */; };
 		0A5A3830250FCA460008790F /* CTreatmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5A382F250FCA460008790F /* CTreatmentTests.swift */; };
+		0A5F03702510B2F8005659A0 /* NightscoutServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5F036F2510B2F8005659A0 /* NightscoutServiceTests.swift */; };
+		0A5F03722510B342005659A0 /* NightscoutServiceMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5F03712510B342005659A0 /* NightscoutServiceMirror.swift */; };
 		0A616E952502478A00157E9E /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A616E942502478A00157E9E /* OptionsView.swift */; };
 		0A616E97250247A100157E9E /* OptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A616E96250247A000157E9E /* OptionsView.xib */; };
 		0A616E9A25027B0B00157E9E /* EntriesListTrainingsPersistenceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A616E9925027B0B00157E9E /* EntriesListTrainingsPersistenceWorker.swift */; };
@@ -708,6 +710,8 @@
 		0A216CD424A5F7BE002DA0AF /* HomeViewControllerMirror.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerMirror.swift; sourceTree = "<group>"; };
 		0A5A382C250FB10F0008790F /* UploadRequestFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadRequestFactoryTests.swift; sourceTree = "<group>"; };
 		0A5A382F250FCA460008790F /* CTreatmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTreatmentTests.swift; sourceTree = "<group>"; };
+		0A5F036F2510B2F8005659A0 /* NightscoutServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutServiceTests.swift; sourceTree = "<group>"; };
+		0A5F03712510B342005659A0 /* NightscoutServiceMirror.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutServiceMirror.swift; sourceTree = "<group>"; };
 		0A616E942502478A00157E9E /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		0A616E96250247A000157E9E /* OptionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsView.xib; sourceTree = "<group>"; };
 		0A616E9925027B0B00157E9E /* EntriesListTrainingsPersistenceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesListTrainingsPersistenceWorker.swift; sourceTree = "<group>"; };
@@ -1450,6 +1454,7 @@
 				0A216CD224A5F718002DA0AF /* GlucoseCurrentInfoViewMirror.swift */,
 				0A216CD424A5F7BE002DA0AF /* HomeViewControllerMirror.swift */,
 				0A68E568250665EE00F70366 /* OptionsViewMirror.swift */,
+				0A5F03712510B342005659A0 /* NightscoutServiceMirror.swift */,
 			);
 			path = Mirroring;
 			sourceTree = "<group>";
@@ -1459,6 +1464,7 @@
 			children = (
 				0A5A382E250FCA270008790F /* Codables */,
 				0A5A382C250FB10F0008790F /* UploadRequestFactoryTests.swift */,
+				0A5F036F2510B2F8005659A0 /* NightscoutServiceTests.swift */,
 			);
 			path = CloudSync;
 			sourceTree = "<group>";
@@ -4415,6 +4421,7 @@
 				58B5FD9A24192E5A00DB857D /* SettingsRootInteractorTests.swift in Sources */,
 				5805CA3D24389FF5002AFA1B /* InitialSetupTransmitterTypeViewControllerTests.swift in Sources */,
 				5805CA712438A344002AFA1B /* DexcomG6SensorDataTxMessageTests.swift in Sources */,
+				0A5F03702510B2F8005659A0 /* NightscoutServiceTests.swift in Sources */,
 				5805CA672438A2B7002AFA1B /* DexcomG6MessageWorkerTests.swift in Sources */,
 				580E4CC5243F789D00565EDE /* SettingsPenUserPresenterTests.swift in Sources */,
 				0A216CC824A50BE4002DA0AF /* GlucoseCurrentInfoViewTests.swift in Sources */,
@@ -4624,6 +4631,7 @@
 				580E4C44243F771200565EDE /* SettingsAlertRootPresenterTests.swift in Sources */,
 				5805CA3724389F8B002AFA1B /* InitialSetupIntroViewControllerTests.swift in Sources */,
 				2C90528E2476CD0000719793 /* AudioControllerTests.swift in Sources */,
+				0A5F03722510B342005659A0 /* NightscoutServiceMirror.swift in Sources */,
 				580E4CA8243F784800565EDE /* SettingsSensorRouterTests.swift in Sources */,
 				2C5B3F0C2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift in Sources */,
 				2C493C2F244EFD4600F4A54B /* CustomDatePickerTests.swift in Sources */,
