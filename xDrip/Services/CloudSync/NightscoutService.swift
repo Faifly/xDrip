@@ -98,18 +98,16 @@ final class NightscoutService {
         runQueue()
     }
     
-    func scanForNotUploadedTreatments(respectSettings: Bool = true) {
+    func scanForNotUploadedTreatments() {
         LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
-        if respectSettings {
-            guard let settings = User.current.settings.nightscoutSync,
-                settings.isEnabled, settings.uploadTreatments else {
-                    LogController.log(
-                        message: "[NighscoutService]: Aborting %@ because sync or uploadTreatments is disabled.",
-                        type: .info,
-                        #function
-                    )
-                    return
-            }
+        guard let settings = User.current.settings.nightscoutSync,
+            settings.isEnabled, settings.uploadTreatments else {
+                LogController.log(
+                    message: "[NighscoutService]: Aborting %@ because sync or uploadTreatments is disabled.",
+                    type: .info,
+                    #function
+                )
+                return
         }
         
         scanForTreatments(treatmentType: .carbs)

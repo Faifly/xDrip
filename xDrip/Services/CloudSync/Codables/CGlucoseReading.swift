@@ -129,16 +129,4 @@ struct CGlucoseReading: Codable {
             noise = nil
         }
     }
-    
-    static func getIDFromUUID(uuid: String?) -> String {
-        guard let externalID = uuid else { return "" }
-        if externalID.count <= 24 {
-            return externalID
-        } else {
-            let str = externalID.replacingOccurrences(of: "-", with: "")
-            let endIndex = str.index(str.startIndex, offsetBy: 24)
-            let subStr = str[..<endIndex]
-            return String(subStr)
-        }
-    }
 }
