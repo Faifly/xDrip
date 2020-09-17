@@ -57,6 +57,8 @@ final class EditCalibrationPresenterTests: XCTestCase {
             hasInitialCalibrations: false,
             datePickerValueChanged: { _, _ in },
             glucosePickerValueChanged: { _, _ in },
+            value1: "",
+            value2: "",
             date1: Date(),
             date2: Date()
         )

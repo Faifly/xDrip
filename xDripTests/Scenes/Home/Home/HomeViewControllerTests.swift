@@ -141,30 +141,28 @@ final class HomeViewControllerTests: XCTestCase {
         view.setLocalTimeFrame(.secondsPerHour)
         
         // Then
-        XCTAssertTrue(view.localDateRange.duration == view.localInterval + 2 * view.forwardTimeOffset)
+        XCTAssertTrue(view.localDateRange.duration ~~ view.localInterval + 2 * view.forwardTimeOffset)
         
         // When
         
         view.setLocalTimeFrame(12 * .secondsPerHour)
         
         // Then
-        XCTAssertTrue(view.localDateRange.duration == view.localInterval + 2 * view.forwardTimeOffset)
+        XCTAssertTrue(view.localDateRange.duration ~~ view.localInterval + 2 * view.forwardTimeOffset)
         
         // When
         
         view.setLocalTimeFrame(.secondsPerDay)
         
         // Then
-        XCTAssertTrue(view.localDateRange.duration == view.localInterval + view.forwardTimeOffset)
+        XCTAssertTrue(view.localDateRange.duration ~~ view.localInterval + view.forwardTimeOffset)
     }
     
     func testDisplayGlucoseData() throws {
         let mirror = HomeViewControllerMirror(viewController: sut)
         let worker = HomeGlucoseFormattingWorker()
         
-        var randomInterval: Double {
-            return Double.random(in: 100...2500)
-        }
+        var randomInterval: Double { return Double.random(in: 100...2500) }
         
         func createEntry(_ value: Double) -> HomeGlucoseEntry {
             return HomeGlucoseEntry(value: value, date: Date().addingTimeInterval(-randomInterval), severity: .normal)
@@ -232,5 +230,14 @@ final class HomeViewControllerTests: XCTestCase {
         
         //Then
         XCTAssertTrue(mirror.glucoseChart?.leftLabelsView.labels.count == 2)
+        
+        //When
+        
+        let glucoseValues4 =  [createEntry(150.0), createEntry(150.0), createEntry(150.0)]
+        
+        setupGlucoseChart(with: glucoseValues4)
+        
+        //Then
+        XCTAssertTrue(mirror.glucoseChart?.leftLabelsView.labels.count == 3)
     }
 }
