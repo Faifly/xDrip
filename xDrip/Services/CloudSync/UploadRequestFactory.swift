@@ -298,6 +298,13 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         return headers
     }
     
+    private func createApiSecretHeader(apiSecret: String) -> [String: String] {
+        let headers = [
+            "API-SECRET": apiSecret
+        ]
+        return headers
+    }
+    
     func createNotUploadedTreatmentRequest(_ entry: CTreatment, requestType: UploadRequestType) -> UploadRequest? {
         LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
         guard var request = try? createTreatmentsRequest() else {
@@ -440,7 +447,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
             throw NightscoutError.noAPISecret
         }
         request.httpMethod = "DELETE"
-        request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
+        request.allHTTPHeaderFields = createApiSecretHeader(apiSecret: apiSecret.sha1)
         
         return request
     }

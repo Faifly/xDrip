@@ -10,6 +10,7 @@ import Foundation
 
 protocol TreatmentEntryProtocol {
     var amount: Double { get }
+    var absorptionDuration: TimeInterval? { get }
     var date: Date? { get }
     var externalID: String { get }
     var cloudUploadStatus: CloudUploadStatus { get }

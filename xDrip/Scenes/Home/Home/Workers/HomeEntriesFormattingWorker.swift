@@ -31,8 +31,7 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
     
     func formatBolusResponse(_ response: Home.BolusDataUpdate.Response) -> InsulinCarbEntry {
         insulinEntries = response.insulinData
-        let insulinDuration = User.current.settings.insulinActionTime
-        let baseChartEntries = formatEntries(insulinEntries, absorbtionDuration: insulinDuration)
+        let baseChartEntries = formatEntries(insulinEntries)
         return InsulinCarbEntry(title: "home_active_insulin".localized,
                                 entries: baseChartEntries,
                                 unit: Root.EntryType.bolus.shortLabel,
@@ -40,15 +39,14 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
     }
     func formatCarbsResponse(_ response: Home.CarbsDataUpdate.Response) -> InsulinCarbEntry {
         carbEntries = response.carbsData
-        let carbsDuration = User.current.settings.carbsAbsorptionRate
-        let baseChartEntries = formatEntries(carbEntries, absorbtionDuration: carbsDuration)
+        let baseChartEntries = formatEntries(carbEntries)
         return InsulinCarbEntry(title: "home_active_carbohydrates".localized,
                                 entries: baseChartEntries,
                                 unit: Root.EntryType.carbs.shortLabel,
                                 color: .carbsChartEntry)
     }
     
-    func formatEntries(_ entries: [AbstractEntryProtocol], absorbtionDuration: TimeInterval) -> [BaseChartEntry] {
+    func formatEntries(_ entries: [AbstractEntryProtocol]) -> [BaseChartEntry] {
         var baseChartEntries: [BaseChartEntry] = []
         let chartStartDate = Date().timeIntervalSince1970 - .secondsPerDay
         var amountsArray: [Double] = entries.map { $0.amount }
@@ -57,7 +55,8 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
             let entry = entries[index]
     
             guard let entryStartDate = entry.date?.timeIntervalSince1970 else { continue }
-            var entryEndDate = entryStartDate + absorbtionDuration
+            guard let entryAbsorptionDuration = entry.absorptionDuration else { continue }
+            var entryEndDate = entryStartDate + entryAbsorptionDuration
             var entryEndAmount = 0.0
           
             guard amountsArray[index] > 0 else { continue }
@@ -66,7 +65,8 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
             if index > 0 {
                 let prevEntry = entries[index - 1]
                 guard let prevEntryDate = prevEntry.date?.timeIntervalSince1970 else { continue }
-                let prevEntryEndDate = prevEntryDate + absorbtionDuration
+                guard let prevEntryAbsorptionDuration = prevEntry.absorptionDuration else { continue }
+                let prevEntryEndDate = prevEntryDate + prevEntryAbsorptionDuration
                 if entryStartDate < prevEntryEndDate {
                     let pointX = entryStartDate
                     let startX = prevEntryDate
@@ -107,34 +107,31 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
     func getChartButtonTitle(_ entryType: Root.EntryType) -> String {
         var entries: [AbstractEntryProtocol]
         var shortLabel: String
-        var absorbtionDuration: TimeInterval
         switch entryType {
         case .bolus:
             entries = insulinEntries
-            absorbtionDuration = User.current.settings.insulinActionTime
             shortLabel = Root.EntryType.bolus.shortLabel + " >"
         case .carbs:
             entries = carbEntries
-            absorbtionDuration = User.current.settings.carbsAbsorptionRate
             shortLabel = Root.EntryType.carbs.shortLabel + " >"
         default:
             return ""
         }
         
-        return makeButtonTitle(entries: entries, shortLabel: shortLabel, absorbtionDuration: absorbtionDuration)
+        return makeButtonTitle(entries: entries, shortLabel: shortLabel)
     }
     
     private func makeButtonTitle(entries: [AbstractEntryProtocol],
-                                 shortLabel: String,
-                                 absorbtionDuration: TimeInterval) -> String {
+                                 shortLabel: String) -> String {
         let startInterval = Date().timeIntervalSince1970 - timeInterval
         var totalAmount = 0.0
         for index in (0..<entries.count).reversed() {
             let entry = entries[index]
             guard let entryInterval = entry.date?.timeIntervalSince1970 else { continue }
+            guard let entryAbsorptionDuration = entry.absorptionDuration else { continue }
             var entryAmount = entry.amount
             guard entryAmount > 0 else { continue }
-            let entryEndInterval = entryInterval + absorbtionDuration
+            let entryEndInterval = entryInterval + entryAbsorptionDuration
             
             if entryInterval >= startInterval {
                 totalAmount += entryAmount
@@ -143,7 +140,8 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
                     if index > 0 {
                         let prevEntry = entries[index - 1]
                         guard let prevEntryInterval = prevEntry.date?.timeIntervalSince1970 else { continue }
-                        let endX = prevEntryInterval + absorbtionDuration
+                        guard let prevEntryAbsorptionDuration = prevEntry.absorptionDuration else { continue }
+                        let endX = prevEntryInterval + prevEntryAbsorptionDuration
                         if entryInterval < endX {
                             let pointX = entryInterval
                             let startX = prevEntryInterval

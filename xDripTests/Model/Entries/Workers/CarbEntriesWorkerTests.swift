@@ -16,7 +16,7 @@ final class CarbEntriesWorkerTests: AbstractRealmTest {
         let entry = CarbEntriesWorker.addCarbEntry(amount: 1.1, foodType: "2.2", date: date)
         XCTAssertTrue(entry.amount ~ 1.1)
         XCTAssertTrue(entry.foodType == "2.2")
-        XCTAssertTrue(entry.assimilationDuration ~ 0.0)
+        XCTAssertTrue(entry.absorptionDuration ~ User.current.settings.carbsAbsorptionRate)
         let entryDate = try XCTUnwrap(entry.date)
         XCTAssertTrue(entryDate.timeIntervalSince1970 ~~ 6.0)
         XCTAssertNotNil(entry.externalID)
