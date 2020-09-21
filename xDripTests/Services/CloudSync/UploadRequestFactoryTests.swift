@@ -55,7 +55,7 @@ final class UploadRequestFactoryTests: XCTestCase {
         
         XCTAssertTrue(deleteRequset?.request.url?.absoluteString == "baseURL/api/v1/treatments/\(uuid)")
         XCTAssertTrue(deleteRequset?.request.httpMethod == "DELETE")
-        let fields = ["API-SECRET": "apiSecret".sha1]
+        let fields = ["Content-Type": "application/json", "API-SECRET": "apiSecret".sha1]
         XCTAssertTrue(deleteRequset?.request.allHTTPHeaderFields == fields)
     }
     
