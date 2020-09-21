@@ -70,7 +70,7 @@ final class UploadRequestFactoryTests: XCTestCase {
         // Then
         XCTAssertTrue(getRequset?.url?.absoluteString == "baseURL/api/v1/treatments")
         XCTAssertTrue(getRequset?.httpMethod == "GET")
-        let fields = ["Content-Type": "application/json"]
+        let fields = ["Content-Type": "application/json", "API-SECRET": "apiSecret".sha1]
         XCTAssertTrue(getRequset?.allHTTPHeaderFields == fields)
     }
 }

@@ -9,7 +9,8 @@
 import UIKit
 
 class BaseHistoryView: UIView {
-    var verticalLines: Int = 5
+    var maxVerticalLinesCount = 5
+    
     var forwardTimeOffset: TimeInterval = 600.0
     
     let scrollContainer = ChartScrollContainer()
@@ -144,9 +145,23 @@ class BaseHistoryView: UIView {
     func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?) {
         guard let minValue = minValue else { return }
         guard let maxValue = maxValue else { return }
-        let adjustedMinValue = max(minValue.rounded(.down), 0.0)
-        let adjustedMaxValue = maxValue.rounded(.up)
-        let step = (adjustedMaxValue - adjustedMinValue) / Double(verticalLines - 1)
+        var adjustedMinValue = max(minValue.rounded(.down), 0.0)
+        var adjustedMaxValue = maxValue.rounded(.up)
+        if adjustedMinValue ~~ adjustedMaxValue {
+            adjustedMinValue = max(adjustedMinValue - 1.0, 0.0)
+            adjustedMaxValue += 1.0
+        }
+        
+        let diff = adjustedMaxValue - adjustedMinValue
+        var verticalLines: Int
+        
+        if Int(diff) < maxVerticalLinesCount - 1 {
+            verticalLines = Int(diff) + 1
+        } else {
+            verticalLines = maxVerticalLinesCount
+        }
+        
+        let step = diff / Double(verticalLines - 1)
         
         var labels: [String] = []
         for index in 0..<verticalLines {
@@ -156,11 +171,8 @@ class BaseHistoryView: UIView {
         leftLabelsView.labels = labels
         leftLabelsView.setNeedsDisplay()
         chartView.verticalLinesCount = labels.count
-        if adjustedMinValue ~~ adjustedMaxValue {
-            chartView.yRange = (max(adjustedMinValue - 1.0, 0.0))...(adjustedMaxValue + 1.0)
-        } else {
-            chartView.yRange = adjustedMinValue...adjustedMaxValue
-        }
+
+        chartView.yRange = adjustedMinValue...adjustedMaxValue
     }
     
     private func calculateHorizontalBottomLabels() {

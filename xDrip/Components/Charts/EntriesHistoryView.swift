@@ -26,12 +26,12 @@ final class EntriesHistoryView: BaseHistoryView {
         }
     }
     
-    override var verticalLines: Int {
+    override var maxVerticalLinesCount: Int {
         get {
             return 3
         }
         set {
-            super.verticalLines = newValue
+            super.maxVerticalLinesCount = newValue
         }
     }
     
