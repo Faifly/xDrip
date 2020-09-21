@@ -22,6 +22,13 @@ final class TrainingEntriesWorkerTests: AbstractRealmTest {
         XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 7.0)
         
         XCTAssertTrue(realm.objects(TrainingEntry.self).count == 1)
+        
+        let entry1 = TrainingEntriesWorker.addTraining(duration: 1.0,
+                                                       intensity: .low,
+                                                       date: Date(),
+                                                       externalID: "123456")
+        
+        XCTAssertTrue(entry1.externalID == "123456")
     }
     
     func testFetchingEntries() {
@@ -42,6 +49,9 @@ final class TrainingEntriesWorkerTests: AbstractRealmTest {
     }
     
     func testDeleteEntry() throws {
+        let settings = try XCTUnwrap(User.current.settings.nightscoutSync)
+        settings.updateIsEnabled(false)
+        settings.updateUploadTreatments(false)
         XCTAssertTrue(realm.objects(TrainingEntry.self).isEmpty)
         
         TrainingEntriesWorker.addTraining(duration: 1.1, intensity: .high, date: Date())
@@ -55,6 +65,16 @@ final class TrainingEntriesWorkerTests: AbstractRealmTest {
         TrainingEntriesWorker.deleteTrainingEntry(entry)
         
         XCTAssertTrue(TrainingEntriesWorker.fetchAllTrainings().isEmpty)
+        
+        settings.updateIsEnabled(true)
+        settings.updateUploadTreatments(true)
+        
+        let trainigEntry = TrainingEntriesWorker.addTraining(duration: 1.5, intensity: .low, date: Date())
+        
+        TrainingEntriesWorker.deleteTrainingEntry(trainigEntry)
+        
+        XCTAssertTrue(TrainingEntriesWorker.fetchAllTrainings().count == 1)
+        XCTAssertTrue(trainigEntry.cloudUploadStatus == .waitingForDeletion)
     }
     
     func testUpdatedEntry() throws {
@@ -77,5 +97,46 @@ final class TrainingEntriesWorkerTests: AbstractRealmTest {
                      date: Date())
         
         XCTAssertTrue(ispdatedCalled)
+    }
+    
+    func testDeleteEntryWithExternalID() throws {
+        let externalID = "111"
+        let trainingEntry = TrainingEntry(duration: 2.5,
+                                          intensity: .default,
+                                          date: Date(),
+                                          externalID: externalID)
+        realm.safeWrite {
+            realm.add(trainingEntry)
+        }
+        
+        let entries = TrainingEntriesWorker.fetchAllTrainings()
+        
+        XCTAssertTrue(entries.count == 1)
+        
+        let entry = try XCTUnwrap(entries.first)
+        
+        XCTAssertTrue(entry.externalID == externalID)
+        
+        TrainingEntriesWorker.deleteEntryWith(externalID: externalID)
+        
+        XCTAssertTrue(TrainingEntriesWorker.fetchAllTrainings().isEmpty)
+    }
+    
+    func testMarkEntryAsUploaded() throws {
+        TrainingEntriesWorker.addTraining(duration: 3.5, intensity: .high, date: Date())
+        
+        let entries = TrainingEntriesWorker.fetchAllTrainings()
+        
+        XCTAssertTrue(entries.count == 1)
+        
+        let entry = try XCTUnwrap(entries.first)
+        
+        XCTAssertTrue(entry.cloudUploadStatus == .notApplicable)
+        
+        let externalID = entry.externalID
+        
+        TrainingEntriesWorker.markEntryAsUploaded(externalID: externalID)
+        
+        XCTAssertTrue(entry.cloudUploadStatus == .uploaded)
     }
 }

@@ -192,18 +192,18 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
                 return
         }
         let settings = User.current.settings.nightscoutSync
-        
+            
         // When
-        dataSwitch.isOn = true
+        dataSwitch.setOn(true, animated: false)
         dataSwitch.sendActions(for: .valueChanged)
         // Then
-        XCTAssert(settings?.downloadData == false)
+        XCTAssert(settings?.downloadData == dataSwitch.isOn)
         
         // When
-        dataSwitch.isOn = false
+        dataSwitch.setOn(false, animated: false)
         dataSwitch.sendActions(for: .valueChanged)
         // Then
-        XCTAssert(settings?.downloadData == false)
+        XCTAssert(settings?.downloadData == dataSwitch.isOn)
     }
     
     func testTextEditingChangedHandler() {
@@ -214,8 +214,8 @@ final class NightscoutCloudConfigurationViewControllerTests: XCTestCase {
         
         guard let textCell = tableView.getCell(of: cellType, at: IndexPath(row: 0, section: 3)),
             let textField = textCell.findView(with: "textField") as? UITextField else {
-            XCTFail("Cannot obtain textField")
-            return
+                XCTFail("Cannot obtain textField")
+                return
         }
         
         let settings = User.current.settings.nightscoutSync
