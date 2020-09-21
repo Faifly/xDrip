@@ -342,7 +342,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
             return nil
         }
         
-        guard let request = try? createTreatmentsRequest(appendSecret: false) else {
+        guard let request = try? createTreatmentsRequest(uploading: false) else {
             LogController.log(
                 message: "[UploadRequestFactory]: Failed to %@.",
                 type: .info,
@@ -353,8 +353,8 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         
         return request
     }
-    
-    private func createTreatmentsRequest(appendSecret: Bool = true) throws -> URLRequest? {
+
+    private func createTreatmentsRequest(uploading: Bool = true) throws -> URLRequest? {
         LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
         guard let baseURLString = User.current.settings.nightscoutSync?.baseURL else {
             LogController.log(
@@ -374,30 +374,32 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         }
         let url = baseURL.safeAppendingPathComponent("/api/v1/treatments")
         var request = URLRequest(url: url)
-        request.allHTTPHeaderFields = createHeaders()
         
-        if appendSecret {
-            guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret else {
-                LogController.log(
-                    message: "[UploadRequestFactory]: Failed to %@ because of no api secret provided.",
-                    type: .info,
-                    #function
-                )
-                throw NightscoutError.noAPISecret
-            }
-            guard !apiSecret.isEmpty else {
-                LogController.log(
-                    message: "[UploadRequestFactory]: Failed to %@ because of no api secret provided.",
-                    type: .info,
-                    #function
-                )
-                throw NightscoutError.noAPISecret
-            }
+        guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Failed to %@ because of no api secret provided.",
+                type: .info,
+                #function
+            )
+            throw NightscoutError.noAPISecret
+        }
+        guard !apiSecret.isEmpty else {
+            LogController.log(
+                message: "[UploadRequestFactory]: Failed to %@ because of no api secret provided.",
+                type: .info,
+                #function
+            )
+            throw NightscoutError.noAPISecret
+        }
+        
+        if uploading {
             request.httpMethod = "PUT"
-            request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
         } else {
             request.httpMethod = "GET"
         }
+        
+        request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
+        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         
         return request
     }
