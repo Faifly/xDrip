@@ -29,4 +29,9 @@ final class HomeViewControllerMirror: MirrorObject {
     var bolusHistoryView: EntriesHistoryView? {
         return extract()
     }
+    
+    var glucoseChart: GlucoseHistoryView? {
+        return extract()
+    }
+    
 }
