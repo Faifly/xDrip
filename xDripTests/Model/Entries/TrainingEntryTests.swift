@@ -12,13 +12,25 @@ import XCTest
 // swiftlint:disable force_unwrapping
 
 final class TrainingEntryTests: AbstractRealmTest {
-    func testInit() {
+    func testInit() throws {
+        let settings = try XCTUnwrap(User.current.settings.nightscoutSync)
+        settings.updateIsEnabled(true)
+        settings.updateUploadTreatments(true)
         let date = Date(timeIntervalSince1970: 2.0)
         let entry = TrainingEntry(duration: 1.1, intensity: .low, date: date)
         
         XCTAssertTrue(entry.duration ~ 1.1)
         XCTAssertTrue(entry.intensity == .low)
         XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 2.0)
+        XCTAssertTrue(entry.cloudUploadStatus == .notUploaded)
+        
+        settings.updateUploadTreatments(false)
+        let entry1 = TrainingEntry(duration: 3.1, intensity: .low, date: date)
+        XCTAssertTrue(entry1.cloudUploadStatus == .notApplicable)
+        
+        settings.updateUploadTreatments(true)
+        let entry2 = TrainingEntry(duration: 4.1, intensity: .low, date: date, externalID: "12345")
+        XCTAssertTrue(entry2.cloudUploadStatus == .uploaded)
     }
     
     func testIntensity() {
@@ -41,5 +53,10 @@ final class TrainingEntryTests: AbstractRealmTest {
         XCTAssertTrue(entry.duration ~ 2.2)
         XCTAssertTrue(entry.intensity == .high)
         XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 3.0)
+        
+        let entry1 = TrainingEntry(duration: 6.1, intensity: .normal, date: Date())
+        entry1.updateCloudUploadStatus(.uploaded)
+        entry1.update(duration: 7.2, intensity: .high, date: date)
+        XCTAssertTrue(entry1.cloudUploadStatus == .modified)
     }
 }

@@ -30,6 +30,8 @@ extension NotificationCenter {
         case high
         case low
         case warmUp
+        case downloadData
+        case uploadTreatments
     }
     
     func subscribe(forSettingsChange settings: [Setting],
@@ -79,6 +81,8 @@ fileprivate extension NotificationCenter.Setting {
         case .activeInsulin: name = "activeInsulin"
         case .activeCarbs: name = "activeCarbs"
         case .data: name = "data"
+        case .downloadData: name = "downloadData"
+        case .uploadTreatments: name = "uploadTreatments"
         }
         return Notification.Name(name)
     }

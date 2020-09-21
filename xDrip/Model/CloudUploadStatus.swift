@@ -13,4 +13,5 @@ enum CloudUploadStatus: Int {
     case notUploaded
     case modified
     case uploaded
+    case waitingForDeletion
 }

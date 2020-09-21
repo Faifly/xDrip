@@ -25,5 +25,23 @@ final class AbstractEntryTests: XCTestCase {
         let date = Date(timeIntervalSince1970: 9.0)
         let entry = AbstractEntry(date: date)
         XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 9.0)
+        XCTAssertNotNil(entry.externalID)
+        
+        let entry1 = AbstractEntry(date: date, externalID: "externalID")
+        XCTAssertTrue(entry1.externalID == "externalID")
+    }
+    
+    func testUpdateCloudUploadAsatus() {
+        let entry = AbstractEntry(date: Date())
+        
+        XCTAssertTrue(entry.cloudUploadStatus == .notApplicable)
+        
+        let cloudUploadStatus: CloudUploadStatus = .waitingForDeletion
+        
+        entry.updateCloudUploadStatus(cloudUploadStatus)
+        
+        XCTAssertTrue(entry.cloudUploadStatus == cloudUploadStatus)
+        
+        XCTAssertTrue(!entry.isValid)
     }
 }

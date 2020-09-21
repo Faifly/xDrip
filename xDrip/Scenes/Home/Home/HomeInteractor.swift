@@ -220,7 +220,9 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         let isShown = User.current.settings.chart?.showActiveInsulin == true
             && User.current.settings.deviceMode != .follower
         if isShown {
-            insulinData = InsulinEntriesWorker.fetchAllBolusEntries()
+            insulinData = InsulinEntriesWorker.fetchAllBolusEntries().filter {
+                $0.isValid
+            }
         }
         let response = Home.BolusDataUpdate.Response(insulinData: insulinData, isShown: isShown)
         presenter?.presentBolusData(response: response)
@@ -231,7 +233,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         let isShown = User.current.settings.chart?.showActiveCarbs == true
             && User.current.settings.deviceMode != .follower
         if  isShown {
-            carbsData = CarbEntriesWorker.fetchAllCarbEntries()
+            carbsData = CarbEntriesWorker.fetchAllCarbEntries().filter { $0.isValid }
         }
         let response = Home.CarbsDataUpdate.Response(carbsData: carbsData, isShown: isShown)
         presenter?.presentCarbsData(response: response)

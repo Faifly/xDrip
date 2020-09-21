@@ -141,20 +141,20 @@ final class HomeViewControllerTests: XCTestCase {
         view.setLocalTimeFrame(.secondsPerHour)
         
         // Then
-        XCTAssertTrue(view.localDateRange.duration == view.localInterval + 2 * view.forwardTimeOffset)
+        XCTAssertTrue(view.localDateRange.duration ~~ view.localInterval + 2 * view.forwardTimeOffset)
         
         // When
         
         view.setLocalTimeFrame(12 * .secondsPerHour)
         
         // Then
-        XCTAssertTrue(view.localDateRange.duration == view.localInterval + 2 * view.forwardTimeOffset)
+        XCTAssertTrue(view.localDateRange.duration ~~ view.localInterval + 2 * view.forwardTimeOffset)
         
         // When
         
         view.setLocalTimeFrame(.secondsPerDay)
         
         // Then
-        XCTAssertTrue(view.localDateRange.duration == view.localInterval + view.forwardTimeOffset)
+        XCTAssertTrue(view.localDateRange.duration ~~ view.localInterval + view.forwardTimeOffset)
     }
 }

@@ -52,8 +52,8 @@ final class NightscoutCloudConfigurationInteractor: NightscoutCloudConfiguration
             settings.updateSendDisplayGlucose(value)
             
         case .downloadData:
-//            settings.updateDownloadData(value)
-            router?.presentNotYetImplementedAlert()
+            settings.updateDownloadData(value)
+            NotificationCenter.default.postSettingsChangeNotification(setting: .downloadData)
             
         default: break
         }
