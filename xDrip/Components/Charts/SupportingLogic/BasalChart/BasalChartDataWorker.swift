@@ -67,7 +67,7 @@ enum BasalChartDataWorker {
         let currentEntryStartTime = (toDate ?? Date()).timeIntervalSince(startOfDay)
         
         var rates = calculateRates(for: prevEntryStartTime, and: currentEntryStartTime)
-        var unitsPerHour = Double(rates[0].units)
+        let unitsPerHour = Double(rates[0].units)
         rates.removeFirst()
         
         func calcValue(startTime: TimeInterval) {

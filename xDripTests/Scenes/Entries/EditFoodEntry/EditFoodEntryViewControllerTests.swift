@@ -14,8 +14,6 @@
 import XCTest
 
 // swiftlint:disable implicitly_unwrapped_optional
-// swiftlint:disable type_body_length
-// swiftlint:disable file_length
 
 final class EditFoodEntryViewControllerTests: XCTestCase {
     // MARK: Subject under test
