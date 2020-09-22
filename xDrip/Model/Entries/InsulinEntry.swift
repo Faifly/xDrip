@@ -9,9 +9,14 @@
 import Foundation
 import RealmSwift
 
-final class InsulinEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryProtocol {
+final class InsulinEntry: AbstractEntry, AbstractAbsorbableEntryProtocol, TreatmentEntryProtocol {
     @objc private(set) dynamic var amount: Double = 0.0
     @objc private dynamic var rawType: Int = InsulinType.bolus.rawValue
+    @objc private(set) dynamic var absorptionDuration: TimeInterval = 0.0
+    
+    var treatmentAbsorptionTime: TimeInterval? {
+        return absorptionDuration
+    }
     
     var type: InsulinType {
         get {

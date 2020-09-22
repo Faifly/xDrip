@@ -58,7 +58,7 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
                                 color: .carbsChartEntry)
     }
     
-    func formatEntries(_ entries: [AbstractEntryProtocol]) -> [BaseChartEntry] {
+    func formatEntries(_ entries: [AbstractAbsorbableEntryProtocol]) -> [BaseChartEntry] {
         let objects = createChartEntriesFrom(entries)
         var baseChartEntries: [BaseChartEntry] = []
         let chartStartDate = Date().addingTimeInterval(-.secondsPerDay)
@@ -94,7 +94,7 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
     }
     
     func getChartButtonTitle(_ entryType: Root.EntryType) -> String {
-        var entries: [AbstractEntryProtocol]
+        var entries: [AbstractAbsorbableEntryProtocol]
         var shortLabel: String
         switch entryType {
         case .bolus:
@@ -110,21 +110,21 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
         return makeButtonTitle(entries: entries, shortLabel: shortLabel)
     }
     
-    private func createChartEntriesFrom(_ entries: [AbstractEntryProtocol]) -> [ChartEntry] {
+    private func createChartEntriesFrom(_ entries: [AbstractAbsorbableEntryProtocol]) -> [ChartEntry] {
         var objects: [ChartEntry] = []
         for entry in entries {
             guard entry.amount > 0.0 else { continue }
             guard let date = entry.date else { continue }
-            guard let asorptionDuration = entry.absorptionDuration else { continue }
+            guard entry.absorptionDuration > 0.0 else { continue }
             
             objects.append(ChartEntry(amount: entry.amount,
                                       startDate: date,
-                                      endDate: date + asorptionDuration))
+                                      endDate: date + entry.absorptionDuration))
         }
         return objects
     }
     
-    private func makeButtonTitle(entries: [AbstractEntryProtocol],
+    private func makeButtonTitle(entries: [AbstractAbsorbableEntryProtocol],
                                  shortLabel: String) -> String {
         let startDate = Date().addingTimeInterval(-timeInterval)
         let objects = createChartEntriesFrom(entries)

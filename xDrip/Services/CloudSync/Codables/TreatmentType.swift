@@ -10,17 +10,22 @@ import Foundation
 
 protocol TreatmentEntryProtocol {
     var amount: Double { get }
-    var absorptionDuration: TimeInterval? { get }
+    var treatmentAbsorptionTime: TimeInterval? { get }
     var date: Date? { get }
     var externalID: String { get }
     var cloudUploadStatus: CloudUploadStatus { get }
-    var exerciseIntensity: Int? { get set }
+    var exerciseIntensity: Int? { get }
 }
 
 extension TreatmentEntryProtocol {
     var exerciseIntensity: Int? {
-        get { return nil }
-        set { exerciseIntensity = newValue }
+        return nil 
+    }
+}
+
+extension TreatmentEntryProtocol {
+    var treatmentAbsorptionTime: TimeInterval? {
+        return nil
     }
 }
 

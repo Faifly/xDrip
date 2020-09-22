@@ -9,9 +9,14 @@
 import Foundation
 import RealmSwift
 
-final class CarbEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryProtocol {
+final class CarbEntry: AbstractEntry, AbstractAbsorbableEntryProtocol, TreatmentEntryProtocol {
     @objc private(set) dynamic var amount: Double = 0.0
     @objc private(set) dynamic var foodType: String?
+    @objc private(set) dynamic var absorptionDuration: TimeInterval = 0.0
+    
+    var treatmentAbsorptionTime: TimeInterval? {
+        return absorptionDuration
+    }
     
     init(amount: Double,
          foodType: String?,

@@ -12,32 +12,16 @@ import RealmSwift
 protocol AbstractEntryProtocol {
     var amount: Double { get }
     var date: Date? { get }
-    var absorptionDuration: TimeInterval? { get set }
 }
 
-extension AbstractEntryProtocol {
-    var absorptionDuration: TimeInterval? {
-        get { return nil }
-        set { absorptionDuration = newValue }
-    }
+protocol AbstractAbsorbableEntryProtocol: AbstractEntryProtocol {
+    var absorptionDuration: TimeInterval { get }
 }
 
 class AbstractEntry: Object {
     @objc private(set) dynamic var date: Date?
     @objc private(set) dynamic var externalID: String = UUID().uuidString.lowercased()
     @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notApplicable.rawValue
-    @objc private(set) dynamic var absorptionTime: TimeInterval = 0.0
-    
-    var absorptionDuration: TimeInterval? {
-        get {
-            return absorptionTime
-        }
-        set {
-            Realm.shared.safeWrite {
-                absorptionTime = newValue ?? 0.0
-            }
-        }
-    }
     
     override class func primaryKey() -> String? {
         return "externalID"

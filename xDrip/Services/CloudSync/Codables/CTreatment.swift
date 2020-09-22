@@ -53,13 +53,15 @@ struct CTreatment: Codable {
         
         switch treatmentType {
         case .carbs:
-            absorptionTime = (entry.absorptionDuration ?? User.current.settings.carbsAbsorptionRate) / .secondsPerMinute
+            let defaultAbsorptionTime = User.current.settings.carbsAbsorptionRate
+            absorptionTime = (entry.treatmentAbsorptionTime ?? defaultAbsorptionTime) / .secondsPerMinute
             carbs = entry.amount
             insulin = nil
             duration = nil
             exerciseIntensity = nil
         case .bolus:
-            absorptionTime = (entry.absorptionDuration ?? User.current.settings.insulinActionTime) / .secondsPerMinute
+            let defaultAbsorptionTime = User.current.settings.insulinActionTime
+            absorptionTime = (entry.treatmentAbsorptionTime ?? defaultAbsorptionTime) / .secondsPerMinute
             carbs = nil
             insulin = entry.amount
             duration = nil
