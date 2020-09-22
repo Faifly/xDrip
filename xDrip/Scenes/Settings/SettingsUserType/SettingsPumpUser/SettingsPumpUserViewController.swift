@@ -14,6 +14,7 @@ import UIKit
 
 protocol SettingsPumpUserDisplayLogic: AnyObject {
     func displayLoad(viewModel: SettingsPumpUser.Load.ViewModel)
+    func displayState(viewModel: SettingsPumpUser.UpdateState.ViewModel)
 }
 
 class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplayLogic {
@@ -51,6 +52,7 @@ class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplay
     // MARK: IB
     @IBOutlet private weak var infoLabel: UILabel!
     @IBOutlet private weak var syncButton: UIButton!
+    @IBOutlet private weak var tableView: UITableView!
     
     // MARK: View lifecycle
     
@@ -62,6 +64,8 @@ class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplay
     
     // MARK: Do something
     
+    private var viewModel: SettingsPumpUser.UpdateState.ViewModel?
+    
     private func doLoad() {
         let request = SettingsPumpUser.Load.Request()
         interactor?.doLoad(request: request)
@@ -69,7 +73,23 @@ class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplay
     
     private func setupUI() {
         infoLabel.text = "settings_pump_user_info_label_text".localized
+    }
+    
+    private func displayNonSynced() {
+        infoLabel.isHidden = false
+        tableView.isHidden = true
         syncButton.setTitle("settings_pump_user_sync_button_title".localized, for: .normal)
+        syncButton.backgroundColor = .customBlue
+    }
+    
+    private func displaySynced(viewModel: SettingsPumpUser.UpdateState.ViewModel) {
+        infoLabel.isHidden = true
+        tableView.isHidden = false
+        syncButton.setTitle("settings_pump_user_unpair_button_title".localized, for: .normal)
+        syncButton.backgroundColor = .tabBarRedColor
+        
+        self.viewModel = viewModel
+        tableView.reloadData()
     }
     
     // MARK: Display
@@ -77,10 +97,32 @@ class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplay
     func displayLoad(viewModel: SettingsPumpUser.Load.ViewModel) {
     }
     
+    func displayState(viewModel: SettingsPumpUser.UpdateState.ViewModel) {
+        if viewModel.isSynced {
+            displaySynced(viewModel: viewModel)
+        } else {
+            displayNonSynced()
+        }
+    }
+    
     // MARK: Handlers
     
     @IBAction private func onSync(_ sender: UIButton) {
         let request = SettingsPumpUser.Sync.Request()
         interactor?.doSync(request: request)
+    }
+}
+
+extension SettingsPumpUserViewController: UITableViewDataSource, UITableViewDelegate {
+    private enum CellType: Int, Case {
+        case nightscoutURL
+        case pumpID
+        case manufacturer
+        case model
+        case connectionDate
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
     }
 }

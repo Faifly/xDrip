@@ -10,15 +10,17 @@ import Foundation
 import RealmSwift
 
 final class Settings: Object {
-    @objc private(set) dynamic var chart: ChartSettings?
-    @objc private(set) dynamic var alert: AlertSettings?
-    @objc private(set) dynamic var nightscoutSync: NightscoutSyncSettings?
+    @objc private(set) dynamic var chart: ChartSettings!
+    @objc private(set) dynamic var alert: AlertSettings!
+    @objc private(set) dynamic var nightscoutSync: NightscoutSyncSettings!
+    @objc private(set) dynamic var pumpSync: PumpSyncSettings!
     
     required init() {
         super.init()
         chart = ChartSettings()
         alert = AlertSettings()
         nightscoutSync = NightscoutSyncSettings()
+        pumpSync = PumpSyncSettings()
     }
     
     // MARK: Device mode

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="infoLabel" destination="cm8-Dq-7WO" id="ZCI-ID-3HZ"/>
                 <outlet property="syncButton" destination="8pV-9R-6kf" id="5Ou-uD-YnQ"/>
+                <outlet property="tableView" destination="m5S-cC-9Dm" id="kKg-3q-fA1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -46,19 +47,31 @@
                         <action selector="onSync:" destination="-1" eventType="touchUpInside" id="38Q-je-ECY"/>
                     </connections>
                 </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="m5S-cC-9Dm">
+                    <rect key="frame" x="0.0" y="52" width="414" height="724"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="tGZ-yQ-HWw"/>
+                        <outlet property="delegate" destination="-1" id="kBX-3n-lc9"/>
+                    </connections>
+                </tableView>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
                 <constraint firstItem="cm8-Dq-7WO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="8md-iU-71E"/>
+                <constraint firstItem="m5S-cC-9Dm" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="9V2-AS-67x"/>
                 <constraint firstItem="cm8-Dq-7WO" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="NFF-RX-K2m"/>
                 <constraint firstItem="8pV-9R-6kf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="NI3-BO-9Ga"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="8pV-9R-6kf" secondAttribute="bottom" constant="30" id="NZU-5L-pUc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8pV-9R-6kf" secondAttribute="trailing" constant="16" id="PSP-gT-3Iw"/>
                 <constraint firstItem="cm8-Dq-7WO" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="XAl-uN-7ux"/>
+                <constraint firstItem="m5S-cC-9Dm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="jl7-MC-VJ8"/>
+                <constraint firstItem="8pV-9R-6kf" firstAttribute="top" secondItem="m5S-cC-9Dm" secondAttribute="bottom" constant="8" id="o2y-I9-8VB"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cm8-Dq-7WO" secondAttribute="trailing" constant="16" id="qKv-w5-eRk"/>
+                <constraint firstItem="m5S-cC-9Dm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ujB-QH-RCT"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="139" y="99"/>
+            <point key="canvasLocation" x="137.68115942028987" y="98.4375"/>
         </view>
     </objects>
     <resources>

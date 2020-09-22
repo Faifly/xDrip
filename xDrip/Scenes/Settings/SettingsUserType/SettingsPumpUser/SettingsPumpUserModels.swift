@@ -31,11 +31,23 @@ enum SettingsPumpUser {
     enum Sync {
         struct Request {
         }
+    }
+    
+    enum UpdateState {
+        struct Request {
+        }
         
         struct Response {
+            let settings: PumpSyncSettings
         }
         
         struct ViewModel {
+            let isSynced: Bool
+            let nightscoutURL: String?
+            let pumpID: String?
+            let manufacturer: String?
+            let model: String?
+            let connectionDate: String?
         }
     }
 }

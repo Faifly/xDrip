@@ -29,8 +29,17 @@ final class SettingsPumpUserInteractor: SettingsPumpUserBusinessLogic, SettingsP
     func doLoad(request: SettingsPumpUser.Load.Request) {
         let response = SettingsPumpUser.Load.Response()
         presenter?.presentLoad(response: response)
+        
+        updateState()
     }
     
     func doSync(request: SettingsPumpUser.Sync.Request) {
+    }
+    
+    // MARK: Logic
+    
+    private func updateState() {
+        let response = SettingsPumpUser.UpdateState.Response(settings: User.current.settings.pumpSync)
+        presenter?.presentState(response: response)
     }
 }

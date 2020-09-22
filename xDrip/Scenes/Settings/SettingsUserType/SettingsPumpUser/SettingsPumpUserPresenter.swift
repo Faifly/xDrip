@@ -14,6 +14,7 @@ import UIKit
 
 protocol SettingsPumpUserPresentationLogic {
     func presentLoad(response: SettingsPumpUser.Load.Response)
+    func presentState(response: SettingsPumpUser.UpdateState.Response)
 }
 
 final class SettingsPumpUserPresenter: SettingsPumpUserPresentationLogic {
@@ -24,5 +25,25 @@ final class SettingsPumpUserPresenter: SettingsPumpUserPresentationLogic {
     func presentLoad(response: SettingsPumpUser.Load.Response) {
         let viewModel = SettingsPumpUser.Load.ViewModel()
         viewController?.displayLoad(viewModel: viewModel)
+    }
+    
+    func presentState(response: SettingsPumpUser.UpdateState.Response) {
+        let notAvailable = "not_available".localized
+        let dateString: String
+        if let date = response.settings.connectionDate {
+            dateString = DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .medium)
+        } else {
+            dateString = notAvailable
+        }
+        
+        let viewModel = SettingsPumpUser.UpdateState.ViewModel(
+            isSynced: response.settings.isEnabled,
+            nightscoutURL: response.settings.nightscoutURL ?? notAvailable,
+            pumpID: response.settings.pumpID ?? notAvailable,
+            manufacturer: response.settings.manufacturer ?? notAvailable,
+            model: response.settings.model ?? notAvailable,
+            connectionDate: dateString
+        )
+        viewController?.displayState(viewModel: viewModel)
     }
 }

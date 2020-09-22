@@ -11,4 +11,5 @@ import Foundation
 enum InsulinType: Int {
     case bolus
     case basal
+    case pumpBasal
 }

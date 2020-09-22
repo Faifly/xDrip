@@ -680,6 +680,7 @@
 		58FFBC2F24A765F2003D2DE6 /* InitialSetupFinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC2D24A765F2003D2DE6 /* InitialSetupFinishViewController.swift */; };
 		58FFBC3024A765F2003D2DE6 /* InitialSetupFinishViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FFBC2E24A765F2003D2DE6 /* InitialSetupFinishViewController.xib */; };
 		58FFBC3224AA1A4A003D2DE6 /* LocalizedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC3124AA1A4A003D2DE6 /* LocalizedTextField.swift */; };
+		914E31C12503D47E00ED0391 /* PumpSyncSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914E31C02503D47E00ED0391 /* PumpSyncSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1380,6 +1381,7 @@
 		58FFBC2D24A765F2003D2DE6 /* InitialSetupFinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupFinishViewController.swift; sourceTree = "<group>"; };
 		58FFBC2E24A765F2003D2DE6 /* InitialSetupFinishViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupFinishViewController.xib; sourceTree = "<group>"; };
 		58FFBC3124AA1A4A003D2DE6 /* LocalizedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedTextField.swift; sourceTree = "<group>"; };
+		914E31C02503D47E00ED0391 /* PumpSyncSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSyncSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3026,6 +3028,7 @@
 				5844325C243CD8C300282A6C /* AlertConfiguration.swift */,
 				5844325E243CDAF800282A6C /* AlertEventType.swift */,
 				58443260243CE71000282A6C /* NightscoutSyncSettings.swift */,
+				914E31C02503D47E00ED0391 /* PumpSyncSettings.swift */,
 				58443262243CEB4700282A6C /* BasalRate.swift */,
 				58DDC4542423C4F5008CB04D /* GlucoseWarningLevelSetting.swift */,
 			);
@@ -4117,6 +4120,7 @@
 				5844325D243CD8C300282A6C /* AlertConfiguration.swift in Sources */,
 				58F4CC83243BA2110053D17C /* DebugLogPresenter.swift in Sources */,
 				5805C9A524389230002AFA1B /* DexcomG6AuthChallengeTxMessage.swift in Sources */,
+				914E31C12503D47E00ED0391 /* PumpSyncSettings.swift in Sources */,
 				580E4B75243F716000565EDE /* SettingsAlertSingleTypeInteractor.swift in Sources */,
 				580E4BC4243F733100565EDE /* SettingsModeRootInteractor.swift in Sources */,
 				5805C9B924389230002AFA1B /* CGMBluetoothServiceDelegate.swift in Sources */,
