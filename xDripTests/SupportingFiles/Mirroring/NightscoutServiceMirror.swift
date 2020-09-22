@@ -16,5 +16,4 @@ final class NightscoutServiceMirror: MirrorObject {
     var requestQueue: [UploadRequest]? {
         return extract()
     }
-    
 }
