@@ -49,10 +49,10 @@ final class NightscoutCloudBackfillRouterTests: XCTestCase {
     func testPresentPopUp() {
         let spy = createSpy()
         sut.viewController = spy
-        
+
         // When
-        sut.presentPopUp()
+        sut.presentPopUp(message: "message", success: true)
         // Then
-//        XCTAssertTrue(spy.lastPresentedViewController is PopUpViewController)
+        XCTAssertTrue(spy.lastPresentedViewController is PopUpViewController)
     }
 }

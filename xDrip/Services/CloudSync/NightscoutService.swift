@@ -147,29 +147,34 @@ final class NightscoutService {
             modified.count
         )
         
-        for entry in notUploaded {
-            guard !requestQueue.contains(where: {
-                $0.itemID == entry.externalID && $0.type == .postGlucoseReading
-            }) else { continue }
-            guard let request = requestFactory.createNotUploadedGlucoseRequest(entry) else { return }
-            requestQueue.append(request)
+        let entries = notUploaded.filter { entry in
+            !requestQueue.contains(where: { requset in
+                guard let externalID = entry.externalID else { return false }
+                return requset.itemIDs.contains(externalID) && requset.type == .postGlucoseReading
+            })
         }
+        
+        guard let request = requestFactory.createNotUploadedGlucoseRequest(entries) else { return }
+        requestQueue.append(request)
         
         for entry in modified {
             if let index = requestQueue.firstIndex(where: {
-                $0.itemID == entry.externalID && $0.type == .postGlucoseReading
+                guard let externalID = entry.externalID else { return false }
+                return $0.itemIDs.contains(externalID) && $0.type == .postGlucoseReading
             }) {
                 requestQueue.remove(at: index)
             }
             
             if !requestQueue.contains(where: {
-                $0.itemID == entry.externalID && $0.type == .deleteGlucoseReading
+                guard let externalID = entry.externalID else { return false }
+                return $0.itemIDs.contains(externalID) && $0.type == .deleteGlucoseReading
             }), let request = requestFactory.createDeleteReadingRequest(entry) {
                 requestQueue.append(request)
             }
             
             if !requestQueue.contains(where: {
-                $0.itemID == entry.externalID && $0.type == .modifyGlucoseReading
+                guard let externalID = entry.externalID else { return false }
+                return $0.itemIDs.contains(externalID) && $0.type == .modifyGlucoseReading
             }), var request = requestFactory.createModifiedGlucoseRequest(entry) {
                 request.type = .modifyGlucoseReading
                 requestQueue.append(request)
@@ -182,7 +187,8 @@ final class NightscoutService {
         let notUploaded = Calibration.allForCurrentSensor.filter { !$0.isUploaded }
         for entry in notUploaded {
             guard !requestQueue.contains(where: {
-                $0.itemID == entry.externalID && $0.type == .postCalibration
+                guard let externalID = entry.externalID else { return false }
+                return $0.itemIDs.contains(externalID) && $0.type == .postCalibration
             }) else { continue }
             guard let request = requestFactory.createCalibrationRequest(entry) else { continue }
             requestQueue.append(request)
@@ -227,7 +233,7 @@ final class NightscoutService {
         let postRequestType = treatmentType.getUploadRequestTypeFor(requestType: .post)
         for entry in notUploaded {
             guard !requestQueue.contains(where: {
-                $0.itemID == entry.externalID && $0.type == postRequestType
+            $0.itemIDs.contains(entry.externalID) && $0.type == postRequestType
             }) else { continue }
             
             guard let request = requestFactory.createNotUploadedTreatmentRequest(
@@ -242,13 +248,13 @@ final class NightscoutService {
         let modifyRequestType = treatmentType.getUploadRequestTypeFor(requestType: .modify)
         for entry in modified {
             if let index = requestQueue.firstIndex(where: {
-                $0.itemID == entry.externalID && $0.type == postRequestType
+                $0.itemIDs.contains(entry.externalID) && $0.type == postRequestType
             }) {
                 requestQueue.remove(at: index)
             }
             
             if !requestQueue.contains(where: {
-                $0.itemID == entry.externalID && $0.type == modifyRequestType
+                $0.itemIDs.contains(entry.externalID) && $0.type == modifyRequestType
             }), let request = requestFactory.createModifiedTreatmentRequest(
                 CTreatment(entry: entry, treatmentType: treatmentType), requestType: modifyRequestType) {
                 requestQueue.append(request)
@@ -261,12 +267,12 @@ final class NightscoutService {
         let deleteRequestType = treatmentType.getUploadRequestTypeFor(requestType: .delete)
         for entry in deleted {
             if let index = requestQueue.firstIndex(where: {
-                $0.itemID == entry.externalID && $0.type == postRequestType
+                $0.itemIDs.contains(entry.externalID) && $0.type == postRequestType
             }) {
                 requestQueue.remove(at: index)
             }
             
-            if !requestQueue.contains(where: { $0.itemID == entry.externalID && $0.type == deleteRequestType
+            if !requestQueue.contains(where: { $0.itemIDs.contains(entry.externalID) && $0.type == deleteRequestType
             }) {
                 guard let request = requestFactory.createDeleteTreatmentRequest(entry.externalID,
                                                                                 requestType: deleteRequestType) else {

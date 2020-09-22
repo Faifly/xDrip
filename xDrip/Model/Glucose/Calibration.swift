@@ -14,7 +14,6 @@ import AKUtils
 // swiftlint:disable type_body_length
 // swiftlint:disable function_body_length
 // swiftlint:disable closure_body_length
-// swiftlint:disable file_length
 
 enum CalibrationError: Error {
     case notEnoughReadings

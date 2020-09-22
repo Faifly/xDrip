@@ -10,7 +10,7 @@ import Foundation
 
 struct UploadRequest {
     let request: URLRequest
-    let itemID: String
+    let itemIDs: [String]
     var type: UploadRequestType
 }
 
@@ -42,6 +42,6 @@ enum RequestType {
 
 extension UploadRequest: Equatable {
     static func == (lhs: UploadRequest, rhs: UploadRequest) -> Bool {
-        return lhs.itemID == rhs.itemID
+        return lhs.itemIDs == rhs.itemIDs
     }
 }

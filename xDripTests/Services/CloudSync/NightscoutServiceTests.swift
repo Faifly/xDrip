@@ -35,7 +35,7 @@ final class NightscoutServiceTests: XCTestCase {
         let externalID = entry.externalID
         
         let postResult = try XCTUnwrap(mirror.requestQueue).contains(where: {
-            $0.itemID == externalID && $0.type == .postCarbs
+            $0.itemIDs.contains(externalID) && $0.type == .postCarbs
         })
         
         XCTAssertTrue(postResult)
@@ -45,7 +45,7 @@ final class NightscoutServiceTests: XCTestCase {
         entry.update(amount: 2.0, foodType: "2.0", date: Date())
         
         let modifyResult = try XCTUnwrap(mirror.requestQueue).contains(where: {
-            $0.itemID == externalID && $0.type == .modifyCarbs
+            $0.itemIDs.contains(externalID)  && $0.type == .modifyCarbs
         })
         
         XCTAssertTrue(modifyResult)
@@ -53,7 +53,7 @@ final class NightscoutServiceTests: XCTestCase {
         CarbEntriesWorker.deleteCarbsEntry(entry)
         
         let deleteResult = try XCTUnwrap(mirror.requestQueue).contains(where: {
-            $0.itemID == externalID && $0.type == .deleteCarbs
+            $0.itemIDs.contains(externalID)  && $0.type == .deleteCarbs
         })
         
         XCTAssertTrue(deleteResult)
@@ -67,7 +67,7 @@ final class NightscoutServiceTests: XCTestCase {
         let externalID = entry.externalID
         
         let postResult = try XCTUnwrap(mirror.requestQueue).contains(where: {
-            $0.itemID == externalID && $0.type == .postBolus
+            $0.itemIDs.contains(externalID)  && $0.type == .postBolus
         })
         
         XCTAssertTrue(postResult)
@@ -77,7 +77,7 @@ final class NightscoutServiceTests: XCTestCase {
         entry.update(amount: 2.0, date: Date())
         
         let modifyResult = try XCTUnwrap(mirror.requestQueue).contains(where: {
-            $0.itemID == externalID && $0.type == .modifyBolus
+            $0.itemIDs.contains(externalID)  && $0.type == .modifyBolus
         })
         
         XCTAssertTrue(modifyResult)
@@ -85,7 +85,7 @@ final class NightscoutServiceTests: XCTestCase {
         InsulinEntriesWorker.deleteInsulinEntry(entry)
         
         let deleteResult = try XCTUnwrap(mirror.requestQueue).contains(where: {
-            $0.itemID == externalID && $0.type == .deleteBolus
+            $0.itemIDs.contains(externalID)  && $0.type == .deleteBolus
         })
         
         XCTAssertTrue(deleteResult)
@@ -99,7 +99,7 @@ final class NightscoutServiceTests: XCTestCase {
         let externalID = entry.externalID
         
         let postResult = try XCTUnwrap(mirror.requestQueue).contains(where: {
-            $0.itemID == externalID && $0.type == .postBasal
+            $0.itemIDs.contains(externalID)  && $0.type == .postBasal
         })
         
         XCTAssertTrue(postResult)
@@ -109,7 +109,7 @@ final class NightscoutServiceTests: XCTestCase {
         entry.update(amount: 2.0, date: Date())
         
         let modifyResult = try XCTUnwrap(mirror.requestQueue).contains(where: {
-            $0.itemID == externalID && $0.type == .modifyBasal
+            $0.itemIDs.contains(externalID)  && $0.type == .modifyBasal
         })
         
         XCTAssertTrue(modifyResult)
@@ -117,7 +117,7 @@ final class NightscoutServiceTests: XCTestCase {
         InsulinEntriesWorker.deleteInsulinEntry(entry)
         
         let deleteResult = try XCTUnwrap(mirror.requestQueue).contains(where: {
-            $0.itemID == externalID && $0.type == .deleteBasal
+            $0.itemIDs.contains(externalID)  && $0.type == .deleteBasal
         })
         
         XCTAssertTrue(deleteResult)
@@ -131,7 +131,7 @@ final class NightscoutServiceTests: XCTestCase {
         let externalID = entry.externalID
         
         let postResult = try XCTUnwrap(mirror.requestQueue).contains(where: {
-            $0.itemID == externalID && $0.type == .postTraining
+            $0.itemIDs.contains(externalID)  && $0.type == .postTraining
         })
         
         XCTAssertTrue(postResult)
@@ -141,7 +141,7 @@ final class NightscoutServiceTests: XCTestCase {
         entry.update(duration: 2.0, intensity: .low, date: Date())
         
         let modifyResult = try XCTUnwrap(mirror.requestQueue).contains(where: {
-            $0.itemID == externalID && $0.type == .modifyTraining
+            $0.itemIDs.contains(externalID)  && $0.type == .modifyTraining
         })
         
         XCTAssertTrue(modifyResult)
@@ -149,7 +149,7 @@ final class NightscoutServiceTests: XCTestCase {
         TrainingEntriesWorker.deleteTrainingEntry(entry)
         
         let deleteResult = try XCTUnwrap(mirror.requestQueue).contains(where: {
-            $0.itemID == externalID && $0.type == .deleteTraining
+            $0.itemIDs.contains(externalID)  && $0.type == .deleteTraining
         })
         
         XCTAssertTrue(deleteResult)

@@ -63,6 +63,7 @@ final class NightscoutCloudBackfillPresenter: NightscoutCloudBackfillPresentatio
         let picker = CustomDatePicker()
         picker.datePickerMode = .dateAndTime
         picker.date = date
+        picker.maximumDate = date
         
         picker.formatDate = { date in
             dateChangedHandler(date)

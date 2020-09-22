@@ -63,7 +63,7 @@ final class NightscoutCloudBackfillViewControllerTests: XCTestCase {
     final class NightscoutCloudBackfillRoutingLogicSpy: NightscoutCloudBackfillRoutingLogic {
         var presentPopUpCalled = false
         
-        func presentPopUp() {
+        func presentPopUp(message: String, success: Bool) {
             presentPopUpCalled = true
         }
     }

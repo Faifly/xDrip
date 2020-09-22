@@ -15,16 +15,26 @@ import XCTest
 
 // swiftlint:disable implicitly_unwrapped_optional
 
-final class NightscoutCloudBackfillInteractorTests: XCTestCase {
+final class NightscoutCloudBackfillInteractorTests: AbstractRealmTest {
     // MARK: Subject under test
     
     var sut: NightscoutCloudBackfillInteractor!
+    var settings: NightscoutSyncSettings!
     
     // MARK: Test lifecycle
     
     override func setUp() {
         super.setUp()
         setupNightscoutCloudBackfillInteractor()
+        do { try initSettings() } catch { XCTFail("Couldn't init NightscoutSyncSettings") }
+    }
+    
+    func initSettings() throws {
+        settings = try XCTUnwrap(User.current.settings.nightscoutSync)
+        settings.updateIsEnabled(true)
+        settings.updateUploadTreatments(true)
+        settings.updateBaseURL("baseURL")
+        settings.updateAPISecret("apiSecret")
     }
     
     override func tearDown() {
@@ -48,7 +58,7 @@ final class NightscoutCloudBackfillInteractorTests: XCTestCase {
     }
     
     final class NightscoutCloudBackfillRoutingLogicSpy: NightscoutCloudBackfillRoutingLogic {
-        func presentPopUp() {
+        func presentPopUp(message: String, success: Bool) {
         }
     }
     
@@ -65,5 +75,66 @@ final class NightscoutCloudBackfillInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.presentLoadCalled, "doLoad(request:) should ask the presenter to format the result")
+    }
+    
+    func testDoSend() throws {
+        // Given
+        CGMDevice.current.updateMetadata(
+            ofType: .sensorAge,
+            value: "\((Date() - .secondsPerDay).timeIntervalSince1970)"
+        )
+        CGMDevice.current.updateSensorIsStarted(true)
+        let date = Date().addingTimeInterval(.secondsPerHour)
+        let reading = GlucoseReading()
+        reading.setValue(date, forKey: "date")
+        reading.setValue(130.0, forKey: "rawValue")
+        reading.generateID()
+        
+        realm.safeWrite {
+            realm.add(reading)
+        }
+        
+        let carbEntry = CarbEntry(amount: 1.0, foodType: "1.2", date: date)
+        realm.safeWrite {
+            realm.add(carbEntry)
+        }
+        let request = NightscoutCloudBackfill.Send.Request()
+        
+        let mirror = NightscoutServiceMirror(object: NightscoutService.shared)
+        
+        var postGlucoseResult: Bool {
+            var result = false
+            do { result = try XCTUnwrap(mirror.requestQueue).contains(where: {
+                $0.type == .postGlucoseReading
+            }) } catch { XCTFail("Couldn't Unwrap NightscoutServiceMirror") }
+            
+            return result
+        }
+        
+        var postCarbResult: Bool {
+            var result = false
+            do { result = try XCTUnwrap(mirror.requestQueue).contains(where: {
+                $0.type == .postCarbs
+            }) } catch { XCTFail("Couldn't Unwrap NightscoutServiceMirror") }
+            
+            return result
+        }
+        
+        XCTAssertFalse(postCarbResult)
+        XCTAssertFalse(postGlucoseResult)
+        
+        // When
+        reading.updateCalculatedValue(1.0)
+        reading.updateCloudUploadStatus(.uploaded)
+        carbEntry.updateCloudUploadStatus(.uploaded)
+        sut.doSend(request: request)
+
+        // Then
+        XCTAssertTrue(reading.cloudUploadStatus == .notUploaded)
+        XCTAssertTrue(carbEntry.cloudUploadStatus == .notUploaded)
+        XCTAssertTrue(postCarbResult)
+        XCTAssertTrue(postGlucoseResult)
+        
+        CarbEntriesWorker.deleteCarbsEntry(carbEntry)
     }
 }

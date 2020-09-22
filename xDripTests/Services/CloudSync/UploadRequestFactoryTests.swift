@@ -32,11 +32,13 @@ final class UploadRequestFactoryTests: XCTestCase {
         
         // Then
         XCTAssertTrue(uploadRequset == modifyRequset)
-        XCTAssertTrue(uploadRequset?.request.url?.absoluteString == "baseURL/api/v1/treatments")
-        XCTAssertTrue(uploadRequset?.request.httpMethod == "PUT")
+        let request = try XCTUnwrap(uploadRequset)
+        XCTAssertTrue(request.request.url?.absoluteString == "baseURL/api/v1/treatments")
+        XCTAssertTrue(request.request.httpMethod == "PUT")
         let fields = ["Content-Type": "application/json", "API-SECRET": "apiSecret".sha1]
-        XCTAssertTrue(uploadRequset?.request.allHTTPHeaderFields == fields)
-        XCTAssertTrue(uploadRequset?.itemID == carbEntry.externalID)
+        XCTAssertTrue(request.request.allHTTPHeaderFields == fields)
+        let externalID = try XCTUnwrap(carbEntry.externalID)
+        XCTAssertTrue(request.itemIDs.contains(externalID))
     }
     
     func testCreateDeleteTreatmentRequest() throws {

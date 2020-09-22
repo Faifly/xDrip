@@ -33,5 +33,4 @@ final class HomeViewControllerMirror: MirrorObject {
     var glucoseChart: GlucoseHistoryView? {
         return extract()
     }
-    
 }

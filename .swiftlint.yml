@@ -2,6 +2,7 @@ disabled_rules:
     - trailing_whitespace
     - type_name
     - nesting
+    - type_body_length
     
 enabled_rules:
     - anyobject_protocol
@@ -64,3 +65,5 @@ enabled_rules:
     - vertical_whitespace_closing_braces
     - vertical_whitespace_opening_braces
     - yoda_condition
+
+file_length: 500
