@@ -59,23 +59,12 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
     }
     
     func formatEntries(_ entries: [AbstractAbsorbableEntryProtocol]) -> [BaseChartEntry] {
-        let objects = createChartEntriesFrom(entries)
+        let entries = createChartEntriesFrom(entries)
         var baseChartEntries: [BaseChartEntry] = []
         let chartStartDate = Date().addingTimeInterval(-.secondsPerDay)
         
-        for index in 0..<objects.count {
-            let entry = objects[index]
-            
-            if index > 0 {
-                let prevEntry = objects[index - 1]
-                if entry.startDate < prevEntry.endDate {
-                    let lastAmount = calculatePointYFor(pointX: entry.startDate,
-                                                        startX: prevEntry.startDate,
-                                                        startY: prevEntry.amount,
-                                                        endX: prevEntry.endDate)
-                    entry.amount += lastAmount
-                }
-            }
+        for entry in entries {
+            adjustEntryAmount(entries, entry)
             
             guard entry.endDate > chartStartDate else { continue }
             
@@ -127,33 +116,15 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
     private func makeButtonTitle(entries: [AbstractAbsorbableEntryProtocol],
                                  shortLabel: String) -> String {
         let startDate = Date().addingTimeInterval(-timeInterval)
-        let objects = createChartEntriesFrom(entries)
+        let entries = createChartEntriesFrom(entries)
         var totalAmount = 0.0
-        var partiallyIncluded: [ChartEntry] = []
         
-        for index in 0..<objects.count {
-            let entry = objects[index]
-            
-            if entry.startDate >= startDate {
-                totalAmount += entry.amount
-            }
-            
-            if index > 0 {
-                let prevEntry = objects[index - 1]
-                if entry.startDate < prevEntry.endDate {
-                    let lastAmount = calculatePointYFor(pointX: entry.startDate,
-                                                        startX: prevEntry.startDate,
-                                                        startY: prevEntry.amount,
-                                                        endX: prevEntry.endDate)
-                    entry.amount += lastAmount
-                }
-            }
-            
-            if entry.startDate < startDate && entry.endDate > startDate {
-                partiallyIncluded.append(entry)
-            }
-        }
+        let includedEntries = entries.filter({ $0.startDate >= startDate })
+        includedEntries.forEach { entry in totalAmount += entry.amount }
         
+        entries.forEach { entry in adjustEntryAmount(entries, entry) }
+        
+        let partiallyIncluded = entries.filter({ $0.startDate < startDate && $0.endDate > startDate })
         if let closestEntry = partiallyIncluded.max(by: { $0.startDate < $1.startDate }) {
             totalAmount += calculatePointYFor(pointX: startDate,
                                               startX: closestEntry.startDate,
@@ -164,6 +135,16 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
         currentAmount = totalAmount
         
         return String(format: "%.2f", totalAmount.rounded(to: 2)) + " \(shortLabel)"
+    }
+    
+    private func adjustEntryAmount(_ objects: [ChartEntry], _ entry: ChartEntry) {
+        let crossedEntries = objects.filter({ $0.startDate < entry.startDate && $0.endDate > entry.startDate })
+        if let closestEntry = crossedEntries.max(by: { $0.startDate < $1.startDate }) {
+            entry.amount += calculatePointYFor(pointX: entry.startDate,
+                                               startX: closestEntry.startDate,
+                                               startY: closestEntry.amount,
+                                               endX: closestEntry.endDate)
+        }
     }
     
     func getChartShouldBeShown() -> Bool {
