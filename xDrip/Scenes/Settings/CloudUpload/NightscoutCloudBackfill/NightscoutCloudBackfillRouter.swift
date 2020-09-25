@@ -13,7 +13,7 @@
 import UIKit
 
 protocol NightscoutCloudBackfillRoutingLogic {
-    func presentPopUp()
+    func presentPopUp(message: String, success: Bool)
 }
 
 protocol NightscoutCloudBackfillDataPassing {
@@ -25,13 +25,22 @@ final class NightscoutCloudBackfillRouter: NightscoutCloudBackfillRoutingLogic, 
     weak var dataStore: NightscoutCloudBackfillDataStore?
     
     // MARK: Routing
-    func presentPopUp() {
-//        let popUp = PopUpViewController()
-//        popUp.okActionHandler = { [weak self] in
-//            self?.dismissScene()
-//        }
-//
-//        viewController?.present(popUp, animated: true, completion: nil)
+    func presentPopUp(message: String, success: Bool) {
+        let popUpController = PopUpViewController()
+        popUpController.okActionHandler = { [weak self] in
+            self?.dismissScene()
+        }
+        
+        var image: UIImage?
+        if success {
+            image = UIImage(named: "icon_success")
+        } else {
+            image = UIImage(named: "icon_error")
+        }
+        guard let icon = image else { fatalError() }
+        
+        viewController?.present(popUpController, animated: true, completion: nil)
+        popUpController.presentFinishAlert(message: message, icon: icon)
     }
     
     private func dismissScene() {

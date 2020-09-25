@@ -46,6 +46,9 @@ final class EntriesListRouter: EntriesListRoutingLogic, EntriesListDataPassing {
         case is CarbEntry:
             dataStore?.entryType = .carbs
             dataStore?.carbEntry = entry as? CarbEntry
+        case is TrainingEntry:
+            dataStore?.entryType = .training
+            dataStore?.trainingEntry = entry as? TrainingEntry
         default:
             break
         }

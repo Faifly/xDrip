@@ -26,12 +26,12 @@ final class EntriesHistoryView: BaseHistoryView {
         }
     }
     
-    override var verticalLines: Int {
+    override var maxVerticalLinesCount: Int {
         get {
             return 3
         }
         set {
-            super.verticalLines = newValue
+            super.maxVerticalLinesCount = newValue
         }
     }
     
@@ -105,6 +105,13 @@ final class EntriesHistoryView: BaseHistoryView {
         chartButton.setTitle(chartButtonTitle, for: .normal)
         noDataView.isHidden = showChart
         leftLabelsView.isHidden = !showChart
+    }
+    
+    override func updateIntervals() {
+        super.updateIntervals()
+        if localInterval < .secondsPerDay {
+         localDateRange.duration += forwardTimeOffset
+        }
     }
     
     @objc func chartButtonClicked() {

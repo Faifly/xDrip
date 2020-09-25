@@ -1,10 +1,12 @@
 // AUTO-GENERATED
 // General
 "cancel" = "Отмена";
+"close" = "Закрыть";
 "error" = "Ошибка";
 "nyi_alert_title" = "Ещё Не Внедрено";
 "nyi_alert_message" = "Эта функция ещё не разработана. Следите за обновлениями!";
 "nyi_alert_ok_button" = "Хорошо";
+"not_available" = "Н/Д";
 
 // Tabbar
 "tabbar_calibration_title" = "Калибровка";
@@ -33,6 +35,8 @@
 "home_all_trainings" = "Все Тренировки";
 "home_all_basals" = "Все Базалы";
 "home_options_title" = "Опции";
+"home_sensor_stopped" = "Сенсор остановлен";
+"home_sensor_waiting_readings" = "Сенсор получает первые считывания, чтобы отобразить их";
 
 // Root
 "root_add_entry_food" = "Еда";
@@ -286,6 +290,9 @@
 "settings_nightscout_cloud_backfill_send" = "Отправить";
 "settings_nightscout_cloud_backfill_date_title" = "Дата";
 "settings_nightscout_cloud_backfill_section_footer" = "Выберите дату самой старой записи для отправки на Nightscout. Используйте с осторожностью";
+"settings_nightscout_cloud_backfill_no_glucose_readings_found" = "Значений глюкозы на указанный период времени не найдено";
+"settings_nightscout_cloud_backfill_found_readings_and_treatments" = "%d  значений глюкозы и %d тритментов поставлены в очередь!";
+
 
 // Settings Units
 "settings_units_mgdl" = "мг/дл";
@@ -421,8 +428,10 @@
 "settings_pen_user_delete_alert_cancel_button" = "Нет";
 
 // Settings Pump User
-"settings_pump_user_info_label_text" = "Система Nightscout позволяет подключить (или присоединить) устройство к приемнику Dexcom, который передает показания глюкозы в Интернет, где любое подключенное к сети устройство может просматривать цифры. Это так просто";
+"settings_pump_user_info_label_text" = "Если у вас есть помпа, подключенная к сервису Nightscout, вы можете синхронизовать его с приложением, чтобы отобразить базальный инсулин.";
 "settings_pump_user_sync_button_title" = "Синхронизировать с NightScout";
+"settings_pump_user_unpair_button_title" = "Разорвать синхронизацию";
+
 
 // Bluetooth Errors
 "bluetooth_error_title" = "Ошибка Сервиса Датчиков";
@@ -449,6 +458,7 @@
 "calibration_not_ready_error_general_message" = "Не достигнуты все условия для калибровки";
 "calibration_not_ready_error_no_initial_readings" = "Недостаточно показаний для первичной калибровки";
 "calibration_not_ready_error_warming_up" = "Во время разогрева сенсора калибровка невозможна";
+"calibration_not_ready_error_sensor_stopped" = "Калибровка не может быть выполнена, если сенсор не работает. Пожалуйста, запустите сенсор в настройках приложения";
 "calibration_initial_alert_title" = "Начальная Калибровка";
 "calibration_initial_alert_message" = "Для нормального функционирования сенсора требуется начальная калибровка";
 "calibration_initial_alert_proceed_button" = "Продолжить";
@@ -486,6 +496,8 @@
 "notification_missed_readings_body" = "Похоже, что у вас есть одно или более пропущеных считываний";
 "notification_phone_muted_title" = "Включен беззвучный режим";
 "notification_phone_muted_body" = "Ваше устройство находится в беззвучном режиме";
+"notification_transmitter_connection_title" = "Подключение передатчика";
+"notification_transmitter_connection_body" = "Передатчик успешно подключен и готов к отправке считываний";
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Приветствуем!";

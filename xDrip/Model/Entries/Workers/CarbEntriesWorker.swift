@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RealmSwift
 
 final class CarbEntriesWorker: AbstractEntriesWorker {
     static var carbsDataHandler: (() -> Void)?
@@ -15,20 +14,31 @@ final class CarbEntriesWorker: AbstractEntriesWorker {
     @discardableResult static func addCarbEntry(
         amount: Double,
         foodType: String?,
-        date: Date) -> CarbEntry {
+        date: Date,
+        externalID: String? = nil) -> CarbEntry {
         let entry = CarbEntry(
             amount: amount,
             foodType: foodType,
-            date: date
+            date: date,
+            externalID: externalID
         )
+
         let addedEntry = add(entry: entry)
         carbsDataHandler?()
+        NightscoutService.shared.scanForNotUploadedTreatments()
         return addedEntry
     }
     
-    static func deleteCarbsEntry(_ entry: AbstractEntry) {
-        super.deleteEntry(entry)
+    static func deleteCarbsEntry(_ entry: CarbEntry) {
+        if let settings = User.current.settings.nightscoutSync,
+            settings.isEnabled, settings.uploadTreatments {
+            entry.updateCloudUploadStatus(.waitingForDeletion)
+        } else {
+            super.deleteEntry(entry)
+        }
+        
         carbsDataHandler?()
+        NightscoutService.shared.scanForNotUploadedTreatments()
     }
     
     static func fetchAllCarbEntries() -> [CarbEntry] {
@@ -37,5 +47,20 @@ final class CarbEntriesWorker: AbstractEntriesWorker {
     
     static func updatedCarbsEntry() {
         carbsDataHandler?()
+        NightscoutService.shared.scanForNotUploadedTreatments()
+    }
+    
+    static func deleteEntryWith(externalID: String) {
+        guard let entry = fetchAllCarbEntries().first(where: { $0.externalID == externalID }) else {
+            return
+        }
+        super.deleteEntry(entry)
+    }
+    
+    static func markEntryAsUploaded(externalID: String) {
+        guard let entry = fetchAllCarbEntries().first(where: { $0.externalID == externalID }) else {
+            return
+        }
+        entry.updateCloudUploadStatus(.uploaded)
     }
 }

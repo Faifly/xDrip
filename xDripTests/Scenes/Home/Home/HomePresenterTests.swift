@@ -53,8 +53,9 @@ final class HomePresenterTests: XCTestCase {
         func displayGlucoseChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
         }
         func displayGlucoseCurrentInfo(viewModel: Home.GlucoseCurrentInfo.ViewModel) {
+            displayGlucoseCurrentInfoCalled = true
         }
-        func displayWarmUp(viewModel: Home.WarmUp.ViewModel) {
+        func displayUpdateSensorState(viewModel: Home.UpdateSensorState.ViewModel) {
         }
         func displayBolusData(viewModel: Home.BolusDataUpdate.ViewModel) {
         }
@@ -65,6 +66,8 @@ final class HomePresenterTests: XCTestCase {
         func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
         }
         func displayGlucoseChartTimeFrame(viewModel: Home.ChangeGlucoseEntriesChartTimeFrame.ViewModel) {
+        }
+        func displayUpdateGlucoseDataView(viewModel: Home.GlucoseDataViewUpdate.ViewModel) {
         }
     }
     

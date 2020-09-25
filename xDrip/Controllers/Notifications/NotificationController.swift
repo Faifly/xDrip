@@ -159,6 +159,31 @@ final class NotificationController: NSObject {
         
         return content
     }
+    
+    func sendSuccessfulConnectionNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "notification_transmitter_connection_title".localized
+        content.body = "notification_transmitter_connection_body".localized
+        content.sound = .default
+        content.categoryIdentifier = defaultCategoryID
+        content.badge = 0
+        
+        let request = UNNotificationRequest(
+            identifier: "TransmitterConnectionAlert",
+            content: content,
+            trigger: nil
+        )
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                LogController.log(
+                    message: "Error while add notification request to a queue",
+                    type: .error,
+                    error: error
+                )
+            }
+        }
+    }
 }
 
 extension NotificationController: UNUserNotificationCenterDelegate {

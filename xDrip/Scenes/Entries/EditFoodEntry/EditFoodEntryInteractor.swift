@@ -23,6 +23,7 @@ protocol EditFoodEntryDataStore: AnyObject {
     var entryType: EditFoodEntry.EntryType? { get set }
     var carbEntry: CarbEntry? { get set }
     var insulinEntry: InsulinEntry? { get set }
+    var trainingEntry: TrainingEntry? { get set }
 }
 
 final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDataStore {
@@ -37,6 +38,12 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
         var date = Date()
     }
     
+    private struct TrainingInput {
+        var duration: TimeInterval = .secondsPerMinute
+        var intensity: TrainingIntensity = .default
+        var date = Date()
+    }
+    
     var presenter: EditFoodEntryPresentationLogic?
     var router: EditFoodEntryRoutingLogic?
     
@@ -44,9 +51,11 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
     var entryType: EditFoodEntry.EntryType?
     var carbEntry: CarbEntry?
     var insulinEntry: InsulinEntry?
+    var trainingEntry: TrainingEntry?
     
     private var carbInput = CarbInput()
     private var insulinInput = InsulinInput()
+    private var trainingInput = TrainingInput()
     
     // MARK: Do something
     
@@ -62,13 +71,22 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
             insulinInput.date = insulinEntry.date ?? Date()
         }
         
+        if let trainingEntry = trainingEntry {
+            trainingInput.duration = trainingEntry.duration
+            trainingInput.intensity = trainingEntry.intensity
+            trainingInput.date = trainingEntry.date ?? Date()
+        }
+        
         let response = EditFoodEntry.Load.Response(
             insulinEntry: insulinEntry,
             carbEntry: carbEntry,
+            trainingEntry: trainingEntry,
             entryType: entryType ?? .food,
             textChangedHandler: handleTextChanged(_:_:),
             dateChangedHandler: handleDateChanged(_:_:),
-            foodTypeChangedHandler: handleFoodTypeChanged(_:)
+            foodTypeChangedHandler: handleFoodTypeChanged(_:),
+            trainingIntensityChangedHandler: handleIntensityChanged(_:),
+            timeIntervalChangedHandler: handleTrainingDurationChanged(_:)
         )
         presenter?.presentLoad(response: response)
     }
@@ -81,11 +99,9 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
         if let insulinEntry = insulinEntry,
             (insulinEntry.amount !~ insulinInput.amount || insulinEntry.date != insulinInput.date) {
             insulinEntry.update(amount: insulinInput.amount, date: insulinInput.date)
-            if insulinEntry.type == .bolus { InsulinEntriesWorker.updatedBolusEntry() }
         } else if insulinEntry == nil, insulinInput.amount !~ 0.0 {
             if entryType == .basal {
                 InsulinEntriesWorker.addBasalEntry(amount: insulinInput.amount, date: insulinInput.date)
-                NotificationCenter.default.postSettingsChangeNotification(setting: .basalRelated)
             } else {
                 InsulinEntriesWorker.addBolusEntry(amount: insulinInput.amount, date: insulinInput.date)
             }
@@ -96,9 +112,21 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
             carbEntry.date != carbInput.date ||
             carbEntry.foodType != carbInput.foodType) {
             carbEntry.update(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
-            CarbEntriesWorker.updatedCarbsEntry()
         } else if carbEntry == nil, carbInput.amount !~ 0.0 {
             CarbEntriesWorker.addCarbEntry(amount: carbInput.amount, foodType: carbInput.foodType, date: carbInput.date)
+        }
+        
+        if let trainingEntry = trainingEntry,
+            (trainingEntry.duration !~ trainingInput.duration ||
+            trainingEntry.date != trainingInput.date ||
+            trainingEntry.intensity != trainingInput.intensity) {
+            trainingEntry.update(duration: trainingInput.duration,
+                                 intensity: trainingInput.intensity,
+                                 date: trainingInput.date)
+        } else if entryType == .training, trainingEntry == nil, trainingInput.duration !~ 0.0 {
+            TrainingEntriesWorker.addTraining(duration: trainingInput.duration,
+                                              intensity: trainingInput.intensity,
+                                              date: trainingInput.date)
         }
 
         router?.dismissScene()
@@ -121,11 +149,20 @@ final class EditFoodEntryInteractor: EditFoodEntryBusinessLogic, EditFoodEntryDa
         switch field {
         case .carbsDate: carbInput.date = date
         case .insulinDate: insulinInput.date = date
+        case .trainingDate: trainingInput.date = date
         default: break
         }
     }
     
     private func handleFoodTypeChanged(_ foodType: String?) {
         carbInput.foodType = foodType
+    }
+    
+    private func handleIntensityChanged(_ intensity: TrainingIntensity) {
+        trainingInput.intensity = intensity
+    }
+    
+    private func handleTrainingDurationChanged(_ duration: TimeInterval) {
+        trainingInput.duration = duration
     }
 }

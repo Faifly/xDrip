@@ -11,25 +11,44 @@ import AKUtils
 
 final class InsulinEntriesWorker: AbstractEntriesWorker {
     static var bolusDataHandler: (() -> Void)?
+    static var basalDataHandler: (() -> Void)?
     
-    @discardableResult static func addBolusEntry(amount: Double, date: Date) -> InsulinEntry {
-        let entry = InsulinEntry(amount: amount, date: date, type: .bolus)
-        let addedEntry = add(entry: entry)
+    @discardableResult static func addBolusEntry(amount: Double,
+                                                 date: Date,
+                                                 externalID: String? = nil) -> InsulinEntry {
+        let entry = InsulinEntry(amount: amount, date: date, type: .bolus, externalID: externalID)
+        add(entry: entry)
         bolusDataHandler?()
-        return addedEntry
+        NightscoutService.shared.scanForNotUploadedTreatments()
+        return entry
     }
     
-    @discardableResult static func addBasalEntry(amount: Double, date: Date) -> InsulinEntry {
-        let entry = InsulinEntry(amount: amount, date: date, type: .basal)
+    @discardableResult static func addBasalEntry(amount: Double,
+                                                 date: Date,
+                                                 externalID: String? = nil) -> InsulinEntry {
+        let entry = InsulinEntry(amount: amount, date: date, type: .basal, externalID: externalID)
         add(entry: entry)
-        
+        basalDataHandler?()
+        NightscoutService.shared.scanForNotUploadedTreatments()
         return entry
     }
     
     static func deleteInsulinEntry(_ entry: InsulinEntry) {
         let type = entry.type
-        super.deleteEntry(entry)
-        if type == .bolus { bolusDataHandler?() }
+        if let settings = User.current.settings.nightscoutSync,
+            settings.isEnabled, settings.uploadTreatments {
+            entry.updateCloudUploadStatus(.waitingForDeletion)
+        } else {
+            super.deleteEntry(entry)
+        }
+        
+        switch type {
+        case .bolus:
+            bolusDataHandler?()
+        case .basal:
+            basalDataHandler?()
+        }
+        NightscoutService.shared.scanForNotUploadedTreatments()
     }
     
     static func fetchAllBolusEntries() -> [InsulinEntry] {
@@ -46,5 +65,25 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
     
     static func updatedBolusEntry() {
         bolusDataHandler?()
+        NightscoutService.shared.scanForNotUploadedTreatments()
+    }
+    
+    static func updatedBasalEntry() {
+        basalDataHandler?()
+        NightscoutService.shared.scanForNotUploadedTreatments()
+    }
+    
+    static func deleteEntryWith(externalID: String) {
+        guard let entry = fetchAllInsulinEntries().first(where: { $0.externalID == externalID }) else {
+            return
+        }
+        super.deleteEntry(entry)
+    }
+    
+    static func markEntryAsUploaded(externalID: String) {
+        guard let entry = fetchAllInsulinEntries().first(where: { $0.externalID == externalID }) else {
+            return
+        }
+        entry.updateCloudUploadStatus(.uploaded)
     }
 }

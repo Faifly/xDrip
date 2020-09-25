@@ -9,7 +9,8 @@
 import UIKit
 
 class BaseHistoryView: UIView {
-    var verticalLines: Int = 5
+    var maxVerticalLinesCount = 5
+    
     var forwardTimeOffset: TimeInterval = 600.0
     
     let scrollContainer = ChartScrollContainer()
@@ -105,7 +106,7 @@ class BaseHistoryView: UIView {
         updateChart()
     }
     
-    private func updateIntervals() {
+    func updateIntervals() {
         var endDate = Date() + forwardTimeOffset
         var globalDuration = globalInterval + forwardTimeOffset
         var localDuration = localInterval + forwardTimeOffset
@@ -144,9 +145,23 @@ class BaseHistoryView: UIView {
     func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?) {
         guard let minValue = minValue else { return }
         guard let maxValue = maxValue else { return }
-        let adjustedMinValue = max(minValue.rounded(.down), 0.0)
-        let adjustedMaxValue = maxValue.rounded(.up)
-        let step = (adjustedMaxValue - adjustedMinValue) / Double(verticalLines - 1)
+        var adjustedMinValue = max(minValue.rounded(.down), 0.0)
+        var adjustedMaxValue = maxValue.rounded(.up)
+        if adjustedMinValue ~~ adjustedMaxValue {
+            adjustedMinValue = max(adjustedMinValue - 1.0, 0.0)
+            adjustedMaxValue += 1.0
+        }
+        
+        let diff = adjustedMaxValue - adjustedMinValue
+        var verticalLines: Int
+        
+        if Int(diff) < maxVerticalLinesCount - 1 {
+            verticalLines = Int(diff) + 1
+        } else {
+            verticalLines = maxVerticalLinesCount
+        }
+        
+        let step = diff / Double(verticalLines - 1)
         
         var labels: [String] = []
         for index in 0..<verticalLines {
@@ -156,11 +171,8 @@ class BaseHistoryView: UIView {
         leftLabelsView.labels = labels
         leftLabelsView.setNeedsDisplay()
         chartView.verticalLinesCount = labels.count
-        if adjustedMinValue ~~ adjustedMaxValue {
-            chartView.yRange = (max(adjustedMinValue - 1.0, 0.0))...(adjustedMaxValue + 1.0)
-        } else {
-            chartView.yRange = adjustedMinValue...adjustedMaxValue
-        }
+
+        chartView.yRange = adjustedMinValue...adjustedMaxValue
     }
     
     private func calculateHorizontalBottomLabels() {
@@ -173,7 +185,7 @@ class BaseHistoryView: UIView {
         
         if interval < .secondsPerHour {
             let currentMinute = Calendar.current.component(.minute, from: now)
-            let targetMinute = Int((Double(currentMinute) / 10.0).rounded(.down) * 10.0)
+            let targetMinute = Int((Double(currentMinute) / 10.0).rounded(.up) * 10.0)
             var components = Calendar.current.dateComponents(in: .current, from: now)
             components.minute = targetMinute
             components.second = 0
@@ -181,6 +193,9 @@ class BaseHistoryView: UIView {
             initialGridDate = Calendar.current.date(from: components) ?? now
         } else {
             var components = Calendar.current.dateComponents(in: .current, from: now)
+            let currentHour = Calendar.current.component(.hour, from: now)
+            let targetHour = Int((Double(currentHour + 1) / interval.hours).rounded(.up) * interval.hours)
+            components.hour = targetHour
             components.minute = 0
             components.second = 0
             components.nanosecond = 0
@@ -188,11 +203,21 @@ class BaseHistoryView: UIView {
         }
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
+        dateFormatter.dateFormat = "MMM dd"
+        let hoursFormatter = DateFormatter()
+        hoursFormatter.dateFormat = "HH:mm"
+        
         var endGridTime = initialGridDate.timeIntervalSince1970
         while endGridTime > globalDateRange.start.timeIntervalSince1970 {
             let date = Date(timeIntervalSince1970: endGridTime)
-            globalHorizontalLabels.append(dateFormatter.string(from: date))
+            let stringDate = hoursFormatter.string(from: date)
+            
+            if stringDate == "00:00" {
+                globalHorizontalLabels.append(dateFormatter.string(from: date))
+            } else {
+                globalHorizontalLabels.append(stringDate)
+            }
+            
             endGridTime -= interval
         }
         
@@ -208,9 +233,7 @@ class BaseHistoryView: UIView {
         switch hours {
         case 0...1: return 10.0 * .secondsPerMinute
         case 2...11: return .secondsPerHour
-        case 12...23: return .secondsPerHour * 3.0
-        case 24: return .secondsPerHour * 4.0
-        default: return TimeInterval(hours) / 4.0 * .secondsPerHour
+        default: return .secondsPerHour * 3.0
         }
     }
 }

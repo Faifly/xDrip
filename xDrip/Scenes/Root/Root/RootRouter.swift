@@ -85,8 +85,7 @@ final class RootRouter: RootRoutingLogic, RootDataPassing {
     }
     
     func routeToAddTraining() {
-        let editTrainingViewController = EditTrainingViewController()
-        presentViewController(editTrainingViewController)
+        routeToAddEntry(entryType: .training)
     }
     
     func routeToInitialSetup() {
@@ -105,6 +104,7 @@ final class RootRouter: RootRoutingLogic, RootDataPassing {
         case .bolus: dataStore.entryType = .bolus
         case .basal: dataStore.entryType = .basal
         case .carbs: dataStore.entryType = .carbs
+        case .training: dataStore.entryType = .training
         default:
             break
         }

@@ -38,6 +38,8 @@ final class EditCalibrationSavingWorker: EditCalibrationSavingWorkerLogic {
                 try Calibration.createRegularCalibration(glucoseLevel: value1, date: date1)
                 CGMController.shared.notifyGlucoseChange()
             }
+            
+            NotificationCenter.default.postSettingsChangeNotification(setting: .warmUp)
         } catch CalibrationError.noReadingsNearDate {
             throw EditCalibration.ValidationError.noReadingsNearCalibration
         } catch CalibrationError.notEnoughReadings {

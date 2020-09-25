@@ -46,9 +46,9 @@ final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBu
             updateData()
             
         case .uploadTreatments:
-//            settings.updateUploadTreatments(value)
-            router?.presentNotYetImplementedAlert()
+            settings.updateUploadTreatments(value)
             updateData()
+            NotificationCenter.default.postSettingsChangeNotification(setting: .uploadTreatments)
             
         case .alertOnFailures:
 //            settings.updateAlertOnFailures(value)
@@ -73,7 +73,6 @@ final class NightscoutCloudExtraOptionsInteractor: NightscoutCloudExtraOptionsBu
     }
     
     private func handleSingleSelection() {
-//        router?.routeToBackfillData()
-        router?.presentNotYetImplementedAlert()
+        router?.routeToBackfillData()
     }
 }

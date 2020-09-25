@@ -18,6 +18,7 @@ protocol HomeBusinessLogic {
     func doChangeGlucoseChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request)
     func doChangeBolusChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request)
     func doChangeCarbsChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request)
+    func doUpdateGlucoseDataView(request: Home.GlucoseDataViewUpdate.Request)
 }
 
 protocol HomeDataStore: AnyObject {
@@ -30,7 +31,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     var router: HomeRoutingLogic?
     
     private let glucoseDataWorker: HomeGlucoseDataWorkerProtocol
-    private let warmUpWorker: HomeWarmUpWorkerLogic
+    private let sensorStateWorker: HomeSensorStateWorkerLogic
     private var basalEntriesObserver: [NSObjectProtocol]?
     private var activeInsulinObserver: [NSObjectProtocol]?
     private var activeCarbsObserver: [NSObjectProtocol]?
@@ -38,10 +39,17 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private var deviceModeObserver: [NSObjectProtocol]?
     private var hours: Int = 1
     
+    private var timer: Timer?
+    
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
-        warmUpWorker = HomeWarmUpWorker()
+        sensorStateWorker = HomeSensorStateWorker()
         
+        subscribeToEntriesWorkersEvents()
+        subscribeToNotifications()
+    }
+    
+    private func subscribeToEntriesWorkersEvents() {
         glucoseDataWorker.glucoseDataHandler = { [weak self] in
             guard let self = self else { return }
             self.updateGlucoseCurrentInfo()
@@ -51,11 +59,17 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             guard let self = self else { return }
             self.updateBolusChartData()
         }
+        InsulinEntriesWorker.basalDataHandler = { [weak self] in
+            guard let self = self else { return }
+            self.updateGlucoseChartData()
+        }
         CarbEntriesWorker.carbsDataHandler = { [weak self] in
             guard let self = self else { return }
             self.updateCarbsChartData()
         }
-        
+    }
+    
+    private func subscribeToNotifications() {
         basalEntriesObserver = NotificationCenter.default.subscribe(
             forSettingsChange: [.basalRelated, .unit, .chart],
             notificationHandler: { [weak self] _ in
@@ -100,6 +114,28 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         )
     }
     
+    private func setupUpdateTimer(with state: Home.SensorState) {
+        switch state {
+        case .started:
+            timer?.invalidate()
+            timer = nil
+        case .stopped:
+            if timer == nil {
+                timer = Timer.scheduledTimer(
+                    withTimeInterval: 60.0,
+                    repeats: true) { [weak self] _ in
+                        guard let self = self else { return }
+                        self.updateGlucoseChartData()
+                        self.updateGlucoseCurrentInfo()
+                        self.updateBolusChartData()
+                        self.updateCarbsChartData()
+                }
+            }
+        default:
+            break
+        }
+    }
+    
     // MARK: Do something
     
     func doLoad(request: Home.Load.Request) {
@@ -109,9 +145,11 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         updateGlucoseChartData()
         updateBolusChartData()
         updateCarbsChartData()
-        warmUpWorker.subscribeForWarmUpStateChange { [weak self] state in
-            let response = Home.WarmUp.Response(state: state)
-            self?.presenter?.presentWarmUp(response: response)
+        
+        sensorStateWorker.subscribeForSensorStateChange { [weak self] state in
+            let response = Home.UpdateSensorState.Response(state: state)
+            self?.presenter?.presentUpdateSensorState(response: response)
+            self?.setupUpdateTimer(with: state)
         }
     }
     
@@ -121,6 +159,10 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
             router?.routeToBolusEntriesList()
         case .carbs:
             router?.routeToCarbsEntriesList()
+        case .training:
+            router?.routeToTrainingEntriesList()
+        case .basal:
+            router?.routeToBasalEntriesList()
         default:
             break
         }
@@ -135,12 +177,18 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         updateGlucoseChartData()
     }
     
+    func doUpdateGlucoseDataView(request: Home.GlucoseDataViewUpdate.Request) {
+        let response = Home.GlucoseDataViewUpdate.Response(
+            intervalGlucoseData: glucoseDataWorker.fetchGlucoseData(for: request.dateInterval)
+        )
+        presenter?.presentUpdateGlucoseDataView(response: response)
+    }
+    
     // MARK: Logic
     
     private func updateGlucoseChartData() {
         let response = Home.GlucoseDataUpdate.Response(
             glucoseData: glucoseDataWorker.fetchGlucoseData(for: 24),
-            intervalGlucoseData: glucoseDataWorker.fetchGlucoseData(for: hours),
             basalDisplayMode: User.current.settings.chart?.basalDisplayMode ?? .notShown,
             insulinData: BasalChartDataWorker.fetchBasalData(for: 24),
             chartPointsData: BasalChartDataWorker.calculateChartValues(for: 24)
@@ -172,7 +220,9 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         let isShown = User.current.settings.chart?.showActiveInsulin == true
             && User.current.settings.deviceMode != .follower
         if isShown {
-            insulinData = InsulinEntriesWorker.fetchAllBolusEntries()
+            insulinData = InsulinEntriesWorker.fetchAllBolusEntries().filter {
+                $0.isValid
+            }
         }
         let response = Home.BolusDataUpdate.Response(insulinData: insulinData, isShown: isShown)
         presenter?.presentBolusData(response: response)
@@ -183,7 +233,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         let isShown = User.current.settings.chart?.showActiveCarbs == true
             && User.current.settings.deviceMode != .follower
         if  isShown {
-            carbsData = CarbEntriesWorker.fetchAllCarbEntries()
+            carbsData = CarbEntriesWorker.fetchAllCarbEntries().filter { $0.isValid }
         }
         let response = Home.CarbsDataUpdate.Response(carbsData: carbsData, isShown: isShown)
         presenter?.presentCarbsData(response: response)

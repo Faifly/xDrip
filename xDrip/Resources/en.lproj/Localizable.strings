@@ -1,10 +1,12 @@
 // AUTO-GENERATED
 // General
 "cancel" = "Cancel";
+"close" = "Close";
 "error" = "Error";
 "nyi_alert_title" = "Not Yet Implemented";
 "nyi_alert_message" = "This feature is still under development, please follow the updates.";
 "nyi_alert_ok_button" = "OK";
+"not_available" = "N/A";
 
 // Tabbar
 "tabbar_calibration_title" = "Calibration";
@@ -33,6 +35,8 @@
 "home_all_trainings" = "All Trainings";
 "home_all_basals" = "All Basals";
 "home_options_title" = "Options";
+"home_sensor_stopped" = "Sensor Stopped";
+"home_sensor_waiting_readings" = "Sensor is getting the first readings to display it";
 
 // Root
 "root_add_entry_food" = "Food";
@@ -286,6 +290,9 @@
 "settings_nightscout_cloud_backfill_send" = "Send";
 "settings_nightscout_cloud_backfill_date_title" = "Date";
 "settings_nightscout_cloud_backfill_section_footer" = "Choose the date for the oldest record to send to Nightscout. Use with care";
+"settings_nightscout_cloud_backfill_no_glucose_readings_found" = "Didn't find any glucose readings in that time period";
+"settings_nightscout_cloud_backfill_found_readings_and_treatments" = "Queued %d glucose readings and %d  treatments!";
+
 
 // Settings Units
 "settings_units_mgdl" = "mg/dL";
@@ -422,8 +429,10 @@ This setting will be applied to all future sensors";
 "settings_pen_user_delete_alert_cancel_button" = "No";
 
 // Settings Pump User
-"settings_pump_user_info_label_text" = "The Nightscout system allows you to attach (or pair) a device to the Dexcom receiver that transmits the glucose readings to the Internet, where any web-connected device can view the numbers. It's that simple";
+"settings_pump_user_info_label_text" = "If you have a pump connected to Nightscout, you can sync it with xDrip to display basal insulin.";
 "settings_pump_user_sync_button_title" = "Synchronise with NightScout";
+"settings_pump_user_unpair_button_title" = "Unpair pump";
+
 
 // Bluetooth Errors
 "bluetooth_error_title" = "Transmitter Service Error";
@@ -450,6 +459,7 @@ This setting will be applied to all future sensors";
 "calibration_not_ready_error_general_message" = "Not all conditions for calibration are met";
 "calibration_not_ready_error_no_initial_readings" = "Not enough readings for initial calibration";
 "calibration_not_ready_error_warming_up" = "Cannot calibration while sensor is warming up";
+"calibration_not_ready_error_sensor_stopped" = "Calibration can not be performed when sensor isn't running. Please, start sensor in the app Settings";
 "calibration_initial_alert_title" = "Initial Calibration";
 "calibration_initial_alert_message" = "Initial calibration is required to proceed with readings";
 "calibration_initial_alert_proceed_button" = "Provide Now";
@@ -487,6 +497,8 @@ This setting will be applied to all future sensors";
 "notification_missed_readings_body" = "Seems like you have one or more missed BG readings";
 "notification_phone_muted_title" = "Phone Muted";
 "notification_phone_muted_body" = "Your device in Ring/Silent mode";
+"notification_transmitter_connection_title" = "Transmitter Connection";
+"notification_transmitter_connection_body" = "Transmitter successfully connected and ready to send readings";
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Greetings";

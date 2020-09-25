@@ -30,6 +30,13 @@ enum Home {
         let minutesLeft: Int?
     }
     
+    enum SensorState {
+        case stopped
+        case warmingUp(minutesLeft: Int)
+        case waitingReadings
+        case started
+    }
+    
     struct DataSectionViewModel {
         let lowValue: String
         let lowTitle: String
@@ -64,7 +71,6 @@ enum Home {
         
         struct Response {
             let glucoseData: [GlucoseReading]
-            let intervalGlucoseData: [GlucoseReading]
             let basalDisplayMode: ChartSettings.BasalDisplayMode
             let insulinData: [InsulinEntry]
             let chartPointsData: [InsulinEntry]
@@ -76,6 +82,19 @@ enum Home {
             let basalValues: [BasalChartBasalEntry]
             let strokeChartBasalValues: [BasalChartBasalEntry]
             let unit: String
+        }
+    }
+    
+    enum GlucoseDataViewUpdate {
+        struct Request {
+            let dateInterval: DateInterval
+        }
+        
+        struct Response {
+            let intervalGlucoseData: [GlucoseReading]
+        }
+        
+        struct ViewModel {
             let dataSection: DataSectionViewModel
         }
     }
@@ -180,15 +199,14 @@ enum Home {
         }
     }
     
-    enum WarmUp {
+    enum UpdateSensorState {
         struct Response {
-            let state: Home.WarmUpState
+            let state: Home.SensorState
         }
         
         struct ViewModel {
-            let shouldShowWarmUp: Bool
-            let warmUpLeftHours: Int
-            let warmUpLeftMinutes: Int
+            let shouldShow: Bool
+            let text: NSAttributedString
         }
     }
 }

@@ -44,12 +44,14 @@ final class HomeInteractorTests: XCTestCase {
         var presentGlucoseCurrentInfoCalled = false
         var presentBolusDataCalled = false
         var presentCarbsDataCalled = false
+        var presentGlucoseDataCalled = false
         
         func presentLoad(response: Home.Load.Response) {
             presentLoadCalled = true
         }
         
         func presentGlucoseData(response: Home.GlucoseDataUpdate.Response) {
+            presentGlucoseDataCalled = true
         }
         
         func presentGlucoseChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
@@ -58,7 +60,7 @@ final class HomeInteractorTests: XCTestCase {
         func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
             presentGlucoseCurrentInfoCalled = true
         }
-        func presentWarmUp(response: Home.WarmUp.Response) {
+        func presentUpdateSensorState(response: Home.UpdateSensorState.Response) {
         }
         func presentBolusData(response: Home.BolusDataUpdate.Response) {
             presentBolusDataCalled = true
@@ -70,11 +72,15 @@ final class HomeInteractorTests: XCTestCase {
         }
         func presentCarbsChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
         }
+        func presentUpdateGlucoseDataView(response: Home.GlucoseDataViewUpdate.Response) {
+        }
     }
     
     final class HomeRoutingLogicSpy: HomeRoutingLogic {
         var toCarbsCalled = false
         var toBolusCalled = false
+        var toTrainingCalled = false
+        var toBasalCalled = false
         
         func routeToCarbsEntriesList() {
             toCarbsCalled = true
@@ -82,6 +88,14 @@ final class HomeInteractorTests: XCTestCase {
         
         func routeToBolusEntriesList() {
             toBolusCalled = true
+        }
+        
+        func routeToTrainingEntriesList() {
+            toTrainingCalled = true
+        }
+        
+        func routeToBasalEntriesList() {
+            toBasalCalled = true
         }
     }
     
@@ -120,19 +134,61 @@ final class HomeInteractorTests: XCTestCase {
         
         // Then
         XCTAssertTrue(spy.toBolusCalled)
+        
+        request = Home.ShowEntriesList.Request(entriesType: .basal)
+        
+        //When
+        sut.doShowEntriesList(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.toBasalCalled)
+        
+        request = Home.ShowEntriesList.Request(entriesType: .training)
+        
+        //When
+        sut.doShowEntriesList(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.toTrainingCalled)
     }
     
     func testUpdateBolusChartData() {
-      // Given
-      let spy = HomePresentationLogicSpy()
-      sut.presenter = spy
-      let request = Home.Load.Request()
-      
-      // When
-      sut.doLoad(request: request)
-      
-      // Then
-      XCTAssertTrue(spy.presentBolusDataCalled)
-      XCTAssertTrue(spy.presentCarbsDataCalled)
+        // Given
+        let spy = HomePresentationLogicSpy()
+        sut.presenter = spy
+        let request = Home.Load.Request()
+        
+        // When
+        sut.doLoad(request: request)
+        
+        // Then
+        XCTAssertTrue(spy.presentBolusDataCalled)
+        XCTAssertTrue(spy.presentCarbsDataCalled)
+    }
+    
+    func testSubscribeToEntriesWorkersEvents() throws {
+        // Given
+        let spy = HomePresentationLogicSpy()
+        sut.presenter = spy
+        let request = Home.Load.Request()
+        
+        // When
+        sut.doLoad(request: request)
+        InsulinEntriesWorker.addBasalEntry(amount: 1.0, date: Date())
+        XCTAssertTrue(spy.presentGlucoseDataCalled)
+        
+        spy.presentGlucoseDataCalled = false
+        
+        let lastEntry = try XCTUnwrap(InsulinEntriesWorker.fetchAllBasalEntries().last)
+        
+        lastEntry.update(amount: 2.0, date: Date())
+        
+        XCTAssertTrue(spy.presentGlucoseDataCalled)
+        
+        spy.presentGlucoseDataCalled = false
+        
+        InsulinEntriesWorker.deleteInsulinEntry(lastEntry)
+        
+        XCTAssertTrue(spy.presentGlucoseDataCalled)
     }
 }

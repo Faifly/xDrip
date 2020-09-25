@@ -9,16 +9,16 @@
 import Foundation
 
 protocol HomeWarmUpWorkerLogic {
-    func subscribeForWarmUpStateChange(callback: @escaping (Home.WarmUpState) -> Void)
+    func subscribeForSensorStateChange(callback: @escaping (Home.SensorState) -> Void)
 }
 
-final class HomeWarmUpWorker: HomeWarmUpWorkerLogic {
-    private var callback: ((Home.WarmUpState) -> Void)?
+final class HomeSensorStateWorker: HomeWarmUpWorkerLogic {
+    private var callback: ((Home.SensorState) -> Void)?
     private var isWarmingUp = false
     private var timer: Timer?
     private var settingsObservers: [NSObjectProtocol] = []
     
-    func subscribeForWarmUpStateChange(callback: @escaping (Home.WarmUpState) -> Void) {
+    func subscribeForSensorStateChange(callback: @escaping (Home.SensorState) -> Void) {
         self.callback = callback
         checkWarmUpState()
         CGMController.shared.subscribeForMetadataEvents(listener: self) { [weak self] type in
@@ -43,11 +43,12 @@ final class HomeWarmUpWorker: HomeWarmUpWorkerLogic {
             guard let intervalAge = TimeInterval(stringAge) else { return }
             guard let type = CGMDevice.current.deviceType else { return }
             let age = Date().timeIntervalSince1970 - intervalAge
-            let state = Home.WarmUpState(
-                isWarmingUp: true,
-                minutesLeft: Int((type.warmUpInterval - age) / 60.0)
-            )
-            callback?(state)
+            let minutesLeft = Int((type.warmUpInterval - age) / 60.0)
+//            let state = Home.WarmUpState(
+//                isWarmingUp: true,
+//                minutesLeft: Int((type.warmUpInterval - age) / 60.0)
+//            )
+            callback?(.warmingUp(minutesLeft: minutesLeft))
             
             if timer == nil {
                 timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { [weak self] _ in
@@ -58,17 +59,18 @@ final class HomeWarmUpWorker: HomeWarmUpWorkerLogic {
             isWarmingUp = false
             timer?.invalidate()
             timer = nil
-            callback?(.notWarming)
+            let state: Home.SensorState = CGMDevice.current.sensorStartDate != nil ? .started : .stopped
+            callback?(state)
         }
     }
 }
 
-extension HomeWarmUpWorker: Hashable {
+extension HomeSensorStateWorker: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(1)
     }
     
-    static func == (lhs: HomeWarmUpWorker, rhs: HomeWarmUpWorker) -> Bool {
+    static func == (lhs: HomeSensorStateWorker, rhs: HomeSensorStateWorker) -> Bool {
         return true
     }
 }

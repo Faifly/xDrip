@@ -16,4 +16,28 @@ enum TrainingIntensity: Int, CaseIterable {
     static var `default`: TrainingIntensity {
         return .normal
     }
+    
+    var paramValue: String {
+        switch self {
+        case .low:
+            return "low"
+        case .normal:
+            return "moderate"
+        case .high:
+            return "high"
+        }
+    }
+    
+    init(paramValue: String) {
+        switch paramValue {
+        case "low":
+            self = .low
+        case "moderate":
+            self = .normal
+        case "high":
+            self = .high
+        default:
+            self = .default
+        }
+    }
 }

@@ -14,7 +14,6 @@ import AKUtils
 // swiftlint:disable type_body_length
 // swiftlint:disable function_body_length
 // swiftlint:disable closure_body_length
-// swiftlint:disable file_length
 
 enum CalibrationError: Error {
     case notEnoughReadings
@@ -277,6 +276,8 @@ final class Calibration: Object {
         realm.safeWrite {
             realm.delete(last)
         }
+        
+        NotificationCenter.default.postSettingsChangeNotification(setting: .warmUp)
     }
     
     static func deleteAll() {
@@ -286,6 +287,8 @@ final class Calibration: Object {
         realm.safeWrite {
             realm.delete(all)
         }
+        
+        NotificationCenter.default.postSettingsChangeNotification(setting: .warmUp)
     }
     
     static func markCalibrationAsUploaded(itemID: String) {
