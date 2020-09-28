@@ -280,6 +280,17 @@ extension DexcomG6BluetoothService: CBPeripheralDelegate {
         )
         do {
             try messageWorker?.handleIncomingMessage(characteristic.value)
+        } catch DexcomG6Error.notAuthenticated {
+            self.peripheral = nil
+            centralManager.cancelPeripheralConnection(peripheral)
+            
+            LogController.log(
+                message: "[Dexcom G6] Connected to wrong peripheral, starting scanning for new one...",
+                type: .debug
+            )
+            
+            let advertisementID = CBUUID(string: DexcomG6Constants.advertisementServiceID)
+            centralManager.scanForPeripherals(withServices: [advertisementID], options: nil)
         } catch {
             delegate?.serviceDidFail(
                 withError: .deviceSpecific(error: error as? LocalizedError ?? CGMBluetoothServiceError.unknown)
