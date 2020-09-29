@@ -353,7 +353,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         
         return request
     }
-
+    
     private func createTreatmentsRequest(uploading: Bool = true) throws -> URLRequest? {
         LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
         guard let baseURLString = User.current.settings.nightscoutSync?.baseURL else {

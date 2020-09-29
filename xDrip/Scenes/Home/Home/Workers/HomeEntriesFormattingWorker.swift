@@ -15,6 +15,18 @@ struct InsulinCarbEntry: BaseHomeEntryProtocol {
     let color: UIColor
 }
 
+private class ChartEntry {
+    var amount: Double
+    let startDate: Date
+    var endDate: Date
+    
+    init(amount: Double, startDate: Date, endDate: Date) {
+        self.amount = amount
+        self.startDate = startDate
+        self.endDate = endDate
+    }
+}
+
 protocol HomeEntriesFormattingWorkerProtocol {
     func formatBolusResponse(_ response: Home.BolusDataUpdate.Response) -> InsulinCarbEntry
     func formatCarbsResponse(_ response: Home.CarbsDataUpdate.Response) -> InsulinCarbEntry
@@ -31,8 +43,7 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
     
     func formatBolusResponse(_ response: Home.BolusDataUpdate.Response) -> InsulinCarbEntry {
         insulinEntries = response.insulinData
-        let insulinDuration = User.current.settings.insulinActionTime
-        let baseChartEntries = formatEntries(insulinEntries, absorbtionDuration: insulinDuration)
+        let baseChartEntries = formatEntries(insulinEntries)
         return InsulinCarbEntry(title: "home_active_insulin".localized,
                                 entries: baseChartEntries,
                                 unit: Root.EntryType.bolus.shortLabel,
@@ -40,62 +51,29 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
     }
     func formatCarbsResponse(_ response: Home.CarbsDataUpdate.Response) -> InsulinCarbEntry {
         carbEntries = response.carbsData
-        let carbsDuration = User.current.settings.carbsAbsorptionRate
-        let baseChartEntries = formatEntries(carbEntries, absorbtionDuration: carbsDuration)
+        let baseChartEntries = formatEntries(carbEntries)
         return InsulinCarbEntry(title: "home_active_carbohydrates".localized,
                                 entries: baseChartEntries,
                                 unit: Root.EntryType.carbs.shortLabel,
                                 color: .carbsChartEntry)
     }
     
-    func formatEntries(_ entries: [AbstractEntryProtocol], absorbtionDuration: TimeInterval) -> [BaseChartEntry] {
+    func formatEntries(_ entries: [AbstractAbsorbableEntryProtocol]) -> [BaseChartEntry] {
+        let entries = createChartEntriesFrom(entries)
         var baseChartEntries: [BaseChartEntry] = []
-        let chartStartDate = Date().timeIntervalSince1970 - .secondsPerDay
-        var amountsArray: [Double] = entries.map { $0.amount }
-    
-        for index in 0..<entries.count {
-            let entry = entries[index]
-    
-            guard let entryStartDate = entry.date?.timeIntervalSince1970 else { continue }
-            var entryEndDate = entryStartDate + absorbtionDuration
-            var entryEndAmount = 0.0
-          
-            guard amountsArray[index] > 0 else { continue }
-            guard entryEndDate >= chartStartDate else { continue }
-         
-            if index > 0 {
-                let prevEntry = entries[index - 1]
-                guard let prevEntryDate = prevEntry.date?.timeIntervalSince1970 else { continue }
-                let prevEntryEndDate = prevEntryDate + absorbtionDuration
-                if entryStartDate < prevEntryEndDate {
-                    let pointX = entryStartDate
-                    let startX = prevEntryDate
-                    let startY = amountsArray[index - 1]
-                    let endX = prevEntryEndDate
-                    let lastAmount = calculatePointYFor(pointX: pointX, startX: startX, startY: startY, endX: endX)
-                    amountsArray[index] += lastAmount
-                }
-            }
+        let chartStartDate = Date().addingTimeInterval(-.secondsPerDay)
+        
+        for entry in entries {
+            adjustEntryAmount(entries, entry)
             
-            if index < entries.count - 1 {
-                let nextEntry = entries[index + 1]
-                guard let nextEntryStartDate = nextEntry.date?.timeIntervalSince1970 else { continue }
-                if nextEntryStartDate < entryEndDate && amountsArray[index + 1] > 0 {
-                    let pointX = nextEntryStartDate
-                    let startX = entryStartDate
-                    let startY = amountsArray[index]
-                    let endX = entryEndDate
-                    entryEndAmount = calculatePointYFor(pointX: pointX, startX: startX, startY: startY, endX: endX)
-                    entryEndDate = nextEntryStartDate
-                }
-            }
+            guard entry.endDate > chartStartDate else { continue }
             
             baseChartEntries.append(BaseChartEntry(value: 0.0,
-                                                   date: Date(timeIntervalSince1970: entryStartDate)))
-            baseChartEntries.append(BaseChartEntry(value: amountsArray[index],
-                                                   date: Date(timeIntervalSince1970: entryStartDate)))
-            baseChartEntries.append(BaseChartEntry(value: entryEndAmount,
-                                                   date: Date(timeIntervalSince1970: entryEndDate)))
+                                                   date: entry.startDate))
+            baseChartEntries.append(BaseChartEntry(value: entry.amount,
+                                                   date: entry.startDate))
+            baseChartEntries.append(BaseChartEntry(value: 0.0,
+                                                   date: entry.endDate))
         }
         return baseChartEntries
     }
@@ -105,65 +83,53 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
     }
     
     func getChartButtonTitle(_ entryType: Root.EntryType) -> String {
-        var entries: [AbstractEntryProtocol]
+        var entries: [AbstractAbsorbableEntryProtocol]
         var shortLabel: String
-        var absorbtionDuration: TimeInterval
         switch entryType {
         case .bolus:
             entries = insulinEntries
-            absorbtionDuration = User.current.settings.insulinActionTime
             shortLabel = Root.EntryType.bolus.shortLabel + " >"
         case .carbs:
             entries = carbEntries
-            absorbtionDuration = User.current.settings.carbsAbsorptionRate
             shortLabel = Root.EntryType.carbs.shortLabel + " >"
         default:
             return ""
         }
         
-        return makeButtonTitle(entries: entries, shortLabel: shortLabel, absorbtionDuration: absorbtionDuration)
+        return makeButtonTitle(entries: entries, shortLabel: shortLabel)
     }
     
-    private func makeButtonTitle(entries: [AbstractEntryProtocol],
-                                 shortLabel: String,
-                                 absorbtionDuration: TimeInterval) -> String {
-        let startInterval = Date().timeIntervalSince1970 - timeInterval
-        var totalAmount = 0.0
-        for index in (0..<entries.count).reversed() {
-            let entry = entries[index]
-            guard let entryInterval = entry.date?.timeIntervalSince1970 else { continue }
-            var entryAmount = entry.amount
-            guard entryAmount > 0 else { continue }
-            let entryEndInterval = entryInterval + absorbtionDuration
+    private func createChartEntriesFrom(_ entries: [AbstractAbsorbableEntryProtocol]) -> [ChartEntry] {
+        var objects: [ChartEntry] = []
+        for entry in entries {
+            guard entry.amount > 0.0 else { continue }
+            guard let date = entry.date else { continue }
+            guard entry.absorptionDuration > 0.0 else { continue }
             
-            if entryInterval >= startInterval {
-                totalAmount += entryAmount
-            } else {
-                if entryEndInterval > startInterval {
-                    if index > 0 {
-                        let prevEntry = entries[index - 1]
-                        guard let prevEntryInterval = prevEntry.date?.timeIntervalSince1970 else { continue }
-                        let endX = prevEntryInterval + absorbtionDuration
-                        if entryInterval < endX {
-                            let pointX = entryInterval
-                            let startX = prevEntryInterval
-                            let startY = prevEntry.amount
-                            let lastAmount = calculatePointYFor(pointX: pointX,
-                                                                startX: startX,
-                                                                startY: startY,
-                                                                endX: endX)
-                            entryAmount += lastAmount
-                        }
-                    }
-                
-                    let pointX = startInterval
-                    let startX = entryInterval
-                    let endX = entryEndInterval
-                    let startY = entryAmount
-                    totalAmount += calculatePointYFor(pointX: pointX, startX: startX, startY: startY, endX: endX)
-                    break
-                }
-            }
+            objects.append(ChartEntry(amount: entry.amount,
+                                      startDate: date,
+                                      endDate: date + entry.absorptionDuration))
+        }
+        return objects
+    }
+    
+    private func makeButtonTitle(entries: [AbstractAbsorbableEntryProtocol],
+                                 shortLabel: String) -> String {
+        let startDate = Date().addingTimeInterval(-timeInterval)
+        let entries = createChartEntriesFrom(entries)
+        var totalAmount = 0.0
+        
+        let includedEntries = entries.filter({ $0.startDate >= startDate })
+        includedEntries.forEach { entry in totalAmount += entry.amount }
+        
+        entries.forEach { entry in adjustEntryAmount(entries, entry) }
+        
+        let partiallyIncluded = entries.filter({ $0.startDate < startDate && $0.endDate > startDate })
+        if let closestEntry = partiallyIncluded.max(by: { $0.startDate < $1.startDate }) {
+            totalAmount += calculatePointYFor(pointX: startDate,
+                                              startX: closestEntry.startDate,
+                                              startY: closestEntry.amount,
+                                              endX: closestEntry.endDate)
         }
         
         currentAmount = totalAmount
@@ -171,14 +137,28 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
         return String(format: "%.2f", totalAmount.rounded(to: 2)) + " \(shortLabel)"
     }
     
+    private func adjustEntryAmount(_ objects: [ChartEntry], _ entry: ChartEntry) {
+        let crossedEntries = objects.filter({ $0.startDate < entry.startDate && $0.endDate > entry.startDate })
+        if let closestEntry = crossedEntries.max(by: { $0.startDate < $1.startDate }) {
+            entry.amount += calculatePointYFor(pointX: entry.startDate,
+                                               startX: closestEntry.startDate,
+                                               startY: closestEntry.amount,
+                                               endX: closestEntry.endDate)
+        }
+    }
+    
     func getChartShouldBeShown() -> Bool {
         return currentAmount > 0.0
     }
     
-    private func calculatePointYFor(pointX: TimeInterval,
-                                    startX: TimeInterval,
+    private func calculatePointYFor(pointX: Date,
+                                    startX: Date,
                                     startY: Double,
-                                    endX: TimeInterval) -> Double {
+                                    endX: Date) -> Double {
+        let pointX = pointX.timeIntervalSince1970
+        let startX = startX.timeIntervalSince1970
+        let endX = endX.timeIntervalSince1970
+        
         return ((pointX - startX) * (0.0 - startY)) / (endX - startX) + startY
     }
 }

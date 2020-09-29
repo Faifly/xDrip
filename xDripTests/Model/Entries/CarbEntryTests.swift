@@ -21,7 +21,7 @@ final class CarbEntryTests: AbstractRealmTest {
         
         XCTAssertTrue(entry.amount ~ 1.1)
         XCTAssertTrue(entry.foodType == "2.2")
-        XCTAssertTrue(entry.assimilationDuration ~ 0)
+        XCTAssertTrue(entry.absorptionDuration ~ User.current.settings.carbsAbsorptionRate)
         XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 5.0)
         XCTAssertTrue(entry.cloudUploadStatus == .notUploaded)
         
@@ -41,7 +41,7 @@ final class CarbEntryTests: AbstractRealmTest {
         
         XCTAssertTrue(entry.amount ~ 2.2)
         XCTAssertTrue(entry.foodType == "2.2")
-        XCTAssertTrue(entry.assimilationDuration ~ 0)
+        XCTAssertTrue(entry.absorptionDuration ~ User.current.settings.carbsAbsorptionRate)
         XCTAssertTrue(entry.date!.timeIntervalSince1970 ~~ 6.0)
         
         let entry1 = CarbEntry(amount: 5.1, foodType: "1.1", date: Date())
