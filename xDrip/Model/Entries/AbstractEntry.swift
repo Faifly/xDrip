@@ -14,6 +14,10 @@ protocol AbstractEntryProtocol {
     var date: Date? { get }
 }
 
+protocol AbstractAbsorbableEntryProtocol: AbstractEntryProtocol {
+    var absorptionDuration: TimeInterval { get }
+}
+
 class AbstractEntry: Object {
     @objc private(set) dynamic var date: Date?
     @objc private(set) dynamic var externalID: String = UUID().uuidString.lowercased()

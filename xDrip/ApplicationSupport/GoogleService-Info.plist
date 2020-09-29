@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>514230837254-a817qm884o1b9o29urgtbh8nkkbk3jg5.apps.googleusercontent.com</string>
+	<string>63248095805-d38qheagnpj7852fu847i9518v8cubut.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.514230837254-a817qm884o1b9o29urgtbh8nkkbk3jg5</string>
+	<string>com.googleusercontent.apps.63248095805-d38qheagnpj7852fu847i9518v8cubut</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAcJ9dgTW78jGhWAJ7u_zzg6GZHi8xMuEE</string>
+	<string>AIzaSyCAvhpJds_dvUyumia5bl3HDLQSgnezOFs</string>
 	<key>GCM_SENDER_ID</key>
-	<string>514230837254</string>
+	<string>63248095805</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.faifly.xDrip</string>
 	<key>PROJECT_ID</key>
-	<string>xdrip-d85d6</string>
+	<string>xdrip-57c75</string>
 	<key>STORAGE_BUCKET</key>
-	<string>xdrip-d85d6.appspot.com</string>
+	<string>xdrip-57c75.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:514230837254:ios:2b75eba8ec879bb62fe387</string>
+	<string>1:63248095805:ios:cc2ad956664d6db0b1a854</string>
 	<key>DATABASE_URL</key>
-	<string>https://xdrip-d85d6.firebaseio.com</string>
+	<string>https://xdrip-57c75.firebaseio.com</string>
 </dict>
 </plist>

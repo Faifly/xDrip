@@ -14,6 +14,7 @@ struct CTreatment: Codable {
     let treatmentID: String?
     let carbs: Double?
     let duration: Double?
+    let absorptionTime: Double?
     let exerciseIntensity: String?
     let eventType: String?
     let insulin: Double?
@@ -41,6 +42,7 @@ struct CTreatment: Codable {
         case foodType
         case duration
         case exerciseIntensity
+        case absorptionTime
     }
     
     init(entry: TreatmentEntryProtocol, treatmentType: TreatmentType) {
@@ -51,16 +53,27 @@ struct CTreatment: Codable {
         
         switch treatmentType {
         case .carbs:
+            let defaultAbsorptionTime = User.current.settings.carbsAbsorptionRate
+            absorptionTime = (entry.treatmentAbsorptionTime ?? defaultAbsorptionTime) / .secondsPerMinute
             carbs = entry.amount
             insulin = nil
             duration = nil
             exerciseIntensity = nil
-        case .bolus, .basal:
+        case .bolus:
+            let defaultAbsorptionTime = User.current.settings.insulinActionTime
+            absorptionTime = (entry.treatmentAbsorptionTime ?? defaultAbsorptionTime) / .secondsPerMinute
+            carbs = nil
+            insulin = entry.amount
+            duration = nil
+            exerciseIntensity = nil
+        case .basal:
+            absorptionTime = nil
             carbs = nil
             insulin = entry.amount
             duration = nil
             exerciseIntensity = nil
         case .training:
+            absorptionTime = nil
             carbs = nil
             insulin = nil
             duration = entry.amount / .secondsPerMinute
@@ -112,6 +125,7 @@ struct CTreatment: Codable {
         foodType = try? container.decode(String.self, forKey: .foodType)
         duration = try? container.decode(Double.self, forKey: .duration)
         exerciseIntensity = try? container.decode(String.self, forKey: .exerciseIntensity)
+        absorptionTime = try? container.decode(Double.self, forKey: .absorptionTime)
         
         switch eventType?.lowercased() {
         case TreatmentType.carbs.rawValue.lowercased():
@@ -171,20 +185,27 @@ struct CTreatment: Codable {
         
         let treatmentDate = treatment.getDate()
         
+        var absorptionDuration: TimeInterval?
+        if let time = treatment.absorptionTime {
+            absorptionDuration = time * .secondsPerMinute
+        }
+        
         switch treatment.type {
         case .carbs:
             if let amount = treatment.carbs {
                 object = CarbEntry(amount: amount,
                                    foodType: treatment.foodType,
                                    date: treatmentDate,
-                                   externalID: treatment.uuid)
+                                   externalID: treatment.uuid,
+                                   absorptionDuration: absorptionDuration)
             }
         case .bolus:
             if let amount = treatment.insulin {
                 object = InsulinEntry(amount: amount,
                                       date: treatmentDate,
                                       type: .bolus,
-                                      externalID: treatment.uuid)
+                                      externalID: treatment.uuid,
+                                      absorptionDuration: absorptionDuration)
             }
         case .basal:
             if let amount = treatment.insulin {

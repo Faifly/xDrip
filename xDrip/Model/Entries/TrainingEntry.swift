@@ -18,14 +18,7 @@ final class TrainingEntry: AbstractEntry, TreatmentEntryProtocol {
     }
     
     var exerciseIntensity: Int? {
-        get {
-            return rawIntensity
-        }
-        set {
-            Realm.shared.safeWrite {
-                rawIntensity = newValue ?? 1
-            }
-        }
+        return rawIntensity
     }
     
     private(set) var intensity: TrainingIntensity {

@@ -9,10 +9,15 @@
 import Foundation
 import RealmSwift
 
-final class InsulinEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryProtocol {
+final class InsulinEntry: AbstractEntry, AbstractAbsorbableEntryProtocol, TreatmentEntryProtocol {
     @objc private(set) dynamic var amount: Double = 0.0
     @objc private dynamic var rawType: Int = InsulinType.bolus.rawValue
     @objc private(set) dynamic var duration: Double = 0.0
+    @objc private(set) dynamic var absorptionDuration: TimeInterval = 0.0
+    
+    var treatmentAbsorptionTime: TimeInterval? {
+        return absorptionDuration
+    }
     
     var type: InsulinType {
         get {
@@ -27,10 +32,17 @@ final class InsulinEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryPr
         super.init()
     }
     
-    init(amount: Double, date: Date, type: InsulinType, externalID: String? = nil) {
+    init(amount: Double,
+         date: Date,
+         type: InsulinType,
+         externalID: String? = nil,
+         absorptionDuration: TimeInterval? = nil) {
         super.init(date: date, externalID: externalID)
         self.amount = amount
         self.type = type
+        if type == .bolus {
+            self.absorptionDuration = absorptionDuration ?? User.current.settings.insulinActionTime
+        }
         if externalID != nil {
             self.cloudUploadStatus = .uploaded
         } else if let settings = User.current.settings.nightscoutSync,
@@ -43,9 +55,12 @@ final class InsulinEntry: AbstractEntry, AbstractEntryProtocol, TreatmentEntryPr
         Realm.shared.safeWrite {
             self.amount = amount
             self.updateDate(date)
+            if type == .bolus {
+                self.absorptionDuration = User.current.settings.insulinActionTime
+            }
             if self.cloudUploadStatus == .uploaded {
-                 self.cloudUploadStatus = .modified
-             }
+                self.cloudUploadStatus = .modified
+            }
         }
         
         switch type {

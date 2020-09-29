@@ -8,37 +8,35 @@
 
 import Foundation
 
+// swiftlint:disable closure_body_length
+
 enum NightscoutRequestCompleter {
     static func completeRequest(_ request: UploadRequest) {
         DispatchQueue.main.async {
-            self.completeRequestMain(request)
-        }
-    }
-    
-    private static func completeRequestMain(_ request: UploadRequest) {
-        for itemID in request.itemIDs {
-            switch request.type {
-            case .postGlucoseReading, .modifyGlucoseReading:
-                GlucoseReading.markEntryAsUploaded(externalID: itemID)
-            case .deleteGlucoseReading, .deleteCalibration:
-                break
-            case .postCalibration:
-                Calibration.markCalibrationAsUploaded(itemID: itemID)
-            case .postCarbs, .modifyCarbs:
-                CarbEntriesWorker.markEntryAsUploaded(externalID: itemID)
-            case .deleteCarbs:
-                CarbEntriesWorker.deleteEntryWith(externalID: itemID)
-            case .postBolus, .modifyBolus, .postBasal, .modifyBasal:
-                InsulinEntriesWorker.markEntryAsUploaded(externalID: itemID)
-            case .deleteBolus, .deleteBasal:
-                InsulinEntriesWorker.deleteEntryWith(externalID: itemID)
-                
-            case .postTraining, .modifyTraining:
-                TrainingEntriesWorker.markEntryAsUploaded(externalID: itemID)
-            case .deleteTraining:
-                TrainingEntriesWorker.deleteEntryWith(externalID: itemID)
+            for itemID in request.itemIDs {
+                switch request.type {
+                case .postGlucoseReading, .modifyGlucoseReading:
+                    GlucoseReading.markEntryAsUploaded(externalID: itemID)
+                case .deleteGlucoseReading, .deleteCalibration:
+                    break
+                case .postCalibration:
+                    Calibration.markCalibrationAsUploaded(itemID: itemID)
+                case .postCarbs, .modifyCarbs:
+                    CarbEntriesWorker.markEntryAsUploaded(externalID: itemID)
+                case .deleteCarbs:
+                    CarbEntriesWorker.deleteEntryWith(externalID: itemID)
+                case .postBolus, .modifyBolus, .postBasal, .modifyBasal:
+                    InsulinEntriesWorker.markEntryAsUploaded(externalID: itemID)
+                case .deleteBolus, .deleteBasal:
+                    InsulinEntriesWorker.deleteEntryWith(externalID: itemID)
+                    
+                case .postTraining, .modifyTraining:
+                    TrainingEntriesWorker.markEntryAsUploaded(externalID: itemID)
+                case .deleteTraining:
+                    TrainingEntriesWorker.deleteEntryWith(externalID: itemID)
+                }
             }
+            NightscoutService.shared.sendDeviceStatus()
         }
-        NightscoutService.shared.sendDeviceStatus()
     }
 }
