@@ -503,7 +503,7 @@ This setting will be applied to all future sensors";
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Greetings";
 "initial_welcome_large_welcome_message" = "Welcome to xDrip for iOS!";
-"initial_welcome_small_welcome_message" = "Seems like this is yout first time in xDrip. Do you want us to guide you through the initial setup process?";
+"initial_welcome_small_welcome_message" = "Seems like this is your first time in xDrip. Do you want us to guide you through the initial setup process?";
 "initial_welcome_start_button" = "Begin Initial Setup";
 "initial_welcome_skip_button" = "Skip";
 
