@@ -45,7 +45,7 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
         switch type {
         case .bolus:
             bolusDataHandler?()
-        case .basal:
+        case .basal, .pumpBasal:
             basalDataHandler?()
         }
         NightscoutService.shared.scanForNotUploadedTreatments()
@@ -57,6 +57,10 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
     
     static func fetchAllBasalEntries() -> [InsulinEntry] {
         return super.fetchAllEntries(type: InsulinEntry.self).filter { $0.type == .basal }
+    }
+    
+    static func fetchAllPumpBasalEntries() -> [InsulinEntry] {
+        return super.fetchAllEntries(type: InsulinEntry.self).filter { $0.type == .pumpBasal }
     }
     
     static func fetchAllInsulinEntries() -> [InsulinEntry] {

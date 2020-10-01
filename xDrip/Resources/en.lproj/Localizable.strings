@@ -432,7 +432,24 @@ This setting will be applied to all future sensors";
 "settings_pump_user_info_label_text" = "If you have a pump connected to Nightscout, you can sync it with xDrip to display basal insulin.";
 "settings_pump_user_sync_button_title" = "Synchronise with NightScout";
 "settings_pump_user_unpair_button_title" = "Unpair pump";
-
+"settings_pump_user_nightscout_url_cell_title" = "Nightscout URL";
+"settings_pump_user_pump_id_cell_title" = "Pump ID";
+"settings_pump_user_pump_manufacturer_cell_title" = "Manufacturer";
+"settings_pump_user_pump_model_cell_title" = "Model";
+"settings_pump_user_pump_connection_date_cell_title" = "Connection date";
+"settings_pump_user_nightscout_url_alert_title" = "Nightscout URL";
+"settings_pump_user_nightscout_url_alert_message" = "Enter Nightscout server URL, which has a pump connected.";
+"settings_pump_user_nightscout_url_alert_cancel_button" = "Cancel";
+"settings_pump_user_nightscout_url_alert_confirm_button" = "Connect";
+"settings_pump_user_connection_error_general" = "Can't connect to the specific Nightscout server.";
+"settings_pump_user_connection_error_no_device" = "Connection to Nightscout was successful, but no device info was found. Check that you connected your device to this server.";
+"settings_pump_user_connection_error_no_pump" = "Connection to Nightscout was successful, but no pump was found. Check that you connected your pump to this server.";
+"settings_pump_user_connection_error_pump_suspended" = "Connection to Nightscout was successful and pump was found, but seems like it is suspended. Please check that the pump is working and is displayed correctly in Nightscout.";
+"settings_pump_user_connection_successful" = "Your pump was successfully connected!";
+"settings_pump_user_unpair_alert_title" = "Unpair pump";
+"settings_pump_user_unpair_alert_message" = "Are you sure you want to unpair this pump? This action will remove all your current pump data.";
+"settings_pump_user_unpair_alert_confirm_button" = "Unpair";
+"settings_pump_user_unpair_alert_cancel_button" = "Cancel";
 
 // Bluetooth Errors
 "bluetooth_error_title" = "Transmitter Service Error";
@@ -503,7 +520,7 @@ This setting will be applied to all future sensors";
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Greetings";
 "initial_welcome_large_welcome_message" = "Welcome to xDrip for iOS!";
-"initial_welcome_small_welcome_message" = "Seems like this is yout first time in xDrip. Do you want us to guide you through the initial setup process?";
+"initial_welcome_small_welcome_message" = "Seems like this is your first time in xDrip. Do you want us to guide you through the initial setup process?";
 "initial_welcome_start_button" = "Begin Initial Setup";
 "initial_welcome_skip_button" = "Skip";
 

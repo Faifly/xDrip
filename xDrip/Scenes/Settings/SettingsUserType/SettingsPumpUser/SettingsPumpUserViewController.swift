@@ -73,6 +73,7 @@ class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplay
     
     private func setupUI() {
         infoLabel.text = "settings_pump_user_info_label_text".localized
+        tableView.registerNib(type: BaseSettingsDisclosureCell.self)
     }
     
     private func displayNonSynced() {
@@ -114,7 +115,7 @@ class SettingsPumpUserViewController: NibViewController, SettingsPumpUserDisplay
 }
 
 extension SettingsPumpUserViewController: UITableViewDataSource, UITableViewDelegate {
-    private enum CellType: Int, Case {
+    private enum CellType: Int, CaseIterable {
         case nightscoutURL
         case pumpID
         case manufacturer
@@ -123,6 +124,58 @@ extension SettingsPumpUserViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return CellType.allCases.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(ofType: BaseSettingsDisclosureCell.self, for: indexPath)
+        switch CellType.allCases[indexPath.row] {
+        case .nightscoutURL:
+            cell.configure(
+                mainText: "settings_pump_user_nightscout_url_cell_title".localized,
+                detailText: viewModel?.nightscoutURL,
+                showDisclosureIndicator: false,
+                detailTextColor: nil,
+                isLoading: false
+            )
+            
+        case .pumpID:
+            cell.configure(
+                mainText: "settings_pump_user_pump_id_cell_title".localized,
+                detailText: viewModel?.pumpID,
+                showDisclosureIndicator: false,
+                detailTextColor: nil,
+                isLoading: false
+            )
+            
+        case .manufacturer:
+            cell.configure(
+                mainText: "settings_pump_user_pump_manufacturer_cell_title".localized,
+                detailText: viewModel?.manufacturer,
+                showDisclosureIndicator: false,
+                detailTextColor: nil,
+                isLoading: false
+            )
+            
+        case .model:
+            cell.configure(
+                mainText: "settings_pump_user_pump_model_cell_title".localized,
+                detailText: viewModel?.model,
+                showDisclosureIndicator: false,
+                detailTextColor: nil,
+                isLoading: false
+            )
+            
+        case .connectionDate:
+            cell.configure(
+                mainText: "settings_pump_user_pump_connection_date_cell_title".localized,
+                detailText: viewModel?.connectionDate,
+                showDisclosureIndicator: false,
+                detailTextColor: nil,
+                isLoading: false
+            )
+        }
+        
+        return cell
     }
 }

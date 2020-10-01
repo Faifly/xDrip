@@ -13,6 +13,10 @@
 import UIKit
 
 protocol SettingsPumpUserRoutingLogic {
+    func inputNightscoutURL(callback: @escaping (String?) -> Void)
+    func showConnectionTestingAlert()
+    func finishConnectionTestingAlert(message: String, icon: UIImage?)
+    func showUnpairConfirmation(callback: @escaping () -> Void)
 }
 
 protocol SettingsPumpUserDataPassing {
@@ -23,6 +27,64 @@ final class SettingsPumpUserRouter: SettingsPumpUserRoutingLogic, SettingsPumpUs
     weak var viewController: SettingsPumpUserViewController?
     weak var dataStore: SettingsPumpUserDataStore?
     
+    private weak var popUpController: PopUpViewController?
+    
     // MARK: Routing
     
+    func inputNightscoutURL(callback: @escaping (String?) -> Void) {
+        let alert = UIAlertController(
+            title: "settings_pump_user_nightscout_url_alert_title".localized,
+            message: "settings_pump_user_nightscout_url_alert_message".localized,
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(
+            title: "settings_pump_user_nightscout_url_alert_cancel_button".localized,
+            style: .cancel
+        )
+        alert.addAction(cancelAction)
+        
+        let confirmAction = UIAlertAction(
+            title: "settings_pump_user_nightscout_url_alert_confirm_button".localized,
+            style: .default) { _ in
+            callback(alert.textFields?.first?.text)
+        }
+        alert.addAction(confirmAction)
+        
+        alert.addTextField { textField in
+            textField.keyboardType = .URL
+        }
+        
+        viewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showConnectionTestingAlert() {
+        let popUpController = PopUpViewController()
+        viewController?.present(popUpController, animated: true, completion: nil)
+        self.popUpController = popUpController
+    }
+    
+    func finishConnectionTestingAlert(message: String, icon: UIImage?) {
+        popUpController?.presentFinishAlert(message: message, icon: icon ?? UIImage())
+    }
+    
+    func showUnpairConfirmation(callback: @escaping () -> Void) {
+        let alert = UIAlertController(
+            title: "settings_pump_user_unpair_alert_title".localized,
+            message: "settings_pump_user_unpair_alert_message".localized,
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "settings_pump_user_unpair_alert_cancel_button".localized, style: .cancel)
+        alert.addAction(cancelAction)
+        
+        let confirmAction = UIAlertAction(
+            title: "settings_pump_user_unpair_alert_confirm_button".localized,
+            style: .destructive) { _ in
+            callback()
+        }
+        alert.addAction(confirmAction)
+        
+        viewController?.present(alert, animated: true, completion: nil)
+    }
 }

@@ -20,7 +20,7 @@ final class EntriesListInsulinPersistenceWorker: EntriesListEntryPersistenceWork
         switch type {
         case .bolus:
             insulinEntries = InsulinEntriesWorker.fetchAllBolusEntries()
-        case .basal:
+        case .basal, .pumpBasal:
             insulinEntries = InsulinEntriesWorker.fetchAllBasalEntries()
         }
         return insulinEntries

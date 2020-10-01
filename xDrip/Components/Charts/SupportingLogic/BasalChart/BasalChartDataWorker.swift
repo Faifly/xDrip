@@ -12,8 +12,7 @@ import AKUtils
 enum BasalChartDataWorker {
     static func fetchBasalData(for hours: Int) -> [InsulinEntry] {
         let minimumDate = Date() - TimeInterval(hours) * .secondsPerHour
-        let all = InsulinEntriesWorker.fetchAllBasalEntries()
-        return all.filter { $0.date >=? minimumDate && $0.isValid }
+        return fetchAllBasalDataForCurrentMode().filter { $0.date >=? minimumDate && $0.isValid }
     }
     
     static func fetchBasalData(for date: Date) -> [InsulinEntry] {
@@ -27,10 +26,20 @@ enum BasalChartDataWorker {
         }
     }
     
+    private static func fetchAllBasalDataForCurrentMode() -> [InsulinEntry] {
+        if User.current.settings.injectionType == .pen {
+            return InsulinEntriesWorker.fetchAllBasalEntries()
+        } else if User.current.settings.injectionType == .pump {
+            return InsulinEntriesWorker.fetchAllPumpBasalEntries()
+        } else {
+            return []
+        }
+    }
+    
     static func getBasalValueForDate(date: Date) -> Double {
         let minimumDate = date - .secondsPerDay * 3.0
         guard date >= minimumDate else { return 0.0 }
-        let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate &&
+        let all = fetchAllBasalDataForCurrentMode().filter({ $0.date >=? minimumDate &&
             $0.date <=? date && $0.isValid })
         
         guard !all.isEmpty else { return 0.0 }
@@ -131,7 +140,7 @@ enum BasalChartDataWorker {
     
     static func calculateChartValues(for hours: Int) -> [InsulinEntry] {
         let minimumDate = Date() - TimeInterval(hours) * .secondsPerHour
-        let all = InsulinEntriesWorker.fetchAllBasalEntries().filter({ $0.date >=? minimumDate &&
+        let all = fetchAllBasalDataForCurrentMode().filter({ $0.date >=? minimumDate &&
             $0.isValid })
         
         var points = [InsulinEntry]()

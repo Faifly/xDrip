@@ -9,6 +9,8 @@
 import Foundation
 import RealmSwift
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class Settings: Object {
     @objc private(set) dynamic var chart: ChartSettings!
     @objc private(set) dynamic var alert: AlertSettings!

@@ -682,7 +682,10 @@
 		58FFBC2F24A765F2003D2DE6 /* InitialSetupFinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC2D24A765F2003D2DE6 /* InitialSetupFinishViewController.swift */; };
 		58FFBC3024A765F2003D2DE6 /* InitialSetupFinishViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FFBC2E24A765F2003D2DE6 /* InitialSetupFinishViewController.xib */; };
 		58FFBC3224AA1A4A003D2DE6 /* LocalizedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FFBC3124AA1A4A003D2DE6 /* LocalizedTextField.swift */; };
+		914DAF2A2524D4F10032108E /* CDeviceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914DAF292524D4F10032108E /* CDeviceStatus.swift */; };
 		914E31C12503D47E00ED0391 /* PumpSyncSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914E31C02503D47E00ED0391 /* PumpSyncSettings.swift */; };
+		91B2ED032523A4C800A8C3C1 /* PumpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2ED022523A4C800A8C3C1 /* PumpService.swift */; };
+		91CE50F82525D18100E60457 /* CPumpBasalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE50F72525D18100E60457 /* CPumpBasalEntry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1389,7 +1392,10 @@
 		58FFBC2D24A765F2003D2DE6 /* InitialSetupFinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupFinishViewController.swift; sourceTree = "<group>"; };
 		58FFBC2E24A765F2003D2DE6 /* InitialSetupFinishViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupFinishViewController.xib; sourceTree = "<group>"; };
 		58FFBC3124AA1A4A003D2DE6 /* LocalizedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedTextField.swift; sourceTree = "<group>"; };
+		914DAF292524D4F10032108E /* CDeviceStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDeviceStatus.swift; sourceTree = "<group>"; };
 		914E31C02503D47E00ED0391 /* PumpSyncSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSyncSettings.swift; sourceTree = "<group>"; };
+		91B2ED022523A4C800A8C3C1 /* PumpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpService.swift; sourceTree = "<group>"; };
+		91CE50F72525D18100E60457 /* CPumpBasalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPumpBasalEntry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3197,6 +3203,7 @@
 		588584A1248E76C700C3F74C /* CloudSync */ = {
 			isa = PBXGroup;
 			children = (
+				914DAF282524D4DF0032108E /* Pump */,
 				58FFBC1924A49EAD003D2DE6 /* Codables */,
 				588584A2248E76DF00C3F74C /* NightscoutService.swift */,
 				0A6B05D7250B69B300F8238E /* NightscoutRequestCompleter.swift */,
@@ -3788,6 +3795,16 @@
 			path = InitialSetupFinishViewController;
 			sourceTree = "<group>";
 		};
+		914DAF282524D4DF0032108E /* Pump */ = {
+			isa = PBXGroup;
+			children = (
+				91B2ED022523A4C800A8C3C1 /* PumpService.swift */,
+				914DAF292524D4F10032108E /* CDeviceStatus.swift */,
+				91CE50F72525D18100E60457 /* CPumpBasalEntry.swift */,
+			);
+			path = Pump;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -4135,6 +4152,7 @@
 				5805C9AD24389230002AFA1B /* DexcomG6SensorDataRxMessage.swift in Sources */,
 				58B5FD55241910BD00DB857D /* SettingsRootViewController.swift in Sources */,
 				2C4ABF02248A7EB5001ED694 /* FoodTextInputTableViewCell.swift in Sources */,
+				91CE50F82525D18100E60457 /* CPumpBasalEntry.swift in Sources */,
 				5805CA17243892D6002AFA1B /* InitialSetupDexcomG6SensorAgeWorker.swift in Sources */,
 				5844325D243CD8C300282A6C /* AlertConfiguration.swift in Sources */,
 				58F4CC83243BA2110053D17C /* DebugLogPresenter.swift in Sources */,
@@ -4160,6 +4178,7 @@
 				580E4BD0243F736D00565EDE /* SettingsModeFollowerModels.swift in Sources */,
 				580E4CF22440BC6300565EDE /* MockedBluetoothServiceConfiguration.swift in Sources */,
 				580E4B9C243F721500565EDE /* NightscoutCloudConfigurationViewController.swift in Sources */,
+				91B2ED032523A4C800A8C3C1 /* PumpService.swift in Sources */,
 				5805C9A324389230002AFA1B /* DexcomG6PairRequestTxMessage.swift in Sources */,
 				5805CA1D243892D6002AFA1B /* InitialSetupViewController.swift in Sources */,
 				58B23C8D24BA33370033E6AD /* StatsBarsChart.swift in Sources */,
@@ -4281,6 +4300,7 @@
 				58F4CC86243BA2110053D17C /* DebugLogViewController.swift in Sources */,
 				5805CA1B243892D6002AFA1B /* InitialSetupRouter.swift in Sources */,
 				2C493C2324489ABF00F4A54B /* Settings+Notifications.swift in Sources */,
+				914DAF2A2524D4F10032108E /* CDeviceStatus.swift in Sources */,
 				0A0CA75C24A2232C00C63857 /* EntriesChartProvider.swift in Sources */,
 				580E4B8D243F71DC00565EDE /* SettingsCloudTypesRouter.swift in Sources */,
 				580E4B3F243E37E800565EDE /* BaseSettingsCellFactory.swift in Sources */,

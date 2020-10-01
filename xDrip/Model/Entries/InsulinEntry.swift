@@ -36,7 +36,8 @@ final class InsulinEntry: AbstractEntry, AbstractAbsorbableEntryProtocol, Treatm
          date: Date,
          type: InsulinType,
          externalID: String? = nil,
-         absorptionDuration: TimeInterval? = nil) {
+         absorptionDuration: TimeInterval? = nil,
+         duration: Double = 0.0) {
         super.init(date: date, externalID: externalID)
         self.amount = amount
         self.type = type
@@ -66,7 +67,7 @@ final class InsulinEntry: AbstractEntry, AbstractAbsorbableEntryProtocol, Treatm
         switch type {
         case .bolus:
             InsulinEntriesWorker.updatedBolusEntry()
-        case .basal:
+        case .basal, .pumpBasal:
             InsulinEntriesWorker.updatedBasalEntry()
         }
     }

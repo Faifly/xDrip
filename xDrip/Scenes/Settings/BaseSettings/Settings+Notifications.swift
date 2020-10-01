@@ -32,6 +32,7 @@ extension NotificationCenter {
         case warmUp
         case downloadData
         case uploadTreatments
+        case pumpSync
     }
     
     func subscribe(forSettingsChange settings: [Setting],
@@ -83,6 +84,7 @@ fileprivate extension NotificationCenter.Setting {
         case .data: name = "data"
         case .downloadData: name = "downloadData"
         case .uploadTreatments: name = "uploadTreatments"
+        case .pumpSync: name = "pumpSync"
         }
         return Notification.Name(name)
     }

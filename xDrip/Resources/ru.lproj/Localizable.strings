@@ -431,7 +431,24 @@
 "settings_pump_user_info_label_text" = "Если у вас есть помпа, подключенная к сервису Nightscout, вы можете синхронизовать его с приложением, чтобы отобразить базальный инсулин.";
 "settings_pump_user_sync_button_title" = "Синхронизировать с NightScout";
 "settings_pump_user_unpair_button_title" = "Разорвать синхронизацию";
-
+"settings_pump_user_nightscout_url_cell_title" = "Сервер Nightscout";
+"settings_pump_user_pump_id_cell_title" = "Идентификатор помпы";
+"settings_pump_user_pump_manufacturer_cell_title" = "Производитель";
+"settings_pump_user_pump_model_cell_title" = "Модель";
+"settings_pump_user_pump_connection_date_cell_title" = "Дата подключения";
+"settings_pump_user_nightscout_url_alert_title" = "Сервер Nightscout";
+"settings_pump_user_nightscout_url_alert_message" = "Введите адрес сервера Nightscout, к которому подключена помпа.";
+"settings_pump_user_nightscout_url_alert_cancel_button" = "Отмена";
+"settings_pump_user_nightscout_url_alert_confirm_button" = "Подключиться";
+"settings_pump_user_connection_error_general" = "Не удалось подключиться к серверу Nightscout.";
+"settings_pump_user_connection_error_no_device" = "Подключение к серверу Nightscout было успешно, но не было найдено информации об устройстве. Проверьте, что вы подключили своё устройство к этому серверу.";
+"settings_pump_user_connection_error_no_pump" = "Подключение к серверу Nightscout было успешно, но не было найдено информации об помпе. Проверьте, что вы подключили свою помпу к этому серверу.";
+"settings_pump_user_connection_error_pump_suspended" = "Подключение к серверу Nightscout было успешно и помпа была найдена, но она приостановлена. Проверьте, что помпа работает, подключена к Nightscout и отображается корректно.";
+"settings_pump_user_connection_successful" = "Помпа была подключена";
+"settings_pump_user_unpair_alert_title" = "Отключиться от помпы";
+"settings_pump_user_unpair_alert_message" = "Вы уверены, что хотите отключиться от помпы? Это действие удалит все данные об этой помпе.";
+"settings_pump_user_unpair_alert_confirm_button" = "Отключиться";
+"settings_pump_user_unpair_alert_cancel_button" = "Отмена";
 
 // Bluetooth Errors
 "bluetooth_error_title" = "Ошибка Сервиса Датчиков";

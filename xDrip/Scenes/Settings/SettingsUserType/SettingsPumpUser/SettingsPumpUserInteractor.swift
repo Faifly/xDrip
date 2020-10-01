@@ -24,6 +24,12 @@ final class SettingsPumpUserInteractor: SettingsPumpUserBusinessLogic, SettingsP
     var presenter: SettingsPumpUserPresentationLogic?
     var router: SettingsPumpUserRoutingLogic?
     
+    private let pumpService: PumpServiceLogic
+    
+    init() {
+        pumpService = PumpService()
+    }
+    
     // MARK: Do something
     
     func doLoad(request: SettingsPumpUser.Load.Request) {
@@ -34,6 +40,30 @@ final class SettingsPumpUserInteractor: SettingsPumpUserBusinessLogic, SettingsP
     }
     
     func doSync(request: SettingsPumpUser.Sync.Request) {
+        if User.current.settings.pumpSync.isEnabled {
+            router?.showUnpairConfirmation { [weak self] in
+                self?.unpairPump()
+            }
+        } else {
+            router?.inputNightscoutURL(callback: { [weak self] url in
+                guard let urlString = url else { return }
+                guard let url = URL(string: urlString) else { return }
+                guard let self = self else { return }
+                self.router?.showConnectionTestingAlert()
+                self.pumpService.connectToNightscoutPump(nightscoutURL: url) { [weak self] info, error in
+                    guard let self = self else { return }
+                    guard let info = info, error == nil else {
+                        let errorMessage = error?.localizedDescription ?? ""
+                        self.router?.finishConnectionTestingAlert(
+                            message: errorMessage,
+                            icon: UIImage(named: "icon_error")
+                        )
+                        return
+                    }
+                    self.handleSuccessfulConnection(info, url: url.absoluteString)
+                }
+            })
+        }
     }
     
     // MARK: Logic
@@ -41,5 +71,38 @@ final class SettingsPumpUserInteractor: SettingsPumpUserBusinessLogic, SettingsP
     private func updateState() {
         let response = SettingsPumpUser.UpdateState.Response(settings: User.current.settings.pumpSync)
         presenter?.presentState(response: response)
+    }
+    
+    private func handleSuccessfulConnection(_ info: PumpServiceConnectionInfo, url: String?) {
+        router?.finishConnectionTestingAlert(
+            message: "settings_pump_user_connection_successful".localized,
+            icon: UIImage(named: "icon_success")
+        )
+        
+        let settings = User.current.settings.pumpSync
+        settings?.updateModel(info.model)
+        settings?.updateManufacturer(info.manufacturer)
+        settings?.updateIsEnabled(true)
+        settings?.updateConnectionDate(Date())
+        settings?.updatePumpID(info.pumpID)
+        settings?.updateNightscoutURL(url)
+        
+        updateState()
+        
+        NotificationCenter.default.postSettingsChangeNotification(setting: .pumpSync)
+    }
+    
+    private func unpairPump() {
+        let settings = User.current.settings.pumpSync
+        settings?.updateModel(nil)
+        settings?.updateManufacturer(nil)
+        settings?.updateIsEnabled(false)
+        settings?.updateConnectionDate(nil)
+        settings?.updatePumpID(nil)
+        settings?.updateNightscoutURL(nil)
+        
+        updateState()
+        
+        NotificationCenter.default.postSettingsChangeNotification(setting: .pumpSync)
     }
 }

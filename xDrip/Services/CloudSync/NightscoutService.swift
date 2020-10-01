@@ -29,6 +29,16 @@ final class NightscoutService {
             }
     }
     
+    private lazy var pumpSyncObserver: [Any] = NotificationCenter.default.subscribe(
+        forSettingsChange: [.pumpSync]) {
+            guard let settings = User.current.settings.pumpSync else { return }
+            if settings.isEnabled {
+                self.startFetchingPumpData()
+            } else {
+                self.stopFetchingPumpData()
+            }
+    }
+    
     private lazy var downloadDataSettingsObserver: [Any] = NotificationCenter.default.subscribe(
         forSettingsChange: [.downloadData]) {
             guard let settings = User.current.settings.nightscoutSync else { return }
@@ -47,8 +57,10 @@ final class NightscoutService {
             }
     }
     private lazy var lastFollowerFetchTime = GlucoseReading.allFollower.last?.date
+    private lazy var pumpService: PumpServiceLogic = PumpService()
     private var followerFetchTimer: Timer?
     private var treatmentsFetchTimer: Timer?
+    private var pumpFetchTimer: Timer?
     private let requestFactory: UploadRequestFactoryLogic
     
     var isPaused = false
@@ -64,6 +76,10 @@ final class NightscoutService {
         
         if let settings = User.current.settings.nightscoutSync, settings.downloadData {
             startFetchingTreatments()
+        }
+        
+        if User.current.settings.pumpSync.isEnabled {
+            startFetchingPumpData()
         }
         
         reachability?.whenReachable = { [weak self] reachability in
@@ -349,7 +365,7 @@ final class NightscoutService {
     }
     
     private func startFetchingTreatments() {
-        LogController.log(message: "[NighscoutService]: Started fetching follower data.", type: .info)
+        LogController.log(message: "[NighscoutService]: Started fetching treatments data.", type: .info)
         treatmentsFetchTimer = Timer.scheduledTimer(
             withTimeInterval: 60.0,
             repeats: true) { _ in
@@ -358,6 +374,22 @@ final class NightscoutService {
                 }
         }
         fetchTreatments()
+    }
+    
+    private func startFetchingPumpData() {
+        LogController.log(message: "[NighscoutService]: Started fetching pump data.", type: .info)
+        pumpFetchTimer = Timer.scheduledTimer(withTimeInterval: 120.0, repeats: true, block: { _ in
+            if User.current.settings.pumpSync.isEnabled {
+                self.pumpService.fetchPumpData()
+            }
+        })
+        pumpService.fetchPumpData()
+    }
+    
+    private func stopFetchingPumpData() {
+        LogController.log(message: "[NighscoutService]: Stopped fetching pump data.", type: .info)
+        pumpFetchTimer?.invalidate()
+        pumpFetchTimer = nil
     }
     
     private func stopFetchingFollowerData() {
