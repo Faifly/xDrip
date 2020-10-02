@@ -63,6 +63,8 @@ class DebugLogViewController: NibViewController, DebugLogDisplayLogic {
     // MARK: Do something
     
     private func doLoad() {
+        setupUI()
+        
         let request = DebugLog.Load.Request()
         interactor?.doLoad(request: request)
     }
@@ -70,6 +72,10 @@ class DebugLogViewController: NibViewController, DebugLogDisplayLogic {
     // MARK: Display
     
     func displayLoad(viewModel: DebugLog.Load.ViewModel) {        
+    }
+    
+    func setupUI() {
+        title = "settings_root_debug_logs_title".localized
     }
     
     func displayLogs(viewModel: DebugLog.UpdateLog.ViewModel) {
