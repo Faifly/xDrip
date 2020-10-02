@@ -32,6 +32,7 @@ enum EntriesList {
         
         struct ViewModel {
             let items: [SectionViewModel]
+            let editEnabled: Bool
         }
     }
     

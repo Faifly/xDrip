@@ -101,6 +101,7 @@ class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
         
         tableController.tableView = tableView
         tableController.reload(with: viewModel.items)
+        navigationItem.rightBarButtonItem?.isEnabled = viewModel.editEnabled
     }
     
     private func setupUI() {
