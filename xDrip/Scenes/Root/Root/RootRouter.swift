@@ -150,7 +150,8 @@ final class RootRouter: RootRoutingLogic, RootDataPassing {
     private func routeToBasalSettings() {
         let viewController = SettingsUserTypeRootViewController()
         viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
+            title: "close".localized,
+            style: .plain,
             target: self,
             action: #selector(dismissBasalSettings)
         )

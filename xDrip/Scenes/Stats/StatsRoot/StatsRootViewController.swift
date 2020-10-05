@@ -87,7 +87,8 @@ class StatsRootViewController: NibViewController, StatsRootDisplayLogic {
     
     private func setupNavigationItems() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
+            title: "close".localized,
+            style: .plain,
             target: self,
             action: #selector(onCancelButtonTap)
         )
