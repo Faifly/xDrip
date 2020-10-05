@@ -22,6 +22,8 @@ final class InitialSetupG6DeviceIDViewController: InitialSetupAbstractStepViewCo
             target: self,
             action: #selector(onSaveTap)
         )
+        
+        deviceIDTextField.delegate = self
     }
     
     @objc private func onSaveTap() {
@@ -59,5 +61,12 @@ final class InitialSetupG6DeviceIDViewController: InitialSetupAbstractStepViewCo
         alert.addAction(confirmAction)
         
         AlertPresenter.shared.presentAlert(alert)
+    }
+}
+
+extension InitialSetupG6DeviceIDViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
