@@ -157,8 +157,10 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
         
         if viewModel.timeInterval.hours > 24.0 {
             dateButtonsHeightConstraint.constant = 0.0
+            datePickerStackView.isHidden = true
         } else {
             dateButtonsHeightConstraint.constant = 30.0
+            datePickerStackView.isHidden = false
         }
     }
     

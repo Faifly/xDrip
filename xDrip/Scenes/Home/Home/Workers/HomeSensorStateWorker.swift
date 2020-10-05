@@ -1,5 +1,5 @@
 //
-//  HomeWarmUpWorker.swift
+//  HomeSensorStateWorker.swift
 //  xDrip
 //
 //  Created by Artem Kalmykov on 03.07.2020.
