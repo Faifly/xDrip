@@ -456,7 +456,7 @@ This setting will be applied to all future sensors";
 // Bluetooth Errors
 "bluetooth_error_title" = "Transmitter Service Error";
 "bluetooth_error_unknown" = "Unknown bluetooth error happened";
-"bluetooth_error_powered_off" = "Bluetooth is powerered off";
+"bluetooth_error_powered_off" = "Bluetooth is powered off. Please enable it in system settings and try again";
 "bluetooth_error_unauthorized" = "No Bluetooth access permissions";
 "bluetooth_error_unsupported" = "Bluetooth is not supported on this device";
 "bluetooth_error_alert_settings_button_title" = "Settings";
