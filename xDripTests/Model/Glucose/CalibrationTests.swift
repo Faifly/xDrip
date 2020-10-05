@@ -367,7 +367,7 @@ final class CalibrationTests: AbstractRealmTest {
         
         for index in 0..<30 {
             let filtered = 100.0 + Double(index) * 10.0
-            let unfiltered = filtered - 5.0
+            let unfiltered = filtered * 1000.0 - 5000.0
             let date = now - TimeInterval(index) * .secondsPerMinute * 5.0 - 1.0
             GlucoseReading.create(filtered: filtered, unfiltered: unfiltered, rssi: 0.0, date: date)
         }

@@ -141,8 +141,8 @@ final class GlucoseReading: Object {
         let reading = GlucoseReading()
         reading.externalID = UUID().uuidString
         reading.calibration = Calibration.calibration(for: date)
-        reading.rawValue = unfiltered
-        reading.filteredValue = filtered
+        reading.rawValue = unfiltered / 1000.0
+        reading.filteredValue = filtered / 1000.0
         reading.date = date
         reading.timeSinceSensorStarted = date.timeIntervalSince1970 - sensorStarted.timeIntervalSince1970
         reading.rssi = rssi

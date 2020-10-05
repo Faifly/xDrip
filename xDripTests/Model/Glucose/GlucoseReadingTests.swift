@@ -127,7 +127,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         )
         CGMDevice.current.updateSensorIsStarted(true)
         
-        let reading1 = GlucoseReading.create(filtered: 140.0, unfiltered: 135.0, rssi: 0.0)!
+        let reading1 = GlucoseReading.create(filtered: 140000.0, unfiltered: 135000.0, rssi: 0.0)!
         XCTAssertNotNil(reading1)
         XCTAssert(reading1.filteredValue ~ 140.0)
         XCTAssert(reading1.rawValue ~ 135.0)
@@ -147,7 +147,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         XCTAssert(reading1.calculatedValueSlope ~ 0.0)
         XCTAssert(reading1.timeSinceSensorStarted ~~ .secondsPerDay)
         
-        let reading2 = GlucoseReading.create(filtered: 150.0, unfiltered: 145.0, rssi: 0.0)!
+        let reading2 = GlucoseReading.create(filtered: 150000.0, unfiltered: 145000.0, rssi: 0.0)!
         XCTAssertNotNil(reading2)
         XCTAssert(reading2.filteredValue ~ 150.0)
         XCTAssert(reading2.rawValue ~ 145.0)
@@ -167,7 +167,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         XCTAssert(reading2.calculatedValueSlope ~ 0.0)
         XCTAssert(reading2.timeSinceSensorStarted ~~ .secondsPerDay)
         
-        let reading3 = GlucoseReading.create(filtered: 160.0, unfiltered: 155.0, rssi: 0.0)!
+        let reading3 = GlucoseReading.create(filtered: 160000.0, unfiltered: 155000.0, rssi: 0.0)!
         XCTAssertNotNil(reading3)
         XCTAssert(reading3.filteredValue ~ 160.0)
         XCTAssert(reading3.rawValue ~ 155.0)

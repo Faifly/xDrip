@@ -96,7 +96,7 @@ final class EntriesListViewControllerTests: XCTestCase {
     func testDisplayLoad() {
         // Given
         let items = generateDummyData()
-        let viewModel = EntriesList.UpdateData.ViewModel(items: items)
+        let viewModel = EntriesList.UpdateData.ViewModel(items: items, editEnabled: false)
         
         // When
         loadView()
@@ -117,7 +117,7 @@ final class EntriesListViewControllerTests: XCTestCase {
         sut.interactor = spy
         
         let items = generateDummyData()
-        let viewModel = EntriesList.UpdateData.ViewModel(items: items)
+        let viewModel = EntriesList.UpdateData.ViewModel(items: items, editEnabled: true)
         
         // When
         loadView()
@@ -149,7 +149,7 @@ final class EntriesListViewControllerTests: XCTestCase {
         sut.interactor = spy
         
         let items = generateDummyData()
-        let viewModel = EntriesList.UpdateData.ViewModel(items: items)
+        let viewModel = EntriesList.UpdateData.ViewModel(items: items, editEnabled: false)
         
         // When
         loadView()

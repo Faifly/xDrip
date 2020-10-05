@@ -71,6 +71,7 @@ final class SettingsRootViewControllerTests: XCTestCase {
         var toUserTypeCalled = false
         var toSensorCalled = false
         var toNightscoutServiceCalled = false
+        var toDebugLogsCalled = false
         
         func dismissSelf() { }
         
@@ -112,6 +113,10 @@ final class SettingsRootViewControllerTests: XCTestCase {
         
         func routeToNightscoutService() {
             toNightscoutServiceCalled = true
+        }
+        
+        func routeToDebugLogs() {
+            toDebugLogsCalled = true
         }
     }
     

@@ -58,6 +58,7 @@ final class SettingsRootInteractor: SettingsRootBusinessLogic, SettingsRootDataS
         case .rangeSelection: router?.routeToRangeSelection()
         case .sensor: router?.routeToSensor()
         case .nightscoutService: router?.routeToNightscoutService()
+        case .debugLogs: router?.routeToDebugLogs()
         default: break
         }
     }
