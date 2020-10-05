@@ -24,7 +24,8 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
     func presentLoad(response: SettingsRoot.Load.Response) {
         var sections = [
             createApplicationSetupSection(response: response),
-            createProfileSetupSection(response: response)
+            createProfileSetupSection(response: response),
+            createDebugSection(response: response)
         ]
         
         if response.injectionType == .pump {
@@ -110,6 +111,18 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
         )
     }
     
+    func createDebugSection(response: SettingsRoot.Load.Response) -> BaseSettings.Section {
+        let cells: [BaseSettings.Cell] = [
+            createDisclosureCell(.debugLogs, detailText: nil, selectionHandler: response.selectionHandler)
+        ]
+        
+        return .normal(
+            cells: cells,
+            header: "settings_root_debug_section_header".localized,
+            footer: nil
+        )
+    }
+    
     private func createDisclosureCell(
         _ field: SettingsRoot.Field,
         detailText: String?,
@@ -171,6 +184,7 @@ private extension SettingsRoot.Field {
         case .carbsDurationTime: return "settings_root_carbs_duration_time_title".localized
         case .insulinDurationTime: return "settings_root_insulin_duration_time_title".localized
         case .nightscoutService: return "settings_root_nightscout_pump_title".localized
+        case .debugLogs: return "settings_root_debug_logs_title".localized
         }
     }
 }

@@ -64,6 +64,7 @@ final class SettingsRootInteractorTests: XCTestCase {
         func routeToUserType() { }
         func routeToSensor() { }
         func routeToNightscoutService() {}
+        func routeToDebugLogs() {}
     }
     
     // MARK: Tests

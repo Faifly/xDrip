@@ -139,6 +139,8 @@
 
 "settings_root_user_type_pen" = "Pen User";
 "settings_root_user_type_pump" = "Pump User";
+"settings_root_debug_section_header" = "DEBUG";
+"settings_root_debug_logs_title" = "Debug Logs";
 
 // Settings Chart
 "settings_chart_active_insulin" = "Active Insulin";

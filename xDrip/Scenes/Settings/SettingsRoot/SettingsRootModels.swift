@@ -28,6 +28,7 @@ enum SettingsRoot {
         case carbsDurationTime
         case insulinDurationTime
         case nightscoutService
+        case debugLogs
     }
     
     // MARK: Use cases

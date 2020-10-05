@@ -139,6 +139,8 @@
 
 "settings_root_user_type_pen" = "Ручка";
 "settings_root_user_type_pump" = "Помпа";
+"settings_root_debug_section_header" = "ОТЛАДКА";
+"settings_root_debug_logs_title" = "Логи отладки";
 
 // Settings Chart
 "settings_chart_active_insulin" = "Активный инсулин";

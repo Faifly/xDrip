@@ -24,6 +24,7 @@ protocol SettingsRootRoutingLogic {
     func routeToRangeSelection()
     func routeToSensor()
     func routeToNightscoutService()
+    func routeToDebugLogs()
 }
 
 protocol SettingsRootDataPassing {
@@ -77,6 +78,10 @@ final class SettingsRootRouter: SettingsRootRoutingLogic, SettingsRootDataPassin
     }
     
     func routeToNightscoutService() {
+    }
+    
+    func routeToDebugLogs() {
+        present(DebugLogViewController())
     }
     
     private func present(_ viewController: UIViewController) {
