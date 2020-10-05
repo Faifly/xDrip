@@ -33,7 +33,8 @@ final class EntriesListPresenter: EntriesListPresentationLogic {
         let title = "entries_list_data_section_title".localized
         
         let viewModel = EntriesList.UpdateData.ViewModel(
-            items: [EntriesList.SectionViewModel(title: title, items: cellViewModel)]
+            items: [EntriesList.SectionViewModel(title: title, items: cellViewModel)],
+            editEnabled: !entries.isEmpty
         )
         viewController?.displayUpdateData(viewModel: viewModel)
     }
