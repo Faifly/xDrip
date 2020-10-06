@@ -42,7 +42,7 @@ final class StatsBarsChart: BaseChartView {
         translatesAutoresizingMaskIntoConstraints = false
         
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleTouch(_:)))
-        recognizer.minimumPressDuration = 0.0
+        recognizer.minimumPressDuration = 0.2
         addGestureRecognizer(recognizer)
         
         chartInsets.top = 0.0

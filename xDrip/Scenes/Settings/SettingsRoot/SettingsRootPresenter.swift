@@ -24,8 +24,7 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
     func presentLoad(response: SettingsRoot.Load.Response) {
         var sections = [
             createApplicationSetupSection(response: response),
-            createProfileSetupSection(response: response),
-            createDebugSection(response: response)
+            createProfileSetupSection(response: response)
         ]
         
         if response.injectionType == .pump {
@@ -33,6 +32,10 @@ final class SettingsRootPresenter: SettingsRootPresentationLogic {
                 createServicesSection(response: response)
             )
         }
+        
+        sections.append(
+            createDebugSection(response: response)
+        )
         
         let tableViewModel = BaseSettings.ViewModel(sections: sections)
         

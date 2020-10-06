@@ -181,7 +181,7 @@ final class SettingsRootViewControllerTests: XCTestCase {
             return
         }
         
-        XCTAssertTrue(tableView.numberOfSections == 2)
+        XCTAssertTrue(tableView.numberOfSections == 3)
         XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 6)
         XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 5)
         
@@ -240,7 +240,7 @@ final class SettingsRootViewControllerTests: XCTestCase {
         User.current.settings.updateInjectionType(.pump)
         NotificationCenter.default.postSettingsChangeNotification(setting: .injectionType)
         // Then
-        XCTAssertTrue(tableView.numberOfSections == 3)
+        XCTAssertTrue(tableView.numberOfSections == 4)
         XCTAssertTrue(tableView.numberOfRows(inSection: 2) == 1)
         
         // When

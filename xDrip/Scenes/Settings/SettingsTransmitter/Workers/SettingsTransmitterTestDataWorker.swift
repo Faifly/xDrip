@@ -21,7 +21,7 @@ protocol SettingsTransmitterTestDataWorkerLogic {
 }
 
 final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorkerLogic {
-    private let glucoseStepMin = 0.1
+    private let glucoseStepMin = 0.1 * 1000.0
     
     func generateTestData(configuration: SettingsTransmitter.TestBackfillConfiguration,
                           callback: @escaping (Int, Int) -> Void) {
@@ -47,7 +47,7 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
         var currentOffset = now.timeIntervalSince1970 - backfillInterval
         
         let readingsAmount = Int(backfillInterval / readingsInterval)
-        var currentGlucose = configuration.minGlucose
+        var currentGlucose = configuration.minGlucose * 1000
         var increment = 1.0
         
         CGMDevice.current.sensorStartDate = Date(timeIntervalSince1970: currentOffset - .secondsPerHour * 3.0)
@@ -66,8 +66,8 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
             
             if index == 1 {
                 try? Calibration.createInitialCalibration(
-                    glucoseLevel1: currentGlucose,
-                    glucoseLevel2: currentGlucose + 1.0,
+                    glucoseLevel1: currentGlucose / 1000.0,
+                    glucoseLevel2: currentGlucose / 1000.0 + 1.0,
                     date1: Date(timeIntervalSince1970: currentOffset),
                     date2: Date(timeIntervalSince1970: currentOffset)
                 )
@@ -75,12 +75,12 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
             
             currentOffset += readingsInterval
             
-            let step = Double.random(in: glucoseStepMin...configuration.maxStepDeviation)
+            let step = Double.random(in: glucoseStepMin...configuration.maxStepDeviation * 1000.0)
             
             if configuration.isChaotic {
-                if currentGlucose + configuration.maxStepDeviation > configuration.maxGlucose {
+                if currentGlucose + configuration.maxStepDeviation * 1000.0 > configuration.maxGlucose * 1000.0 {
                     currentGlucose -= step
-                } else if currentGlucose - configuration.maxStepDeviation < configuration.minGlucose {
+                } else if currentGlucose - configuration.maxStepDeviation * 1000.0 < configuration.minGlucose * 1000.0 {
                     currentGlucose += step
                 } else {
                     if Bool.random() {
@@ -92,9 +92,9 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
             } else {
                 currentGlucose += increment * step
                 
-                if currentGlucose >= configuration.maxGlucose && increment > 0 {
+                if currentGlucose >= configuration.maxGlucose * 1000.0 && increment > 0 {
                     increment = -1.0
-                } else if currentGlucose <= configuration.minGlucose && increment < 0 {
+                } else if currentGlucose <= configuration.minGlucose * 1000.0 && increment < 0 {
                     increment = 1.0
                 }
             }
