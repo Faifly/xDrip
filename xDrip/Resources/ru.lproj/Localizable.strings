@@ -499,6 +499,8 @@
 "notification_pairing_request_body" = "Пожалуйста, разблокируйте свой телефон и примите запрос на подключение от вашего датчика в течении 30ти секунд";
 "notification_initial_calibration_title" = "Начальная калибровка";
 "notification_initial_calibration_body" = "Сенсор теперь готов получить начальную калибровку";
+"notification_calibration_title" = "Начальная калибровка";
+"notification_calibration_body" = "Калибровка необходима для корректировки точности ваших считываний";
 "notification_fast_rise_title" = "Быстрый рост уровня сахара";
 "notification_fast_rise_body" = "Уровень сахара в вашей крови быстро растет";
 "notification_urgent_high_title" = "Очень высокий уровень сахара";

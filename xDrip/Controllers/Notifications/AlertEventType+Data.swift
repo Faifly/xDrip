@@ -22,7 +22,7 @@ extension AlertEventType {
         case .urgentLow: return "notification_urgent_low_title".localized
         case .missedReadings: return "notification_missed_readings_title".localized
         case .phoneMuted: return "notification_phone_muted_title".localized
-        case .calibrationRequest: return "Calibration Request"
+        case .calibrationRequest: return "notification_calibration_title".localized
         }
     }
     
@@ -39,7 +39,7 @@ extension AlertEventType {
         case .urgentLow: return "notification_urgent_low_body".localized
         case .missedReadings: return "notification_missed_readings_body".localized
         case .phoneMuted: return "notification_phone_muted_body".localized
-        case .calibrationRequest: return "calibration request body"
+        case .calibrationRequest: return "notification_calibration_body".localized
         }
     }
     
