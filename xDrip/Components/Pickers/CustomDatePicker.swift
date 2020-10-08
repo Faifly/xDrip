@@ -25,11 +25,9 @@ final class CustomDatePicker: UIDatePicker, PickerView {
     private func commonInit() {
         addTarget(self, action: #selector(handleValueChanged), for: .valueChanged)
         
-        #if targetEnvironment(macCatalyst)
-        if #available(macCatalyst 13.4, *) {
+        if #available(iOS 13.4, *) {
             preferredDatePickerStyle = .wheels
         }
-        #endif
     }
     
     @objc private func handleValueChanged() {
