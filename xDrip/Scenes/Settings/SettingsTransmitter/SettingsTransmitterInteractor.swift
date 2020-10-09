@@ -202,9 +202,11 @@ final class SettingsTransmitterInteractor: SettingsTransmitterBusinessLogic, Set
         router?.showStopTransmitterConfirmation { [weak self] in
             self?.stopScanning()
             CGMDevice.current.updateBluetoothID(nil)
+            CGMDevice.current.updateSensorIsStarted(false)
             CGMDevice.current.resetAllMetadata()
             self?.determineState()
             self?.updateData()
+            NotificationCenter.default.postSettingsChangeNotification(setting: .sensorStarted)
         }
     }
 }
