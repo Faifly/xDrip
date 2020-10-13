@@ -14,6 +14,7 @@ import UIKit
 
 protocol InitialSetupBusinessLogic {
     func doLoad(request: InitialSetup.Load.Request)
+    func doWarningAgreed(request: InitialSetup.WarningAgreed.Request)
     func doBeginSetup(request: InitialSetup.BeginSetup.Request)
     func doSkipSetup(request: InitialSetup.SkipSetup.Request)
     func doSelectDeviceMode(request: InitialSetup.SelectDeviceMode.Request)
@@ -46,6 +47,12 @@ final class InitialSetupInteractor: InitialSetupBusinessLogic, InitialSetupDataS
             stepProvidingWorker = InitialSetupGenericStepWorker()
         }
         
+        showNextStep()
+    }
+    
+    func doWarningAgreed(request: InitialSetup.WarningAgreed.Request) {
+        User.current.setIsWarningAgreed(true)
+        stepProvidingWorker?.completeStep(InitialSetup.GenericStep.warning)
         showNextStep()
     }
     
@@ -111,9 +118,13 @@ final class InitialSetupInteractor: InitialSetupBusinessLogic, InitialSetupDataS
     // MARK: Logic
     
     private func showNextStep() {
-        guard let viewController = stepProvidingWorker?.nextStep?.createViewController() else { return }
+        guard let nextStep = stepProvidingWorker?.nextStep else { return }
+        let viewController = nextStep.createViewController()
         viewController.interactor = self
-        router?.showNextScene(viewController)
+        
+        let clearStack = nextStep as? InitialSetup.GenericStep == InitialSetup.GenericStep.intro
+        
+        router?.showNextScene(viewController, clearStack: clearStack)
     }
     
     private func injectDeviceSpecificStepProvider() {

@@ -14,7 +14,7 @@ import UIKit
 
 protocol InitialSetupRoutingLogic {
     func dismissScene()
-    func showNextScene(_ viewController: UIViewController)
+    func showNextScene(_ viewController: UIViewController, clearStack: Bool)
 }
 
 protocol InitialSetupDataPassing {
@@ -31,9 +31,9 @@ final class InitialSetupRouter: InitialSetupRoutingLogic, InitialSetupDataPassin
         viewController?.dismiss(animated: true, completion: nil)
     }
     
-    func showNextScene(_ viewController: UIViewController) {
+    func showNextScene(_ viewController: UIViewController, clearStack: Bool = false) {
         guard let navigationController = self.viewController else { return }
-        if navigationController.viewControllers.isEmpty {
+        if navigationController.viewControllers.isEmpty || clearStack {
             navigationController.viewControllers = [viewController]
         } else {
             navigationController.pushViewController(viewController, animated: true)

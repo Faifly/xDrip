@@ -16,6 +16,7 @@ enum InitialSetup {
     // MARK: Models
     
     enum GenericStep {
+        case warning
         case intro
         case deviceMode
         case injectionType
@@ -28,6 +29,17 @@ enum InitialSetup {
     // MARK: Use cases
     
     enum Load {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
+    
+    enum WarningAgreed {
         struct Request {
         }
         
