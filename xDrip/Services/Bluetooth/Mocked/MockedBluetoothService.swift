@@ -53,12 +53,12 @@ final class MockedBluetoothService {
         }
         
         let deviationRange = config.glucoseMaximumEpsilon / 2.0
-        let deviation = Double.random(in: -deviationRange...deviationRange)
+        let deviation = Double.random(in: -deviationRange...deviationRange) * 1000.0
         var nextValue = previousGlucoseValue + deviation
         
         switch config.glucoseChangeMode {
         case .normalDeviation: break
-        case .continuousChange(let epsilon): nextValue += epsilon
+        case .continuousChange(let epsilon): nextValue += epsilon * 1000.0
         case .abnormalDeviation: nextValue += deviation
         }
         
@@ -71,7 +71,7 @@ extension MockedBluetoothService: CGMBluetoothService {
     func connect() {
         isStopped = false
         let config = MockedBluetoothServiceConfiguration.current
-        previousGlucoseValue = config.initialGlucose
+        previousGlucoseValue = config.initialGlucose * 1000.0
         DispatchQueue.main.asyncAfter(deadline: .now() + config.metadataReceiveDelay) { [weak self] in
             self?.generateMetadata()
             self?.generateGlucoseReading()
