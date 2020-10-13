@@ -19,6 +19,9 @@ final class InitialSetupGenericStepWorker: InitialSetupStepProvidingWorker {
         guard let step = step as? InitialSetup.GenericStep else { return }
         
         switch step {
+        case .warning:
+            currentStep = .intro
+            
         case .intro:
             currentStep = .deviceMode
             
@@ -52,12 +55,19 @@ final class InitialSetupGenericStepWorker: InitialSetupStepProvidingWorker {
         return currentStep
     }
     
+    init() {
+        if !User.current.isWarningAgreed {
+            currentStep = .warning
+        }
+    }
+    
     func initConnectionStep() {}
 }
 
 extension InitialSetup.GenericStep: InitialSetupStep {
     func createViewController() -> InitialSetupInteractable {
         switch self {
+        case .warning: return InitialSetupWarningViewController()
         case .intro: return InitialSetupIntroViewController()
         case .deviceMode: return InitialSetupDeviceModeViewController()
         case .injectionType: return InitialSetupInjectionTypeViewController()

@@ -49,7 +49,14 @@ final class User: Object {
     
     // MARK: Initial setup
     
+    @objc private(set) dynamic var isWarningAgreed = false
     @objc private(set) dynamic var isInitialSetupDone = false
+    
+    func setIsWarningAgreed(_ agreed: Bool) {
+        Realm.shared.safeWrite {
+            self.isWarningAgreed = agreed
+        }
+    }
     
     func setIsInitialSetupDone(_ done: Bool) {
         Realm.shared.safeWrite {

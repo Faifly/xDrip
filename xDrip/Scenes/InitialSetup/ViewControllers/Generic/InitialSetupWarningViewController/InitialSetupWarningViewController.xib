@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InitialSetupWarningViewController" customModule="xDrip" customModuleProvider="target">
+            <connections>
+                <outlet property="textView" destination="8Nc-Wq-3e9" id="GaB-Ok-Gf9"/>
+                <outlet property="understandSwitch" destination="QCI-4H-ewJ" id="Ecg-1Q-rpr"/>
+                <outlet property="view" destination="V0T-Mv-3It" id="rhM-ds-Zke"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="V0T-Mv-3It">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="1393"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nhd-Mg-Bcq">
+                    <rect key="frame" x="0.0" y="44" width="414" height="1315"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="8Nc-Wq-3e9">
+                            <rect key="frame" x="16" y="0.0" width="382" height="1150"/>
+                            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1150" id="aYd-2O-yTB"/>
+                            </constraints>
+                            <string key="text">Do NOT use or rely on this software or any associated materials for any medical purpose or decision.
+
+Do NOT rely on this system for any real-time alarms or time critical data.
+
+Do NOT use or rely on this system for treatment decisions or use as a substitute for professional healthcare judgement.
+
+All software and materials have been provided for informational purposes only as a proof of concept to assist possibilities for further research.
+
+No claims at all are made about fitness for any purpose and everything is provided "AS IS". Any part of the system can fail at any time.
+
+Always seek the advice of a qualified healthcare professional for any medical questions.
+
+Always follow your glucose-sensor or other device manufacturers' instructions when using any equipment; do not discontinue use of accompanying reader or receiver, other than as advised by your doctor.
+
+This software is not associated with or endorsed by any equipment manufacturer and all trademarks are those of their respective owners.
+
+Your use of this software is entirely at your own risk.
+
+No charge has been made by the developers for the use of this software.
+
+This is an open-source project which has been created by volunteers. The source code is published free and open-source for you to inspect and evaluate.
+
+By using this software and/or website you agree that you are over 18 years of age and have read, understood and agree to all of the above.
+</string>
+                            <color key="textColor" systemColor="labelColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HAZ-g5-z63">
+                            <rect key="frame" x="37.5" y="1166" width="339" height="40"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEy-s3-HL0" customClass="LocalizedButton" customModule="xDrip" customModuleProvider="target">
+                                    <rect key="frame" x="65" y="0.0" width="266" height="40"/>
+                                    <state key="normal" title="initial_warning_understand_and_agree"/>
+                                    <connections>
+                                        <action selector="onUnderstand" destination="-1" eventType="touchUpInside" id="pj2-o5-zMc"/>
+                                    </connections>
+                                </button>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="QCI-4H-ewJ">
+                                    <rect key="frame" x="8" y="4.5" width="51" height="31"/>
+                                    <connections>
+                                        <action selector="onSwitchToggle:" destination="-1" eventType="valueChanged" id="DtC-tV-uPN"/>
+                                    </connections>
+                                </switch>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="FEy-s3-HL0" firstAttribute="leading" secondItem="QCI-4H-ewJ" secondAttribute="trailing" constant="8" id="9Pb-5L-HCy"/>
+                                <constraint firstAttribute="trailing" secondItem="FEy-s3-HL0" secondAttribute="trailing" constant="8" id="Mp3-0n-FWd"/>
+                                <constraint firstItem="QCI-4H-ewJ" firstAttribute="leading" secondItem="HAZ-g5-z63" secondAttribute="leading" constant="8" id="QJz-oT-CAq"/>
+                                <constraint firstItem="FEy-s3-HL0" firstAttribute="top" secondItem="HAZ-g5-z63" secondAttribute="top" id="RK1-Qj-ggk"/>
+                                <constraint firstAttribute="bottom" secondItem="FEy-s3-HL0" secondAttribute="bottom" id="S62-kE-cfR"/>
+                                <constraint firstItem="QCI-4H-ewJ" firstAttribute="centerY" secondItem="FEy-s3-HL0" secondAttribute="centerY" id="Ztv-cW-7Pp"/>
+                                <constraint firstAttribute="height" constant="40" id="dpz-Ex-SlE"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="8Nc-Wq-3e9" firstAttribute="leading" secondItem="nhd-Mg-Bcq" secondAttribute="leading" constant="16" id="68J-va-8ac"/>
+                        <constraint firstItem="HAZ-g5-z63" firstAttribute="centerX" secondItem="nhd-Mg-Bcq" secondAttribute="centerX" id="FRn-MF-cUT"/>
+                        <constraint firstItem="HAZ-g5-z63" firstAttribute="top" secondItem="8Nc-Wq-3e9" secondAttribute="bottom" constant="16" id="JCH-wC-6HX"/>
+                        <constraint firstItem="8Nc-Wq-3e9" firstAttribute="top" secondItem="R5d-3K-EWr" secondAttribute="top" id="cBA-aa-0T1"/>
+                        <constraint firstAttribute="trailing" secondItem="8Nc-Wq-3e9" secondAttribute="trailing" constant="16" id="dnt-3d-jxW"/>
+                        <constraint firstItem="R5d-3K-EWr" firstAttribute="bottom" secondItem="HAZ-g5-z63" secondAttribute="bottom" constant="16" id="v7c-Xi-uaR"/>
+                    </constraints>
+                    <viewLayoutGuide key="contentLayoutGuide" id="R5d-3K-EWr"/>
+                    <viewLayoutGuide key="frameLayoutGuide" id="1ed-uX-xBd"/>
+                </scrollView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="n9n-ME-9aC"/>
+            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="8Nc-Wq-3e9" firstAttribute="width" secondItem="V0T-Mv-3It" secondAttribute="width" constant="-32" id="PCk-k8-edd"/>
+                <constraint firstItem="n9n-ME-9aC" firstAttribute="bottom" secondItem="nhd-Mg-Bcq" secondAttribute="bottom" id="b3S-6O-O32"/>
+                <constraint firstItem="n9n-ME-9aC" firstAttribute="trailing" secondItem="nhd-Mg-Bcq" secondAttribute="trailing" id="hmc-la-nL9"/>
+                <constraint firstItem="nhd-Mg-Bcq" firstAttribute="leading" secondItem="n9n-ME-9aC" secondAttribute="leading" id="oZh-rC-I24"/>
+                <constraint firstItem="nhd-Mg-Bcq" firstAttribute="top" secondItem="n9n-ME-9aC" secondAttribute="top" id="vTc-G1-OHg"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="53.623188405797109" y="-305.69196428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

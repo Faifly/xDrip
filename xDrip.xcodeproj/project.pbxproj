@@ -128,6 +128,8 @@
 		2C5B3F0A24533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */; };
 		2C5B3F0C2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */; };
 		2C5C64A624C700E10026B439 /* BasalChartProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C64A524C700E10026B439 /* BasalChartProvider.swift */; };
+		2C6964322534A30200DD8BF0 /* InitialSetupWarningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6964302534A30200DD8BF0 /* InitialSetupWarningViewController.swift */; };
+		2C6964332534A30200DD8BF0 /* InitialSetupWarningViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C6964312534A30200DD8BF0 /* InitialSetupWarningViewController.xib */; };
 		2C6DBE9E24A5EC3C00B0F33A /* 500ms-of-silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2C6DBE9D24A5EC3C00B0F33A /* 500ms-of-silence.mp3 */; };
 		2C6DBE9F24A5F02B00B0F33A /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C55FEF624A23B62006BB3EF /* RepeatingTimer.swift */; };
 		2C824A5F24CEE8C4000578D2 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C824A5E24CEE8C4000578D2 /* ReachabilityService.swift */; };
@@ -821,6 +823,8 @@
 		2C5B3F0924533FE500A5BBDD /* BaseSettingsViewControllerCoderTest.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BaseSettingsViewControllerCoderTest.storyboard; sourceTree = "<group>"; };
 		2C5B3F0B2453C18800A5BBDD /* BaseSettingsViewControllerCoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewControllerCoderTest.swift; sourceTree = "<group>"; };
 		2C5C64A524C700E10026B439 /* BasalChartProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasalChartProvider.swift; sourceTree = "<group>"; };
+		2C6964302534A30200DD8BF0 /* InitialSetupWarningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSetupWarningViewController.swift; sourceTree = "<group>"; };
+		2C6964312534A30200DD8BF0 /* InitialSetupWarningViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialSetupWarningViewController.xib; sourceTree = "<group>"; };
 		2C6DBE9D24A5EC3C00B0F33A /* 500ms-of-silence.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "500ms-of-silence.mp3"; sourceTree = "<group>"; };
 		2C824A5E24CEE8C4000578D2 /* ReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		2C87F045243E69C0002CF3D8 /* UView+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UView+Tests.swift"; sourceTree = "<group>"; };
@@ -1670,6 +1674,15 @@
 			path = TestHelpers;
 			sourceTree = "<group>";
 		};
+		2C6964232534998800DD8BF0 /* InitialSetupWarningViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2C6964302534A30200DD8BF0 /* InitialSetupWarningViewController.swift */,
+				2C6964312534A30200DD8BF0 /* InitialSetupWarningViewController.xib */,
+			);
+			path = InitialSetupWarningViewController;
+			sourceTree = "<group>";
+		};
 		2CBE1A812430F6EC003BE14E /* Logic */ = {
 			isa = PBXGroup;
 			children = (
@@ -1913,6 +1926,7 @@
 		5805C9E4243892D6002AFA1B /* Generic */ = {
 			isa = PBXGroup;
 			children = (
+				2C6964232534998800DD8BF0 /* InitialSetupWarningViewController */,
 				5805C9E5243892D6002AFA1B /* InitialSetupIntroViewController */,
 				5805C9EE243892D6002AFA1B /* InitialSetupDeviceModeViewController */,
 				5805C9F1243892D6002AFA1B /* InitialSetupInjectionTypeViewController */,
@@ -3947,6 +3961,7 @@
 				2C4E7EFA24694F440062D403 /* Alarm.caf in Resources */,
 				58184A532438C51100E848C6 /* HistoryRootViewController.xib in Resources */,
 				58E5A67C2402B8A8002C2BE3 /* LaunchScreen.storyboard in Resources */,
+				2C6964332534A30200DD8BF0 /* InitialSetupWarningViewController.xib in Resources */,
 				2C09D2232441D383008538E9 /* PickerExpandableTableViewCell.xib in Resources */,
 				2C4E7F0824694F440062D403 /* Ding.caf in Resources */,
 				580E4C08243F746F00565EDE /* SettingsUserTypeRootViewController.xib in Resources */,
@@ -4234,6 +4249,7 @@
 				5826A60724698A12009684E4 /* RootCalibrationValidatorWorker.swift in Sources */,
 				580E4B59243F711200565EDE /* SettingsAlertRootModels.swift in Sources */,
 				2C4E7ED4246940DC0062D403 /* CustomSound.swift in Sources */,
+				2C6964322534A30200DD8BF0 /* InitialSetupWarningViewController.swift in Sources */,
 				586F6BB1245C4B6A004FB4E6 /* SlopeParameters.swift in Sources */,
 				2CBF32A4242E030700DE944A /* EntriesListTableViewCell.swift in Sources */,
 				58DDC45C2423C925008CB04D /* InsulinEntry.swift in Sources */,
