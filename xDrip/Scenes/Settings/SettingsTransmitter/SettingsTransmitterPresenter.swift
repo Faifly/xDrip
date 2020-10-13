@@ -161,6 +161,14 @@ final class SettingsTransmitterPresenter: SettingsTransmitterPresentationLogic {
                 detailText: nil,
                 textFieldText: serialNumber,
                 placeholder: "settings_transmitter_serial_number_placeholder".localized,
+                textFieldConfigurator: { textField in
+                    textField.autocapitalizationType = .allCharacters
+                    textField.autocorrectionType = .no
+                    textField.smartDashesType = .no
+                    textField.smartQuotesType = .no
+                    textField.smartInsertDeleteType = .no
+                    textField.spellCheckingType = .no
+                },
                 textChangedHandler: response.serialNumberChangeHandler
             )
         }
