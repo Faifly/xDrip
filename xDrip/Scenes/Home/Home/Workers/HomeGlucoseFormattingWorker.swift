@@ -77,14 +77,23 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
             entry.filteredCalculatedValue) )
         let glucoseIntValue = components.first ?? "-"
         let glucoseDecimalValue = components.last ?? "-"
-        let slopeValue = slopeToArrowSymbol(slope: entry.activeSlope() )
+        
+        let slope: Double
+        let last2Readings = GlucoseReading.lastReadings(2, for: entry.deviceMode)
+        if last2Readings.count < 2 {
+            slope = 0.0
+        } else {
+            slope = last2Readings[0].calculatedValue - last2Readings[1].calculatedValue
+        }
+        
+        let slopeValue = slopeToArrowSymbol(slope: slope)
         var lastScanDate: String
         if let date = entry.date {
             lastScanDate = getLastScanDateStringFrom(date: date)
         } else {
             lastScanDate = "--"
         }
-        let difValue = getDeltaString(entry.calculatedValueSlope)
+        let difValue = getDeltaString(slope)
         let settings = User.current.settings
         let severity = GlucoseChartSeverityLevel(
                            warningLevel: settings?.warningLevel(forValue: entry.filteredCalculatedValue))
