@@ -45,6 +45,8 @@ final class SettingsPumpUserPresenterTests: XCTestCase {
         func displayLoad(viewModel: SettingsPumpUser.Load.ViewModel) {
             displayLoadCalled = true
         }
+        
+        func displayState(viewModel: SettingsPumpUser.UpdateState.ViewModel) {}
     }
     
     // MARK: Tests

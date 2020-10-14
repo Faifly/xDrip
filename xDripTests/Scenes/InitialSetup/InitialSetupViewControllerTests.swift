@@ -80,6 +80,8 @@ final class InitialSetupViewControllerTests: XCTestCase {
         func doLoad(request: InitialSetup.Load.Request) {
             doLoadCalled = true
         }
+        
+        func doWarningAgreed(request: InitialSetup.WarningAgreed.Request) {}
     }
     
     // MARK: Tests
