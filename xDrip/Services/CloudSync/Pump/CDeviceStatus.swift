@@ -8,6 +8,8 @@
 
 import Foundation
 
+// swiftlint:disable discouraged_optional_boolean
+
 struct CDeviceStatus: Decodable {
     let pump: CPumpInfo?
 }

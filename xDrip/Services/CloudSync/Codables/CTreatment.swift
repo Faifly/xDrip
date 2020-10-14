@@ -9,6 +9,8 @@
 import Foundation
 import RealmSwift
 
+// swiftlint:disable function_body_length
+
 struct CTreatment: Codable {
     var type: TreatmentType?
     let treatmentID: String?

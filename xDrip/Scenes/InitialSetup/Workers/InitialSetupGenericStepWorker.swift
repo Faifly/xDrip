@@ -12,6 +12,8 @@
 
 import UIKit
 
+// swiftlint:disable cyclomatic_complexity
+
 final class InitialSetupGenericStepWorker: InitialSetupStepProvidingWorker {
     private var currentStep: InitialSetup.GenericStep? = .intro
     
