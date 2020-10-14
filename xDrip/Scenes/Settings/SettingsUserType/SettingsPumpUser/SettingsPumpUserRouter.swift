@@ -75,7 +75,10 @@ final class SettingsPumpUserRouter: SettingsPumpUserRoutingLogic, SettingsPumpUs
             preferredStyle: .alert
         )
         
-        let cancelAction = UIAlertAction(title: "settings_pump_user_unpair_alert_cancel_button".localized, style: .cancel)
+        let cancelAction = UIAlertAction(
+            title: "settings_pump_user_unpair_alert_cancel_button".localized,
+            style: .cancel
+        )
         alert.addAction(cancelAction)
         
         let confirmAction = UIAlertAction(

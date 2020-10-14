@@ -57,6 +57,7 @@ final class InitialSetupNightscoutViewControllerTests: XCTestCase {
         
         func doSelectDeviceType(request: InitialSetup.SelectDevice.Request) { }
         func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) { }
+        func doWarningAgreed(request: InitialSetup.WarningAgreed.Request) {}
     }
     
     func testNightscoutConnectionMainMode() {

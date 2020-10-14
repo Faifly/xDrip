@@ -32,6 +32,8 @@ final class InitialSetupG6WarmUpViewControllerTests: XCTestCase {
             calledCompleteSetup = true
             moreStepsExpected = request.moreStepsExpected
         }
+        
+        func doWarningAgreed(request: InitialSetup.WarningAgreed.Request) {}
     }
     
     func testOnFinishButton() {

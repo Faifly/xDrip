@@ -8,6 +8,8 @@
 
 @testable import xDrip
 
+// swiftlint:disable discouraged_optional_collection
+
 final class NightscoutServiceMirror: MirrorObject {
     init(object: NightscoutService) {
         super.init(reflecting: object)

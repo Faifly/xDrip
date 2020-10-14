@@ -8,6 +8,8 @@
 
 import Foundation
 
+// swiftlint:disable identifier_name
+
 struct CPumpBasalEntry: Decodable {
     enum CodingKeys: String, CodingKey {
         case id = "_id"

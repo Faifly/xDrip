@@ -33,6 +33,7 @@ final class InitialSetupIntroViewControllerTests: XCTestCase {
         func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) { }
         func doSaveNightscoutConnectionData(request: InitialSetup.SaveNightscoutCredentials.Request) { }
         func doFinishSetup(request: InitialSetup.FinishSetup.Request) { }
+        func doWarningAgreed(request: InitialSetup.WarningAgreed.Request) {}
     }
     
     func testOnBeginSetup() {

@@ -60,6 +60,8 @@ final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
             calledCompleteSetup = true
             moreStepsExpected = request.moreStepsExpected
         }
+        
+        func doWarningAgreed(request: InitialSetup.WarningAgreed.Request) {}
     }
     
     func testOnContinueButton() {

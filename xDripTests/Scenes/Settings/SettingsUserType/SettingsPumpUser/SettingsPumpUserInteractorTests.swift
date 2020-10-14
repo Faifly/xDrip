@@ -45,9 +45,14 @@ final class SettingsPumpUserInteractorTests: XCTestCase {
         func presentLoad(response: SettingsPumpUser.Load.Response) {
             presentLoadCalled = true
         }
+        func presentState(response: SettingsPumpUser.UpdateState.Response) {}
     }
     
     final class SettingsPumpUserRoutingLogicSpy: SettingsPumpUserRoutingLogic {
+        func finishConnectionTestingAlert(message: String, icon: UIImage?) {}
+        func inputNightscoutURL(callback: @escaping (String?) -> Void) {}
+        func showConnectionTestingAlert() {}
+        func showUnpairConfirmation(callback: @escaping () -> Void) {}
     }
     
     // MARK: Tests

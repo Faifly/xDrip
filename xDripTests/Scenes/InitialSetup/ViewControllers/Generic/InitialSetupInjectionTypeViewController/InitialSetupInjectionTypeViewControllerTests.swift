@@ -31,6 +31,7 @@ final class InitialSetupInjectionTypeViewControllerTests: XCTestCase {
         func doSaveSettings(request: InitialSetup.SaveSettings.Request) { }
         func doSelectDeviceType(request: InitialSetup.SelectDevice.Request) { }
         func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) { }
+        func doWarningAgreed(request: InitialSetup.WarningAgreed.Request) {}
     }
     
     func testButtonsCallback() {

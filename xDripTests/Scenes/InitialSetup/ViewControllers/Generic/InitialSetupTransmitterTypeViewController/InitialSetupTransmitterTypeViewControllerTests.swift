@@ -59,6 +59,7 @@ final class InitialSetupTransmitterTypeViewControllerTests: XCTestCase {
         }
         
         func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request) { }
+        func doWarningAgreed(request: InitialSetup.WarningAgreed.Request) {}
     }
     
     func testOnDexcomG6Selected() {
