@@ -186,6 +186,7 @@
 
 // Settings Alert Root // Alert Types // Alert Single Type
 "settings_alert_single_type_override_default" = "Override Default";
+"settings_alert_single_type_is_enabled" = "Enabled";
 "settings_alert_single_type_name" = "Name";
 "settings_alert_single_type_snooze_from_notification" = "Snooze From Notification";
 "settings_alert_single_type_snooze" = "Snooze";

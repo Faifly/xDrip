@@ -39,7 +39,7 @@ final class AlertSettings: Object {
         var sound = CustomSound.default
         
         let configuration = customConfiguration(for: type)
-        if configuration.isEnabled, let snd = CustomSound(rawValue: configuration.soundID) {
+        if configuration.isOverride, let snd = CustomSound(rawValue: configuration.soundID) {
             sound = snd
         } else if let defaultConfig = defaultConfiguration, let snd = CustomSound(rawValue: defaultConfig.soundID) {
             sound = snd
@@ -52,7 +52,7 @@ final class AlertSettings: Object {
         var isVibrating = false
         
         let configuration = customConfiguration(for: type)
-        if configuration.isEnabled {
+        if configuration.isOverride {
             isVibrating = configuration.isVibrating
         } else if let defaultConfig = defaultConfiguration {
             isVibrating = defaultConfig.isVibrating

@@ -144,6 +144,6 @@ final class SettingsSensorPresenter: SettingsSensorPresentationLogic {
         let level = GlucoseUnit.convertFromDefault(calibration.glucoseLevel)
         let unit = User.current.settings.unit.label
         let dateString = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
-        return String(format: "%.2f %@, %@", level, unit, dateString)
+        return String(format: "%.1f %@, %@", level, unit, dateString)
     }
 }

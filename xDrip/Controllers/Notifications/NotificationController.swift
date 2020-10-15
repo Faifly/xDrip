@@ -60,6 +60,8 @@ final class NotificationController: NSObject {
     func sendNotification(ofType type: AlertEventType) {
         guard let settings = User.current.settings.alert, settings.isNotificationsEnabled else { return }
         let config = settings.customConfiguration(for: type)
+        guard config.isEnabled else { return }
+        
         let date = Date()
         
         if !config.isEntireDay {
@@ -110,7 +112,7 @@ final class NotificationController: NSObject {
         
         var date = Date()
         let config = alertSettings.customConfiguration(for: type)
-        if config.isEnabled,
+        if config.isOverride,
             config.defaultSnooze > 0 {
             date = Date().addingTimeInterval(config.defaultSnooze)
         } else if let defaultConfig = alertSettings.defaultConfiguration,
@@ -138,7 +140,7 @@ final class NotificationController: NSObject {
         
         if let alert = User.current.settings.alert {
             let configuration = alert.customConfiguration(for: type)
-            if configuration.isEnabled {
+            if configuration.isOverride {
                 if let name = configuration.name {
                     content.title = name
                 }

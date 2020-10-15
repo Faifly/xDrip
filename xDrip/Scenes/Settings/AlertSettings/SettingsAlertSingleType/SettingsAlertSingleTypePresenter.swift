@@ -43,6 +43,11 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         let cells: [BaseSettings.Cell] = [
             createRightSwitchCell(
                 .overrideDefault,
+                isSwitchOn: config.isOverride,
+                switchValueChangedHandler: response.switchValueChangedHandler
+            ),
+            createRightSwitchCell(
+                .isEnabled,
                 isSwitchOn: config.isEnabled,
                 switchValueChangedHandler: response.switchValueChangedHandler
             )
@@ -55,7 +60,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         let config = response.configuration
         var cells: [BaseSettings.Cell] = []
         
-        if config.isEnabled {
+        if config.isOverride {
             cells.append(contentsOf: createCellsForActiveConfig(config, response: response))
         }
         
@@ -125,12 +130,22 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
                     .defaultSnooze,
                     detail: config.defaultSnooze,
                     valueChangeHandler: response.timePickerValueChangedHandler
-                ),
+                )
+            ]
+        )
+        
+        if AlertEventType.warningLevelAlerts.contains(config.eventType) {
+            cells.append(
                 createRightSwitchCell(
                     .repeat,
                     isSwitchOn: config.repeat,
                     switchValueChangedHandler: response.switchValueChangedHandler
-                ),
+                )
+            )
+        }
+        
+        cells.append(
+            contentsOf: [
                 createDisclosureCell(
                     .sound,
                     selectionHandler: response.selectionHandler
@@ -322,6 +337,7 @@ private extension SettingsAlertSingleType.Field {
     var title: String {
         switch self {
         case .overrideDefault: return "settings_alert_single_type_override_default".localized
+        case .isEnabled: return "settings_alert_single_type_is_enabled".localized
         case .name: return "settings_alert_single_type_name".localized
         case .snoozeFromNotification: return "settings_alert_single_type_snooze_from_notification".localized
         case .defaultSnooze: return "settings_alert_single_type_snooze".localized
