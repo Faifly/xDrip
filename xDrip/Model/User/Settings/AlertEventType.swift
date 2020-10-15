@@ -43,4 +43,6 @@ enum AlertEventType: Int, CaseIterable {
     }
     
     static let warningLevelAlerts: [AlertEventType] = [.urgentLow, .low, .high, .urgentHigh, .fastRise, .fastDrop]
+    
+    static let postponableAlerts: [AlertEventType] = [.missedReadings, .calibrationRequest]
 }

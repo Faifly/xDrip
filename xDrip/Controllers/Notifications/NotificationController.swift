@@ -16,14 +16,30 @@ final class NotificationController: NSObject {
     static let shared = NotificationController()
     private var glucoseNotificationWorker = GlucoseNotificationWorker()
     
+    private var alertSentCount = [AlertEventType: Int]()
+    private var alertSkipCount = [AlertEventType: Int]()
+    private var calibrationsObserver: NSObjectProtocol?
+    
+    private var notAliveNotificationTimer: Timer?
+    
     override private init() {
         super.init()
-        glucoseNotificationWorker.notificationRequest = { [weak self] alertType in
-            guard let self = self else { return }
-            self.sendNotification(ofType: alertType)
-        }
+        setupNotificationObservers()
         
-        UNUserNotificationCenter.current().delegate = self
+        addAppStoppedNotificationToQueue()
+        notAliveNotificationTimer = Timer.scheduledTimer(
+            withTimeInterval: TimeInterval(minutes: 9),
+            repeats: true,
+            block: { [weak self] _ in
+                self?.removeAppStoppedNotificationFromQueue()
+                self?.addAppStoppedNotificationToQueue()
+            }
+        )
+    }
+    
+    deinit {
+        CGMController.shared.unsubscribeFromGlucoseDataEvents(listener: self)
+        calibrationsObserver = nil
     }
     
     func requestAuthorization() {
@@ -57,7 +73,39 @@ final class NotificationController: NSObject {
         UNUserNotificationCenter.current().setNotificationCategories([alertEventCategory])
     }
     
+    private func setupNotificationObservers() {
+        glucoseNotificationWorker.notificationRequest = { [weak self] alertType in
+            guard let self = self else { return }
+            self.sendNotification(ofType: alertType)
+        }
+        
+        UNUserNotificationCenter.current().delegate = self
+        
+        CGMController.shared.subscribeForGlucoseDataEvents(listener: self) { [weak self] _ in
+            self?.alertSentCount[.missedReadings] = 0
+            self?.alertSkipCount[.missedReadings] = 0
+        }
+        
+        calibrationsObserver = NotificationCenter.default.addObserver(
+            forName: NSNotification.Name("RegularCalibrationCreated"),
+            object: nil,
+            queue: nil,
+            using: { [weak self] _ in
+                self?.alertSentCount[.calibrationRequest] = 0
+                self?.alertSkipCount[.calibrationRequest] = 0
+            }
+        )
+    }
+    
+    private func setupPostponableAlerts() {
+        for type in AlertEventType.postponableAlerts {
+            alertSkipCount[type] = 0
+            alertSentCount[type] = 0
+        }
+    }
+    
     func sendNotification(ofType type: AlertEventType) {
+        guard canSendNotification(ofType: type) else { return }
         guard let settings = User.current.settings.alert, settings.isNotificationsEnabled else { return }
         let config = settings.customConfiguration(for: type)
         guard config.isEnabled else { return }
@@ -185,6 +233,68 @@ final class NotificationController: NSObject {
                 )
             }
         }
+    }
+    
+    func removeAppStoppedNotificationFromQueue() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["AppStoppedAlert"])
+    }
+    
+    func addAppStoppedNotificationToQueue() {
+        let content = UNMutableNotificationContent()
+        content.title = "notification_app_stopped_title".localized
+        content.body = "notification_app_stopped_body".localized
+        content.sound = .default
+        content.categoryIdentifier = defaultCategoryID
+        content.badge = 0
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: .minutes(10), repeats: false)
+        
+        let request = UNNotificationRequest(
+            identifier: "AppStoppedAlert",
+            content: content,
+            trigger: trigger
+        )
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                LogController.log(
+                    message: "Error while add notification request to a queue",
+                    type: .error,
+                    error: error
+                )
+            }
+        }
+    }
+    
+    private func canSendNotification(ofType type: AlertEventType) -> Bool {
+        if AlertEventType.postponableAlerts.contains(type) {
+            guard alertSkipCount[type] == 0 else {
+                alertSkipCount[type]? -= 1
+                return false
+            }
+            alertSentCount[type]? += 1
+            alertSkipCount[type] = fibonicci(alertSentCount[type] ?? 0) - 1
+        }
+        
+        return true
+    }
+    
+    private func fibonicci(_ number: Int) -> Int {
+        if number == 0 || number == 1 {
+            return 1
+        }
+        
+        var array = [Int]()
+        array.append(1)
+        array.append(1)
+        
+        var index = 2
+        while index <= number {
+            array.append(array[index - 1] + array[index - 2])
+            index += 1
+        }
+        
+        return array[number]
     }
 }
 
