@@ -50,6 +50,14 @@ final class DexcomG6MessageWorker {
             let message = try DexcomG6SensorDataRxMessage(data: data)
             delegate?.workerDidReceiveReading(message)
             
+        case .glucoseRx:
+            let message = try DexcomG6GlucoseRxMessage(data: data)
+            delegate?.workerDidReceiveReading(message)
+        
+        case .glucoseG6Rx:
+            let message = try DexcomG6GlucoseG6RxMessage(data: data)
+            delegate?.workerDidReceiveReading(message)
+            
         case .batteryStatusRx:
             let message = try DexcomG6BatteryStatusRxMessage(data: data)
             delegate?.workerDidReceiveBatteryInfo(message)
@@ -82,7 +90,7 @@ final class DexcomG6MessageWorker {
             return
         }
         
-        createDataRequest(ofType: .sensorDataTx)
+        createDataRequest(ofType: .glucoseTx)
         if CGMDevice.current.requiresUpdate(for: .firmwareVersion) {
             LogController.log(message: "[Dexcom G6] Firmware version update required", type: .debug)
             createDataRequest(ofType: .transmitterVersionTx)
@@ -114,6 +122,7 @@ final class DexcomG6MessageWorker {
         guard response.authenticated else { throw DexcomG6Error.notAuthenticated }
         if response.paired {
             isPaired = true
+            createDataRequest(ofType: .sessionStartTx)
         } else {
             LogController.log(
                 message: "[Dexcom G6] Not paired, requesting user and keeping alive...",
@@ -149,6 +158,7 @@ final class DexcomG6MessageWorker {
     private func handlePairResponse(_ response: DexcomG6PairRequestRxMessage) throws {
         guard response.paired else { throw DexcomG6Error.notPaired }
         isPaired = true
+        createDataRequest(ofType: .sessionStartTx)
     }
     
     private func trySendingMessageFromQueue() {

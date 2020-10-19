@@ -93,7 +93,7 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
         peripheral.setNotifyValue(true, for: writeCharacteristic)
     }
     
-    func workerDidReceiveReading(_ message: DexcomG6SensorDataRxMessage) {
+    func workerDidReceiveReading(_ message: DexcomG6BaseGlucoseMessageProtocol) {
         lastPeripheralReadingDate = Date()
         LogController.log(
             message: "[Dexcom G6] Did receive reading with status: %u, filtered: %f, unfiltered: %f",

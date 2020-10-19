@@ -16,6 +16,8 @@ final class DexcomG6MessageFactory {
         case .firmwareVersionTx: return DexcomG6FirmwareVersionTxMessage()
         case .transmitterVersionTx: return DexcomG6TransmitterVersionTxMessage()
         case .sensorDataTx: return DexcomG6SensorDataTxMessage()
+        case .glucoseTx: return DexcomG6GlucoseTxMessage()
+        case .glucoseG6Tx: return DexcomG6GlucoseG6TxMessage()
         case .batteryStatusTx: return DexcomG6BatteryStatusTxMessage()
         case .transmitterTimeTx: return DexcomG6TransmitterTimeTxMessage()
         case .resetTx: return DexcomG6ResetTxMessage()

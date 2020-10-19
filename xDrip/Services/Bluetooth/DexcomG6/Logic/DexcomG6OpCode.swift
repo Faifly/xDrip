@@ -46,6 +46,7 @@ enum DexcomG6OpCode: UInt8 {
     case glucoseBackfillTx = 0x50
     case glucoseBackfillRx = 0x51
     case keepAliveRx = 0xFF
+    case unknown = 0xD0
     
     var requiresPairing: Bool {
         switch self {

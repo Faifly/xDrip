@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DexcomG6SensorDataRxMessage {
+struct DexcomG6SensorDataRxMessage: DexcomG6BaseGlucoseMessageProtocol {
     let status: UInt8
     let filtered: Double
     let unfiltered: Double
