@@ -43,7 +43,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         let cells: [BaseSettings.Cell] = [
             createRightSwitchCell(
                 .overrideDefault,
-                isSwitchOn: config.isOverride,
+                isSwitchOn: config.isOverriden,
                 switchValueChangedHandler: response.switchValueChangedHandler
             ),
             createRightSwitchCell(
@@ -60,7 +60,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         let config = response.configuration
         var cells: [BaseSettings.Cell] = []
         
-        if config.isOverride {
+        if config.isOverriden {
             cells.append(contentsOf: createCellsForActiveConfig(config, response: response))
         }
         

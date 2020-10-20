@@ -119,7 +119,7 @@ final class GlucoseNotificationWorker: NSObject {
             let now = Date().timeIntervalSince1970
             if AlertEventType.warningLevelAlerts.contains(data.key) {
                 let config = User.current.settings.alert.customConfiguration(for: data.key)
-                if config.isOverride {
+                if config.isOverriden {
                     guard config.repeat else { continue }
                 } else if let defaultConfig = User.current.settings.alert.defaultConfiguration {
                     guard defaultConfig.repeat else { continue }
@@ -151,7 +151,7 @@ final class GlucoseNotificationWorker: NSObject {
         let alertTypes = AlertEventType.warningLevelAlerts
         
         for type in alertTypes {
-            if let config = User.current.settings.alert?.customConfiguration(for: type), config.isOverride {
+            if let config = User.current.settings.alert?.customConfiguration(for: type), config.isOverriden {
                 if config.repeat {
                     disableAlert(type)
                 }
@@ -170,7 +170,7 @@ final class GlucoseNotificationWorker: NSObject {
         
         for type in alertTypes {
             if let config = User.current.settings.alert?.customConfiguration(for: type),
-                !config.isOverride,
+                !config.isOverriden,
                 let defaultConfig = User.current.settings.alert?.defaultConfiguration {
                 if defaultConfig.repeat {
                     disableAlert(type)

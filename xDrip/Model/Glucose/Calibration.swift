@@ -221,7 +221,7 @@ final class Calibration: Object {
         calculateWLS()
         adjustRecentReadings(30)
         NightscoutService.shared.scanForNotUploadedEntries()
-        NotificationCenter.default.post(name: NSNotification.Name("RegularCalibrationCreated"), object: nil)
+        NotificationCenter.default.post(name: .regularCalibrationCreated, object: nil)
     }
     
     private static func clearAllExistingCalibrations() {

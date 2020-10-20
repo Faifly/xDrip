@@ -87,7 +87,7 @@ final class NotificationController: NSObject {
         }
         
         calibrationsObserver = NotificationCenter.default.addObserver(
-            forName: NSNotification.Name("RegularCalibrationCreated"),
+            forName: .regularCalibrationCreated,
             object: nil,
             queue: nil,
             using: { [weak self] _ in
@@ -160,7 +160,7 @@ final class NotificationController: NSObject {
         
         var date = Date()
         let config = alertSettings.customConfiguration(for: type)
-        if config.isOverride,
+        if config.isOverriden,
             config.defaultSnooze > 0 {
             date = Date().addingTimeInterval(config.defaultSnooze)
         } else if let defaultConfig = alertSettings.defaultConfiguration,
@@ -188,7 +188,7 @@ final class NotificationController: NSObject {
         
         if let alert = User.current.settings.alert {
             let configuration = alert.customConfiguration(for: type)
-            if configuration.isOverride {
+            if configuration.isOverriden {
                 if let name = configuration.name {
                     content.title = name
                 }
@@ -273,13 +273,13 @@ final class NotificationController: NSObject {
                 return false
             }
             alertSentCount[type]? += 1
-            alertSkipCount[type] = fibonicci(alertSentCount[type] ?? 0) - 1
+            alertSkipCount[type] = fibonacci(alertSentCount[type] ?? 0) - 1
         }
         
         return true
     }
     
-    private func fibonicci(_ number: Int) -> Int {
+    private func fibonacci(_ number: Int) -> Int {
         if number == 0 || number == 1 {
             return 1
         }
@@ -327,4 +327,8 @@ extension NotificationController: UNUserNotificationCenterDelegate {
         
         completionHandler()
     }
+}
+
+extension Notification.Name {
+    static let regularCalibrationCreated = Notification.Name("RegularCalibrationCreated")
 }

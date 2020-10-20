@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 final class AlertConfiguration: Object {
-    @objc private(set) dynamic var isOverride: Bool = false
+    @objc private(set) dynamic var isOverriden: Bool = false
     @objc private(set) dynamic var isEnabled: Bool = true
     @objc private(set) dynamic var name: String?
     @objc private(set) dynamic var snoozeFromNotification: Bool = false
@@ -47,7 +47,7 @@ final class AlertConfiguration: Object {
     
     func updateIsOverride(_ isOverride: Bool) {
         Realm.shared.safeWrite {
-            self.isOverride = isOverride
+            self.isOverriden = isOverride
         }
     }
     
