@@ -127,8 +127,10 @@ final class PumpService: PumpServiceLogic {
         let entries = rawTempBasal.map { InsulinEntry(rawPumpEntry: $0, dateFormatter: dateFormatter) }
         
         DispatchQueue.main.async {
-            Realm.shared.add(entries, update: .all)
-            InsulinEntriesWorker.updatedBasalEntry()
+            Realm.shared.safeWrite {
+                Realm.shared.add(entries, update: .all)
+                InsulinEntriesWorker.updatedBasalEntry()
+            }
         }
     }
 }
