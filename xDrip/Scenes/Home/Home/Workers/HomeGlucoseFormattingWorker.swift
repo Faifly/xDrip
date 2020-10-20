@@ -93,7 +93,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         } else {
             lastScanDate = "--"
         }
-        let difValue = getDeltaString(slope)
+        let difValue = getDeltaString(GlucoseUnit.convertFromDefault(slope))
         let settings = User.current.settings
         let severity = GlucoseChartSeverityLevel(
                            warningLevel: settings?.warningLevel(forValue: entry.filteredCalculatedValue))

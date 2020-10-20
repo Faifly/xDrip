@@ -145,9 +145,11 @@ final class GlucoseHistoryView: BaseHistoryView {
         let maxBasalValue = basalEntries.max(by: { $0.value < $1.value })?.value
         let adjustedMaxValue = max(initVal, maxBasalValue ?? 0.0).rounded(.up)
         
-        labels.append(String(format: format, 0.0))
-        if adjustedMaxValue > 0.0 {
-            labels.append(String(format: format, adjustedMaxValue))
+        if basalDisplayMode != .notShown {
+            labels.append(String(format: format, 0.0))
+            if adjustedMaxValue > 0.0 {
+                labels.append(String(format: format, adjustedMaxValue))
+            }
         }
         
         rightLabelsView.textAlignment = .left
