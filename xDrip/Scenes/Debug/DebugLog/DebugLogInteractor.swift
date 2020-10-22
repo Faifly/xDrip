@@ -30,7 +30,9 @@ final class DebugLogInteractor: DebugLogBusinessLogic, DebugLogDataStore {
         presenter?.presentLoad(response: response)
         
         DebugController.shared.logSubscriber = { [weak self] in
-            self?.updateLogs()
+            DispatchQueue.main.async { [weak self] in
+                self?.updateLogs()
+            }
         }
         
         updateLogs()
