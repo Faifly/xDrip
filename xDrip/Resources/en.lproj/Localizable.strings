@@ -120,7 +120,7 @@
 "settings_root_title" = "Settings";
 "settings_root_units_title" = "Units";
 "settings_root_chart_title" = "Chart Settings";
-"settings_root_alert_title" = "Alert";
+"settings_root_alert_title" = "Alerts";
 "settings_root_mode_title" = "Mode Settings";
 "settings_root_cloud_upload_title" = "Cloud Upload";
 "settings_root_sensor_title" = "Sensor";
@@ -170,7 +170,7 @@
 "settings_alert_types_default_vibrate" = "Vibrate";
 "settings_alert_types_default_header" = "DEFAULT";
 "settings_alert_types_events_header" = "EVENTS";
-"settings_alert_types_event_type_title_default" = "Alert";
+"settings_alert_types_event_type_title_default" = "Alerts";
 "settings_alert_types_event_type_title_fast_rise" = "Fast Rise";
 "settings_alert_types_event_type_title_urgent_high" = "Urgent High";
 "settings_alert_types_event_type_title_high" = "High";

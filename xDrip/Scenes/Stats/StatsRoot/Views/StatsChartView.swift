@@ -62,7 +62,9 @@ final class StatsChartView: UIView {
         formatter.maximumSignificantDigits = 3
         let step = (linesChart.visualMaxValue - linesChart.visualMinValue) / Double(linesChart.verticalCount - 1)
         verticalLabelsView.labels = [Int](0..<linesChart.verticalCount)
-            .compactMap { formatter.string(from: (linesChart.visualMinValue + Double($0) * step) as NSNumber) }
+            .compactMap {
+                formatter.string(from: (Int((linesChart.visualMinValue + Double($0) * step).rounded())) as NSNumber)
+            }
         
         linesChart.setNeedsDisplay()
         verticalLabelsView.setNeedsDisplay()
