@@ -63,7 +63,9 @@ final class StatsChartView: UIView {
         let step = (linesChart.visualMaxValue - linesChart.visualMinValue) / Double(linesChart.verticalCount - 1)
         verticalLabelsView.labels = [Int](0..<linesChart.verticalCount)
             .compactMap {
-                formatter.string(from: (Int((linesChart.visualMinValue + Double($0) * step).rounded())) as NSNumber)
+                let value = GlucoseUnit.convertFromDefault(linesChart.visualMinValue + Double($0) * step)
+                let numberValue = (Int(value.rounded())) as NSNumber
+                return formatter.string(from: numberValue)
             }
         
         linesChart.setNeedsDisplay()
@@ -81,9 +83,9 @@ final class StatsChartView: UIView {
         
         guard let value = entry.value else { return }
         
-        let minValue = String(format: "%0.1f", value.lowerBound)
-        let maxValue = String(format: "%0.1f", value.upperBound)
-        let medianValue = (value.upperBound + value.lowerBound) / 2.0
+        let minValue = String(format: "%0.1f", GlucoseUnit.convertFromDefault(value.lowerBound))
+        let maxValue = String(format: "%0.1f", GlucoseUnit.convertFromDefault(value.upperBound))
+        let medianValue = GlucoseUnit.convertFromDefault((value.upperBound + value.lowerBound) / 2.0)
         let median = String(format: "%0.1f \("stats_median_details_label".localized)", medianValue)
         let dateString = DateFormatter.localizedString(
             from: entry.interval.start,
