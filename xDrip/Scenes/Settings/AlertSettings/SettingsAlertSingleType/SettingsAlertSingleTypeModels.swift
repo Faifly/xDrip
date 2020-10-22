@@ -17,6 +17,7 @@ enum SettingsAlertSingleType {
     
     enum Field {
         case overrideDefault
+        case isEnabled
         case name
         case snoozeFromNotification
         case defaultSnooze

@@ -186,6 +186,7 @@
 
 // Settings Alert Root // Alert Types // Alert Single Type
 "settings_alert_single_type_override_default" = "Переопределить стандартное";
+"settings_alert_single_type_is_enabled" = "Включено";
 "settings_alert_single_type_name" = "Название";
 "settings_alert_single_type_snooze_from_notification" = "Повторять оповещения";
 "settings_alert_single_type_snooze" = "Время повторного оповещения";
@@ -519,6 +520,8 @@
 "notification_phone_muted_body" = "Ваше устройство находится в беззвучном режиме";
 "notification_transmitter_connection_title" = "Подключение передатчика";
 "notification_transmitter_connection_body" = "Передатчик успешно подключен и готов к отправке считываний";
+"notification_app_stopped_title" = "Приложение остановлено";
+"notification_app_stopped_body" = "Ваше приложение xDrip не запущено. Вы не будете получать уведомления или считывания с сенсора.";
 
 // Initial Warning screen
 "initial_warning_screen_title" = "Важное предупреждение";

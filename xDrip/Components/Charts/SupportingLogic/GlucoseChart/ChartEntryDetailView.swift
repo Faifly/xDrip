@@ -53,7 +53,7 @@ final class ChartEntryDetailView: UIView {
     
     func set(value: Double, unit: String, date: Date) {
         setText(
-            topLeft: String(format: "%0.2f", value),
+            topLeft: String(format: "%0.1f", value),
             topRight: unit,
             bottom: DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .short)
         )

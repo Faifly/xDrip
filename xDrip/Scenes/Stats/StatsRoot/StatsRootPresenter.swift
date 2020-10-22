@@ -106,16 +106,16 @@ final class StatsRootPresenter: StatsRootPresentationLogic {
         case .medianMeanBG:
             let median = GlucoseUnit.convertFromDefault(calculationWorker.median)
             let mean = GlucoseUnit.convertFromDefault(calculationWorker.mean)
-            return String(format: "%0.2f/%0.2f %@", median, mean, response.unit.label)
+            return String(format: "%0.1f/%0.1f %@", median, mean, response.unit.label)
             
         case .hba1cEst:
             let ifcc = GlucoseUnit.convertFromDefault(calculationWorker.a1cIFCC)
             let dcct = calculationWorker.a1cDCCT
-            return String(format: "%0.2f %@ %0.1f%%", ifcc, response.unit.label, dcct)
+            return String(format: "%0.1f %@ %0.1f%%", ifcc, response.unit.label, dcct)
             
         case .stdDev:
             return String(
-                format: "%0.2f %@",
+                format: "%0.1f %@",
                 GlucoseUnit.convertFromDefault(calculationWorker.stdDev),
                 response.unit.label
             )

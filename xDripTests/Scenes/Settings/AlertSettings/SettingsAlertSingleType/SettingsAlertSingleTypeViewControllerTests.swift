@@ -97,13 +97,13 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         // When
         toggleSecondSection(expanded: false)
         // Then
-        XCTAssertTrue(configuration?.isEnabled == false)
+        XCTAssertTrue(configuration?.isOverride == false)
         XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 1)
         
         // When
         toggleSecondSection(expanded: true)
         // Then
-        XCTAssertTrue(configuration?.isEnabled == true)
+        XCTAssertTrue(configuration?.isOverride == true)
         XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 7)
         
         // When
