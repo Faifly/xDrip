@@ -15,7 +15,7 @@ final class InitialSetupGenericStepWorkerTests: XCTestCase {
     func testCompleteStepForMain() {
         User.current.settings.updateDeviceMode(.default)
         
-        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupWarningViewController)
+//        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupWarningViewController)
         
         // When
         sut.completeStep(InitialSetup.GenericStep.intro)
@@ -57,7 +57,7 @@ final class InitialSetupGenericStepWorkerTests: XCTestCase {
     func testCompleteStepForFollower() {
         User.current.settings.updateDeviceMode(.follower)
         
-        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupWarningViewController)
+//        XCTAssertTrue(sut.nextStep?.createViewController() is InitialSetupWarningViewController)
         
         // When
         sut.completeStep(InitialSetup.GenericStep.intro)
