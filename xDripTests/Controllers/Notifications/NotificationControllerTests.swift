@@ -21,7 +21,7 @@ final class NotificationContorllerTests: AbstractRealmTest {
             XCTFail("Cannot obtain alert configurations")
             return
         }
-        config.updateIsEnabled(false)
+        config.updateIsOverride(false)
         config.updateSnoozedUntilDate(Date(timeIntervalSince1970: 1.0))
         settings?.updateNotificationEnabled(false)
         sut.sendNotification(ofType: .fastRise)
@@ -40,7 +40,7 @@ final class NotificationContorllerTests: AbstractRealmTest {
         config.updateStartTime(0.0)
         config.updateName("FaSt RiSe")
         config.updateIsVibrating(true)
-        config.updateIsEnabled(true)
+        config.updateIsOverride(true)
         sut.sendNotification(ofType: .fastRise)
         
         config.updateSnoozeFromNotification(true)
@@ -56,7 +56,7 @@ final class NotificationContorllerTests: AbstractRealmTest {
             XCTFail("Cannot obtain alert configurations")
             return
         }
-        config.updateIsEnabled(false)
+        config.updateIsOverride(false)
         
         var date = Date()
         defaultConfig.updateDefaultSnooze(360.0)
@@ -65,7 +65,7 @@ final class NotificationContorllerTests: AbstractRealmTest {
         XCTAssertTrue(config.snoozedUntilDate.timeIntervalSince(date) ~~ 360.0)
         
         date = Date()
-        config.updateIsEnabled(true)
+        config.updateIsOverride(true)
         config.updateDefaultSnooze(180.0)
         sut.scheduleSnoozeForNotification(ofType: .fastRise)
         

@@ -116,10 +116,16 @@ final class ChartSliderView: UIView, GlucoseChartProvider {
             slider.center.x = location.x
             tapCenterXOffset = 0.0
         }
+        
+        changeRelativeOffset(for: touches)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard (1.0 - sliderRelativeWidth) > .ulpOfOne else { return }
+        changeRelativeOffset(for: touches)
+    }
+    
+    private func changeRelativeOffset(for touches: Set<UITouch>) {
         guard let location = touches.first?.location(in: self) else { return }
         guard let offset = tapCenterXOffset else { return }
         var targetX = location.x - offset - slider.bounds.width / 2.0

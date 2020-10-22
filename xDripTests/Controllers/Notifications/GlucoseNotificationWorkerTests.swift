@@ -38,7 +38,7 @@ final class GlucoseNotificationsWorkerTests: AbstractRealmTest {
         let alertSettings = User.current.settings.alert
         let fastRise = alertSettings?.customConfiguration(for: .fastRise)
         fastRise?.updateRepeat(true)
-        fastRise?.updateIsEnabled(true)
+        fastRise?.updateIsOverride(true)
         
         let defaultConfig = alertSettings?.defaultConfiguration
         defaultConfig?.updateRepeat(true)

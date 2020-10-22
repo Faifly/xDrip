@@ -118,6 +118,13 @@ final class GlucoseNotificationWorker: NSObject {
         for data in alertsData {
             let now = Date().timeIntervalSince1970
             if AlertEventType.warningLevelAlerts.contains(data.key) {
+                let config = User.current.settings.alert.customConfiguration(for: data.key)
+                if config.isOverriden {
+                    guard config.repeat else { continue }
+                } else if let defaultConfig = User.current.settings.alert.defaultConfiguration {
+                    guard defaultConfig.repeat else { continue }
+                }
+                
                 if now - data.value.lastFireTimestamp > 60.0 {
                     fireAlert(ofType: data.key)
                 
@@ -144,7 +151,7 @@ final class GlucoseNotificationWorker: NSObject {
         let alertTypes = AlertEventType.warningLevelAlerts
         
         for type in alertTypes {
-            if let config = User.current.settings.alert?.customConfiguration(for: type), config.isEnabled {
+            if let config = User.current.settings.alert?.customConfiguration(for: type), config.isOverriden {
                 if config.repeat {
                     disableAlert(type)
                 }
@@ -163,7 +170,7 @@ final class GlucoseNotificationWorker: NSObject {
         
         for type in alertTypes {
             if let config = User.current.settings.alert?.customConfiguration(for: type),
-                !config.isEnabled,
+                !config.isOverriden,
                 let defaultConfig = User.current.settings.alert?.defaultConfiguration {
                 if defaultConfig.repeat {
                     disableAlert(type)
@@ -209,19 +216,27 @@ final class GlucoseNotificationWorker: NSObject {
     }
     
     private func checkWarningLevel(for reading: GlucoseReading) {
+        disableAlert(.urgentLow)
+        disableAlert(.low)
+        disableAlert(.high)
+        disableAlert(.urgentHigh)
+        
         guard let warningLevel = User.current.settings.warningLevel(forValue: reading.calculatedValue) else {
-            disableAlert(.urgentLow)
-            disableAlert(.low)
-            disableAlert(.high)
-            disableAlert(.urgentLow)
             return
         }
         
         switch warningLevel {
-        case .urgentLow: fireAlert(ofType: .urgentLow)
-        case .low: fireAlert(ofType: .low)
-        case .high: fireAlert(ofType: .high)
-        case .urgentHigh: fireAlert(ofType: .urgentHigh)
+        case .urgentLow:
+            fireAlert(ofType: .urgentLow)
+            
+        case .low:
+            fireAlert(ofType: .low)
+            
+        case .high:
+            fireAlert(ofType: .high)
+            
+        case .urgentHigh:
+            fireAlert(ofType: .urgentHigh)
         }
     }
     

@@ -120,7 +120,7 @@
 "settings_root_title" = "Settings";
 "settings_root_units_title" = "Units";
 "settings_root_chart_title" = "Chart Settings";
-"settings_root_alert_title" = "Alert";
+"settings_root_alert_title" = "Alerts";
 "settings_root_mode_title" = "Mode Settings";
 "settings_root_cloud_upload_title" = "Cloud Upload";
 "settings_root_sensor_title" = "Sensor";
@@ -170,7 +170,7 @@
 "settings_alert_types_default_vibrate" = "Vibrate";
 "settings_alert_types_default_header" = "DEFAULT";
 "settings_alert_types_events_header" = "EVENTS";
-"settings_alert_types_event_type_title_default" = "Alert";
+"settings_alert_types_event_type_title_default" = "Alerts";
 "settings_alert_types_event_type_title_fast_rise" = "Fast Rise";
 "settings_alert_types_event_type_title_urgent_high" = "Urgent High";
 "settings_alert_types_event_type_title_high" = "High";
@@ -186,6 +186,7 @@
 
 // Settings Alert Root // Alert Types // Alert Single Type
 "settings_alert_single_type_override_default" = "Override Default";
+"settings_alert_single_type_is_enabled" = "Enabled";
 "settings_alert_single_type_name" = "Name";
 "settings_alert_single_type_snooze_from_notification" = "Snooze From Notification";
 "settings_alert_single_type_snooze" = "Snooze";
@@ -520,6 +521,8 @@ This setting will be applied to all future sensors";
 "notification_phone_muted_body" = "Your device in Ring/Silent mode";
 "notification_transmitter_connection_title" = "Transmitter Connection";
 "notification_transmitter_connection_body" = "Transmitter successfully connected and ready to send readings";
+"notification_app_stopped_title" = "App Stopped";
+"notification_app_stopped_body" = "Your xDrip App is not running. You will not receive alerts, alarms or sensor glucose readings.";
 
 // Initial Warning screen
 "initial_warning_screen_title" = "Important Warning";

@@ -57,7 +57,8 @@ final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLo
     
     private func handleSwitchValueChanged(_ field: SettingsAlertSingleType.Field, _ value: Bool) {
         switch field {
-        case .overrideDefault: configuration.updateIsEnabled(value); doUpdate()
+        case .overrideDefault: configuration.updateIsOverride(value); doUpdate()
+        case .isEnabled: configuration.updateIsEnabled(value)
         case .snoozeFromNotification: configuration.updateSnoozeFromNotification(value)
         case .repeat: configuration.updateRepeat(value)
         case .vibrate: configuration.updateIsVibrating(value)

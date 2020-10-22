@@ -22,7 +22,7 @@ final class AlertSettingsTests: AbstractRealmTest {
         XCTAssert(settings.getSound(for: .fastRise) == .bloom)
         
         let config = settings.customConfiguration(for: .fastRise)
-        config.updateIsEnabled(true)
+        config.updateIsOverride(true)
         config.updateSoundID(0)
         
         XCTAssert(settings.getSound(for: .fastRise) == .alarm)
