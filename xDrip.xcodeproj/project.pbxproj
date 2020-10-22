@@ -3883,7 +3883,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1210;
 				ORGANIZATIONNAME = Faifly;
 				TargetAttributes = {
 					58E5A66B2402B8A7002C2BE3 = {
