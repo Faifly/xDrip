@@ -688,6 +688,7 @@
 		914E31C12503D47E00ED0391 /* PumpSyncSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914E31C02503D47E00ED0391 /* PumpSyncSettings.swift */; };
 		91B2ED032523A4C800A8C3C1 /* PumpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B2ED022523A4C800A8C3C1 /* PumpService.swift */; };
 		91CE50F82525D18100E60457 /* CPumpBasalEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CE50F72525D18100E60457 /* CPumpBasalEntry.swift */; };
+		91CF6D8825449E50004F4940 /* DexcomG6BackfillTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CF6D8725449E50004F4940 /* DexcomG6BackfillTxMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1400,6 +1401,7 @@
 		914E31C02503D47E00ED0391 /* PumpSyncSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSyncSettings.swift; sourceTree = "<group>"; };
 		91B2ED022523A4C800A8C3C1 /* PumpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpService.swift; sourceTree = "<group>"; };
 		91CE50F72525D18100E60457 /* CPumpBasalEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPumpBasalEntry.swift; sourceTree = "<group>"; };
+		91CF6D8725449E50004F4940 /* DexcomG6BackfillTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6BackfillTxMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1821,6 +1823,7 @@
 				5805C98B24389230002AFA1B /* DexcomG6FirmwareVersionTxMessage.swift */,
 				589EA8D62478359200515BCC /* DexcomG6ResetTxMessage.swift */,
 				58FE4CB824796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift */,
+				91CF6D8725449E50004F4940 /* DexcomG6BackfillTxMessage.swift */,
 			);
 			path = Outgoing;
 			sourceTree = "<group>";
@@ -4238,6 +4241,7 @@
 				58FFBC2124A5ED5F003D2DE6 /* ActionButton.swift in Sources */,
 				580EC7812421457700C34948 /* EditFoodEntryInteractor.swift in Sources */,
 				2CEEA2B124D1702A0081D6ED /* BridgeBatteryService.swift in Sources */,
+				91CF6D8825449E50004F4940 /* DexcomG6BackfillTxMessage.swift in Sources */,
 				5805C9AB24389230002AFA1B /* DexcomG6AuthChallengeRxMessage.swift in Sources */,
 				580E4CF42440D24800565EDE /* BaseChartView.swift in Sources */,
 				580E4BE8243F73B200565EDE /* SettingsSensorPresenter.swift in Sources */,

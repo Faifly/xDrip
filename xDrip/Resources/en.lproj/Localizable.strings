@@ -94,7 +94,7 @@
 "edit_entry_insulin_amount_title" = "Units";
 "edit_entry_date_and_time" = "Date/Time";
 "edit_entry_carbs_amount_unit_grams" = "g";
-"edit_entry_insulin_unit_milligrams" = "mg";
+"edit_entry_insulin_unit_milligrams" = "U";
 "edit_entry_fast_carbs_title" = "Fast";
 "edit_entry_medium_carbs_title" = "Medium";
 "edit_entry_slow_carbs_title" = "Slow";

@@ -94,7 +94,7 @@
 "edit_entry_insulin_amount_title" = "Дозировка";
 "edit_entry_date_and_time" = "Дата/Время";
 "edit_entry_carbs_amount_unit_grams" = "г";
-"edit_entry_insulin_unit_milligrams" = "мг";
+"edit_entry_insulin_unit_milligrams" = "U";
 "edit_entry_fast_carbs_title" = "Быстрые";
 "edit_entry_medium_carbs_title" = "Средние";
 "edit_entry_slow_carbs_title" = "Медленные";
