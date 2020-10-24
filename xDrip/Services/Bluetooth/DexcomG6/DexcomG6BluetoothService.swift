@@ -13,6 +13,7 @@ final class DexcomG6BluetoothService: NSObject {
     private weak var delegate: CGMBluetoothServiceDelegate?
     private let centralManager = CBCentralManager()
     private var isConnectionRequested = false
+    private var centralManagerLastState: CBManagerState?
     private var messageWorker: DexcomG6MessageWorker?
     
     private var characteristics: [DexcomG6CharacteristicType: CBCharacteristic] = [:]
@@ -32,6 +33,7 @@ final class DexcomG6BluetoothService: NSObject {
     
     override init() {
         super.init()
+        centralManagerLastState = centralManager.state
         centralManager.delegate = self
         messageWorker = DexcomG6MessageWorker(delegate: self)
     }
@@ -152,12 +154,15 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
         case .poweredOn where isConnectionRequested: startConnectionFlow()
-        case .poweredOff: delegate?.serviceDidFail(withError: .bluetoothIsPoweredOff)
+        case .poweredOff where centralManagerLastState != .unknown:
+            delegate?.serviceDidFail(withError: .bluetoothIsPoweredOff)
+            
         case .unauthorized: delegate?.serviceDidFail(withError: .bluetoothIsUnauthorized)
         case .unsupported: delegate?.serviceDidFail(withError: .bluetoothUnsupported)
-        case .resetting, .unknown, .poweredOn: break
+        case .resetting, .unknown, .poweredOn, .poweredOff: break
         @unknown default: break
         }
+        centralManagerLastState = centralManager.state
     }
     
     func centralManager(_ central: CBCentralManager,
