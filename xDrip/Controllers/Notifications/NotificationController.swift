@@ -18,7 +18,7 @@ final class NotificationController: NSObject {
     
     private var alertSentCount = [AlertEventType: Int]()
     private var alertSkipCount = [AlertEventType: Int]()
-    private var calibrationsObserver: NSObjectProtocol?
+    private var notificationObservers = [NSObjectProtocol?]()
     
     private var notAliveNotificationTimer: Timer?
     
@@ -39,10 +39,25 @@ final class NotificationController: NSObject {
     
     deinit {
         CGMController.shared.unsubscribeFromGlucoseDataEvents(listener: self)
-        calibrationsObserver = nil
+        notificationObservers.removeAll()
     }
     
-    func requestAuthorization() {
+    func setupService() {
+        getAuthStatus { [weak self] auth in
+            switch auth {
+            case .notDetermined:
+                self?.requestAuthorization()
+            case .denied:
+                DispatchQueue.main.async {
+                    self?.showDeniedAuthAlert()
+                }
+            default:
+                break
+            }
+        }
+    }
+    
+    private func requestAuthorization() {
         let options: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(options: options) { [weak self] granted, error in
             if let error = error {
@@ -55,10 +70,43 @@ final class NotificationController: NSObject {
         }
     }
     
+    private func getAuthStatus(completion: @escaping (UNAuthorizationStatus) -> Void) {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            completion(settings.authorizationStatus)
+        }
+    }
+    
+    private func showDeniedAuthAlert() {
+        let alert = UIAlertController(
+            title: "notification_error_title".localized,
+            message: "notification_error_not_allowed".localized,
+            preferredStyle: .alert
+        )
+        
+        let confirmAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(confirmAction)
+        
+        let settingsAction = UIAlertAction(
+            title: "notification_error_alert_settings_button_title".localized,
+            style: .default
+        ) { _ in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: nil)
+            }
+        }
+        alert.addAction(settingsAction)
+        
+        AlertPresenter.shared.presentAlert(alert)
+    }
+    
     private func setupCategories() {
         let snoozeAction = UNNotificationAction(
             identifier: "snooze_action",
-            title: "Snooze",
+            title: "notification_snooze".localized,
             options: .authenticationRequired
         )
         
@@ -86,13 +134,30 @@ final class NotificationController: NSObject {
             self?.alertSkipCount[.missedReadings] = 0
         }
         
-        calibrationsObserver = NotificationCenter.default.addObserver(
-            forName: .regularCalibrationCreated,
+        notificationObservers.append(createObserver(for: .calibrationRequest))
+        notificationObservers.append(createObserver(for: .phoneMuted))
+    }
+    
+    private func createObserver(for type: AlertEventType) -> NSObjectProtocol? {
+        var notificationName: Notification.Name?
+        switch type {
+        case .calibrationRequest:
+            notificationName = .regularCalibrationCreated
+        case .phoneMuted:
+            notificationName = .notMuted
+        default:
+            break
+        }
+        
+        guard let name = notificationName else { return nil }
+        
+        return NotificationCenter.default.addObserver(
+            forName: name,
             object: nil,
             queue: nil,
             using: { [weak self] _ in
-                self?.alertSentCount[.calibrationRequest] = 0
-                self?.alertSkipCount[.calibrationRequest] = 0
+                self?.alertSentCount[type] = 0
+                self?.alertSkipCount[type] = 0
             }
         )
     }

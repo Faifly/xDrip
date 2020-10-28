@@ -191,6 +191,8 @@ final class GlucoseNotificationWorker: NSObject {
         MuteChecker.shared.checkMute { [weak self] isMuted in
             if isMuted {
                 self?.fireAlert(ofType: .phoneMuted)
+            } else {
+                NotificationCenter.default.post(name: .notMuted, object: nil)
             }
         }
     }
@@ -296,4 +298,8 @@ final class GlucoseNotificationWorker: NSObject {
         
         return isChangingFast
     }
+}
+
+extension Notification.Name {
+    static let notMuted = Notification.Name("NotMuted")
 }

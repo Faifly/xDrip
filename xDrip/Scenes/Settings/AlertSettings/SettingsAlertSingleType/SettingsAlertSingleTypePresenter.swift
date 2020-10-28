@@ -84,13 +84,13 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
             cells.append(
                 contentsOf: [
                     createUnitsPickerView(
-                        .highTreshold,
+                        .highThreshold,
                         detailText: String(format: "%.1f", high),
                         settings: response.settings,
                         valueChangeHandler: response.pickerViewValueChangedHandler
                     ),
                     createUnitsPickerView(
-                        .lowTreshold,
+                        .lowThreshold,
                         detailText: String(format: "%.1f", low),
                         settings: response.settings,
                         valueChangeHandler: response.pickerViewValueChangedHandler
@@ -347,8 +347,8 @@ private extension SettingsAlertSingleType.Field {
         case .entireDay: return "settings_alert_single_type_entire_day".localized
         case .startTime: return "settings_alert_single_type_start_time".localized
         case .endTime: return "settings_alert_single_type_end_time".localized
-        case .highTreshold: return "settings_alert_single_type_high_treshold".localized
-        case .lowTreshold: return "settings_alert_single_type_low_treshold".localized
+        case .highThreshold: return "settings_alert_single_type_high_threshold".localized
+        case .lowThreshold: return "settings_alert_single_type_low_threshold".localized
         case .minimumBGChange: return "settings_alert_single_type_minimum_bg_change".localized
         }
     }
