@@ -246,28 +246,30 @@ final class GlucoseNotificationWorker: NSObject {
         guard last3.count == 3 else {
             return false
         }
-        
+        // We have at least 3 readings
         let lastReading = last3[0]
         let middleReading = last3[1]
         let firstReading = last3[2]
         
-        var highThreshold = User.current.settings.warningLevelValue(for: .high)
-        var lowThreshold = User.current.settings.warningLevelValue(for: .low)
-        var minimumBGChange = 10.0
-        
-        if let config = User.current.settings.alert?.customConfiguration(for: isRise ? .fastRise : .fastDrop) {
-            highThreshold = Double(config.highThreshold)
-            lowThreshold = Double(config.lowThreshold)
-            minimumBGChange = Double(config.minimumBGChange)
-        }
+        // Check thresholds
+        let config = User.current.settings.alert.customConfiguration(for: isRise ? .fastRise : .fastDrop)
+        let isUseGlucoseThreshold = config.isUseGlucoseThreshold
+        let highThreshold = Double(config.highThreshold)
+        let lowThreshold = Double(config.lowThreshold)
+        let minimumBGChange = Double(config.minimumBGChange)
         
         guard
             lastReading.calculatedValue !~ 0.0,
             middleReading.calculatedValue !~ 0.0,
-            firstReading.calculatedValue !~ 0.0,
-            lastReading.calculatedValue <= highThreshold,
-            lastReading.calculatedValue >= lowThreshold
+            firstReading.calculatedValue !~ 0.0
         else { return false }
+        
+        // Last 3 readings are valid
+        if isUseGlucoseThreshold &&
+            (lastReading.calculatedValue < lowThreshold || lastReading.calculatedValue > highThreshold) {
+            // Reading is outside user defined thresholds
+            return false
+        }
         
         let date = Date()
         let nineMinutes = TimeInterval.secondsPerMinute * 9.0
@@ -279,17 +281,19 @@ final class GlucoseNotificationWorker: NSObject {
             lastDate.timeIntervalSince(middleDate) < nineMinutes,
             middleDate.timeIntervalSince(firstDate) < nineMinutes
         else { return false }
-        
+        // All readings are not more than 6 minutes apart
         let lastSlope = lastReading.calculatedValue - middleReading.calculatedValue
         let middleSlope = middleReading.calculatedValue - firstReading.calculatedValue
         
         var isChangingFast = false
         if isRise {
             if middleSlope >= minimumBGChange, lastSlope >= minimumBGChange {
+                // It's rising fast
                 isChangingFast = true
             }
         } else {
             if middleSlope <= -1 * minimumBGChange, lastSlope <= -1 * minimumBGChange {
+                // It's dropping fast
                 isChangingFast = true
             }
         }

@@ -77,31 +77,44 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
         }
         
         if config.eventType.requiresGlucoseThreshold {
-            let high = GlucoseUnit.convertFromDefault(Double(config.highThreshold))
-            let low = GlucoseUnit.convertFromDefault(Double(config.lowThreshold))
-            let minimumChange = GlucoseUnit.convertFromDefault(Double(config.minimumBGChange))
-            
             cells.append(
-                contentsOf: [
-                    createUnitsPickerView(
-                        .highTreshold,
-                        detailText: String(format: "%.1f", high),
-                        settings: response.settings,
-                        valueChangeHandler: response.pickerViewValueChangedHandler
-                    ),
-                    createUnitsPickerView(
-                        .lowTreshold,
-                        detailText: String(format: "%.1f", low),
-                        settings: response.settings,
-                        valueChangeHandler: response.pickerViewValueChangedHandler
-                    ),
-                    createUnitsPickerView(
-                        .minimumBGChange,
-                        detailText: String(format: "%.1f", minimumChange),
-                        settings: response.settings,
-                        valueChangeHandler: response.pickerViewValueChangedHandler
-                    )
-                ]
+                createRightSwitchCell(
+                    .isUseGlucoseThreshold,
+                    isSwitchOn: config.isUseGlucoseThreshold,
+                    switchValueChangedHandler: response.switchValueChangedHandler
+                )
+            )
+            
+            if config.isUseGlucoseThreshold {
+                let high = GlucoseUnit.convertFromDefault(Double(config.highThreshold))
+                let low = GlucoseUnit.convertFromDefault(Double(config.lowThreshold))
+                
+                cells.append(
+                    contentsOf: [
+                        createUnitsPickerView(
+                            .highTreshold,
+                            detailText: String(format: "%.1f", high),
+                            settings: response.settings,
+                            valueChangeHandler: response.pickerViewValueChangedHandler
+                        ),
+                        createUnitsPickerView(
+                            .lowTreshold,
+                            detailText: String(format: "%.1f", low),
+                            settings: response.settings,
+                            valueChangeHandler: response.pickerViewValueChangedHandler
+                        )
+                    ]
+                )
+            }
+            
+            let minimumChange = GlucoseUnit.convertFromDefault(Double(config.minimumBGChange))
+            cells.append(
+                createUnitsPickerView(
+                    .minimumBGChange,
+                    detailText: String(format: "%.1f", minimumChange),
+                    settings: response.settings,
+                    valueChangeHandler: response.pickerViewValueChangedHandler
+                )
             )
         }
         
@@ -347,6 +360,7 @@ private extension SettingsAlertSingleType.Field {
         case .entireDay: return "settings_alert_single_type_entire_day".localized
         case .startTime: return "settings_alert_single_type_start_time".localized
         case .endTime: return "settings_alert_single_type_end_time".localized
+        case .isUseGlucoseThreshold: return "settings_alert_single_type_is_use_glucose_threshold".localized
         case .highTreshold: return "settings_alert_single_type_high_treshold".localized
         case .lowTreshold: return "settings_alert_single_type_low_treshold".localized
         case .minimumBGChange: return "settings_alert_single_type_minimum_bg_change".localized
