@@ -94,7 +94,7 @@
 "edit_entry_insulin_amount_title" = "Units";
 "edit_entry_date_and_time" = "Date/Time";
 "edit_entry_carbs_amount_unit_grams" = "g";
-"edit_entry_insulin_unit_milligrams" = "mg";
+"edit_entry_insulin_unit_milligrams" = "U";
 "edit_entry_fast_carbs_title" = "Fast";
 "edit_entry_medium_carbs_title" = "Medium";
 "edit_entry_slow_carbs_title" = "Slow";
@@ -196,8 +196,8 @@
 "settings_alert_single_type_entire_day" = "Entire Day";
 "settings_alert_single_type_start_time" = "Start Time";
 "settings_alert_single_type_end_time" = "End Time";
-"settings_alert_single_type_high_treshold" = "High Treshold";
-"settings_alert_single_type_low_treshold" = "Low Treshold";
+"settings_alert_single_type_high_threshold" = "High Threshold";
+"settings_alert_single_type_low_threshold" = "Low Threshold";
 "settings_alert_single_type_minimum_bg_change" = "Minimum BG Change";
 "settings_alert_single_type_setting_header" = "SETTING";
 "settings_alert_single_type_events_header" = "EVENTS";
@@ -554,7 +554,7 @@ By using this software and/or website you agree that you are over 18 years of ag
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Greetings";
-"initial_welcome_large_welcome_message" = "Welcome to xDrip for iOS!";
+"initial_welcome_large_welcome_message" = "Welcome to xDrip for ";
 "initial_welcome_small_welcome_message" = "Seems like this is your first time in xDrip. Do you want us to guide you through the initial setup process?";
 "initial_welcome_start_button" = "Begin Initial Setup";
 "initial_welcome_skip_button" = "Skip";

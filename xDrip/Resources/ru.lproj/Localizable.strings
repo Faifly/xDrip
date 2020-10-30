@@ -94,7 +94,7 @@
 "edit_entry_insulin_amount_title" = "Дозировка";
 "edit_entry_date_and_time" = "Дата/Время";
 "edit_entry_carbs_amount_unit_grams" = "г";
-"edit_entry_insulin_unit_milligrams" = "мг";
+"edit_entry_insulin_unit_milligrams" = "U";
 "edit_entry_fast_carbs_title" = "Быстрые";
 "edit_entry_medium_carbs_title" = "Средние";
 "edit_entry_slow_carbs_title" = "Медленные";
@@ -196,8 +196,8 @@
 "settings_alert_single_type_entire_day" = "Весь день";
 "settings_alert_single_type_start_time" = "Время начала";
 "settings_alert_single_type_end_time" = "Время конца";
-"settings_alert_single_type_high_treshold" = "Верхний порог";
-"settings_alert_single_type_low_treshold" = "Нижний порог";
+"settings_alert_single_type_high_threshold" = "Верхний порог";
+"settings_alert_single_type_low_threshold" = "Нижний порог";
 "settings_alert_single_type_minimum_bg_change" = "Мин. изменение сахара";
 "settings_alert_single_type_setting_header" = "Настройки";
 "settings_alert_single_type_events_header" = "События";
@@ -553,7 +553,7 @@
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Приветствуем!";
-"initial_welcome_large_welcome_message" = "Добро пожаловать в xDrip для iOS!";
+"initial_welcome_large_welcome_message" = "Добро пожаловать в xDrip для ";
 "initial_welcome_small_welcome_message" = "Похоже, что это ваш первый раз в этом приложении. Хотите, чтобы мы провели вас через процесс первоначальной настройки?";
 "initial_welcome_start_button" = "Начать Настройку";
 "initial_welcome_skip_button" = "Пропустить";

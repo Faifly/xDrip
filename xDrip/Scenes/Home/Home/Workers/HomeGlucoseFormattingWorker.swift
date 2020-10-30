@@ -175,7 +175,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         var valueString: String
         if value.rounded(to: 2).isZero {
             valueString = getRoundedStringFrom(abs(value), place: 1)
-        } else if abs(value) < 0.1 {
+        } else if abs(value) < 0.1 || unit == .mmolL {
             valueString = getRoundedStringFrom(value, place: 2)
         } else {
             valueString = getRoundedStringFrom(value, place: 1)

@@ -27,8 +27,8 @@ enum SettingsAlertSingleType {
         case entireDay
         case startTime
         case endTime
-        case highTreshold
-        case lowTreshold
+        case highThreshold
+        case lowThreshold
         case minimumBGChange
     }
     
