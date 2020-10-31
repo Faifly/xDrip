@@ -200,8 +200,10 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
             type: .debug,
             error: error
         )
-        if let error = error, (error as NSError).code == CBError.Code.peerRemovedPairingInformation.rawValue {
-            delegate?.serviceDidFail(withError: .peerRemovedPairingInformation)
+        if #available(iOS 13.4, *) {
+            if let error = error, (error as NSError).code == CBError.Code.peerRemovedPairingInformation.rawValue {
+                delegate?.serviceDidFail(withError: .peerRemovedPairingInformation)
+            }
         }
         if hasRecentlyConnected {
             LogController.log(message: "[Dexcom G6] Has connected recently, retrying in 10 seconds", type: .debug)
