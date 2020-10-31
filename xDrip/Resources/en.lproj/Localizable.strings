@@ -196,6 +196,7 @@
 "settings_alert_single_type_entire_day" = "Entire Day";
 "settings_alert_single_type_start_time" = "Start Time";
 "settings_alert_single_type_end_time" = "End Time";
+"settings_alert_single_type_is_use_glucose_threshold" = "Use Glucose Threshold?";
 "settings_alert_single_type_high_threshold" = "High Threshold";
 "settings_alert_single_type_low_threshold" = "Low Threshold";
 "settings_alert_single_type_minimum_bg_change" = "Minimum BG Change";
@@ -461,6 +462,7 @@ This setting will be applied to all future sensors";
 "bluetooth_error_unauthorized" = "No Bluetooth access permissions";
 "bluetooth_error_unsupported" = "Bluetooth is not supported on this device";
 "bluetooth_error_alert_settings_button_title" = "Settings";
+"bluetooth_error_removed_pairing_info" = "Failed to connect to the transmitter because of pairing error. Looks like you have recently paired your transmitter with another device. To fix this, go to System Settings -> Bluetooth, select your transmitter and tap on \"Forget this device\".";
 
 // Dexcom Errors
 "dexcom_error_invalid_serial" = "Serial number is invalid";
@@ -523,6 +525,12 @@ This setting will be applied to all future sensors";
 "notification_transmitter_connection_body" = "Transmitter successfully connected and ready to send readings";
 "notification_app_stopped_title" = "App Stopped";
 "notification_app_stopped_body" = "Your xDrip App is not running. You will not receive alerts, alarms or sensor glucose readings.";
+
+"notification_snooze" = "Snooze";
+
+"notification_error_title" = "Notification Service Error";
+"notification_error_not_allowed" = "Notifications not allowed. Please go to the device/app settings and allow notifications";
+"notification_error_alert_settings_button_title" = "Settings";
 
 // Initial Warning screen
 "initial_warning_screen_title" = "Important Warning";

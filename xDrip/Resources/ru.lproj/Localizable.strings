@@ -196,6 +196,7 @@
 "settings_alert_single_type_entire_day" = "Весь день";
 "settings_alert_single_type_start_time" = "Время начала";
 "settings_alert_single_type_end_time" = "Время конца";
+"settings_alert_single_type_is_use_glucose_threshold" = "Использовать пороги глюкозы?";
 "settings_alert_single_type_high_threshold" = "Верхний порог";
 "settings_alert_single_type_low_threshold" = "Нижний порог";
 "settings_alert_single_type_minimum_bg_change" = "Мин. изменение сахара";
@@ -460,6 +461,7 @@
 "bluetooth_error_unauthorized" = "Доступ к Bluetooth запрещён";
 "bluetooth_error_unsupported" = "Bluetooth не поддерживается этим устройством";
 "bluetooth_error_alert_settings_button_title" = "Настройки";
+"bluetooth_error_removed_pairing_info" = "Не удалось подключиться к передатчику из-за ошибки создания пары. Похоже недавно вы подключали ваш передатчик к другому устройству. Чтобы исправить это, зайди в Системные настройки -> Bluetooth, выберите ваш передатчик и нажмите \"Забыть это устройство\".";
 
 // Dexcom Errors
 "dexcom_error_invalid_serial" = "Неправильный серийный номер";
@@ -522,6 +524,12 @@
 "notification_transmitter_connection_body" = "Передатчик успешно подключен и готов к отправке считываний";
 "notification_app_stopped_title" = "Приложение остановлено";
 "notification_app_stopped_body" = "Ваше приложение xDrip не запущено. Вы не будете получать уведомления или считывания с сенсора.";
+
+"notification_snooze" = "Отложить";
+
+"notification_error_title" = "Ошибка Сервиса Оповещений";
+"notification_error_not_allowed" = "Уведомления не разрешены. Пожалуйста, перейдите в настройки устройства/приложения и разрешите уведомления";
+"notification_error_alert_settings_button_title" = "Настройки";
 
 // Initial Warning screen
 "initial_warning_screen_title" = "Важное предупреждение";
