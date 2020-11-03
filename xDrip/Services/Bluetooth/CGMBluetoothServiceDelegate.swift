@@ -14,4 +14,5 @@ protocol CGMBluetoothServiceDelegate: AnyObject {
     func serviceDidUpdateMetadata(_ metadata: CGMDeviceMetadataType, value: String)
     func serviceDidReceiveGlucoseReading(raw: Double, filtered: Double, rssi: Double)
     func serviceDidFail(withError error: CGMBluetoothServiceError)
+    func serviceDidReceiveBackfillData(backsie: DexcomG6BackfillStream.Backsie, time: TimeInterval)
 }

@@ -62,6 +62,10 @@ final class DexcomG6MessageWorker {
             let message = try DexcomG6TransmitterTimeRxMessage(data: data)
             delegate?.workerDidReceiveTransmitterTimeInfo(message)
             
+        case .glucoseBackfillRx:
+            let message = try DexcomG6BackfillRxMessage(data: data)
+            delegate?.workerDidReceiveGlucoseBackfillMessage(message)
+            
         default: break
         }
         
@@ -149,6 +153,14 @@ final class DexcomG6MessageWorker {
     private func handlePairResponse(_ response: DexcomG6PairRequestRxMessage) throws {
         guard response.paired else { throw DexcomG6Error.notPaired }
         isPaired = true
+    }
+    
+    func handleBackfillStream(_ data: Data?) {
+        guard let data = data else { return }
+        let stream = DexcomG6BackfillStream()
+        stream.push(data)
+        
+        delegate?.workerDidReceiveBackfillData(stream.decode())
     }
     
     private func trySendingMessageFromQueue() {

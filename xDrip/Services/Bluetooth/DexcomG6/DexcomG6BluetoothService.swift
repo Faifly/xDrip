@@ -146,6 +146,35 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
     func workerDidRequestPairing() {
         NotificationController.shared.sendNotification(ofType: .pairingRequest)
     }
+    
+    func workerDidReceiveGlucoseBackfillMessage(_ message: DexcomG6BackfillRxMessage) {
+        LogController.log(
+            message: "[Dexcom G6] Glucose backfill request is %@",
+            type: .debug,
+            message.valid ? "confirmed" : "corrupted"
+        )
+    }
+    
+    func workerDidReceiveBackfillData(_ backsies: [DexcomG6BackfillStream.Backsie]) {
+        for backsie in backsies {
+            let rawTime = backsie.dexTime
+            guard let ageString = CGMDevice.current.metadata(ofType: .transmitterTime)?.value, let age = Double(ageString) else {
+                return
+            }
+            
+            let transmitterStartDate = Date(timeIntervalSince1970: age)
+            let time = transmitterStartDate + TimeInterval(rawTime)
+            let date = Date().timeIntervalSince(time)
+            
+            guard date < TimeInterval.hours(6), date > 0 else {
+                return
+            }
+            
+            if GlucoseReading.reading(for: time) == nil {
+                GlucoseReading.create(filtered: <#T##Double#>, unfiltered: <#T##Double#>, rssi: <#T##Double#>)
+            }
+        }
+    }
 }
 
 extension DexcomG6BluetoothService: CBCentralManagerDelegate {
@@ -278,23 +307,28 @@ extension DexcomG6BluetoothService: CBPeripheralDelegate {
             type: .debug,
             error: error
         )
-        do {
-            try messageWorker?.handleIncomingMessage(characteristic.value)
-        } catch DexcomG6Error.notAuthenticated {
-            self.peripheral = nil
-            centralManager.cancelPeripheralConnection(peripheral)
-            
-            LogController.log(
-                message: "[Dexcom G6] Connected to wrong peripheral, starting scanning for new one...",
-                type: .debug
-            )
-            
-            let advertisementID = CBUUID(string: DexcomG6Constants.advertisementServiceID)
-            centralManager.scanForPeripherals(withServices: [advertisementID], options: nil)
-        } catch {
-            delegate?.serviceDidFail(
-                withError: .deviceSpecific(error: error as? LocalizedError ?? CGMBluetoothServiceError.unknown)
-            )
+        
+        if characteristic.uuid.uuidString == DexcomG6Constants.backfillCharacteristicID {
+            messageWorker?.handleBackfillStream(characteristic.value)
+        } else {
+            do {
+                try messageWorker?.handleIncomingMessage(characteristic.value)
+            } catch DexcomG6Error.notAuthenticated {
+                self.peripheral = nil
+                centralManager.cancelPeripheralConnection(peripheral)
+                
+                LogController.log(
+                    message: "[Dexcom G6] Connected to wrong peripheral, starting scanning for new one...",
+                    type: .debug
+                )
+                
+                let advertisementID = CBUUID(string: DexcomG6Constants.advertisementServiceID)
+                centralManager.scanForPeripherals(withServices: [advertisementID], options: nil)
+            } catch {
+                delegate?.serviceDidFail(
+                    withError: .deviceSpecific(error: error as? LocalizedError ?? CGMBluetoothServiceError.unknown)
+                )
+            }
         }
     }
 }
