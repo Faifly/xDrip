@@ -18,9 +18,9 @@ struct DexcomG6SensorDataRxMessage {
         guard data[0] == DexcomG6OpCode.sensorDataRx.rawValue else { throw DexcomG6Error.invalidSensorDataRx }
 
         status = data[1]
-        let rawFiltered: UInt32 = Data(data[6..<10]).to(UInt32.self)
-        filtered = Double(rawFiltered)
-        let rawUnfiltered: UInt32 = Data(data[10..<14]).to(UInt32.self)
+        let rawUnfiltered: UInt32 = Data(data[6..<10]).to(UInt32.self)
         unfiltered = Double(rawUnfiltered)
+        let rawFiltered: UInt32 = Data(data[10..<14]).to(UInt32.self)
+        filtered = Double(rawFiltered)
     }
 }
