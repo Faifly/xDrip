@@ -174,9 +174,12 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
             type: .debug,
             peripheral
         )
-        self.peripheral = peripheral
-        lastRSSI = RSSI.doubleValue
-        central.connect(peripheral, options: nil)
+        if let sensorName = CGMDevice.current.sensorName,
+            peripheral.name?.lowercased() == sensorName.lowercased() {
+            self.peripheral = peripheral
+            lastRSSI = RSSI.doubleValue
+            central.connect(peripheral, options: nil)
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {

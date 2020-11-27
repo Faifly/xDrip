@@ -151,6 +151,11 @@ final class CGMDevice: Object {
         return Date().timeIntervalSince1970 - sensorStartDate.timeIntervalSince1970 < deviceType.warmUpInterval
     }
     
+    var sensorName: String? {
+        guard let serial = metadata(ofType: .serialNumber)?.value else { return nil }
+        return Constants.Sensor.dexcomPrefix + serial.suffix(2)
+    }
+    
     // MARK: Reset
     
     @objc private(set) dynamic var isResetScheduled: Bool = false
