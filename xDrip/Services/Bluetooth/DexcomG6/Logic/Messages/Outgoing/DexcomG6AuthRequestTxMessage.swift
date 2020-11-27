@@ -22,7 +22,7 @@ struct DexcomG6AuthRequestTxMessage: DexcomG6OutgoingMessage {
         data.append(uuid.5)
         data.append(uuid.6)
         data.append(uuid.7)
-        data.append(0x2)
+        data.append(0x1)
         
         return data
     }
