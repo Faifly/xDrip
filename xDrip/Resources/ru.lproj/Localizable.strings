@@ -94,7 +94,7 @@
 "edit_entry_insulin_amount_title" = "Дозировка";
 "edit_entry_date_and_time" = "Дата/Время";
 "edit_entry_carbs_amount_unit_grams" = "г";
-"edit_entry_insulin_unit_milligrams" = "мг";
+"edit_entry_insulin_unit_milligrams" = "U";
 "edit_entry_fast_carbs_title" = "Быстрые";
 "edit_entry_medium_carbs_title" = "Средние";
 "edit_entry_slow_carbs_title" = "Медленные";
@@ -198,7 +198,7 @@
 "settings_alert_single_type_end_time" = "Время конца";
 "settings_alert_single_type_high_treshold" = "Верхний порог";
 "settings_alert_single_type_low_treshold" = "Нижний порог";
-"settings_alert_single_type_is_use_glucose_threshold" = "Использовать пороги глюкозы?";
+"settings_alert_single_type_is_use_glucose_treshold" = "Использовать пороги глюкозы?";
 "settings_alert_single_type_minimum_bg_change" = "Мин. изменение сахара";
 "settings_alert_single_type_setting_header" = "Настройки";
 "settings_alert_single_type_events_header" = "События";
@@ -461,6 +461,7 @@
 "bluetooth_error_unauthorized" = "Доступ к Bluetooth запрещён";
 "bluetooth_error_unsupported" = "Bluetooth не поддерживается этим устройством";
 "bluetooth_error_alert_settings_button_title" = "Настройки";
+"bluetooth_error_removed_pairing_info" = "Не удалось подключиться к передатчику из-за ошибки создания пары. Похоже недавно вы подключали ваш передатчик к другому устройству. Чтобы исправить это, зайди в Системные настройки -> Bluetooth, выберите ваш передатчик и нажмите \"Забыть это устройство\".";
 
 // Dexcom Errors
 "dexcom_error_invalid_serial" = "Неправильный серийный номер";
@@ -524,6 +525,12 @@
 "notification_app_stopped_title" = "Приложение остановлено";
 "notification_app_stopped_body" = "Ваше приложение xDrip не запущено. Вы не будете получать уведомления или считывания с сенсора.";
 
+"notification_snooze" = "Отложить";
+
+"notification_error_title" = "Ошибка Сервиса Оповещений";
+"notification_error_not_allowed" = "Уведомления не разрешены. Пожалуйста, перейдите в настройки устройства/приложения и разрешите уведомления";
+"notification_error_alert_settings_button_title" = "Настройки";
+
 // Initial Warning screen
 "initial_warning_screen_title" = "Важное предупреждение";
 "initial_warning_agree" = "ПРИНЯТЬ";
@@ -554,7 +561,7 @@
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Приветствуем!";
-"initial_welcome_large_welcome_message" = "Добро пожаловать в xDrip для iOS!";
+"initial_welcome_large_welcome_message" = "Добро пожаловать в xDrip для ";
 "initial_welcome_small_welcome_message" = "Похоже, что это ваш первый раз в этом приложении. Хотите, чтобы мы провели вас через процесс первоначальной настройки?";
 "initial_welcome_start_button" = "Начать Настройку";
 "initial_welcome_skip_button" = "Пропустить";

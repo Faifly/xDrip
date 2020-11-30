@@ -360,7 +360,7 @@ private extension SettingsAlertSingleType.Field {
         case .entireDay: return "settings_alert_single_type_entire_day".localized
         case .startTime: return "settings_alert_single_type_start_time".localized
         case .endTime: return "settings_alert_single_type_end_time".localized
-        case .isUseGlucoseThreshold: return "settings_alert_single_type_is_use_glucose_threshold".localized
+        case .isUseGlucoseTreshold: return "settings_alert_single_type_is_use_glucose_treshold".localized
         case .highTreshold: return "settings_alert_single_type_high_treshold".localized
         case .lowTreshold: return "settings_alert_single_type_low_treshold".localized
         case .minimumBGChange: return "settings_alert_single_type_minimum_bg_change".localized

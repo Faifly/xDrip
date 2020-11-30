@@ -10,6 +10,7 @@ import UIKit
 
 final class InitialSetupIntroViewController: InitialSetupAbstractStepViewController {
     @IBOutlet private weak var startFlowButton: UIButton!
+    @IBOutlet private weak var largeTitleLable: UILabel!
     
     @IBAction private func onBeginSetup() {
         let request = InitialSetup.BeginSetup.Request()
@@ -24,5 +25,14 @@ final class InitialSetupIntroViewController: InitialSetupAbstractStepViewControl
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "initial_welcome_screen_title".localized
+        var title = "initial_welcome_large_welcome_message".localized
+        
+        #if targetEnvironment(macCatalyst)
+        title += "macOS!"
+        #else
+        title += "iOS!"
+        #endif
+        
+        largeTitleLable.text = title
     }
 }

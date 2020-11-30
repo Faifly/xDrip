@@ -152,6 +152,10 @@ final class GlucoseHistoryView: BaseHistoryView {
             }
         }
         
+        if basalDisplayMode == .onBottom && labels.count == 1 {
+            labels.append("")
+        }
+        
         rightLabelsView.textAlignment = .left
         rightLabelsView.labels = basalDisplayMode == .onBottom ? labels : labels.reversed()
         rightLabelsView.setNeedsDisplay()

@@ -84,8 +84,8 @@ final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLo
     private func handlePickerViewValueChanged(_ field: SettingsAlertSingleType.Field, _ value: Double) {
         let convertedValue = Float(GlucoseUnit.convertToDefault(value))
         switch field {
-        case .highTreshold: configuration.updateHighThreshold(convertedValue)
-        case .lowTreshold: configuration.updateLowThreshold(convertedValue)
+        case .highThreshold: configuration.updateHighThreshold(convertedValue)
+        case .lowThreshold: configuration.updateLowThreshold(convertedValue)
         case .minimumBGChange: configuration.updateMinimumBGChange(convertedValue)
         default: break
         }

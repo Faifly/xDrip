@@ -174,13 +174,16 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
             type: .debug,
             peripheral
         )
-        self.peripheral = peripheral
-        lastRSSI = RSSI.doubleValue
-        central.connect(peripheral, options: nil)
+        if let sensorName = CGMDevice.current.sensorName,
+            peripheral.name?.lowercased() == sensorName.lowercased() {
+            central.stopScan()
+            self.peripheral = peripheral
+            lastRSSI = RSSI.doubleValue
+            central.connect(peripheral, options: nil)
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        central.stopScan()
         guard isConnectionRequested else { return }
         LogController.log(
             message: "[Dexcom G6] Did connect to peripheral, discovering services...",
@@ -200,6 +203,11 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
             type: .debug,
             error: error
         )
+        if #available(iOS 13.4, *) {
+            if let error = error, (error as NSError).code == CBError.Code.peerRemovedPairingInformation.rawValue {
+                delegate?.serviceDidFail(withError: .peerRemovedPairingInformation)
+            }
+        }
         if hasRecentlyConnected {
             LogController.log(message: "[Dexcom G6] Has connected recently, retrying in 10 seconds", type: .debug)
             DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) { [weak self] in

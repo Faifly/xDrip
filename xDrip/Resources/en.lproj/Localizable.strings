@@ -94,7 +94,7 @@
 "edit_entry_insulin_amount_title" = "Units";
 "edit_entry_date_and_time" = "Date/Time";
 "edit_entry_carbs_amount_unit_grams" = "g";
-"edit_entry_insulin_unit_milligrams" = "mg";
+"edit_entry_insulin_unit_milligrams" = "U";
 "edit_entry_fast_carbs_title" = "Fast";
 "edit_entry_medium_carbs_title" = "Medium";
 "edit_entry_slow_carbs_title" = "Slow";
@@ -198,7 +198,7 @@
 "settings_alert_single_type_end_time" = "End Time";
 "settings_alert_single_type_high_treshold" = "High Treshold";
 "settings_alert_single_type_low_treshold" = "Low Treshold";
-"settings_alert_single_type_is_use_glucose_threshold" = "Use Glucose Threshold?";
+"settings_alert_single_type_is_use_glucose_treshold" = "Use Glucose Treshold?";
 "settings_alert_single_type_minimum_bg_change" = "Minimum BG Change";
 "settings_alert_single_type_setting_header" = "SETTING";
 "settings_alert_single_type_events_header" = "EVENTS";
@@ -462,6 +462,7 @@ This setting will be applied to all future sensors";
 "bluetooth_error_unauthorized" = "No Bluetooth access permissions";
 "bluetooth_error_unsupported" = "Bluetooth is not supported on this device";
 "bluetooth_error_alert_settings_button_title" = "Settings";
+"bluetooth_error_removed_pairing_info" = "Failed to connect to the transmitter because of pairing error. Looks like you have recently paired your transmitter with another device. To fix this, go to System Settings -> Bluetooth, select your transmitter and tap on \"Forget this device\".";
 
 // Dexcom Errors
 "dexcom_error_invalid_serial" = "Serial number is invalid";
@@ -525,6 +526,12 @@ This setting will be applied to all future sensors";
 "notification_app_stopped_title" = "App Stopped";
 "notification_app_stopped_body" = "Your xDrip App is not running. You will not receive alerts, alarms or sensor glucose readings.";
 
+"notification_snooze" = "Snooze";
+
+"notification_error_title" = "Notification Service Error";
+"notification_error_not_allowed" = "Notifications not allowed. Please go to the device/app settings and allow notifications";
+"notification_error_alert_settings_button_title" = "Settings";
+
 // Initial Warning screen
 "initial_warning_screen_title" = "Important Warning";
 "initial_warning_agree" = "I AGREE";
@@ -555,7 +562,7 @@ By using this software and/or website you agree that you are over 18 years of ag
 
 // Initial Welcome screen
 "initial_welcome_screen_title" = "Greetings";
-"initial_welcome_large_welcome_message" = "Welcome to xDrip for iOS!";
+"initial_welcome_large_welcome_message" = "Welcome to xDrip for ";
 "initial_welcome_small_welcome_message" = "Seems like this is your first time in xDrip. Do you want us to guide you through the initial setup process?";
 "initial_welcome_start_button" = "Begin Initial Setup";
 "initial_welcome_skip_button" = "Skip";
