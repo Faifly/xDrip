@@ -19,6 +19,13 @@ enum CGMDeviceType: Int {
         }
     }
     
+    var prefix: String {
+        switch self {
+        case .dexcomG6: return "Dexcom"
+        case .mocked: return "Mocked"
+        }
+    }
+
     var warmUpInterval: TimeInterval {
         switch self {
         case .dexcomG6, .mocked: return .secondsPerHour * 2.0
