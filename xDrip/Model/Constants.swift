@@ -24,8 +24,4 @@ enum Constants {
     enum Nightscout {
         static let appIdentifierName = "xDrip iOS"
     }
-    
-    enum Sensor {
-        static let dexcomPrefix = "Dexcom"
-    }
 }
