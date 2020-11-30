@@ -153,7 +153,8 @@ final class CGMDevice: Object {
     
     var sensorName: String? {
         guard let serial = metadata(ofType: .serialNumber)?.value else { return nil }
-        return CGMDeviceType.dexcomG6.prefix + serial.suffix(2)
+        guard let deviceType = deviceType else { return nil }
+        return deviceType.prefix + serial.suffix(2)
     }
     
     // MARK: Reset
