@@ -196,9 +196,9 @@
 "settings_alert_single_type_entire_day" = "Весь день";
 "settings_alert_single_type_start_time" = "Время начала";
 "settings_alert_single_type_end_time" = "Время конца";
-"settings_alert_single_type_high_treshold" = "Верхний порог";
-"settings_alert_single_type_low_treshold" = "Нижний порог";
-"settings_alert_single_type_is_use_glucose_treshold" = "Использовать пороги глюкозы?";
+"settings_alert_single_type_is_use_glucose_threshold" = "Использовать пороги глюкозы?";
+"settings_alert_single_type_high_threshold" = "Верхний порог";
+"settings_alert_single_type_low_threshold" = "Нижний порог";
 "settings_alert_single_type_minimum_bg_change" = "Мин. изменение сахара";
 "settings_alert_single_type_setting_header" = "Настройки";
 "settings_alert_single_type_events_header" = "События";

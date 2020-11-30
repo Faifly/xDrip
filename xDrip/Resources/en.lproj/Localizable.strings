@@ -196,9 +196,9 @@
 "settings_alert_single_type_entire_day" = "Entire Day";
 "settings_alert_single_type_start_time" = "Start Time";
 "settings_alert_single_type_end_time" = "End Time";
-"settings_alert_single_type_high_treshold" = "High Treshold";
-"settings_alert_single_type_low_treshold" = "Low Treshold";
-"settings_alert_single_type_is_use_glucose_treshold" = "Use Glucose Treshold?";
+"settings_alert_single_type_is_use_glucose_threshold" = "Use Glucose Threshold?";
+"settings_alert_single_type_high_threshold" = "High Threshold";
+"settings_alert_single_type_low_threshold" = "Low Threshold";
 "settings_alert_single_type_minimum_bg_change" = "Minimum BG Change";
 "settings_alert_single_type_setting_header" = "SETTING";
 "settings_alert_single_type_events_header" = "EVENTS";
