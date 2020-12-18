@@ -16,4 +16,6 @@ protocol DexcomG6MessageWorkerDelegate: AnyObject {
     func workerDidReceiveBatteryInfo(_ message: DexcomG6BatteryStatusRxMessage)
     func workerDidReceiveTransmitterTimeInfo(_ message: DexcomG6TransmitterTimeRxMessage)
     func workerDidRequestPairing()
+    func workerDidReceiveGlucoseBackfillMessage(_ message: DexcomG6BackfillRxMessage)
+    func workerDidReceiveBackfillData(_ backsies: [DexcomG6BackfillStream.Backsie])
 }

@@ -40,6 +40,10 @@
 		0A89542824A0AC230067601F /* HomeGlucoseFormattingWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A89542724A0AC230067601F /* HomeGlucoseFormattingWorkerTests.swift */; };
 		0A94D7F924A654AD00D14AD2 /* HomeEntriesFormattingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94D7F824A654AD00D14AD2 /* HomeEntriesFormattingWorker.swift */; };
 		0A94D7FB24A65A7600D14AD2 /* BaseHomeEntryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94D7FA24A65A7600D14AD2 /* BaseHomeEntryProtocol.swift */; };
+		0AA09F2C258CAABF004C96DC /* DexcomG6CalibrationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA09F2B258CAABF004C96DC /* DexcomG6CalibrationState.swift */; };
+		0AA09F30258CAC65004C96DC /* DexcomG6BackfillRxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA09F2F258CAC65004C96DC /* DexcomG6BackfillRxMessage.swift */; };
+		0AA09F34258CAC98004C96DC /* DexcomG6BackfillStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA09F33258CAC98004C96DC /* DexcomG6BackfillStream.swift */; };
+		0AA09F38258CAD0E004C96DC /* DexcomG6BackfillTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA09F37258CAD0E004C96DC /* DexcomG6BackfillTxMessage.swift */; };
 		0AAE030C24FCF66E003CF50B /* CTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE030B24FCF66D003CF50B /* CTreatment.swift */; };
 		2C09D21224410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */; };
 		2C09D21324410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */; };
@@ -734,6 +738,10 @@
 		0A89542724A0AC230067601F /* HomeGlucoseFormattingWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGlucoseFormattingWorkerTests.swift; sourceTree = "<group>"; };
 		0A94D7F824A654AD00D14AD2 /* HomeEntriesFormattingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEntriesFormattingWorker.swift; sourceTree = "<group>"; };
 		0A94D7FA24A65A7600D14AD2 /* BaseHomeEntryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHomeEntryProtocol.swift; sourceTree = "<group>"; };
+		0AA09F2B258CAABF004C96DC /* DexcomG6CalibrationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6CalibrationState.swift; sourceTree = "<group>"; };
+		0AA09F2F258CAC65004C96DC /* DexcomG6BackfillRxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6BackfillRxMessage.swift; sourceTree = "<group>"; };
+		0AA09F33258CAC98004C96DC /* DexcomG6BackfillStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6BackfillStream.swift; sourceTree = "<group>"; };
+		0AA09F37258CAD0E004C96DC /* DexcomG6BackfillTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6BackfillTxMessage.swift; sourceTree = "<group>"; };
 		0AAE030B24FCF66D003CF50B /* CTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTreatment.swift; sourceTree = "<group>"; };
 		2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsRightSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsRightSwitchTableViewCell.xib; sourceTree = "<group>"; };
@@ -1794,6 +1802,7 @@
 				5805C99A24389230002AFA1B /* DexcomG6MessageWorkerDelegate.swift */,
 				5805C9F6243892D6002AFA1B /* DexcomG6SerialSavingWorker.swift */,
 				58161A42247931C70023FF76 /* DexcomG6Firmware.swift */,
+				0AA09F2B258CAABF004C96DC /* DexcomG6CalibrationState.swift */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -1821,6 +1830,7 @@
 				5805C98B24389230002AFA1B /* DexcomG6FirmwareVersionTxMessage.swift */,
 				589EA8D62478359200515BCC /* DexcomG6ResetTxMessage.swift */,
 				58FE4CB824796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift */,
+				0AA09F37258CAD0E004C96DC /* DexcomG6BackfillTxMessage.swift */,
 			);
 			path = Outgoing;
 			sourceTree = "<group>";
@@ -1835,6 +1845,8 @@
 				5805C99124389230002AFA1B /* DexcomG6SensorDataRxMessage.swift */,
 				5805C99224389230002AFA1B /* DexcomG6TransmitterVersionRxMessage.swift */,
 				5805C99324389230002AFA1B /* DexcomG6PairRequestRxMessage.swift */,
+				0AA09F2F258CAC65004C96DC /* DexcomG6BackfillRxMessage.swift */,
+				0AA09F33258CAC98004C96DC /* DexcomG6BackfillStream.swift */,
 			);
 			path = Incoming;
 			sourceTree = "<group>";
@@ -4096,6 +4108,7 @@
 				589EA8D72478359200515BCC /* DexcomG6ResetTxMessage.swift in Sources */,
 				580E4BEA243F73B200565EDE /* SettingsSensorModels.swift in Sources */,
 				580EC77D2421457600C34948 /* EditFoodEntryPresenter.swift in Sources */,
+				0AA09F34258CAC98004C96DC /* DexcomG6BackfillStream.swift in Sources */,
 				58160DF32402C7F600C792F4 /* RootRouter.swift in Sources */,
 				580E4BA6243F723200565EDE /* NightscoutCloudExtraOptionsPresenter.swift in Sources */,
 				0A94D7F924A654AD00D14AD2 /* HomeEntriesFormattingWorker.swift in Sources */,
@@ -4163,6 +4176,7 @@
 				5805C9B324389230002AFA1B /* DexcomG6Error.swift in Sources */,
 				588584AC248E7A2800C3F74C /* CloudUploadStatus.swift in Sources */,
 				58B5FD4A24190EB300DB857D /* HistoryRootViewController.swift in Sources */,
+				0AA09F30258CAC65004C96DC /* DexcomG6BackfillRxMessage.swift in Sources */,
 				5805CA11243892D6002AFA1B /* InitialSetupTransmitterTypeViewController.swift in Sources */,
 				5805C9AD24389230002AFA1B /* DexcomG6SensorDataRxMessage.swift in Sources */,
 				58B5FD55241910BD00DB857D /* SettingsRootViewController.swift in Sources */,
@@ -4221,6 +4235,7 @@
 				5805C9B724389230002AFA1B /* DexcomG6BluetoothService.swift in Sources */,
 				587F425B24B1D8210001D788 /* InsulinType.swift in Sources */,
 				580E4CDF243F802F00565EDE /* SettingsModeMasterPresenter.swift in Sources */,
+				0AA09F2C258CAABF004C96DC /* DexcomG6CalibrationState.swift in Sources */,
 				2C53317624C87338005B3A6F /* BasalChartBasalEntry.swift in Sources */,
 				2C53317824C87751005B3A6F /* BasalChartDataWorker.swift in Sources */,
 				0A895423249CE71A0067601F /* GlucoseCurrentInfoView.swift in Sources */,
@@ -4410,6 +4425,7 @@
 				5805C9CB2438929E002AFA1B /* CenteredTitleButton.swift in Sources */,
 				5805C9C32438925F002AFA1B /* CGMDeviceType.swift in Sources */,
 				580E4BB7243F725600565EDE /* NightscoutCloudBackfillInteractor.swift in Sources */,
+				0AA09F38258CAD0E004C96DC /* DexcomG6BackfillTxMessage.swift in Sources */,
 				58788B7724264A36000EB113 /* CalibrationEntriesWorker.swift in Sources */,
 				580E4BDD243F739C00565EDE /* SettingsTransmitterModels.swift in Sources */,
 				580E4BB3243F725600565EDE /* NightscoutCloudBackfillPresenter.swift in Sources */,
