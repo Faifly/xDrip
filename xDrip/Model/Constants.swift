@@ -24,4 +24,8 @@ enum Constants {
     enum Nightscout {
         static let appIdentifierName = "xDrip iOS"
     }
+    
+    static let specialG5RawValuePlaceholder = -0.1597
+    static let maxBackfillPeriod = TimeInterval(hours: 3)
+    static let dexcomPeriod = TimeInterval(minutes: 5)
 }

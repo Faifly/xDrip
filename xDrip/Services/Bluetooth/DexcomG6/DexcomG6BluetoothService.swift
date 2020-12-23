@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import AKUtils
 
 final class DexcomG6BluetoothService: NSObject {
     private weak var delegate: CGMBluetoothServiceDelegate?
@@ -93,6 +94,8 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
         guard let peripheral = peripheral else { return }
         guard let writeCharacteristic = characteristics[.write] else { return }
         peripheral.setNotifyValue(true, for: writeCharacteristic)
+        guard let backfillCharacteristic = characteristics[.backfill] else { return }
+        peripheral.setNotifyValue(true, for: backfillCharacteristic)
     }
     
     func workerDidReceiveReading(_ message: DexcomG6SensorDataRxMessage) {
@@ -110,6 +113,7 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
             filtered: DexcomG6Firmware.scaleRawValue(message.filtered, firmware: firmware),
             rssi: lastRSSI
         )
+        backFillIfNeeded()
     }
     
     func workerDidReceiveTransmitterInfo(_ message: DexcomG6TransmitterVersionRxMessage) {
@@ -147,6 +151,69 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
     
     func workerDidRequestPairing() {
         NotificationController.shared.sendNotification(ofType: .pairingRequest)
+    }
+    
+    func workerDidReceiveGlucoseBackfillMessage(_ message: DexcomG6BackfillRxMessage) {
+        LogController.log(
+            message: "[Dexcom G6] Glucose backfill request is %@",
+            type: .debug,
+            message.valid ? "confirmed" : "corrupted"
+        )
+    }
+
+    func workerDidReceiveBackfillData(_ backsies: [DexcomG6BackfillStream.Backsie]) {
+        for backsie in backsies {
+            let rawTime = backsie.dexTime
+            guard let transmitterStartDate = CGMDevice.current.transmitterStartDate else {
+                    return
+            }
+            let backsieDate = transmitterStartDate + Double(rawTime)
+            let diff = Date().timeIntervalSince1970 - backsieDate.timeIntervalSince1970
+            
+            guard diff > 0, diff < TimeInterval.hours(6) else { return }
+            
+            delegate?.serviceDidReceiveBackfillGlucoseReading(calculatedValue: Double(backsie.glucose),
+                                                              date: backsieDate)
+        }
+    }
+    
+    func backFillIfNeeded() {
+        var backFillIsNeeded = false
+        let neededReadingsCount = Int(Constants.maxBackfillPeriod / Constants.dexcomPeriod)
+        var earliestTimestamp = Date().timeIntervalSince1970 - Constants.maxBackfillPeriod
+        var latestTimestamp = Date().timeIntervalSince1970
+        var readings = GlucoseReading.readingsForInterval(
+            DateInterval(start: Date() - Constants.maxBackfillPeriod - TimeInterval(minutes: 0.5),
+                         end: Date()))
+        
+        readings.sort(by: { $0.date >? $1.date })
+        
+        if readings.count != neededReadingsCount {
+            backFillIsNeeded = true
+        } else {
+            for (idx, reading) in readings.enumerated() {
+                guard let date = reading.date else { break }
+                let sinseReading = Date().timeIntervalSince1970 - date.timeIntervalSince1970
+                if sinseReading > (Constants.dexcomPeriod * Double(idx) + TimeInterval(minutes: 7)) {
+                    backFillIsNeeded = true
+                    if  sinseReading <= Constants.maxBackfillPeriod {
+                        earliestTimestamp = date.timeIntervalSince1970
+                    }
+                    break
+                } else {
+                    latestTimestamp = date.timeIntervalSince1970
+                }
+            }
+        }
+        
+        if backFillIsNeeded {
+            guard let transmitterStartDate = CGMDevice.current.transmitterStartDate else {
+                return
+            }
+            let startTime = Int(earliestTimestamp - TimeInterval(minutes: 5) - transmitterStartDate.timeIntervalSince1970)
+            let endTime = Int(latestTimestamp + TimeInterval(minutes: 5) - transmitterStartDate.timeIntervalSince1970)
+            messageWorker?.createBackFillRequest(startTime: startTime, endTime: endTime)
+        }
     }
 }
 
@@ -192,7 +259,6 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
         CGMDevice.current.updateBluetoothID(peripheral.identifier.uuidString)
         delegate?.serviceDidConnect()
         delegate?.serviceDidUpdateMetadata(.deviceName, value: peripheral.name ?? "")
-        self.peripheral = peripheral
         let serviceUUID = CBUUID(string: DexcomG6Constants.serviceID)
         peripheral.discoverServices([serviceUUID])
     }
@@ -266,6 +332,9 @@ extension DexcomG6BluetoothService: CBPeripheralDelegate {
             } else if characteristic.uuid.uuidString == DexcomG6Constants.writeCharacteristicID {
                 LogController.log(message: "[Dexcom G6] Found write characteristic", type: .debug)
                 characteristics[.write] = characteristic
+            } else if characteristic.uuid.uuidString == DexcomG6Constants.backfillCharacteristicID {
+                LogController.log(message: "[Dexcom G6] Found backfill characteristic", type: .debug)
+                characteristics[.backfill] = characteristic
             }
         }
     }
@@ -291,6 +360,14 @@ extension DexcomG6BluetoothService: CBPeripheralDelegate {
             type: .debug,
             error: error
         )
+        
+        switch characteristic.uuid.uuidString {
+        case DexcomG6Constants.backfillCharacteristicID:
+            messageWorker?.handleBackfillStream(characteristic.value)
+            return
+        default: break
+        }
+        
         do {
             try messageWorker?.handleIncomingMessage(characteristic.value)
         } catch DexcomG6Error.notAuthenticated {

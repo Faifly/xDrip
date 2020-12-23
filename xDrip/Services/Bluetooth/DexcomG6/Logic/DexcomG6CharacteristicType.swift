@@ -11,4 +11,5 @@ import Foundation
 enum DexcomG6CharacteristicType {
     case notify
     case write
+    case backfill
 }

@@ -106,6 +106,15 @@ extension CGMController: CGMBluetoothServiceDelegate {
         }
     }
     
+    func serviceDidReceiveBackfillGlucoseReading(calculatedValue: Double, date: Date) {
+        guard !CGMDevice.current.isWarmingUp else { return }
+        if GlucoseReading.reading(for: date, precisionInMinutes: 4) == nil {
+            if let reading = GlucoseReading.createFromG6(calculatedValue: calculatedValue, date: date) {
+                glucoseDataListeners.values.forEach { $0(reading) }
+            }
+        } 
+    }
+    
     func serviceDidFail(withError error: CGMBluetoothServiceError) {
         let alert = UIAlertController(
             title: "bluetooth_error_title".localized,

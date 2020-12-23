@@ -186,8 +186,43 @@ final class GlucoseReading: Object {
         return reading
     }
     
-    static func reading(for date: Date) -> GlucoseReading? {
-        let allowedOffset = TimeInterval.secondsPerMinute * 15.0
+    @discardableResult static func createFromG6(calculatedValue: Double,
+                                                date: Date) -> GlucoseReading? {
+        LogController.log(message: "[Glucose] Trying to create reading...", type: .debug)
+        guard CGMDevice.current.isSensorStarted else {
+            LogController.log(message: "[Glucose] Can't createFromG6 reading, sensor not started", type: .error)
+            return nil
+        }
+        
+        guard calculatedValue > .ulpOfOne else {
+            LogController.log(message: "[Glucose] Can't createFromG6 reading, calculatedValue is below zero",
+                              type: .error)
+            return nil
+        }
+        
+        let reading = GlucoseReading()
+        reading.externalID = UUID().uuidString
+        reading.calculatedValue = calculatedValue
+        reading.filteredCalculatedValue = calculatedValue
+        reading.rawValue = Constants.specialG5RawValuePlaceholder
+        reading.date = date
+        reading.sourceInfo = CGMDevice.current.deviceType?.title ?? "" + "Backfill"
+        
+        Realm.shared.safeWrite {
+            Realm.shared.add(reading)
+        }
+        
+        LogController.log(
+            message: "[Glucose] Created FromG6 reading with calculated value: %@",
+            type: .debug,
+            "\(reading.calculatedValue)"
+        )
+        
+        return reading
+    }
+    
+    static func reading(for date: Date, precisionInMinutes: Int = 15, lockToSensor: Bool = false) -> GlucoseReading? {
+        let allowedOffset = TimeInterval.secondsPerMinute * Double(precisionInMinutes)
         let minOffset = date - allowedOffset
         let maxOffset = date + allowedOffset
         let matching = allMaster.filter { $0.date >? minOffset && $0.date <? maxOffset }
