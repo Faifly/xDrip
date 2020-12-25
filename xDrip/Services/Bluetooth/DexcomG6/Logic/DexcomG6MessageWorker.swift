@@ -33,6 +33,7 @@ final class DexcomG6MessageWorker {
         guard let data = data else { return }
         LogController.log(message: "[Dexcom G6] Received message: %@", type: .debug, data.hexEncodedString)
         guard let opCode = DexcomG6OpCode(rawValue: data[0]) else { return }
+        print("opCode \(opCode)")
         
         switch opCode {
         case .authRequestRx:
@@ -66,6 +67,8 @@ final class DexcomG6MessageWorker {
         case .glucoseBackfillRx:
             let message = try DexcomG6BackfillRxMessage(data: data)
             delegate?.workerDidReceiveGlucoseBackfillMessage(message)
+        case .glucoseRx:
+            createDataRequest(ofType: .sensorDataTx)
             
         default: break
         }
@@ -77,6 +80,10 @@ final class DexcomG6MessageWorker {
     func createDataRequest(ofType type: DexcomG6OpCode) {
         guard isPaired || !type.requiresPairing else { return }
         guard let message = messageFactory.createOutgoingMessage(ofType: type) else { return }
+        if type == .authRequestTx {
+            isQueueAwaitingForResponse = false
+            messageQueue.removeAll()
+        }
         messageQueue.append(message)
         trySendingMessageFromQueue()
     }
@@ -87,7 +94,7 @@ final class DexcomG6MessageWorker {
             return
         }
         
-        createDataRequest(ofType: .sensorDataTx)
+        createDataRequest(ofType: .glucoseTx)
         if CGMDevice.current.requiresUpdate(for: .firmwareVersion) {
             LogController.log(message: "[Dexcom G6] Firmware version update required", type: .debug)
             createDataRequest(ofType: .transmitterVersionTx)
