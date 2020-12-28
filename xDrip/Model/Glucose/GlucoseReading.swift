@@ -196,15 +196,27 @@ final class GlucoseReading: Object {
         
         let reading = GlucoseReading()
         reading.externalID = UUID().uuidString
+        reading.calibration = Calibration.calibration(for: date)
         reading.calculatedValue = calculatedValue
         reading.filteredCalculatedValue = calculatedValue
         reading.rawValue = Constants.specialG5RawValuePlaceholder
         reading.date = date
         reading.sourceInfo = CGMDevice.current.deviceType?.title ?? "" + "Backfill"
         
+        if let settings = User.current.settings.nightscoutSync, settings.isEnabled, !forBackfill {
+            reading.cloudUploadStatus = .notUploaded
+        }
+        
         Realm.shared.safeWrite {
             Realm.shared.add(reading)
         }
+        
+        reading.findNewCurve()
+        reading.findNewRawCurve()
+        
+        Calibration.adjustRecentReadings(1)
+        reading.calculateNoise()
+        reading.injectDisplayGlucose()
         
         LogController.log(
             message: "[Glucose] Created FromG6 reading with calculated value: %@",
