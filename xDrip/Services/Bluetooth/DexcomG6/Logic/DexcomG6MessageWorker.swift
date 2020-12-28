@@ -50,7 +50,7 @@ final class DexcomG6MessageWorker {
             
         case .sensorDataRx:
             let message = try DexcomG6SensorDataRxMessage(data: data)
-            delegate?.workerDidReceiveReading(message)
+            delegate?.workerDidReceiveSensorData(message)
             
         case .batteryStatusRx:
             let message = try DexcomG6BatteryStatusRxMessage(data: data)
@@ -68,7 +68,8 @@ final class DexcomG6MessageWorker {
             let message = try DexcomG6BackfillRxMessage(data: data)
             delegate?.workerDidReceiveGlucoseBackfillMessage(message)
         case .glucoseRx:
-            createDataRequest(ofType: .sensorDataTx)
+            let message = try DexcomG6GlucoseDataRxMessage(data: data)
+            delegate?.workerDidReceiveGlucoseData(message)
             
         default: break
         }
@@ -94,7 +95,6 @@ final class DexcomG6MessageWorker {
             return
         }
         
-        createDataRequest(ofType: .glucoseTx)
         if CGMDevice.current.requiresUpdate(for: .firmwareVersion) {
             LogController.log(message: "[Dexcom G6] Firmware version update required", type: .debug)
             createDataRequest(ofType: .transmitterVersionTx)
@@ -106,6 +106,12 @@ final class DexcomG6MessageWorker {
         if CGMDevice.current.requiresUpdate(for: .transmitterTime) {
             LogController.log(message: "[Dexcom G6] Transmitter time update required", type: .debug)
             createDataRequest(ofType: .transmitterTimeTx)
+        }
+        
+        if CGMDevice.current.isFirstTransmitterVersion ?? false {
+            createDataRequest(ofType: .sensorDataTx)
+        } else {
+            createDataRequest(ofType: .glucoseTx)
         }
     }
     

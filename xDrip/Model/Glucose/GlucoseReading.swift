@@ -171,23 +171,17 @@ final class GlucoseReading: Object {
             "\(reading.calculatedValue)"
         )
         
-        if Calibration.allForCurrentSensor.isEmpty
-            && GlucoseReading.allMasterForCurrentSensor.count >= 2
-            && requireCalibration {
-            CalibrationController.shared.requestInitialCalibration()
-        } else if CalibrationController.shared.canShowNextRegularCalibrationRequest() &&
-            CalibrationController.shared.isOptimalConditionToCalibrate() &&
-            masterForCurrentSensorInLast30Minutes.count >= 2 {
-            CalibrationController.shared.requestRegularCalibration()
-        }
+        checkForCalibrationRequest(requireCalibration)
         
         NightscoutService.shared.scanForNotUploadedEntries()
         
         return reading
     }
-    
+        
     @discardableResult static func createFromG6(calculatedValue: Double,
-                                                date: Date) -> GlucoseReading? {
+                                                date: Date,
+                                                forBackfill: Bool = false,
+                                                requireCalibration: Bool = true) -> GlucoseReading? {
         LogController.log(message: "[Glucose] Trying to create reading...", type: .debug)
         guard CGMDevice.current.isSensorStarted else {
             LogController.log(message: "[Glucose] Can't createFromG6 reading, sensor not started", type: .error)
@@ -218,7 +212,24 @@ final class GlucoseReading: Object {
             "\(reading.calculatedValue)"
         )
         
+        if !forBackfill {
+            checkForCalibrationRequest(requireCalibration)
+            NightscoutService.shared.scanForNotUploadedEntries()
+        }
+        
         return reading
+    }
+    
+    private static func checkForCalibrationRequest(_ requireCalibration: Bool) {
+        if Calibration.allForCurrentSensor.isEmpty
+            && GlucoseReading.allMasterForCurrentSensor.count >= 2
+            && requireCalibration {
+            CalibrationController.shared.requestInitialCalibration()
+        } else if CalibrationController.shared.canShowNextRegularCalibrationRequest() &&
+                    CalibrationController.shared.isOptimalConditionToCalibrate() &&
+                    masterForCurrentSensorInLast30Minutes.count >= 2 {
+            CalibrationController.shared.requestRegularCalibration()
+        }
     }
     
     static func reading(for date: Date, precisionInMinutes: Int = 15, lockToSensor: Bool = false) -> GlucoseReading? {

@@ -98,7 +98,7 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
         peripheral.setNotifyValue(true, for: backfillCharacteristic)
     }
     
-    func workerDidReceiveReading(_ message: DexcomG6SensorDataRxMessage) {
+    func workerDidReceiveSensorData(_ message: DexcomG6SensorDataRxMessage) {
         lastPeripheralReadingDate = Date()
         LogController.log(
             message: "[Dexcom G6] Did receive reading with status: %u, filtered: %f, unfiltered: %f",
@@ -108,11 +108,18 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
             message.unfiltered
         )
         let firmware = CGMDevice.current.metadata(ofType: .firmwareVersion)?.value
-        delegate?.serviceDidReceiveGlucoseReading(
+        delegate?.serviceDidReceiveSensorGlucoseReading(
             raw: DexcomG6Firmware.scaleRawValue(message.unfiltered, firmware: firmware),
             filtered: DexcomG6Firmware.scaleRawValue(message.filtered, firmware: firmware),
             rssi: lastRSSI
         )
+        backFillIfNeeded()
+    }
+    
+    func workerDidReceiveGlucoseData(_ message: DexcomG6GlucoseDataRxMessage) {
+        delegate?.serviceDidReceiveGlucoseReading(calculatedValue: message.calculatedValue,
+                                                  date: Date(),
+                                                  forBackfill: false)
         backFillIfNeeded()
     }
     
@@ -172,8 +179,9 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
             
             guard diff > 0, diff < TimeInterval.hours(6) else { return }
             
-            delegate?.serviceDidReceiveBackfillGlucoseReading(calculatedValue: Double(backsie.glucose),
-                                                              date: backsieDate)
+            delegate?.serviceDidReceiveGlucoseReading(calculatedValue: Double(backsie.glucose),
+                                                      date: backsieDate,
+                                                      forBackfill: true)
         }
     }
     

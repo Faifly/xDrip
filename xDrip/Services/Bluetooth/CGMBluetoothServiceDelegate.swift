@@ -12,7 +12,7 @@ protocol CGMBluetoothServiceDelegate: AnyObject {
     func serviceDidConnect()
     func serviceDidDisconnect()
     func serviceDidUpdateMetadata(_ metadata: CGMDeviceMetadataType, value: String)
-    func serviceDidReceiveGlucoseReading(raw: Double, filtered: Double, rssi: Double)
-    func serviceDidReceiveBackfillGlucoseReading(calculatedValue: Double, date: Date)
+    func serviceDidReceiveSensorGlucoseReading(raw: Double, filtered: Double, rssi: Double)
+    func serviceDidReceiveGlucoseReading(calculatedValue: Double, date: Date, forBackfill: Bool)
     func serviceDidFail(withError error: CGMBluetoothServiceError)
 }

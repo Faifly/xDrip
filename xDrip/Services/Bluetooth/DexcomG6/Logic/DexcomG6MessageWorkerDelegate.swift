@@ -11,7 +11,8 @@ import Foundation
 protocol DexcomG6MessageWorkerDelegate: AnyObject {
     func workerRequiresSendingOutgoingMessage(_ message: DexcomG6OutgoingMessage)
     func workerDidSuccessfullyAuthorize()
-    func workerDidReceiveReading(_ message: DexcomG6SensorDataRxMessage)
+    func workerDidReceiveSensorData(_ message: DexcomG6SensorDataRxMessage)
+    func workerDidReceiveGlucoseData(_ message: DexcomG6GlucoseDataRxMessage)
     func workerDidReceiveTransmitterInfo(_ message: DexcomG6TransmitterVersionRxMessage)
     func workerDidReceiveBatteryInfo(_ message: DexcomG6BatteryStatusRxMessage)
     func workerDidReceiveTransmitterTimeInfo(_ message: DexcomG6TransmitterTimeRxMessage)

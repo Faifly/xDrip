@@ -144,15 +144,21 @@ final class CGMDevice: Object {
     }
     
     var transmitterStartDate: Date? {
-        get {
-            let transmitterData = CGMDevice.current.metadata(ofType: .transmitterTime)
-            guard let ageString = transmitterData?.value,
-                let age = Double(ageString),
-                let date = transmitterData?.date else {
-                    return nil
-            }
-            return date - age
+        let transmitterData = CGMDevice.current.metadata(ofType: .transmitterTime)
+        guard let ageString = transmitterData?.value,
+              let age = Double(ageString),
+              let date = transmitterData?.date else {
+            return nil
         }
+        return date - age
+    }
+    
+    var isFirstTransmitterVersion: Bool? {
+        guard let versionString = CGMDevice.current.metadata(ofType: .firmwareVersion)?.value
+        else {
+            return nil
+        }
+        return versionString.starts(with: "1")
     }
 
     var isWarmingUp: Bool {
