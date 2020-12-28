@@ -136,21 +136,27 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
                 isShown: isShown
             )
         }
-        let lowThreshold = User.current.settings.warningLevelValue(for: .low)
-        let highThreshold = User.current.settings.warningLevelValue(for: .high)
+        let lowThresholdValue = User.current.settings.warningLevelValue(for: .low)
+        let convertedLow = GlucoseUnit.convertFromDefault(lowThresholdValue)
+        let highThresholdValue = User.current.settings.warningLevelValue(for: .high)
+        let convertedHigh = GlucoseUnit.convertFromDefault(highThresholdValue)
         let unit = User.current.settings.unit.label
         
-        statsCalculationWorker.calculate(with: entries, lowThreshold: lowThreshold, highThreshold: highThreshold)
+        statsCalculationWorker.calculate(
+            with: entries,
+            lowThreshold: lowThresholdValue,
+            highThreshold: highThresholdValue
+        )
         
         let avgGlucose = GlucoseUnit.convertFromDefault(statsCalculationWorker.mean)
         let stdDeviation = GlucoseUnit.convertFromDefault(statsCalculationWorker.stdDev)
         
         return Home.DataSectionViewModel(
             lowValue: String(format: "%0.1f%%", statsCalculationWorker.lowPercentage),
-            lowTitle: String(format: "Low (<%0.1f)", lowThreshold),
+            lowTitle: String(format: "Low (<%0.1f)", convertedLow),
             inRange: String(format: "%0.1f%%", statsCalculationWorker.normalPercentage),
             highValue: String(format: "%0.1f%%", statsCalculationWorker.highPercentage),
-            highTitle: String(format: "High (>%0.1f)", highThreshold),
+            highTitle: String(format: "High (>%0.1f)", convertedHigh),
             avgGlucose: String(format: "%0.1f \(unit)", avgGlucose),
             a1c: String(format: "%0.1f%%", statsCalculationWorker.a1cDCCT),
             reading: "\(entries.count)",

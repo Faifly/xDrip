@@ -236,8 +236,8 @@ final class StatsBarsChart: BaseChartView {
         minValue = values.min(by: { $0.lowerBound < $1.lowerBound })?.lowerBound ?? 0.0
         maxValue = values.max(by: { $0.upperBound < $1.upperBound })?.upperBound ?? 0.0
         
-        visualMinValue = max((minValue * (1.0 - visualCorrelationFactor)).rounded(.down), 0.0)
-        visualMaxValue = (maxValue * (1.0 + visualCorrelationFactor)).rounded(.up)
+        visualMinValue = max((minValue * (1.0 - visualCorrelationFactor) - 0.5).rounded(.down), 0.0)
+        visualMaxValue = (maxValue * (1.0 + visualCorrelationFactor) + 0.5).rounded(.up)
     }
     
     @objc private func handleTouch(_ sender: UIGestureRecognizer) {
