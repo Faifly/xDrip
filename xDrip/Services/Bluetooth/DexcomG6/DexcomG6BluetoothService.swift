@@ -186,35 +186,14 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
     }
     
     func backFillIfNeeded() {
-        var backFillIsNeeded = false
         let neededReadingsCount = Int(Constants.maxBackfillPeriod / Constants.dexcomPeriod)
-        var earliestTimestamp = Date().timeIntervalSince1970 - Constants.maxBackfillPeriod
-        var latestTimestamp = Date().timeIntervalSince1970
-        var readings = GlucoseReading.readingsForInterval(
+        let earliestTimestamp = Date().timeIntervalSince1970 - Constants.maxBackfillPeriod
+        let latestTimestamp = Date().timeIntervalSince1970
+        let readings = GlucoseReading.readingsForInterval(
             DateInterval(start: Date() - Constants.maxBackfillPeriod - TimeInterval(minutes: 0.5),
-                         end: Date()))
+                         end: Date() + TimeInterval(minutes: 0.5)))
         
-        readings.sort(by: { $0.date >? $1.date })
-        
-        if readings.count != neededReadingsCount {
-            backFillIsNeeded = true
-        } else {
-            for (idx, reading) in readings.enumerated() {
-                guard let date = reading.date else { break }
-                let sinseReading = Date().timeIntervalSince1970 - date.timeIntervalSince1970
-                if sinseReading > (Constants.dexcomPeriod * Double(idx) + TimeInterval(minutes: 7)) {
-                    backFillIsNeeded = true
-                    if  sinseReading <= Constants.maxBackfillPeriod {
-                        earliestTimestamp = date.timeIntervalSince1970
-                    }
-                    break
-                } else {
-                    latestTimestamp = date.timeIntervalSince1970
-                }
-            }
-        }
-        
-        if backFillIsNeeded {
+        if readings.count < neededReadingsCount + 1 {
             guard let transmitterStartDate = CGMDevice.current.transmitterStartDate else {
                 return
             }

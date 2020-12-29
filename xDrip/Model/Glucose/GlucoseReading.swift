@@ -203,7 +203,8 @@ final class GlucoseReading: Object {
         reading.date = date
         reading.sourceInfo = CGMDevice.current.deviceType?.title ?? "" + "Backfill"
         
-        if let settings = User.current.settings.nightscoutSync, settings.isEnabled, !forBackfill {
+        if let settings = User.current.settings.nightscoutSync, settings.isEnabled,
+           !forBackfill {
             reading.cloudUploadStatus = .notUploaded
         }
         
