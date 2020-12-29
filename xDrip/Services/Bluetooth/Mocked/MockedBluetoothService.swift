@@ -81,4 +81,7 @@ extension MockedBluetoothService: CGMBluetoothService {
     func disconnect() {
         isStopped = true
     }
+    
+    func sendCalibration(glucose: Int, date: Date) {
+    }
 }

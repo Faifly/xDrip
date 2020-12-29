@@ -71,6 +71,14 @@ final class DexcomG6MessageWorker {
             let message = try DexcomG6GlucoseDataRxMessage(data: data)
             delegate?.workerDidReceiveGlucoseData(message)
             
+        case .calibrateGlucoseRx:
+            let message = try DexcomG6CalibrationRxMessage(data: data)
+            LogController.log(
+                message: "[Dexcom G6] DexcomG6CalibrationRxMessage accepted : %@",
+                type: .debug,
+                message.accepted
+            )
+            
         default: break
         }
         
@@ -179,6 +187,22 @@ final class DexcomG6MessageWorker {
         )
         backFillStream = DexcomG6BackfillStream()
         let message = DexcomG6BackfillTxMessage(startTime: startTime, endTime: endTime)
+        messageQueue.append(message)
+        trySendingMessageFromQueue()
+    }
+    
+    func createCalibrationRequest(glucose: Int, timestamp: Int) {
+        guard isPaired else { return }
+        
+        guard let isFirstVersion = CGMDevice.current.isFirstTransmitterVersion, !isFirstVersion else { return }
+        
+        LogController.log(
+            message: "[Dexcom G6] Queuing Calibration for transmitter: glucose %d, timestamp: %d",
+            type: .debug,
+            glucose,
+            timestamp
+        )
+        let message = DexcomG6CalibrationTxMessage(glucose: glucose, time: timestamp)
         messageQueue.append(message)
         trySendingMessageFromQueue()
     }

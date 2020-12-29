@@ -13,4 +13,5 @@ protocol CGMBluetoothService {
     
     func connect()
     func disconnect()
+    func sendCalibration(glucose: Int, date: Date)
 }
