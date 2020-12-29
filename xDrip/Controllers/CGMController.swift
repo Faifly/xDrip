@@ -83,10 +83,6 @@ final class CGMController {
     func notifyMetadataChanged(_ metadata: CGMDeviceMetadataType) {
         metadataListeners.values.forEach { $0(metadata) }
     }
-    
-    func addCalibration(glucose: Int, date: Date) {
-        service?.sendCalibration(glucose: glucose, date: date)
-    }
 }
 
 extension CGMController: CGMBluetoothServiceDelegate {

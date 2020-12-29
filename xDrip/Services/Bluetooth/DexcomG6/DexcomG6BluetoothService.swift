@@ -194,55 +194,13 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
                          end: Date() + TimeInterval(minutes: 0.5)))
         
         if readings.count < neededReadingsCount + 1 {
-            guard let transmitterStartDate = CGMDevice.current.transmitterStartDate else {
+            guard let transmitterStartInterval = CGMDevice.current.transmitterStartDate?.timeIntervalSince1970 else {
                 return
             }
-            let startTime = Int(earliestTimestamp - TimeInterval(minutes: 5) - transmitterStartDate.timeIntervalSince1970)
-            let endTime = Int(latestTimestamp + TimeInterval(minutes: 5) - transmitterStartDate.timeIntervalSince1970)
+            let startTime = Int(earliestTimestamp - TimeInterval(minutes: 5) - transmitterStartInterval)
+            let endTime = Int(latestTimestamp + TimeInterval(minutes: 5) - transmitterStartInterval)
             messageWorker?.createBackFillRequest(startTime: startTime, endTime: endTime)
         }
-    }
-    
-    func sendCalibration(glucose: Int, date: Date) {
-        let since = Date().timeIntervalSince1970 - date.timeIntervalSince1970
-        
-        if since < 0 {
-            LogController.log(
-                message: "[Dexcom G6] Cannot send calibration in future to transmitter %@",
-                type: .debug,
-                date.debugDescription
-            )
-            return
-        }
-        if since > TimeInterval.hours(1) {
-            LogController.log(
-                message: "[Dexcom G6] Cannot send calibration older than 1 hour to transmitter %@",
-                type: .debug,
-                date.debugDescription
-            )
-            return
-        }
-        if glucose < 40 || glucose > 400 {
-            LogController.log(
-                message: "[Dexcom G6] Calibration glucose value out of range %d",
-                type: .debug,
-                glucose
-            )
-            return
-        }
-        
-        guard let transmitterStartDate = CGMDevice.current.transmitterStartDate else {
-            LogController.log(
-                message: "[Dexcom G6] Transmitter Start Date is nil",
-                type: .debug
-            )
-            return
-        }
-        
-        let timestamp = Int(date.timeIntervalSince1970 - transmitterStartDate.timeIntervalSince1970)
-        
-        messageWorker?.createCalibrationRequest(glucose: glucose,
-                                                timestamp: timestamp)
     }
 }
 

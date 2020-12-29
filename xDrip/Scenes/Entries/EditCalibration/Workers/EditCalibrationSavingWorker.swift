@@ -39,8 +39,6 @@ final class EditCalibrationSavingWorker: EditCalibrationSavingWorkerLogic {
                 CGMController.shared.notifyGlucoseChange()
             }
             
-            CGMController.shared.addCalibration(glucose: Int(value1), date: date1)
-            
             NotificationCenter.default.postSettingsChangeNotification(setting: .warmUp)
         } catch CalibrationError.noReadingsNearDate {
             throw EditCalibration.ValidationError.noReadingsNearCalibration
