@@ -123,11 +123,7 @@ final class DexcomG6MessageWorker {
         if CGMDevice.current.isFirstTransmitterVersion ?? false {
             createDataRequest(ofType: .sensorDataTx)
         } else {
-            if let calibration = Calibration.lastValid,
-               let date = calibration.date,
-               !calibration.isSentToTransmitter {
-                createCalibrationRequest(glucose: Int(calibration.glucoseLevel), date: date)
-            }
+            createCalibrationRequest()
             createDataRequest(ofType: .glucoseTx)
         }
     }
@@ -200,8 +196,13 @@ final class DexcomG6MessageWorker {
         trySendingMessageFromQueue()
     }
     
-    func createCalibrationRequest(glucose: Int, date: Date) {
+    func createCalibrationRequest() {
         guard isPaired else { return }
+        guard let calibration = Calibration.lastValid,
+              let date = calibration.date,
+              !calibration.isSentToTransmitter else { return }
+        
+        let glucose = Int(calibration.glucoseLevel)
         
         let since = Date().timeIntervalSince1970 - date.timeIntervalSince1970
         
