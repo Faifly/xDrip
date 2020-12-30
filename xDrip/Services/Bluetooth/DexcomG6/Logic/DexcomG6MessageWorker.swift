@@ -70,19 +70,21 @@ final class DexcomG6MessageWorker {
         case .glucoseRx:
             let message = try DexcomG6GlucoseDataRxMessage(data: data)
             delegate?.workerDidReceiveGlucoseData(message)
-            
         case .calibrateGlucoseRx:
             let message = try DexcomG6CalibrationRxMessage(data: data)
-            if let calibration = Calibration.lastValid,
+            if let calibration = Calibration.allForCurrentSensor.first,
                !calibration.isSentToTransmitter, message.accepted {
                 calibration.markCalibrationAsSentToTransmitter()
+                LogController.log(
+                    message: "[Dexcom G6] Marked last calibration as sent to transmitter",
+                    type: .debug
+                )
             }
             LogController.log(
                 message: "[Dexcom G6] DexcomG6CalibrationRxMessage accepted : %@",
                 type: .debug,
-                message.accepted
+                message.accepted.description
             )
-            
         default: break
         }
         
@@ -198,9 +200,15 @@ final class DexcomG6MessageWorker {
     
     func createCalibrationRequest() {
         guard isPaired else { return }
-        guard let calibration = Calibration.lastValid,
+        guard let calibration = Calibration.allForCurrentSensor.first,
               let date = calibration.date,
-              !calibration.isSentToTransmitter else { return }
+              !calibration.isSentToTransmitter else {
+            LogController.log(
+                message: "[Dexcom G6] Cannot find last valid calibration",
+                type: .debug
+            )
+            return
+        }
         
         let glucose = Int(calibration.glucoseLevel)
         

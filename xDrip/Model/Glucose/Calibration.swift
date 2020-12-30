@@ -49,7 +49,6 @@ final class Calibration: Object {
     @objc private(set) dynamic var externalID: String?
     @objc private(set) dynamic var isSentToTransmitter: Bool = false
     
-    
     override class func primaryKey() -> String? {
         return "externalID"
     }
