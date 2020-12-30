@@ -151,10 +151,13 @@ class BaseHistoryView: UIView {
     }
     
     func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?) {
-        guard let minValue = minValue else { return }
-        guard let maxValue = maxValue else { return }
-        var adjustedMinValue = max(minValue.rounded(.down), 0.0)
-        var adjustedMaxValue = maxValue.rounded(.up)
+        guard var minValue = minValue else { return }
+        guard var maxValue = maxValue else { return }
+        minValue *= 10.0
+        maxValue *= 10.0
+        let alphaValue = 0.20 * (maxValue - minValue)
+        var adjustedMinValue = max((minValue - alphaValue).rounded(.down), 0.0)
+        var adjustedMaxValue = (maxValue + alphaValue).rounded(.up)
         if adjustedMinValue ~~ adjustedMaxValue {
             adjustedMinValue = max(adjustedMinValue - 1.0, 0.0)
             adjustedMaxValue += 1.0
@@ -162,25 +165,30 @@ class BaseHistoryView: UIView {
         
         let diff = adjustedMaxValue - adjustedMinValue
         var verticalLines: Int
-        
         if Int(diff) < maxVerticalLinesCount - 1 {
             verticalLines = Int(diff) + 1
         } else {
             verticalLines = maxVerticalLinesCount
         }
         
+        let tail = Int(diff) % (verticalLines - 1)
+        if tail != 0 {
+            adjustedMaxValue += Double((verticalLines - 1) - tail)
+        }
+        
         let step = diff / Double(verticalLines - 1)
         
         var labels: [String] = []
+        let format = User.current.settings.unit == .mmolL ? "%0.1f" : "%0.f"
         for index in 0..<verticalLines {
-            labels.append(String(format: "%0.f", adjustedMinValue + step * Double(index)))
+            labels.append(String(format: format, (adjustedMinValue + step * Double(index)) / 10.0))
         }
         
         leftLabelsView.labels = labels
         leftLabelsView.setNeedsDisplay()
         chartView.verticalLinesCount = labels.count
 
-        chartView.yRange = adjustedMinValue...adjustedMaxValue
+        chartView.yRange = (adjustedMinValue / 10.0)...(adjustedMaxValue / 10.0)
     }
     
     private func calculateHorizontalBottomLabels() {

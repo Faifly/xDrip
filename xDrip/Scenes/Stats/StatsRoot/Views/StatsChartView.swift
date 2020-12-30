@@ -65,7 +65,7 @@ final class StatsChartView: UIView {
         let step = (linesChart.visualMaxValue - linesChart.visualMinValue) / Double(linesChart.verticalCount - 1)
         verticalLabelsView.labels = [Int](0..<linesChart.verticalCount)
             .compactMap {
-                let value = GlucoseUnit.convertFromDefault(linesChart.visualMinValue - 0.5 + Double($0) * step)
+                let value = GlucoseUnit.convertFromDefault(linesChart.visualMinValue + Double($0) * step)
                 let numberValue = value as NSNumber
                 return formatter.string(from: numberValue)
             }
