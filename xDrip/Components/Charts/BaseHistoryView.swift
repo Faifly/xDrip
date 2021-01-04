@@ -16,6 +16,7 @@ class BaseHistoryView: UIView {
     let scrollContainer = ChartScrollContainer()
     let leftLabelsView = ChartVerticalLabelsView()
     var chartView = BaseChartView()
+    var multiplier = CGFloat(1.6)
     weak var chartWidthConstraint: NSLayoutConstraint?
     
     var globalDateRange = DateInterval()
@@ -42,7 +43,7 @@ class BaseHistoryView: UIView {
         addSubview(scrollContainer)
         scrollContainer.scrollView.addSubview(chartView)
         leftLabelsView.topAnchor.constraint(equalTo: scrollContainer.topAnchor).isActive = true
-        leftLabelsView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        leftLabelsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0).isActive = true
         leftLabelsView.trailingAnchor.constraint(equalTo: scrollContainer.leadingAnchor).isActive = true
         leftLabelsView.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
         chartView.bindToSuperview()
@@ -130,11 +131,18 @@ class BaseHistoryView: UIView {
             ),
             1.0
         )
-        let chartWidth = scrollContainer.bounds.width * scrollSegments
+        var chartWidth = scrollContainer.bounds.width * scrollSegments
+        #if os(iOS)
+        let width = UIScreen.main.bounds.width
+        if width < 414.0 {
+            multiplier = 1.6 + (414.0 / width) - 1
+        }
+        #endif
+        chartWidth *= multiplier
         chartWidthConstraint?.constant = chartWidth
         chartView.dateInterval = globalDateRange
         chartView.setNeedsDisplay()
-        updateChartSliderView(with: scrollSegments)
+        updateChartSliderView(with: scrollSegments * multiplier)
         scrollContainer.layoutIfNeeded()
         scrollContainer.scrollView.contentOffset = CGPoint(x: chartWidth - scrollContainer.bounds.width, y: 0.0)
     }
@@ -143,10 +151,13 @@ class BaseHistoryView: UIView {
     }
     
     func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?) {
-        guard let minValue = minValue else { return }
-        guard let maxValue = maxValue else { return }
-        var adjustedMinValue = max(minValue.rounded(.down), 0.0)
-        var adjustedMaxValue = maxValue.rounded(.up)
+        guard var minValue = minValue else { return }
+        guard var maxValue = maxValue else { return }
+        minValue *= 10.0
+        maxValue *= 10.0
+        let alphaValue = 0.20 * (maxValue - minValue)
+        var adjustedMinValue = max((minValue - alphaValue).rounded(.down), 0.0)
+        var adjustedMaxValue = (maxValue + alphaValue).rounded(.up)
         if adjustedMinValue ~~ adjustedMaxValue {
             adjustedMinValue = max(adjustedMinValue - 1.0, 0.0)
             adjustedMaxValue += 1.0
@@ -154,25 +165,30 @@ class BaseHistoryView: UIView {
         
         let diff = adjustedMaxValue - adjustedMinValue
         var verticalLines: Int
-        
         if Int(diff) < maxVerticalLinesCount - 1 {
             verticalLines = Int(diff) + 1
         } else {
             verticalLines = maxVerticalLinesCount
         }
         
+        let tail = Int(diff) % (verticalLines - 1)
+        if tail != 0 {
+            adjustedMaxValue += Double((verticalLines - 1) - tail)
+        }
+        
         let step = diff / Double(verticalLines - 1)
         
         var labels: [String] = []
+        let format = User.current.settings.unit == .mmolL ? "%0.1f" : "%0.f"
         for index in 0..<verticalLines {
-            labels.append(String(format: "%0.f", adjustedMinValue + step * Double(index)))
+            labels.append(String(format: format, (adjustedMinValue + step * Double(index)) / 10.0))
         }
         
         leftLabelsView.labels = labels
         leftLabelsView.setNeedsDisplay()
         chartView.verticalLinesCount = labels.count
 
-        chartView.yRange = adjustedMinValue...adjustedMaxValue
+        chartView.yRange = (adjustedMinValue / 10.0)...(adjustedMaxValue / 10.0)
     }
     
     private func calculateHorizontalBottomLabels() {
@@ -205,14 +221,14 @@ class BaseHistoryView: UIView {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM dd"
         let hoursFormatter = DateFormatter()
-        hoursFormatter.dateFormat = "HH:mm"
+        hoursFormatter.dateFormat = "H:mm"
         
         var endGridTime = initialGridDate.timeIntervalSince1970
         while endGridTime > globalDateRange.start.timeIntervalSince1970 {
             let date = Date(timeIntervalSince1970: endGridTime)
             let stringDate = hoursFormatter.string(from: date)
             
-            if stringDate == "00:00" {
+            if stringDate == "0:00" || stringDate == "12:00 AM" {
                 globalHorizontalLabels.append(dateFormatter.string(from: date))
             } else {
                 globalHorizontalLabels.append(stringDate)
