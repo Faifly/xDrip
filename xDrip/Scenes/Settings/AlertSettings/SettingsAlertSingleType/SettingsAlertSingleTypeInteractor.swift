@@ -63,6 +63,7 @@ final class SettingsAlertSingleTypeInteractor: SettingsAlertSingleTypeBusinessLo
         case .repeat: configuration.updateRepeat(value)
         case .vibrate: configuration.updateIsVibrating(value)
         case .entireDay: configuration.updateIsEntireDay(value); doUpdate()
+        case .isUseGlucoseThreshold: configuration.updateIsUseGlucoseThreshold(value); doUpdate()
         default: break
         }
     }
