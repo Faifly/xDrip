@@ -25,6 +25,7 @@ private struct HomeGlucoseCurrentInfoEntry: GlucoseCurrentInfoEntry {
     let lastScanDate: String
     let difValue: String
     let severityColor: UIColor?
+    let isOutdated: Bool
     
     static var emptyEntry: HomeGlucoseCurrentInfoEntry {
         return HomeGlucoseCurrentInfoEntry(
@@ -33,7 +34,8 @@ private struct HomeGlucoseCurrentInfoEntry: GlucoseCurrentInfoEntry {
         slopeValue: "-",
         lastScanDate: "--",
         difValue: "--",
-        severityColor: nil)
+        severityColor: nil,
+        isOutdated: false)
     }
 }
 
@@ -99,13 +101,20 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         let severity = GlucoseChartSeverityLevel(
                            warningLevel: settings?.warningLevel(forValue: entry.filteredCalculatedValue))
         let color = UIColor.colorForSeverityLevel(severity)
+        var isOutdated: Bool
+        if let entryDate = entry.date {
+            isOutdated = Date().timeIntervalSince1970 - entryDate.timeIntervalSince1970 >= TimeInterval(minutes: 11)
+        } else {
+            isOutdated = false
+        }
         return HomeGlucoseCurrentInfoEntry(
             glucoseIntValue: glucoseIntValue,
             glucoseDecimalValue: glucoseDecimalValue,
             slopeValue: slopeValue,
             lastScanDate: lastScanDate,
             difValue: difValue,
-            severityColor: color)
+            severityColor: color,
+            isOutdated: isOutdated)
     }
     
     func formatEntries(_ entries: [InsulinEntry]) -> [BasalChartBasalEntry] {

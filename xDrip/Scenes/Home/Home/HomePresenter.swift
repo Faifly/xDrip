@@ -72,7 +72,8 @@ final class HomePresenter: HomePresentationLogic {
             slopeValue: value.slopeValue,
             lastScanDate: value.lastScanDate,
             difValue: value.difValue,
-            severityColor: value.severityColor)
+            severityColor: value.severityColor,
+            isOutdated: value.isOutdated)
         viewController?.displayGlucoseCurrentInfo(viewModel: viewModel)
     }
     

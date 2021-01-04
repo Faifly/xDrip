@@ -16,4 +16,5 @@ protocol GlucoseCurrentInfoEntry {
     var lastScanDate: String { get }
     var difValue: String { get }
     var severityColor: UIColor? { get }
+    var isOutdated: Bool { get }
 }

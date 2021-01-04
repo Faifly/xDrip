@@ -196,6 +196,7 @@ enum Home {
             let lastScanDate: String
             let difValue: String
             let severityColor: UIColor?
+            let isOutdated: Bool
         }
     }
     

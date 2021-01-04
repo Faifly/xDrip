@@ -463,6 +463,8 @@ This setting will be applied to all future sensors";
 "bluetooth_error_unsupported" = "Bluetooth is not supported on this device";
 "bluetooth_error_alert_settings_button_title" = "Settings";
 "bluetooth_error_removed_pairing_info" = "Failed to connect to the transmitter because of pairing error. Looks like you have recently paired your transmitter with another device. To fix this, go to System Settings -> Bluetooth, select your transmitter and tap on \"Forget this device\".";
+"bluetooth_error_late_pairing_attempt_description" = "Please wait for another pairing request and try again";
+"bluetooth_error_late_pairing_attempt_title" = "Pairing failed";
 
 // Dexcom Errors
 "dexcom_error_invalid_serial" = "Serial number is invalid";

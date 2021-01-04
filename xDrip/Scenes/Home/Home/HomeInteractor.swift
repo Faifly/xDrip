@@ -40,6 +40,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private var hours: Int = 1
     
     private var timer: Timer?
+    private var currentGlucoseTimer: Timer?
     
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
@@ -126,13 +127,23 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
                     repeats: true) { [weak self] _ in
                         guard let self = self else { return }
                         self.updateGlucoseChartData()
-                        self.updateGlucoseCurrentInfo()
                         self.updateBolusChartData()
                         self.updateCarbsChartData()
                 }
             }
         default:
             break
+        }
+    }
+    
+    private func setupCurrentGlucoseTimer() {
+        if currentGlucoseTimer == nil {
+            currentGlucoseTimer = Timer.scheduledTimer(
+                withTimeInterval: 60.0,
+                repeats: true) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateGlucoseCurrentInfo()
+            }
         }
     }
     
@@ -145,7 +156,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         updateGlucoseChartData()
         updateBolusChartData()
         updateCarbsChartData()
-        
+        setupCurrentGlucoseTimer()
         sensorStateWorker.subscribeForSensorStateChange { [weak self] state in
             let response = Home.UpdateSensorState.Response(state: state)
             self?.presenter?.presentUpdateSensorState(response: response)
