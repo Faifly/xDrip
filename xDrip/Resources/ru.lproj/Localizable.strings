@@ -462,6 +462,8 @@
 "bluetooth_error_unsupported" = "Bluetooth не поддерживается этим устройством";
 "bluetooth_error_alert_settings_button_title" = "Настройки";
 "bluetooth_error_removed_pairing_info" = "Не удалось подключиться к передатчику из-за ошибки создания пары. Похоже недавно вы подключали ваш передатчик к другому устройству. Чтобы исправить это, зайди в Системные настройки -> Bluetooth, выберите ваш передатчик и нажмите \"Забыть это устройство\".";
+"bluetooth_error_late_pairing_attempt_description" = "Подождите еще одного запроса на подключение и повторите попытку";
+"bluetooth_error_late_pairing_attempt_title" = "Подключение не удалось";
 
 // Dexcom Errors
 "dexcom_error_invalid_serial" = "Неправильный серийный номер";

@@ -14,7 +14,7 @@ final class CGMController {
     private init() {}
     
     // MARK: Connection
-    typealias ConnectionCallback = (Bool) -> Void
+    typealias ConnectionCallback = (Bool, Bool) -> Void
     private var connectionListeners: [AnyHashable: ConnectionCallback] = [:]
     
     func subscribeForConnectionEvents(listener: AnyHashable, callback: @escaping ConnectionCallback) {
@@ -86,12 +86,12 @@ final class CGMController {
 }
 
 extension CGMController: CGMBluetoothServiceDelegate {
-    func serviceDidConnect() {
-        connectionListeners.values.forEach { $0(true) }
+    func serviceDidConnect(isPaired: Bool) {
+        connectionListeners.values.forEach { $0(true, isPaired) }
     }
     
-    func serviceDidDisconnect() {
-        connectionListeners.values.forEach { $0(false) }
+    func serviceDidDisconnect(isPaired: Bool) {
+        connectionListeners.values.forEach { $0(false, isPaired) }
     }
     
     func serviceDidUpdateMetadata(_ metadata: CGMDeviceMetadataType, value: String) {
@@ -117,7 +117,7 @@ extension CGMController: CGMBluetoothServiceDelegate {
     
     func serviceDidFail(withError error: CGMBluetoothServiceError) {
         let alert = UIAlertController(
-            title: "bluetooth_error_title".localized,
+            title: error.errorTitle ,
             message: error.localizedDescription,
             preferredStyle: .alert
         )
@@ -145,6 +145,6 @@ extension CGMController: CGMBluetoothServiceDelegate {
         }
         
         AlertPresenter.shared.presentAlert(alert)
-        serviceDidDisconnect()
+        serviceDidDisconnect(isPaired: false)
     }
 }

@@ -24,9 +24,14 @@ final class DexcomG6MessageWorker {
     }
     
     private var applicationStateObserver: NSObjectProtocol?
+    private var keepingAliveSinceDate: Date?
     
     init(delegate: DexcomG6MessageWorkerDelegate) {
         self.delegate = delegate
+    }
+    
+    func workerIsPaired() -> Bool {
+        return isPaired
     }
     
     func handleIncomingMessage(_ data: Data?) throws {
@@ -126,6 +131,7 @@ final class DexcomG6MessageWorker {
             )
             createDataRequest(ofType: .keepAliveTx)
             delegate?.workerDidRequestPairing()
+            keepingAliveSinceDate = Date()
             
             if UIApplication.shared.applicationState == .active {
                 createDataRequest(ofType: .pairRequestTx)
@@ -142,12 +148,18 @@ final class DexcomG6MessageWorker {
             forName: UIApplication.didBecomeActiveNotification,
             object: nil,
             queue: nil) { [weak self] _ in
-                guard let self = self else { return }
-                guard !self.isPaired else { return }
-                self.createDataRequest(ofType: .pairRequestTx)
-                
-                guard let observer = self.applicationStateObserver else { return }
-                NotificationCenter.default.removeObserver(observer)
+            guard let self = self else { return }
+            guard !self.isPaired else { return }
+            guard let keep = self.keepingAliveSinceDate?.timeIntervalSince1970 else { return }
+            self.keepingAliveSinceDate = nil
+            guard (Date().timeIntervalSince1970 - keep) <= Double(CGMDeviceType.dexcomG6.keepAliveSeconds) else {
+                self.delegate?.workerDidEncounterLatePairingAttempt()
+                return
+            }
+            self.createDataRequest(ofType: .pairRequestTx)
+            
+            guard let observer = self.applicationStateObserver else { return }
+            NotificationCenter.default.removeObserver(observer)
         }
     }
     

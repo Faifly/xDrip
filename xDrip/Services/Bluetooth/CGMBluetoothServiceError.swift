@@ -15,6 +15,7 @@ enum CGMBluetoothServiceError: LocalizedError {
     case bluetoothUnsupported
     case peerRemovedPairingInformation
     case deviceSpecific(error: LocalizedError)
+    case latePairingAttempt
     
     var errorDescription: String? {
         switch self {
@@ -24,6 +25,14 @@ enum CGMBluetoothServiceError: LocalizedError {
         case .bluetoothUnsupported: return "bluetooth_error_unsupported".localized
         case .peerRemovedPairingInformation: return "bluetooth_error_removed_pairing_info".localized
         case .deviceSpecific(let error): return error.localizedDescription
+        case .latePairingAttempt: return "bluetooth_error_late_pairing_attempt_description".localized
+        }
+    }
+    
+    var errorTitle: String? {
+        switch self {
+        case .latePairingAttempt: return "bluetooth_error_late_pairing_attempt_title".localized
+        default: return "bluetooth_error_title".localized
         }
     }
 }
