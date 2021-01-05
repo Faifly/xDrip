@@ -25,6 +25,7 @@ private struct HomeGlucoseCurrentInfoEntry: GlucoseCurrentInfoEntry {
     let lastScanDate: String
     let difValue: String
     let severityColor: UIColor?
+    let isOutdated: Bool
     
     static var emptyEntry: HomeGlucoseCurrentInfoEntry {
         return HomeGlucoseCurrentInfoEntry(
@@ -33,7 +34,8 @@ private struct HomeGlucoseCurrentInfoEntry: GlucoseCurrentInfoEntry {
         slopeValue: "-",
         lastScanDate: "--",
         difValue: "--",
-        severityColor: nil)
+        severityColor: nil,
+        isOutdated: false)
     }
 }
 
@@ -99,13 +101,20 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         let severity = GlucoseChartSeverityLevel(
                            warningLevel: settings?.warningLevel(forValue: entry.filteredCalculatedValue))
         let color = UIColor.colorForSeverityLevel(severity)
+        var isOutdated: Bool
+        if let entryDate = entry.date {
+            isOutdated = Date().timeIntervalSince1970 - entryDate.timeIntervalSince1970 >= TimeInterval(minutes: 11)
+        } else {
+            isOutdated = false
+        }
         return HomeGlucoseCurrentInfoEntry(
             glucoseIntValue: glucoseIntValue,
             glucoseDecimalValue: glucoseDecimalValue,
             slopeValue: slopeValue,
             lastScanDate: lastScanDate,
             difValue: difValue,
-            severityColor: color)
+            severityColor: color,
+            isOutdated: isOutdated)
     }
     
     func formatEntries(_ entries: [InsulinEntry]) -> [BasalChartBasalEntry] {
@@ -136,21 +145,27 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
                 isShown: isShown
             )
         }
-        let lowThreshold = User.current.settings.warningLevelValue(for: .low)
-        let highThreshold = User.current.settings.warningLevelValue(for: .high)
+        let lowThresholdValue = User.current.settings.warningLevelValue(for: .low)
+        let convertedLow = GlucoseUnit.convertFromDefault(lowThresholdValue)
+        let highThresholdValue = User.current.settings.warningLevelValue(for: .high)
+        let convertedHigh = GlucoseUnit.convertFromDefault(highThresholdValue)
         let unit = User.current.settings.unit.label
         
-        statsCalculationWorker.calculate(with: entries, lowThreshold: lowThreshold, highThreshold: highThreshold)
+        statsCalculationWorker.calculate(
+            with: entries,
+            lowThreshold: lowThresholdValue,
+            highThreshold: highThresholdValue
+        )
         
         let avgGlucose = GlucoseUnit.convertFromDefault(statsCalculationWorker.mean)
         let stdDeviation = GlucoseUnit.convertFromDefault(statsCalculationWorker.stdDev)
         
         return Home.DataSectionViewModel(
             lowValue: String(format: "%0.1f%%", statsCalculationWorker.lowPercentage),
-            lowTitle: String(format: "Low (<%0.1f)", lowThreshold),
+            lowTitle: String(format: "Low (<%0.1f)", convertedLow),
             inRange: String(format: "%0.1f%%", statsCalculationWorker.normalPercentage),
             highValue: String(format: "%0.1f%%", statsCalculationWorker.highPercentage),
-            highTitle: String(format: "High (>%0.1f)", highThreshold),
+            highTitle: String(format: "High (>%0.1f)", convertedHigh),
             avgGlucose: String(format: "%0.1f \(unit)", avgGlucose),
             a1c: String(format: "%0.1f%%", statsCalculationWorker.a1cDCCT),
             reading: "\(entries.count)",

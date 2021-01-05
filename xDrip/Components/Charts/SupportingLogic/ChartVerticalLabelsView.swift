@@ -23,7 +23,7 @@ final class ChartVerticalLabelsView: UIView {
         }
     }
     
-    var font: UIFont = .systemFont(ofSize: 14.0, weight: .regular)
+    var font: UIFont = .systemFont(ofSize: 12.0, weight: .regular)
     
     private var formattedLabels: [NSAttributedString] = []
     

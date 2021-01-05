@@ -23,6 +23,7 @@ final class AlertConfiguration: Object {
     @objc private(set) dynamic var startTime: TimeInterval = 0.0
     @objc private(set) dynamic var endTime: TimeInterval = 0.0
     @objc private(set) dynamic var minimumBGChange: Float = 10.0
+    @objc private(set) dynamic var isUseGlucoseThreshold: Bool = true
     @objc private(set) dynamic var highThreshold: Float = 170.0
     @objc private(set) dynamic var lowThreshold: Float = 70.0
     @objc private dynamic var rawEventType: Int = 0
@@ -131,6 +132,12 @@ final class AlertConfiguration: Object {
     func updateEndTime(_ endTime: TimeInterval) {
         Realm.shared.safeWrite {
             self.endTime = endTime
+        }
+    }
+    
+    func updateIsUseGlucoseThreshold(_ use: Bool) {
+        Realm.shared.safeWrite {
+            self.isUseGlucoseThreshold = use
         }
     }
     

@@ -18,17 +18,19 @@ final class GlucoseCurrentInfoView: NibView {
     @IBOutlet private weak var difValueLabel: UILabel!
     
     func setup(with viewModel: Home.GlucoseCurrentInfo.ViewModel) {
+        let isOutdated = viewModel.isOutdated
         glucoseIntValueLabel.text = viewModel.glucoseIntValue
-        glucoseIntValueLabel.textColor = viewModel.severityColor
+        glucoseIntValueLabel.textColor = isOutdated ? .chartTextColor : viewModel.severityColor
         glucoseDecimalValueLablel.text = ". " + viewModel.glucoseDecimalValue
-        glucoseDecimalValueLablel.textColor = viewModel.severityColor
+        glucoseDecimalValueLablel.textColor = isOutdated ? .chartTextColor : viewModel.severityColor
         slopeArrowLabel.text = viewModel.slopeValue
-        slopeArrowLabel.textColor = viewModel.severityColor
+        slopeArrowLabel.textColor = isOutdated ? .chartTextColor : viewModel.severityColor
         lastScanTitleLabel.text = "home_last_scan_title".localized
-        lastScanTitleLabel.textColor = .lastScanDateTextColor
+        lastScanTitleLabel.textColor = isOutdated ? .chartValueCritical : .lastScanDateTextColor
         lastScanValueLabel.text = viewModel.lastScanDate
         difTitleLabel.text = "home_last_diff_title".localized
-        difTitleLabel.textColor = .diffTextColor
+        difTitleLabel.textColor = isOutdated ? .chartTextColor : .diffTextColor
         difValueLabel.text = viewModel.difValue
+        difValueLabel.textColor = isOutdated ? .chartTextColor : .none
     }
 }

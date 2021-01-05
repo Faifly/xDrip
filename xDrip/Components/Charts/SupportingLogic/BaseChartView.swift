@@ -32,7 +32,7 @@ class BaseChartView: UIView {
         }
     }
     
-    var horizontalLabelsFont = UIFont.systemFont(ofSize: 14.0, weight: .regular)
+    var horizontalLabelsFont = UIFont.systemFont(ofSize: 12.0, weight: .regular)
     private var formattedHorizontalLabels: [NSAttributedString] = []
     
     private func formatHorizontalLabels() {
