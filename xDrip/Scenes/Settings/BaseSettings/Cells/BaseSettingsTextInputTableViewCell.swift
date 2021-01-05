@@ -32,10 +32,15 @@ final class BaseSettingsTextInputTableViewCell: UITableViewCell {
         textChangeHandler: ((String?) -> Void)?) {
         mainTextLabel.text = mainText
         detailLabel.text = detailText
-        textField.text = textFieldText
+        setTextFieldText(text: textFieldText)
         textField.placeholder = placeholder
         textFieldConfigurator?(textField)
         self.textChangeHandler = textChangeHandler
+    }
+    
+    private func setTextFieldText(text: String?) {
+        if let textFieldText = textField.text, !textFieldText.isEmpty { return }
+        textField.text = text
     }
     
     @IBAction private func editingChanged(_ sender: UITextField) {
