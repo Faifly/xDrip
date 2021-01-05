@@ -14,7 +14,7 @@ final class CGMController {
     private init() {}
     
     // MARK: Connection
-    typealias ConnectionCallback = (Bool, Bool) -> Void
+    typealias ConnectionCallback = (_ isConnectionActive: Bool,_ isPaired: Bool) -> Void
     private var connectionListeners: [AnyHashable: ConnectionCallback] = [:]
     
     func subscribeForConnectionEvents(listener: AnyHashable, callback: @escaping ConnectionCallback) {
