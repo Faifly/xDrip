@@ -33,7 +33,6 @@ final class DexcomG6MessageWorker {
         guard let data = data else { return }
         LogController.log(message: "[Dexcom G6] Received message: %@", type: .debug, data.hexEncodedString)
         guard let opCode = DexcomG6OpCode(rawValue: data[0]) else { return }
-        print("opCode \(opCode)")
         
         switch opCode {
         case .authRequestRx:
@@ -122,9 +121,15 @@ final class DexcomG6MessageWorker {
             createDataRequest(ofType: .transmitterTimeTx)
         }
         
-        if CGMDevice.current.isFirstTransmitterVersion ?? false {
+        guard let firstVersionCharacter = CGMDevice.current.transmitterVersionString?.first,
+              let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter) else {
+            LogController.log(message: "[Dexcom G6] Could not resolve transmitter version", type: .debug)
+            return
+        }
+        
+        if transmitterVersion == .first {
             createDataRequest(ofType: .sensorDataTx)
-        } else {
+        } else if transmitterVersion == .second {
             createCalibrationRequest()
             createDataRequest(ofType: .glucoseTx)
         }
@@ -248,9 +253,7 @@ final class DexcomG6MessageWorker {
         }
         
         let timestamp = Int(date.timeIntervalSince1970 - transmitterStartDate.timeIntervalSince1970)
-        
-        guard let isFirstVersion = CGMDevice.current.isFirstTransmitterVersion, !isFirstVersion else { return }
-        
+                
         LogController.log(
             message: "[Dexcom G6] Queuing Calibration for transmitter: glucose %d, timestamp: %d",
             type: .debug,
