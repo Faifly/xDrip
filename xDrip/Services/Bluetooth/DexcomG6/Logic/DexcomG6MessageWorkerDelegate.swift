@@ -19,4 +19,5 @@ protocol DexcomG6MessageWorkerDelegate: AnyObject {
     func workerDidRequestPairing()
     func workerDidReceiveGlucoseBackfillMessage(_ message: DexcomG6BackfillRxMessage)
     func workerDidReceiveBackfillData(_ backsies: [DexcomG6BackfillStream.Backsie])
+    func workerDidEncounterLatePairingAttempt()
 }

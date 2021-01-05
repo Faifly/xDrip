@@ -66,17 +66,24 @@ final class SettingsTransmitterPresenter: SettingsTransmitterPresentationLogic {
             isEnabled = true
             statusText = "settings_transmitter_stop_scanning_hint".localized
             
-        case .running(isConnectionActive: true):
+        case .running(isConnectionActive: true, isPaired: _):
             title = "settings_transmitter_updating_scan_button".localized
             backgroundColor = UIColor.tabBarBlueColor.withAlphaComponent(0.3)
             isEnabled = false
             statusText = "settings_transmitter_updating_hint".localized
             
-        case .running(isConnectionActive: false):
-            title = "settings_transmitter_stop_transmitter_button".localized
-            backgroundColor = .tabBarRedColor
-            isEnabled = true
-            statusText = "settings_transmitter_unpair_hint".localized
+        case .running(isConnectionActive: false, isPaired: let isPaired):
+            if isPaired {
+                title = "settings_transmitter_stop_transmitter_button".localized
+                backgroundColor = .tabBarRedColor
+                isEnabled = true
+                statusText = "settings_transmitter_unpair_hint".localized
+            } else {
+                title = "settings_transmitter_stop_scan_button".localized
+                backgroundColor = .tabBarRedColor
+                isEnabled = true
+                statusText = "settings_transmitter_stop_scanning_hint".localized
+            }
         }
         
         let viewModel = SettingsTransmitter.ChangeStatus.ViewModel(

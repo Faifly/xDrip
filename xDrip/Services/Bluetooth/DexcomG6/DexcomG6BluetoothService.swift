@@ -202,6 +202,10 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
             messageWorker?.createBackFillRequest(startTime: startTime, endTime: endTime)
         }
     }
+    
+    func workerDidEncounterLatePairingAttempt() {
+        delegate?.serviceDidFail(withError: .latePairingAttempt)
+    }
 }
 
 extension DexcomG6BluetoothService: CBCentralManagerDelegate {
@@ -244,7 +248,7 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
             type: .debug
         )
         CGMDevice.current.updateBluetoothID(peripheral.identifier.uuidString)
-        delegate?.serviceDidConnect()
+        delegate?.serviceDidConnect(isPaired: messageWorker?.workerIsPaired() ?? true)
         delegate?.serviceDidUpdateMetadata(.deviceName, value: peripheral.name ?? "")
         let serviceUUID = CBUUID(string: DexcomG6Constants.serviceID)
         peripheral.discoverServices([serviceUUID])
@@ -279,7 +283,7 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
             type: .debug,
             error: error
         )
-        delegate?.serviceDidDisconnect()
+        delegate?.serviceDidDisconnect(isPaired: messageWorker?.workerIsPaired() ?? true)
         if hasRecentlyConnected {
             LogController.log(
                 message: "[Dexcom G6] Has connected recently, retrying in 10 seconds",

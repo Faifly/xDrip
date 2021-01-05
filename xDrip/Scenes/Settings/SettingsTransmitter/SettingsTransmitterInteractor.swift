@@ -58,15 +58,15 @@ final class SettingsTransmitterInteractor: SettingsTransmitterBusinessLogic, Set
         switch state {
         case .notSetup: startScanning()
         case .initialSearch: stopScanning()
-        case .running: stopTransmitter()
+        case .running(isConnectionActive: _, isPaired: let isPaired): stopTransmitter(withAlert: isPaired)
         }
     }
     
     // MARK: Logic
     
     private func subscribeForCGMEvents() {
-        CGMController.shared.subscribeForConnectionEvents(listener: listenerID) { [weak self] connected in
-            self?.onConnectionStateChanged(connected)
+        CGMController.shared.subscribeForConnectionEvents(listener: listenerID) { [weak self] connected, isPaired in
+            self?.onConnectionStateChanged(connected, isPaired)
         }
         CGMController.shared.subscribeForMetadataEvents(listener: listenerID) { [weak self] _ in
             self?.onMetadataUpdated()
@@ -158,17 +158,17 @@ final class SettingsTransmitterInteractor: SettingsTransmitterBusinessLogic, Set
         }
     }
     
-    private func onConnectionStateChanged(_ connected: Bool) {
+    private func onConnectionStateChanged(_ connected: Bool, _ isPaired: Bool) {
         switch state {
         case .notSetup, .initialSearch:
             if !connected {
                 stopScanning()
             } else {
-                state = .running(isConnectionActive: connected)
+                state = .running(isConnectionActive: connected, isPaired: isPaired)
             }
             
         case .running:
-            state = .running(isConnectionActive: connected)
+            state = .running(isConnectionActive: connected, isPaired: isPaired)
         }
     }
     
@@ -198,16 +198,24 @@ final class SettingsTransmitterInteractor: SettingsTransmitterBusinessLogic, Set
         updateData()
     }
     
-    private func stopTransmitter() {
-        router?.showStopTransmitterConfirmation { [weak self] in
-            self?.stopScanning()
-            CGMDevice.current.updateBluetoothID(nil)
-            CGMDevice.current.updateSensorIsStarted(false)
-            CGMDevice.current.resetAllMetadata()
-            self?.determineState()
-            self?.updateData()
-            NotificationCenter.default.postSettingsChangeNotification(setting: .sensorStarted)
+    private func stopTransmitter(withAlert: Bool) {
+        if withAlert {
+            router?.showStopTransmitterConfirmation { [weak self] in
+                self?.onStopTransmitter()
+            }
+        } else {
+            onStopTransmitter()
         }
+    }
+    
+    private func onStopTransmitter() {
+        stopScanning()
+        CGMDevice.current.updateBluetoothID(nil)
+        CGMDevice.current.updateSensorIsStarted(false)
+        CGMDevice.current.resetAllMetadata()
+        determineState()
+        updateData()
+        NotificationCenter.default.postSettingsChangeNotification(setting: .sensorStarted)
     }
 }
 

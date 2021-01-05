@@ -18,7 +18,7 @@ enum SettingsTransmitter {
     enum State {
         case notSetup
         case initialSearch
-        case running(isConnectionActive: Bool)
+        case running(isConnectionActive: Bool, isPaired: Bool = true)
     }
     
     struct TestBackfillConfiguration {

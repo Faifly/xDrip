@@ -9,8 +9,8 @@
 import Foundation
 
 protocol CGMBluetoothServiceDelegate: AnyObject {
-    func serviceDidConnect()
-    func serviceDidDisconnect()
+    func serviceDidConnect(isPaired: Bool)
+    func serviceDidDisconnect(isPaired: Bool)
     func serviceDidUpdateMetadata(_ metadata: CGMDeviceMetadataType, value: String)
     func serviceDidReceiveSensorGlucoseReading(raw: Double, filtered: Double, rssi: Double)
     func serviceDidReceiveGlucoseReading(calculatedValue: Double, date: Date, forBackfill: Bool)

@@ -25,6 +25,12 @@ enum CGMDeviceType: Int {
         case .mocked: return "Mocked"
         }
     }
+    
+    var keepAliveSeconds: UInt8 {
+        switch self {
+        case .dexcomG6, .mocked: return 60
+        }
+    }
 
     var warmUpInterval: TimeInterval {
         switch self {
