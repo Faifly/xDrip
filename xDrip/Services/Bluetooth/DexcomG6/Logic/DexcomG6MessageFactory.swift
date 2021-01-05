@@ -20,6 +20,7 @@ final class DexcomG6MessageFactory {
         case .transmitterTimeTx: return DexcomG6TransmitterTimeTxMessage()
         case .resetTx: return DexcomG6ResetTxMessage()
         case .keepAliveTx: return DexcomG6KeepAliveTxMessage(seconds: 255)
+        case .glucoseTx: return DexcomG6GlucoseDataTxMessage()
         default: return nil
         }
     }

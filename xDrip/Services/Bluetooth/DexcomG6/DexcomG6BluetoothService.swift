@@ -98,7 +98,7 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
         peripheral.setNotifyValue(true, for: backfillCharacteristic)
     }
     
-    func workerDidReceiveReading(_ message: DexcomG6SensorDataRxMessage) {
+    func workerDidReceiveSensorData(_ message: DexcomG6SensorDataRxMessage) {
         lastPeripheralReadingDate = Date()
         LogController.log(
             message: "[Dexcom G6] Did receive reading with status: %u, filtered: %f, unfiltered: %f",
@@ -108,11 +108,18 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
             message.unfiltered
         )
         let firmware = CGMDevice.current.metadata(ofType: .firmwareVersion)?.value
-        delegate?.serviceDidReceiveGlucoseReading(
+        delegate?.serviceDidReceiveSensorGlucoseReading(
             raw: DexcomG6Firmware.scaleRawValue(message.unfiltered, firmware: firmware),
             filtered: DexcomG6Firmware.scaleRawValue(message.filtered, firmware: firmware),
             rssi: lastRSSI
         )
+        backFillIfNeeded()
+    }
+    
+    func workerDidReceiveGlucoseData(_ message: DexcomG6GlucoseDataRxMessage) {
+        delegate?.serviceDidReceiveGlucoseReading(calculatedValue: message.calculatedValue,
+                                                  date: Date(),
+                                                  forBackfill: false)
         backFillIfNeeded()
     }
     
@@ -172,46 +179,26 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
             
             guard diff > 0, diff < TimeInterval.hours(6) else { return }
             
-            delegate?.serviceDidReceiveBackfillGlucoseReading(calculatedValue: Double(backsie.glucose),
-                                                              date: backsieDate)
+            delegate?.serviceDidReceiveGlucoseReading(calculatedValue: Double(backsie.glucose),
+                                                      date: backsieDate,
+                                                      forBackfill: true)
         }
     }
     
     func backFillIfNeeded() {
-        var backFillIsNeeded = false
         let neededReadingsCount = Int(Constants.maxBackfillPeriod / Constants.dexcomPeriod)
-        var earliestTimestamp = Date().timeIntervalSince1970 - Constants.maxBackfillPeriod
-        var latestTimestamp = Date().timeIntervalSince1970
-        var readings = GlucoseReading.readingsForInterval(
+        let earliestTimestamp = Date().timeIntervalSince1970 - Constants.maxBackfillPeriod
+        let latestTimestamp = Date().timeIntervalSince1970
+        let readings = GlucoseReading.readingsForInterval(
             DateInterval(start: Date() - Constants.maxBackfillPeriod - TimeInterval(minutes: 0.5),
-                         end: Date()))
+                         end: Date() + TimeInterval(minutes: 0.5)))
         
-        readings.sort(by: { $0.date >? $1.date })
-        
-        if readings.count != neededReadingsCount {
-            backFillIsNeeded = true
-        } else {
-            for (idx, reading) in readings.enumerated() {
-                guard let date = reading.date else { break }
-                let sinseReading = Date().timeIntervalSince1970 - date.timeIntervalSince1970
-                if sinseReading > (Constants.dexcomPeriod * Double(idx) + TimeInterval(minutes: 7)) {
-                    backFillIsNeeded = true
-                    if  sinseReading <= Constants.maxBackfillPeriod {
-                        earliestTimestamp = date.timeIntervalSince1970
-                    }
-                    break
-                } else {
-                    latestTimestamp = date.timeIntervalSince1970
-                }
-            }
-        }
-        
-        if backFillIsNeeded {
-            guard let transmitterStartDate = CGMDevice.current.transmitterStartDate else {
+        if readings.count < neededReadingsCount + 1 {
+            guard let transmitterStartInterval = CGMDevice.current.transmitterStartDate?.timeIntervalSince1970 else {
                 return
             }
-            let startTime = Int(earliestTimestamp - TimeInterval(minutes: 5) - transmitterStartDate.timeIntervalSince1970)
-            let endTime = Int(latestTimestamp + TimeInterval(minutes: 5) - transmitterStartDate.timeIntervalSince1970)
+            let startTime = Int(earliestTimestamp - TimeInterval(minutes: 5) - transmitterStartInterval)
+            let endTime = Int(latestTimestamp + TimeInterval(minutes: 5) - transmitterStartInterval)
             messageWorker?.createBackFillRequest(startTime: startTime, endTime: endTime)
         }
     }
