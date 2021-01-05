@@ -20,6 +20,7 @@ enum DexcomG6Error: LocalizedError {
     case invalidBatteryStatusRx
     case invalidTransmitterTimeRx
     case invalidGlucoseBackfillRx
+    case invalidCalibrationRx
     
     var errorDescription: String? {
         switch self {
@@ -34,6 +35,7 @@ enum DexcomG6Error: LocalizedError {
         case .invalidBatteryStatusRx: return "dexcom_error_invalid_battery_status_response".localized
         case .invalidTransmitterTimeRx: return "dexcom_error_invalid_transmitter_time_response".localized
         case .invalidGlucoseBackfillRx: return "Invalid Glucose Rx Message"
+        case .invalidCalibrationRx: return "Invalid Calibration Rx Message"
         }
     }
 }

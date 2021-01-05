@@ -47,6 +47,7 @@ final class Calibration: Object {
     @objc private(set) dynamic var secondScale: Double = 0.0
     @objc private(set) dynamic var isUploaded: Bool = false
     @objc private(set) dynamic var externalID: String?
+    @objc private(set) dynamic var isSentToTransmitter: Bool = false
     
     override class func primaryKey() -> String? {
         return "externalID"
@@ -296,6 +297,12 @@ final class Calibration: Object {
         guard let calibration = all.first(where: { $0.externalID == itemID }) else { return }
         Realm.shared.safeWrite {
             calibration.isUploaded = true
+        }
+    }
+    
+    func markCalibrationAsSentToTransmitter() {
+        Realm.shared.safeWrite {
+            isSentToTransmitter = true
         }
     }
     

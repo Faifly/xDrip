@@ -12,7 +12,10 @@ struct DexcomG6KeepAliveTxMessage: DexcomG6OutgoingMessage {
     let data: Data
     
     init(seconds: UInt8) {
-        data = Data([DexcomG6OpCode.keepAliveTx.rawValue, seconds])
+        var dataArray = [Int8]()
+        dataArray.append(Int8(DexcomG6OpCode.keepAliveTx.rawValue))
+        dataArray.append(Int8(bitPattern: seconds))
+        data = dataArray.withUnsafeBufferPointer { Data(buffer: $0) }
     }
     
     var characteristic: DexcomG6CharacteristicType {

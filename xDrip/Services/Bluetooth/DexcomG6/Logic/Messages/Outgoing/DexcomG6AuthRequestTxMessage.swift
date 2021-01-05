@@ -10,21 +10,21 @@ import Foundation
 
 struct DexcomG6AuthRequestTxMessage: DexcomG6OutgoingMessage {
     var data: Data {
-        var data = Data()
-        data.append(DexcomG6OpCode.authRequestTx.rawValue)
+        var dataArray = [Int8]()
+        dataArray.append(Int8(DexcomG6OpCode.authRequestTx.rawValue))
         
         let uuid = UUID().uuid
-        data.append(uuid.0)
-        data.append(uuid.1)
-        data.append(uuid.2)
-        data.append(uuid.3)
-        data.append(uuid.4)
-        data.append(uuid.5)
-        data.append(uuid.6)
-        data.append(uuid.7)
-        data.append(0x2)
-        
-        return data
+        dataArray.append(Int8(bitPattern: uuid.0))
+        dataArray.append(Int8(bitPattern: uuid.1))
+        dataArray.append(Int8(bitPattern: uuid.2))
+        dataArray.append(Int8(bitPattern: uuid.3))
+        dataArray.append(Int8(bitPattern: uuid.4))
+        dataArray.append(Int8(bitPattern: uuid.5))
+        dataArray.append(Int8(bitPattern: uuid.6))
+        dataArray.append(Int8(bitPattern: uuid.7))
+        dataArray.append(0x2)
+
+        return dataArray.withUnsafeBufferPointer { Data(buffer: $0) }
     }
     
     var characteristic: DexcomG6CharacteristicType {

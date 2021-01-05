@@ -24,3 +24,8 @@ enum DexcomG6Firmware {
         return firmware != "1.6.5.27"
     }
 }
+
+enum DexcomG6FirmwareVersion: Character {
+    case first = "1"
+    case second = "2"
+}
