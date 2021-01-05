@@ -58,13 +58,15 @@ final class StatsChartView: UIView {
         linesChart.entries = data
         
         let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 1
-        formatter.maximumSignificantDigits = 3
+        let unit = User.current.settings.unit
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = unit == .mgDl ? 0 : 1
+        formatter.minimumFractionDigits = unit == .mgDl ? 0 : 1
         let step = (linesChart.visualMaxValue - linesChart.visualMinValue) / Double(linesChart.verticalCount - 1)
         verticalLabelsView.labels = [Int](0..<linesChart.verticalCount)
             .compactMap {
                 let value = GlucoseUnit.convertFromDefault(linesChart.visualMinValue + Double($0) * step)
-                let numberValue = (Int(value.rounded())) as NSNumber
+                let numberValue = value as NSNumber
                 return formatter.string(from: numberValue)
             }
         

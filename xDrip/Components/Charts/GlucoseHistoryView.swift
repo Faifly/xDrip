@@ -206,7 +206,7 @@ final class GlucoseHistoryView: BaseHistoryView {
         let scrollView = scrollContainer.scrollView
         let currentRelativeOffset = scrollView.contentOffset.x / scrollView.contentSize.width
         let globalDurationOffset = globalDateRange.duration * TimeInterval(currentRelativeOffset)
-        let localOffsettedInterval = localInterval
+        let localOffsettedInterval = localInterval / Double(multiplier)
         let endDate = globalDateRange.start + globalDurationOffset + localOffsettedInterval
         let dateInterval = DateInterval(endDate: endDate, duration: localInterval)
         callback(dateInterval)
@@ -222,7 +222,7 @@ final class GlucoseHistoryView: BaseHistoryView {
         )
         let globalDurationOffset = globalDateRange.duration * TimeInterval(currentRelativeOffset)
         let localOffsettedInterval = localInterval + forwardTimeOffset / scrollSegments
-        let localDurationOffset = localOffsettedInterval * TimeInterval(userRelativeSelection)
+        let localDurationOffset = localOffsettedInterval * TimeInterval(userRelativeSelection) / Double(multiplier)
         let currentRelativeStartTime = globalDurationOffset + localDurationOffset
         let selectedDate = globalDateRange.start + currentRelativeStartTime
         if let entry = nearestEntry(forDate: selectedDate) {
