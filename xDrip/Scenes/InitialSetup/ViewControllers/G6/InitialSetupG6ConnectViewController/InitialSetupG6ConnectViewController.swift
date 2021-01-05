@@ -25,7 +25,18 @@ final class InitialSetupG6ConnectViewController: InitialSetupAbstractStepSetting
             target: self,
             action: #selector(onContinueTap)
         )
-        button.isEnabled = false
+        button.isEnabled = true
+        return button
+    }()
+    
+    private lazy var closeButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            title: "close".localized,
+            style: .plain,
+            target: self,
+            action: #selector(onCloseTap)
+        )
+        button.isEnabled = true
         return button
     }()
     
@@ -43,7 +54,7 @@ final class InitialSetupG6ConnectViewController: InitialSetupAbstractStepSetting
         super.viewDidLoad()
         
         setupTable()
-        setupContinueButton()
+        setupCloseButton()
         title = "initial_connect_screen_title".localized
         worker.onSuccessfulConnection = { [weak self] viewModel in
             guard let self = self else { return }
@@ -99,12 +110,20 @@ final class InitialSetupG6ConnectViewController: InitialSetupAbstractStepSetting
         navigationItem.rightBarButtonItem = continueButton
     }
     
+    private func setupCloseButton() {
+        navigationItem.rightBarButtonItem = closeButton
+    }
+    
     @objc private func onContinueTap() {
         let request = InitialSetup.CompleteCustomDeviceStep.Request(
             moreStepsExpected: true,
             step: InitialSetupG6Step.connect
         )
         interactor?.doCompleteCustomDeviceStep(request: request)
+    }
+    
+    @objc private func onCloseTap() {
+        interactor?.doClose()
     }
     
     private func update(withViewModel viewModel: ViewModel) {
@@ -148,6 +167,6 @@ final class InitialSetupG6ConnectViewController: InitialSetupAbstractStepSetting
         )
         let viewModel = BaseSettings.ViewModel(sections: [section])
         update(with: viewModel)
-        continueButton.isEnabled = true
+        setupContinueButton()
     }
 }

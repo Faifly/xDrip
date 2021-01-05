@@ -24,6 +24,7 @@ protocol InitialSetupBusinessLogic {
     func doCompleteCustomDeviceStep(request: InitialSetup.CompleteCustomDeviceStep.Request)
     func doSaveNightscoutConnectionData(request: InitialSetup.SaveNightscoutCredentials.Request)
     func doFinishSetup(request: InitialSetup.FinishSetup.Request)
+    func doClose()
 }
 
 protocol InitialSetupDataStore: AnyObject {
@@ -112,6 +113,10 @@ final class InitialSetupInteractor: InitialSetupBusinessLogic, InitialSetupDataS
     
     func doFinishSetup(request: InitialSetup.FinishSetup.Request) {
         stepProvidingWorker?.completeStep(InitialSetup.GenericStep.finish)
+        router?.dismissScene()
+    }
+    
+    func doClose() {
         router?.dismissScene()
     }
     
