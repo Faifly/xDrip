@@ -87,7 +87,7 @@ final class GlucoseNotificationWorker: NSObject {
             }
             
             if count >= 2 {
-                timeInterval = 2.0 * interval / count
+                timeInterval = 2.1 * interval / count 
             }
         }
         
