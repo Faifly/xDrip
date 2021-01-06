@@ -20,21 +20,19 @@ final class NotificationController: NSObject {
     private var alertSkipCount = [AlertEventType: Int]()
     private var notificationObservers = [NSObjectProtocol?]()
     
-    private var notAliveNotificationTimer: Timer?
+    private var notAliveNotificationTimer: RepeatingTimer?
     
     override private init() {
         super.init()
         setupNotificationObservers()
         
         addAppStoppedNotificationToQueue()
-        notAliveNotificationTimer = Timer.scheduledTimer(
-            withTimeInterval: TimeInterval(minutes: 9),
-            repeats: true,
-            block: { [weak self] _ in
-                self?.removeAppStoppedNotificationFromQueue()
-                self?.addAppStoppedNotificationToQueue()
-            }
-        )
+        notAliveNotificationTimer = RepeatingTimer(timeInterval: TimeInterval(minutes: 9))
+        notAliveNotificationTimer?.eventHandler = { [weak self] in
+            self?.removeAppStoppedNotificationFromQueue()
+            self?.addAppStoppedNotificationToQueue()
+        }
+        notAliveNotificationTimer?.resume()
     }
     
     deinit {
