@@ -23,8 +23,16 @@ struct DexcomG6SessionStartTxMessage: DexcomG6OutgoingMessage {
             withUnsafeBytes(of: startTime) {
                 array.append(contentsOf: Array($0.prefix(4 * MemoryLayout<Int8>.size)).map { Int8(bitPattern: $0) })
             }
+            
+            withUnsafeBytes(of: 2900) {
+                array.append(contentsOf: Array($0.prefix(2 * MemoryLayout<Int8>.size)).map { Int8(bitPattern: $0) })
+            }
+            
+            withUnsafeBytes(of: 3400) {
+                array.append(contentsOf: Array($0.prefix(2 * MemoryLayout<Int8>.size)).map { Int8(bitPattern: $0) })
+            }
 
-//            array.append(contentsOf: [Int8](repeating: 0, count: 2))
+            array.append(contentsOf: [Int8](repeating: 0, count: 2))
 
             let data = array.withUnsafeBufferPointer { Data(buffer: $0) }
 
