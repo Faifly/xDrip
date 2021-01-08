@@ -15,6 +15,7 @@ final class DexcomG6MessageWorker {
     private var messageQueue: [DexcomG6OutgoingMessage] = []
     private let messageFactory = DexcomG6MessageFactory()
     private var backFillStream = DexcomG6BackfillStream()
+    private var sensorNeedsToBeStarted = false
     private var isPaired = false {
         didSet {
             if isPaired {
@@ -74,6 +75,9 @@ final class DexcomG6MessageWorker {
         case .glucoseRx:
             let message = try DexcomG6GlucoseDataRxMessage(data: data)
             delegate?.workerDidReceiveGlucoseData(message)
+            if let state = message.state {
+                sensorNeedsToBeStarted = state == .stopped
+            }
         case .calibrateGlucoseRx:
             let message = try DexcomG6CalibrationRxMessage(data: data)
             if let calibration = Calibration.allForCurrentSensor.first,
@@ -90,6 +94,9 @@ final class DexcomG6MessageWorker {
                 message.accepted.description,
                 message.type.debugDescription
             )
+        case .sessionStartRx:
+            let _ = try DexcomG6SessionStartRxMessage(data: data)
+            
         default: break
         }
         
@@ -136,9 +143,28 @@ final class DexcomG6MessageWorker {
         if transmitterVersion == .first {
             createDataRequest(ofType: .sensorDataTx)
         } else if transmitterVersion == .second {
+            if sensorNeedsToBeStarted {
+                sensorNeedsToBeStarted = false
+                createSensorStartRequest()
+            }
             createCalibrationRequest()
             createDataRequest(ofType: .glucoseTx)
         }
+    }
+    
+    func createSensorStartRequest() {
+        guard let transmitterStartDate = CGMDevice.current.transmitterStartDate else {
+            LogController.log(
+                message: "[Dexcom G6] Transmitter Start Date is nil",
+                type: .debug
+            )
+            return
+        }
+        
+        let message = DexcomG6SessionStartTxMessage(startTime: Int(Date().timeIntervalSince1970),
+                                                    dexTime: Int(transmitterStartDate.timeIntervalSince1970))
+        messageQueue.append(message)
+        trySendingMessageFromQueue()
     }
     
     func requestReset() {
@@ -280,7 +306,11 @@ final class DexcomG6MessageWorker {
     
     func handleBackfillStream(_ data: Data?) {
         guard let data = data else { return }
-        print("Array(data) \(Array(data))")
+        LogController.log(
+            message: "[Dexcom G6] Did receive backfill datd array: %@",
+            type: .debug,
+            Array(data).description
+        )
         backFillStream.push(data)
         delegate?.workerDidReceiveBackfillData(backFillStream.decode())
     }
