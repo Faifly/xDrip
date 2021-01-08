@@ -20,7 +20,7 @@ struct DexcomG6SessionStartTxMessage: DexcomG6OutgoingMessage {
                 array.append(contentsOf: Array($0.prefix(4 * MemoryLayout<Int8>.size)).map { Int8(bitPattern: $0) })
             }
             
-            withUnsafeBytes(of: startTime) {
+            withUnsafeBytes(of: startTime / 1000) {
                 array.append(contentsOf: Array($0.prefix(4 * MemoryLayout<Int8>.size)).map { Int8(bitPattern: $0) })
             }
             
@@ -31,8 +31,10 @@ struct DexcomG6SessionStartTxMessage: DexcomG6OutgoingMessage {
             withUnsafeBytes(of: 3400) {
                 array.append(contentsOf: Array($0.prefix(2 * MemoryLayout<Int8>.size)).map { Int8(bitPattern: $0) })
             }
-
-            array.append(contentsOf: [Int8](repeating: 0, count: 2))
+            
+            withUnsafeBytes(of: 0) {
+                array.append(contentsOf: Array($0.prefix(2 * MemoryLayout<Int8>.size)).map { Int8(bitPattern: $0) })
+            }
 
             let data = array.withUnsafeBufferPointer { Data(buffer: $0) }
 
