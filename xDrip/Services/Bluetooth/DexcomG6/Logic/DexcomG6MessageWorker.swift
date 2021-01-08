@@ -162,7 +162,7 @@ final class DexcomG6MessageWorker {
         }
         
         let message = DexcomG6SessionStartTxMessage(startTime: Int(Date().timeIntervalSince1970),
-                                                    dexTime: Int(transmitterStartDate.timeIntervalSince1970))
+                                                    dexTime: Int(Date().timeIntervalSince1970 - transmitterStartDate.timeIntervalSince1970))
         messageQueue.append(message)
         trySendingMessageFromQueue()
     }
