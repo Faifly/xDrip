@@ -20,7 +20,7 @@ struct DexcomG6SessionStartTxMessage: DexcomG6OutgoingMessage {
                 array.append(contentsOf: Array($0.prefix(4 * MemoryLayout<Int8>.size)).map { Int8(bitPattern: $0) })
             }
             
-            withUnsafeBytes(of: startTime / 1000) {
+            withUnsafeBytes(of: startTime) {
                 array.append(contentsOf: Array($0.prefix(4 * MemoryLayout<Int8>.size)).map { Int8(bitPattern: $0) })
             }
             
