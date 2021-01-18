@@ -208,7 +208,7 @@ final class GlucoseHistoryView: BaseHistoryView {
         let globalDurationOffset = globalDateRange.duration * TimeInterval(currentRelativeOffset)
         let localOffsettedInterval = localInterval / Double(multiplier)
         let endDate = globalDateRange.start + globalDurationOffset + localOffsettedInterval
-        let dateInterval = DateInterval(endDate: endDate, duration: localInterval)
+        let dateInterval = DateInterval(endDate: endDate, duration: localInterval / Double(multiplier))
         callback(dateInterval)
     }
     
