@@ -42,9 +42,13 @@ final class HomeGlucoseDataWorker: NSObject, HomeGlucoseDataWorkerProtocol {
     
     func fetchLastGlucoseReading() -> GlucoseReading? {
         let minimumDate = Date() - .secondsPerDay
-        let lastReading = User.current.settings.deviceMode == .main ?
-            GlucoseReading.allMaster.first : GlucoseReading.allFollower.first
-        if let reading = lastReading, reading.date >=? minimumDate && reading.filteredCalculatedValue > .ulpOfOne {
+        let lastReading = GlucoseReading.allForCurrentMode.filter(
+            "date >= %@ AND filteredCalculatedValue > %@",
+            minimumDate,
+            Double.ulpOfOne
+        ).first
+        
+        if let reading = lastReading {
             return reading
         } else {
             return nil
@@ -63,14 +67,15 @@ final class HomeGlucoseDataWorker: NSObject, HomeGlucoseDataWorkerProtocol {
         let minimumDate = dateInterval.start
         let maximumDate = dateInterval.end
         
-        let all = User.current.settings.deviceMode == .main ? GlucoseReading.allMaster : GlucoseReading.allFollower
+        let all = GlucoseReading.allForCurrentMode
         
         return Array(
-            all.filter {
-                $0.date >=? minimumDate &&
-                $0.filteredCalculatedValue > .ulpOfOne &&
-                $0.date <=? maximumDate
-            }
+            all.filter(
+                "date >= %@ AND date <= %@ AND filteredCalculatedValue > %@",
+                minimumDate,
+                maximumDate,
+                Double.ulpOfOne
+            )
         )
     }
 }

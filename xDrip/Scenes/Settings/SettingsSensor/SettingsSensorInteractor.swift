@@ -35,7 +35,7 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
     private func updateData() {
         let response = SettingsSensor.UpdateData.Response(
             device: CGMDevice.current,
-            sensorCalibrations: Calibration.allForCurrentSensor,
+            sensorCalibrations: Array(Calibration.allForCurrentSensor),
             startStopHandler: onStartStopSensor,
             deleteLastHandler: onDeleteLastCalibration,
             deleteAllHandler: onDeleteAllCalibrations,

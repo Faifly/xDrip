@@ -56,7 +56,7 @@ final class NightscoutService {
                 self.scanForNotUploadedTreatments()
             }
     }
-    private lazy var lastFollowerFetchTime = GlucoseReading.allFollower.last?.date
+    private lazy var lastFollowerFetchTime = GlucoseReading.allFollower.first?.date
     private lazy var pumpService: PumpServiceLogic = PumpService()
     private var followerFetchTimer: Timer?
     private var treatmentsFetchTimer: Timer?
@@ -153,8 +153,8 @@ final class NightscoutService {
     private func scanForGlucoseEntries() {
         LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
         let all = GlucoseReading.allMaster
-        let notUploaded = all.filter { $0.cloudUploadStatus == .notUploaded }
-        let modified = all.filter { $0.cloudUploadStatus == .modified }
+        let notUploaded = Array(all.filter("cloudUploadStatus == \(CloudUploadStatus.notUploaded)"))
+        let modified = Array(all.filter("cloudUploadStatus == \(CloudUploadStatus.modified)"))
         
         LogController.log(
             message: "[NighscoutService]: Found %d not uploaded and %d modified entries",

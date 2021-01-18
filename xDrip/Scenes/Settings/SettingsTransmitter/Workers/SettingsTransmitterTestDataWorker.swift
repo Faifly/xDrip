@@ -32,6 +32,9 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
     
     private func startDataGeneration(configuration: SettingsTransmitter.TestBackfillConfiguration,
                                      callback: @escaping (Int, Int) -> Void) {
+        let time = Date()
+        print("[DEBUG]: Generation Start Time - \(time)")
+        
         if let service = CGMController.shared.service as? MockedBluetoothService {
             service.isPaused = true
         }
@@ -99,6 +102,10 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
                 }
             }
         }
+        
+        let end = Date()
+        print("[DEBUG]: Generation End Time - \(end)")
+        print("[DEBUG]: Generation Time - \(end.timeIntervalSince(time))")
         
         if let service = CGMController.shared.service as? MockedBluetoothService {
             service.isPaused = false

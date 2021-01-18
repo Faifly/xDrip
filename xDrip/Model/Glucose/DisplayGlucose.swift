@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RealmSwift
+import AKUtils
 
 struct DisplayGlucose {
     let mgDl: Double
@@ -14,8 +16,8 @@ struct DisplayGlucose {
     var slope: Double = 0.0
     var deltaName: String = ""
     
-    init?(readings: [GlucoseReading]) {
-        guard let last = readings.last else { return nil }
+    init?(readings: Results<GlucoseReading>) {
+        guard let last = readings.sorted(byKeyPath: "date", ascending: true).last else { return nil }
 
         mgDl = last.calculatedValue
         let timestamp = last.date?.timeIntervalSince1970 ?? 0.0

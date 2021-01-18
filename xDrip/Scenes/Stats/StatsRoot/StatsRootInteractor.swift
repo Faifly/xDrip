@@ -74,7 +74,7 @@ final class StatsRootInteractor: StatsRootBusinessLogic, StatsRootDataStore {
         
         let dateInterval = DateInterval(start: startDate, duration: interval)
         
-        let readings = GlucoseReading.readingsForInterval(dateInterval)
+        let readings = Array(GlucoseReading.readingsForInterval(dateInterval))
         updateTableData(readings: readings)
         updateChartData(readings: readings, interval: dateInterval)
     }

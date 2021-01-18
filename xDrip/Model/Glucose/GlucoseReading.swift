@@ -52,6 +52,10 @@ final class GlucoseReading: Object {
         return "externalID"
     }
     
+    override class func indexedProperties() -> [String] {
+        return ["date"]
+    }
+    
     var cloudUploadStatus: CloudUploadStatus {
         get {
             return CloudUploadStatus(rawValue: rawCloudUploadStatus) ?? .notApplicable
@@ -74,53 +78,52 @@ final class GlucoseReading: Object {
         super.init()
     }
     
-    static var allMaster: [GlucoseReading] {
-        return Array(
-            Realm.shared.objects(GlucoseReading.self)
+    private static var emptyReadingsArray = Realm.shared.objects(GlucoseReading.self).filter(NSPredicate(value: false))
+    
+    static var allMaster: Results<GlucoseReading> {
+        return Realm.shared.objects(GlucoseReading.self)
                 .filter("rawDeviceMode = \(UserDeviceMode.main.rawValue)")
                 .sorted(byKeyPath: "date", ascending: false)
-        )
     }
     
-    static var allFollower: [GlucoseReading] {
-        return Array(
-            Realm.shared.objects(GlucoseReading.self)
+    static var allFollower: Results<GlucoseReading> {
+        return Realm.shared.objects(GlucoseReading.self)
                 .filter("rawDeviceMode = \(UserDeviceMode.follower.rawValue)")
                 .sorted(byKeyPath: "date", ascending: false)
-        )
     }
     
-    static var allForCurrentMode: [GlucoseReading] {
+    static var allForCurrentMode: Results<GlucoseReading> {
         return User.current.settings.deviceMode == .follower ? allFollower : allMaster
     }
     
-    static var allMasterForCurrentSensor: [GlucoseReading] {
-        guard CGMDevice.current.isSensorStarted else { return [] }
-        guard let sensorStartDate = CGMDevice.current.sensorStartDate else { return [] }
-        return allMaster.filter { $0.date >? sensorStartDate }
+    static var allMasterForCurrentSensor: Results<GlucoseReading> {
+        guard CGMDevice.current.isSensorStarted else { return emptyReadingsArray }
+        guard let sensorStartDate = CGMDevice.current.sensorStartDate else { return emptyReadingsArray }
+        return allMaster.filter("date > %@", sensorStartDate)
     }
     
-    static func lastReadings(_ amount: Int, for mode: UserDeviceMode) -> [GlucoseReading] {
-        return last(for: mode, amount: amount, filter: { $0.calculatedValue !~ 0 && $0.rawValue !~ 0 })
+    static func lastReadings(_ amount: Int, for mode: UserDeviceMode) -> Results<GlucoseReading> {
+        return last(for: mode, amount: amount, filter: "calculatedValue != 0.0 AND rawValue != 0.0")
     }
     
-    static func latestByCount(_ amount: Int, for mode: UserDeviceMode) -> [GlucoseReading] {
-        return last(for: mode, amount: amount, filter: { $0.rawValue !~ 0 })
+    static func latestByCount(_ amount: Int, for mode: UserDeviceMode) -> Results<GlucoseReading> {
+        return last(for: mode, amount: amount, filter: "rawValue != 0.0")
     }
     
-    static func last(for mode: UserDeviceMode, amount: Int, filter: (GlucoseReading) -> Bool) -> [GlucoseReading] {
-        guard amount > 0 else { return [] }
+    static func last(for mode: UserDeviceMode, amount: Int, filter: String) -> Results<GlucoseReading> {
+        guard amount > 0 else { return emptyReadingsArray }
         
-        let allReadings = mode == .main ? allMasterForCurrentSensor.filter(filter) : allFollower.filter(filter)
-        if allReadings.count > amount {
-            return Array(allReadings[0..<amount])
-        }
+        let allReadings = mode == .main ? allMasterForCurrentSensor : allFollower
         
-        return Array(allReadings)
+        let start = allReadings.first?.date ?? Date()
+        let interval = TimeInterval(amount) * TimeInterval(minutes: 5.5)
+        let endDate = start.addingTimeInterval(-interval)
+        
+        return allReadings.filter(filter + " AND date > %@", endDate)
     }
     
-    static var masterForCurrentSensorInLast30Minutes: [GlucoseReading] {
-        return allMasterForCurrentSensor.filter { $0.date >? Date().addingTimeInterval(-(.secondsPerHour / 2)) }
+    static var masterForCurrentSensorInLast30Minutes: Results<GlucoseReading> {
+        return allMasterForCurrentSensor.filter("date > %@", Date().addingTimeInterval(-(.secondsPerHour / 2)))
     }
     
     @discardableResult static func create(filtered: Double,
@@ -241,7 +244,7 @@ final class GlucoseReading: Object {
         let allowedOffset = TimeInterval.secondsPerMinute * Double(precisionInMinutes)
         let minOffset = date - allowedOffset
         let maxOffset = date + allowedOffset
-        let matching = allMaster.filter { $0.date >? minOffset && $0.date <? maxOffset }
+        let matching = allMaster.filter("date > %@ AND date < %@", minOffset, maxOffset)
         let offsets = matching.map {
             abs(($0.date?.timeIntervalSince1970 ?? .greatestFiniteMagnitude) - date.timeIntervalSince1970)
         }
@@ -266,7 +269,7 @@ final class GlucoseReading: Object {
     }
     
     static func markEntryAsUploaded(externalID: String) {
-        guard let entry = allMaster.first(where: { $0.externalID == externalID }) else {
+        guard let entry = allMaster.filter("externalID == \(externalID)").first else {
             return
         }
         Realm.shared.safeWrite {
@@ -302,8 +305,8 @@ final class GlucoseReading: Object {
         return entry
     }
     
-    static func readingsForInterval(_ interval: DateInterval) -> [GlucoseReading] {
-        return allForCurrentMode.filter { $0.date >=? interval.start && $0.date <=? interval.end }
+    static func readingsForInterval(_ interval: DateInterval) -> Results<GlucoseReading> {
+        return allForCurrentMode.filter("date >= %@ AND date <= %@", interval.start, interval.end)
     }
     
     func updateCalculatedValue(_ value: Double) {
@@ -400,7 +403,7 @@ final class GlucoseReading: Object {
         let last2Readings = GlucoseReading.lastReadings(2, for: .main)
         
         Realm.shared.safeWrite {
-            if last2Readings.count == 2 {
+            if last2Readings.count >= 2 {
                 calculatedValueSlope = calculateSlope(lastReading: last2Readings[1])
             } else {
                 calculatedValueSlope = 0.0
@@ -428,7 +431,7 @@ final class GlucoseReading: Object {
         let b: Double
         let c: Double
         
-        if last3.count == 3 {
+        if last3.count >= 3 {
             let y3 = last3[0].value(forKey: valueKey) as? Double ?? 1.0
             let x3 = last3[0].date?.timeIntervalSince1970 ?? 1.0
             let y2 = last3[1].value(forKey: valueKey) as? Double ?? 1.0
@@ -479,7 +482,7 @@ final class GlucoseReading: Object {
     }
     
     func activeSlope(date: Date = Date()) -> Double {
-        return 2 * a * date.timeIntervalSince1970 + b
+        return 2.0 * a * date.timeIntervalSince1970 + b
     }
     
     private func calculateNoise() {
@@ -487,7 +490,7 @@ final class GlucoseReading: Object {
         let maxRecords = 8
         let minRecords = 4
         
-        let readings = Array(GlucoseReading.lastReadings(maxRecords, for: mode).reversed())
+        let readings = GlucoseReading.lastReadings(maxRecords, for: mode).sorted(byKeyPath: "date", ascending: true)
         if readings.count < minRecords {
             Realm.shared.safeWrite {
                 noise = "1" // Clean

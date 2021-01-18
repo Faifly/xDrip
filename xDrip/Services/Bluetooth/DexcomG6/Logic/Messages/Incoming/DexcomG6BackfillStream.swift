@@ -19,7 +19,6 @@ final class DexcomG6BackfillStream {
     private var lastSequence = 0
     private var idx = 4
     
-    
     func push(_ packet: Data) {
         guard !packet.isEmpty else { return }
         

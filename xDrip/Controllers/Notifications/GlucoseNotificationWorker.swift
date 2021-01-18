@@ -75,7 +75,7 @@ final class GlucoseNotificationWorker: NSObject {
         }
         
         var timeInterval = Constants.Glucose.defaultMissedReadingTimeInterval
-        if readings.count == Constants.Glucose.requiredReadingsCountToCalculateInterval {
+        if readings.count >= Constants.Glucose.requiredReadingsCountToCalculateInterval {
             var interval = 0.0
             var count = 0.0
             

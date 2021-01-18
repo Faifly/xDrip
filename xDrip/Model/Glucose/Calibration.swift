@@ -53,44 +53,50 @@ final class Calibration: Object {
         return "externalID"
     }
     
-    static var all: [Calibration] {
-        return Array(Realm.shared.objects(Calibration.self).sorted(byKeyPath: "date", ascending: false))
+    private static var emptyCalibrationsArray: Results<Calibration> {
+        return Realm.shared.objects(Calibration.self).filter(NSPredicate(value: false))
     }
     
-    static var allForCurrentSensor: [Calibration] {
-        guard CGMDevice.current.isSensorStarted else { return [] }
-        guard let sensorStartDate = CGMDevice.current.sensorStartDate else { return [] }
-        return all.filter { $0.date >? sensorStartDate }
+    static var all: Results<Calibration> {
+        return Realm.shared.objects(Calibration.self).sorted(byKeyPath: "date", ascending: false)
+    }
+    
+    static var allForCurrentSensor: Results<Calibration> {
+        guard CGMDevice.current.isSensorStarted else { return emptyCalibrationsArray }
+        guard let sensorStartDate = CGMDevice.current.sensorStartDate else { return emptyCalibrationsArray }
+        return all.filter("date > %@", sensorStartDate)
     }
     
     static func lastCalibrations(_ amount: Int) -> [Calibration] {
         guard amount > 0 else { return [] }
         
         let allCalibrations = allForCurrentSensor
+        var count = allCalibrations.count
         if allCalibrations.count > amount {
-            return Array(allCalibrations[0..<amount])
+            count = amount
         }
         
-        return Array(allCalibrations)
+        var array = [Calibration]()
+        for calibration in allCalibrations {
+            guard array.count < count else { break }
+            array.append(calibration)
+        }
+        
+        return array
     }
     
     static var lastValid: Calibration? {
-        return allForCurrentSensor.first {
-            $0.slopeConfidence !~ 0 &&
-            $0.sensorConfidence !~ 0 &&
-            $0.slope !~ 0 &&
-            $0.intercept <= SlopeParameters.highestSaneIntercept
-        }
+        return allForCurrentSensor.filter(
+            "slopeConfidence != 0.0 AND sensorConfidence != 0.0 AND slope != 0.0 AND intercept <= %@",
+            SlopeParameters.highestSaneIntercept
+        ).first
     }
     
     static func calibration(for date: Date) -> Calibration? {
-        return allForCurrentSensor.first(
-            where: {
-                $0.slopeConfidence !~ 0 &&
-                $0.sensorConfidence !~ 0 &&
-                $0.date <? date
-            }
-        )
+        return allForCurrentSensor.filter(
+            "slopeConfidence != 0.0 AND sensorConfidence != 0.0 AND date < %@",
+            date
+        ).first
     }
     
     static func createInitialCalibration(
@@ -101,7 +107,7 @@ final class Calibration: Object {
         adjustedReadingsAmount: Int = 5
     ) throws {
         let last2Readings = GlucoseReading.latestByCount(2, for: .main)
-        guard last2Readings.count == 2 else { throw CalibrationError.notEnoughReadings }
+        guard last2Readings.count >= 2 else { throw CalibrationError.notEnoughReadings }
         guard let sensorStarted = CGMDevice.current.sensorStartDate else { throw CalibrationError.sensorNotStarted }
         guard CGMDevice.current.isSensorStarted else { throw CalibrationError.sensorNotStarted }
         
@@ -285,7 +291,7 @@ final class Calibration: Object {
     static func deleteAll() {
         let realm = Realm.shared
         let all = allForCurrentSensor
-        NightscoutService.shared.deleteCalibrations(all)
+        NightscoutService.shared.deleteCalibrations(Array(all))
         realm.safeWrite {
             realm.delete(all)
         }
@@ -294,7 +300,7 @@ final class Calibration: Object {
     }
     
     static func markCalibrationAsUploaded(itemID: String) {
-        guard let calibration = all.first(where: { $0.externalID == itemID }) else { return }
+        guard let calibration = all.filter("externalID == \(itemID)").first else { return }
         Realm.shared.safeWrite {
             calibration.isUploaded = true
         }
@@ -309,11 +315,11 @@ final class Calibration: Object {
     private static func calculateWLS(date: Date = Date()) {
         let slopeParameters = SlopeParameters.dex
         let minDate = date.timeIntervalSince1970 - .secondsPerDay * 4.0
-        let calibrations = all.filter {
-            $0.date?.timeIntervalSince1970 >? minDate &&
-            $0.sensorConfidence !~ 0 &&
-            $0.slopeConfidence !~ 0
-        }
+        let calibrations = all.filter(
+            "date > %@ AND sensorConfidence != 0.0 AND slopeConfidence != 0.0",
+            Date(timeIntervalSince1970: minDate)
+        )
+        
         guard !calibrations.isEmpty else { return }
         
         guard calibrations.count > 1 else {
