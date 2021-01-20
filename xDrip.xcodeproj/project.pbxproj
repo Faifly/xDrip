@@ -67,6 +67,7 @@
 		2C1DE8A624792DEF0023B512 /* PopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C1DE8A424792DEF0023B512 /* PopUpViewController.xib */; };
 		2C1DE8A8247938780023B512 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1DE8A7247938780023B512 /* CustomAlertController.swift */; };
 		2C225D0A248012C400A575A0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C225D09248012C400A575A0 /* Constants.swift */; };
+		2C23E18E25B6F1E300F7DAA4 /* GlucoseChartEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C23E18D25B6F1E300F7DAA4 /* GlucoseChartEntry.swift */; };
 		2C2D7561251B743C00550488 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C2D7560251B743B00550488 /* GoogleService-Info.plist */; };
 		2C467FCB247E686B006D651D /* ChartRangesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C467FCA247E686B006D651D /* ChartRangesHeaderView.swift */; };
 		2C467FCD247E6884006D651D /* ChartRangesHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C467FCC247E6884006D651D /* ChartRangesHeaderView.xib */; };
@@ -770,6 +771,7 @@
 		2C1DE8A424792DEF0023B512 /* PopUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopUpViewController.xib; sourceTree = "<group>"; };
 		2C1DE8A7247938780023B512 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		2C225D09248012C400A575A0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2C23E18D25B6F1E300F7DAA4 /* GlucoseChartEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseChartEntry.swift; sourceTree = "<group>"; };
 		2C2D7560251B743B00550488 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2C467FCA247E686B006D651D /* ChartRangesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartRangesHeaderView.swift; sourceTree = "<group>"; };
 		2C467FCC247E6884006D651D /* ChartRangesHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChartRangesHeaderView.xib; sourceTree = "<group>"; };
@@ -3699,6 +3701,7 @@
 				58DDC45D2423C99B008CB04D /* TrainingEntry.swift */,
 				58DDC45F2423C9EF008CB04D /* TrainingIntensity.swift */,
 				58DDC4632423CAA3008CB04D /* CalibrationEntry.swift */,
+				2C23E18D25B6F1E300F7DAA4 /* GlucoseChartEntry.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -4224,6 +4227,7 @@
 				580E4B9C243F721500565EDE /* NightscoutCloudConfigurationViewController.swift in Sources */,
 				91B2ED032523A4C800A8C3C1 /* PumpService.swift in Sources */,
 				5805C9A324389230002AFA1B /* DexcomG6PairRequestTxMessage.swift in Sources */,
+				2C23E18E25B6F1E300F7DAA4 /* GlucoseChartEntry.swift in Sources */,
 				5805CA1D243892D6002AFA1B /* InitialSetupViewController.swift in Sources */,
 				58B23C8D24BA33370033E6AD /* StatsBarsChart.swift in Sources */,
 				5805C9A724389230002AFA1B /* DexcomG6TransmitterTimeTxMessage.swift in Sources */,

@@ -37,7 +37,7 @@ enum ApplicationLaunchController {
     
     private static func setupRealm() {
         Realm.Configuration.defaultConfiguration = Realm.Configuration(
-            schemaVersion: 4,
+            schemaVersion: 5,
             migrationBlock: { _, _ in },
             deleteRealmIfMigrationNeeded: false
         )

@@ -178,6 +178,11 @@ final class GlucoseReading: Object {
         
         NightscoutService.shared.scanForNotUploadedEntries()
         
+        let chartEntry = GlucoseChartEntry(reading: reading)
+        Realm.sharedCharts.safeWrite {
+            Realm.sharedCharts.add(chartEntry, update: .modified)
+        }
+        
         return reading
     }
         
@@ -223,6 +228,11 @@ final class GlucoseReading: Object {
         if !forBackfill {
             checkForCalibrationRequest(requireCalibration)
             NightscoutService.shared.scanForNotUploadedEntries()
+        }
+        
+        let chartEntry = GlucoseChartEntry(reading: reading)
+        Realm.sharedCharts.safeWrite {
+            Realm.sharedCharts.add(chartEntry, update: .modified)
         }
         
         return reading
@@ -290,6 +300,11 @@ final class GlucoseReading: Object {
             realm.add(readings, update: .all)
         }
         
+        let chartEntries = readings.compactMap { GlucoseChartEntry(reading: $0) }
+        Realm.sharedCharts.safeWrite {
+            Realm.sharedCharts.add(chartEntries, update: .modified)
+        }
+        
         return readings
     }
     
@@ -321,6 +336,11 @@ final class GlucoseReading: Object {
     func updateFilteredCalculatedValue(_ value: Double) {
         Realm.shared.safeWrite {
             self.filteredCalculatedValue = value
+        }
+        
+        let chartEntry = GlucoseChartEntry(reading: self)
+        Realm.sharedCharts.safeWrite {
+            Realm.sharedCharts.add(chartEntry, update: .modified)
         }
     }
     
@@ -386,6 +406,11 @@ final class GlucoseReading: Object {
         Realm.shared.safeWrite {
             self.date = date
         }
+        
+        let chartEntry = GlucoseChartEntry(reading: self)
+        Realm.sharedCharts.safeWrite {
+            Realm.sharedCharts.add(chartEntry, update: .modified)
+        }
     }
     
     func calculateSlope(lastReading: GlucoseReading) -> Double {
@@ -408,6 +433,11 @@ final class GlucoseReading: Object {
             } else {
                 calculatedValueSlope = 0.0
             }
+        }
+        
+        let chartEntry = GlucoseChartEntry(reading: self)
+        Realm.sharedCharts.safeWrite {
+            Realm.sharedCharts.add(chartEntry, update: .modified)
         }
     }
     
@@ -478,6 +508,11 @@ final class GlucoseReading: Object {
                 calculatedValue = min(400.0, max(39.0, calculatedValue))
                 hideSlope = false
             }
+        }
+        
+        let chartEntry = GlucoseChartEntry(reading: self)
+        Realm.sharedCharts.safeWrite {
+            Realm.sharedCharts.add(chartEntry, update: .modified)
         }
     }
     

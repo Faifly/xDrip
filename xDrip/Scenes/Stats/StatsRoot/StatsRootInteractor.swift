@@ -74,12 +74,12 @@ final class StatsRootInteractor: StatsRootBusinessLogic, StatsRootDataStore {
         
         let dateInterval = DateInterval(start: startDate, duration: interval)
         
-        let readings = Array(GlucoseReading.readingsForInterval(dateInterval))
+        let readings = Array(GlucoseChartEntry.readingsForInterval(dateInterval))
         updateTableData(readings: readings)
         updateChartData(readings: readings, interval: dateInterval)
     }
     
-    private func updateTableData(readings: [GlucoseReading]) {
+    private func updateTableData(readings: [GlucoseChartEntry]) {
         let response = StatsRoot.UpdateTableData.Response(
             readings: readings,
             lowGlucoseThreshold: User.current.settings.warningLevelValue(for: .low),
@@ -89,7 +89,7 @@ final class StatsRootInteractor: StatsRootBusinessLogic, StatsRootDataStore {
         presenter?.presentTableData(response: response)
     }
     
-    private func updateChartData(readings: [GlucoseReading], interval: DateInterval) {
+    private func updateChartData(readings: [GlucoseChartEntry], interval: DateInterval) {
         let response = StatsRoot.UpdateChartData.Response(readings: readings, timeFrame: timeFrame, interval: interval)
         presenter?.presentChartData(response: response)
     }

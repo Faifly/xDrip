@@ -21,6 +21,18 @@ extension Realm {
         }
     }
     
+    static var sharedCharts: Realm {
+        do {
+            var config = Realm.Configuration()
+            config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("charts.realm")
+            
+            return try Realm(configuration: config)
+        } catch let error {
+            print("Realm initialization error: " + error.localizedDescription)
+            exit(0)
+        }
+    }
+    
     func finishWrite() {
         do {
             try self.commitWrite()

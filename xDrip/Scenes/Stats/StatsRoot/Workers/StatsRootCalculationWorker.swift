@@ -13,9 +13,10 @@
 // swiftlint:disable function_body_length
 
 import UIKit
+import AKUtils
 
 protocol StatsRootCalculationWorkerLogic {
-    func calculate(with readings: [GlucoseReading], lowThreshold: Double, highThreshold: Double)
+    func calculate(with readings: [GlucoseChartEntry], lowThreshold: Double, highThreshold: Double)
     
     var isCalculated: Bool { get }
     var mean: Double { get }
@@ -51,7 +52,7 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
     var gvi: Double = 0.0
     var pgs: Double = 0.0
     
-    func calculate(with readings: [GlucoseReading], lowThreshold: Double, highThreshold: Double) {
+    func calculate(with readings: [GlucoseChartEntry], lowThreshold: Double, highThreshold: Double) {
         let nonZero = readings.filter { $0.filteredCalculatedValue !~ 0 }
         guard !nonZero.isEmpty else { isCalculated = false; return }
         
@@ -118,13 +119,14 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
         isCalculated = true
     }
     
-    private func pass1DataCleaning(_ readings: [GlucoseReading]) -> [GlucoseReading] {
+    private func pass1DataCleaning(_ readings: [GlucoseChartEntry]) -> [GlucoseChartEntry] {
         guard readings.count > 1 else { return readings }
+        let sorted = readings.sorted(by: { $0.date <? $1.date })
         
-        var glucoseData: [GlucoseReading] = []
-        for index in 0..<readings.count - 1 {
-            let entry = readings[index]
-            let nextEntry = readings[index + 1]
+        var glucoseData: [GlucoseChartEntry] = []
+        for index in 0..<sorted.count - 1 {
+            let entry = sorted[index]
+            let nextEntry = sorted[index + 1]
             
             guard let date1 = entry.date, let date2 = nextEntry.date else { continue }
             
@@ -143,18 +145,19 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
                 let newEntry = GlucoseReading()
                 newEntry.updateFilteredCalculatedValue(entry.filteredCalculatedValue + delta * Double(index2))
                 newEntry.updateDate(date1 + Double(index2) * Double(timePatch))
-                glucoseData.append(newEntry)
+                let entry = GlucoseChartEntry(reading: newEntry)
+                glucoseData.append(entry)
             }
         }
         
         return glucoseData
     }
     
-    private func pass2DataCleaning(_ glucoseData: [GlucoseReading]) -> [GlucoseReading] {
+    private func pass2DataCleaning(_ glucoseData: [GlucoseChartEntry]) -> [GlucoseChartEntry] {
         guard glucoseData.count > 2 else { return glucoseData }
         
-        var glucoseData2: [GlucoseReading] = []
-        var previousEntry: GlucoseReading?
+        var glucoseData2: [GlucoseChartEntry] = []
+        var previousEntry: GlucoseChartEntry?
         
         if !glucoseData.isEmpty {
             glucoseData2.append(glucoseData[0])
@@ -194,8 +197,9 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
                 newEntry.updateFilteredCalculatedValue(prevEntry.filteredCalculatedValue + delta)
                 newEntry.updateDate(date1)
                 
-                glucoseData2.append(newEntry)
-                previousEntry = newEntry
+                let entry = GlucoseChartEntry(reading: newEntry)
+                glucoseData2.append(entry)
+                previousEntry = entry
                 continue
             }
             

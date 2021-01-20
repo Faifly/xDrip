@@ -70,7 +70,7 @@ enum Home {
         }
         
         struct Response {
-            let glucoseData: [GlucoseReading]
+            let glucoseData: [GlucoseChartEntry]
             let basalDisplayMode: ChartSettings.BasalDisplayMode
             let insulinData: [InsulinEntry]
             let chartPointsData: [InsulinEntry]
@@ -91,7 +91,7 @@ enum Home {
         }
         
         struct Response {
-            let intervalGlucoseData: [GlucoseReading]
+            let intervalGlucoseData: [GlucoseChartEntry]
         }
         
         struct ViewModel {
@@ -186,7 +186,7 @@ enum Home {
         }
         
         struct Response {
-            let lastGlucoseReading: GlucoseReading?
+            let lastGlucoseReading: GlucoseChartEntry?
         }
         
         struct ViewModel {

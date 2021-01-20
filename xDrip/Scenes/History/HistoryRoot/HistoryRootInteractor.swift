@@ -70,7 +70,7 @@ final class HistoryRootInteractor: HistoryRootBusinessLogic, HistoryRootDataStor
     // MARK: Logic
     
     private func updateGlucoseChartData() {
-        var glucoseData = [GlucoseReading]()
+        var glucoseData = [GlucoseChartEntry]()
         var basalValues = [InsulinEntry]()
         var chartEntries = [InsulinEntry]()
         if timeline == .last14Days {

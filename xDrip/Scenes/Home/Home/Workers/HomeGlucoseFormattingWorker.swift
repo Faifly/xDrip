@@ -45,10 +45,10 @@ private struct HomeBasalEntry: BasalChartBasalEntry {
 }
 
 protocol HomeGlucoseFormattingWorkerProtocol {
-    func formatEntries(_ entries: [GlucoseReading]) -> [GlucoseChartGlucoseEntry]
-    func formatEntry(_ entry: GlucoseReading?) -> GlucoseCurrentInfoEntry
+    func formatEntries(_ entries: [GlucoseChartEntry]) -> [GlucoseChartGlucoseEntry]
+    func formatEntry(_ entry: GlucoseChartEntry?) -> GlucoseCurrentInfoEntry
     func formatEntries(_ entries: [InsulinEntry]) -> [BasalChartBasalEntry]
-    func formatDataSection(_ entries: [GlucoseReading]) -> Home.DataSectionViewModel
+    func formatDataSection(_ entries: [GlucoseChartEntry]) -> Home.DataSectionViewModel
 }
 
 final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
@@ -58,7 +58,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         statsCalculationWorker = StatsRootCalculationWorker()
     }
     
-    func formatEntries(_ entries: [GlucoseReading]) -> [GlucoseChartGlucoseEntry] {
+    func formatEntries(_ entries: [GlucoseChartEntry]) -> [GlucoseChartGlucoseEntry] {
         let settings = User.current.settings
         return entries.map {
             HomeGlucoseEntry(
@@ -71,7 +71,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         }
     }
     
-    func formatEntry(_ entry: GlucoseReading?) -> GlucoseCurrentInfoEntry {
+    func formatEntry(_ entry: GlucoseChartEntry?) -> GlucoseCurrentInfoEntry {
         guard let entry = entry else {
             return HomeGlucoseCurrentInfoEntry.emptyEntry
         }
@@ -81,7 +81,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         let glucoseDecimalValue = components.last ?? "-"
         
         let diff: Double
-        let last2Readings = GlucoseReading.lastReadings(2, for: entry.deviceMode)
+        let last2Readings = GlucoseChartEntry.lastReadings(2, for: entry.deviceMode)
         if last2Readings.count < 2 {
             diff = 0.0
         } else {
@@ -127,7 +127,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         }
     }
     
-    func formatDataSection(_ entries: [GlucoseReading]) -> Home.DataSectionViewModel {
+    func formatDataSection(_ entries: [GlucoseChartEntry]) -> Home.DataSectionViewModel {
          let isShown = User.current.settings.chart?.showData ?? true
         guard !entries.isEmpty else {
             return Home.DataSectionViewModel(

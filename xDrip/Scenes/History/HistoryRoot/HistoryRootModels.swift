@@ -51,8 +51,8 @@ enum HistoryRoot {
         }
         
         struct Response {
-            let glucoseData: [GlucoseReading]
-            let intervalGlucoseData: [GlucoseReading]
+            let glucoseData: [GlucoseChartEntry]
+            let intervalGlucoseData: [GlucoseChartEntry]
             let basalDisplayMode: ChartSettings.BasalDisplayMode
             let insulinData: [InsulinEntry]
             let chartPointsData: [InsulinEntry]
