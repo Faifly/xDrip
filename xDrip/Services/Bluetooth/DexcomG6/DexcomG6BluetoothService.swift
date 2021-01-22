@@ -220,6 +220,13 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
         case .resetting, .unknown, .poweredOn, .poweredOff: break
         @unknown default: break
         }
+        
+        if #available(iOS 13, *) {} else {
+            if central.state == .poweredOff {
+                delegate?.serviceDidFail(withError: .bluetoothIsPoweredOff)
+            }
+        }
+        
         centralManagerLastState = centralManager.state
     }
     
