@@ -321,6 +321,10 @@ final class GlucoseReading: Object {
         }
     }
     
+    func setFilteredCalculatedValue(_ value: Double) {
+        self.filteredCalculatedValue = value
+    }
+    
     func updateIsCalibrated(_ isCalibrated: Bool) {
         Realm.shared.safeWrite {
             self.isCalibrated = isCalibrated
@@ -383,6 +387,10 @@ final class GlucoseReading: Object {
         Realm.shared.safeWrite {
             self.date = date
         }
+    }
+    
+    func setDate(_ date: Date) {
+        self.date = date
     }
     
     func calculateSlope(lastReading: GlucoseReading) -> Double {

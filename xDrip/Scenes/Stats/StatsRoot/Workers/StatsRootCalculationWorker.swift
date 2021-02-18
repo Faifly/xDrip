@@ -89,8 +89,8 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
             $0 + ($1.filteredCalculatedValue - mean) * ($1.filteredCalculatedValue - mean) / Double(nonZero.count)
         }))
         relativeSD = (1000.0 * stdDev / mean).rounded() / 10.0
-        
-        let normalized = pass2DataCleaning(pass1DataCleaning(readings))
+        let pass1Data = pass1DataCleaning(readings)
+        let normalized = pass2DataCleaning(pass1Data)
         guard !normalized.isEmpty else { isCalculated = true; return }
         
         let glucoseFirst = normalized[0].filteredCalculatedValue
@@ -141,8 +141,8 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
             
             for index2 in 1...missingRecords {
                 let newEntry = GlucoseReading()
-                newEntry.updateFilteredCalculatedValue(entry.filteredCalculatedValue + delta * Double(index2))
-                newEntry.updateDate(date1 + Double(index2) * Double(timePatch))
+                newEntry.setFilteredCalculatedValue(entry.filteredCalculatedValue + delta * Double(index2))
+                newEntry.setDate(date1 + Double(index2) * Double(timePatch))
                 glucoseData.append(newEntry)
             }
         }
@@ -152,7 +152,7 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
     
     private func pass2DataCleaning(_ glucoseData: [GlucoseReading]) -> [GlucoseReading] {
         guard glucoseData.count > 2 else { return glucoseData }
-        
+       
         var glucoseData2: [GlucoseReading] = []
         var previousEntry: GlucoseReading?
         
@@ -191,8 +191,8 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
             if (delta1 > 0.0 && delta2 < 0.0) || (delta1 < 0.0 && delta2 > 0.0) {
                 let delta = (nextEntry.filteredCalculatedValue - prevEntry.filteredCalculatedValue) / 2.0
                 let newEntry = GlucoseReading()
-                newEntry.updateFilteredCalculatedValue(prevEntry.filteredCalculatedValue + delta)
-                newEntry.updateDate(date1)
+                newEntry.setFilteredCalculatedValue(prevEntry.filteredCalculatedValue + delta)
+                newEntry.setDate(date1)
                 
                 glucoseData2.append(newEntry)
                 previousEntry = newEntry
