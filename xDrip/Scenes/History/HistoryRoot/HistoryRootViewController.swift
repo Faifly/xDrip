@@ -64,36 +64,53 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
     @IBOutlet private weak var unitLabel: UILabel!
     
     @IBOutlet private weak var dateButton: UIButton!
+    @IBOutlet private weak var spinner: UIActivityIndicatorView!
     
     private let datePicker = UIDatePicker()
     
     // MARK: View lifecycle
     
+    private func showSpinner() {
+        spinner.isHidden = false
+        spinner.startAnimating()
+    }
+    
+    private func hideSpinner() {
+        spinner.stopAnimating()
+        spinner.isHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         doLoad()
+        showSpinner()
     }
     
     // MARK: Do something
     
     private func doLoad() {
-        setupNavigationItems()
-        
-        let request = HistoryRoot.Load.Request()
-        interactor?.doLoad(request: request)
+        DispatchQueue.main.async {[weak self] in
+            self?.setupNavigationItems()
+            
+            let request = HistoryRoot.Load.Request()
+            self?.interactor?.doLoad(request: request)
+        }
     }
     
     @IBAction private func onTimeFrameSegmentSelected() {
-        let timeline: HistoryRoot.Timeline
-        switch timeLineSegmentView.selectedSegmentIndex {
-        case 0: timeline = .last14Days
-        case 1: timeline = .date
-        default: timeline = .last14Days
+        showSpinner()
+        DispatchQueue.main.async {[weak self] in
+            let timeline: HistoryRoot.Timeline
+            switch self?.timeLineSegmentView.selectedSegmentIndex {
+            case 0: timeline = .last14Days
+            case 1: timeline = .date
+            default: timeline = .last14Days
+            }
+            
+            let request = HistoryRoot.ChangeEntriesChartTimeFrame.Request(timeline: timeline)
+            self?.interactor?.doChangeChartTimeFrame(request: request)
         }
-        
-        let request = HistoryRoot.ChangeEntriesChartTimeFrame.Request(timeline: timeline)
-        interactor?.doChangeChartTimeFrame(request: request)
     }
     
     private func setupNavigationItems() {
@@ -151,6 +168,8 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
         } else {
             dateLabel.text = ""
         }
+
+        hideSpinner()
     }
     
     func displayChartTimeFrameChange(viewModel: HistoryRoot.ChangeEntriesChartTimeFrame.ViewModel) {

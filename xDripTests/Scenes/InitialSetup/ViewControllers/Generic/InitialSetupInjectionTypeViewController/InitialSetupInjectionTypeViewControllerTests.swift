@@ -13,6 +13,7 @@ final class InitialSetupInjectionTypeViewControllerTests: XCTestCase {
     let sut = InitialSetupInjectionTypeViewController()
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
+        func doClose() {}
         var calledSelectInjectionType = false
         var injectionType: UserInjectionType?
         

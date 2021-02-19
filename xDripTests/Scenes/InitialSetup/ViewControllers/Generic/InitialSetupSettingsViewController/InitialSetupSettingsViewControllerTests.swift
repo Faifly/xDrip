@@ -13,6 +13,7 @@ final class InitialSetupSettingsViewControllerTests: XCTestCase {
     let sut = InitialSetupSettingsViewController()
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
+        func doClose() {}
         var calledSave = false
         var selectedUnit: GlucoseUnit?
         var alertsEnabled = false

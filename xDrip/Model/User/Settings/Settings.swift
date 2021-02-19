@@ -87,6 +87,7 @@ final class Settings: Object {
     private let glucoseWarningLevels = List<GlucoseWarningLevelSetting>()
     
     func warningLevelValue(for level: GlucoseWarningLevel) -> Double {
+        if glucoseWarningLevels.isEmpty { return level.defaultValue }
         return glucoseWarningLevels.first(where: { $0.warningLevel == level })?.value ?? level.defaultValue
     }
     

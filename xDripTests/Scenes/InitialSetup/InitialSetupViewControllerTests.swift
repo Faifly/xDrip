@@ -48,6 +48,7 @@ final class InitialSetupViewControllerTests: XCTestCase {
     // MARK: Test doubles
     
     final class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
+        func doClose() {}
         func doBeginSetup(request: InitialSetup.BeginSetup.Request) {
         }
         

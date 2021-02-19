@@ -13,6 +13,7 @@ final class InitialSetupIntroViewControllerTests: XCTestCase {
     let sut = InitialSetupIntroViewController()
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
+        func doClose() {}
         var calledSetup = false
         var calledSkip = false
         

@@ -189,8 +189,9 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     }
     
     func doUpdateGlucoseDataView(request: Home.GlucoseDataViewUpdate.Request) {
+        let allReadings = GlucoseReading.allForCurrentMode
         let response = Home.GlucoseDataViewUpdate.Response(
-            intervalGlucoseData: glucoseDataWorker.fetchGlucoseData(for: request.dateInterval)
+            intervalGlucoseData: glucoseDataWorker.fetchGlucoseData(for: request.dateInterval, readings: allReadings)
         )
         presenter?.presentUpdateGlucoseDataView(response: response)
     }
@@ -198,8 +199,9 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     // MARK: Logic
     
     private func updateGlucoseChartData() {
+        let allReadings = GlucoseReading.allForCurrentMode
         let response = Home.GlucoseDataUpdate.Response(
-            glucoseData: glucoseDataWorker.fetchGlucoseData(for: 24),
+            glucoseData: glucoseDataWorker.fetchGlucoseData(for: 24, readings: allReadings),
             basalDisplayMode: User.current.settings.chart?.basalDisplayMode ?? .notShown,
             insulinData: BasalChartDataWorker.fetchBasalData(for: 24),
             chartPointsData: BasalChartDataWorker.calculateChartValues(for: 24)
@@ -208,7 +210,9 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     }
     
     private func updateGlucoseCurrentInfo() {
-        let response = Home.GlucoseCurrentInfo.Response(lastGlucoseReading: glucoseDataWorker.fetchLastGlucoseReading())
+        let allReadings = GlucoseReading.allForCurrentMode
+        let response = Home.GlucoseCurrentInfo.Response(lastGlucoseReading: glucoseDataWorker
+                                                            .fetchLastGlucoseReading(readings: allReadings))
         presenter?.presentGlucoseCurrentInfo(response: response)
     }
     

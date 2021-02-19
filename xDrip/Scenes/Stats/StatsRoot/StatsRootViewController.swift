@@ -57,12 +57,26 @@ class StatsRootViewController: NibViewController, StatsRootDisplayLogic {
     @IBOutlet private weak var tableViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var chartView: StatsChartView!
     @IBOutlet private weak var scrollView: UIScrollView!
-    
+    @IBOutlet private weak var spinner: UIActivityIndicatorView!
     @IBAction private func onSegmentedControlValueChanged() {
-        let request = StatsRoot.UpdateTimeFrame.Request(
-            timeFrame: StatsRoot.TimeFrame.allCases[segmentedControl.selectedSegmentIndex]
-        )
-        interactor?.doSelectTimeFrame(request: request)
+        showSpinner()
+        DispatchQueue.main.async {[weak self] in
+            guard let self = self  else { return }
+            let request = StatsRoot.UpdateTimeFrame.Request(
+                timeFrame: StatsRoot.TimeFrame.allCases[self.segmentedControl.selectedSegmentIndex]
+            )
+            self.interactor?.doSelectTimeFrame(request: request)
+        }
+    }
+    
+    private func showSpinner() {
+        spinner.isHidden = false
+        spinner.startAnimating()
+    }
+    
+    private func hideSpinner() {
+        spinner.stopAnimating()
+        spinner.isHidden = true
     }
     
     // MARK: View lifecycle
@@ -121,6 +135,7 @@ class StatsRootViewController: NibViewController, StatsRootDisplayLogic {
     
     func displayChartData(viewModel: StatsRoot.UpdateChartData.ViewModel) {
         chartView.update(with: viewModel.entries)
+        hideSpinner()
     }
 }
 

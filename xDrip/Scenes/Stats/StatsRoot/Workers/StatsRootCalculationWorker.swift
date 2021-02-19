@@ -15,7 +15,7 @@
 import UIKit
 
 protocol StatsRootCalculationWorkerLogic {
-    func calculate(with readings: [GlucoseReading], lowThreshold: Double, highThreshold: Double)
+    func calculate(with readings: [BaseGlucoseReading], lowThreshold: Double, highThreshold: Double)
     
     var isCalculated: Bool { get }
     var mean: Double { get }
@@ -51,8 +51,8 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
     var gvi: Double = 0.0
     var pgs: Double = 0.0
     
-    func calculate(with readings: [GlucoseReading], lowThreshold: Double, highThreshold: Double) {
-        let nonZero = readings.filter { $0.filteredCalculatedValue !~ 0 }
+    func calculate(with readings: [BaseGlucoseReading], lowThreshold: Double, highThreshold: Double) {
+        let nonZero = readings
         guard !nonZero.isEmpty else { isCalculated = false; return }
         
         lowCount = nonZero.filter { $0.filteredCalculatedValue < lowThreshold }.count
@@ -118,10 +118,10 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
         isCalculated = true
     }
     
-    private func pass1DataCleaning(_ readings: [GlucoseReading]) -> [GlucoseReading] {
+    private func pass1DataCleaning(_ readings: [BaseGlucoseReading]) -> [BaseGlucoseReading] {
         guard readings.count > 1 else { return readings }
         
-        var glucoseData: [GlucoseReading] = []
+        var glucoseData: [BaseGlucoseReading] = []
         for index in 0..<readings.count - 1 {
             let entry = readings[index]
             let nextEntry = readings[index + 1]
@@ -140,7 +140,7 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
             glucoseData.append(entry)
             
             for index2 in 1...missingRecords {
-                let newEntry = GlucoseReading()
+                let newEntry = LightGlucoseReading()
                 newEntry.setFilteredCalculatedValue(entry.filteredCalculatedValue + delta * Double(index2))
                 newEntry.setDate(date1 + Double(index2) * Double(timePatch))
                 glucoseData.append(newEntry)
@@ -150,11 +150,11 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
         return glucoseData
     }
     
-    private func pass2DataCleaning(_ glucoseData: [GlucoseReading]) -> [GlucoseReading] {
+    private func pass2DataCleaning(_ glucoseData: [BaseGlucoseReading]) -> [BaseGlucoseReading] {
         guard glucoseData.count > 2 else { return glucoseData }
        
-        var glucoseData2: [GlucoseReading] = []
-        var previousEntry: GlucoseReading?
+        var glucoseData2: [BaseGlucoseReading] = []
+        var previousEntry: BaseGlucoseReading?
         
         if !glucoseData.isEmpty {
             glucoseData2.append(glucoseData[0])
@@ -190,7 +190,7 @@ final class StatsRootCalculationWorker: StatsRootCalculationWorkerLogic {
             
             if (delta1 > 0.0 && delta2 < 0.0) || (delta1 < 0.0 && delta2 > 0.0) {
                 let delta = (nextEntry.filteredCalculatedValue - prevEntry.filteredCalculatedValue) / 2.0
-                let newEntry = GlucoseReading()
+                let newEntry = LightGlucoseReading()
                 newEntry.setFilteredCalculatedValue(prevEntry.filteredCalculatedValue + delta)
                 newEntry.setDate(date1)
                 

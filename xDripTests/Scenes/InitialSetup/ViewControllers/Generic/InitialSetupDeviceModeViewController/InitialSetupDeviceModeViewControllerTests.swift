@@ -13,6 +13,7 @@ final class InitialSetupDeviceModeViewControllerTests: XCTestCase {
     let sut = InitialSetupDeviceModeViewController()
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
+        func doClose() {}
         var calledSelectDeviceMode = false
         var deviceMode: UserDeviceMode?
         

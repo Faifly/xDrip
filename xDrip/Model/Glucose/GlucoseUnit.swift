@@ -33,8 +33,8 @@ enum GlucoseUnit: Int, CaseIterable {
         }
     }
     
-    static func convertFromDefault(_ value: Double) -> Double {
-        let current = User.current.settings.unit
+    static func convertFromDefault(_ value: Double, currentUnit: GlucoseUnit? = nil) -> Double {
+        let current = currentUnit ?? User.current.settings.unit
         switch current {
         case .mgDl: return value
         case .mmolL: return GlucoseUnit.mgDl.convertToAnother(value)
