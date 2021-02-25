@@ -26,7 +26,7 @@ final class GlucoseCurrentInfoViewTests: XCTestCase {
             slopeValue: "slopeValue",
             lastScanDate: "lastScanDate",
             difValue: "difValue",
-            severityColor: .green)
+            severityColor: .green, isOutdated: false)
         
         // When
         view.setup(with: viewModel)

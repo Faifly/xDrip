@@ -97,13 +97,13 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         // When
         toggleSecondSection(expanded: false)
         // Then
-        XCTAssertTrue(configuration?.isOverride == false)
+        XCTAssertTrue(configuration?.isOverriden == false)
         XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 1)
         
         // When
         toggleSecondSection(expanded: true)
         // Then
-        XCTAssertTrue(configuration?.isOverride == true)
+        XCTAssertTrue(configuration?.isOverriden == true)
         XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 7)
         
         // When
@@ -253,7 +253,7 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         toggleSecondSection(expanded: false)
         toggleEntireDaySwitch(expanded: false, isSecondSectionExpanded: false)
         
-        guard let highPickerView = getPicker(tableView, at: IndexPath(row: 3, section: 1)) as? CustomPickerView else {
+        guard let highPickerView = getPicker(tableView, at: IndexPath(row: 4, section: 1)) as? CustomPickerView else {
             XCTFail("Cannot obtain picker view")
             return
         }
@@ -275,7 +275,7 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         toggleSecondSection(expanded: false)
         toggleEntireDaySwitch(expanded: false, isSecondSectionExpanded: false)
         
-        guard let lowPickerView = getPicker(tableView, at: IndexPath(row: 4, section: 1)) as? CustomPickerView else {
+        guard let lowPickerView = getPicker(tableView, at: IndexPath(row: 5, section: 1)) as? CustomPickerView else {
             XCTFail("Cannot obtain picker view")
             return
         }
@@ -305,7 +305,7 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
         toggleSecondSection(expanded: false)
         toggleEntireDaySwitch(expanded: false, isSecondSectionExpanded: false)
         
-        guard let bgPickerView = getPicker(tableView, at: IndexPath(row: 5, section: 1)) as? CustomPickerView else {
+        guard let bgPickerView = getPicker(tableView, at: IndexPath(row: 6, section: 1)) as? CustomPickerView else {
             XCTFail("Cannot obtain picker view")
             return
         }

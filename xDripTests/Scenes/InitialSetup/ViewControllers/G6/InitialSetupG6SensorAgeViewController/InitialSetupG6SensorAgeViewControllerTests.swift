@@ -15,6 +15,7 @@ final class InitialSetupG6SensorAgeViewControllerTests: XCTestCase {
     let sut = InitialSetupG6SensorAgeViewController()
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
+        func doClose() {}
         var calledCompleteSetup = false
         var moreStepsExpected: Bool?
         

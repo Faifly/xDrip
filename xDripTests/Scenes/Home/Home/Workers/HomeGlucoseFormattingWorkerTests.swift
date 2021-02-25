@@ -21,8 +21,9 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
     func testFormatEntry() {
         // Given
         let reading: GlucoseReading? = nil
+        let last2Readings = GlucoseReading.lastReadings(2, for: .main)
         // When
-        let formattedEntry = sut.formatEntry(reading)
+        let formattedEntry = sut.formatEntry(reading, last2Readings: last2Readings)
         // Then
         XCTAssertTrue(formattedEntry.glucoseIntValue == "-")
         XCTAssertTrue(formattedEntry.glucoseDecimalValue == "-")
@@ -35,7 +36,7 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
         reading1.setValue(0.0, forKey: "filteredCalculatedValue")
         reading1.setValue(-5.5, forKey: "calculatedValueSlope")
         // When
-        let formattedEntry1 = sut.formatEntry(reading1)
+        let formattedEntry1 = sut.formatEntry(reading1, last2Readings: last2Readings)
         // Then
         XCTAssertTrue(formattedEntry1.glucoseIntValue == "0")
         XCTAssertTrue(formattedEntry1.glucoseDecimalValue == "0")
@@ -48,7 +49,7 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
         reading2.setValue(12345.193456, forKey: "filteredCalculatedValue")
         reading2.setValue(0.012345, forKey: "calculatedValueSlope")
         // When
-        let formattedEntry2 = sut.formatEntry(reading2)
+        let formattedEntry2 = sut.formatEntry(reading2, last2Readings: last2Readings)
         // Then
         XCTAssertTrue(formattedEntry2.glucoseIntValue == "12345")
         XCTAssertTrue(formattedEntry2.glucoseDecimalValue == "2")
@@ -58,7 +59,7 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
         // Given
         let reading3 = GlucoseReading()
         // When
-        let formattedEntry3 = sut.formatEntry(reading3)
+        let formattedEntry3 = sut.formatEntry(reading3, last2Readings: last2Readings)
         // Then
         XCTAssertTrue(!formattedEntry3.lastScanDate.isEmpty)
     }
@@ -66,8 +67,9 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
     func testSlopeToArrowSymbol() {
         // Given
         let reading: GlucoseReading? = nil
+        let last2Readings = GlucoseReading.lastReadings(2, for: .main)
         // When
-        let formattedEntry = sut.formatEntry(reading)
+        let formattedEntry = sut.formatEntry(reading, last2Readings: last2Readings)
         // Then
         XCTAssertTrue(formattedEntry.slopeValue == "-")
         
@@ -75,7 +77,7 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
         let reading1 = GlucoseReading()
         reading1.setValue(-3.6, forKey: "b")
         // When
-        let formattedEntry1 = sut.formatEntry(reading1)
+        let formattedEntry1 = sut.formatEntry(reading1, last2Readings: last2Readings)
         // Then
         XCTAssertTrue(formattedEntry1.slopeValue == "→")
         
@@ -83,7 +85,7 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
         let reading2 = GlucoseReading()
         reading2.setValue(3.6, forKey: "b")
         // When
-        let formattedEntry2 = sut.formatEntry(reading2)
+        let formattedEntry2 = sut.formatEntry(reading2, last2Readings: last2Readings)
         // Then
         XCTAssertTrue(formattedEntry2.slopeValue == "→")
         
@@ -91,7 +93,7 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
         let reading4 = GlucoseReading()
         reading4.setValue(-2.1, forKey: "b")
         // When
-        let formattedEntry4 = sut.formatEntry(reading4)
+        let formattedEntry4 = sut.formatEntry(reading4, last2Readings: last2Readings)
         // Then
         XCTAssertTrue(formattedEntry4.slopeValue == "→")
         
@@ -99,15 +101,15 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
         let reading5 = GlucoseReading()
         reading5.setValue(-1.1, forKey: "b")
         // When
-        let formattedEntry5 = sut.formatEntry(reading5)
+        let formattedEntry5 = sut.formatEntry(reading5, last2Readings: last2Readings)
         // Then
         XCTAssertTrue(formattedEntry5.slopeValue == "→")
         
         // Given
         let reading6 = GlucoseReading()
-        reading4.setValue(0.9, forKey: "b")
+        reading6.setValue(0.9, forKey: "b")
         // When
-        let formattedEntry6 = sut.formatEntry(reading6)
+        let formattedEntry6 = sut.formatEntry(reading6, last2Readings: last2Readings)
         // Then
         XCTAssertTrue(formattedEntry6.slopeValue == "→")
         
@@ -115,7 +117,7 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
         let reading7 = GlucoseReading()
         reading7.setValue(1.9, forKey: "b")
         // When
-        let formattedEntry7 = sut.formatEntry(reading7)
+        let formattedEntry7 = sut.formatEntry(reading7, last2Readings: last2Readings)
         // Then
         XCTAssertTrue(formattedEntry7.slopeValue == "→")
         
@@ -123,7 +125,7 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
         let reading8 = GlucoseReading()
         reading8.setValue(3.4, forKey: "b")
         // When
-        let formattedEntry8 = sut.formatEntry(reading8)
+        let formattedEntry8 = sut.formatEntry(reading8, last2Readings: last2Readings)
         // Then
         XCTAssertTrue(formattedEntry8.slopeValue == "→")
     }

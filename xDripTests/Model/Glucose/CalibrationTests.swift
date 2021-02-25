@@ -475,7 +475,7 @@ final class CalibrationTests: AbstractRealmTest {
         )
         
         let readings = GlucoseReading.lastReadings(2, for: .main)
-        XCTAssert(readings[0].filteredCalculatedValue ~ 89.48)
+        XCTAssert(readings[0].filteredCalculatedValue ~ 89.48000013830654)
         XCTAssert(readings[1].filteredCalculatedValue ~ 100.0)
     }
     

@@ -43,6 +43,7 @@ final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
     }
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
+        func doClose() {}
         var calledCompleteSetup = false
         var moreStepsExpected: Bool?
         

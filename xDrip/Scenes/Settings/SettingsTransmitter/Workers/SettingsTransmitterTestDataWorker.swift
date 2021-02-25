@@ -40,6 +40,10 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
             Realm.shared.delete(GlucoseReading.allMaster)
         }
         
+        Realm.shared.safeWrite {
+            Realm.shared.delete(Realm.shared.objects(LightGlucoseReading.self))
+        }
+        
         let backfillInterval = TimeInterval(configuration.days) * .secondsPerDay
         let readingsInterval = TimeInterval(configuration.minutesBetweenReading) * .secondsPerMinute
         
@@ -54,48 +58,50 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
         CGMDevice.current.updateSensorIsStarted(true)
         
         for index in 0..<readingsAmount {
-            callback(index, readingsAmount)
-            
-            GlucoseReading.create(
-                filtered: currentGlucose,
-                unfiltered: currentGlucose,
-                rssi: 100.0,
-                date: Date(timeIntervalSince1970: currentOffset),
-                requireCalibration: false
-            )
-            
-            if index == 1 {
-                try? Calibration.createInitialCalibration(
-                    glucoseLevel1: currentGlucose / 1000.0,
-                    glucoseLevel2: currentGlucose / 1000.0 + 1.0,
-                    date1: Date(timeIntervalSince1970: currentOffset),
-                    date2: Date(timeIntervalSince1970: currentOffset)
+            autoreleasepool {
+                callback(index, readingsAmount)
+                
+                GlucoseReading.create(
+                    filtered: currentGlucose,
+                    unfiltered: currentGlucose,
+                    rssi: 100.0,
+                    date: Date(timeIntervalSince1970: currentOffset),
+                    requireCalibration: false
                 )
-            }
-            
-            currentOffset += readingsInterval
-            
-            let step = Double.random(in: glucoseStepMin...configuration.maxStepDeviation * 1000.0)
-            
-            if configuration.isChaotic {
-                if currentGlucose + configuration.maxStepDeviation * 1000.0 > configuration.maxGlucose * 1000.0 {
-                    currentGlucose -= step
-                } else if currentGlucose - configuration.maxStepDeviation * 1000.0 < configuration.minGlucose * 1000.0 {
-                    currentGlucose += step
-                } else {
-                    if Bool.random() {
+                
+                if index == 1 {
+                    try? Calibration.createInitialCalibration(
+                        glucoseLevel1: currentGlucose / 1000.0,
+                        glucoseLevel2: currentGlucose / 1000.0 + 1.0,
+                        date1: Date(timeIntervalSince1970: currentOffset),
+                        date2: Date(timeIntervalSince1970: currentOffset)
+                    )
+                }
+                
+                currentOffset += readingsInterval
+                
+                let step = Double.random(in: glucoseStepMin...configuration.maxStepDeviation * 1000.0)
+                
+                if configuration.isChaotic {
+                    if currentGlucose + configuration.maxStepDeviation * 1000.0 > configuration.maxGlucose * 1000.0 {
+                        currentGlucose -= step
+                    } else if currentGlucose - configuration.maxStepDeviation * 1000.0 < configuration.minGlucose * 1000.0 {
                         currentGlucose += step
                     } else {
-                        currentGlucose -= step
+                        if Bool.random() {
+                            currentGlucose += step
+                        } else {
+                            currentGlucose -= step
+                        }
                     }
-                }
-            } else {
-                currentGlucose += increment * step
-                
-                if currentGlucose >= configuration.maxGlucose * 1000.0 && increment > 0 {
-                    increment = -1.0
-                } else if currentGlucose <= configuration.minGlucose * 1000.0 && increment < 0 {
-                    increment = 1.0
+                } else {
+                    currentGlucose += increment * step
+                    
+                    if currentGlucose >= configuration.maxGlucose * 1000.0 && increment > 0 {
+                        increment = -1.0
+                    } else if currentGlucose <= configuration.minGlucose * 1000.0 && increment < 0 {
+                        increment = 1.0
+                    }
                 }
             }
         }

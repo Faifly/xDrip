@@ -317,7 +317,9 @@ final class GlucoseReadingTests: AbstractRealmTest {
             realm.add(reading1)
         }
         
-        reading1.findNewCurve()
+        var last3Readings = GlucoseReading.lastReadings(3, for: .main)
+        
+        reading1.findNewCurve(last3Readings: last3Readings)
         XCTAssert(reading1.a ~ 0.0)
         XCTAssert(reading1.b ~ 0.0)
         XCTAssert(reading1.c ~ 22.0)
@@ -332,7 +334,9 @@ final class GlucoseReadingTests: AbstractRealmTest {
             realm.add(reading2)
         }
         
-        reading2.findNewCurve()
+        last3Readings = GlucoseReading.lastReadings(3, for: .main)
+        
+        reading2.findNewCurve(last3Readings: last3Readings)
         XCTAssert(reading2.a ~ 0.0)
         XCTAssert(reading2.b ~ 11.0)
         XCTAssert(reading2.c ~ 22.0)
@@ -347,7 +351,9 @@ final class GlucoseReadingTests: AbstractRealmTest {
             realm.add(reading3)
         }
         
-        reading3.findNewCurve()
+        last3Readings = GlucoseReading.lastReadings(3, for: .main)
+        
+        reading3.findNewCurve(last3Readings: last3Readings)
         XCTAssert(reading3.a ~ 0.0)
         XCTAssert(reading3.b ~ 11.0)
         XCTAssert(reading3.c ~ 0.0)
@@ -371,7 +377,9 @@ final class GlucoseReadingTests: AbstractRealmTest {
             realm.add(reading1)
         }
         
-        reading1.findNewRawCurve()
+        var last3Readings = GlucoseReading.lastReadings(3, for: .main)
+        
+        reading1.findNewRawCurve(last3Readings: last3Readings)
         XCTAssert(reading1.ra ~ 0.0)
         XCTAssert(reading1.rb ~ 0.0)
         XCTAssert(reading1.rc ~ 22.0)
@@ -387,7 +395,9 @@ final class GlucoseReadingTests: AbstractRealmTest {
             realm.add(reading2)
         }
         
-        reading2.findNewRawCurve()
+        last3Readings = GlucoseReading.lastReadings(3, for: .main)
+        
+        reading2.findNewRawCurve(last3Readings: last3Readings)
         XCTAssert(reading2.ra ~ 0.0)
         XCTAssert(reading2.rb ~ 11.0)
         XCTAssert(reading2.rc ~ 22.0)
@@ -403,7 +413,9 @@ final class GlucoseReadingTests: AbstractRealmTest {
             realm.add(reading3)
         }
         
-        reading3.findNewRawCurve()
+        last3Readings = GlucoseReading.lastReadings(3, for: .main)
+        
+        reading3.findNewRawCurve(last3Readings: last3Readings)
         XCTAssert(reading3.ra ~ 0.0)
         XCTAssert(reading3.rb ~ 11.0)
         XCTAssert(reading3.rc ~ 0.0)

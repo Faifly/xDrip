@@ -15,6 +15,7 @@ final class InitialSetupG6WarmUpViewControllerTests: XCTestCase {
     let sut = InitialSetupG6WarmUpViewController()
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
+        func doClose() {}
         var calledCompleteSetup = false
         var moreStepsExpected: Bool?
         
