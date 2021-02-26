@@ -289,7 +289,7 @@ final class SettingsAlertSingleTypePresenter: SettingsAlertSingleTypePresentatio
             
             var time = TimeInterval(hour) * TimeInterval.secondsPerHour
             time += TimeInterval(minutes) * TimeInterval.secondsPerMinute
-            time -= TimeInterval(TimeZone.current.secondsFromGMT())
+            time -= TimeInterval(TimeZone.current.secondsFromGMT(for: date))
             
             valueChangeHandler(field, time)
             

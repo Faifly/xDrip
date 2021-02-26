@@ -15,7 +15,7 @@ import XCTest
 
 // swiftlint:disable implicitly_unwrapped_optional
 
-final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
+final class SettingsAlertSingleTypeViewControllerTests: AbstractRealmTest {
     // MARK: Subject under test
     
     var sut: SettingsAlertSingleTypeViewController!
@@ -87,39 +87,41 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
     }
     
     func testTableView() {
+        sut.router?.dataStore?.eventType = .fastRise
         loadView()
         
         let configuration = sut.router?.dataStore?.configuration
         
         XCTAssertTrue(tableView.numberOfSections == 2)
-        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 2)
         
         // When
         toggleSecondSection(expanded: false)
         // Then
         XCTAssertTrue(configuration?.isOverriden == false)
-        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 1)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 5)
         
         // When
         toggleSecondSection(expanded: true)
         // Then
         XCTAssertTrue(configuration?.isOverriden == true)
-        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 7)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 11)
         
         // When
         toggleEntireDaySwitch(expanded: true, isSecondSectionExpanded: true)
         // Then
         XCTAssertTrue(configuration?.isEntireDay == true)
-        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 7)
-        
+        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 11)
+
         // When
         toggleEntireDaySwitch(expanded: false, isSecondSectionExpanded: true)
         // Then
         XCTAssertTrue(configuration?.isEntireDay == false)
-        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 9)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 1) == 13)
     }
     
     func testSwitchValueChangedHandler() {
+        sut.router?.dataStore?.eventType = .fastRise
         loadView()
         
         let configuration = sut.router?.dataStore?.configuration
@@ -214,6 +216,7 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
     }
     
     func testTimePickerValueChanged() {
+        sut.router?.dataStore?.eventType = .fastRise
         loadView()
         
         let configuration = sut.router?.dataStore?.configuration
@@ -318,6 +321,7 @@ final class SettingsAlertSingleTypeViewControllerTests: XCTestCase {
     }
     
     func testSingleSelectionHandler() {
+        sut.router?.dataStore?.eventType = .fastRise
         loadView()
         
         let routerSpy = SettingsAlertSingleTypeRoutingLogicSpy()

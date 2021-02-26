@@ -15,7 +15,7 @@ import XCTest
 
 // swiftlint:disable implicitly_unwrapped_optional
 
-final class SettingsAlertRootViewControllerTests: XCTestCase {
+final class SettingsAlertRootViewControllerTests: AbstractRealmTest {
     // MARK: Subject under test
     
     var sut: SettingsAlertRootViewController!
@@ -106,7 +106,7 @@ final class SettingsAlertRootViewControllerTests: XCTestCase {
         
         // When
         
-        var indexPath = IndexPath(row: 4, section: 0)
+        var indexPath = IndexPath(row: 3, section: 0)
         #if targetEnvironment(macCatalyst)
         indexPath = IndexPath(row: 1, section: 0)
         #endif
