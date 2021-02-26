@@ -158,15 +158,15 @@ class BaseHistoryView: UIView {
         let alphaValue = 0.20 * (maxValue - minValue)
         var adjustedMinValue = max((minValue - alphaValue).rounded(.down), 0.0)
         var adjustedMaxValue = (maxValue + alphaValue).rounded(.up)
-        if adjustedMinValue ~~ adjustedMaxValue {
-            adjustedMinValue = max(adjustedMinValue - 1.0, 0.0)
-            adjustedMaxValue += 1.0
+        if (adjustedMinValue / 10.0) ~~ (adjustedMaxValue / 10.0) {
+            adjustedMinValue = max(adjustedMinValue - 10.0, 0.0)
+            adjustedMaxValue += 10.0
         }
         
         let diff = adjustedMaxValue - adjustedMinValue
         var verticalLines: Int
-        if Int(diff) < maxVerticalLinesCount - 1 {
-            verticalLines = Int(diff) + 1
+        if Int(diff / 10) < maxVerticalLinesCount - 1 {
+            verticalLines = Int(diff / 10) + 1
         } else {
             verticalLines = maxVerticalLinesCount
         }
