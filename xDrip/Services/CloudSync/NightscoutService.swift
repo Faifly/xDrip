@@ -153,8 +153,8 @@ final class NightscoutService {
     private func scanForGlucoseEntries() {
         LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
         let all = GlucoseReading.allMaster
-        let notUploaded = Array(all.filter("cloudUploadStatus == \(CloudUploadStatus.notUploaded)"))
-        let modified = Array(all.filter("cloudUploadStatus == \(CloudUploadStatus.modified)"))
+        let notUploaded = Array(all.filter("rawCloudUploadStatus == 1"))
+        let modified = Array(all.filter("rawCloudUploadStatus == 2"))
         
         LogController.log(
             message: "[NighscoutService]: Found %d not uploaded and %d modified entries",

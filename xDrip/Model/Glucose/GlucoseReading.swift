@@ -182,8 +182,6 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         }
         
         let readings = allReadings(for: .main, filteredBy: .rawValue).sorted(by: [.dateDescending])
-        
-        print("allReadings \(readings.count)")
 
         let latestReadings = readings.filter(.calculatedValue)
         

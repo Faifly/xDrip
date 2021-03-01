@@ -47,13 +47,17 @@ final class LightGlucoseReading: Object, BaseGlucoseReading {
         self.date = date
     }
     
-    private static var allMaster: Results<LightGlucoseReading> {
+    private static var allReadings: Results<LightGlucoseReading> {
         return Realm.shared.objects(LightGlucoseReading.self)
+    }
+    
+    static var allMaster: Results<LightGlucoseReading> {
+        return allReadings
             .filter(.deviceMode(mode: .main)).sorted(by: [.dateDescending])
     }
     
     private static var allFollower: Results<LightGlucoseReading> {
-        return Realm.shared.objects(LightGlucoseReading.self)
+        return allReadings
             .filter(.deviceMode(mode: .follower)).sorted(by: [.dateDescending])
     }
     
@@ -71,7 +75,7 @@ final class LightGlucoseReading: Object, BaseGlucoseReading {
     }
     
     private static func clearOldReadings() {
-        let oldReadings = Realm.shared.objects(LightGlucoseReading.self)
+        let oldReadings = allReadings
             .filter(.earlierThan(date: Date().addingTimeInterval(-(.secondsPerDay * 90))))
         let realm = Realm.shared
         realm.safeWrite {
