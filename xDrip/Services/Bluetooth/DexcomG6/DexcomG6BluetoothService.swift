@@ -217,7 +217,14 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
             
         case .unauthorized: delegate?.serviceDidFail(withError: .bluetoothIsUnauthorized)
         case .unsupported: delegate?.serviceDidFail(withError: .bluetoothUnsupported)
-        case .resetting, .unknown, .poweredOn, .poweredOff: break
+        case .poweredOff:
+            if #available(iOS 13, *) {
+                break
+            } else {
+                delegate?.serviceDidFail(withError: .bluetoothIsPoweredOff)
+            }
+            
+        case .resetting, .unknown, .poweredOn: break
         @unknown default: break
         }
         
