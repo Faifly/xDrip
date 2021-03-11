@@ -246,7 +246,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         reading.externalID = UUID().uuidString
         reading.calculatedValue = calculatedValue
         reading.filteredCalculatedValue = calculatedValue
-        reading.rawValue = Constants.specialG5RawValuePlaceholder
+        reading.rawValue = calculatedValue
         reading.date = date
         reading.sourceInfo = CGMDevice.current.deviceType?.title ?? "" + (forBackfill ? "Backfill" : "")
         
