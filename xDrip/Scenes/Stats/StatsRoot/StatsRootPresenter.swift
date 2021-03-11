@@ -62,7 +62,7 @@ final class StatsRootPresenter: StatsRootPresentationLogic {
             let interval = DateInterval(start: currentOffset, duration: response.timeFrame.groupingInterval)
             let readings = response.readings.filter { $0.date >=? interval.start && $0.date <=? interval.end }
             
-            let values = readings.map { $0.filteredCalculatedValue }
+            let values = readings.map { GlucoseUnit.convertFromDefault($0.filteredCalculatedValue) }
             let valuesRange: ClosedRange<Double>?
             if let min = values.min(), let max = values.max() {
                 valuesRange = min...max

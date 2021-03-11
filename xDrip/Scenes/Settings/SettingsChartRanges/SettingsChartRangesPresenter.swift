@@ -40,6 +40,11 @@ final class SettingsChartRangesPresenter: SettingsChartRangesPresentationLogic {
         highValue = GlucoseUnit.convertFromDefault(highValue)
         lowValue = GlucoseUnit.convertFromDefault(lowValue)
         
+        if response.settings.unit == .mgDl {
+            highValue = highValue.rounded(.up)
+            lowValue = lowValue.rounded(.down)
+        }
+        
         let cells: [BaseSettings.Cell] = [
             createPickerCell(
                 .notHigherLess,
@@ -61,6 +66,11 @@ final class SettingsChartRangesPresenter: SettingsChartRangesPresentationLogic {
         highValue = GlucoseUnit.convertFromDefault(highValue) - step
         lowValue = GlucoseUnit.convertFromDefault(lowValue) + step
         
+        if response.settings.unit == .mgDl {
+            highValue = highValue.rounded(.up)
+            lowValue = lowValue.rounded(.down)
+        }
+        
         let detailText = String(format: "%.1f/%.1f", highValue, lowValue)
         let title = SettingsChartRanges.Field.highLow.title
         let cells: [BaseSettings.Cell] = [
@@ -77,6 +87,11 @@ final class SettingsChartRangesPresenter: SettingsChartRangesPresentationLogic {
         var lowValue = response.settings.warningLevelValue(for: .urgentLow)
         highValue = GlucoseUnit.convertFromDefault(highValue)
         lowValue = GlucoseUnit.convertFromDefault(lowValue)
+        
+        if response.settings.unit == .mgDl {
+            highValue = highValue.rounded(.up)
+            lowValue = lowValue.rounded(.down)
+        }
         
         let cells: [BaseSettings.Cell] = [
             createPickerCell(

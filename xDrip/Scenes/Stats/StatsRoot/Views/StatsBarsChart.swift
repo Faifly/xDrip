@@ -229,15 +229,20 @@ final class StatsBarsChart: BaseChartView {
     }
     
     private func calculateMinMax() {
-        let visualCorrelationFactor = 0.01
-        
         let values = entries.compactMap { $0.value }
         
         minValue = values.min(by: { $0.lowerBound < $1.lowerBound })?.lowerBound ?? 0.0
         maxValue = values.max(by: { $0.upperBound < $1.upperBound })?.upperBound ?? 0.0
         
-        var minVal = minValue * 10.0
-        var maxVal = maxValue * 10.0
+        let unit = User.current.settings.unit
+        
+        if unit == .mgDl {
+            minValue = minValue.rounded(.down)
+            maxValue = maxValue.rounded(.up)
+        }
+        
+        let minVal = (minValue * 10.0).rounded(.down)
+        let maxVal = (maxValue * 10.0).rounded(.up)
    
         let alphaValue = 0.20 * (maxVal - minVal)
         var axisRightMax = Int(round(maxVal + alphaValue))
@@ -251,11 +256,8 @@ final class StatsBarsChart: BaseChartView {
             axisRightMax += (verticalCount - 1) - tail
         }
         
-        minVal = Double(axisRightMin) / 10.0
-        maxVal = Double(axisRightMax) / 10.0
-        
-        visualMinValue = max((minVal * (1.0 - visualCorrelationFactor)).rounded(.down), 0.0)
-        visualMaxValue = (maxVal * (1.0 + visualCorrelationFactor)).rounded(.up)
+        visualMinValue = Double(axisRightMin) / 10.0
+        visualMaxValue = Double(axisRightMax) / 10.0
     }
     
     @objc private func handleTouch(_ sender: UIGestureRecognizer) {
