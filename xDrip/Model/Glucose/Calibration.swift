@@ -97,7 +97,8 @@ final class Calibration: Object {
         glucoseLevel1: Double,
         glucoseLevel2: Double,
         date1: Date,
-        date2: Date
+        date2: Date,
+        adjustedReadingsAmount: Int = 5
     ) throws {
         let last2Readings = GlucoseReading.latestByCount(2, for: .main)
         
@@ -161,11 +162,11 @@ final class Calibration: Object {
         lowReading.updateCalculatedValue(lowLevel)
         lowReading.updateIsCalibrated(true)
         lowReading.updateCalibration(lowCalibration)
-        let last3Readings = GlucoseReading.lastReadings(3, for: .main)
-        highReading.findNewCurve(last3Readings: last3Readings)
-        highReading.findNewRawCurve(last3Readings: last3Readings)
-        lowReading.findNewCurve(last3Readings: last3Readings)
-        lowReading.findNewRawCurve(last3Readings: last3Readings)
+       
+        highReading.findNewCurve()
+        highReading.findNewRawCurve()
+        lowReading.findNewCurve()
+        lowReading.findNewRawCurve()
         
         for calibration in [lowCalibration, highCalibration] {
             Realm.shared.safeWrite {
@@ -179,8 +180,7 @@ final class Calibration: Object {
             Calibration.calculateWLS(date: calibration.date ?? Date())
         }
         
-        let readings = GlucoseReading.latestByCount(5, for: .main)
-        adjustRecentReadings(readings, last3Readings: last3Readings)
+        adjustRecentReadings(adjustedReadingsAmount)
         
         NightscoutService.shared.scanForNotUploadedEntries()
     }
@@ -221,9 +221,7 @@ final class Calibration: Object {
         reading.updateCalculatedValue(glucoseLevel)
         reading.updateFilteredCalculatedValue(glucoseLevel)
         calculateWLS()
-        let readings = GlucoseReading.latestByCount(30, for: .main)
-        let last3Readings = GlucoseReading.lastReadings(3, for: .main)
-        adjustRecentReadings(readings, last3Readings: last3Readings)
+        adjustRecentReadings(30)
         NightscoutService.shared.scanForNotUploadedEntries()
         NotificationCenter.default.post(name: .regularCalibrationCreated, object: nil)
     }
@@ -238,9 +236,10 @@ final class Calibration: Object {
         }
     }
     
-    static func adjustRecentReadings(_ readings: [GlucoseReading], last3Readings: [GlucoseReading]) {
+    static func adjustRecentReadings(_ amount: Int) {
         let calibrations = lastCalibrations(3)
-        
+        let readings = GlucoseReading.latestByCount(amount, for: .main)
+
         if calibrations.count >= 3 {
             let denom = Double(readings.count)
             guard let latestCalibration = lastValid else { return }
@@ -252,7 +251,7 @@ final class Calibration: Object {
                     reading.updateFilteredCalculatedValue(newCalculatedValue)
                 }
                 reading.updateCalculatedValue(newCalculatedValue)
-                reading.findSlope(last2Readings: Array(last3Readings.prefix(2)))
+                reading.findSlope()
             }
         } else if calibrations.count == 2 {
             guard let latestCalibration = lastValid else { return }
@@ -265,12 +264,12 @@ final class Calibration: Object {
                 }
                 reading.updateCalculatedValue(newYValue)
                 reading.updateCalculatedValueToWithinMinMax()
-                reading.findSlope(last2Readings: Array(last3Readings.prefix(2)))
+                reading.findSlope()
             }
         }
         
-        readings.first?.findNewRawCurve(last3Readings: last3Readings)
-        readings.first?.findNewCurve(last3Readings: last3Readings)
+        readings.first?.findNewRawCurve()
+        readings.first?.findNewCurve()
     }
     
     static func deleteLast() {
