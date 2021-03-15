@@ -158,6 +158,25 @@ final class HomePresenter: HomePresentationLogic {
                     .foregroundColor: UIColor.tabBarRedColor
                 ]
             )
+            
+        case let .calibrationState(state):
+            guard let state = state else { return }
+            if state == .okay {
+                let viewModel = Home.UpdateSensorState.ViewModel(
+                    shouldShow: false,
+                    text: NSMutableAttributedString(string: "")
+                )
+                viewController?.displayUpdateSensorState(viewModel: viewModel)
+                return
+            } else {
+                string = NSMutableAttributedString(
+                    string: state.rawValue.description,
+                    attributes: [
+                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                        .foregroundColor: UIColor.tabBarRedColor
+                    ]
+                )
+            }
         }
         
         let viewModel = Home.UpdateSensorState.ViewModel(

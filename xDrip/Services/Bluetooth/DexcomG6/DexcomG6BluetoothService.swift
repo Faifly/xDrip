@@ -118,6 +118,7 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
     
     func workerDidReceiveGlucoseData(_ message: DexcomG6GlucoseDataRxMessage) {
         delegate?.serviceDidReceiveGlucoseReading(calculatedValue: message.calculatedValue,
+                                                  calibrationState: message.state,
                                                   date: Date(),
                                                   forBackfill: false)
         backFillIfNeeded()
@@ -180,6 +181,7 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
             guard diff > 0, diff < TimeInterval.hours(6) else { return }
             
             delegate?.serviceDidReceiveGlucoseReading(calculatedValue: Double(backsie.glucose),
+                                                      calibrationState: nil,
                                                       date: backsieDate,
                                                       forBackfill: true)
         }

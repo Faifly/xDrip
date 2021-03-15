@@ -33,6 +33,15 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
         }
     }
     
+    init() {
+        CGMController.shared.subscribeForGlucoseDataEvents(listener: self) { [weak self] reading in
+            guard let reading = reading, let self = self else { return }
+            if let calibrationStateValue = reading.calibrationState, let state = UInt8(calibrationStateValue) {
+                self.callback?(.calibrationState(state: DexcomG6CalibrationState(rawValue: state)))
+            }
+        }
+    }
+    
     deinit {
         CGMController.shared.unsubscribeFromMetadataEvents(listener: self)
         settingsObservers.forEach { NotificationCenter.default.removeObserver($0) }

@@ -85,9 +85,10 @@ final class DexcomG6MessageWorker {
                 )
             }
             LogController.log(
-                message: "[Dexcom G6] DexcomG6CalibrationRxMessage accepted : %@",
+                message: "[Dexcom G6] DexcomG6CalibrationRxMessage accepted : %@, calibrationResponseType : %@",
                 type: .debug,
-                message.accepted.description
+                message.accepted.description,
+                message.type.debugDescription
             )
         default: break
         }
