@@ -227,6 +227,11 @@ final class GlucoseReading: Object, BaseGlucoseReading {
             return nil
         }
         
+        guard let sensorStarted = CGMDevice.current.sensorStartDate, CGMDevice.current.isSensorStarted else {
+            LogController.log(message: "[Glucose] Can't create reading, sensor not started", type: .error)
+            return nil
+        }
+        
         guard calculatedValue > .ulpOfOne else {
             LogController.log(message: "[Glucose] Can't createFromG6 reading, calculatedValue is below zero",
                               type: .error)
@@ -239,6 +244,9 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         reading.filteredCalculatedValue = calculatedValue
         reading.rawValue = calculatedValue
         reading.date = date
+        reading.timeSinceSensorStarted = date.timeIntervalSince1970 - sensorStarted.timeIntervalSince1970
+        reading.calculateAgeAdjustedRawValue()
+        reading.findSlope()
         reading.sourceInfo = CGMDevice.current.deviceType?.title ?? "" + (forBackfill ? "Backfill" : "")
         
         if let settings = User.current.settings.nightscoutSync, settings.isEnabled,
@@ -249,6 +257,9 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         Realm.shared.safeWrite {
             Realm.shared.add(reading)
         }
+        
+        reading.findNewCurve()
+        reading.findNewRawCurve()
         
         LogController.log(
             message: "[Glucose] Created FromG6 reading with calculated value: %@",
