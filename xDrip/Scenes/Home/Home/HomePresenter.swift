@@ -159,7 +159,7 @@ final class HomePresenter: HomePresentationLogic {
                 ]
             )
             
-        case let .calibrationState(state):
+        case let .readingCalibrationState(state):
             guard let state = state else { return }
             if state == .okay {
                 let viewModel = Home.UpdateSensorState.ViewModel(
@@ -170,7 +170,26 @@ final class HomePresenter: HomePresentationLogic {
                 return
             } else {
                 string = NSMutableAttributedString(
-                    string: state.rawValue.description,
+                    string: "readingCalibrationState \(state.rawValue.description)",
+                    attributes: [
+                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                        .foregroundColor: UIColor.tabBarRedColor
+                    ]
+                )
+            }
+        case let .calibrationResponse(type):
+            guard let type = type else { return }
+            let accepted = type == .okay || type == .secondCalibrationNeeded || type == .duplicate
+            if accepted {
+                let viewModel = Home.UpdateSensorState.ViewModel(
+                    shouldShow: false,
+                    text: NSMutableAttributedString(string: "")
+                )
+                viewController?.displayUpdateSensorState(viewModel: viewModel)
+                return
+            } else {
+                string = NSMutableAttributedString(
+                    string: "calibrationResponse \(type.rawValue.description)",
                     attributes: [
                         .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
                         .foregroundColor: UIColor.tabBarRedColor

@@ -26,6 +26,18 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
                 self?.checkWarmUpState()
             }
         }
+        
+        CGMController.shared.subscribeForCalibrationEvents(listener: self) { [weak self] type in
+            guard let self = self else { return }
+            self.callback?(.calibrationResponse(type: type))
+        }
+        
+        CGMController.shared.subscribeForGlucoseDataEvents(listener: self) { [weak self] reading in
+            guard let reading = reading, let self = self else { return }
+            if let calibrationStateValue = reading.calibrationState, let state = UInt8(calibrationStateValue) {
+                self.callback?(.readingCalibrationState(state: DexcomG6CalibrationState(rawValue: state)))
+            }
+        }
         settingsObservers = NotificationCenter.default.subscribe(
             forSettingsChange: [.warmUp, .sensorStarted]
         ) { [weak self] in
@@ -33,17 +45,10 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
         }
     }
     
-    init() {
-        CGMController.shared.subscribeForGlucoseDataEvents(listener: self) { [weak self] reading in
-            guard let reading = reading, let self = self else { return }
-            if let calibrationStateValue = reading.calibrationState, let state = UInt8(calibrationStateValue) {
-                self.callback?(.calibrationState(state: DexcomG6CalibrationState(rawValue: state)))
-            }
-        }
-    }
-    
     deinit {
         CGMController.shared.unsubscribeFromMetadataEvents(listener: self)
+        CGMController.shared.unsubscribeFromGlucoseDataEvents(listener: self)
+        CGMController.shared.unsubscribeFromCalibrationEvents(listener: self)
         settingsObservers.forEach { NotificationCenter.default.removeObserver($0) }
     }
     
