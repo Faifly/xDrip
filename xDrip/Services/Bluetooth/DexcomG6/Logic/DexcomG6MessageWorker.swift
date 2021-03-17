@@ -257,7 +257,6 @@ final class DexcomG6MessageWorker {
         let message = DexcomG6CalibrationTxMessage(glucose: glucose, time: timestamp)
         
         if !messageQueue.contains(where: { $0 is DexcomG6CalibrationTxMessage }) {
-            
             messageQueue.append(message)
             trySendingMessageFromQueue()
             
@@ -268,14 +267,13 @@ final class DexcomG6MessageWorker {
                 timestamp
             )
             
-            messageQueue.forEach { (message) in
+            for message in messageQueue {
                 LogController.log(
                     message: "[Dexcom G6] messageQueue %@",
                     type: .debug,
-                    message
+                    message.data.description
                 )
             }
-            
         } else {
             LogController.log(
                 message: "[Dexcom G6] Message Queue already contains calibration",
