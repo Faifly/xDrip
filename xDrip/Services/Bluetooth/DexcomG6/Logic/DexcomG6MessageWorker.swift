@@ -205,13 +205,6 @@ final class DexcomG6MessageWorker {
     
     func createCalibrationRequest() {
         guard isPaired else { return }
-        guard !messageQueue.contains(where: { $0 is DexcomG6CalibrationTxMessage }) else {
-            LogController.log(
-                message: "[Dexcom G6] Message Queue already contains calibration",
-                type: .debug
-            )
-            return
-        }
         guard let calibration = Calibration.allForCurrentSensor.first,
               let date = calibration.date,
               !calibration.isSentToTransmitter else {
@@ -261,14 +254,21 @@ final class DexcomG6MessageWorker {
         
         let timestamp = Int(date.timeIntervalSince1970 - transmitterStartDate.timeIntervalSince1970)
                 
+        let message = DexcomG6CalibrationTxMessage(glucose: glucose, time: timestamp)
+        guard !messageQueue.contains(where: { $0 is DexcomG6CalibrationTxMessage }) else {
+            LogController.log(
+                message: "[Dexcom G6] Message Queue already contains calibration",
+                type: .debug
+            )
+            return
+        }
+        messageQueue.append(message)
         LogController.log(
             message: "[Dexcom G6] Queuing Calibration for transmitter: glucose %d, timestamp: %d",
             type: .debug,
             glucose,
             timestamp
         )
-        let message = DexcomG6CalibrationTxMessage(glucose: glucose, time: timestamp)
-        messageQueue.append(message)
         trySendingMessageFromQueue()
     }
     

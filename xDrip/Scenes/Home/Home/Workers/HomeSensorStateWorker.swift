@@ -133,7 +133,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
            let rawType = UInt8(responseType) ,
            let type = DexcomG6CalibrationResponseType(rawValue: rawType),
            !(type == .okay || type == .secondCalibrationNeeded || type == .duplicate) {
-            guard let calibrationInterval = calibration.date?.timeIntervalSince1970 else {
+            guard let calibrationInterval = calibration.creationDate?.timeIntervalSince1970 else {
                 return "Create new calibration"
             }
             let interval = Date().timeIntervalSince1970
