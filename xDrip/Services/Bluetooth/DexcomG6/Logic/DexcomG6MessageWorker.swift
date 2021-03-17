@@ -12,6 +12,7 @@ final class DexcomG6MessageWorker {
     private weak var delegate: DexcomG6MessageWorkerDelegate?
     
     private var isQueueAwaitingForResponse = false
+    private var isCalibrationMessageAlreadyQueued = false
     private var messageQueue: [DexcomG6OutgoingMessage] = []
     private let messageFactory = DexcomG6MessageFactory()
     private var backFillStream = DexcomG6BackfillStream()
@@ -89,6 +90,7 @@ final class DexcomG6MessageWorker {
         guard let message = messageFactory.createOutgoingMessage(ofType: type) else { return }
         if type == .authRequestTx {
             isQueueAwaitingForResponse = false
+            isCalibrationMessageAlreadyQueued = false
             messageQueue.removeAll()
         }
         messageQueue.append(message)
@@ -205,6 +207,13 @@ final class DexcomG6MessageWorker {
     
     func createCalibrationRequest() {
         guard isPaired else { return }
+        guard !isCalibrationMessageAlreadyQueued else {
+            LogController.log(
+                message: "[Dexcom G6] DexcomG6CalibrationTxMessage has been already queued",
+                type: .debug
+            )
+            return
+        }
         guard let calibration = Calibration.allForCurrentSensor.first,
               let date = calibration.date,
               !calibration.isSentToTransmitter else {
@@ -256,31 +265,16 @@ final class DexcomG6MessageWorker {
         
         let message = DexcomG6CalibrationTxMessage(glucose: glucose, time: timestamp)
         
-        if !messageQueue.contains(where: { $0 is DexcomG6CalibrationTxMessage }) {
-            messageQueue.append(message)
-            trySendingMessageFromQueue()
-            
-            LogController.log(
-                message: "[Dexcom G6] Queuing Calibration for transmitter: glucose %d, timestamp: %d",
-                type: .debug,
-                glucose,
-                timestamp
-            )
-            
-            for message in messageQueue {
-                LogController.log(
-                    message: "[Dexcom G6] messageQueue %@",
-                    type: .debug,
-                    message.data.description
-                )
-            }
-        } else {
-            LogController.log(
-                message: "[Dexcom G6] Message Queue already contains calibration",
-                type: .debug
-            )
-            return
-        }
+        messageQueue.append(message)
+        isCalibrationMessageAlreadyQueued = true
+        trySendingMessageFromQueue()
+        
+        LogController.log(
+            message: "[Dexcom G6] Queuing Calibration for transmitter: glucose %d, timestamp: %d",
+            type: .debug,
+            glucose,
+            timestamp
+        )
     }
     
     func handleBackfillStream(_ data: Data?) {
