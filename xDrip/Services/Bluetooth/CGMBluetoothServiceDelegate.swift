@@ -17,6 +17,5 @@ protocol CGMBluetoothServiceDelegate: AnyObject {
                                          calibrationState: DexcomG6CalibrationState?,
                                          date: Date,
                                          forBackfill: Bool)
-    func serviceDidReceiveCalibrationResponse(type: DexcomG6CalibrationResponseType?)
     func serviceDidFail(withError error: CGMBluetoothServiceError)
 }

@@ -76,7 +76,7 @@ final class DexcomG6MessageWorker {
             delegate?.workerDidReceiveGlucoseData(message)
         case .calibrateGlucoseRx:
             let message = try DexcomG6CalibrationRxMessage(data: data)
-            delegate?.workerDidReceiveCalibrateGlucoseData(message)
+            handleCalibrationRxMessage(message)
         default: break
         }
         
@@ -286,5 +286,26 @@ final class DexcomG6MessageWorker {
         isQueueAwaitingForResponse = true
         let message = messageQueue.removeFirst()
         delegate?.workerRequiresSendingOutgoingMessage(message)
+    }
+    
+    func handleCalibrationRxMessage(_ message: DexcomG6CalibrationRxMessage) {
+        if let calibration = Calibration.allForCurrentSensor.first {
+            if !calibration.isSentToTransmitter {
+                calibration.markCalibrationAsSentToTransmitter()
+                LogController.log(
+                message: "[Dexcom G6] Marked last calibration as sent to transmitter",
+                type: .debug
+            )}
+        
+            if let type = message.type {
+                calibration.updateResponseType(type: type)
+            }
+        }
+        LogController.log(
+            message: "[Dexcom G6] DexcomG6CalibrationRxMessage accepted : %@, calibrationResponseType : %@",
+            type: .debug,
+            message.accepted.description,
+            message.type.debugDescription
+        )
     }
 }

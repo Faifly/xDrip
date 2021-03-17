@@ -131,16 +131,24 @@ final class HomePresenter: HomePresentationLogic {
         switch response.state {
         case let .warmingUp(minutesLeft):
             string = createWarmUpMessage(for: minutesLeft)
-            
-        case .started:
-            let viewModel = Home.UpdateSensorState.ViewModel(
-                shouldShow: false,
-                text: NSMutableAttributedString(string: "")
-            )
-            
-            viewController?.displayUpdateSensorState(viewModel: viewModel)
-            return
-            
+        case let .started(message):
+            if let message = message {
+                string = NSMutableAttributedString(
+                    string: message,
+                    attributes: [
+                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                        .foregroundColor: UIColor.tabBarRedColor
+                    ]
+                )
+            } else {
+                let viewModel = Home.UpdateSensorState.ViewModel(
+                    shouldShow: false,
+                    text: NSMutableAttributedString(string: "")
+                )
+                
+                viewController?.displayUpdateSensorState(viewModel: viewModel)
+                return
+            }
         case .waitingReadings:
             string = NSMutableAttributedString(
                 string: "home_sensor_waiting_readings".localized,
@@ -158,44 +166,6 @@ final class HomePresenter: HomePresentationLogic {
                     .foregroundColor: UIColor.tabBarRedColor
                 ]
             )
-            
-        case let .readingCalibrationState(state):
-            guard let state = state else { return }
-            if state == .okay {
-                let viewModel = Home.UpdateSensorState.ViewModel(
-                    shouldShow: false,
-                    text: NSMutableAttributedString(string: "")
-                )
-                viewController?.displayUpdateSensorState(viewModel: viewModel)
-                return
-            } else {
-                string = NSMutableAttributedString(
-                    string: "readingCalibrationState \(state.rawValue.description)",
-                    attributes: [
-                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
-                        .foregroundColor: UIColor.tabBarRedColor
-                    ]
-                )
-            }
-        case let .calibrationResponse(type):
-            guard let type = type else { return }
-            let accepted = type == .okay || type == .secondCalibrationNeeded || type == .duplicate
-            if accepted {
-                let viewModel = Home.UpdateSensorState.ViewModel(
-                    shouldShow: false,
-                    text: NSMutableAttributedString(string: "")
-                )
-                viewController?.displayUpdateSensorState(viewModel: viewModel)
-                return
-            } else {
-                string = NSMutableAttributedString(
-                    string: "calibrationResponse \(type.rawValue.description)",
-                    attributes: [
-                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
-                        .foregroundColor: UIColor.tabBarRedColor
-                    ]
-                )
-            }
         }
         
         let viewModel = Home.UpdateSensorState.ViewModel(

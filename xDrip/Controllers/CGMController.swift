@@ -48,19 +48,7 @@ final class CGMController {
     func unsubscribeFromMetadataEvents(listener: AnyHashable) {
         metadataListeners.removeValue(forKey: listener)
     }
-    
-    // MARK: Calibration for transmitter v2
-    typealias CalibrationCallback = (DexcomG6CalibrationResponseType?) -> Void
-    private var calibrationListeners: [AnyHashable: CalibrationCallback] = [:]
-    
-    func subscribeForCalibrationEvents(listener: AnyHashable, callback: @escaping CalibrationCallback) {
-        calibrationListeners[listener] = callback
-    }
-    
-    func unsubscribeFromCalibrationEvents(listener: AnyHashable) {
-        calibrationListeners.removeValue(forKey: listener)
-    }
-    
+        
     // MARK: Bluetooth service
     private(set) var service: CGMBluetoothService?
     
@@ -164,9 +152,5 @@ extension CGMController: CGMBluetoothServiceDelegate {
         
         AlertPresenter.shared.presentAlert(alert)
         serviceDidDisconnect(isPaired: false)
-    }
-    
-    func serviceDidReceiveCalibrationResponse(type: DexcomG6CalibrationResponseType?) {
-        calibrationListeners.values.forEach { $0(type) }
     }
 }

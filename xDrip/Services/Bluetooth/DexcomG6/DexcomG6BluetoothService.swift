@@ -208,24 +208,6 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
     func workerDidEncounterLatePairingAttempt() {
         delegate?.serviceDidFail(withError: .latePairingAttempt)
     }
-    
-    func workerDidReceiveCalibrateGlucoseData(_ message: DexcomG6CalibrationRxMessage) {
-        if let calibration = Calibration.allForCurrentSensor.first,
-           !calibration.isSentToTransmitter {
-            calibration.markCalibrationAsSentToTransmitter()
-            LogController.log(
-                message: "[Dexcom G6] Marked last calibration as sent to transmitter",
-                type: .debug
-            )
-        }
-        LogController.log(
-            message: "[Dexcom G6] DexcomG6CalibrationRxMessage accepted : %@, calibrationResponseType : %@",
-            type: .debug,
-            message.accepted.description,
-            message.type.debugDescription
-        )
-        delegate?.serviceDidReceiveCalibrationResponse(type: message.type)
-    }
 }
 
 extension DexcomG6BluetoothService: CBCentralManagerDelegate {

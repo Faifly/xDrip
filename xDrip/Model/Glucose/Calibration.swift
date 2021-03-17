@@ -47,6 +47,7 @@ final class Calibration: Object {
     @objc private(set) dynamic var secondScale: Double = 0.0
     @objc private(set) dynamic var isUploaded: Bool = false
     @objc private(set) dynamic var externalID: String?
+    @objc private(set) dynamic var responseType: String?
     @objc private(set) dynamic var isSentToTransmitter: Bool = false
     
     override class func primaryKey() -> String? {
@@ -304,6 +305,12 @@ final class Calibration: Object {
     func markCalibrationAsSentToTransmitter() {
         Realm.shared.safeWrite {
             isSentToTransmitter = true
+        }
+    }
+    
+    func updateResponseType(type: DexcomG6CalibrationResponseType) {
+        Realm.shared.safeWrite {
+            responseType = String(type.rawValue)
         }
     }
     

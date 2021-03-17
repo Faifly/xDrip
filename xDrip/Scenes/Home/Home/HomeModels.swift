@@ -34,9 +34,7 @@ enum Home {
         case stopped
         case warmingUp(minutesLeft: Int)
         case waitingReadings
-        case started
-        case readingCalibrationState(state: DexcomG6CalibrationState?)
-        case calibrationResponse(type: DexcomG6CalibrationResponseType?)
+        case started(errorMessage: String?)
     }
     
     struct DataSectionViewModel {
