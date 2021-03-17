@@ -149,7 +149,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
            let rawState = UInt8(calibrationStateValue),
            let state = DexcomG6CalibrationState(rawValue: rawState) {
             switch state {
-            case .okay: break
+            case .okay, .insufficientCalibration: break
             case .warmingUp: return "Sensor is warming up"
             default:
                 return "Reading calibration state error"

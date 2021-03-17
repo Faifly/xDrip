@@ -253,23 +253,36 @@ final class DexcomG6MessageWorker {
         }
         
         let timestamp = Int(date.timeIntervalSince1970 - transmitterStartDate.timeIntervalSince1970)
-                
+        
         let message = DexcomG6CalibrationTxMessage(glucose: glucose, time: timestamp)
-        guard !messageQueue.contains(where: { $0 is DexcomG6CalibrationTxMessage }) else {
+        
+        if !messageQueue.contains(where: { $0 is DexcomG6CalibrationTxMessage }) {
+            
+            messageQueue.append(message)
+            trySendingMessageFromQueue()
+            
+            LogController.log(
+                message: "[Dexcom G6] Queuing Calibration for transmitter: glucose %d, timestamp: %d",
+                type: .debug,
+                glucose,
+                timestamp
+            )
+            
+            messageQueue.forEach { (message) in
+                LogController.log(
+                    message: "[Dexcom G6] messageQueue %@",
+                    type: .debug,
+                    message
+                )
+            }
+            
+        } else {
             LogController.log(
                 message: "[Dexcom G6] Message Queue already contains calibration",
                 type: .debug
             )
             return
         }
-        messageQueue.append(message)
-        LogController.log(
-            message: "[Dexcom G6] Queuing Calibration for transmitter: glucose %d, timestamp: %d",
-            type: .debug,
-            glucose,
-            timestamp
-        )
-        trySendingMessageFromQueue()
     }
     
     func handleBackfillStream(_ data: Data?) {
