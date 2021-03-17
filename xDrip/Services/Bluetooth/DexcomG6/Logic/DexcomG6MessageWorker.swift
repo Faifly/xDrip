@@ -304,7 +304,7 @@ final class DexcomG6MessageWorker {
         
             if let type = message.type {
                 calibration.updateResponseType(type: type)
-                calibration.updateResponceDate(date: Date())
+                calibration.updateResponseDate(date: Date())
             }
         }
         LogController.log(

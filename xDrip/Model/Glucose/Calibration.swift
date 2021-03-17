@@ -315,7 +315,7 @@ final class Calibration: Object {
         }
     }
     
-    func updateResponceDate(date: Date) {
+    func updateResponseDate(date: Date) {
         Realm.shared.safeWrite {
             responseDate = date
         }

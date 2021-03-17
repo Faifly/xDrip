@@ -138,7 +138,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             }
             let interval = Date().timeIntervalSince1970
             let calibrationAge = interval - calibrationInterval
-            let waitDuration = TimeInterval(minutes: 2)
+            let waitDuration = TimeInterval(minutes: 5)
             let diff = (waitDuration - calibrationAge) / 60.0
             let intDiff = Int(diff)
             
