@@ -23,7 +23,7 @@ enum CalibrationError: Error {
 
 final class Calibration: Object {
     @objc private(set) dynamic var date: Date?
-    @objc private(set) dynamic var creationDate: Date?
+    @objc private(set) dynamic var responseDate: Date?
     @objc private(set) dynamic var rawDate: Date?
     @objc private(set) dynamic var sensorAge: Double = 0.0
     @objc private(set) dynamic var glucoseLevel: Double = 0.0
@@ -135,7 +135,6 @@ final class Calibration: Object {
         
         let highCalibration = Calibration()
         highCalibration.date = highDate
-        highCalibration.creationDate = Date()
         highCalibration.glucoseLevel = highLevel
         highCalibration.slope = 1.0
         highCalibration.intercept = highLevel
@@ -152,7 +151,6 @@ final class Calibration: Object {
         
         let lowCalibration = Calibration()
         lowCalibration.date = lowDate
-        lowCalibration.creationDate = Date()
         lowCalibration.glucoseLevel = lowLevel
         lowCalibration.slope = 1.0
         lowCalibration.intercept = lowLevel
@@ -197,7 +195,6 @@ final class Calibration: Object {
         let calibration = Calibration()
         calibration.glucoseLevel = glucoseLevel
         calibration.date = date
-        calibration.creationDate = Date()
         calibration.rawValue = reading.rawValue
         calibration.adjustedRawValue = reading.ageAdjustedRawValue
         calibration.slopeConfidence = min(max(((4.0 - abs(reading.calculatedValueSlope * 60.0)) / 4.0), 0.0), 1.0)
@@ -315,6 +312,12 @@ final class Calibration: Object {
     func updateResponseType(type: DexcomG6CalibrationResponseType) {
         Realm.shared.safeWrite {
             responseType = String(type.rawValue)
+        }
+    }
+    
+    func updateResponceDate(date: Date) {
+        Realm.shared.safeWrite {
+            responseDate = date
         }
     }
     
