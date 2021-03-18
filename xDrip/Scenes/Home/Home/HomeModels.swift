@@ -34,7 +34,7 @@ enum Home {
         case stopped
         case warmingUp(minutesLeft: Int)
         case waitingReadings
-        case started(errorMessage: String?)
+        case started(errorMessage: CalibrationStateError?)
     }
     
     struct DataSectionViewModel {

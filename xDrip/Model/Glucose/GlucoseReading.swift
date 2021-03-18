@@ -43,7 +43,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     @objc private(set) dynamic var rc: Double = 0.0
     @objc private(set) dynamic var ageAdjustedRawValue: Double = 0.0
     @objc private(set) dynamic var calibration: Calibration?
-    @objc private(set) dynamic var calibrationState: String?
+    @objc private(set) dynamic var rawCalibrationState: String?
     @objc private(set) dynamic var hideSlope: Bool = false
     @objc private(set) dynamic var calculatedValueSlope: Double = 0.0
     @objc private(set) dynamic var timeSinceSensorStarted: TimeInterval = 0.0
@@ -79,6 +79,13 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         set {
             rawDeviceMode = newValue.rawValue
         }
+    }
+    
+    var сalibrationState: DexcomG6CalibrationState? {
+        guard let calibrationStateValue = rawCalibrationState,
+              let rawState = UInt8(calibrationStateValue),
+              let state = DexcomG6CalibrationState(rawValue: rawState) else { return nil }
+        return state
     }
     
     required init() {
@@ -246,7 +253,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         reading.filteredCalculatedValue = calculatedValue
         reading.rawValue = calculatedValue
         if let state = calibrationState {
-            reading.calibrationState = String(state.rawValue)
+            reading.rawCalibrationState = String(state.rawValue)
         }
         reading.date = date
         reading.timeSinceSensorStarted = date.timeIntervalSince1970 - sensorStarted.timeIntervalSince1970

@@ -23,7 +23,6 @@ enum CalibrationError: Error {
 
 final class Calibration: Object {
     @objc private(set) dynamic var date: Date?
-    @objc private(set) dynamic var responseDate: Date?
     @objc private(set) dynamic var rawDate: Date?
     @objc private(set) dynamic var sensorAge: Double = 0.0
     @objc private(set) dynamic var glucoseLevel: Double = 0.0
@@ -48,7 +47,8 @@ final class Calibration: Object {
     @objc private(set) dynamic var secondScale: Double = 0.0
     @objc private(set) dynamic var isUploaded: Bool = false
     @objc private(set) dynamic var externalID: String?
-    @objc private(set) dynamic var responseType: String?
+    @objc private(set) dynamic var rawResponseType: String?
+    @objc private(set) dynamic var responseDate: Date?
     @objc private(set) dynamic var isSentToTransmitter: Bool = false
     
     override class func primaryKey() -> String? {
@@ -93,6 +93,13 @@ final class Calibration: Object {
                 $0.date <? date
             }
         )
+    }
+    
+    var responseType: DexcomG6CalibrationResponseType? {
+        guard let responseType = rawResponseType ,
+              let rawType = UInt8(responseType) ,
+              let type = DexcomG6CalibrationResponseType(rawValue: rawType) else { return nil }
+        return type
     }
     
     static func createInitialCalibration(
@@ -311,7 +318,7 @@ final class Calibration: Object {
     
     func updateResponseType(type: DexcomG6CalibrationResponseType) {
         Realm.shared.safeWrite {
-            responseType = String(type.rawValue)
+            rawResponseType = String(type.rawValue)
         }
     }
     

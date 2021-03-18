@@ -131,8 +131,23 @@ final class HomePresenter: HomePresentationLogic {
         switch response.state {
         case let .warmingUp(minutesLeft):
             string = createWarmUpMessage(for: minutesLeft)
-        case let .started(message):
-            if let message = message {
+        case let .started(error):
+            if let error = error {
+                var message: String
+                switch error {
+                case .sensorIsWarmingUp:
+                    message = "home_sensor_is_warming_up".localized
+                case .needNewCalibrationNow:
+                    message = "home_please_enter_a_new_calibration".localized
+                case let .needNewCalibrationIn(minutes):
+                    message = String(
+                        format: "home_please_recalibrate_again_in_min".localized,
+                        minutes
+                    )
+                case .needNewCalibrationAgain:
+                    message = "home_calibration_error_please_enter_a_new_calibration".localized
+                }
+                
                 string = NSMutableAttributedString(
                     string: message,
                     attributes: [

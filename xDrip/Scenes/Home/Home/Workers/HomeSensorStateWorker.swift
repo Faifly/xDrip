@@ -12,6 +12,13 @@ protocol HomeSensorStateWorkerLogic {
     func subscribeForSensorStateChange(callback: @escaping (Home.SensorState) -> Void)
 }
 
+enum CalibrationStateError {
+    case sensorIsWarmingUp
+    case needNewCalibrationNow
+    case needNewCalibrationIn(minutes: Int)
+    case needNewCalibrationAgain
+}
+
 final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
     private var callback: ((Home.SensorState) -> Void)?
     private var isWarmingUp = false
@@ -127,32 +134,36 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
         }
     }
     
-    func createErrorMessage() -> String? {
+    func createErrorMessage() -> CalibrationStateError? {
+        let lastReadingCalibrationState = GlucoseReading.allMaster.first?.сalibrationState
+        
+        if let state = lastReadingCalibrationState, state == .warmingUp {
+            return .sensorIsWarmingUp
+        }
+        
         if let calibration = Calibration.allForCurrentSensor.first,
-           let responseType = calibration.responseType ,
-           let rawType = UInt8(responseType) ,
-           let type = DexcomG6CalibrationResponseType(rawValue: rawType),
+           let type = calibration.responseType,
            !(type == .okay || type == .secondCalibrationNeeded || type == .duplicate) {
             guard let calibrationInterval = calibration.responseDate?.timeIntervalSince1970 else {
-                return "Create new calibration"
+                return .needNewCalibrationNow
             }
             let interval = Date().timeIntervalSince1970
             let calibrationAge = interval - calibrationInterval
-            let waitDuration = TimeInterval(minutes: 5)
+            let waitDuration = TimeInterval(minutes: 6)
             let diff = (waitDuration - calibrationAge) / 60.0
             let intDiff = Int(diff)
             
-            return intDiff > 0 ? "Create new calibration in \(intDiff) minutes" : "Create new calibration now"
+            return intDiff > 0 ? .needNewCalibrationIn(minutes: intDiff) : .needNewCalibrationNow
         }
         
-        if let calibrationStateValue = GlucoseReading.allMaster.first?.calibrationState,
-           let rawState = UInt8(calibrationStateValue),
-           let state = DexcomG6CalibrationState(rawValue: rawState) {
+        if let state = lastReadingCalibrationState {
             switch state {
             case .okay, .insufficientCalibration: break
-            case .warmingUp: return "Sensor is warming up"
             default:
-                return "Reading calibration state error"
+                guard let calibration = Calibration.allForCurrentSensor.first,
+                      !calibration.isSentToTransmitter else {
+                    return .needNewCalibrationAgain
+                }
             }
         }
         return nil
