@@ -29,9 +29,8 @@ class BackgroundPlayer {
     
     @objc fileprivate func interruptedAudio(_ notification: Notification) {
         if notification.name == AVAudioSession.interruptionNotification, let info = notification.userInfo {
-            var intValue = 0
-            (info[AVAudioSessionInterruptionTypeKey] as AnyObject).getValue(&intValue)
-            if intValue == 1 { playAudio() }
+            let state = info[AVAudioSessionInterruptionTypeKey] as? NSNumber
+            if state?.intValue == 1 { playAudio() }
         }
     }
     
