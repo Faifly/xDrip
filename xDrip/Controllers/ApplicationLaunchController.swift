@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 #if !targetEnvironment(macCatalyst)
 import FirebaseCore
-private let keepAliveController = KeepAliveController()
+private let backgroundPlayer = BackgroundPlayer()
 #endif
 
 enum ApplicationLaunchController {
@@ -18,7 +18,7 @@ enum ApplicationLaunchController {
         _ = AudioController.shared
         #if !targetEnvironment(macCatalyst)
         FirebaseApp.configure()
-        _ = keepAliveController
+        backgroundPlayer.startBackgroundTask()
         #endif
         setupRealm()
         setupDevice()
