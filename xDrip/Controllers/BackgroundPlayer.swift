@@ -16,7 +16,7 @@ class BackgroundPlayer {
     
     func startBackgroundTask() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(interruptedAudio),
+                                               selector: #selector(handleInterruption),
                                                name: AVAudioSession.interruptionNotification,
                                                object: AVAudioSession.sharedInstance())
         self.playAudio()
@@ -27,25 +27,32 @@ class BackgroundPlayer {
         player.stop()
     }
     
-    @objc fileprivate func interruptedAudio(_ notification: Notification) {
-        if notification.name == AVAudioSession.interruptionNotification, let info = notification.userInfo {
-            let state = info[AVAudioSessionInterruptionTypeKey] as? NSNumber
-            if state?.intValue == 1 { playAudio() }
+    @objc func handleInterruption(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
+            return
+        }
+        
+        switch type {
+        case .began: break
+        case .ended: playAudio()
+        default: break
         }
     }
     
     fileprivate func playAudio() {
         do {
             guard let path = Bundle.main.path(forResource: "500ms-of-silence", ofType: ".mp3") else { return }
-            let alertSound = URL(fileURLWithPath: path)
+            let sound = URL(fileURLWithPath: path)
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
                                                             options: [.defaultToSpeaker])
             try AVAudioSession.sharedInstance().setActive(true)
-            try self.player = AVAudioPlayer(contentsOf: alertSound)
+            try self.player = AVAudioPlayer(contentsOf: sound)
             self.player.numberOfLoops = -1
             self.player.volume = 0.01
             self.player.prepareToPlay()
             self.player.play()
-        } catch { print(error) }
+        } catch { LogController.log(message: "Can not play audio", type: .error, error: error) }
     }
 }
