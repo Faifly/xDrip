@@ -28,31 +28,21 @@ class BackgroundPlayer {
     }
     
     @objc func handleInterruption(notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-              let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
-            return
-        }
-        
-        switch type {
-        case .began: break
-        case .ended: playAudio()
-        default: break
-        }
+        playAudio()
     }
     
     fileprivate func playAudio() {
         do {
             guard let path = Bundle.main.path(forResource: "500ms-of-silence", ofType: ".mp3") else { return }
             let sound = URL(fileURLWithPath: path)
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
-                                                            options: [.defaultToSpeaker])
+            let songData = try NSData(contentsOf: sound, options: NSData.ReadingOptions.mappedIfSafe)
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
             try AVAudioSession.sharedInstance().setActive(true)
-            try self.player = AVAudioPlayer(contentsOf: sound)
-            self.player.numberOfLoops = -1
-            self.player.volume = 0.01
-            self.player.prepareToPlay()
-            self.player.play()
-        } catch { LogController.log(message: "Can not play audio", type: .error, error: error) }
+            player = try AVAudioPlayer(data: songData as Data)
+            player.numberOfLoops = -1
+            player.volume = 0.01
+            player.prepareToPlay()
+            player.play()
+        } catch { LogController.log(message: "Failed to play audio", type: .error, error: error) }
     }
 }
