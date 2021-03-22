@@ -16,7 +16,7 @@ struct DexcomG6SessionStopRxMessage {
     let transmitterTime: Double
 
     init(data: Data) throws {
-        guard data[0] == DexcomG6OpCode.sessionStartRx.rawValue else { throw DexcomG6Error.invalidStartSensorDataRx }
+        guard data[0] == DexcomG6OpCode.sessionStopRx.rawValue else { throw DexcomG6Error.invalidStopSensorDataRx }
         status = data[1]
         received = data[2]
         sessionStopTime = Double(Data(data[3..<7]).to(UInt32.self))

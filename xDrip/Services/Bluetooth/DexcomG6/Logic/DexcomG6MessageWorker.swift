@@ -13,6 +13,7 @@ final class DexcomG6MessageWorker {
     
     private var isQueueAwaitingForResponse = false
     private var isCalibrationMessageAlreadyQueued = false
+    private var isRestartMessageAlreadyQueued = false
     private var messageQueue: [DexcomG6OutgoingMessage] = []
     private let messageFactory = DexcomG6MessageFactory()
     private var backFillStream = DexcomG6BackfillStream()
@@ -100,6 +101,15 @@ final class DexcomG6MessageWorker {
             )
             return
         }
+        guard !isRestartMessageAlreadyQueued else {
+            LogController.log(
+                message: "[Dexcom G6] Restart has been already queued",
+                type: .debug
+            )
+            return
+        }
+
+        isRestartMessageAlreadyQueued = true
         
         let when = Date().timeIntervalSince1970 - TimeInterval(hours: 2) - TimeInterval(minutes: 10)
         
@@ -121,6 +131,7 @@ final class DexcomG6MessageWorker {
         if type == .authRequestTx {
             isQueueAwaitingForResponse = false
             isCalibrationMessageAlreadyQueued = false
+            isRestartMessageAlreadyQueued = false
             messageQueue.removeAll()
         }
         messageQueue.append(message)
