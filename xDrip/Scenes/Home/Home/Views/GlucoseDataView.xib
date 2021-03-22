@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,7 +26,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="142" height="300"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Low (&lt;=4.0)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ikC-yo-e8V" customClass="LocalizedLabel" customModule="xDrip" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="0.0" width="76" height="49"/>
+                                            <rect key="frame" x="16" y="0.0" width="75.5" height="49"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -133,7 +134,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="142" height="300"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High (&gt;=9.0)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98h-wc-F1N" customClass="LocalizedLabel" customModule="xDrip" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="0.0" width="79.5" height="49"/>
+                                            <rect key="frame" x="16" y="0.0" width="79" height="49"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -188,7 +189,7 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="elO-OR-wic">
                             <rect key="frame" x="0.0" y="0.0" width="428" height="0.0"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" id="tKx-hq-LgT"/>
                             </constraints>
@@ -230,7 +231,7 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qPE-Oe-zR4">
                             <rect key="frame" x="0.0" y="300" width="428" height="0.0"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                     </subviews>
                     <constraints>
@@ -238,6 +239,7 @@
                     </constraints>
                 </stackView>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="eSU-nJ-Kis"/>
             <color key="backgroundColor" name="chartSelectionLine"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="qML-Zm-R6J" secondAttribute="bottom" id="3FX-VQ-rGn"/>
@@ -250,7 +252,6 @@
                 <constraint firstItem="6yn-SQ-Xm7" firstAttribute="top" secondItem="wUM-fB-oaM" secondAttribute="top" id="ycP-TW-gW1"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="eSU-nJ-Kis"/>
             <connections>
                 <outlet property="a1cValueLabel" destination="UCR-Wy-S75" id="rC7-lB-ll7"/>
                 <outlet property="averageGlucoseValueLabel" destination="jj6-yH-uyM" id="LxN-CN-Is7"/>
@@ -295,5 +296,8 @@
         <namedColor name="chartSelectionLine">
             <color red="0.95294117647058818" green="0.94901960784313721" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

@@ -144,9 +144,15 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
                 isShown: isShown
             )
         }
-        let lowThresholdValue = User.current.settings.warningLevelValue(for: .low)
+        var lowThresholdValue = User.current.settings.warningLevelValue(for: .low)
+        var highThresholdValue = User.current.settings.warningLevelValue(for: .high)
+        
+        if User.current.settings.unit == .mgDl {
+            lowThresholdValue = lowThresholdValue.rounded(.down)
+            highThresholdValue = highThresholdValue.rounded(.up)
+        }
+        
         let convertedLow = GlucoseUnit.convertFromDefault(lowThresholdValue)
-        let highThresholdValue = User.current.settings.warningLevelValue(for: .high)
         let convertedHigh = GlucoseUnit.convertFromDefault(highThresholdValue)
         let unit = User.current.settings.unit.label
         
