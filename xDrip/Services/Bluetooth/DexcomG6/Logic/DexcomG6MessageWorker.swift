@@ -75,7 +75,7 @@ final class DexcomG6MessageWorker {
         case .glucoseRx:
             let message = try DexcomG6GlucoseDataRxMessage(data: data)
             delegate?.workerDidReceiveGlucoseData(message)
-            if message.state == .sensorFailed {
+            if message.state == .sensorFailedStart {
                 createSensorRestartRequest()
             }
         case .calibrateGlucoseRx:
