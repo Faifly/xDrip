@@ -117,6 +117,12 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
     }
     
     func workerDidReceiveGlucoseData(_ message: DexcomG6GlucoseDataRxMessage) {
+        LogController.log(
+            message: "[Dexcom G6] Did receive glucose reading with value: %@ , state: %@",
+            type: .debug,
+            message.calculatedValue.debugDescription,
+            message.state.debugDescription
+        )
         delegate?.serviceDidReceiveGlucoseReading(calculatedValue: message.calculatedValue,
                                                   calibrationState: message.state,
                                                   date: Date(),
