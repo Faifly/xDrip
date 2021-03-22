@@ -13,6 +13,7 @@ final class DexcomG6MessageWorker {
     
     private var isQueueAwaitingForResponse = false
     private var isCalibrationMessageAlreadyQueued = false
+    private var isRestartMessageAlreadyQueued = false
     private var messageQueue: [DexcomG6OutgoingMessage] = []
     private let messageFactory = DexcomG6MessageFactory()
     private var backFillStream = DexcomG6BackfillStream()
@@ -78,6 +79,10 @@ final class DexcomG6MessageWorker {
         case .calibrateGlucoseRx:
             let message = try DexcomG6CalibrationRxMessage(data: data)
             handleCalibrationRxMessage(message)
+        case .sessionStopRx:
+            let _ = try DexcomG6SessionStopRxMessage(data: data)
+        case .sessionStartRx:
+            let _ = try DexcomG6SessionStartRxMessage(data: data)
         default: break
         }
         
@@ -85,12 +90,48 @@ final class DexcomG6MessageWorker {
         trySendingMessageFromQueue()
     }
     
+    func createSensorRestartRequest(withStop: Bool) {
+        guard let transmitterStartDate = CGMDevice.current.transmitterStartDate else {
+            LogController.log(
+                message: "[Dexcom G6] Transmitter Start Date is nil",
+                type: .debug
+            )
+            return
+        }
+        guard !isRestartMessageAlreadyQueued else {
+            LogController.log(
+                message: "[Dexcom G6] Restart has been already queued",
+                type: .debug
+            )
+            return
+        }
+
+        isRestartMessageAlreadyQueued = true
+        
+        var when = Date().timeIntervalSince1970
+        var whenStarted = when
+        
+        if withStop {
+            when -= (TimeInterval(hours: 2) + TimeInterval(minutes: 10))
+            whenStarted += 1
+            let stopMessage = DexcomG6SessionStopTxMessage(stopTime: Int(when  - transmitterStartDate.timeIntervalSince1970))
+            messageQueue.append(stopMessage)
+            trySendingMessageFromQueue()
+        }
+        
+        let startMessage = DexcomG6SessionStartTxMessage(startTime: Int(when),
+                                                         dexTime: Int(whenStarted - transmitterStartDate.timeIntervalSince1970))
+        messageQueue.append(startMessage)
+        trySendingMessageFromQueue()
+    }
+
     func createDataRequest(ofType type: DexcomG6OpCode) {
         guard isPaired || !type.requiresPairing else { return }
         guard let message = messageFactory.createOutgoingMessage(ofType: type) else { return }
         if type == .authRequestTx {
             isQueueAwaitingForResponse = false
             isCalibrationMessageAlreadyQueued = false
+            isRestartMessageAlreadyQueued = false
             messageQueue.removeAll()
         }
         messageQueue.append(message)

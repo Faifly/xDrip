@@ -21,6 +21,8 @@ enum DexcomG6Error: LocalizedError {
     case invalidTransmitterTimeRx
     case invalidGlucoseBackfillRx
     case invalidCalibrationRx
+    case invalidStopSensorDataRx
+    case invalidStartSensorDataRx
     
     var errorDescription: String? {
         switch self {
@@ -36,6 +38,8 @@ enum DexcomG6Error: LocalizedError {
         case .invalidTransmitterTimeRx: return "dexcom_error_invalid_transmitter_time_response".localized
         case .invalidGlucoseBackfillRx: return "Invalid Glucose Rx Message"
         case .invalidCalibrationRx: return "Invalid Calibration Rx Message"
+        case .invalidStartSensorDataRx: return "Invalid Start Sensor Rx Message"
+        case .invalidStopSensorDataRx: return "Invalid Stop Sensor Rx Message"
         }
     }
 }

@@ -45,6 +45,10 @@ import UserNotifications
         }
     }
     
+    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+        return true
+    }
+    
     override func buildMenu(with builder: UIMenuBuilder) {
         MacMenuController.buildMenu(builder)
     }
