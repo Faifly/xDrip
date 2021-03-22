@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,6 +14,7 @@
                 <outlet property="chartView" destination="8XE-r3-A9e" id="1KW-D5-Nca"/>
                 <outlet property="scrollView" destination="1iv-9d-zYh" id="6T5-41-PL9"/>
                 <outlet property="segmentedControl" destination="JrB-de-NEU" id="boJ-rV-Lb6"/>
+                <outlet property="spinner" destination="KYv-9H-ne6" id="x90-t9-BMR"/>
                 <outlet property="tableView" destination="Jwy-AS-dWA" id="nAE-pS-LpG"/>
                 <outlet property="tableViewHeightConstraint" destination="Cb5-H5-sKJ" id="gia-Pu-Ksx"/>
                 <outlet property="view" destination="iN0-l3-epB" id="HWv-bf-nxe"/>
@@ -56,13 +58,18 @@
                                         <outlet property="delegate" destination="-1" id="YcK-x9-Dj1"/>
                                     </connections>
                                 </tableView>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="KYv-9H-ne6">
+                                    <rect key="frame" x="177.5" y="255" width="20" height="20"/>
+                                </activityIndicatorView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                             <constraints>
+                                <constraint firstItem="KYv-9H-ne6" firstAttribute="top" secondItem="8XE-r3-A9e" secondAttribute="top" constant="200" id="AjG-Q2-h8y"/>
                                 <constraint firstItem="JrB-de-NEU" firstAttribute="centerX" secondItem="n9a-le-Bla" secondAttribute="centerX" id="C3y-RG-PYo"/>
                                 <constraint firstItem="JrB-de-NEU" firstAttribute="top" secondItem="n9a-le-Bla" secondAttribute="top" constant="16" id="Fba-T5-TVX"/>
                                 <constraint firstAttribute="bottom" secondItem="Jwy-AS-dWA" secondAttribute="bottom" id="Hmz-ce-zeM"/>
                                 <constraint firstItem="Jwy-AS-dWA" firstAttribute="top" secondItem="8XE-r3-A9e" secondAttribute="bottom" constant="8" id="Ivn-e2-Ouc"/>
+                                <constraint firstItem="KYv-9H-ne6" firstAttribute="centerX" secondItem="n9a-le-Bla" secondAttribute="centerX" id="N4d-Ks-3c5"/>
                                 <constraint firstItem="8XE-r3-A9e" firstAttribute="leading" secondItem="n9a-le-Bla" secondAttribute="leading" id="RJL-Bc-zrX"/>
                                 <constraint firstItem="8XE-r3-A9e" firstAttribute="top" secondItem="JrB-de-NEU" secondAttribute="bottom" constant="8" id="UdX-iB-d2R"/>
                                 <constraint firstAttribute="trailing" secondItem="8XE-r3-A9e" secondAttribute="trailing" id="bhA-ri-WPz"/>
@@ -81,7 +88,8 @@
                     </constraints>
                 </scrollView>
             </subviews>
-            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
             <constraints>
                 <constraint firstItem="1iv-9d-zYh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="aTe-lQ-Had"/>
                 <constraint firstItem="n9a-le-Bla" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="bZv-qD-eKM"/>
@@ -89,8 +97,12 @@
                 <constraint firstAttribute="bottom" secondItem="1iv-9d-zYh" secondAttribute="bottom" id="mnw-TB-p69"/>
                 <constraint firstItem="1iv-9d-zYh" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="pXt-41-n6h"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="137.68115942028987" y="114.50892857142857"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

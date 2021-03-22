@@ -47,6 +47,11 @@ final class AlertPresenter {
         if alertQueue.isEmpty && currentAlert == nil {
             presentNextAlert(alert)
         } else {
+            guard
+                !alertQueue.contains(where: { $0.message == alert.message }),
+                currentAlert?.message != alert.message
+            else { return }
+            
             alertQueue.append(alert)
         }
     }

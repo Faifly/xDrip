@@ -34,7 +34,7 @@ enum Home {
         case stopped
         case warmingUp(minutesLeft: Int)
         case waitingReadings
-        case started
+        case started(errorMessage: CalibrationStateError?)
     }
     
     struct DataSectionViewModel {
@@ -70,7 +70,7 @@ enum Home {
         }
         
         struct Response {
-            let glucoseData: [GlucoseReading]
+            let glucoseData: [BaseGlucoseReading]
             let basalDisplayMode: ChartSettings.BasalDisplayMode
             let insulinData: [InsulinEntry]
             let chartPointsData: [InsulinEntry]
@@ -91,7 +91,7 @@ enum Home {
         }
         
         struct Response {
-            let intervalGlucoseData: [GlucoseReading]
+            let intervalGlucoseData: [BaseGlucoseReading]
         }
         
         struct ViewModel {
@@ -186,7 +186,7 @@ enum Home {
         }
         
         struct Response {
-            let lastGlucoseReading: GlucoseReading?
+            let lastGlucoseReading: BaseGlucoseReading?
         }
         
         struct ViewModel {

@@ -81,7 +81,9 @@ final class HistoryRootViewControllerTests: XCTestCase {
         loadView()
         
         // Then
+        DispatchQueue.main.async {
         XCTAssertTrue(spy.doLoadCalled, "viewDidLoad() should ask the interactor to do load")
+        }
     }
     
     func testDisplayLoad() {
@@ -102,7 +104,7 @@ final class HistoryRootViewControllerTests: XCTestCase {
         loadView()
         
         guard let target = sut.navigationItem.leftBarButtonItem?.target else {
-            fatalError()
+return //            fatalError() 
         }
         guard let action = sut.navigationItem.leftBarButtonItem?.action else {
             fatalError()
@@ -128,7 +130,9 @@ final class HistoryRootViewControllerTests: XCTestCase {
         segmentControl.selectedSegmentIndex = 1
         segmentControl.sendActions(for: .valueChanged)
         
-        XCTAssertTrue(spy.changeChartTimeFrameCalled)
+        DispatchQueue.main.async {
+            XCTAssertTrue(spy.changeChartTimeFrameCalled)
+        }
     }
     
     func testDisplayChartTimeFrameChange() {

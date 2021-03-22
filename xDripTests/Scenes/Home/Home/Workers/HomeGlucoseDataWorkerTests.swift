@@ -25,13 +25,13 @@ final class HomeGlucoseDataWorkerTests: AbstractRealmTest {
         // When
         CGMDevice.current.updateMetadata(ofType: .sensorAge, value: "\(Date().timeIntervalSince1970)")
         CGMDevice.current.updateSensorIsStarted(true)
-        CGMController.shared.serviceDidReceiveGlucoseReading(raw: 0.0, filtered: 0.0, rssi: 0.0)
+        CGMController.shared.serviceDidReceiveGlucoseReading(calculatedValue: 0.0, calibrationState: .okay, date: Date(), forBackfill: false)
         
         // Then
         XCTAssertFalse(calledDataHandler)
         
         // When
-        CGMController.shared.serviceDidReceiveGlucoseReading(raw: 10.0, filtered: 10.0, rssi: 0.0)
+        CGMController.shared.serviceDidReceiveSensorGlucoseReading(raw: 10.0, filtered: 10.0, rssi: 0.0)
         
         // Then
         XCTAssertTrue(calledDataHandler)
@@ -48,8 +48,9 @@ final class HomeGlucoseDataWorkerTests: AbstractRealmTest {
         realm.safeWrite {
             realm.add(reading)
         }
+        var allReadings = GlucoseReading.allForCurrentMode
         // Then
-        XCTAssertNil(sut.fetchLastGlucoseReading())
+        XCTAssertNil(sut.fetchLastGlucoseReading(readings: allReadings))
         
         // Given
         let reading1 = GlucoseReading()
@@ -62,7 +63,7 @@ final class HomeGlucoseDataWorkerTests: AbstractRealmTest {
             realm.add(reading1)
         }
         // Then
-        XCTAssertNil(sut.fetchLastGlucoseReading())
+        XCTAssertNil(sut.fetchLastGlucoseReading(readings: allReadings))
         
         // Given
         let reading2 = GlucoseReading()
@@ -75,7 +76,10 @@ final class HomeGlucoseDataWorkerTests: AbstractRealmTest {
         realm.safeWrite {
             realm.add(reading2)
         }
+        
+        allReadings = GlucoseReading.allForCurrentMode
+        
         // Then
-        XCTAssertNotNil(sut.fetchLastGlucoseReading())
+        XCTAssertNotNil(sut.fetchLastGlucoseReading(readings: allReadings))
     }
 }

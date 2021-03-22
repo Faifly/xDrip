@@ -65,7 +65,8 @@ final class HomePresenter: HomePresentationLogic {
     }
     
     func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
-        let value = glucoseFormattingWorker.formatEntry(response.lastGlucoseReading)
+        let last2Readings = GlucoseReading.lastReadings(2, for: response.lastGlucoseReading?.deviceMode ?? .main)
+        let value = glucoseFormattingWorker.formatEntry(response.lastGlucoseReading, last2Readings: last2Readings)
         let viewModel = Home.GlucoseCurrentInfo.ViewModel(
             glucoseIntValue: value.glucoseIntValue,
             glucoseDecimalValue: value.glucoseDecimalValue,
@@ -130,16 +131,39 @@ final class HomePresenter: HomePresentationLogic {
         switch response.state {
         case let .warmingUp(minutesLeft):
             string = createWarmUpMessage(for: minutesLeft)
-            
-        case .started:
-            let viewModel = Home.UpdateSensorState.ViewModel(
-                shouldShow: false,
-                text: NSMutableAttributedString(string: "")
-            )
-            
-            viewController?.displayUpdateSensorState(viewModel: viewModel)
-            return
-            
+        case let .started(error):
+            if let error = error {
+                var message: String
+                switch error {
+                case .sensorIsWarmingUp:
+                    message = "home_sensor_is_warming_up".localized
+                case .needNewCalibrationNow:
+                    message = "home_please_enter_a_new_calibration".localized
+                case let .needNewCalibrationIn(minutes):
+                    message = String(
+                        format: "home_please_recalibrate_again_in_min".localized,
+                        minutes
+                    )
+                case .needNewCalibrationAgain:
+                    message = "home_calibration_error_please_enter_a_new_calibration".localized
+                }
+                
+                string = NSMutableAttributedString(
+                    string: message,
+                    attributes: [
+                        .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                        .foregroundColor: UIColor.tabBarRedColor
+                    ]
+                )
+            } else {
+                let viewModel = Home.UpdateSensorState.ViewModel(
+                    shouldShow: false,
+                    text: NSMutableAttributedString(string: "")
+                )
+                
+                viewController?.displayUpdateSensorState(viewModel: viewModel)
+                return
+            }
         case .waitingReadings:
             string = NSMutableAttributedString(
                 string: "home_sensor_waiting_readings".localized,

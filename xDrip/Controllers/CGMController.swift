@@ -48,7 +48,7 @@ final class CGMController {
     func unsubscribeFromMetadataEvents(listener: AnyHashable) {
         metadataListeners.removeValue(forKey: listener)
     }
-    
+        
     // MARK: Bluetooth service
     private(set) var service: CGMBluetoothService?
     
@@ -106,10 +106,14 @@ extension CGMController: CGMBluetoothServiceDelegate {
         }
     }
     
-    func serviceDidReceiveGlucoseReading(calculatedValue: Double, date: Date, forBackfill: Bool) {
+    func serviceDidReceiveGlucoseReading(calculatedValue: Double,
+                                         calibrationState: DexcomG6CalibrationState?,
+                                         date: Date,
+                                         forBackfill: Bool) {
         guard !CGMDevice.current.isWarmingUp else { return }
         if GlucoseReading.reading(for: date, precisionInMinutes: 4) == nil {
             if let reading = GlucoseReading.createFromG6(calculatedValue: calculatedValue,
+                                                         calibrationState: calibrationState,
                                                          date: date,
                                                          forBackfill: forBackfill) {
                 glucoseDataListeners.values.forEach { $0(reading) }

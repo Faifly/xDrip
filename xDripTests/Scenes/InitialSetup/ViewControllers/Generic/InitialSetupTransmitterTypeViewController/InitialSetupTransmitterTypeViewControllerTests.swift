@@ -41,6 +41,7 @@ final class InitialSetupTransmitterTypeViewControllerTests: XCTestCase {
     }
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
+        func doClose() {}
         var calledSelectDeviceType = false
         var deviceType: CGMDeviceType?
         

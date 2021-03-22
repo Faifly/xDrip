@@ -153,20 +153,31 @@ class BaseHistoryView: UIView {
     func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?) {
         guard var minValue = minValue else { return }
         guard var maxValue = maxValue else { return }
+        let unit = User.current.settings.unit
+        
+        if unit == .mgDl {
+            minValue = minValue.rounded(.down)
+            maxValue = maxValue.rounded(.up)
+        }
+        
         minValue *= 10.0
         maxValue *= 10.0
+        
+        minValue = minValue.rounded(.down)
+        maxValue = maxValue.rounded(.up)
+        
         let alphaValue = 0.20 * (maxValue - minValue)
         var adjustedMinValue = max((minValue - alphaValue).rounded(.down), 0.0)
         var adjustedMaxValue = (maxValue + alphaValue).rounded(.up)
-        if adjustedMinValue ~~ adjustedMaxValue {
-            adjustedMinValue = max(adjustedMinValue - 1.0, 0.0)
-            adjustedMaxValue += 1.0
+        if (adjustedMinValue / 10.0) ~~ (adjustedMaxValue / 10.0) {
+            adjustedMinValue = max(adjustedMinValue - 10.0, 0.0)
+            adjustedMaxValue += 10.0
         }
         
         let diff = adjustedMaxValue - adjustedMinValue
         var verticalLines: Int
-        if Int(diff) < maxVerticalLinesCount - 1 {
-            verticalLines = Int(diff) + 1
+        if Int(diff / 10) < maxVerticalLinesCount - 1 {
+            verticalLines = Int(diff / 10) + 1
         } else {
             verticalLines = maxVerticalLinesCount
         }
@@ -176,10 +187,10 @@ class BaseHistoryView: UIView {
             adjustedMaxValue += Double((verticalLines - 1) - tail)
         }
         
-        let step = diff / Double(verticalLines - 1)
+        let step = (diff / Double(verticalLines - 1)).rounded()
         
         var labels: [String] = []
-        let format = User.current.settings.unit == .mmolL ? "%0.1f" : "%0.f"
+        let format = unit == .mmolL ? "%0.1f" : "%0.f"
         for index in 0..<verticalLines {
             labels.append(String(format: format, (adjustedMinValue + step * Double(index)) / 10.0))
         }

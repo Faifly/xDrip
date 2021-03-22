@@ -12,11 +12,19 @@ protocol HomeSensorStateWorkerLogic {
     func subscribeForSensorStateChange(callback: @escaping (Home.SensorState) -> Void)
 }
 
+enum CalibrationStateError {
+    case sensorIsWarmingUp
+    case needNewCalibrationNow
+    case needNewCalibrationIn(minutes: Int)
+    case needNewCalibrationAgain
+}
+
 final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
     private var callback: ((Home.SensorState) -> Void)?
     private var isWarmingUp = false
     private var timer: Timer?
     private var settingsObservers: [NSObjectProtocol] = []
+    private var calibrationObserver: NSObjectProtocol?
     
     func subscribeForSensorStateChange(callback: @escaping (Home.SensorState) -> Void) {
         self.callback = callback
@@ -26,16 +34,48 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
                 self?.checkWarmUpState()
             }
         }
+        
+        CGMController.shared.subscribeForGlucoseDataEvents(listener: self) { [weak self] _ in
+            guard let self = self else { return }
+            self.checkWarmUpState()
+        }
+        
         settingsObservers = NotificationCenter.default.subscribe(
             forSettingsChange: [.warmUp, .sensorStarted]
         ) { [weak self] in
             self?.checkWarmUpState()
         }
+        
+        calibrationObserver = NotificationCenter.default.addObserver(
+            forName: .regularCalibrationCreated,
+            object: nil,
+            queue: nil,
+            using: { [weak self] _ in
+                self?.checkWarmUpState()
+            }
+        )
     }
     
     deinit {
         CGMController.shared.unsubscribeFromMetadataEvents(listener: self)
+        CGMController.shared.unsubscribeFromGlucoseDataEvents(listener: self)
         settingsObservers.forEach { NotificationCenter.default.removeObserver($0) }
+        if let observer = calibrationObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+    
+    private func startCheckTimer() {
+        if timer == nil {
+            timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { [weak self] _ in
+                self?.checkWarmUpState()
+            })
+        }
+    }
+    
+    private func stopCheckTimer() {
+        timer?.invalidate()
+        timer = nil
     }
     
     private func checkWarmUpState() {
@@ -48,38 +88,85 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             let minutesLeft = Int((type.warmUpInterval - age) / 60.0)
             callback?(.warmingUp(minutesLeft: minutesLeft))
             
-            if timer == nil {
-                timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { [weak self] _ in
-                    self?.checkWarmUpState()
-                })
-            }
+            startCheckTimer()
         } else if isWarmingUp {
             isWarmingUp = false
-            timer?.invalidate()
-            timer = nil
             let state: Home.SensorState
             
+            let errorMessage = createErrorMessage()
+            
             if CGMDevice.current.sensorStartDate != nil {
-                state = Calibration.allForCurrentSensor.count > 1 ? .started : .waitingReadings
+                state = Calibration.allForCurrentSensor.count > 1 ?
+                    .started(errorMessage: errorMessage) :
+                    .waitingReadings
             } else {
                 state = .stopped
+            }
+            
+            if errorMessage != nil {
+                startCheckTimer()
+            } else {
+                stopCheckTimer()
             }
             
             callback?(state)
         } else {
             isWarmingUp = false
-            timer?.invalidate()
-            timer = nil
             let state: Home.SensorState
             
+            let errorMessage = createErrorMessage()
+            
             if CGMDevice.current.sensorStartDate != nil {
-                state = Calibration.allForCurrentSensor.count > 1 ? .started : .waitingReadings
+                state = Calibration.allForCurrentSensor.count > 1 ?
+                    .started(errorMessage: errorMessage) :
+                    .waitingReadings
             } else {
                 state = .stopped
             }
             
+            if errorMessage != nil {
+                startCheckTimer()
+            } else {
+                stopCheckTimer()
+            }
+            
             callback?(state)
         }
+    }
+    
+    func createErrorMessage() -> CalibrationStateError? {
+        let lastReadingCalibrationState = GlucoseReading.allMaster.first?.сalibrationState
+        
+        if let state = lastReadingCalibrationState, state == .warmingUp {
+            return .sensorIsWarmingUp
+        }
+        
+        if let calibration = Calibration.allForCurrentSensor.first,
+           let type = calibration.responseType,
+           !(type == .okay || type == .secondCalibrationNeeded || type == .duplicate) {
+            guard let calibrationInterval = calibration.responseDate?.timeIntervalSince1970 else {
+                return .needNewCalibrationNow
+            }
+            let interval = Date().timeIntervalSince1970
+            let calibrationAge = interval - calibrationInterval
+            let waitDuration = TimeInterval(minutes: 6)
+            let diff = (waitDuration - calibrationAge) / 60.0
+            let intDiff = Int(diff)
+            
+            return intDiff > 0 ? .needNewCalibrationIn(minutes: intDiff) : .needNewCalibrationNow
+        }
+        
+        if let state = lastReadingCalibrationState {
+            switch state {
+            case .okay, .insufficientCalibration: break
+            default:
+                guard let calibration = Calibration.allForCurrentSensor.first,
+                      !calibration.isSentToTransmitter else {
+                    return .needNewCalibrationAgain
+                }
+            }
+        }
+        return nil
     }
 }
 

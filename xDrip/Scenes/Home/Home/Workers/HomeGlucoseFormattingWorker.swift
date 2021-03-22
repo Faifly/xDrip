@@ -45,10 +45,10 @@ private struct HomeBasalEntry: BasalChartBasalEntry {
 }
 
 protocol HomeGlucoseFormattingWorkerProtocol {
-    func formatEntries(_ entries: [GlucoseReading]) -> [GlucoseChartGlucoseEntry]
-    func formatEntry(_ entry: GlucoseReading?) -> GlucoseCurrentInfoEntry
+    func formatEntries(_ entries: [BaseGlucoseReading]) -> [GlucoseChartGlucoseEntry]
+    func formatEntry(_ entry: BaseGlucoseReading?, last2Readings: [BaseGlucoseReading]) -> GlucoseCurrentInfoEntry
     func formatEntries(_ entries: [InsulinEntry]) -> [BasalChartBasalEntry]
-    func formatDataSection(_ entries: [GlucoseReading]) -> Home.DataSectionViewModel
+    func formatDataSection(_ entries: [BaseGlucoseReading]) -> Home.DataSectionViewModel
 }
 
 final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
@@ -58,11 +58,11 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         statsCalculationWorker = StatsRootCalculationWorker()
     }
     
-    func formatEntries(_ entries: [GlucoseReading]) -> [GlucoseChartGlucoseEntry] {
+    func formatEntries(_ entries: [BaseGlucoseReading]) -> [GlucoseChartGlucoseEntry] {
         let settings = User.current.settings
         return entries.map {
             HomeGlucoseEntry(
-                value: GlucoseUnit.convertFromDefault($0.filteredCalculatedValue),
+                value: GlucoseUnit.convertFromDefault($0.filteredCalculatedValue, currentUnit: settings?.unit),
                 date: $0.date ?? Date(),
                 severity: GlucoseChartSeverityLevel(
                     warningLevel: settings?.warningLevel(forValue: $0.filteredCalculatedValue)
@@ -71,7 +71,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         }
     }
     
-    func formatEntry(_ entry: GlucoseReading?) -> GlucoseCurrentInfoEntry {
+    func formatEntry(_ entry: BaseGlucoseReading?, last2Readings: [BaseGlucoseReading]) -> GlucoseCurrentInfoEntry {
         guard let entry = entry else {
             return HomeGlucoseCurrentInfoEntry.emptyEntry
         }
@@ -81,7 +81,6 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         let glucoseDecimalValue = components.last ?? "-"
         
         let diff: Double
-        let last2Readings = GlucoseReading.lastReadings(2, for: entry.deviceMode)
         if last2Readings.count < 2 {
             diff = 0.0
         } else {
@@ -127,7 +126,7 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
         }
     }
     
-    func formatDataSection(_ entries: [GlucoseReading]) -> Home.DataSectionViewModel {
+    func formatDataSection(_ entries: [BaseGlucoseReading]) -> Home.DataSectionViewModel {
          let isShown = User.current.settings.chart?.showData ?? true
         guard !entries.isEmpty else {
             return Home.DataSectionViewModel(
@@ -145,9 +144,15 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
                 isShown: isShown
             )
         }
-        let lowThresholdValue = User.current.settings.warningLevelValue(for: .low)
+        var lowThresholdValue = User.current.settings.warningLevelValue(for: .low)
+        var highThresholdValue = User.current.settings.warningLevelValue(for: .high)
+        
+        if User.current.settings.unit == .mgDl {
+            lowThresholdValue = lowThresholdValue.rounded(.down)
+            highThresholdValue = highThresholdValue.rounded(.up)
+        }
+        
         let convertedLow = GlucoseUnit.convertFromDefault(lowThresholdValue)
-        let highThresholdValue = User.current.settings.warningLevelValue(for: .high)
         let convertedHigh = GlucoseUnit.convertFromDefault(highThresholdValue)
         let unit = User.current.settings.unit.label
         

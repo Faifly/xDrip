@@ -37,6 +37,10 @@
 "home_options_title" = "Options";
 "home_sensor_stopped" = "Sensor Stopped";
 "home_sensor_waiting_readings" = "Sensor is getting the first readings to display it";
+"home_sensor_is_warming_up" = "Sensor is warming up";
+"home_please_enter_a_new_calibration" = "Please enter a new calibration";
+"home_please_recalibrate_again_in_min" = "Please recalibrate again in %d min";
+"home_calibration_error_please_enter_a_new_calibration" = "Calibration error. Please enter a new calibration";
 
 // Root
 "root_add_entry_food" = "Food";

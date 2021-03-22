@@ -316,7 +316,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         realm.safeWrite {
             realm.add(reading1)
         }
-        
+
         reading1.findNewCurve()
         XCTAssert(reading1.a ~ 0.0)
         XCTAssert(reading1.b ~ 0.0)
@@ -497,5 +497,56 @@ final class GlucoseReadingTests: AbstractRealmTest {
         reading.setValue(0.0, forKey: "a")
         reading.setValue(1.0, forKey: "b")
         XCTAssert(reading.activeSlope() ~ 1.0)
+    }
+    
+    func testClearOldReadings() {
+        let now = Date()
+        let readingsPerDay = Int(TimeInterval.secondsPerDay / Constants.dexcomPeriod)
+        
+        CGMDevice.current.updateMetadata(
+            ofType: .sensorAge,
+            value: "\((now - .secondsPerDay).timeIntervalSince1970)"
+        )
+        CGMDevice.current.updateSensorIsStarted(true)
+        
+        for index in 0..<readingsPerDay {
+            let filtered = 100.0 + Double(index) * 10.0
+            let unfiltered = filtered * 1000.0 - 5000.0
+            let date = now - TimeInterval(index) * .secondsPerMinute * 5.0 - 1.0
+            GlucoseReading.create(filtered: filtered, unfiltered: unfiltered, rssi: 0.0, date: date)
+        }
+        
+        var allGrossReadings = GlucoseReading.allMaster
+        var allLightReadings = LightGlucoseReading.allMaster
+        
+        XCTAssertTrue(allGrossReadings.count == 288)
+        XCTAssertTrue(allLightReadings.isEmpty)
+        
+        for reading in allGrossReadings {
+            realm.safeWrite {
+                guard var date = reading.date else { return }
+                date -= TimeInterval(.secondsPerMinute) * 5.0
+                reading.setValue(date, forKey: "date")
+            }
+        }
+        
+        for reading in allLightReadings {
+            realm.safeWrite {
+                guard var date = reading.date else { return }
+                date -= TimeInterval(.secondsPerMinute) * 5.0
+                reading.setValue(date, forKey: "date")
+            }
+        }
+        
+        let filtered = 100.0 + Double(readingsPerDay) * 10.0
+        let unfiltered = filtered * 1000.0 - 5000.0
+        let date = now
+        GlucoseReading.create(filtered: filtered, unfiltered: unfiltered, rssi: 0.0, date: date)
+        
+        allGrossReadings = GlucoseReading.allMaster
+        allLightReadings = LightGlucoseReading.allMaster
+        
+        XCTAssertTrue(allGrossReadings.count == 288)
+        XCTAssertTrue(allLightReadings.count == 1)
     }
 }

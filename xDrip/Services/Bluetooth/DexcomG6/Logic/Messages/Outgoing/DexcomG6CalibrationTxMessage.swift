@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 struct DexcomG6CalibrationTxMessage: DexcomG6OutgoingMessage {
     let data: Data
 

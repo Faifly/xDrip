@@ -45,6 +45,7 @@ final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
         var calledCompleteSetup = false
         var moreStepsExpected: Bool?
+        var calledClose = false
         
         func doLoad(request: InitialSetup.Load.Request) { }
         func doBeginSetup(request: InitialSetup.BeginSetup.Request) { }
@@ -61,10 +62,34 @@ final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
             moreStepsExpected = request.moreStepsExpected
         }
         
+        func doClose() {
+            calledClose = true
+        }
+        
         func doWarningAgreed(request: InitialSetup.WarningAgreed.Request) {}
     }
     
     func testOnContinueButton() {
+        let spy = InitialSetupBusinessLogicSpy()
+        sut.interactor = spy
+
+        loadView()
+        let controller = CGMController.shared
+        controller.serviceDidUpdateMetadata(.firmwareVersion, value: "firmware")
+        controller.serviceDidUpdateMetadata(.batteryVoltageA, value: "batteryA")
+        controller.serviceDidUpdateMetadata(.batteryVoltageB, value: "batteryB")
+        controller.serviceDidUpdateMetadata(.transmitterTime, value: "transmitterTime")
+        controller.serviceDidUpdateMetadata(.deviceName, value: "testName")
+
+        let button = sut.navigationItem.rightBarButtonItem
+        // When
+        _ = button?.target?.perform(button?.action, with: nil)
+        // Then
+        XCTAssertTrue(spy.calledCompleteSetup == true)
+        XCTAssert(spy.moreStepsExpected == true)
+    }
+    
+    func testCloseButton() {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
@@ -74,8 +99,7 @@ final class InitialSetupG6ConnectViewControllerTests: XCTestCase {
         // When
         _ = button?.target?.perform(button?.action, with: nil)
         // Then
-        XCTAssertTrue(spy.calledCompleteSetup == true)
-        XCTAssert(spy.moreStepsExpected == true)
+        XCTAssertTrue(spy.calledClose)
     }
     
     func testUpdate() {

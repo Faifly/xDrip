@@ -68,7 +68,7 @@ enum StatsRoot {
         }
         
         struct Response {
-            let readings: [GlucoseReading]
+            let readings: [BaseGlucoseReading]
             let lowGlucoseThreshold: Double
             let highGlucoseThreshold: Double
             let unit: GlucoseUnit
@@ -84,7 +84,7 @@ enum StatsRoot {
         }
         
         struct Response {
-            let readings: [GlucoseReading]
+            let readings: [BaseGlucoseReading]
             let timeFrame: TimeFrame
             let interval: DateInterval
         }

@@ -78,7 +78,7 @@ final class NightscoutService {
             startFetchingTreatments()
         }
         
-        if User.current.settings.pumpSync.isEnabled {
+        if User.current.settings.pumpSync?.isEnabled ?? false {
             startFetchingPumpData()
         }
         
@@ -153,8 +153,8 @@ final class NightscoutService {
     private func scanForGlucoseEntries() {
         LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
         let all = GlucoseReading.allMaster
-        let notUploaded = all.filter { $0.cloudUploadStatus == .notUploaded }
-        let modified = all.filter { $0.cloudUploadStatus == .modified }
+        let notUploaded = Array(all.filter("rawCloudUploadStatus == 1"))
+        let modified = Array(all.filter("rawCloudUploadStatus == 2"))
         
         LogController.log(
             message: "[NighscoutService]: Found %d not uploaded and %d modified entries",

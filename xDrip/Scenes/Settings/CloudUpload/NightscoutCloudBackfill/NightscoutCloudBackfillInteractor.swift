@@ -35,9 +35,11 @@ final class NightscoutCloudBackfillInteractor: NightscoutCloudBackfillBusinessLo
     }
     
     func doSend(request: NightscoutCloudBackfill.Send.Request) {
-        let allGlucoseReadings = GlucoseReading.allMaster.filter({ $0.date >? date &&
-            $0.calculatedValue !~ 0.0 &&
-            $0.rawValue !~ 0.0}).prefix(500000)
+        let allGlucoseReadings = GlucoseReading.allMaster.filter( NSCompoundPredicate(type: .and, subpredicates: [
+            .laterThan(date: date),
+            .calculatedValue,
+            .rawValue
+        ])).prefix(500000)
         
         if allGlucoseReadings.isEmpty {
             router?.presentPopUp(message: "settings_nightscout_cloud_backfill_no_glucose_readings_found".localized,

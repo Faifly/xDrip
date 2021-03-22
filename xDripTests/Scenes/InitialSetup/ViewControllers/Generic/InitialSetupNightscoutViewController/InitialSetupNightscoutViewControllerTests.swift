@@ -41,6 +41,7 @@ final class InitialSetupNightscoutViewControllerTests: XCTestCase {
     }
     
     private class InitialSetupBusinessLogicSpy: InitialSetupBusinessLogic {
+        func doClose() {}
         var doSaveNightscoutConnectionDataCalled = false
         
         func doLoad(request: InitialSetup.Load.Request) { }

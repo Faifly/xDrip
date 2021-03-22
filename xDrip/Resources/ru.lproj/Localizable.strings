@@ -37,6 +37,10 @@
 "home_options_title" = "Опции";
 "home_sensor_stopped" = "Сенсор остановлен";
 "home_sensor_waiting_readings" = "Сенсор получает первые считывания, чтобы отобразить их";
+"home_sensor_is_warming_up" = "Сенсор разогревается";
+"home_please_enter_a_new_calibration" = "Пожалуйста введите новую калибровку";
+"home_please_recalibrate_again_in_min" = "Пожалуйста повторите калибровку через %d мин";
+"home_calibration_error_please_enter_a_new_calibration" = "Ошибка калибровки. Пожалуйста введите новую калибровку";
 
 // Root
 "root_add_entry_food" = "Еда";

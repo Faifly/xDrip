@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol HistoryRootBusinessLogic {
     func doLoad(request: HistoryRoot.Load.Request)
@@ -27,6 +28,7 @@ final class HistoryRootInteractor: HistoryRootBusinessLogic, HistoryRootDataStor
     var router: HistoryRootRoutingLogic?
     
     private let glucoseDataWorker: HomeGlucoseDataWorkerProtocol
+    private let lightGlucoseDataWorker: HistoryGlucoseDataWorkerProtocol
     private var timeline: HistoryRoot.Timeline = .last14Days
     private var selectedDate = Date()
     
@@ -40,6 +42,7 @@ final class HistoryRootInteractor: HistoryRootBusinessLogic, HistoryRootDataStor
     
     init() {
         glucoseDataWorker = HomeGlucoseDataWorker()
+        lightGlucoseDataWorker = HistoryGlucoseDataWorker()
     }
     
     // MARK: Do something
@@ -70,15 +73,27 @@ final class HistoryRootInteractor: HistoryRootBusinessLogic, HistoryRootDataStor
     // MARK: Logic
     
     private func updateGlucoseChartData() {
-        var glucoseData = [GlucoseReading]()
+        var glucoseData = [BaseGlucoseReading]()
         var basalValues = [InsulinEntry]()
         var chartEntries = [InsulinEntry]()
+        
+        let lightReadings = LightGlucoseReading.allForCurrentMode
+        let grossReadings = GlucoseReading.allForCurrentMode
+        
         if timeline == .last14Days {
-            glucoseData = glucoseDataWorker.fetchGlucoseData(for: 14 * 24)
+            let lightGlucoseData = lightGlucoseDataWorker.fetchGlucoseData(for: 14 * 24, readings: lightReadings)
+            let grossGlucoseData = glucoseDataWorker.fetchGlucoseData(for: 14 * 24, readings: grossReadings)
+            
+            glucoseData = grossGlucoseData + lightGlucoseData
+    
             basalValues = BasalChartDataWorker.fetchBasalData(for: 14 * 24)
             chartEntries = BasalChartDataWorker.calculateChartValues(for: 14 * 24)
         } else {
-            glucoseData = glucoseDataWorker.fetchGlucoseData(for: selectedDate)
+            let lightGlucoseData = lightGlucoseDataWorker.fetchGlucoseData(for: selectedDate, readings: lightReadings)
+            let grossGlucoseData = glucoseDataWorker.fetchGlucoseData(for: selectedDate, readings: grossReadings)
+            
+            glucoseData = grossGlucoseData + lightGlucoseData
+            
             basalValues = BasalChartDataWorker.fetchBasalData(for: selectedDate)
             chartEntries = BasalChartDataWorker.calculateChartValues(for: selectedDate)
         }
