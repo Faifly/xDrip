@@ -25,7 +25,7 @@ final class HomeGlucoseDataWorkerTests: AbstractRealmTest {
         // When
         CGMDevice.current.updateMetadata(ofType: .sensorAge, value: "\(Date().timeIntervalSince1970)")
         CGMDevice.current.updateSensorIsStarted(true)
-        CGMController.shared.serviceDidReceiveGlucoseReading(calculatedValue: 0.0, date: Date(), forBackfill: false)
+        CGMController.shared.serviceDidReceiveGlucoseReading(calculatedValue: 0.0, calibrationState: .okay, date: Date(), forBackfill: false)
         
         // Then
         XCTAssertFalse(calledDataHandler)

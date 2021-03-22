@@ -43,6 +43,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     @objc private(set) dynamic var rc: Double = 0.0
     @objc private(set) dynamic var ageAdjustedRawValue: Double = 0.0
     @objc private(set) dynamic var calibration: Calibration?
+    @objc private(set) dynamic var rawCalibrationState: String?
     @objc private(set) dynamic var hideSlope: Bool = false
     @objc private(set) dynamic var calculatedValueSlope: Double = 0.0
     @objc private(set) dynamic var timeSinceSensorStarted: TimeInterval = 0.0
@@ -78,6 +79,13 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         set {
             rawDeviceMode = newValue.rawValue
         }
+    }
+    
+    var сalibrationState: DexcomG6CalibrationState? {
+        guard let calibrationStateValue = rawCalibrationState,
+              let rawState = UInt8(calibrationStateValue),
+              let state = DexcomG6CalibrationState(rawValue: rawState) else { return nil }
+        return state
     }
     
     required init() {
@@ -170,6 +178,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         reading.timeSinceSensorStarted = date.timeIntervalSince1970 - sensorStarted.timeIntervalSince1970
         reading.rssi = rssi
         reading.calculateAgeAdjustedRawValue()
+        reading.findSlope()
         reading.sourceInfo = CGMDevice.current.deviceType?.title
         
         if let settings = User.current.settings.nightscoutSync, settings.isEnabled {
@@ -181,31 +190,21 @@ final class GlucoseReading: Object, BaseGlucoseReading {
             realm.add(reading)
         }
         
-        let readings = allReadings(for: .main, filteredBy: .rawValue).sorted(by: [.dateDescending])
-
-        let latestReadings = readings.filter(.calculatedValue)
+        reading.findNewCurve()
+        reading.findNewRawCurve()
         
-        let lastReading = Array(readings.prefix(1))
-        let last2Readings = Array(latestReadings.prefix(2))
-        let last3Readings = Array(latestReadings.prefix(3))
-        let last8Readings = User.current.settings.deviceMode == .main
-            ? Array(latestReadings.prefix(8))
-            : lastReadings(8, for: .follower)
-        
-        reading.findSlope(last2Readings: last2Readings)
-        Calibration.adjustRecentReadings(lastReading, last3Readings: last3Readings)
-        reading.calculateNoise(last8Readings: last8Readings)
-        reading.injectDisplayGlucose(last2Readings: last2Readings)
+        Calibration.adjustRecentReadings(1)
+        reading.calculateNoise()
+        reading.injectDisplayGlucose()
         checkForCalibrationRequest(requireCalibration)
         NightscoutService.shared.scanForNotUploadedEntries()
-        clearOldReadings()
         
         LogController.log(
             message: "[Glucose] Created reading with calculated value: %@",
             type: .debug,
             "\(reading.calculatedValue)"
         )
-        
+        clearOldReadings()
         return reading
     }
     
@@ -227,12 +226,18 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     }
     
     @discardableResult static func createFromG6(calculatedValue: Double,
+                                                calibrationState: DexcomG6CalibrationState?,
                                                 date: Date,
                                                 forBackfill: Bool = false,
                                                 requireCalibration: Bool = true) -> GlucoseReading? {
         LogController.log(message: "[Glucose] Trying to create reading...", type: .debug)
         guard CGMDevice.current.isSensorStarted else {
             LogController.log(message: "[Glucose] Can't createFromG6 reading, sensor not started", type: .error)
+            return nil
+        }
+        
+        guard let sensorStarted = CGMDevice.current.sensorStartDate, CGMDevice.current.isSensorStarted else {
+            LogController.log(message: "[Glucose] Can't create reading, sensor not started", type: .error)
             return nil
         }
         
@@ -247,7 +252,13 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         reading.calculatedValue = calculatedValue
         reading.filteredCalculatedValue = calculatedValue
         reading.rawValue = calculatedValue
+        if let state = calibrationState {
+            reading.rawCalibrationState = String(state.rawValue)
+        }
         reading.date = date
+        reading.timeSinceSensorStarted = date.timeIntervalSince1970 - sensorStarted.timeIntervalSince1970
+        reading.calculateAgeAdjustedRawValue()
+        reading.findSlope()
         reading.sourceInfo = CGMDevice.current.deviceType?.title ?? "" + (forBackfill ? "Backfill" : "")
         
         if let settings = User.current.settings.nightscoutSync, settings.isEnabled,
@@ -258,6 +269,9 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         Realm.shared.safeWrite {
             Realm.shared.add(reading)
         }
+        
+        reading.findNewCurve()
+        reading.findNewRawCurve()
         
         LogController.log(
             message: "[Glucose] Created FromG6 reading with calculated value: %@",
@@ -411,9 +425,9 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         }
     }
     
-    func findNewCurve(last3Readings: [GlucoseReading]) {
-        let curve = findCurve(valueKey: "calculatedValue", bKey: "b", last3Readings: last3Readings)
-        
+    func findNewCurve() {
+        let curve = findCurve(valueKey: "calculatedValue", bKey: "b")
+
         Realm.shared.safeWrite {
             self.a = curve.a
             self.b = curve.b
@@ -421,8 +435,8 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         }
     }
     
-    func findNewRawCurve(last3Readings: [GlucoseReading]) {
-        let curve = findCurve(valueKey: "ageAdjustedRawValue", bKey: "rb", last3Readings: last3Readings)
+    func findNewRawCurve() {
+        let curve = findCurve(valueKey: "ageAdjustedRawValue", bKey: "rb")
         Realm.shared.safeWrite {
             self.ra = curve.a
             self.rb = curve.b
@@ -457,7 +471,9 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         return (lastReading.calculatedValue - calculatedValue) / (lastDate - selfDate)
     }
     
-    func findSlope(last2Readings: [GlucoseReading]) {
+    func findSlope() {
+        let last2Readings = GlucoseReading.lastReadings(2, for: .main)
+
         Realm.shared.safeWrite {
             if last2Readings.count == 2 {
                 calculatedValueSlope = calculateSlope(lastReading: last2Readings[1])
@@ -478,9 +494,8 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         }
     }
     
-    private func findCurve(valueKey: String, bKey: String, last3Readings: [GlucoseReading]) ->
-    (a: Double, b: Double, c: Double) {
-        let last3 = last3Readings
+    private func findCurve(valueKey: String, bKey: String) -> (a: Double, b: Double, c: Double) {
+        let last3 = GlucoseReading.lastReadings(3, for: .main)
         
         let a: Double
         let b: Double
@@ -540,11 +555,14 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         return 2 * a * date.timeIntervalSince1970 + b
     }
     
-    private func calculateNoise(last8Readings: [GlucoseReading]) {
+    private func calculateNoise() {
+        let mode = User.current.settings.deviceMode
+        let maxRecords = 8
+
         let minRecords = 4
         
-        //        let readings = Array(GlucoseReading.lastReadings(maxRecords, for: mode).reversed())
-        let readings = Array(last8Readings.reversed())
+        let readings = Array(GlucoseReading.lastReadings(maxRecords, for: mode).reversed())
+
         if readings.count < minRecords {
             Realm.shared.safeWrite {
                 noise = "1" // Clean
@@ -632,8 +650,8 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         }
     }
     
-    private func injectDisplayGlucose(last2Readings: [GlucoseReading]) {
-        guard let displayGlucose = DisplayGlucose(readings: last2Readings) else {
+    private func injectDisplayGlucose() {
+        guard let displayGlucose = DisplayGlucose(readings: GlucoseReading.lastReadings(2, for: .main)) else {
             return
         }
         

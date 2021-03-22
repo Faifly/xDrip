@@ -47,6 +47,8 @@ final class Calibration: Object {
     @objc private(set) dynamic var secondScale: Double = 0.0
     @objc private(set) dynamic var isUploaded: Bool = false
     @objc private(set) dynamic var externalID: String?
+    @objc private(set) dynamic var rawResponseType: String?
+    @objc private(set) dynamic var responseDate: Date?
     @objc private(set) dynamic var isSentToTransmitter: Bool = false
     
     override class func primaryKey() -> String? {
@@ -93,11 +95,19 @@ final class Calibration: Object {
         )
     }
     
+    var responseType: DexcomG6CalibrationResponseType? {
+        guard let responseType = rawResponseType ,
+              let rawType = UInt8(responseType) ,
+              let type = DexcomG6CalibrationResponseType(rawValue: rawType) else { return nil }
+        return type
+    }
+    
     static func createInitialCalibration(
         glucoseLevel1: Double,
         glucoseLevel2: Double,
         date1: Date,
-        date2: Date
+        date2: Date,
+        adjustedReadingsAmount: Int = 5
     ) throws {
         let last2Readings = GlucoseReading.latestByCount(2, for: .main)
         
@@ -161,11 +171,11 @@ final class Calibration: Object {
         lowReading.updateCalculatedValue(lowLevel)
         lowReading.updateIsCalibrated(true)
         lowReading.updateCalibration(lowCalibration)
-        let last3Readings = GlucoseReading.lastReadings(3, for: .main)
-        highReading.findNewCurve(last3Readings: last3Readings)
-        highReading.findNewRawCurve(last3Readings: last3Readings)
-        lowReading.findNewCurve(last3Readings: last3Readings)
-        lowReading.findNewRawCurve(last3Readings: last3Readings)
+       
+        highReading.findNewCurve()
+        highReading.findNewRawCurve()
+        lowReading.findNewCurve()
+        lowReading.findNewRawCurve()
         
         for calibration in [lowCalibration, highCalibration] {
             Realm.shared.safeWrite {
@@ -179,8 +189,7 @@ final class Calibration: Object {
             Calibration.calculateWLS(date: calibration.date ?? Date())
         }
         
-        let readings = GlucoseReading.latestByCount(5, for: .main)
-        adjustRecentReadings(readings, last3Readings: last3Readings)
+        adjustRecentReadings(adjustedReadingsAmount)
         
         NightscoutService.shared.scanForNotUploadedEntries()
     }
@@ -221,9 +230,7 @@ final class Calibration: Object {
         reading.updateCalculatedValue(glucoseLevel)
         reading.updateFilteredCalculatedValue(glucoseLevel)
         calculateWLS()
-        let readings = GlucoseReading.latestByCount(30, for: .main)
-        let last3Readings = GlucoseReading.lastReadings(3, for: .main)
-        adjustRecentReadings(readings, last3Readings: last3Readings)
+        adjustRecentReadings(30)
         NightscoutService.shared.scanForNotUploadedEntries()
         NotificationCenter.default.post(name: .regularCalibrationCreated, object: nil)
     }
@@ -238,9 +245,10 @@ final class Calibration: Object {
         }
     }
     
-    static func adjustRecentReadings(_ readings: [GlucoseReading], last3Readings: [GlucoseReading]) {
+    static func adjustRecentReadings(_ amount: Int) {
         let calibrations = lastCalibrations(3)
-        
+        let readings = GlucoseReading.latestByCount(amount, for: .main)
+
         if calibrations.count >= 3 {
             let denom = Double(readings.count)
             guard let latestCalibration = lastValid else { return }
@@ -252,7 +260,7 @@ final class Calibration: Object {
                     reading.updateFilteredCalculatedValue(newCalculatedValue)
                 }
                 reading.updateCalculatedValue(newCalculatedValue)
-                reading.findSlope(last2Readings: Array(last3Readings.prefix(2)))
+                reading.findSlope()
             }
         } else if calibrations.count == 2 {
             guard let latestCalibration = lastValid else { return }
@@ -265,12 +273,12 @@ final class Calibration: Object {
                 }
                 reading.updateCalculatedValue(newYValue)
                 reading.updateCalculatedValueToWithinMinMax()
-                reading.findSlope(last2Readings: Array(last3Readings.prefix(2)))
+                reading.findSlope()
             }
         }
         
-        readings.first?.findNewRawCurve(last3Readings: last3Readings)
-        readings.first?.findNewCurve(last3Readings: last3Readings)
+        readings.first?.findNewRawCurve()
+        readings.first?.findNewCurve()
     }
     
     static func deleteLast() {
@@ -305,6 +313,18 @@ final class Calibration: Object {
     func markCalibrationAsSentToTransmitter() {
         Realm.shared.safeWrite {
             isSentToTransmitter = true
+        }
+    }
+    
+    func updateResponseType(type: DexcomG6CalibrationResponseType) {
+        Realm.shared.safeWrite {
+            rawResponseType = String(type.rawValue)
+        }
+    }
+    
+    func updateResponseDate(date: Date) {
+        Realm.shared.safeWrite {
+            responseDate = date
         }
     }
     

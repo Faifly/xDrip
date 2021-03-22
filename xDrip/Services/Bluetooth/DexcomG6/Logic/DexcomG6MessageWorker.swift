@@ -12,6 +12,7 @@ final class DexcomG6MessageWorker {
     private weak var delegate: DexcomG6MessageWorkerDelegate?
     
     private var isQueueAwaitingForResponse = false
+    private var isCalibrationMessageAlreadyQueued = false
     private var messageQueue: [DexcomG6OutgoingMessage] = []
     private let messageFactory = DexcomG6MessageFactory()
     private var backFillStream = DexcomG6BackfillStream()
@@ -76,19 +77,7 @@ final class DexcomG6MessageWorker {
             delegate?.workerDidReceiveGlucoseData(message)
         case .calibrateGlucoseRx:
             let message = try DexcomG6CalibrationRxMessage(data: data)
-            if let calibration = Calibration.allForCurrentSensor.first,
-               !calibration.isSentToTransmitter, message.accepted {
-                calibration.markCalibrationAsSentToTransmitter()
-                LogController.log(
-                    message: "[Dexcom G6] Marked last calibration as sent to transmitter",
-                    type: .debug
-                )
-            }
-            LogController.log(
-                message: "[Dexcom G6] DexcomG6CalibrationRxMessage accepted : %@",
-                type: .debug,
-                message.accepted.description
-            )
+            handleCalibrationRxMessage(message)
         default: break
         }
         
@@ -101,6 +90,7 @@ final class DexcomG6MessageWorker {
         guard let message = messageFactory.createOutgoingMessage(ofType: type) else { return }
         if type == .authRequestTx {
             isQueueAwaitingForResponse = false
+            isCalibrationMessageAlreadyQueued = false
             messageQueue.removeAll()
         }
         messageQueue.append(message)
@@ -217,6 +207,13 @@ final class DexcomG6MessageWorker {
     
     func createCalibrationRequest() {
         guard isPaired else { return }
+        guard !isCalibrationMessageAlreadyQueued else {
+            LogController.log(
+                message: "[Dexcom G6] DexcomG6CalibrationTxMessage has been already queued",
+                type: .debug
+            )
+            return
+        }
         guard let calibration = Calibration.allForCurrentSensor.first,
               let date = calibration.date,
               !calibration.isSentToTransmitter else {
@@ -265,16 +262,19 @@ final class DexcomG6MessageWorker {
         }
         
         let timestamp = Int(date.timeIntervalSince1970 - transmitterStartDate.timeIntervalSince1970)
-                
+        
+        let message = DexcomG6CalibrationTxMessage(glucose: glucose, time: timestamp)
+        
+        messageQueue.append(message)
+        isCalibrationMessageAlreadyQueued = true
+        trySendingMessageFromQueue()
+        
         LogController.log(
             message: "[Dexcom G6] Queuing Calibration for transmitter: glucose %d, timestamp: %d",
             type: .debug,
             glucose,
             timestamp
         )
-        let message = DexcomG6CalibrationTxMessage(glucose: glucose, time: timestamp)
-        messageQueue.append(message)
-        trySendingMessageFromQueue()
     }
     
     func handleBackfillStream(_ data: Data?) {
@@ -291,5 +291,27 @@ final class DexcomG6MessageWorker {
         isQueueAwaitingForResponse = true
         let message = messageQueue.removeFirst()
         delegate?.workerRequiresSendingOutgoingMessage(message)
+    }
+    
+    func handleCalibrationRxMessage(_ message: DexcomG6CalibrationRxMessage) {
+        if let calibration = Calibration.allForCurrentSensor.first {
+            if !calibration.isSentToTransmitter {
+                calibration.markCalibrationAsSentToTransmitter()
+                LogController.log(
+                message: "[Dexcom G6] Marked last calibration as sent to transmitter",
+                type: .debug
+            )}
+        
+            if let type = message.type {
+                calibration.updateResponseType(type: type)
+                calibration.updateResponseDate(date: Date())
+            }
+        }
+        LogController.log(
+            message: "[Dexcom G6] DexcomG6CalibrationRxMessage accepted : %@, calibrationResponseType : %@",
+            type: .debug,
+            message.accepted.description,
+            message.type.debugDescription
+        )
     }
 }
