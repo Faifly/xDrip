@@ -27,7 +27,7 @@ final class NotificationController: NSObject {
         setupNotificationObservers()
         
         addAppStoppedNotificationToQueue()
-        notAliveNotificationTimer = RepeatingTimer(timeInterval: TimeInterval(minutes: 1))
+        notAliveNotificationTimer = RepeatingTimer(timeInterval: TimeInterval(minutes: 9))
         notAliveNotificationTimer?.eventHandler = { [weak self] in
             self?.removeAppStoppedNotificationFromQueue()
             self?.addAppStoppedNotificationToQueue()
@@ -298,6 +298,31 @@ final class NotificationController: NSObject {
         }
     }
     
+    func sendReadingNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "Reading"
+        content.body = "Reading"
+        content.sound = .default
+        content.categoryIdentifier = defaultCategoryID
+        content.badge = 0
+        
+        let request = UNNotificationRequest(
+            identifier: "Reading",
+            content: content,
+            trigger: nil
+        )
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                LogController.log(
+                    message: "Error while add notification request to a queue",
+                    type: .error,
+                    error: error
+                )
+            }
+        }
+    }
+    
     func removeAppStoppedNotificationFromQueue() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["AppStoppedAlert"])
     }
@@ -310,7 +335,7 @@ final class NotificationController: NSObject {
         content.categoryIdentifier = defaultCategoryID
         content.badge = 0
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: .minutes(2), repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: .minutes(10), repeats: false)
         
         let request = UNNotificationRequest(
             identifier: "AppStoppedAlert",
