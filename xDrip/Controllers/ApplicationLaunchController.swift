@@ -18,7 +18,7 @@ enum ApplicationLaunchController {
         _ = AudioController.shared
         #if !targetEnvironment(macCatalyst)
         FirebaseApp.configure()
-        backgroundPlayer.startBackgroundTask()
+//        backgroundPlayer.startBackgroundTask()
         #endif
         setupRealm()
         setupDevice()

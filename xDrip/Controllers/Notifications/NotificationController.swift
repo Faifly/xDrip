@@ -27,7 +27,7 @@ final class NotificationController: NSObject {
         setupNotificationObservers()
         
         addAppStoppedNotificationToQueue()
-        notAliveNotificationTimer = RepeatingTimer(timeInterval: TimeInterval(minutes: 9))
+        notAliveNotificationTimer = RepeatingTimer(timeInterval: TimeInterval(minutes: 1))
         notAliveNotificationTimer?.eventHandler = { [weak self] in
             self?.removeAppStoppedNotificationFromQueue()
             self?.addAppStoppedNotificationToQueue()
@@ -310,7 +310,7 @@ final class NotificationController: NSObject {
         content.categoryIdentifier = defaultCategoryID
         content.badge = 0
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: .minutes(10), repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: .minutes(2), repeats: false)
         
         let request = UNNotificationRequest(
             identifier: "AppStoppedAlert",

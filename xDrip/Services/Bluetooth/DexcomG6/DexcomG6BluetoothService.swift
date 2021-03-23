@@ -12,7 +12,7 @@ import AKUtils
 
 final class DexcomG6BluetoothService: NSObject {
     private weak var delegate: CGMBluetoothServiceDelegate?
-    private let centralManager = CBCentralManager()
+    private var centralManager: CBCentralManager?
     private var isConnectionRequested = false
     private var centralManagerLastState: CBManagerState?
     private var messageWorker: DexcomG6MessageWorker?
@@ -34,27 +34,36 @@ final class DexcomG6BluetoothService: NSObject {
     
     override init() {
         super.init()
-        centralManagerLastState = centralManager.state
-        centralManager.delegate = self
+        centralManager = CBCentralManager(delegate: self,
+                                          queue: nil,
+                                          options: [CBCentralManagerOptionRestoreIdentifierKey: "uniqueDripX"])
+
+        centralManagerLastState = centralManager?.state
         messageWorker = DexcomG6MessageWorker(delegate: self)
     }
     
     private func startConnectionFlow() {
         LogController.log(message: "[Dexcom G6] Starting connection flow...", type: .debug)
-        if let existingPeripheral = retrieveExistingPeripheral() {
+        if let peripheral = peripheral {
+            LogController.log(
+                message: "[Dexcom G6] Trying to connect to peripheral...",
+                type: .debug
+            )
+            centralManager?.connect(peripheral, options: nil)
+        } else if let existingPeripheral = retrieveExistingPeripheral() {
             peripheral = existingPeripheral
             LogController.log(
                 message: "[Dexcom G6] Found existing peripheral, trying to connect...",
                 type: .debug
             )
-            centralManager.connect(existingPeripheral, options: nil)
+            centralManager?.connect(existingPeripheral, options: nil)
         } else {
             LogController.log(
                 message: "[Dexcom G6] No existing peripherals found, starting scanning...",
                 type: .debug
             )
             let advertisementID = CBUUID(string: DexcomG6Constants.advertisementServiceID)
-            centralManager.scanForPeripherals(withServices: [advertisementID], options: nil)
+            centralManager?.scanForPeripherals(withServices: [advertisementID], options: nil)
         }
     }
     
@@ -63,7 +72,7 @@ final class DexcomG6BluetoothService: NSObject {
         guard device.deviceType == .dexcomG6 else { return nil }
         guard let addressString = device.bluetoothID else { return nil }
         guard let addressID = UUID(uuidString: addressString) else { return nil }
-        return centralManager.retrievePeripherals(withIdentifiers: [addressID]).first
+        return centralManager?.retrievePeripherals(withIdentifiers: [addressID]).first
     }
     
     private func sendOutcomingMessage(_ message: DexcomG6OutgoingMessage) {
@@ -217,6 +226,19 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
 }
 
 extension DexcomG6BluetoothService: CBCentralManagerDelegate {
+    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String: Any]) {
+        if let peripheralsObject = dict[CBCentralManagerRestoredStatePeripheralsKey],
+           let peripherals = peripheralsObject as? [CBPeripheral] {
+            if !peripherals.isEmpty {
+                peripheral = peripherals.first
+                LogController.log(
+                    message: "[Dexcom G6] Restored peripheral...",
+                    type: .debug
+                )
+            }
+        }
+    }
+    
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
         case .poweredOn where isConnectionRequested: startConnectionFlow()
@@ -236,7 +258,7 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
         @unknown default: break
         }
         
-        centralManagerLastState = centralManager.state
+        centralManagerLastState = centralManager?.state
     }
     
     func centralManager(_ central: CBCentralManager,
@@ -379,7 +401,7 @@ extension DexcomG6BluetoothService: CBPeripheralDelegate {
             try messageWorker?.handleIncomingMessage(characteristic.value)
         } catch DexcomG6Error.notAuthenticated {
             self.peripheral = nil
-            centralManager.cancelPeripheralConnection(peripheral)
+            centralManager?.cancelPeripheralConnection(peripheral)
             
             LogController.log(
                 message: "[Dexcom G6] Connected to wrong peripheral, starting scanning for new one...",
@@ -387,7 +409,7 @@ extension DexcomG6BluetoothService: CBPeripheralDelegate {
             )
             
             let advertisementID = CBUUID(string: DexcomG6Constants.advertisementServiceID)
-            centralManager.scanForPeripherals(withServices: [advertisementID], options: nil)
+            centralManager?.scanForPeripherals(withServices: [advertisementID], options: nil)
         } catch {
             delegate?.serviceDidFail(
                 withError: .deviceSpecific(error: error as? LocalizedError ?? CGMBluetoothServiceError.unknown)
@@ -404,7 +426,7 @@ extension DexcomG6BluetoothService: CGMBluetoothService {
     
     func connect() {
         isConnectionRequested = true
-        if centralManager.state == .poweredOn {
+        if centralManager?.state == .poweredOn {
             startConnectionFlow()
         }
     }
@@ -412,7 +434,7 @@ extension DexcomG6BluetoothService: CGMBluetoothService {
     func disconnect() {
         guard let peripheral = peripheral else { return }
         if peripheral.state == .connected {
-            centralManager.cancelPeripheralConnection(peripheral)
+            centralManager?.cancelPeripheralConnection(peripheral)
         }
         self.isConnectionRequested = false
         self.lastPeripheralReadingDate = nil
