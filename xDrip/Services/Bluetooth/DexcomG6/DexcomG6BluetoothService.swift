@@ -43,6 +43,8 @@ final class DexcomG6BluetoothService: NSObject {
     }
     
     private func startConnectionFlow() {
+        NotificationController.shared.resetNotAliveNotification()
+
         LogController.log(message: "[Dexcom G6] Starting connection flow...", type: .debug)
         if let peripheral = peripheral {
             LogController.log(
