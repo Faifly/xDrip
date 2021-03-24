@@ -255,6 +255,7 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
         }
         
         centralManagerLastState = centralManager?.state
+        NotificationController.shared.resetNotAliveNotification()
     }
     
     func centralManager(_ central: CBCentralManager,

@@ -20,23 +20,26 @@ final class NotificationController: NSObject {
     private var alertSkipCount = [AlertEventType: Int]()
     private var notificationObservers = [NSObjectProtocol?]()
     
-    private var notAliveNotificationTimer: RepeatingTimer?
+    private var notAliveNotificationTimer: Timer?
     
     override private init() {
         super.init()
         setupNotificationObservers()
-        resetNotAliveNotification()
     }
     
     func resetNotAliveNotification() {
         removeAppStoppedNotificationFromQueue()
         addAppStoppedNotificationToQueue()
-        notAliveNotificationTimer = RepeatingTimer(timeInterval: TimeInterval(minutes: 6))
-        notAliveNotificationTimer?.eventHandler = { [weak self] in
-            self?.removeAppStoppedNotificationFromQueue()
-            self?.addAppStoppedNotificationToQueue()
-        }
-        notAliveNotificationTimer?.resume()
+        notAliveNotificationTimer?.invalidate()
+        notAliveNotificationTimer = Timer.scheduledTimer(
+            withTimeInterval: TimeInterval(minutes: 6),
+            repeats: true,
+            block: { [weak self] _ in
+                self?.removeAppStoppedNotificationFromQueue()
+                self?.addAppStoppedNotificationToQueue()
+            }
+        )
+
     }
     
     deinit {
@@ -45,6 +48,7 @@ final class NotificationController: NSObject {
     }
     
     func setupService() {
+        resetNotAliveNotification()
         getAuthStatus { [weak self] auth in
             switch auth {
             case .notDetermined:
