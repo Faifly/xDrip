@@ -274,9 +274,10 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         reading.findNewRawCurve()
         
         LogController.log(
-            message: "[Glucose] Created FromG6 reading with calculated value: %@",
+            message: "[Glucose] Created FromG6 reading with calculated value: %@, backfill: %@",
             type: .debug,
-            "\(reading.calculatedValue)"
+            "\(reading.calculatedValue)",
+            forBackfill.description
         )
         
         if !forBackfill {

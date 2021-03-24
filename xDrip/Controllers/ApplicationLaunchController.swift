@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 #if !targetEnvironment(macCatalyst)
 import FirebaseCore
-private let backgroundPlayer = BackgroundPlayer()
+//private let backgroundPlayer = BackgroundPlayer()
 #endif
 
 enum ApplicationLaunchController {

@@ -177,11 +177,6 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
     }
     
     func workerDidReceiveGlucoseBackfillMessage(_ message: DexcomG6BackfillRxMessage) {
-        LogController.log(
-            message: "[Dexcom G6] Glucose backfill request is %@",
-            type: .debug,
-            message.valid ? "confirmed" : "corrupted"
-        )
     }
 
     func workerDidReceiveBackfillData(_ backsies: [DexcomG6BackfillStream.Backsie]) {
@@ -227,7 +222,6 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
 
 extension DexcomG6BluetoothService: CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, willRestoreState dict: [String: Any]) {
-        NotificationController.shared.sendNotification(text: "willRestoreState")
         if let peripheralsObject = dict[CBCentralManagerRestoredStatePeripheralsKey],
            let peripherals = peripheralsObject as? [CBPeripheral] {
             if !peripherals.isEmpty {

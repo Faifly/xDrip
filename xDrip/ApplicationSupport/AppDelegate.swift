@@ -20,9 +20,6 @@ import UserNotifications
         ApplicationLaunchController.runAppLaunchSequence()
         window = ApplicationLaunchController.createWindow()
         
-        NotificationController.shared.sendNotification(text: "didFinishLaunchingWithOptions")
-
-        
         return true
     }
     
