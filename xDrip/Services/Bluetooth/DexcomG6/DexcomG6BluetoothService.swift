@@ -227,10 +227,12 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
 
 extension DexcomG6BluetoothService: CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, willRestoreState dict: [String: Any]) {
+        NotificationController.shared.sendNotification(text: "willRestoreState")
         if let peripheralsObject = dict[CBCentralManagerRestoredStatePeripheralsKey],
            let peripherals = peripheralsObject as? [CBPeripheral] {
             if !peripherals.isEmpty {
                 peripheral = peripherals.first
+                NotificationController.shared.sendNotification(text: "Restored peripheral...")
                 LogController.log(
                     message: "[Dexcom G6] Restored peripheral...",
                     type: .debug

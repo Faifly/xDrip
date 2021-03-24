@@ -284,8 +284,6 @@ final class GlucoseReading: Object, BaseGlucoseReading {
             NightscoutService.shared.scanForNotUploadedEntries()
         }
         
-        NotificationController.shared.sendReadingNotification()
-        
         clearOldReadings()
         
         return reading

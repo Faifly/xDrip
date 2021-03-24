@@ -20,6 +20,9 @@ import UserNotifications
         ApplicationLaunchController.runAppLaunchSequence()
         window = ApplicationLaunchController.createWindow()
         
+        NotificationController.shared.sendNotification(text: "didFinishLaunchingWithOptions")
+
+        
         return true
     }
     
@@ -43,6 +46,10 @@ import UserNotifications
                 sessionRole: connectingSceneSession.role
             )
         }
+    }
+    
+    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+        return true
     }
     
     override func buildMenu(with builder: UIMenuBuilder) {

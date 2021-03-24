@@ -298,10 +298,10 @@ final class NotificationController: NSObject {
         }
     }
     
-    func sendReadingNotification() {
+    func sendNotification(text: String) {
         let content = UNMutableNotificationContent()
-        content.title = "Reading"
-        content.body = "Reading"
+        content.title = text
+        content.body = text
         content.sound = .default
         content.categoryIdentifier = defaultCategoryID
         content.badge = 0
