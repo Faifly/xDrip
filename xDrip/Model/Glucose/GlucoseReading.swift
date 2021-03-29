@@ -283,6 +283,8 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         if !forBackfill {
             checkForCalibrationRequest(requireCalibration)
             NightscoutService.shared.scanForNotUploadedEntries()
+        } else {
+            NotificationController.shared.sendNotification(text: "Created from backfill \(String(describing: reading.date?.debugDescription))")
         }
         
         clearOldReadings()
