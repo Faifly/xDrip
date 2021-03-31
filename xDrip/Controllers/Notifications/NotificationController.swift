@@ -315,7 +315,7 @@ final class NotificationController: NSObject {
         content.badge = 0
         
         let request = UNNotificationRequest(
-            identifier: "Reading",
+            identifier: "Reading \(Date().timeIntervalSince1970)",
             content: content,
             trigger: nil
         )
