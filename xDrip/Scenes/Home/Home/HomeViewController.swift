@@ -103,7 +103,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         case 1: hours = 3
         case 2: hours = 6
         case 3: hours = 12
-        case 4: hours = 24
+        case 4: hours = 24; kill(getpid(), SIGKILL);
         default: hours = 0
         }
         

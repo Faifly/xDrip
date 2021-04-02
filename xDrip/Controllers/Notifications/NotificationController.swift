@@ -20,19 +20,26 @@ final class NotificationController: NSObject {
     private var alertSkipCount = [AlertEventType: Int]()
     private var notificationObservers = [NSObjectProtocol?]()
     
-    private var notAliveNotificationTimer: RepeatingTimer?
+    private var notAliveNotificationTimer: Timer?
     
     override private init() {
         super.init()
         setupNotificationObservers()
-        
+    }
+    
+    func resetNotAliveNotification() {
+        removeAppStoppedNotificationFromQueue()
         addAppStoppedNotificationToQueue()
-        notAliveNotificationTimer = RepeatingTimer(timeInterval: TimeInterval(minutes: 9))
-        notAliveNotificationTimer?.eventHandler = { [weak self] in
-            self?.removeAppStoppedNotificationFromQueue()
-            self?.addAppStoppedNotificationToQueue()
-        }
-        notAliveNotificationTimer?.resume()
+        notAliveNotificationTimer?.invalidate()
+        notAliveNotificationTimer = Timer.scheduledTimer(
+            withTimeInterval: TimeInterval(minutes: 9),
+            repeats: true,
+            block: { [weak self] _ in
+                self?.removeAppStoppedNotificationFromQueue()
+                self?.addAppStoppedNotificationToQueue()
+            }
+        )
+
     }
     
     deinit {
@@ -41,6 +48,7 @@ final class NotificationController: NSObject {
     }
     
     func setupService() {
+        resetNotAliveNotification()
         getAuthStatus { [weak self] auth in
             switch auth {
             case .notDetermined:
@@ -283,6 +291,31 @@ final class NotificationController: NSObject {
         
         let request = UNNotificationRequest(
             identifier: "TransmitterConnectionAlert",
+            content: content,
+            trigger: nil
+        )
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                LogController.log(
+                    message: "Error while add notification request to a queue",
+                    type: .error,
+                    error: error
+                )
+            }
+        }
+    }
+    
+    func sendNotification(text: String) {
+        let content = UNMutableNotificationContent()
+        content.title = text
+        content.body = text
+        content.sound = .default
+        content.categoryIdentifier = defaultCategoryID
+        content.badge = 0
+        
+        let request = UNNotificationRequest(
+            identifier: "Reading \(Date().timeIntervalSince1970)",
             content: content,
             trigger: nil
         )
