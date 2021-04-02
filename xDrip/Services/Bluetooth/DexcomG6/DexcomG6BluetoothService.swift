@@ -133,6 +133,10 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
                                                   date: Date(),
                                                   forBackfill: false)
         backFillIfNeeded()
+        
+        if message.state == .stopped {
+            messageWorker?.createSensorRestartRequest()
+        }
     }
     
     func workerDidReceiveTransmitterInfo(_ message: DexcomG6TransmitterVersionRxMessage) {
