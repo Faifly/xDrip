@@ -135,7 +135,9 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
         backFillIfNeeded()
         
         if message.state == .stopped {
-            messageWorker?.createSensorRestartRequest()
+            messageWorker?.createSensorRestartRequest(withStop: false)
+        } else if message.state == .sensorFailedStart {
+            messageWorker?.createSensorRestartRequest(withStop: false)
         }
     }
     

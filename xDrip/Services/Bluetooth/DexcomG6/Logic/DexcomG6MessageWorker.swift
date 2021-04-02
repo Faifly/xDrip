@@ -90,7 +90,7 @@ final class DexcomG6MessageWorker {
         trySendingMessageFromQueue()
     }
     
-    func createSensorRestartRequest() {
+    func createSensorRestartRequest(withStop: Bool) {
         guard let transmitterStartDate = CGMDevice.current.transmitterStartDate else {
             LogController.log(
                 message: "[Dexcom G6] Transmitter Start Date is nil",
@@ -108,16 +108,19 @@ final class DexcomG6MessageWorker {
 
         isRestartMessageAlreadyQueued = true
         
-        let when = Date().timeIntervalSince1970 - TimeInterval(hours: 2) - TimeInterval(minutes: 10)
+        var when = Date().timeIntervalSince1970
+        var whenStarted = when
         
-        let stopMessage = DexcomG6SessionStopTxMessage(stopTime: Int(when  - transmitterStartDate.timeIntervalSince1970))
-        messageQueue.append(stopMessage)
-        trySendingMessageFromQueue()
-        
-        let whenStarted = when + 1
+        if withStop {
+            when -= (TimeInterval(hours: 2) + TimeInterval(minutes: 10))
+            whenStarted += 1
+            let stopMessage = DexcomG6SessionStopTxMessage(stopTime: Int(when  - transmitterStartDate.timeIntervalSince1970))
+            messageQueue.append(stopMessage)
+            trySendingMessageFromQueue()
+        }
         
         let startMessage = DexcomG6SessionStartTxMessage(startTime: Int(when),
-                                                    dexTime: Int(whenStarted - transmitterStartDate.timeIntervalSince1970))
+                                                         dexTime: Int(whenStarted - transmitterStartDate.timeIntervalSince1970))
         messageQueue.append(startMessage)
         trySendingMessageFromQueue()
     }
