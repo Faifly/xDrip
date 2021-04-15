@@ -76,7 +76,7 @@ final class LightGlucoseReading: Object, BaseGlucoseReading {
     
     private static func clearOldReadings() {
         let oldReadings = allReadings
-            .filter(.earlierThan(date: Date().addingTimeInterval(-(.secondsPerDay * 90))))
+            .filter(.earlierThan(date: Date().addingTimeInterval(-(Constants.observablePeriod))))
         let realm = Realm.shared
         realm.safeWrite {
             realm.delete(oldReadings)

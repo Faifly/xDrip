@@ -211,6 +211,7 @@ class HistoryRootViewController: NibViewController, HistoryRootDisplayLogic {
         #endif
         
         datePicker.addTarget(self, action: #selector(didPickDate), for: .valueChanged)
+        datePicker.minimumDate = Date().addingTimeInterval(-(Constants.observablePeriod))
         datePicker.maximumDate = Date()
         datePicker.datePickerMode = .date
         
