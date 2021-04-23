@@ -150,56 +150,43 @@ class BaseHistoryView: UIView {
     func updateChartSliderView(with scrollSegments: CGFloat) {
     }
     
+    func roundUp(toRound: Int) -> Int {
+        if (toRound % 10 == 0) {
+            return toRound
+        }
+        return (10 - toRound % 10) + toRound
+    }
+    
+    func roundDown(toRound: Int) -> Int {
+        return toRound - toRound % 10
+    }
+    
     func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?) {
-        guard var minValue = minValue else { return }
-        guard var maxValue = maxValue else { return }
+        guard let minValue = minValue else { return }
+        guard let maxValue = maxValue else { return }
+        let maxV = Int(maxValue)
+        let minV = Int(minValue)
+       
         let unit = User.current.settings.unit
         
-        if unit == .mgDl {
-            minValue = minValue.rounded(.down)
-            maxValue = maxValue.rounded(.up)
-        }
+        let diff = maxV - minV
+        let linesCount = (diff < maxVerticalLinesCount - 1) ? diff + 1 : maxVerticalLinesCount
+        let step = roundUp(toRound: diff / (linesCount - 1))
         
-        minValue *= 10.0
-        maxValue *= 10.0
-        
-        minValue = minValue.rounded(.down)
-        maxValue = maxValue.rounded(.up)
-        
-        let alphaValue = 0.20 * (maxValue - minValue)
-        var adjustedMinValue = max((minValue - alphaValue).rounded(.down), 0.0)
-        var adjustedMaxValue = (maxValue + alphaValue).rounded(.up)
-        if (adjustedMinValue / 10.0) ~~ (adjustedMaxValue / 10.0) {
-            adjustedMinValue = max(adjustedMinValue - 10.0, 0.0)
-            adjustedMaxValue += 10.0
-        }
-        
-        let diff = adjustedMaxValue - adjustedMinValue
-        var verticalLines: Int
-        if Int(diff / 10) < maxVerticalLinesCount - 1 {
-            verticalLines = Int(diff / 10) + 1
-        } else {
-            verticalLines = maxVerticalLinesCount
-        }
-        
-        let tail = Int(diff) % (verticalLines - 1)
-        if tail != 0 {
-            adjustedMaxValue += Double((verticalLines - 1) - tail)
-        }
-        
-        let step = (diff / Double(verticalLines - 1)).rounded()
+        let adjustedMinValue = max(roundDown(toRound: minV), 0)
+        let adjustedMaxValue = adjustedMinValue + (step * linesCount)
         
         var labels: [String] = []
         let format = unit == .mmolL ? "%0.1f" : "%0.f"
-        for index in 0..<verticalLines {
-            labels.append(String(format: format, (adjustedMinValue + step * Double(index)) / 10.0))
+        for index in 0..<linesCount {
+            labels.append(String(format: format, Double(adjustedMinValue + (step * index))))
         }
         
         leftLabelsView.labels = labels
         leftLabelsView.setNeedsDisplay()
         chartView.verticalLinesCount = labels.count
 
-        chartView.yRange = (adjustedMinValue / 10.0)...(adjustedMaxValue / 10.0)
+        chartView.yRange = Double(adjustedMinValue)...Double(adjustedMaxValue)
     }
     
     private func calculateHorizontalBottomLabels() {
