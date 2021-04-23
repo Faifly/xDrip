@@ -151,7 +151,7 @@ class BaseHistoryView: UIView {
     }
     
     func roundUp(toRound: Int) -> Int {
-        if (toRound % 10 == 0) {
+        if toRound % 10 == 0 {
             return toRound
         }
         return (10 - toRound % 10) + toRound
@@ -164,22 +164,24 @@ class BaseHistoryView: UIView {
     func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?) {
         guard let minValue = minValue else { return }
         guard let maxValue = maxValue else { return }
-        let maxV = Int(maxValue)
-        let minV = Int(minValue)
-       
         let unit = User.current.settings.unit
-        
+        let verticalPadding = 10
+        let maxV = Int(maxValue.rounded(.up)) + 2 * verticalPadding
+        let minV = Int(minValue.rounded(.down)) - verticalPadding
         let diff = maxV - minV
-        let linesCount = (diff < maxVerticalLinesCount - 1) ? diff + 1 : maxVerticalLinesCount
-        let step = roundUp(toRound: diff / (linesCount - 1))
+        let linesCount = maxVerticalLinesCount
+        let step = Int((Double(diff) / Double((linesCount - 1))).rounded(.up))
+        let stepAdjusted = roundUp(toRound: step)
+        let stepDiff = (stepAdjusted - step) * (linesCount - 1)
+        let adjustedMinValue = max(roundDown(toRound: minV - (stepDiff / 2)), 0)
+        let adjustedMaxValue = adjustedMinValue + (stepAdjusted * (linesCount - 1))
         
-        let adjustedMinValue = max(roundDown(toRound: minV), 0)
-        let adjustedMaxValue = adjustedMinValue + (step * linesCount)
-        
+        print("diff \(diff)")
+
         var labels: [String] = []
         let format = unit == .mmolL ? "%0.1f" : "%0.f"
         for index in 0..<linesCount {
-            labels.append(String(format: format, Double(adjustedMinValue + (step * index))))
+            labels.append(String(format: format, Double(adjustedMinValue + (stepAdjusted * index))))
         }
         
         leftLabelsView.labels = labels
