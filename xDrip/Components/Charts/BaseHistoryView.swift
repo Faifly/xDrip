@@ -166,23 +166,29 @@ class BaseHistoryView: UIView {
         guard let maxValue = maxValue else { return }
         let unit = User.current.settings.unit
         let verticalPadding = 10
-        let maxV = Int(maxValue.rounded(.up)) + 2 * verticalPadding
-        let minV = Int(minValue.rounded(.down)) - verticalPadding
-        let diff = maxV - minV
-        let linesCount = maxVerticalLinesCount
-        let step = Int((Double(diff) / Double((linesCount - 1))).rounded(.up))
-        let stepAdjusted = roundUp(toRound: step)
-        let stepDiff = (stepAdjusted - step) * (linesCount - 1)
-        let adjustedMinValue = max(roundDown(toRound: minV - (stepDiff / 2)), 0)
-        let adjustedMaxValue = adjustedMinValue + (stepAdjusted * (linesCount - 1))
-        
-        print("diff \(diff)")
+        var maxV = Int(maxValue.rounded(.up))
+        var minV = Int(minValue.rounded(.down))
+        let realDiff = maxV - minV
+        var diff = maxV - minV
+        let multiplier = (diff / 100) + 1
+        maxV = roundUp(toRound: maxV + (multiplier * verticalPadding))
+        minV = roundDown(toRound: minV - (multiplier * verticalPadding))
+        diff = maxV - minV
+        let linesCount = max((realDiff / 10) + 1, 2)
+        let adjustedLinesCount = min(linesCount, maxVerticalLinesCount)
+        let step = Int((Double(diff) / Double((adjustedLinesCount - 1))).rounded(.up))
+        let adjustedStep = roundUp(toRound: step)
+        let adjustedMinValue = max(minV, 0)
+        let adjustedMaxValue = adjustedMinValue + (adjustedStep * (adjustedLinesCount - 1))
 
         var labels: [String] = []
         let format = unit == .mmolL ? "%0.1f" : "%0.f"
-        for index in 0..<linesCount {
-            labels.append(String(format: format, Double(adjustedMinValue + (stepAdjusted * index))))
+        for index in 0..<adjustedLinesCount {
+            labels.append(String(format: format, Double(adjustedMinValue + (adjustedStep * index))))
         }
+        
+        print("diff \(diff)")
+        print("realDiff \(realDiff)")
         
         leftLabelsView.labels = labels
         leftLabelsView.setNeedsDisplay()
