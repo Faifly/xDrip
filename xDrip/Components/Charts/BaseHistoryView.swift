@@ -150,23 +150,25 @@ class BaseHistoryView: UIView {
     func updateChartSliderView(with scrollSegments: CGFloat) {
     }
         
-    func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?) {
+    func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?, isForGlucose: Bool = true) {
         guard let minValue = minValue else { return }
         guard let maxValue = maxValue else { return }
         let unit = User.current.settings.unit
-        let verticalPadding = unit == .mmolL ? 1 : 10
+        let isForMmolL = isForGlucose && (unit == .mmolL)
+        
+        let verticalPadding = isForMmolL ? 1 : 10
         let maxV = Int(maxValue.rounded(.up))
         let minV = Int(minValue.rounded(.down))
-        let adjustedMinValue = max(minV.roundedDown - verticalPadding, 0)
-        let linesCount = max(((maxV - minV) / 10) + 1, 2)
+        let adjustedMinValue = max((isForMmolL ? minV : minV.roundedDown) - verticalPadding, 0)
+        let linesCount = max(((maxV - minV) / (isForMmolL ? 1 : 10)) + 1, 2)
         let adjustedLinesCount = min(linesCount, maxVerticalLinesCount)
         let diff = (maxV + verticalPadding) - adjustedMinValue
         let step = Int((Double(diff) / Double((adjustedLinesCount - 1))).rounded(.up))
-        let adjustedStep = step.roundedUp
+        let adjustedStep = (isForMmolL ? step : step.roundedUp)
         let adjustedMaxValue = adjustedMinValue + (adjustedStep * (adjustedLinesCount - 1))
 
         var labels: [String] = []
-        let format = unit == .mmolL ? "%0.1f" : "%0.f"
+        let format = isForMmolL ? "%0.1f" : "%0.f"
         for index in 0..<adjustedLinesCount {
             labels.append(String(format: format, Double(adjustedMinValue + (adjustedStep * index))))
         }

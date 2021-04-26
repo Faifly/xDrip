@@ -82,7 +82,8 @@ final class EntriesHistoryView: BaseHistoryView {
     
     override func updateChart() {
         super.calculateVerticalLeftLabels(minValue: chartEntries.map({ $0.value }).min(),
-                                          maxValue: chartEntries.map({ $0.value }).max())
+                                          maxValue: chartEntries.map({ $0.value }).max(),
+                                          isForGlucose: false)
         super.updateChart()
     }
     

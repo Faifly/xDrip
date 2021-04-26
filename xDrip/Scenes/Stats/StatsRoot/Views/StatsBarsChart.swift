@@ -234,12 +234,13 @@ final class StatsBarsChart: BaseChartView {
         let maxValue = Int(values.max(by: { $0.upperBound < $1.upperBound })?.upperBound ?? 0.0)
         
         let unit = User.current.settings.unit
-        let verticalPadding = unit == .mmolL ? 1 : 10
+        let isForMmolL = unit == .mmolL
         
-        let adjustedMinValue = max(minValue.roundedDown - verticalPadding, 0)
+        let verticalPadding = isForMmolL ? 1 : 10
+        let adjustedMinValue = max((isForMmolL ? minValue : minValue.roundedDown) - verticalPadding, 0)
         let diff = (maxValue + verticalPadding) - adjustedMinValue
         let step = Int((Double(diff) / Double((verticalCount - 1))).rounded(.up))
-        let adjustedStep = step.roundedUp
+        let adjustedStep = (isForMmolL ? step : step.roundedUp)
         let adjustedMaxValue = adjustedMinValue + (adjustedStep * (verticalCount - 1))
         
         visualStep = adjustedStep
