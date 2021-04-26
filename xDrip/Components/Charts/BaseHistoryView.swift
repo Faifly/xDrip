@@ -122,7 +122,7 @@ class BaseHistoryView: UIView {
         localDateRange = DateInterval(endDate: globalDateRange.end, duration: localDuration)
     }
     
-    func updateChart() {
+    func updateChart(respectScreenWidth: Bool = false) {
         calculateHorizontalBottomLabels()
         
         let scrollSegments = max(
@@ -132,13 +132,15 @@ class BaseHistoryView: UIView {
             1.0
         )
         var chartWidth = scrollContainer.bounds.width * scrollSegments
-        #if os(iOS)
-        let width = UIScreen.main.bounds.width
-        if width < 414.0 {
-            multiplier = 1.6 + (414.0 / width) - 1
+        if respectScreenWidth {
+            #if os(iOS)
+            let width = UIScreen.main.bounds.width
+            if width < 414.0 {
+                multiplier = 1.6 + (414.0 / width) - 1
+            }
+            #endif
+            chartWidth *= multiplier
         }
-        #endif
-        chartWidth *= multiplier
         chartWidthConstraint?.constant = chartWidth
         chartView.dateInterval = globalDateRange
         chartView.setNeedsDisplay()

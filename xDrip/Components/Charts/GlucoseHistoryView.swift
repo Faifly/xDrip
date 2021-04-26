@@ -187,10 +187,10 @@ final class GlucoseHistoryView: BaseHistoryView {
         detailsView?.setHidden(true)
     }
     
-    override func updateChart() {
+    override func updateChart(respectScreenWidth: Bool) {
         super.calculateVerticalLeftLabels(minValue: glucoseEntries.map({ $0.value }).min(),
                                           maxValue: glucoseEntries.map({ $0.value }).max())
-        super.updateChart()
+        super.updateChart(respectScreenWidth: true)
         updateGlucoseDataView()
         setupRightLabelViewsAnchorConstraint()
         calculateVerticalRightLabels()
