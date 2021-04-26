@@ -80,9 +80,10 @@ final class EntriesHistoryView: BaseHistoryView {
                                          constant: -bounds.height / 5).isActive = true
             }
     
-    override func updateChart(respectScreenWidth: Bool) {
+    override func updateChart() {
         super.calculateVerticalLeftLabels(minValue: chartEntries.map({ $0.value }).min(),
-                                          maxValue: chartEntries.map({ $0.value }).max())
+                                          maxValue: chartEntries.map({ $0.value }).max(),
+                                          isForGlucose: false)
         super.updateChart()
     }
     

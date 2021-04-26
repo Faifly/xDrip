@@ -56,19 +56,14 @@ final class StatsChartView: UIView {
     
     func update(with data: [StatsChartEntry]) {
         linesChart.entries = data
-        
-        let formatter = NumberFormatter()
         let unit = User.current.settings.unit
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = unit == .mgDl ? 0 : 1
-        formatter.minimumFractionDigits = unit == .mgDl ? 0 : 1
-        let step = (linesChart.visualMaxValue - linesChart.visualMinValue) / Double(linesChart.verticalCount - 1)
-        verticalLabelsView.labels = [Int](0..<linesChart.verticalCount)
-            .compactMap {
-                let value = linesChart.visualMinValue + Double($0) * step
-                let numberValue = value as NSNumber
-                return formatter.string(from: numberValue)
-            }
+        
+        var labels: [String] = []
+        let format = unit == .mmolL ? "%0.1f" : "%0.f"
+        for index in 0..<linesChart.verticalCount {
+            labels.append(String(format: format, Double(linesChart.visualMinValue + (linesChart.visualStep * index))))
+        }
+        verticalLabelsView.labels = labels
         
         linesChart.setNeedsDisplay()
         verticalLabelsView.setNeedsDisplay()

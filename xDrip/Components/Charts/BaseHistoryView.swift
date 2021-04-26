@@ -16,7 +16,6 @@ class BaseHistoryView: UIView {
     let scrollContainer = ChartScrollContainer()
     let leftLabelsView = ChartVerticalLabelsView()
     var chartView = BaseChartView()
-    var multiplier = CGFloat(1.6)
     weak var chartWidthConstraint: NSLayoutConstraint?
     
     var globalDateRange = DateInterval()
@@ -122,7 +121,7 @@ class BaseHistoryView: UIView {
         localDateRange = DateInterval(endDate: globalDateRange.end, duration: localDuration)
     }
     
-    func updateChart(respectScreenWidth: Bool = false) {
+    func updateChart() {
         calculateHorizontalBottomLabels()
         
         let scrollSegments = max(
@@ -131,81 +130,50 @@ class BaseHistoryView: UIView {
             ),
             1.0
         )
-        var chartWidth = scrollContainer.bounds.width * scrollSegments
-        if respectScreenWidth {
-            #if os(iOS)
-            let width = UIScreen.main.bounds.width
-            if width < 414.0 {
-                multiplier = 1.6 + (414.0 / width) - 1
-            }
-            #endif
-            chartWidth *= multiplier
-        }
+        let chartWidth = scrollContainer.bounds.width * scrollSegments
         chartWidthConstraint?.constant = chartWidth
         chartView.dateInterval = globalDateRange
         chartView.setNeedsDisplay()
-        updateChartSliderView(with: scrollSegments * multiplier)
+        updateChartSliderView(with: scrollSegments)
         scrollContainer.layoutIfNeeded()
         scrollContainer.scrollView.contentOffset = CGPoint(x: chartWidth - scrollContainer.bounds.width, y: 0.0)
     }
     
     func updateChartSliderView(with scrollSegments: CGFloat) {
     }
-    
-    func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?) {
-        guard var minValue = minValue else { return }
-        guard var maxValue = maxValue else { return }
+        
+    func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?, isForGlucose: Bool = true) {
+        guard let minValue = minValue else { return }
+        guard let maxValue = maxValue else { return }
         let unit = User.current.settings.unit
+        let isForMmolL = isForGlucose && (unit == .mmolL)
         
-        if unit == .mgDl {
-            minValue = minValue.rounded(.down)
-            maxValue = maxValue.rounded(.up)
-        }
-        
-        minValue *= 10.0
-        maxValue *= 10.0
-        
-        minValue = minValue.rounded(.down)
-        maxValue = maxValue.rounded(.up)
-        
-        let alphaValue = 0.20 * (maxValue - minValue)
-        var adjustedMinValue = max((minValue - alphaValue).rounded(.down), 0.0)
-        var adjustedMaxValue = (maxValue + alphaValue).rounded(.up)
-        if (adjustedMinValue / 10.0) ~~ (adjustedMaxValue / 10.0) {
-            adjustedMinValue = max(adjustedMinValue - 10.0, 0.0)
-            adjustedMaxValue += 10.0
-        }
-        
-        let diff = adjustedMaxValue - adjustedMinValue
-        var verticalLines: Int
-        if Int(diff / 10) < maxVerticalLinesCount - 1 {
-            verticalLines = Int(diff / 10) + 1
-        } else {
-            verticalLines = maxVerticalLinesCount
-        }
-        
-        let tail = Int(diff) % (verticalLines - 1)
-        if tail != 0 {
-            adjustedMaxValue += Double((verticalLines - 1) - tail)
-        }
-        
-        let step = (diff / Double(verticalLines - 1)).rounded()
-        
+        let verticalPadding = isForMmolL ? 1 : 10
+        let maxV = Int(maxValue.rounded(.up))
+        let minV = Int(minValue.rounded(.down))
+        let adjustedMinValue = max((isForMmolL ? minV : minV.roundedDown) - verticalPadding, 0)
+        let linesCount = max(((maxV - minV) / (isForMmolL ? 1 : 10)) + 1, 2)
+        let adjustedLinesCount = min(linesCount, maxVerticalLinesCount)
+        let diff = (maxV + verticalPadding) - adjustedMinValue
+        let step = Int((Double(diff) / Double((adjustedLinesCount - 1))).rounded(.up))
+        let adjustedStep = (isForMmolL ? step : step.roundedUp)
+        let adjustedMaxValue = adjustedMinValue + (adjustedStep * (adjustedLinesCount - 1))
+
         var labels: [String] = []
-        let format = unit == .mmolL ? "%0.1f" : "%0.f"
-        for index in 0..<verticalLines {
-            labels.append(String(format: format, (adjustedMinValue + step * Double(index)) / 10.0))
+        let format = isForMmolL ? "%0.1f" : "%0.f"
+        for index in 0..<adjustedLinesCount {
+            labels.append(String(format: format, Double(adjustedMinValue + (adjustedStep * index))))
         }
         
         leftLabelsView.labels = labels
         leftLabelsView.setNeedsDisplay()
         chartView.verticalLinesCount = labels.count
 
-        chartView.yRange = (adjustedMinValue / 10.0)...(adjustedMaxValue / 10.0)
+        chartView.yRange = Double(adjustedMinValue)...Double(adjustedMaxValue)
     }
     
     private func calculateHorizontalBottomLabels() {
-        var globalHorizontalLabels: [String] = []
+        var globalHorizontalLabels: [ChartBottomLabel] = []
         
         let interval = horizontalInterval(for: localDateRange.duration)
         
@@ -232,21 +200,25 @@ class BaseHistoryView: UIView {
         }
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd"
+        dateFormatter.setLocalizedDateFormatFromTemplate("MMM dd")
         let hoursFormatter = DateFormatter()
-        hoursFormatter.dateFormat = "H:mm"
+        hoursFormatter.dateFormat = localInterval > .secondsPerHour ? "H" : "H:mm"
         
         var endGridTime = initialGridDate.timeIntervalSince1970
         while endGridTime > globalDateRange.start.timeIntervalSince1970 {
             let date = Date(timeIntervalSince1970: endGridTime)
-            let stringDate = hoursFormatter.string(from: date)
             
-            if stringDate == "0:00" || stringDate == "12:00 AM" {
-                globalHorizontalLabels.append(dateFormatter.string(from: date))
+            let calendar = NSCalendar.current
+            let unitFlags: Set<Calendar.Component> = [.hour, .minute]
+            let components = calendar.dateComponents(unitFlags, from: date)
+    
+            if components.hour == 0, components.minute == 0, localInterval > .secondsPerHour {
+                globalHorizontalLabels.append(ChartBottomLabel(title: dateFormatter.string(from: date),
+                                                               isCentered: true))
             } else {
-                globalHorizontalLabels.append(stringDate)
+                globalHorizontalLabels.append(ChartBottomLabel(title: hoursFormatter.string(from: date)))
             }
-            
+
             endGridTime -= interval
         }
         
@@ -262,7 +234,8 @@ class BaseHistoryView: UIView {
         switch hours {
         case 0...1: return 10.0 * .secondsPerMinute
         case 2...11: return .secondsPerHour
-        default: return .secondsPerHour * 3.0
+        case 12...23: return .secondsPerHour * 3.0
+        default: return .secondsPerHour * 4.0
         }
     }
 }
