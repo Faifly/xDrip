@@ -187,10 +187,10 @@ final class GlucoseHistoryView: BaseHistoryView {
         detailsView?.setHidden(true)
     }
     
-    override func updateChart(respectScreenWidth: Bool) {
+    override func updateChart() {
         super.calculateVerticalLeftLabels(minValue: glucoseEntries.map({ $0.value }).min(),
                                           maxValue: glucoseEntries.map({ $0.value }).max())
-        super.updateChart(respectScreenWidth: true)
+        super.updateChart()
         updateGlucoseDataView()
         setupRightLabelViewsAnchorConstraint()
         calculateVerticalRightLabels()
@@ -206,9 +206,9 @@ final class GlucoseHistoryView: BaseHistoryView {
         let scrollView = scrollContainer.scrollView
         let currentRelativeOffset = scrollView.contentOffset.x / scrollView.contentSize.width
         let globalDurationOffset = globalDateRange.duration * TimeInterval(currentRelativeOffset)
-        let localOffsettedInterval = localInterval / Double(multiplier)
+        let localOffsettedInterval = localInterval
         let endDate = globalDateRange.start + globalDurationOffset + localOffsettedInterval
-        let dateInterval = DateInterval(endDate: endDate, duration: localOffsettedInterval)
+        let dateInterval = DateInterval(endDate: endDate, duration: localInterval)
         callback(dateInterval)
     }
     
@@ -222,7 +222,7 @@ final class GlucoseHistoryView: BaseHistoryView {
         )
         let globalDurationOffset = globalDateRange.duration * TimeInterval(currentRelativeOffset)
         let localOffsettedInterval = localInterval + forwardTimeOffset / scrollSegments
-        let localDurationOffset = localOffsettedInterval * TimeInterval(userRelativeSelection) / Double(multiplier)
+        let localDurationOffset = localOffsettedInterval * TimeInterval(userRelativeSelection)
         let currentRelativeStartTime = globalDurationOffset + localDurationOffset
         let selectedDate = globalDateRange.start + currentRelativeStartTime
         if let entry = nearestEntry(forDate: selectedDate) {

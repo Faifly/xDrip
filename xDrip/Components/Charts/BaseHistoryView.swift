@@ -16,7 +16,6 @@ class BaseHistoryView: UIView {
     let scrollContainer = ChartScrollContainer()
     let leftLabelsView = ChartVerticalLabelsView()
     var chartView = BaseChartView()
-    var multiplier = CGFloat(1.6)
     weak var chartWidthConstraint: NSLayoutConstraint?
     
     var globalDateRange = DateInterval()
@@ -122,7 +121,7 @@ class BaseHistoryView: UIView {
         localDateRange = DateInterval(endDate: globalDateRange.end, duration: localDuration)
     }
     
-    func updateChart(respectScreenWidth: Bool = false) {
+    func updateChart() {
         calculateHorizontalBottomLabels()
         
         let scrollSegments = max(
@@ -131,20 +130,11 @@ class BaseHistoryView: UIView {
             ),
             1.0
         )
-        var chartWidth = scrollContainer.bounds.width * scrollSegments
-        if respectScreenWidth {
-            #if os(iOS)
-            let width = UIScreen.main.bounds.width
-            if width < 414.0 {
-                multiplier = 1.6 + (414.0 / width) - 1
-            }
-            #endif
-            chartWidth *= multiplier
-        }
+        let chartWidth = scrollContainer.bounds.width * scrollSegments
         chartWidthConstraint?.constant = chartWidth
         chartView.dateInterval = globalDateRange
         chartView.setNeedsDisplay()
-        updateChartSliderView(with: scrollSegments * multiplier)
+        updateChartSliderView(with: scrollSegments)
         scrollContainer.layoutIfNeeded()
         scrollContainer.scrollView.contentOffset = CGPoint(x: chartWidth - scrollContainer.bounds.width, y: 0.0)
     }
@@ -231,21 +221,15 @@ class BaseHistoryView: UIView {
             initialGridDate = Calendar.current.date(from: components) ?? now
         }
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd"
         let hoursFormatter = DateFormatter()
-        hoursFormatter.dateFormat = "H:mm"
+        hoursFormatter.dateFormat = localInterval > .secondsPerHour ? "H" : "H:mm"
         
         var endGridTime = initialGridDate.timeIntervalSince1970
         while endGridTime > globalDateRange.start.timeIntervalSince1970 {
             let date = Date(timeIntervalSince1970: endGridTime)
             let stringDate = hoursFormatter.string(from: date)
             
-            if stringDate == "0:00" || stringDate == "12:00 AM" {
-                globalHorizontalLabels.append(dateFormatter.string(from: date))
-            } else {
-                globalHorizontalLabels.append(stringDate)
-            }
+            globalHorizontalLabels.append(stringDate)
             
             endGridTime -= interval
         }
