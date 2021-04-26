@@ -199,6 +199,26 @@ final class GlucoseHistoryView: BaseHistoryView {
         glucoseChartView.dateInterval = globalDateRange
         glucoseChartView.basalDisplayMode = basalDisplayMode
         glucoseChartView.setNeedsDisplay()
+        
+        let scrollSegments = max(
+            CGFloat(
+                (globalDateRange.duration - forwardTimeOffset) / (localDateRange.duration - forwardTimeOffset)
+            ),
+            1.0
+        )
+        
+        var chartWidth = scrollContainer.bounds.width * scrollSegments
+        #if os(iOS)
+        let width = UIScreen.main.bounds.width
+        if width < 414.0 {
+            multiplier = 1.6 + (414.0 / width) - 1
+        }
+        #endif
+        chartWidth *= multiplier
+        chartWidthConstraint?.constant = chartWidth
+        updateChartSliderView(with: scrollSegments * multiplier)
+        scrollContainer.layoutIfNeeded()
+        scrollContainer.scrollView.contentOffset = CGPoint(x: chartWidth - scrollContainer.bounds.width, y: 0.0)
     }
     
     private func updateGlucoseDataView() {
