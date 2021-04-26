@@ -149,36 +149,20 @@ class BaseHistoryView: UIView {
     
     func updateChartSliderView(with scrollSegments: CGFloat) {
     }
-    
-    func roundUp(toRound: Int) -> Int {
-        if toRound % 10 == 0 {
-            return toRound
-        }
-        return (10 - toRound % 10) + toRound
-    }
-    
-    func roundDown(toRound: Int) -> Int {
-        return toRound - toRound % 10
-    }
-    
+        
     func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?) {
         guard let minValue = minValue else { return }
         guard let maxValue = maxValue else { return }
         let unit = User.current.settings.unit
-        let verticalPadding = 10
-        var maxV = Int(maxValue.rounded(.up))
-        var minV = Int(minValue.rounded(.down))
-        let realDiff = maxV - minV
-        var diff = maxV - minV
-        let multiplier = (diff / 100) + 1
-        maxV = roundUp(toRound: maxV + (multiplier * verticalPadding))
-        minV = roundDown(toRound: minV - (multiplier * verticalPadding))
-        diff = maxV - minV
-        let linesCount = max((realDiff / 10) + 1, 2)
+        let verticalPadding = unit == .mmolL ? 1 : 10
+        let maxV = Int(maxValue.rounded(.up))
+        let minV = Int(minValue.rounded(.down))
+        let adjustedMinValue = max(minV.roundedDown - verticalPadding, 0)
+        let linesCount = max(((maxV - minV) / 10) + 1, 2)
         let adjustedLinesCount = min(linesCount, maxVerticalLinesCount)
+        let diff = (maxV + verticalPadding) - adjustedMinValue
         let step = Int((Double(diff) / Double((adjustedLinesCount - 1))).rounded(.up))
-        let adjustedStep = roundUp(toRound: step)
-        let adjustedMinValue = max(minV, 0)
+        let adjustedStep = step.roundedUp
         let adjustedMaxValue = adjustedMinValue + (adjustedStep * (adjustedLinesCount - 1))
 
         var labels: [String] = []
@@ -186,9 +170,6 @@ class BaseHistoryView: UIView {
         for index in 0..<adjustedLinesCount {
             labels.append(String(format: format, Double(adjustedMinValue + (adjustedStep * index))))
         }
-        
-        print("diff \(diff)")
-        print("realDiff \(realDiff)")
         
         leftLabelsView.labels = labels
         leftLabelsView.setNeedsDisplay()
