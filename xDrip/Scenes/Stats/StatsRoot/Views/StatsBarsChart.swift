@@ -22,10 +22,9 @@ final class StatsBarsChart: BaseChartView {
     
     var onSelectionChange: ((Int?) -> Void)?
     
-    private var minValue: Double = 0.0
-    private var maxValue: Double = 0.0
-    private(set) var visualMinValue: Double = 0.0
-    private(set) var visualMaxValue: Double = 0.0
+    private(set) var visualMinValue: Int = 0
+    private(set) var visualMaxValue: Int = 0
+    private(set) var visualStep: Int = 0
     let verticalCount = 8
     
     private var selectedSector: Int? {
@@ -91,11 +90,11 @@ final class StatsBarsChart: BaseChartView {
             }
             
             let yInterval = Double(bounds.height - chartInsets.bottom - chartInsets.top)
-            let pixelsPerValue = yInterval / (visualMaxValue - visualMinValue)
+            let pixelsPerValue = yInterval / Double(visualMaxValue - visualMinValue)
             
             let lineCenter = widthPerSector / 2.0 + currentOffset
-            let lineTop = CGFloat((visualMaxValue - value.upperBound) * pixelsPerValue)
-            let lineBottom = CGFloat((visualMaxValue - value.lowerBound) * pixelsPerValue)
+            let lineTop = CGFloat((Double(visualMaxValue) - value.upperBound) * pixelsPerValue)
+            let lineBottom = CGFloat((Double(visualMaxValue) - value.lowerBound) * pixelsPerValue)
             
             context.setLineWidth(lineWidth)
             
@@ -205,13 +204,13 @@ final class StatsBarsChart: BaseChartView {
             let x2 = widthPerSector * CGFloat(index2 + 1) - widthPerSector / 2.0
             
             let yInterval = Double(bounds.height - chartInsets.bottom - chartInsets.top)
-            let pixelsPerValue = yInterval / (visualMaxValue - visualMinValue)
+            let pixelsPerValue = yInterval / Double(visualMaxValue - visualMinValue)
             
-            let entry1Top = CGFloat((visualMaxValue - value1.upperBound) * pixelsPerValue)
-            let entry1Bottom = CGFloat((visualMaxValue - value1.lowerBound) * pixelsPerValue)
+            let entry1Top = CGFloat((Double(visualMaxValue) - value1.upperBound) * pixelsPerValue)
+            let entry1Bottom = CGFloat((Double(visualMaxValue) - value1.lowerBound) * pixelsPerValue)
             
-            let entry2Top = CGFloat((visualMaxValue - value2.upperBound) * pixelsPerValue)
-            let entry2Bottom = CGFloat((visualMaxValue - value2.lowerBound) * pixelsPerValue)
+            let entry2Top = CGFloat((Double(visualMaxValue) - value2.upperBound) * pixelsPerValue)
+            let entry2Bottom = CGFloat((Double(visualMaxValue) - value2.lowerBound) * pixelsPerValue)
             
             let y1 = (entry1Top + entry1Bottom) / 2.0
             let y2 = (entry2Top + entry2Bottom) / 2.0
@@ -231,33 +230,21 @@ final class StatsBarsChart: BaseChartView {
     private func calculateMinMax() {
         let values = entries.compactMap { $0.value }
         
-        minValue = values.min(by: { $0.lowerBound < $1.lowerBound })?.lowerBound ?? 0.0
-        maxValue = values.max(by: { $0.upperBound < $1.upperBound })?.upperBound ?? 0.0
+        let minValue = Int(values.min(by: { $0.lowerBound < $1.lowerBound })?.lowerBound ?? 0.0)
+        let maxValue = Int(values.max(by: { $0.upperBound < $1.upperBound })?.upperBound ?? 0.0)
         
         let unit = User.current.settings.unit
+        let verticalPadding = unit == .mmolL ? 1 : 10
         
-        if unit == .mgDl {
-            minValue = minValue.rounded(.down)
-            maxValue = maxValue.rounded(.up)
-        }
+        let adjustedMinValue = max(minValue.roundedDown - verticalPadding, 0)
+        let diff = (maxValue + verticalPadding) - adjustedMinValue
+        let step = Int((Double(diff) / Double((verticalCount - 1))).rounded(.up))
+        let adjustedStep = step.roundedUp
+        let adjustedMaxValue = adjustedMinValue + (adjustedStep * (verticalCount - 1))
         
-        let minVal = (minValue * 10.0).rounded(.down)
-        let maxVal = (maxValue * 10.0).rounded(.up)
-   
-        let alphaValue = 0.20 * (maxVal - minVal)
-        var axisRightMax = Int(round(maxVal + alphaValue))
-        var axisRightMin = Int(minVal - alphaValue)
-
-        if axisRightMin < 0 { axisRightMin = 0 }
-
-        let range = Int(axisRightMax - axisRightMin)
-        let tail = range % (verticalCount - 1)
-        if tail != 0 {
-            axisRightMax += (verticalCount - 1) - tail
-        }
-        
-        visualMinValue = Double(axisRightMin) / 10.0
-        visualMaxValue = Double(axisRightMax) / 10.0
+        visualStep = adjustedStep
+        visualMinValue = adjustedMinValue
+        visualMaxValue = adjustedMaxValue
     }
     
     @objc private func handleTouch(_ sender: UIGestureRecognizer) {
