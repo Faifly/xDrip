@@ -173,7 +173,7 @@ class BaseHistoryView: UIView {
     }
     
     private func calculateHorizontalBottomLabels() {
-        var globalHorizontalLabels: [String] = []
+        var globalHorizontalLabels: [ChartBottomLabel] = []
         
         let interval = horizontalInterval(for: localDateRange.duration)
         
@@ -199,16 +199,26 @@ class BaseHistoryView: UIView {
             initialGridDate = Calendar.current.date(from: components) ?? now
         }
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.setLocalizedDateFormatFromTemplate("MMM dd")
         let hoursFormatter = DateFormatter()
         hoursFormatter.dateFormat = localInterval > .secondsPerHour ? "H" : "H:mm"
         
         var endGridTime = initialGridDate.timeIntervalSince1970
         while endGridTime > globalDateRange.start.timeIntervalSince1970 {
             let date = Date(timeIntervalSince1970: endGridTime)
-            let stringDate = hoursFormatter.string(from: date)
             
-            globalHorizontalLabels.append(stringDate)
-            
+            let calendar = NSCalendar.current
+            let unitFlags: Set<Calendar.Component> = [.hour, .minute]
+            let components = calendar.dateComponents(unitFlags, from: date)
+    
+            if components.hour == 0, components.minute == 0, localInterval > .secondsPerHour {
+                globalHorizontalLabels.append(ChartBottomLabel(title: dateFormatter.string(from: date),
+                                                               isCentered: true))
+            } else {
+                globalHorizontalLabels.append(ChartBottomLabel(title: hoursFormatter.string(from: date)))
+            }
+
             endGridTime -= interval
         }
         
@@ -224,7 +234,8 @@ class BaseHistoryView: UIView {
         switch hours {
         case 0...1: return 10.0 * .secondsPerMinute
         case 2...11: return .secondsPerHour
-        default: return .secondsPerHour * 3.0
+        case 12...23: return .secondsPerHour * 3.0
+        default: return .secondsPerHour * 4.0
         }
     }
 }

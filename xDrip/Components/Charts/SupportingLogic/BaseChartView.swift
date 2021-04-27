@@ -8,6 +8,26 @@
 
 import UIKit
 
+struct ChartBottomLabel {
+    let title: String
+    let isCentered: Bool
+    
+    init(title: String, isCentered: Bool = false) {
+        self.title = title
+        self.isCentered = isCentered
+    }
+}
+
+struct ChartFormattedBottomLabel {
+    let title: NSAttributedString
+    let isCentered: Bool
+    
+    init(title: NSAttributedString, isCentered: Bool = false) {
+        self.title = title
+        self.isCentered = isCentered
+    }
+}
+
 class BaseChartView: UIView {
     var yRange: ClosedRange<Double> = 0.0...0.0
     var dateInterval = DateInterval()
@@ -26,14 +46,14 @@ class BaseChartView: UIView {
     var verticalLinesCount: Int = 0
     
     /// Strings to be displayed on horizontal axis
-    var horizontalLabels: [String] = [] {
+    var horizontalLabels: [ChartBottomLabel] = [] {
         didSet {
             formatHorizontalLabels()
         }
     }
     
     var horizontalLabelsFont = UIFont.systemFont(ofSize: 12.0, weight: .regular)
-    private var formattedHorizontalLabels: [NSAttributedString] = []
+    private var formattedHorizontalLabels: [ChartFormattedBottomLabel] = []
     
     private func formatHorizontalLabels() {
         let paragraphStyle = NSMutableParagraphStyle()
@@ -43,7 +63,11 @@ class BaseChartView: UIView {
             .foregroundColor: UIColor.chartTextColor,
             .paragraphStyle: paragraphStyle
         ]
-        formattedHorizontalLabels = horizontalLabels.map { NSAttributedString(string: $0, attributes: attributes) }
+   
+        formattedHorizontalLabels = horizontalLabels.map {
+            ChartFormattedBottomLabel(title: NSAttributedString(string: $0.title, attributes: attributes),
+                                      isCentered: $0.isCentered)
+        }
     }
     
     override func draw(_ rect: CGRect) {
@@ -88,8 +112,14 @@ class BaseChartView: UIView {
             context.strokePath()
             
             if index < formattedHorizontalLabels.count {
-                let labelRect = CGRect(x: offset, y: end.y + 6.0, width: absoluteHorizontalInterval, height: 16.0)
-                formattedHorizontalLabels[index].draw(in: labelRect)
+                let isCentered = formattedHorizontalLabels[index].isCentered
+                let labelRect = isCentered
+                    ? CGRect(x: offset - 14.0,
+                             y: end.y + 6.0,
+                             width: absoluteHorizontalInterval + 6.0,
+                             height: 16.0)
+                    : CGRect(x: offset, y: end.y + 6.0, width: absoluteHorizontalInterval, height: 16.0)
+                formattedHorizontalLabels[index].title.draw(in: labelRect)
                 index += 1
             }
             

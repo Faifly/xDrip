@@ -15,7 +15,7 @@ final class StatsBarsChart: BaseChartView {
         didSet {
             relativeHorizontalInterval = 1.0 / CGFloat(entries.count)
             calculateMinMax()
-            horizontalLabels = entries.map { $0.descriptor }
+            horizontalLabels = entries.map { ChartBottomLabel(title: $0.descriptor) }
             selectedSector = nil
         }
     }
