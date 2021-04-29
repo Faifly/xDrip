@@ -43,14 +43,7 @@ final class HomePresenter: HomePresentationLogic {
         viewController?.displayLoad(viewModel: viewModel)
     }
     
-//    func createEntry(_ value: Double) -> HomeGlucoseEntry {
-//        return HomeGlucoseEntry(value: value, date: Date().addingTimeInterval(-(Double.random(in: 100...2500))), severity: .normal)
-//    }
-    
     func presentGlucoseData(response: Home.GlucoseDataUpdate.Response) {
-//        let values =  [
-//            createEntry(266.0), createEntry(150.0), createEntry(55.0)
-//        ]
         let values = glucoseFormattingWorker.formatEntries(response.glucoseData)
         let basal = glucoseFormattingWorker.formatEntries(response.insulinData)
         let stroke = glucoseFormattingWorker.formatEntries(response.chartPointsData)
