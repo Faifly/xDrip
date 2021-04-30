@@ -169,8 +169,7 @@ final class HomeViewControllerTests: XCTestCase {
         }
         
         let glucoseValues =  [
-            createEntry(146.2), createEntry(150.6), createEntry(147.8),
-            createEntry(150.5), createEntry(149.2), createEntry(148.1)
+            createEntry(130.0), createEntry(170.0)
         ]
         
         let strokeChartBasalValues = worker.formatEntries([InsulinEntry(amount: 0.0, date: Date(), type: .basal)])
@@ -203,7 +202,7 @@ final class HomeViewControllerTests: XCTestCase {
         //When
         
         let glucoseValues1 =  [
-            createEntry(148.2), createEntry(150.6), createEntry(149.8), createEntry(148.5), createEntry(149.7)
+            createEntry(130.0), createEntry(160.0)
         ]
         
         setupGlucoseChart(with: glucoseValues1)
@@ -214,7 +213,7 @@ final class HomeViewControllerTests: XCTestCase {
         //When
         
         let glucoseValues2 =  [
-            createEntry(149.2), createEntry(150.6), createEntry(149.8), createEntry(149.7), createEntry(149.6)
+            createEntry(130.0), createEntry(150.0)
         ]
         
         setupGlucoseChart(with: glucoseValues2)
@@ -223,7 +222,7 @@ final class HomeViewControllerTests: XCTestCase {
         XCTAssertTrue(mirror.glucoseChart?.leftLabelsView.labels.count == 3)
         
         let glucoseValues3 =  [
-            createEntry(150.2), createEntry(150.6), createEntry(150.8), createEntry(150.7), createEntry(150.6)
+            createEntry(130.0), createEntry(140.0)
         ]
         
         setupGlucoseChart(with: glucoseValues3)
@@ -233,11 +232,35 @@ final class HomeViewControllerTests: XCTestCase {
         
         //When
         
-        let glucoseValues4 =  [createEntry(150.0), createEntry(150.0), createEntry(150.0)]
+        let glucoseValues4 =  [
+            createEntry(130.0), createEntry(149.99)
+        ]
         
         setupGlucoseChart(with: glucoseValues4)
         
         //Then
         XCTAssertTrue(mirror.glucoseChart?.leftLabelsView.labels.count == 3)
+        
+        //When
+        
+        let glucoseValues5 =  [
+            createEntry(130.0), createEntry(159.99)
+        ]
+        
+        setupGlucoseChart(with: glucoseValues5)
+        
+        //Then
+        XCTAssertTrue(mirror.glucoseChart?.leftLabelsView.labels.count == 4)
+        
+        //When
+        
+        let glucoseValues6 =  [
+            createEntry(130.0), createEntry(169.99)
+        ]
+        
+        setupGlucoseChart(with: glucoseValues6)
+        
+        //Then
+        XCTAssertTrue(mirror.glucoseChart?.leftLabelsView.labels.count == mirror.glucoseChart?.maxVerticalLinesCount)
     }
 }
