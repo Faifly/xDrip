@@ -96,7 +96,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             let errorMessage = createErrorMessage()
             
             if CGMDevice.current.sensorStartDate != nil {
-                state = Calibration.allForCurrentSensor.count > 1 ?
+                state = GlucoseReading.allMaster.count > 1 ?
                     .started(errorMessage: errorMessage) :
                     .waitingReadings
             } else {
@@ -117,7 +117,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             let errorMessage = createErrorMessage()
             
             if CGMDevice.current.sensorStartDate != nil {
-                state = Calibration.allForCurrentSensor.count > 1 ?
+                state = GlucoseReading.allMaster.count > 1 ?
                     .started(errorMessage: errorMessage) :
                     .waitingReadings
             } else {
