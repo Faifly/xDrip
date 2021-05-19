@@ -17,6 +17,7 @@ enum CalibrationStateError {
     case needNewCalibrationNow
     case needNewCalibrationIn(minutes: Int)
     case needNewCalibrationAgain
+    case waitingReadings
 }
 
 final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
@@ -96,9 +97,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             let errorMessage = createErrorMessage()
             
             if CGMDevice.current.sensorStartDate != nil {
-                state = GlucoseReading.allMaster.count > 1 ?
-                    .started(errorMessage: errorMessage) :
-                    .waitingReadings
+                state = .started(errorMessage: errorMessage)
             } else {
                 state = .stopped
             }
@@ -117,9 +116,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             let errorMessage = createErrorMessage()
             
             if CGMDevice.current.sensorStartDate != nil {
-                state = GlucoseReading.allMaster.count > 1 ?
-                    .started(errorMessage: errorMessage) :
-                    .waitingReadings
+                state = .started(errorMessage: errorMessage)
             } else {
                 state = .stopped
             }
@@ -135,38 +132,56 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
     }
     
     func createErrorMessage() -> CalibrationStateError? {
-        let lastReadingCalibrationState = GlucoseReading.allMaster.first?.сalibrationState
-        
-        if let state = lastReadingCalibrationState, state == .warmingUp {
-            return .sensorIsWarmingUp
-        }
-        
-        if let calibration = Calibration.allForCurrentSensor.first,
-           let type = calibration.responseType,
-           !(type == .okay || type == .secondCalibrationNeeded || type == .duplicate) {
-            guard let calibrationInterval = calibration.responseDate?.timeIntervalSince1970 else {
+        if let firstVersionCharacter = CGMDevice.current.transmitterVersionString?.first,
+           let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter),
+           transmitterVersion == .second {
+            let lastReading = GlucoseReading.allMaster.first
+            let lastReadingCalibrationState = lastReading?.сalibrationState
+            
+            let lastCalibration = Calibration.allForCurrentSensor.first
+            let lastCalibrationResponseType = lastCalibration?.responseType
+            
+            if let state = lastReadingCalibrationState, state == .warmingUp {
+                return .sensorIsWarmingUp
+            }
+            
+            if lastCalibration == nil, lastReading != nil {
                 return .needNewCalibrationNow
             }
-            let interval = Date().timeIntervalSince1970
-            let calibrationAge = interval - calibrationInterval
-            let waitDuration = TimeInterval(minutes: 6)
-            let diff = (waitDuration - calibrationAge) / 60.0
-            let intDiff = Int(diff)
             
-            return intDiff > 0 ? .needNewCalibrationIn(minutes: intDiff) : .needNewCalibrationNow
-        }
-        
-        if let state = lastReadingCalibrationState {
-            switch state {
-            case .okay, .insufficientCalibration: break
-            default:
-                guard let calibration = Calibration.allForCurrentSensor.first,
-                      !calibration.isSentToTransmitter else {
-                    return .needNewCalibrationAgain
+            if let calibration = lastCalibration, let type = lastCalibrationResponseType,
+               !(type == .okay || type == .secondCalibrationNeeded || type == .duplicate) {
+                guard let calibrationInterval = calibration.responseDate?.timeIntervalSince1970 else {
+                    return .needNewCalibrationNow
+                }
+                let interval = Date().timeIntervalSince1970
+                let calibrationAge = interval - calibrationInterval
+                let waitDuration = TimeInterval(minutes: 6)
+                let diff = (waitDuration - calibrationAge) / 60.0
+                let intDiff = Int(diff)
+                
+                return intDiff > 0 ? .needNewCalibrationIn(minutes: intDiff) : .needNewCalibrationNow
+            }
+            
+            if let state = lastReadingCalibrationState {
+                switch state {
+                case .okay: return nil
+                default:
+                    if let calibration = lastCalibration, !calibration.isSentToTransmitter {
+                        return nil
+                    } else {
+                        return .needNewCalibrationNow
+                    }
                 }
             }
+            return nil
+        } else {
+            if Calibration.allForCurrentSensor.count > 1 {
+                return nil
+            } else {
+                return .waitingReadings
+            }
         }
-        return nil
     }
 }
 

@@ -134,25 +134,33 @@ final class HomePresenter: HomePresentationLogic {
         case let .started(error):
             if let error = error {
                 var message: String
+                var messageColor: UIColor
                 switch error {
                 case .sensorIsWarmingUp:
                     message = "home_sensor_is_warming_up".localized
+                    messageColor = UIColor.tabBarRedColor
                 case .needNewCalibrationNow:
                     message = "home_please_enter_a_new_calibration".localized
+                    messageColor = UIColor.tabBarRedColor
                 case let .needNewCalibrationIn(minutes):
                     message = String(
                         format: "home_please_recalibrate_again_in_min".localized,
                         minutes
                     )
+                    messageColor = UIColor.tabBarRedColor
                 case .needNewCalibrationAgain:
                     message = "home_calibration_error_please_enter_a_new_calibration".localized
+                    messageColor = UIColor.tabBarRedColor
+                case .waitingReadings:
+                    message = "home_sensor_waiting_readings".localized
+                    messageColor = UIColor.tabBarBlueColor
                 }
                 
                 string = NSMutableAttributedString(
                     string: message,
                     attributes: [
                         .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
-                        .foregroundColor: UIColor.tabBarRedColor
+                        .foregroundColor: messageColor
                     ]
                 )
             } else {
@@ -164,15 +172,6 @@ final class HomePresenter: HomePresentationLogic {
                 viewController?.displayUpdateSensorState(viewModel: viewModel)
                 return
             }
-        case .waitingReadings:
-            string = NSMutableAttributedString(
-                string: "home_sensor_waiting_readings".localized,
-                attributes: [
-                    .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
-                    .foregroundColor: UIColor.tabBarBlueColor
-                ]
-            )
-            
         case .stopped:
             string = NSMutableAttributedString(
                 string: "home_sensor_stopped".localized,

@@ -33,7 +33,6 @@ enum Home {
     enum SensorState {
         case stopped
         case warmingUp(minutesLeft: Int)
-        case waitingReadings
         case started(errorMessage: CalibrationStateError?)
     }
     
