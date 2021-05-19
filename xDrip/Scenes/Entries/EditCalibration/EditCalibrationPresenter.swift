@@ -34,7 +34,7 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
     private func createSection(
         response: EditCalibration.UpdateData.Response
     ) -> BaseSettings.Section {
-        var cells: [BaseSettings.Cell] = [
+        let cells: [BaseSettings.Cell] = [
             createGlucosePickerCell(
                 .firstInput,
                 value: response.value1,
@@ -42,15 +42,6 @@ final class EditCalibrationPresenter: EditCalibrationPresentationLogic {
             ),
             createDatePickerCell(.firstInput, response: response)
         ]
-        
-        if !response.hasInitialCalibrations {
-            let cell = createGlucosePickerCell(
-                .secondInput,
-                value: response.value2,
-                glucoseValueChangedPicker: response.glucosePickerValueChanged
-            )
-            cells.insert(cell, at: 1)
-        }
         
         let header = "edit_calibration_single_section_header".localized
         let footer: String?

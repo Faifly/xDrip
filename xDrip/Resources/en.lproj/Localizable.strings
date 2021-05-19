@@ -41,6 +41,7 @@
 "home_please_enter_a_new_calibration" = "Please enter a new calibration";
 "home_please_recalibrate_again_in_min" = "Please recalibrate again in %d min";
 "home_calibration_error_please_enter_a_new_calibration" = "Calibration error. Please enter a new calibration";
+"home_please_enter_additional_calibration" = "Please enter additional calibration";
 
 // Root
 "root_add_entry_food" = "Food";

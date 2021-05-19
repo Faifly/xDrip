@@ -101,7 +101,7 @@ extension CGMController: CGMBluetoothServiceDelegate {
     
     func serviceDidReceiveSensorGlucoseReading(raw: Double, filtered: Double, rssi: Double) {
         guard !CGMDevice.current.isWarmingUp else { return }
-        if let reading = GlucoseReading.create(filtered: filtered, unfiltered: raw, rssi: rssi) {
+        if let reading = GlucoseReading.create(filtered: filtered, unfiltered: raw, rssi: rssi), reading.isValid {
             glucoseDataListeners.values.forEach { $0(reading) }
         }
     }
@@ -115,7 +115,7 @@ extension CGMController: CGMBluetoothServiceDelegate {
             if let reading = GlucoseReading.createFromG6(calculatedValue: calculatedValue,
                                                          calibrationState: calibrationState,
                                                          date: date,
-                                                         forBackfill: forBackfill) {
+                                                         forBackfill: forBackfill), reading.isValid {
                 glucoseDataListeners.values.forEach { $0(reading) }
             }
         } 

@@ -34,7 +34,7 @@ final class CalibrationService: CalibrationServiceInterface {
         let all = Calibration.allForCurrentSensor
         
         if all.isEmpty {
-            let readings = GlucoseReading.allMasterForCurrentSensor
+            let readings = GlucoseReading.allValidMasterForCurrentSensor
             if readings.count < 2 {
                 return (false, .noInitialReadings)
             }

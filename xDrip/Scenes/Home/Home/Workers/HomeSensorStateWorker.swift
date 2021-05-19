@@ -14,7 +14,8 @@ protocol HomeSensorStateWorkerLogic {
 
 enum CalibrationStateError {
     case sensorIsWarmingUp
-    case needNewCalibrationNow
+    case needNewCalibration
+    case needAdditionalCalibration
     case needNewCalibrationIn(minutes: Int)
     case needNewCalibrationAgain
     case waitingReadings
@@ -136,7 +137,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
            let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter),
            transmitterVersion == .second {
             let lastReading = GlucoseReading.allMaster.first
-            let lastReadingCalibrationState = lastReading?.сalibrationState
+            let lastReadingCalibrationState = lastReading?.calibrationState
             
             let lastCalibration = Calibration.allForCurrentSensor.first
             let lastCalibrationResponseType = lastCalibration?.responseType
@@ -145,14 +146,10 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
                 return .sensorIsWarmingUp
             }
             
-            if lastCalibration == nil, lastReading != nil {
-                return .needNewCalibrationNow
-            }
-            
             if let calibration = lastCalibration, let type = lastCalibrationResponseType,
                !(type == .okay || type == .secondCalibrationNeeded || type == .duplicate) {
                 guard let calibrationInterval = calibration.responseDate?.timeIntervalSince1970 else {
-                    return .needNewCalibrationNow
+                    return .needNewCalibration
                 }
                 let interval = Date().timeIntervalSince1970
                 let calibrationAge = interval - calibrationInterval
@@ -160,17 +157,18 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
                 let diff = (waitDuration - calibrationAge) / 60.0
                 let intDiff = Int(diff)
                 
-                return intDiff > 0 ? .needNewCalibrationIn(minutes: intDiff) : .needNewCalibrationNow
+                return intDiff > 0 ? .needNewCalibrationIn(minutes: intDiff) : .needNewCalibration
             }
             
             if let state = lastReadingCalibrationState {
                 switch state {
                 case .okay: return nil
+                case .needsSecondCalibration: return .needAdditionalCalibration
                 default:
                     if let calibration = lastCalibration, !calibration.isSentToTransmitter {
                         return nil
                     } else {
-                        return .needNewCalibrationNow
+                        return .needNewCalibration
                     }
                 }
             }

@@ -39,7 +39,6 @@ final class NotificationController: NSObject {
                 self?.addAppStoppedNotificationToQueue()
             }
         )
-
     }
     
     deinit {

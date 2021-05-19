@@ -35,19 +35,19 @@ final class NightscoutCloudBackfillInteractor: NightscoutCloudBackfillBusinessLo
     }
     
     func doSend(request: NightscoutCloudBackfill.Send.Request) {
-        let allGlucoseReadings = GlucoseReading.allMaster.filter( NSCompoundPredicate(type: .and, subpredicates: [
+        let allReadings = GlucoseReading.allValidMaster.filter( NSCompoundPredicate(type: .and, subpredicates: [
             .laterThan(date: date),
             .calculatedValue,
             .rawValue
         ])).prefix(500000)
         
-        if allGlucoseReadings.isEmpty {
+        if allReadings.isEmpty {
             router?.presentPopUp(message: "settings_nightscout_cloud_backfill_no_glucose_readings_found".localized,
                                  success: false)
             return
         }
         
-        for entry in allGlucoseReadings {
+        for entry in allReadings {
             entry.updateCloudUploadStatus(.notUploaded)
         }
         
@@ -69,7 +69,7 @@ final class NightscoutCloudBackfillInteractor: NightscoutCloudBackfillBusinessLo
         NightscoutService.shared.scanForNotUploadedTreatments()
         
         let message = String(format: "settings_nightscout_cloud_backfill_found_readings_and_treatments".localized,
-                             allGlucoseReadings.count,
+                             allReadings.count,
                              allTreatments.count)
         
         router?.presentPopUp(message: message, success: true)

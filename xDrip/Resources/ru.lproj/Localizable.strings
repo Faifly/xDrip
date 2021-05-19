@@ -41,6 +41,7 @@
 "home_please_enter_a_new_calibration" = "Пожалуйста введите новую калибровку";
 "home_please_recalibrate_again_in_min" = "Пожалуйста повторите калибровку через %d мин";
 "home_calibration_error_please_enter_a_new_calibration" = "Ошибка калибровки. Пожалуйста введите новую калибровку";
+"home_please_enter_additional_calibration" = "Пожалуйста введите дополнительную калибровку";
 
 // Root
 "root_add_entry_food" = "Еда";

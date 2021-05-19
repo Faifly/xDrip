@@ -65,7 +65,7 @@ final class HomePresenter: HomePresentationLogic {
     }
     
     func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
-        let last2Readings = GlucoseReading.lastReadings(2, for: response.lastGlucoseReading?.deviceMode ?? .main)
+        let last2Readings = GlucoseReading.lastValidReadings(2, for: response.lastGlucoseReading?.deviceMode ?? .main)
         let value = glucoseFormattingWorker.formatEntry(response.lastGlucoseReading, last2Readings: last2Readings)
         let viewModel = Home.GlucoseCurrentInfo.ViewModel(
             glucoseIntValue: value.glucoseIntValue,
@@ -139,8 +139,11 @@ final class HomePresenter: HomePresentationLogic {
                 case .sensorIsWarmingUp:
                     message = "home_sensor_is_warming_up".localized
                     messageColor = UIColor.tabBarRedColor
-                case .needNewCalibrationNow:
+                case .needNewCalibration:
                     message = "home_please_enter_a_new_calibration".localized
+                    messageColor = UIColor.tabBarRedColor
+                case .needAdditionalCalibration:
+                    message = "home_please_enter_additional_calibration".localized
                     messageColor = UIColor.tabBarRedColor
                 case let .needNewCalibrationIn(minutes):
                     message = String(

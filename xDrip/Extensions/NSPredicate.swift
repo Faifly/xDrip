@@ -44,4 +44,9 @@ extension NSPredicate {
     static func earlierThanOrEqual(date: Date) -> NSPredicate {
         return NSPredicate(format: "date <= %@", argumentArray: [date])
     }
+    
+    static var valid: NSPredicate {
+        return NSPredicate(format: "rawCalibrationState != %@",
+                           argumentArray: [String(DexcomG6CalibrationState.warmingUp.rawValue)])
+    }
 }
