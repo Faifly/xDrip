@@ -136,6 +136,9 @@ final class HomePresenter: HomePresentationLogic {
                 var message: String
                 var messageColor: UIColor
                 switch error {
+                case .startingSensor:
+                    message = "home_starting_sensor".localized
+                    messageColor = UIColor.tabBarBlueColor
                 case .sensorIsWarmingUp:
                     message = "home_sensor_is_warming_up".localized
                     messageColor = UIColor.tabBarRedColor

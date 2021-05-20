@@ -19,6 +19,7 @@ enum CalibrationStateError {
     case needNewCalibrationIn(minutes: Int)
     case needNewCalibrationAgain
     case waitingReadings
+    case startingSensor
 }
 
 final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
@@ -162,7 +163,8 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             
             if let state = lastReadingCalibrationState {
                 switch state {
-                case .okay, .stopped, .sensorFailedStart: return nil
+                case .okay: return nil
+                case .stopped, .sensorFailedStart: return .startingSensor
                 case .needsSecondCalibration: return .needAdditionalCalibration
                 default:
                     if let calibration = lastCalibration, !calibration.isSentToTransmitter {
