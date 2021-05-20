@@ -35,7 +35,16 @@ final class CalibrationService: CalibrationServiceInterface {
         
         if all.isEmpty {
             let readings = GlucoseReading.allValidMasterForCurrentSensor
-            if readings.count < 2 {
+            let minReadingsCount: Int
+            if let firstVersionCharacter = CGMDevice.current.transmitterVersionString?.first,
+               let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter),
+               transmitterVersion == .second {
+                minReadingsCount = 1
+            } else {
+                minReadingsCount = 2
+            }
+            
+            if readings.count < minReadingsCount {
                 return (false, .noInitialReadings)
             }
         }
