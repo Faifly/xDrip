@@ -162,7 +162,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             
             if let state = lastReadingCalibrationState {
                 switch state {
-                case .okay: return nil
+                case .okay, .stopped, .sensorFailedStart: return nil
                 case .needsSecondCalibration: return .needAdditionalCalibration
                 default:
                     if let calibration = lastCalibration, !calibration.isSentToTransmitter {
