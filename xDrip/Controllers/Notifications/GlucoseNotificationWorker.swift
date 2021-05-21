@@ -45,7 +45,7 @@ final class GlucoseNotificationWorker: NSObject {
     override init() {
         super.init()
         CGMController.shared.subscribeForGlucoseDataEvents(listener: self) { [weak self] reading in
-            guard let reading = reading, let self = self else { return }
+            guard let reading = reading, let self = self, reading.isValid else { return }
             if User.current.settings.deviceMode == .main {
                 guard Calibration.allForCurrentSensor.count > 1 else { return }
             }
