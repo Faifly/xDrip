@@ -397,7 +397,7 @@
 "settings_sensor_advanced_section_title" = "РАСШИРЕННЫЕ НАСТРОЙКИ";
 "settings_sensor_skip_warmup" = "Пропустить Разогрев";
 "settings_sensor_skip_warmup_alert_title" = "Предупреждение";
-"settings_sensor_skip_warmup_alert_message" = "Пропуск разогрева может привести к неточным считываниям первые несколько часов и скорее всего потребует дополнительные калибровки в течении первого дня. Это свойство будет установлено для всех последующих сенсоров";
+"settings_sensor_skip_warmup_alert_message" = "Пропуск разогрева может привести к неточным считываниям первые несколько часов и скорее всего потребует дополнительные калибровки в течении первого дня.";
 "settings_sensor_skip_warmup_alert_confirm_button" = "Пропустить Разогрев";
 "settings_sensor_skip_warmup_alert_cancel_button" = "Отмена";
 "settings_sensor_no_calibrations_alert_title" = "Предупреждение";
@@ -406,6 +406,14 @@
 "settings_sensor_no_transmitter_alert_title" = "Предупреждение";
 "settings_sensor_no_transmitter_alert_message" = "Вы не подключили датчик. Сделайте это до того, как запускать сенсор";
 "settings_sensor_no_transmitter_alert_button" = "Хорошо";
+"settings_skip_warm_up_no_transmitter_alert_message" = "Вам необходимо подключить датчик сперва";
+"settings_skip_warm_up_no_transmitter_alert_title" = "Предупреждение";
+"settings_skip_warm_up_no_transmitter_alert_button" = "Хорошо";
+"settings_sensor_v2_skip_warmup" = "Пропустить Разогрев";
+"settings_sensor_v2_skip_warmup_alert_title" = "Предупреждение";
+"settings_sensor_v2_skip_warmup_alert_message" = "Пропуск разогрева может привести к неточным считываниям первые несколько часов и скорее всего потребует дополнительные калибровки в течении первого дня. Иногда разогрев не может быть пропущен на версии 2 трансмиттеров.";
+"settings_sensor_v2_skip_warmup_alert_confirm_button" = "Пропустить Разогрев";
+"settings_sensor_v2_skip_warmup_alert_cancel_button" = "Отмена";
 
 // Settings Start Sensor
 "settings_start_sensor_screen_title" = "Запустить Сенсор";

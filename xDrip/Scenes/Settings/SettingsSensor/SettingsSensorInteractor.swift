@@ -51,7 +51,7 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
             }
         } else {
             guard CGMDevice.current.isSetUp else {
-                router?.showNoTransmitterAlert()
+                router?.showNoTransmitterAlert(requester: .sensorStart)
                 return
             }
             router?.routeToStartSensor { [weak self] date in
@@ -86,6 +86,11 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
         guard skip else {
             User.current.settings.updateSkipWarmUp(false)
             NotificationCenter.default.postSettingsChangeNotification(setting: .warmUp)
+            return
+        }
+        guard CGMDevice.current.isSetUp else {
+            router?.showNoTransmitterAlert(requester: .skipWarmUp)
+            updateData()
             return
         }
         router?.showSkipWarmUpConfirmation { [weak self] confirmed in

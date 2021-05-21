@@ -19,7 +19,12 @@ protocol SettingsSensorRoutingLogic {
     func showDeleteAllCalibrationsConfirmation(completion: @escaping () -> Void)
     func showSkipWarmUpConfirmation(completion: @escaping (Bool) -> Void)
     func showNoCalibrationsAlert()
-    func showNoTransmitterAlert()
+    func showNoTransmitterAlert(requester: NoTransmitterRequester)
+}
+
+enum NoTransmitterRequester {
+    case sensorStart
+    case skipWarmUp
 }
 
 protocol SettingsSensorDataPassing {
@@ -63,7 +68,16 @@ final class SettingsSensorRouter: SettingsSensorRoutingLogic, SettingsSensorData
     }
     
     func showSkipWarmUpConfirmation(completion: @escaping (Bool) -> Void) {
-        presentConfirmation(prefix: "settings_sensor_skip_warmup", completion: completion)
+        let prefix: String
+        if let firstVersionCharacter = CGMDevice.current.transmitterVersionString?.first,
+           let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter),
+           transmitterVersion == .second {
+            prefix = "settings_sensor_v2_skip_warmup"
+        } else {
+            prefix = "settings_sensor_skip_warmup"
+        }
+        
+        presentConfirmation(prefix: prefix, completion: completion)
     }
     
     func showNoCalibrationsAlert() {
@@ -82,15 +96,30 @@ final class SettingsSensorRouter: SettingsSensorRoutingLogic, SettingsSensorData
         viewController?.present(alert, animated: true, completion: nil)
     }
     
-    func showNoTransmitterAlert() {
+    func showNoTransmitterAlert(requester: NoTransmitterRequester) {
+        let title: String
+        let message: String
+        let buttonTitle: String
+        
+        switch requester {
+        case .sensorStart:
+            title = "settings_sensor_no_transmitter_alert_title".localized
+            message = "settings_sensor_no_transmitter_alert_message".localized
+            buttonTitle = "settings_sensor_no_transmitter_alert_button".localized
+        case .skipWarmUp:
+            title = "settings_skip_warm_up_no_transmitter_alert_title".localized
+            message = "settings_skip_warm_up_no_transmitter_alert_message".localized
+            buttonTitle = "settings_skip_warm_up_no_transmitter_alert_button".localized
+        }
+        
         let alert = UIAlertController(
-            title: "settings_sensor_no_transmitter_alert_title".localized,
-            message: "settings_sensor_no_transmitter_alert_message".localized,
+            title: title,
+            message: message,
             preferredStyle: .alert
         )
         
         let confirmAction = UIAlertAction(
-            title: "settings_sensor_no_transmitter_alert_button".localized,
+            title: buttonTitle,
             style: .cancel
         )
         alert.addAction(confirmAction)

@@ -397,8 +397,7 @@
 "settings_sensor_advanced_section_title" = "ADVANCED";
 "settings_sensor_skip_warmup" = "Skip Warm-Ups";
 "settings_sensor_skip_warmup_alert_title" = "Warning";
-"settings_sensor_skip_warmup_alert_message" = "Skipping warm-ups can give inaccurate readings the first couple of hours and will probably require a few extra calibrations on the first day.
-This setting will be applied to all future sensors";
+"settings_sensor_skip_warmup_alert_message" = "Skipping warm-ups can give inaccurate readings the first couple of hours and will probably require a few extra calibrations on the first day.";
 "settings_sensor_skip_warmup_alert_confirm_button" = "Skip Warm-Ups";
 "settings_sensor_skip_warmup_alert_cancel_button" = "Cancel";
 "settings_sensor_no_calibrations_alert_title" = "Warning";
@@ -407,6 +406,14 @@ This setting will be applied to all future sensors";
 "settings_sensor_no_transmitter_alert_title" = "Warning";
 "settings_sensor_no_transmitter_alert_message" = "You haven't set up a transmitter. You should do it before starting a sensor";
 "settings_sensor_no_transmitter_alert_button" = "OK";
+"settings_skip_warm_up_no_transmitter_alert_message" = "You need to set up a transmitter first";
+"settings_skip_warm_up_no_transmitter_alert_title" = "Warning";
+"settings_skip_warm_up_no_transmitter_alert_button" = "OK";
+"settings_sensor_v2_skip_warmup" = "Skip Warm-Ups";
+"settings_sensor_v2_skip_warmup_alert_title" = "Warning";
+"settings_sensor_v2_skip_warmup_alert_message" = "Skipping warm-ups can give inaccurate readings the first couple of hours and will probably require a few extra calibrations on the first day. Sometimes warming-up cannot be skipped on transmitters with v.2 firmware.";
+"settings_sensor_v2_skip_warmup_alert_confirm_button" = "Skip Warm-Ups";
+"settings_sensor_v2_skip_warmup_alert_cancel_button" = "Cancel";
 
 // Settings Start Sensor
 "settings_start_sensor_screen_title" = "Start Sensor";

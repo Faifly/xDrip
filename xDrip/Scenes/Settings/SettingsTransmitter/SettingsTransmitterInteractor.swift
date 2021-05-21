@@ -215,6 +215,7 @@ final class SettingsTransmitterInteractor: SettingsTransmitterBusinessLogic, Set
         CGMDevice.current.resetAllMetadata()
         determineState()
         updateData()
+        User.current.settings.updateSkipWarmUp(false)
         NotificationCenter.default.postSettingsChangeNotification(setting: .sensorStarted)
     }
 }
