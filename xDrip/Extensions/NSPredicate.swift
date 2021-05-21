@@ -46,7 +46,7 @@ extension NSPredicate {
     }
     
     static var valid: NSPredicate {
-        return NSPredicate(format: "rawCalibrationState != %@",
-                           argumentArray: [String(DexcomG6CalibrationState.warmingUp.rawValue)])
+        return NSPredicate(format: "rawCalibrationState == %@ OR rawCalibrationState == nil",
+                           argumentArray: [String(DexcomG6CalibrationState.okay.rawValue)])
     }
 }
