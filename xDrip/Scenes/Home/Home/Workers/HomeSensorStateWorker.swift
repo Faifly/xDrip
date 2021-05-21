@@ -137,7 +137,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
         if let firstVersionCharacter = CGMDevice.current.transmitterVersionString?.first,
            let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter),
            transmitterVersion == .second {
-            let lastReading = GlucoseReading.allMaster.first
+            let lastReading = GlucoseReading.allMaster(valid: false).first
             let lastReadingCalibrationState = lastReading?.calibrationState
             
             let lastCalibration = Calibration.allForCurrentSensor.first

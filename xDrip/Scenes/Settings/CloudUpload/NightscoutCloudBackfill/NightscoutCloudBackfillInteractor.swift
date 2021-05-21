@@ -35,7 +35,7 @@ final class NightscoutCloudBackfillInteractor: NightscoutCloudBackfillBusinessLo
     }
     
     func doSend(request: NightscoutCloudBackfill.Send.Request) {
-        let allReadings = GlucoseReading.allValidMaster.filter( NSCompoundPredicate(type: .and, subpredicates: [
+        let allReadings = GlucoseReading.allMaster().filter( NSCompoundPredicate(type: .and, subpredicates: [
             .laterThan(date: date),
             .calculatedValue,
             .rawValue

@@ -37,7 +37,7 @@ final class SettingsTransmitterTestDataWorker: SettingsTransmitterTestDataWorker
         }
         Calibration.deleteAll()
         Realm.shared.safeWrite {
-            Realm.shared.delete(GlucoseReading.allMaster)
+            Realm.shared.delete(GlucoseReading.allMaster(valid: false))
         }
         
         Realm.shared.safeWrite {

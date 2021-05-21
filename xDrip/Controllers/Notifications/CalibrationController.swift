@@ -131,7 +131,7 @@ final class CalibrationController {
     }
     
     func isOptimalConditionToCalibrate() -> Bool {
-        let masterReadings = GlucoseReading.allValidMasterForCurrentSensor
+        let masterReadings = GlucoseReading.allMasterForCurrentSensor()
         
         guard masterReadings.count >= 3 else { return false }
         //We have at least 3 readings

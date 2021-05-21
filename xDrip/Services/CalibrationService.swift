@@ -34,7 +34,7 @@ final class CalibrationService: CalibrationServiceInterface {
         let all = Calibration.allForCurrentSensor
         
         if all.isEmpty {
-            let readings = GlucoseReading.allValidMasterForCurrentSensor
+            let readings = GlucoseReading.allMasterForCurrentSensor()
             let minReadingsCount: Int
             if let firstVersionCharacter = CGMDevice.current.transmitterVersionString?.first,
                let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter),

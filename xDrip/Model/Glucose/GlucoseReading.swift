@@ -103,67 +103,57 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         super.init()
     }
     
-    static var allGlucoseReadings: Results<GlucoseReading> {
-        return Realm.shared.objects(GlucoseReading.self)
+    static func allGlucoseReadings(valid: Bool = true) -> Results<GlucoseReading> {
+        return valid ?
+            Realm.shared.objects(GlucoseReading.self).filter(.valid)
+            :
+            Realm.shared.objects(GlucoseReading.self)
     }
     
-    static var allMaster: Results<GlucoseReading> {
-        return allGlucoseReadings
+    static func allMaster(valid: Bool = true) -> Results<GlucoseReading> {
+        return allGlucoseReadings(valid: valid)
             .filter(.deviceMode(mode: .main))
             .sorted(by: [.dateDescending])
     }
     
-    static var allFollower: Results<GlucoseReading> {
-        return allGlucoseReadings
+    static func allFollower(valid: Bool = true) -> Results<GlucoseReading> {
+        return allGlucoseReadings(valid: valid)
             .filter(.deviceMode(mode: .follower))
             .sorted(by: [.dateDescending])
     }
     
-    static var allForCurrentMode: Results<GlucoseReading> {
-        return User.current.settings.deviceMode == .follower ? allFollower : allMaster
+    static func allForCurrentMode(valid: Bool = true) -> Results<GlucoseReading> {
+        return User.current.settings.deviceMode == .follower ?
+            allFollower(valid: valid) :
+            allMaster(valid: valid)
     }
     
-    static var allValidGlucoseReadings: Results<GlucoseReading> {
-        return Realm.shared.objects(GlucoseReading.self).filter(.valid)
-    }
-    
-    static var allValidMaster: Results<GlucoseReading> {
-        return allValidGlucoseReadings
-            .filter(.deviceMode(mode: .main))
-            .sorted(by: [.dateDescending])
-    }
-    
-    static var allValidFollower: Results<GlucoseReading> {
-        return allValidGlucoseReadings
-            .filter(.deviceMode(mode: .follower))
-            .sorted(by: [.dateDescending])
-    }
-    
-    static var allValidForCurrentMode: Results<GlucoseReading> {
-        return User.current.settings.deviceMode == .follower ? allValidFollower : allValidMaster
-    }
-    
-    static var allValidMasterForCurrentSensor: Results<GlucoseReading> {
+    static func allMasterForCurrentSensor(valid: Bool = true) -> Results<GlucoseReading> {
         guard CGMDevice.current.isSensorStarted else { return emptyReadingsArray }
         guard let sensorStartDate = CGMDevice.current.sensorStartDate else { return emptyReadingsArray }
-        return allValidMaster.filter(.laterThan(date: sensorStartDate))
+        return allMaster(valid: valid).filter(.laterThan(date: sensorStartDate))
     }
     
-    static func lastValidReadings(_ amount: Int, for mode: UserDeviceMode) -> [GlucoseReading] {
-        return lastValid(for: mode, amount: amount, filter:
-                        NSCompoundPredicate(type: .and, subpredicates: [.calculatedValue, .rawValue]))
+    static func lastReadings(_ amount: Int, for mode: UserDeviceMode, valid: Bool = true) -> [GlucoseReading] {
+        return last(for: mode,
+                    amount: amount,
+                    filter: NSCompoundPredicate(type: .and, subpredicates: [.calculatedValue, .rawValue]),
+                    valid: valid)
     }
     
-    static func latestValidByCount(_ amount: Int, for mode: UserDeviceMode) -> [GlucoseReading] {
-        return lastValid(for: mode, amount: amount, filter: .rawValue)
+    static func latestByCount(_ amount: Int, for mode: UserDeviceMode, valid: Bool = true) -> [GlucoseReading] {
+        return last(for: mode, amount: amount, filter: .rawValue, valid: valid)
     }
     
-    static func lastValid(for mode: UserDeviceMode, amount: Int, filter: NSPredicate) -> [GlucoseReading] {
+    static func last(for mode: UserDeviceMode,
+                     amount: Int,
+                     filter: NSPredicate,
+                     valid: Bool = true) -> [GlucoseReading] {
         guard amount > 0 else { return [] }
         
         func allReadings(for mode: UserDeviceMode, filteredBy filter: NSPredicate) -> Results<GlucoseReading> {
             let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [.deviceMode(mode: mode), filter])
-            return allValidGlucoseReadings.filter(andPredicate)
+            return allGlucoseReadings(valid: valid).filter(andPredicate)
         }
         
         let readings = allReadings(for: mode, filteredBy: filter).sorted(by: [.dateDescending])
@@ -173,7 +163,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         return Array(readings)
     }
     
-    static var validMasterForCurrentSensorInLast30MinutesCount: Int {
+    static func masterForCurrentSensorInLast30MinutesCount(valid: Bool = true) -> Int {
         guard CGMDevice.current.isSensorStarted else { return 0 }
         guard let sensorStartDate = CGMDevice.current.sensorStartDate else { return 0 }
         let thirtyMinutesAgo = Date().addingTimeInterval(-(.secondsPerHour / 2))
@@ -183,7 +173,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
                                                 .laterThan(date: sensorStartDate),
                                                 .laterThan(date: thirtyMinutesAgo)
                                                ])
-        return allValidGlucoseReadings.filter(andPredicate).count
+        return allGlucoseReadings(valid: valid).filter(andPredicate).count
     }
     
     @discardableResult static func create(filtered: Double,
@@ -242,7 +232,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     
     static func clearOldReadings() {
         let readingsPerDay = Int(TimeInterval.secondsPerDay / Constants.dexcomPeriod)
-        let allReadings = allForCurrentMode
+        let allReadings = allForCurrentMode(valid: false)
         guard allReadings.count > readingsPerDay,
               let lastReading = allReadings.last,
               let lastReadingDate = lastReading.date,
@@ -313,7 +303,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         )
         
         if !forBackfill {
-            checkForCalibrationRequest(requireCalibration)
+            checkForCalibrationRequest(requireCalibration, calibrationState: calibrationState)
             NightscoutService.shared.scanForNotUploadedEntries()
         }
         
@@ -322,14 +312,27 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         return reading
     }
     
-    private static func checkForCalibrationRequest(_ requireCalibration: Bool) {
+    private static func checkForCalibrationRequest(_ requireCalibration: Bool,
+                                                   calibrationState: DexcomG6CalibrationState? = nil) {
+        if let calibrationState = calibrationState {
+            switch calibrationState {
+            case .needsFirstCalibration:
+                CalibrationController.shared.requestInitialCalibration()
+                return
+            case .needsSecondCalibration, .needsCalibration:
+                CalibrationController.shared.requestRegularCalibration()
+                return
+            default: break
+            }
+        }
+        
         if Calibration.allForCurrentSensor.isEmpty
-            && GlucoseReading.allValidMasterForCurrentSensor.count >= 2
+            && GlucoseReading.allMasterForCurrentSensor().count >= 2
             && requireCalibration {
             CalibrationController.shared.requestInitialCalibration()
         } else if CalibrationController.shared.canShowNextRegularCalibrationRequest() &&
                     CalibrationController.shared.isOptimalConditionToCalibrate() &&
-                    validMasterForCurrentSensorInLast30MinutesCount >= 2 {
+                    masterForCurrentSensorInLast30MinutesCount() >= 2 {
             CalibrationController.shared.requestRegularCalibration()
         }
     }
@@ -338,7 +341,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         let allowedOffset = TimeInterval.secondsPerMinute * Double(precisionInMinutes)
         let minOffset = date - allowedOffset
         let maxOffset = date + allowedOffset
-        let matching = allValidMaster.filter { $0.date >? minOffset && $0.date <? maxOffset }
+        let matching = allMaster(valid: false).filter { $0.date >? minOffset && $0.date <? maxOffset }
         let offsets = matching.map {
             abs(($0.date?.timeIntervalSince1970 ?? .greatestFiniteMagnitude) - date.timeIntervalSince1970)
         }
@@ -358,12 +361,12 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     }
     
     static func estimatedRawGlucoseLevel(date: Date) -> Double {
-        guard let last = lastValidReadings(1, for: .main).first else { return 160.0 }
+        guard let last = lastReadings(1, for: .main).first else { return 160.0 }
         return last.ra * pow(date.timeIntervalSince1970, 2) + last.rb * date.timeIntervalSince1970 + last.rc
     }
     
     static func markEntryAsUploaded(externalID: String) {
-        guard let entry = allValidMaster.first(where: { $0.externalID == externalID }) else {
+        guard let entry = allMaster().first(where: { $0.externalID == externalID }) else {
             return
         }
         Realm.shared.safeWrite {
@@ -400,7 +403,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     }
     
     static func readingsForInterval(_ interval: DateInterval) -> Results<GlucoseReading> {
-        return allValidForCurrentMode.filter(
+        return allForCurrentMode().filter(
             NSCompoundPredicate(type: .and, subpredicates: [
                                     .laterThanOrEqual(date: interval.start),
                                     .earlierThanOrEqual(date: interval.end)
@@ -505,7 +508,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     }
     
     func findSlope() {
-        let last2Readings = GlucoseReading.lastValidReadings(2, for: .main)
+        let last2Readings = GlucoseReading.lastReadings(2, for: .main)
 
         Realm.shared.safeWrite {
             if last2Readings.count == 2 {
@@ -528,7 +531,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     }
     
     private func findCurve(valueKey: String, bKey: String) -> (a: Double, b: Double, c: Double) {
-        let last3 = GlucoseReading.lastValidReadings(3, for: .main)
+        let last3 = GlucoseReading.lastReadings(3, for: .main)
         
         let a: Double
         let b: Double
@@ -594,7 +597,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
 
         let minRecords = 4
         
-        let readings = Array(GlucoseReading.lastValidReadings(maxRecords, for: mode).reversed())
+        let readings = Array(GlucoseReading.lastReadings(maxRecords, for: mode).reversed())
 
         if readings.count < minRecords {
             Realm.shared.safeWrite {
@@ -684,7 +687,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     }
     
     private func injectDisplayGlucose() {
-        guard let displayGlucose = DisplayGlucose(readings: GlucoseReading.lastValidReadings(2, for: .main)) else {
+        guard let displayGlucose = DisplayGlucose(readings: GlucoseReading.lastReadings(2, for: .main)) else {
             return
         }
         

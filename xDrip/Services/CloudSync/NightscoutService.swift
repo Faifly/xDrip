@@ -56,7 +56,7 @@ final class NightscoutService {
                 self.scanForNotUploadedTreatments()
             }
     }
-    private lazy var lastFollowerFetchTime = GlucoseReading.allValidFollower.last?.date
+    private lazy var lastFollowerFetchTime = GlucoseReading.allFollower().last?.date
     private lazy var pumpService: PumpServiceLogic = PumpService()
     private var followerFetchTimer: Timer?
     private var treatmentsFetchTimer: Timer?
@@ -152,7 +152,7 @@ final class NightscoutService {
     
     private func scanForGlucoseEntries() {
         LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
-        let all = GlucoseReading.allValidMaster
+        let all = GlucoseReading.allMaster()
         let notUploaded = Array(all.filter("rawCloudUploadStatus == 1"))
         let modified = Array(all.filter("rawCloudUploadStatus == 2"))
         
@@ -411,7 +411,7 @@ final class NightscoutService {
             guard let data = data, error == nil else { return }
             guard let entries = try? JSONDecoder().decode([CGlucoseReading].self, from: data) else { return }
             DispatchQueue.main.async {
-                let allFollower = GlucoseReading.allValidFollower
+                let allFollower = GlucoseReading.allFollower()
                 let readings = GlucoseReading.parseFollowerEntries(entries).sorted(by: { $0.date >? $1.date })
                 let newReadings = readings.filter { reading -> Bool in
                     !allFollower.contains(where: { $0.externalID == reading.externalID })
