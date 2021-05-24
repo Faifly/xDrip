@@ -92,25 +92,6 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             callback?(.warmingUp(minutesLeft: minutesLeft))
             
             startCheckTimer()
-        } else if isWarmingUp {
-            isWarmingUp = false
-            let state: Home.SensorState
-            
-            let errorMessage = createErrorMessage()
-            
-            if CGMDevice.current.sensorStartDate != nil {
-                state = .started(errorMessage: errorMessage)
-            } else {
-                state = .stopped
-            }
-            
-            if errorMessage != nil {
-                startCheckTimer()
-            } else {
-                stopCheckTimer()
-            }
-            
-            callback?(state)
         } else {
             isWarmingUp = false
             let state: Home.SensorState

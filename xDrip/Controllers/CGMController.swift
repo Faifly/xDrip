@@ -110,7 +110,6 @@ extension CGMController: CGMBluetoothServiceDelegate {
                                          calibrationState: DexcomG6CalibrationState?,
                                          date: Date,
                                          forBackfill: Bool) {
-        guard !CGMDevice.current.isWarmingUp else { return }
         if GlucoseReading.reading(for: date, precisionInMinutes: 4) == nil {
             if let reading = GlucoseReading.createFromG6(calculatedValue: calculatedValue,
                                                          calibrationState: calibrationState,
