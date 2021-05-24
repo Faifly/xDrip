@@ -471,7 +471,8 @@
 // Bluetooth Errors
 "bluetooth_error_title" = "Ошибка Сервиса Датчиков";
 "bluetooth_error_unknown" = "Случилась неизвестная ошибка Bluetooth";
-"bluetooth_error_powered_off" = "Bluetooth выключен. Пожалуйста, включите его в системных настройках и попробуйте еще раз";
+"bluetooth_error_powered_off_title" = "«xDrip» хочет использовать Bluetooth для новых подключений";
+"bluetooth_error_powered_off" = "Bluetooth выключен. Вы можете разрешить новые подключения или включить Bluetooth в настройках.";
 "bluetooth_error_unauthorized" = "Доступ к Bluetooth запрещён";
 "bluetooth_error_unsupported" = "Bluetooth не поддерживается этим устройством";
 "bluetooth_error_alert_settings_button_title" = "Настройки";

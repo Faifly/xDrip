@@ -36,7 +36,10 @@ final class DexcomG6BluetoothService: NSObject {
         super.init()
         centralManager = CBCentralManager(delegate: self,
                                           queue: nil,
-                                          options: [CBCentralManagerOptionRestoreIdentifierKey: "uniqueDripX"])
+                                          options: [
+                                            CBCentralManagerOptionRestoreIdentifierKey: "uniqueDripX",
+                                            CBCentralManagerOptionShowPowerAlertKey: true
+                                          ])
 
         centralManagerLastState = centralManager?.state
         messageWorker = DexcomG6MessageWorker(delegate: self)
@@ -239,20 +242,11 @@ extension DexcomG6BluetoothService: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
         case .poweredOn where isConnectionRequested: startConnectionFlow()
-        case .poweredOff where centralManagerLastState != .unknown:
+        case .poweredOff where centralManagerLastState == .poweredOn:
             delegate?.serviceDidFail(withError: .bluetoothIsPoweredOff)
-            
         case .unauthorized: delegate?.serviceDidFail(withError: .bluetoothIsUnauthorized)
         case .unsupported: delegate?.serviceDidFail(withError: .bluetoothUnsupported)
-        case .poweredOff:
-            if #available(iOS 13, *) {
-                break
-            } else {
-                delegate?.serviceDidFail(withError: .bluetoothIsPoweredOff)
-            }
-            
-        case .resetting, .unknown, .poweredOn: break
-        @unknown default: break
+        default: break
         }
         
         centralManagerLastState = centralManager?.state
@@ -429,6 +423,7 @@ extension DexcomG6BluetoothService: CGMBluetoothService {
     }
     
     func disconnect() {
+        centralManager?.stopScan()
         guard let peripheral = peripheral else { return }
         if peripheral.state == .connected {
             centralManager?.cancelPeripheralConnection(peripheral)
