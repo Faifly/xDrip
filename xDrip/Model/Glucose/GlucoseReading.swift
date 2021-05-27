@@ -58,7 +58,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     @objc private(set) dynamic var sourceInfo: String?
     
     var isValid: Bool {
-        return calibrationState == .okay || calibrationState == nil
+        return calibrationState == .okay || calibrationState == .needsCalibration || calibrationState == nil
     }
     
     override class func primaryKey() -> String? {
