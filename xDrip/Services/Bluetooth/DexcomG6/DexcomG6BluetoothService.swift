@@ -137,10 +137,10 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
                                                   forBackfill: false)
         backFillIfNeeded()
         
-        if message.state == .stopped {
-            messageWorker?.createSensorRestartRequest(withStop: false)
-        } else if message.state == .sensorFailedStart {
-            messageWorker?.createSensorRestartRequest(withStop: false)
+        switch message.state {
+        case .stopped, .ended, .sensorFailed, .sensorFailed2, .sensorFailed3, .sensorFailed4, .sensorFailed5, .sensorFailed6, .sensorFailedStart:
+        messageWorker?.createSensorRestartRequest(withStop: false)
+        default: break
         }
     }
     
