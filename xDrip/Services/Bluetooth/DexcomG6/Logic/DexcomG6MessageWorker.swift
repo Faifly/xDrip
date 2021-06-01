@@ -14,6 +14,7 @@ final class DexcomG6MessageWorker {
     private var isQueueAwaitingForResponse = false
     private var isCalibrationMessageAlreadyQueued = false
     private var isRestartMessageAlreadyQueued = false
+    private var isStopSensorMessageAlreadyQueued = false
     private var messageQueue: [DexcomG6OutgoingMessage] = []
     private let messageFactory = DexcomG6MessageFactory()
     private var backFillStream = DexcomG6BackfillStream()
@@ -80,7 +81,8 @@ final class DexcomG6MessageWorker {
             let message = try DexcomG6CalibrationRxMessage(data: data)
             handleCalibrationRxMessage(message)
         case .sessionStopRx:
-            let _ = try DexcomG6SessionStopRxMessage(data: data)
+            let message = try DexcomG6SessionStopRxMessage(data: data)
+            handleSensorStopRxMessage(message)
         case .sessionStartRx:
             let _ = try DexcomG6SessionStartRxMessage(data: data)
         default: break
@@ -132,6 +134,7 @@ final class DexcomG6MessageWorker {
             isQueueAwaitingForResponse = false
             isCalibrationMessageAlreadyQueued = false
             isRestartMessageAlreadyQueued = false
+            isStopSensorMessageAlreadyQueued = false
             messageQueue.removeAll()
         }
         messageQueue.append(message)
@@ -168,6 +171,7 @@ final class DexcomG6MessageWorker {
         } else if transmitterVersion == .second {
             createCalibrationRequest()
             createDataRequest(ofType: .glucoseTx)
+            createStopSensorRequest()
         }
     }
     
@@ -318,9 +322,46 @@ final class DexcomG6MessageWorker {
         )
     }
     
+    func createStopSensorRequest() {
+        guard isPaired else { return }
+        guard CGMDevice.current.sensorStopScheduleDate != nil else {
+            LogController.log(
+                message: "[Dexcom G6] DexcomG6SessionStopTxMessage Queuing Error: Stop is not scheduled",
+                type: .debug
+            )
+            return
+        }
+        
+        guard !isStopSensorMessageAlreadyQueued else {
+            LogController.log(
+                message: "[Dexcom G6] DexcomG6SessionStopTxMessage Queuing Error: Already queued",
+                type: .debug
+            )
+            return
+        }
+        
+        guard let transmitterStartDate = CGMDevice.current.transmitterStartDate else {
+            LogController.log(
+                message: "[Dexcom G6] DexcomG6SessionStopTxMessage Queuing Error: Transmitter Start Date is nil",
+                type: .debug
+            )
+            return
+        }
+        
+        let stopTime = Int(Date().timeIntervalSince1970 - transmitterStartDate.timeIntervalSince1970)
+        let message = DexcomG6SessionStopTxMessage(stopTime: stopTime)
+        messageQueue.append(message)
+        isStopSensorMessageAlreadyQueued = true
+        trySendingMessageFromQueue()
+        
+        LogController.log(
+            message: "[Dexcom G6] DexcomG6SessionStopTxMessage Success: Queued",
+            type: .debug
+        )
+    }
+    
     func handleBackfillStream(_ data: Data?) {
         guard let data = data else { return }
-        print("Array(data) \(Array(data))")
         backFillStream.push(data)
         delegate?.workerDidReceiveBackfillData(backFillStream.decode())
     }
@@ -354,5 +395,9 @@ final class DexcomG6MessageWorker {
             message.accepted.description,
             message.type.debugDescription
         )
+    }
+    
+    func handleSensorStopRxMessage(_ message: DexcomG6SessionStopRxMessage) {
+        CGMDevice.current.updateSensorStopScheduleDate(nil)
     }
 }

@@ -36,6 +36,7 @@
 "home_all_basals" = "Все Базалы";
 "home_options_title" = "Опции";
 "home_sensor_stopped" = "Сенсор остановлен";
+"home_sensor_stopping" = "Подождите около 5 мин остановку сенсора";
 "home_sensor_waiting_readings" = "Сенсор получает первые считывания, чтобы отобразить их";
 "home_sensor_is_warming_up" = "Сенсор разогревается";
 "home_please_enter_a_new_calibration" = "Пожалуйста введите новую калибровку";

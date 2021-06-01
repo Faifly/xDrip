@@ -36,6 +36,7 @@
 "home_all_basals" = "All Basals";
 "home_options_title" = "Options";
 "home_sensor_stopped" = "Sensor Stopped";
+"home_sensor_stopping" = "Wait about 5 min for sensor stopping";
 "home_sensor_waiting_readings" = "Sensor is getting the first readings to display it";
 "home_sensor_is_warming_up" = "Sensor is warming up";
 "home_please_enter_a_new_calibration" = "Please enter a new calibration";

@@ -88,7 +88,7 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
             NotificationCenter.default.postSettingsChangeNotification(setting: .warmUp)
             return
         }
-        guard CGMDevice.current.isSetUp else {
+        guard let service = CGMController.shared.service, service.isPaired else {
             router?.showNoTransmitterAlert(requester: .skipWarmUp)
             updateData()
             return
@@ -103,7 +103,7 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
     }
     
     private func stopSensor() {
-        CGMDevice.current.updateSensorIsStarted(false)
+        CGMDevice.current.updateSensorIsStarted(false, isOnlySensorAction: true)
         CGMDevice.current.sensorStartDate = nil
         CGMController.shared.notifyMetadataChanged(.sensorAge)
         updateData()
@@ -111,7 +111,7 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
     
     private func startSensor(date: Date) {
         CGMDevice.current.sensorStartDate = date
-        CGMDevice.current.updateSensorIsStarted(true)
+        CGMDevice.current.updateSensorIsStarted(true, isOnlySensorAction: true)
         CGMController.shared.notifyMetadataChanged(.sensorAge)
         updateData()
     }

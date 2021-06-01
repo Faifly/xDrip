@@ -97,14 +97,16 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             let state: Home.SensorState
             
             let errorMessage = createErrorMessage()
+            var waitForStop = false
             
             if CGMDevice.current.sensorStartDate != nil {
                 state = .started(errorMessage: errorMessage)
             } else {
-                state = .stopped
+                waitForStop = CGMDevice.current.sensorStopScheduleDate != nil
+                state = .stopped(waitForStop: waitForStop)
             }
             
-            if errorMessage != nil {
+            if errorMessage != nil || waitForStop {
                 startCheckTimer()
             } else {
                 stopCheckTimer()
@@ -145,7 +147,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             if let state = lastReadingCalibrationState {
                 switch state {
                 case .okay, .needsCalibration: return nil
-                case .stopped, .sensorFailedStart: return .startingSensor
+                case _ where DexcomG6CalibrationState.stoppedCollection.contains(state): return .startingSensor
                 case .needsFirstCalibration:
                     if let calibration = lastCalibration, !calibration.isSentToTransmitter {
                         return .waitingReadings

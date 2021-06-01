@@ -178,9 +178,16 @@ final class HomePresenter: HomePresentationLogic {
                 viewController?.displayUpdateSensorState(viewModel: viewModel)
                 return
             }
-        case .stopped:
+        case let .stopped(waitForStop):
+            let message: String
+            if waitForStop {
+                message = "home_sensor_stopping".localized
+            } else {
+                message = "home_sensor_stopped".localized
+            }
+            
             string = NSMutableAttributedString(
-                string: "home_sensor_stopped".localized,
+                string: message,
                 attributes: [
                     .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
                     .foregroundColor: UIColor.tabBarRedColor

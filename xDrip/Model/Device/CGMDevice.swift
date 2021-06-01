@@ -117,14 +117,25 @@ final class CGMDevice: Object {
     // MARK: Sensor
     
     @objc private(set) dynamic var isSensorStarted: Bool = false
+    @objc private(set) dynamic var sensorStopScheduleDate: Date?
+  
     
-    func updateSensorIsStarted(_ isStarted: Bool) {
+    func updateSensorIsStarted(_ isStarted: Bool, isOnlySensorAction: Bool = false) {
         Realm.shared.safeWrite {
             self.isSensorStarted = isStarted
         }
         
         if isStarted {
             NotificationCenter.default.postSettingsChangeNotification(setting: .sensorStarted)
+            updateSensorStopScheduleDate(nil)
+        } else {
+            updateSensorStopScheduleDate(isOnlySensorAction ? Date() : nil)
+        }
+    }
+    
+    func updateSensorStopScheduleDate(_ date: Date?) {
+        Realm.shared.safeWrite {
+            self.sensorStopScheduleDate = date
         }
     }
     

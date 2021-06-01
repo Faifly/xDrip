@@ -137,10 +137,12 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
                                                   forBackfill: false)
         backFillIfNeeded()
         
-        switch message.state {
-        case .stopped, .ended, .sensorFailed, .sensorFailed2, .sensorFailed3, .sensorFailed4, .sensorFailed5, .sensorFailed6, .sensorFailedStart:
-        messageWorker?.createSensorRestartRequest(withStop: false)
-        default: break
+        if let calibrationState = message.state {
+            switch calibrationState {
+            case _ where DexcomG6CalibrationState.stoppedCollection.contains(calibrationState):
+                messageWorker?.createSensorRestartRequest(withStop: false)
+            default: break
+            }
         }
     }
     
@@ -413,6 +415,10 @@ extension DexcomG6BluetoothService: CGMBluetoothService {
     convenience init(delegate: CGMBluetoothServiceDelegate) {
         self.init()
         self.delegate = delegate
+    }
+    
+    var isPaired: Bool {
+        return messageWorker?.workerIsPaired() ?? false
     }
     
     func connect() {

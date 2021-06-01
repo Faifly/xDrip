@@ -33,3 +33,11 @@ enum DexcomG6CalibrationState: UInt8 {
     case sensorFailed6 = 0x15
     case sensorFailedStart = 0x16
 }
+
+extension DexcomG6CalibrationState {
+    static let stoppedCollection: [DexcomG6CalibrationState] = [
+        .stopped, .ended, .sensorFailed, .sensorFailed2,
+        .sensorFailed3, .sensorFailed4, .sensorFailed5,
+        .sensorFailed6, .sensorFailedStart
+    ]
+}
