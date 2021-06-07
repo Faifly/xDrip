@@ -140,6 +140,7 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
         if let calibrationState = message.state {
             switch calibrationState {
             case _ where DexcomG6CalibrationState.stoppedCollection.contains(calibrationState):
+                guard CGMDevice.current.sensorStartDate != nil else { return }
                 messageWorker?.createSensorRestartRequest(withStop: false)
             default: break
             }
