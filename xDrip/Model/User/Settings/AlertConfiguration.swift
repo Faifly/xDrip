@@ -40,6 +40,14 @@ final class AlertConfiguration: Object {
     required init(eventType: AlertEventType) {
         super.init()
         self.eventType = eventType
+        
+        switch eventType {
+        case .initialCalibrationRequest, .pairingRequest:
+            updateIsOverride(true)
+            updateIsVibrating(true)
+        default:
+            break
+        }
     }
     
     required init() {
