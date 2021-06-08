@@ -65,10 +65,29 @@ final class Calibration: Object {
         return all.filter { $0.date >? sensorStartDate }
     }
     
-    static func lastCalibrations(_ amount: Int) -> [Calibration] {
+    static func lastCalibrations(_ amount: Int, withValidResponse: Bool = false) -> [Calibration] {
         guard amount > 0 else { return [] }
+        let isSecondTransmitterVersion: Bool
         
-        let allCalibrations = allForCurrentSensor
+        if let firstVersionCharacter = CGMDevice.current.transmitterVersionString?.first,
+           let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter),
+           transmitterVersion == .second {
+            isSecondTransmitterVersion = true
+        } else {
+            isSecondTransmitterVersion = false
+        }
+        
+        let allCalibrations = withValidResponse ? allForCurrentSensor.filter {
+            if isSecondTransmitterVersion {
+                if let responseType = $0.responseType {
+                    return DexcomG6CalibrationResponseType.validCollection.contains(responseType)
+                } else {
+                    return false
+                }
+            } else {
+                return true
+            }
+        } : allForCurrentSensor
         if allCalibrations.count > amount {
             return Array(allCalibrations[0..<amount])
         }
@@ -246,7 +265,7 @@ final class Calibration: Object {
     }
     
     static func adjustRecentReadings(_ amount: Int) {
-        let calibrations = lastCalibrations(3)
+        let calibrations = lastCalibrations(3, withValidResponse: true)
         let readings = GlucoseReading.latestByCount(amount, for: .main)
 
         if calibrations.count >= 3 {
@@ -431,7 +450,7 @@ final class Calibration: Object {
     private func slopeOOBHandler(status: Int) -> Double {
         let slopeParameters = SlopeParameters.dex
         
-        let calibrations = Calibration.lastCalibrations(3)
+        let calibrations = Calibration.lastCalibrations(3, withValidResponse: true)
         guard !calibrations.isEmpty else { return 1.0 }
         let thisCalibration = calibrations[0]
         if status == 0 {

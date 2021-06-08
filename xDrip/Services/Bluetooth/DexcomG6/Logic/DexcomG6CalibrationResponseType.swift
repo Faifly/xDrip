@@ -18,3 +18,9 @@ enum DexcomG6CalibrationResponseType: UInt8 {
     case notReady = 0x0E
     case unableToDecode = 0xFF
 }
+
+extension DexcomG6CalibrationResponseType {
+    static let validCollection: [DexcomG6CalibrationResponseType] = [
+        .okay, .secondCalibrationNeeded, .duplicate
+    ]
+}

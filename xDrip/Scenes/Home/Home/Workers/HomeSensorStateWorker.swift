@@ -131,7 +131,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             }
             
             if let calibration = lastCalibration, let type = lastCalibrationResponseType,
-               !(type == .okay || type == .secondCalibrationNeeded || type == .duplicate) {
+               !DexcomG6CalibrationResponseType.validCollection.contains(type) {
                 guard let calibrationInterval = calibration.responseDate?.timeIntervalSince1970 else {
                     return .needNewCalibration
                 }
