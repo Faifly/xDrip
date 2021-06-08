@@ -23,11 +23,23 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
     var presenter: SettingsSensorPresentationLogic?
     var router: SettingsSensorRoutingLogic?
     
+    private let sensorStateWorker: SettingsSensorStateWorkerLogic
+    
+    init() {
+        sensorStateWorker = SettingsSensorStateWorker()
+    }
+    
     // MARK: Do something
     
     func doLoad(request: SettingsSensor.Load.Request) {
         let response = SettingsSensor.Load.Response()
         presenter?.presentLoad(response: response)
+        
+        sensorStateWorker.subscribeForMetadataEvents { [weak self] type in
+            if type == .sensorAge {
+                self?.updateData()
+            }
+        }
         
         updateData()
     }
@@ -106,13 +118,11 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
         CGMDevice.current.updateSensorIsStarted(false, isOnlySensorAction: true)
         CGMDevice.current.sensorStartDate = nil
         CGMController.shared.notifyMetadataChanged(.sensorAge)
-        updateData()
     }
     
     private func startSensor(date: Date) {
         CGMDevice.current.sensorStartDate = date
         CGMDevice.current.updateSensorIsStarted(true, isOnlySensorAction: true)
         CGMController.shared.notifyMetadataChanged(.sensorAge)
-        updateData()
     }
 }

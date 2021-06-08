@@ -33,4 +33,8 @@ struct DexcomG6SessionStopRxMessage {
             transmitterTime.description
         )
     }
+    
+    var isOkay: Bool {
+        return status == 0
+    }
 }

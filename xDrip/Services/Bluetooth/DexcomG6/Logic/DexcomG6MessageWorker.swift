@@ -399,5 +399,11 @@ final class DexcomG6MessageWorker {
     
     func handleSensorStopRxMessage(_ message: DexcomG6SessionStopRxMessage) {
         CGMDevice.current.updateSensorStopScheduleDate(nil)
+        
+        if !message.isOkay {
+            CGMDevice.current.backupStartDate()
+            CGMDevice.current.updateSensorIsStarted(true)
+            CGMController.shared.notifyMetadataChanged(.sensorAge)
+        }
     }
 }

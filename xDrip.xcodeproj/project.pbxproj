@@ -60,6 +60,7 @@
 		0AA09F34258CAC98004C96DC /* DexcomG6BackfillStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA09F33258CAC98004C96DC /* DexcomG6BackfillStream.swift */; };
 		0AA09F38258CAD0E004C96DC /* DexcomG6BackfillTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA09F37258CAD0E004C96DC /* DexcomG6BackfillTxMessage.swift */; };
 		0AAE030C24FCF66E003CF50B /* CTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE030B24FCF66D003CF50B /* CTreatment.swift */; };
+		0AE9498C266F6B56003BA1F9 /* SettingsSensorStateWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE9498B266F6B56003BA1F9 /* SettingsSensorStateWorker.swift */; };
 		2C09D21224410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */; };
 		2C09D21324410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */; };
 		2C09D2162441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */; };
@@ -773,6 +774,7 @@
 		0AA09F33258CAC98004C96DC /* DexcomG6BackfillStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6BackfillStream.swift; sourceTree = "<group>"; };
 		0AA09F37258CAD0E004C96DC /* DexcomG6BackfillTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6BackfillTxMessage.swift; sourceTree = "<group>"; };
 		0AAE030B24FCF66D003CF50B /* CTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTreatment.swift; sourceTree = "<group>"; };
+		0AE9498B266F6B56003BA1F9 /* SettingsSensorStateWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSensorStateWorker.swift; sourceTree = "<group>"; };
 		2C09D21024410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsRightSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C09D21124410EE4008538E9 /* BaseSettingsRightSwitchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseSettingsRightSwitchTableViewCell.xib; sourceTree = "<group>"; };
 		2C09D2142441C214008538E9 /* BaseSettingsSingleSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsSingleSelectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -1587,6 +1589,14 @@
 			name = Views;
 			path = xDrip/Scenes/Home/Home/Views;
 			sourceTree = SOURCE_ROOT;
+		};
+		0AE9498A266F6B1D003BA1F9 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				0AE9498B266F6B56003BA1F9 /* SettingsSensorStateWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
 		};
 		2C1DE8A224792DDA0023B512 /* PopUpVIewController */ = {
 			isa = PBXGroup;
@@ -2531,6 +2541,7 @@
 		580E4BE1243F73A100565EDE /* SettingsSensor */ = {
 			isa = PBXGroup;
 			children = (
+				0AE9498A266F6B1D003BA1F9 /* Workers */,
 				5871C1C224816EA300B79ACF /* StartSensor */,
 				580E4BE2243F73B200565EDE /* SettingsSensorPresenter.swift */,
 				580E4BE3243F73B200565EDE /* SettingsSensorRouter.swift */,
@@ -4436,6 +4447,7 @@
 				580E4C21243F74A300565EDE /* SettingsPumpUserInteractor.swift in Sources */,
 				58A92069249930200025C1C7 /* Double+Rounding.swift in Sources */,
 				58FE4CB924796E3600511B80 /* DexcomG6KeepAliveTxMessage.swift in Sources */,
+				0AE9498C266F6B56003BA1F9 /* SettingsSensorStateWorker.swift in Sources */,
 				5871C1C82481747E00B79ACF /* AlertPresentable.swift in Sources */,
 				2C09D21E2441C5EF008538E9 /* BaseSettingsVolumeSliderTableViewCell.swift in Sources */,
 				58E5A6702402B8A7002C2BE3 /* AppDelegate.swift in Sources */,

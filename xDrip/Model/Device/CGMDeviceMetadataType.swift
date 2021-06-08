@@ -18,6 +18,7 @@ enum CGMDeviceMetadataType: Int {
     case batteryRuntime
     case transmitterTime
     case sensorAge
+    case lastSensorAge
     case serialNumber
     case deviceName
     

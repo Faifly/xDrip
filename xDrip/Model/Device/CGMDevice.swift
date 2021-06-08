@@ -119,7 +119,6 @@ final class CGMDevice: Object {
     @objc private(set) dynamic var isSensorStarted: Bool = false
     @objc private(set) dynamic var sensorStopScheduleDate: Date?
   
-    
     func updateSensorIsStarted(_ isStarted: Bool, isOnlySensorAction: Bool = false) {
         Realm.shared.safeWrite {
             self.isSensorStarted = isStarted
@@ -151,7 +150,27 @@ final class CGMDevice: Object {
                 return
             }
             updateMetadata(ofType: .sensorAge, value: "\(newValue.timeIntervalSince1970)")
+            lastSensorStartDate = newValue
         }
+    }
+    
+    var lastSensorStartDate: Date? {
+        get {
+            guard let sensorStartedString = metadata(ofType: .lastSensorAge)?.value else { return nil }
+            guard let sensorStarted = TimeInterval(sensorStartedString) else { return nil }
+            return Date(timeIntervalSince1970: sensorStarted)
+        }
+        set {
+            guard let newValue = newValue else {
+                updateMetadata(ofType: .lastSensorAge, value: nil)
+                return
+            }
+            updateMetadata(ofType: .lastSensorAge, value: "\(newValue.timeIntervalSince1970)")
+        }
+    }
+    
+    func backupStartDate() {
+        sensorStartDate = lastSensorStartDate
     }
     
     var transmitterStartDate: Date? {
