@@ -13,23 +13,14 @@ protocol SettingsSensorStateWorkerLogic {
 }
 
 final class SettingsSensorStateWorker: SettingsSensorStateWorkerLogic {
+    private let listenerID = "SettingsSensorStateWorker"
     func subscribeForMetadataEvents(callback: @escaping (CGMDeviceMetadataType) -> Void) {
-        CGMController.shared.subscribeForMetadataEvents(listener: self) { type in
+        CGMController.shared.subscribeForMetadataEvents(listener: listenerID) { type in
             callback(type)
         }
     }
     
     deinit {
-        CGMController.shared.unsubscribeFromMetadataEvents(listener: self)
-    }
-}
-
-extension SettingsSensorStateWorker: Hashable {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(1)
-    }
-    
-    static func == (lhs: SettingsSensorStateWorker, rhs: SettingsSensorStateWorker) -> Bool {
-        return true
+        CGMController.shared.unsubscribeFromMetadataEvents(listener: listenerID)
     }
 }
