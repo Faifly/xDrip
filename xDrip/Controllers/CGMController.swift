@@ -99,10 +99,12 @@ extension CGMController: CGMBluetoothServiceDelegate {
         metadataListeners.values.forEach { $0(metadata) }
     }
     
-    func serviceDidReceiveSensorGlucoseReading(raw: Double, filtered: Double, rssi: Double) {
+    func serviceDidReceiveSensorGlucoseReading(raw: Double, filtered: Double, date: Date, rssi: Double) {
         guard !CGMDevice.current.isWarmingUp else { return }
-        if let reading = GlucoseReading.create(filtered: filtered, unfiltered: raw, rssi: rssi) {
-            glucoseDataListeners.values.forEach { $0(reading) }
+        if GlucoseReading.reading(for: date, precisionInMinutes: 4) == nil {
+            if let reading = GlucoseReading.create(filtered: filtered, unfiltered: raw, rssi: rssi, date: date) {
+                glucoseDataListeners.values.forEach { $0(reading) }
+            }
         }
     }
     

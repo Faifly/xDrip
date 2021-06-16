@@ -125,6 +125,7 @@ extension DexcomG6BluetoothService: DexcomG6MessageWorkerDelegate {
         delegate?.serviceDidReceiveSensorGlucoseReading(
             raw: DexcomG6Firmware.scaleRawValue(message.unfiltered, firmware: firmware),
             filtered: DexcomG6Firmware.scaleRawValue(message.filtered, firmware: firmware),
+            date: Date(),
             rssi: lastRSSI
         )
         backFillIfNeeded()

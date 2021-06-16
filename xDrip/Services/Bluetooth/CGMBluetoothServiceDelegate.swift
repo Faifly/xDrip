@@ -12,7 +12,7 @@ protocol CGMBluetoothServiceDelegate: AnyObject {
     func serviceDidConnect(isPaired: Bool)
     func serviceDidDisconnect(isPaired: Bool)
     func serviceDidUpdateMetadata(_ metadata: CGMDeviceMetadataType, value: String)
-    func serviceDidReceiveSensorGlucoseReading(raw: Double, filtered: Double, rssi: Double)
+    func serviceDidReceiveSensorGlucoseReading(raw: Double, filtered: Double, date: Date, rssi: Double)
     func serviceDidReceiveGlucoseReading(calculatedValue: Double,
                                          calibrationState: DexcomG6CalibrationState?,
                                          date: Date,

@@ -31,7 +31,7 @@ final class HomeGlucoseDataWorkerTests: AbstractRealmTest {
         XCTAssertFalse(calledDataHandler)
         
         // When
-        CGMController.shared.serviceDidReceiveSensorGlucoseReading(raw: 10.0, filtered: 10.0, rssi: 0.0)
+        CGMController.shared.serviceDidReceiveSensorGlucoseReading(raw: 10.0, filtered: 10.0, date: Date(), rssi: 0.0)
         
         // Then
         XCTAssertTrue(calledDataHandler)
@@ -48,7 +48,7 @@ final class HomeGlucoseDataWorkerTests: AbstractRealmTest {
         realm.safeWrite {
             realm.add(reading)
         }
-        var allReadings = GlucoseReading.allForCurrentMode
+        var allReadings = GlucoseReading.allForCurrentMode(valid: false)
         // Then
         XCTAssertNil(sut.fetchLastGlucoseReading(readings: allReadings))
         
@@ -77,7 +77,7 @@ final class HomeGlucoseDataWorkerTests: AbstractRealmTest {
             realm.add(reading2)
         }
         
-        allReadings = GlucoseReading.allForCurrentMode
+        allReadings = GlucoseReading.allForCurrentMode(valid: false)
         
         // Then
         XCTAssertNotNil(sut.fetchLastGlucoseReading(readings: allReadings))
