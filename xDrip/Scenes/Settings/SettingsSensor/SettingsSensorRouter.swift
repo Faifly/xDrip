@@ -69,9 +69,7 @@ final class SettingsSensorRouter: SettingsSensorRoutingLogic, SettingsSensorData
     
     func showSkipWarmUpConfirmation(completion: @escaping (Bool) -> Void) {
         let prefix: String
-        if let firstVersionCharacter = CGMDevice.current.transmitterVersionString?.first,
-           let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter),
-           transmitterVersion == .second {
+        if CGMDevice.current.withCalibrationResponse {
             prefix = "settings_sensor_v2_skip_warmup"
         } else {
             prefix = "settings_sensor_skip_warmup"

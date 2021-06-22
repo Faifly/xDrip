@@ -210,4 +210,16 @@ final class CGMDevice: Object {
             self.isResetScheduled = isScheduled
         }
     }
+    
+    var withCalibrationResponse: Bool {
+        if let deviceType = deviceType,
+           deviceType == .dexcomG6,
+           let firstVersionCharacter = CGMDevice.current.transmitterVersionString?.first,
+           let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter),
+           transmitterVersion == .second {
+            return true
+        } else {
+            return false
+        }
+    }
 }

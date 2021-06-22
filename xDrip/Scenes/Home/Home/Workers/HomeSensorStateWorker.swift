@@ -117,9 +117,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
     }
     
     func createErrorMessage() -> CalibrationStateError? {
-        if let firstVersionCharacter = CGMDevice.current.transmitterVersionString?.first,
-           let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter),
-           transmitterVersion == .second {
+        if CGMDevice.current.withCalibrationResponse {
             let lastReading = GlucoseReading.allMaster(valid: false).first
             let lastReadingCalibrationState = lastReading?.calibrationState
             

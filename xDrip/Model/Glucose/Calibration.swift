@@ -67,18 +67,10 @@ final class Calibration: Object {
     
     static func lastCalibrations(_ amount: Int, withValidResponse: Bool = false) -> [Calibration] {
         guard amount > 0 else { return [] }
-        let isSecondTransmitterVersion: Bool
-        
-        if let firstVersionCharacter = CGMDevice.current.transmitterVersionString?.first,
-           let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter),
-           transmitterVersion == .second {
-            isSecondTransmitterVersion = true
-        } else {
-            isSecondTransmitterVersion = false
-        }
+        let withCalibrationResponse = CGMDevice.current.withCalibrationResponse
         
         let allCalibrations = withValidResponse ? allForCurrentSensor.filter {
-            if isSecondTransmitterVersion {
+            if withCalibrationResponse {
                 if let responseType = $0.responseType {
                     return DexcomG6CalibrationResponseType.validCollection.contains(responseType)
                 } else {
@@ -246,8 +238,12 @@ final class Calibration: Object {
         
         reading.updateCalibration(calibration)
         reading.updateIsCalibrated(true)
-        reading.updateCalculatedValue(glucoseLevel)
-        reading.updateFilteredCalculatedValue(glucoseLevel)
+                
+        if !CGMDevice.current.withCalibrationResponse {
+            reading.updateCalculatedValue(glucoseLevel)
+            reading.updateFilteredCalculatedValue(glucoseLevel)
+        }
+        
         calculateWLS()
         adjustRecentReadings(30)
         NightscoutService.shared.scanForNotUploadedEntries()

@@ -35,9 +35,7 @@ final class CalibrationService: CalibrationServiceInterface {
         
         if all.isEmpty {
             let readings = GlucoseReading.allMasterForCurrentSensor(valid: false)
-            if let firstVersionCharacter = CGMDevice.current.transmitterVersionString?.first,
-               let transmitterVersion = DexcomG6FirmwareVersion(rawValue: firstVersionCharacter),
-               transmitterVersion == .second {
+            if CGMDevice.current.withCalibrationResponse {
                 if !readings.contains(where: { reading in reading.calibrationState != .warmingUp }) {
                     return (false, .noInitialReadings)
                 }
