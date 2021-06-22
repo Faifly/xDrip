@@ -174,7 +174,7 @@ final class NotificationController: NSObject {
         }
     }
     
-    func sendNotification(ofType type: AlertEventType) {
+    func sendNotification(ofType type: AlertEventType, shouldShow: Bool = true) {
         guard canSendNotification(ofType: type) else { return }
         guard let settings = User.current.settings.alert, settings.isNotificationsEnabled else { return }
         let config = settings.customConfiguration(for: type)
@@ -201,18 +201,20 @@ final class NotificationController: NSObject {
         
         let content = createContentForNotification(ofType: type)
         
-        let request = UNNotificationRequest(
-            identifier: type.alertID,
-            content: content,
-            trigger: nil
-        )
-        
         let sound = settings.getSound(for: type)
         AudioController.shared.playSoundFile(sound.fileName)
         
         if settings.getIsVibrating(for: type) {
             AudioController.shared.vibrate()
         }
+        
+        guard shouldShow else { return }
+        
+        let request = UNNotificationRequest(
+            identifier: type.alertID,
+            content: content,
+            trigger: nil
+        )
         
         UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
             if let error = error {
