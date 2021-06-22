@@ -322,7 +322,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
             case .needsSecondCalibration, .needsCalibration:
                 CalibrationController.shared.requestRegularCalibration()
                 return
-            default: break
+            default: return
             }
         }
         
