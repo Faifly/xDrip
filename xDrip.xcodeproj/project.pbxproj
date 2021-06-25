@@ -16,6 +16,7 @@
 		0A216CD124A5EBFF002DA0AF /* MirrorObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CD024A5EBFF002DA0AF /* MirrorObject.swift */; };
 		0A216CD324A5F718002DA0AF /* GlucoseCurrentInfoViewMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CD224A5F718002DA0AF /* GlucoseCurrentInfoViewMirror.swift */; };
 		0A216CD524A5F7BE002DA0AF /* HomeViewControllerMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A216CD424A5F7BE002DA0AF /* HomeViewControllerMirror.swift */; };
+		0A3DB4E52686124100141A29 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DB4E42686124100141A29 /* KeyboardController.swift */; };
 		0A3E0BBD2608BF95004FCB2F /* DexcomG6SessionStartTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3E0BBC2608BF95004FCB2F /* DexcomG6SessionStartTxMessage.swift */; };
 		0A3E0BC12608C051004FCB2F /* DexcomG6SessionStartRxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3E0BC02608C051004FCB2F /* DexcomG6SessionStartRxMessage.swift */; };
 		0A3E0BC52608C7F7004FCB2F /* DexcomG6SessionStopTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3E0BC42608C7F7004FCB2F /* DexcomG6SessionStopTxMessage.swift */; };
@@ -730,6 +731,7 @@
 		0A216CD024A5EBFF002DA0AF /* MirrorObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorObject.swift; sourceTree = "<group>"; };
 		0A216CD224A5F718002DA0AF /* GlucoseCurrentInfoViewMirror.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseCurrentInfoViewMirror.swift; sourceTree = "<group>"; };
 		0A216CD424A5F7BE002DA0AF /* HomeViewControllerMirror.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerMirror.swift; sourceTree = "<group>"; };
+		0A3DB4E42686124100141A29 /* KeyboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		0A3E0BBC2608BF95004FCB2F /* DexcomG6SessionStartTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6SessionStartTxMessage.swift; sourceTree = "<group>"; };
 		0A3E0BC02608C051004FCB2F /* DexcomG6SessionStartRxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6SessionStartRxMessage.swift; sourceTree = "<group>"; };
 		0A3E0BC42608C7F7004FCB2F /* DexcomG6SessionStopTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6SessionStopTxMessage.swift; sourceTree = "<group>"; };
@@ -3434,6 +3436,7 @@
 			children = (
 				58FE4CBC247970FA00511B80 /* Notifications */,
 				58B4F6BF24114EBA003C6D8F /* ApplicationLaunchController.swift */,
+				0A3DB4E42686124100141A29 /* KeyboardController.swift */,
 				5805C9C424389275002AFA1B /* CGMController.swift */,
 				5805C9C524389275002AFA1B /* LogController.swift */,
 				58F4CC78243B9F470053D17C /* MacMenuController.swift */,
@@ -4293,6 +4296,7 @@
 				5871C1C524816EBA00B79ACF /* StartSensorViewController.swift in Sources */,
 				584432AB243CFD9B00282A6C /* SettingsChartRouter.swift in Sources */,
 				58A8A42B242523DF00CCFCAC /* CarbEntriesWorker.swift in Sources */,
+				0A3DB4E52686124100141A29 /* KeyboardController.swift in Sources */,
 				58DDC45E2423C99B008CB04D /* TrainingEntry.swift in Sources */,
 				58B5FD3224190E2F00DB857D /* HomePresenter.swift in Sources */,
 				580E4CE1243F802F00565EDE /* SettingsModeMasterModels.swift in Sources */,

@@ -12,6 +12,7 @@ final class InitialSetupG6DeviceIDViewController: InitialSetupAbstractStepViewCo
     private let worker = DexcomG6SerialSavingWorker()
     
     @IBOutlet private weak var deviceIDTextField: UITextField!
+    @IBOutlet private weak var bottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,23 @@ final class InitialSetupG6DeviceIDViewController: InitialSetupAbstractStepViewCo
         )
         
         deviceIDTextField.delegate = self
+        
+        KeyboardController.shared.subscribe(listener: self) { [weak self] willShow, height in
+            guard let self = self else { return }
+            if willShow {
+                if let height = height {
+                    UIView.animate(withDuration: 0.1, animations: { () -> Void in
+                        self.bottomConstraint.constant = height + 10
+                    })
+                }
+            } else {
+                self.bottomConstraint.constant = 0
+            }
+        }
+    }
+    
+    deinit {
+        KeyboardController.shared.unsubscribe(listener: self)
     }
     
     @objc private func onSaveTap() {
