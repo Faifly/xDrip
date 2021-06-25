@@ -62,7 +62,7 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
                 self?.stopSensor()
             }
         } else {
-            guard CGMDevice.current.isSetUp else {
+            guard CGMDevice.current.isSetUp, CGMController.shared.serviceIsPaired else {
                 router?.showNoTransmitterAlert(requester: .sensorStart)
                 return
             }
