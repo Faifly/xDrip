@@ -76,10 +76,6 @@ final class CGMController {
         self.service = nil
     }
     
-    var serviceIsPaired: Bool {
-        return service?.isPaired ?? false
-    }
-    
     func notifyGlucoseChange(_ reading: GlucoseReading? = nil) {
         glucoseDataListeners.values.forEach { $0(reading) }
     }

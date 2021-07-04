@@ -68,9 +68,6 @@ final class MockedBluetoothService {
 }
 
 extension MockedBluetoothService: CGMBluetoothService {
-    var isPaired: Bool {
-        return true
-    }
     
     func connect() {
         isStopped = false

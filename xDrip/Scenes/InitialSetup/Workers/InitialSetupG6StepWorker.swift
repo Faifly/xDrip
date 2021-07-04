@@ -30,9 +30,9 @@ final class InitialSetupG6StepWorker: InitialSetupStepProvidingWorker {
     func completeStep(_ step: InitialSetupStep) {
         guard let step = step as? InitialSetupG6Step else { return }
         switch step {
-        case .deviceID: currentStep = .sensorAge
-        case .sensorAge: currentStep = .connect
-        case .connect: currentStep = .warmUp
+        case .deviceID: currentStep = .connect
+        case .sensorAge: currentStep = .warmUp
+        case .connect: currentStep = .sensorAge
         case .warmUp: break
         }
     }

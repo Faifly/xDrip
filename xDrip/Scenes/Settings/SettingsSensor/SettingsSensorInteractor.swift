@@ -62,7 +62,7 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
                 self?.stopSensor()
             }
         } else {
-            guard CGMDevice.current.isSetUp, CGMController.shared.serviceIsPaired else {
+            guard CGMDevice.current.isSetUp, CGMDevice.current.bluetoothID != nil else {
                 router?.showNoTransmitterAlert(requester: .sensorStart)
                 return
             }
@@ -100,7 +100,8 @@ final class SettingsSensorInteractor: SettingsSensorBusinessLogic, SettingsSenso
             NotificationCenter.default.postSettingsChangeNotification(setting: .warmUp)
             return
         }
-        guard let service = CGMController.shared.service, service.isPaired else {
+        
+        guard CGMDevice.current.isSetUp, CGMDevice.current.bluetoothID != nil else {
             router?.showNoTransmitterAlert(requester: .skipWarmUp)
             updateData()
             return

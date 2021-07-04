@@ -13,5 +13,4 @@ protocol CGMBluetoothService {
     
     func connect()
     func disconnect()
-    var isPaired: Bool { get }
 }

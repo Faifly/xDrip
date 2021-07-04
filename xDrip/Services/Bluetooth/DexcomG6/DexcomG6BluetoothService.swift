@@ -419,10 +419,6 @@ extension DexcomG6BluetoothService: CGMBluetoothService {
         self.delegate = delegate
     }
     
-    var isPaired: Bool {
-        return messageWorker?.workerIsPaired() ?? false
-    }
-    
     func connect() {
         isConnectionRequested = true
         if centralManager?.state == .poweredOn {
