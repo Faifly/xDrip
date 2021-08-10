@@ -35,7 +35,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
             realm.add([reading1, reading2, reading3])
         }
         
-        let all = GlucoseReading.allMaster
+        let all = GlucoseReading.allMaster()
         
         XCTAssertTrue(all[0].a ~ 3.0)
         XCTAssertTrue(all[1].a ~ 2.0)
@@ -516,7 +516,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
             GlucoseReading.create(filtered: filtered, unfiltered: unfiltered, rssi: 0.0, date: date)
         }
         
-        var allGrossReadings = GlucoseReading.allMaster
+        var allGrossReadings = GlucoseReading.allMaster()
         var allLightReadings = LightGlucoseReading.allMaster
         
         XCTAssertTrue(allGrossReadings.count == 288)
@@ -543,7 +543,7 @@ final class GlucoseReadingTests: AbstractRealmTest {
         let date = now
         GlucoseReading.create(filtered: filtered, unfiltered: unfiltered, rssi: 0.0, date: date)
         
-        allGrossReadings = GlucoseReading.allMaster
+        allGrossReadings = GlucoseReading.allMaster()
         allLightReadings = LightGlucoseReading.allMaster
         
         XCTAssertTrue(allGrossReadings.count == 288)

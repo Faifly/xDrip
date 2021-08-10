@@ -41,7 +41,7 @@ final class InitialSetupG6DeviceIDViewControllerTests: XCTestCase {
         let spy = InitialSetupBusinessLogicSpy()
         sut.interactor = spy
         
-        guard let textField = sut.view.subviews.compactMap({ $0 as? UITextField }).first else {
+        guard let textField = sut.view.subviews.first?.subviews.compactMap({ $0 as? UITextField }).first else {
             XCTFail("Cannot obtain textfield")
             return
         }
@@ -65,7 +65,7 @@ final class InitialSetupG6DeviceIDViewControllerTests: XCTestCase {
     }
     
     func testOpenGuideButton() {
-        guard let button = sut.view.subviews.compactMap({ $0 as? UIButton }).first else {
+        guard let button = sut.view.subviews.first?.subviews.compactMap({ $0 as? UIButton }).first else {
             XCTFail("Cannot obtain button")
             return
         }

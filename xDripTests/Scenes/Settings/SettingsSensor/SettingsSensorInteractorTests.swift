@@ -63,7 +63,7 @@ final class SettingsSensorInteractorTests: XCTestCase {
         func showNoCalibrationsAlert() {
         }
         
-        func showNoTransmitterAlert() {
+        func showNoTransmitterAlert(requester: NoTransmitterRequester) {
         }
         
         func showSkipWarmUpConfirmation(completion: @escaping (Bool) -> Void) {

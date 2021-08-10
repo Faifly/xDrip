@@ -28,10 +28,10 @@ final class GlucoseNotificationsWorkerTests: AbstractRealmTest {
             date2: Date().addingTimeInterval(-3600.0)
         )
         
-        CGMController.shared.serviceDidReceiveSensorGlucoseReading(raw: 150.0, filtered: 150.0, rssi: 0.0)
-        CGMController.shared.serviceDidReceiveSensorGlucoseReading(raw: 170.0, filtered: 170.0, rssi: 0.0)
-        CGMController.shared.serviceDidReceiveSensorGlucoseReading(raw: 150.0, filtered: 150.0, rssi: 0.0)
-        CGMController.shared.serviceDidReceiveSensorGlucoseReading(raw: 130.0, filtered: 130.0, rssi: 0.0)
+        CGMController.shared.serviceDidReceiveSensorGlucoseReading(raw: 150.0, filtered: 150.0, date: Date(), rssi: 0.0)
+        CGMController.shared.serviceDidReceiveSensorGlucoseReading(raw: 170.0, filtered: 170.0, date: Date(), rssi: 0.0)
+        CGMController.shared.serviceDidReceiveSensorGlucoseReading(raw: 150.0, filtered: 150.0, date: Date(), rssi: 0.0)
+        CGMController.shared.serviceDidReceiveSensorGlucoseReading(raw: 130.0, filtered: 130.0, date: Date(), rssi: 0.0)
     }
     
     func testSetupRepeatAlerts() {
