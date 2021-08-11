@@ -3,40 +3,73 @@ iOS version of [Nightscout's xDrip+](https://github.com/NightscoutFoundation/xDr
 
 ## Description
 
-### Screenshots
-
-#### iPhone
-
-<img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_1.png" width="200"/> <img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_2.png" width="200"/> <img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_3.png" width="200"/> <img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_4.png" width="200"/>
-
-#### iPad
-<img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_1.png" width="400"/> <img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_4.png" width="400"/>
-
-<img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_2.png" width="400"/> <img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_3.png" width="400"/>
-
-#### And even macOS!
-<img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/macOS/mac_1.png" width="600"/>
-
-#### Supported platforms:
-- [x] iPhone.
-- [x] iPad.
-- [x] macOS.
 
 #### Supported transmitters:
 - [x] Dexcom G6.
 
-#### Features:
-- [x] Blood glucose chart.
-- [x] Insulin chart.
-- [x] Carbs chart.
+#### Supported platforms:
+- [x] iPhone.
+- [x] iPad.
+- [x] macOS. 
+
+
+#### Main features:
+
+
 - [x] Simple initial setup.
-- [x] Statistics and history.
+
+<br/><img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_6.png" width="200"/> <img
+src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_5.png" width="600"/> 
+
+<img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_7.png" width="200"/> <img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_6.png" width="600"/><br/>
+
+
+
+<br/>- [x] Charts: blood glucose, insulin, carbs.<br/>                                                                                      
+                                                                                                                  
+<br/><img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_13.png" width="200"/> <img
+src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_11.png" width="600"/><br/>
+
+
+<br/>- [x] Calibrations.<br/>
+
+<br/><img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_8.png" width="200"/> <img
+src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_7.png" width="600"/><br/> 
+
+
+<br/>- [x] Carbs and insulin tracking.<br/>
+
+<br/><img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_11.png" width="200"/> <img
+src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_9.png" width="600"/><br/> 
+
+
+
+<br/>- [x] Statistics.<br/>
+
+<br/><img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_9.png" width="200"/> <img
+src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_8.png" width="600"/><br/> 
+
+
+
+<br/>- [x] History.<br/>
+
+<br/><img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_14.png" width="200"/> <img
+src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_12.png" width="600"/><br/> 
+
+
+<br/>- [x] Clear and simple settings.<br/>
+
+<br/><img src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPhone/iphone_12.png" width="200"/> <img
+src="https://github.com/Faifly/xDrip/blob/develop/.github/screenshots/iPad/ipad_10.png" width="600"/><br/> 
+
+
+#### Other Features:
+
 - [x] Nightscout sync.
 - [x] Follower mode.
 - [x] Various alerts.
-- [x] Tons of settings and configurations.
-- [x] 73% code coverage (aiming for 100%).
-- [ ] Bolus tracking.
+- [x] 69.5% code coverage (aiming for 100%).
+- [x] Basal tracking.
 - [ ] Transmitter resetting.
 
 
