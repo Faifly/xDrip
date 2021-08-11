@@ -202,10 +202,10 @@ final class EditCalibrationViewControllerTests: XCTestCase {
         }
         
         XCTAssertTrue(tableView.numberOfSections == 1)
-        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 3)
+        XCTAssertTrue(tableView.numberOfRows(inSection: 0) == 2)
         
         guard let firstValuePicker = getPicker(tableView, at: IndexPath(row: 0, section: 0)) as? CustomPickerView,
-            let firstDatePicker = getPicker(tableView, at: IndexPath(row: 2, section: 0)) as? CustomDatePicker else {
+            let firstDatePicker = getPicker(tableView, at: IndexPath(row: 1, section: 0)) as? CustomDatePicker else {
             XCTFail("Cannot obtain first section cells")
             return
         }
@@ -217,15 +217,6 @@ final class EditCalibrationViewControllerTests: XCTestCase {
         firstValuePicker.pickerView(firstValuePicker, didSelectRow: 10, inComponent: 0)
         
         let saveButton = sut.navigationItem.rightBarButtonItem
-        
-        let indexPath = IndexPath(row: 1, section: 0)
-        guard let secondValuePicker = getPicker(tableView, at: indexPath) as? CustomPickerView else {
-            XCTFail("Cannot obtain first section cells")
-            return
-        }
-        
-        secondValuePicker.selectRow(10, inComponent: 0, animated: false)
-        secondValuePicker.pickerView(secondValuePicker, didSelectRow: 10, inComponent: 0)
         
         _ = saveButton?.target?.perform(saveButton?.action, with: nil)
         XCTAssertTrue(spy.showSuccessCalled)
