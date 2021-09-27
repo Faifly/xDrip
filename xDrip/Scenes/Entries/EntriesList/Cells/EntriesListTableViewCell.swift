@@ -12,6 +12,7 @@ final class EntriesListTableViewCell: UITableViewCell, ViewModelConfigurable {
     struct ViewModel {
         let value: String
         let date: String
+        let isEnadled: Bool
     }
     
     override func awakeFromNib() {
@@ -23,5 +24,6 @@ final class EntriesListTableViewCell: UITableViewCell, ViewModelConfigurable {
     func configure(withViewModel viewModel: ViewModel) {
         textLabel?.text = viewModel.value
         detailTextLabel?.text = viewModel.date
+        accessoryType = viewModel.isEnadled ? .disclosureIndicator : .none
     }
 }

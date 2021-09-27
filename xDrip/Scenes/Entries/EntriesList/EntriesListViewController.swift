@@ -105,8 +105,10 @@ class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
     }
     
     private func setupUI() {
-        setupRightBarButtonItem()
-        
+        if User.current.settings.deviceMode == .main {
+            setupRightBarButtonItem()
+        }
+    
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "close".localized,
             style: .plain,
@@ -126,6 +128,8 @@ class EntriesListViewController: NibViewController, EntriesListDisplayLogic {
     }
     
     private func setupTableView() {
+        tableView.allowsSelection = User.current.settings.deviceMode == .main
+        
         tableController.didDeleteEntry = { [weak self] indexPath in
             guard let self = self else { return }
             

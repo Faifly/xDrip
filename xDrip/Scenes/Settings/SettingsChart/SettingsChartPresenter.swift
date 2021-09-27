@@ -44,7 +44,6 @@ final class SettingsChartPresenter: SettingsChartPresentationLogic {
             )
         ]
         
-        if User.current.settings.deviceMode == .main {
             cells.append(contentsOf: [
                 createRightSwitchCell(
                     .activeInsulin,
@@ -57,7 +56,6 @@ final class SettingsChartPresenter: SettingsChartPresentationLogic {
                     switchHandler: response.switchValueChangedHandler
                 )
             ])
-        }
         
         return BaseSettings.Section.normal(
             cells: cells,

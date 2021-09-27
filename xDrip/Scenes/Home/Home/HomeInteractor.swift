@@ -233,7 +233,6 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private func updateBolusChartData() {
         var insulinData: [InsulinEntry] = []
         let isShown = User.current.settings.chart?.showActiveInsulin == true
-            && User.current.settings.deviceMode != .follower
         if isShown {
             insulinData = InsulinEntriesWorker.fetchAllBolusEntries().filter {
                 $0.isValid
@@ -246,7 +245,6 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private func updateCarbsChartData() {
         var carbsData: [CarbEntry] = []
         let isShown = User.current.settings.chart?.showActiveCarbs == true
-            && User.current.settings.deviceMode != .follower
         if  isShown {
             carbsData = CarbEntriesWorker.fetchAllCarbEntries().filter { $0.isValid }
         }

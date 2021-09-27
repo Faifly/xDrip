@@ -25,6 +25,8 @@ final class EntriesListInsulinFormattingWorker: EntriesListAbstractFormattingWor
         )
         let date = getDateString(for: entry)
         
-        return EntriesListTableViewCell.ViewModel(value: value, date: date)
+        return EntriesListTableViewCell.ViewModel(value: value,
+                                                  date: date,
+                                                  isEnadled: User.current.settings.deviceMode == .main)
     }
 }
