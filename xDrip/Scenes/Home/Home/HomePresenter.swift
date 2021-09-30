@@ -65,7 +65,7 @@ final class HomePresenter: HomePresentationLogic {
     }
     
     func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
-        let last2Readings = GlucoseReading.lastReadings(2, for: response.lastGlucoseReading?.deviceMode ?? .main)
+        let last2Readings = GlucoseReading.lastReadings(2)
         let value = glucoseFormattingWorker.formatEntry(response.lastGlucoseReading, last2Readings: last2Readings)
         let viewModel = Home.GlucoseCurrentInfo.ViewModel(
             glucoseIntValue: value.glucoseIntValue,
@@ -129,6 +129,10 @@ final class HomePresenter: HomePresentationLogic {
     func presentUpdateSensorState(response: Home.UpdateSensorState.Response) {
         let string: NSMutableAttributedString
         switch response.state {
+        case .notDefined:
+            let viewModel = Home.UpdateSensorState.ViewModel.empty
+            viewController?.displayUpdateSensorState(viewModel: viewModel)
+            return
         case let .warmingUp(minutesLeft):
             string = createWarmUpMessage(for: minutesLeft)
         case let .started(error):
@@ -170,11 +174,7 @@ final class HomePresenter: HomePresentationLogic {
                     ]
                 )
             } else {
-                let viewModel = Home.UpdateSensorState.ViewModel(
-                    shouldShow: false,
-                    text: NSMutableAttributedString(string: "")
-                )
-                
+                let viewModel = Home.UpdateSensorState.ViewModel.empty
                 viewController?.displayUpdateSensorState(viewModel: viewModel)
                 return
             }

@@ -77,8 +77,8 @@ final class HistoryRootInteractor: HistoryRootBusinessLogic, HistoryRootDataStor
         var basalValues = [InsulinEntry]()
         var chartEntries = [InsulinEntry]()
         
-        let lightReadings = LightGlucoseReading.allForCurrentMode
-        let grossReadings = GlucoseReading.allForCurrentMode()
+        let lightReadings = LightGlucoseReading.allReadings
+        let grossReadings = GlucoseReading.allGlucoseReadings()
         
         if timeline == .last14Days {
             let lightGlucoseData = lightGlucoseDataWorker.fetchGlucoseData(for: 14 * 24, readings: lightReadings)

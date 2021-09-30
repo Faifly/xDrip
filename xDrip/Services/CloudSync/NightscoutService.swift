@@ -56,7 +56,7 @@ final class NightscoutService {
                 self.scanForNotUploadedTreatments()
             }
     }
-    private lazy var lastFollowerFetchTime = GlucoseReading.allFollower().last?.date
+    
     private lazy var pumpService: PumpServiceLogic = PumpService()
     private var followerFetchTimer: Timer?
     private var treatmentsFetchTimer: Timer?
@@ -410,13 +410,14 @@ final class NightscoutService {
         URLSession.shared.loggableDataTask(with: request) { data, _, error in
             guard let data = data, error == nil else { return }
             guard let entries = try? JSONDecoder().decode([CGlucoseReading].self, from: data) else { return }
+            let lastReadingDate = GlucoseReading.allGlucoseReadings().last?.date ?? Date()
+            let newReadings = entries.filter {
+                Date(timeIntervalSince1970: TimeInterval($0.date ?? 0) / 1000.0) >? lastReadingDate
+            }
+            if newReadings.isEmpty { return }
+            let readings = GlucoseReading.parseFollowerEntries(newReadings).sorted(by: { $0.date >? $1.date })
             DispatchQueue.main.async {
-                let allFollower = GlucoseReading.allFollower()
-                let readings = GlucoseReading.parseFollowerEntries(entries).sorted(by: { $0.date >? $1.date })
-                let newReadings = readings.filter { reading -> Bool in
-                    !allFollower.contains(where: { $0.externalID == reading.externalID })
-                }.sorted(by: { $0.date >? $1.date })
-                CGMController.shared.notifyGlucoseChange(newReadings.first)
+                CGMController.shared.notifyGlucoseChange(readings.first)
             }
         }.resume()
     }

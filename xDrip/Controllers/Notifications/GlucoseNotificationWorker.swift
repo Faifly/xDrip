@@ -68,7 +68,7 @@ final class GlucoseNotificationWorker: NSObject {
     }
     
     private func resetMissedReadingsTimer() {
-        let readings = GlucoseReading.lastReadings(4, for: User.current.settings.deviceMode)
+        let readings = GlucoseReading.lastReadings(4)
         guard CGMDevice.current.isSensorStarted, !readings.isEmpty else {
             missedReadingsTimer = nil
             return
@@ -243,7 +243,7 @@ final class GlucoseNotificationWorker: NSObject {
     }
     
     private func isGlucoseChangingFast(isRise: Bool) -> Bool {
-        let last3 = GlucoseReading.latestByCount(3, for: User.current.settings.deviceMode)
+        let last3 = GlucoseReading.latestByCount(3, mode: User.current.settings.deviceMode)
         
         guard last3.count == 3 else {
             return false

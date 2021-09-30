@@ -47,27 +47,12 @@ final class LightGlucoseReading: Object, BaseGlucoseReading {
         self.date = date
     }
     
-    private static var allReadings: Results<LightGlucoseReading> {
+    static var allReadings: Results<LightGlucoseReading> {
         return Realm.shared.objects(LightGlucoseReading.self)
     }
     
-    static var allMaster: Results<LightGlucoseReading> {
-        return allReadings
-            .filter(.deviceMode(mode: .main)).sorted(by: [.dateDescending])
-    }
-    
-    private static var allFollower: Results<LightGlucoseReading> {
-        return allReadings
-            .filter(.deviceMode(mode: .follower)).sorted(by: [.dateDescending])
-    }
-    
-    static var allForCurrentMode: Results<LightGlucoseReading> {
-        clearOldReadings()
-        return User.current.settings.deviceMode == .follower ? allFollower : allMaster
-    }
-    
     static func readingsForInterval(_ interval: DateInterval) -> Results<LightGlucoseReading> {
-        return allForCurrentMode.filter(
+        return allReadings.filter(
             NSCompoundPredicate(type: .and, subpredicates: [
                                     .laterThanOrEqual(date: interval.start),
                                     .earlierThanOrEqual(date: interval.end)
