@@ -21,40 +21,40 @@ final class NightscoutService {
     
     private lazy var followerSettingsObserver: [Any] = NotificationCenter.default.subscribe(
         forSettingsChange: [.followerAuthStatus]) {
-            guard let settings = User.current.settings.nightscoutSync else { return }
-            if settings.isFollowerAuthed {
-                self.startFetchingFollowerData()
-            } else {
-                self.stopFetchingFollowerData()
-            }
+        guard let settings = User.current.settings.nightscoutSync else { return }
+        if settings.isFollowerAuthed {
+            self.startFetchingFollowerData()
+        } else {
+            self.stopFetchingFollowerData()
+        }
     }
     
     private lazy var pumpSyncObserver: [Any] = NotificationCenter.default.subscribe(
         forSettingsChange: [.pumpSync]) {
-            guard let settings = User.current.settings.pumpSync else { return }
-            if settings.isEnabled {
-                self.startFetchingPumpData()
-            } else {
-                self.stopFetchingPumpData()
-            }
+        guard let settings = User.current.settings.pumpSync else { return }
+        if settings.isEnabled {
+            self.startFetchingPumpData()
+        } else {
+            self.stopFetchingPumpData()
+        }
     }
     
     private lazy var downloadDataSettingsObserver: [Any] = NotificationCenter.default.subscribe(
         forSettingsChange: [.downloadData]) {
-            guard let settings = User.current.settings.nightscoutSync else { return }
-            if settings.downloadData {
-                self.startFetchingTreatments()
-            } else {
-                self.stopFetchingTreatments()
-            }
+        guard let settings = User.current.settings.nightscoutSync else { return }
+        if settings.downloadData {
+            self.startFetchingTreatments()
+        } else {
+            self.stopFetchingTreatments()
+        }
     }
     
     private lazy var uploadTreatmentsSettingsObserver: [Any] = NotificationCenter.default.subscribe(
         forSettingsChange: [.uploadTreatments]) {
-            guard let settings = User.current.settings.nightscoutSync else { return }
-            if settings.uploadTreatments {
-                self.scanForNotUploadedTreatments()
-            }
+        guard let settings = User.current.settings.nightscoutSync else { return }
+        if settings.uploadTreatments {
+            self.scanForNotUploadedTreatments()
+        }
     }
     
     private lazy var pumpService: PumpServiceLogic = PumpService()
@@ -108,6 +108,13 @@ final class NightscoutService {
             return
         }
         
+        guard User.current.settings.deviceMode == .main else {
+            LogController.log(
+                message: "[Glucose] Can't scanForNotUploadedEntries, deviceMode is not main(master)",
+                type: .error)
+            return
+        }
+        
         scanForGlucoseEntries()
         scanForCalibrations()
         
@@ -117,13 +124,13 @@ final class NightscoutService {
     func scanForNotUploadedTreatments() {
         LogController.log(message: "[NighscoutService]: Started %@.", type: .info, #function)
         guard let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments else {
-                LogController.log(
-                    message: "[NighscoutService]: Aborting %@ because sync or uploadTreatments is disabled.",
-                    type: .info,
-                    #function
-                )
-                return
+              settings.isEnabled, settings.uploadTreatments else {
+            LogController.log(
+                message: "[NighscoutService]: Aborting %@ because sync or uploadTreatments is disabled.",
+                type: .info,
+                #function
+            )
+            return
         }
         
         scanForTreatments(treatmentType: .carbs)
@@ -249,12 +256,12 @@ final class NightscoutService {
         let postRequestType = treatmentType.getUploadRequestTypeFor(requestType: .post)
         for entry in notUploaded {
             guard !requestQueue.contains(where: {
-            $0.itemIDs.contains(entry.externalID) && $0.type == postRequestType
+                $0.itemIDs.contains(entry.externalID) && $0.type == postRequestType
             }) else { continue }
             
             guard let request = requestFactory.createNotUploadedTreatmentRequest(
-                CTreatment(entry: entry, treatmentType: treatmentType), requestType: postRequestType) else {
-                    return }
+                    CTreatment(entry: entry, treatmentType: treatmentType), requestType: postRequestType) else {
+                return }
             requestQueue.append(request)
         }
     }
@@ -292,7 +299,7 @@ final class NightscoutService {
             }) {
                 guard let request = requestFactory.createDeleteTreatmentRequest(entry.externalID,
                                                                                 requestType: deleteRequestType) else {
-                                                                                    return }
+                    return }
                 self.requestQueue.append(request)
                 self.runQueue()
             }
@@ -359,7 +366,7 @@ final class NightscoutService {
         followerFetchTimer = Timer.scheduledTimer(
             withTimeInterval: 60.0,
             repeats: true) { _ in
-                self.fetchFollowerData()
+            self.fetchFollowerData()
         }
         fetchFollowerData()
     }
@@ -369,9 +376,9 @@ final class NightscoutService {
         treatmentsFetchTimer = Timer.scheduledTimer(
             withTimeInterval: 60.0,
             repeats: true) { _ in
-                if let settings = User.current.settings.nightscoutSync, settings.isEnabled, settings.downloadData {
-                    self.fetchTreatments()
-                }
+            if let settings = User.current.settings.nightscoutSync, settings.isEnabled, settings.downloadData {
+                self.fetchTreatments()
+            }
         }
         fetchTreatments()
     }
@@ -406,20 +413,34 @@ final class NightscoutService {
     
     private func fetchFollowerData() {
         LogController.log(message: "[NighscoutService]: Try to %@.", type: .info, #function)
+        guard User.current.settings.deviceMode == .follower else {
+            LogController.log(message: "[Glucose] Can't fetchFollowerData, deviceMode is not follower", type: .error)
+            return
+        }
         guard let request = requestFactory.createFetchFollowerDataRequest() else { return }
         URLSession.shared.loggableDataTask(with: request) { data, _, error in
             guard let data = data, error == nil else { return }
             guard let entries = try? JSONDecoder().decode([CGlucoseReading].self, from: data) else { return }
+            if entries.isEmpty { return }
+            
             var lastReadingDate: Date?
             if let lastReading = GlucoseReading.allGlucoseReadings().first {
                 lastReadingDate = lastReading.date ?? Date()
             }
-            let newReadings = entries.filter {
-                Date(timeIntervalSince1970: TimeInterval($0.date ?? 0) / 1000.0) >? lastReadingDate
+            
+            var newReadings: [CGlucoseReading] = []
+            
+            for entry in entries {
+                if Date(timeIntervalSince1970: TimeInterval(entry.date ?? 0) / 1000.0) >? lastReadingDate,
+                   !newReadings.contains(where: { $0.date == entry.date }) {
+                    newReadings.append(entry)
+                }
             }
+            
             if newReadings.isEmpty { return }
+        
             DispatchQueue.main.async {
-            let readings = GlucoseReading.parseFollowerEntries(newReadings).sorted(by: { $0.date >? $1.date })
+                let readings = GlucoseReading.parseFollowerEntries(newReadings).sorted(by: { $0.date >? $1.date })
                 CGMController.shared.notifyGlucoseChange(readings.first)
             }
         }.resume()

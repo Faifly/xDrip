@@ -383,7 +383,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         let readings = rawEntries.compactMap { createReading(from: $0) }
         let realm = Realm.shared
         realm.safeWrite {
-            realm.add(readings, update: .all)
+            realm.add(readings)
         }
         
         return readings
