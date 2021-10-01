@@ -410,13 +410,16 @@ final class NightscoutService {
         URLSession.shared.loggableDataTask(with: request) { data, _, error in
             guard let data = data, error == nil else { return }
             guard let entries = try? JSONDecoder().decode([CGlucoseReading].self, from: data) else { return }
-            let lastReadingDate = GlucoseReading.allGlucoseReadings().last?.date ?? Date()
+            var lastReadingDate: Date?
+            if let lastReading = GlucoseReading.allGlucoseReadings().first {
+                lastReadingDate = lastReading.date ?? Date()
+            }
             let newReadings = entries.filter {
                 Date(timeIntervalSince1970: TimeInterval($0.date ?? 0) / 1000.0) >? lastReadingDate
             }
             if newReadings.isEmpty { return }
-            let readings = GlucoseReading.parseFollowerEntries(newReadings).sorted(by: { $0.date >? $1.date })
             DispatchQueue.main.async {
+            let readings = GlucoseReading.parseFollowerEntries(newReadings).sorted(by: { $0.date >? $1.date })
                 CGMController.shared.notifyGlucoseChange(readings.first)
             }
         }.resume()

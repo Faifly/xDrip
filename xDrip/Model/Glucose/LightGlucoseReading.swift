@@ -48,7 +48,7 @@ final class LightGlucoseReading: Object, BaseGlucoseReading {
     }
     
     static var allReadings: Results<LightGlucoseReading> {
-        return Realm.shared.objects(LightGlucoseReading.self)
+        return Realm.shared.objects(LightGlucoseReading.self).sorted(by: [.dateDescending])
     }
     
     static func readingsForInterval(_ interval: DateInterval) -> Results<LightGlucoseReading> {

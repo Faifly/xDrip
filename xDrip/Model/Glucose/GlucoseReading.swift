@@ -105,15 +105,14 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     
     static func allGlucoseReadings(valid: Bool = true) -> Results<GlucoseReading> {
         return valid ?
-            Realm.shared.objects(GlucoseReading.self).filter(.valid)
+            Realm.shared.objects(GlucoseReading.self).filter(.valid).sorted(by: [.dateDescending])
             :
-            Realm.shared.objects(GlucoseReading.self)
+            Realm.shared.objects(GlucoseReading.self).sorted(by: [.dateDescending])
     }
     
     static func allMaster(valid: Bool = true) -> Results<GlucoseReading> {
         return allGlucoseReadings(valid: valid)
             .filter(.deviceMode(mode: .main))
-            .sorted(by: [.dateDescending])
     }
     
     static func allMasterForCurrentSensor(valid: Bool = true) -> Results<GlucoseReading> {
