@@ -107,6 +107,7 @@ final class InitialSetupInteractor: InitialSetupBusinessLogic, InitialSetupDataS
     
     func doSaveNightscoutConnectionData(request: InitialSetup.SaveNightscoutCredentials.Request) {
         User.current.settings.nightscoutSync?.updateIsFollowerAuthed(true)
+        User.current.setIsInitialSetupDone(true)
         stepProvidingWorker?.completeStep(InitialSetup.GenericStep.nightscoutSync)
         showNextStep()
     }
