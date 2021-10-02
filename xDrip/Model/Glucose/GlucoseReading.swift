@@ -386,6 +386,8 @@ final class GlucoseReading: Object, BaseGlucoseReading {
             realm.add(readings)
         }
         
+        readings.forEach { _ in clearOldReadings() }
+        
         return readings
     }
     
