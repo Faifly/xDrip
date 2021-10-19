@@ -81,7 +81,7 @@ struct CTreatment: Codable {
             duration = entry.amount / .secondsPerMinute
             
             if let intensityValue = entry.exerciseIntensity,
-                let intensityString = TrainingIntensity(rawValue: intensityValue)?.paramValue {
+               let intensityString = TrainingIntensity(rawValue: intensityValue)?.paramValue {
                 exerciseIntensity = intensityString
             } else {
                 exerciseIntensity = nil
@@ -139,7 +139,7 @@ struct CTreatment: Codable {
         case TreatmentType.training.rawValue.lowercased():
             type = .training
         default:
-            type = .carbs
+            break
         }
     }
     
@@ -185,7 +185,9 @@ struct CTreatment: Codable {
     private static func createRealmObjectFrom(treatment: CTreatment) -> Object? {
         var object: Object?
         
-        let treatmentDate = treatment.getDate()
+        guard let treatmentDate = treatment.date,
+              let externalID = treatment.uuid
+        else { return nil }
         
         var absorptionDuration: TimeInterval?
         if let time = treatment.absorptionTime {
@@ -198,7 +200,7 @@ struct CTreatment: Codable {
                 object = CarbEntry(amount: amount,
                                    foodType: treatment.foodType,
                                    date: treatmentDate,
-                                   externalID: treatment.uuid,
+                                   externalID: externalID,
                                    absorptionDuration: absorptionDuration)
             }
         case .bolus:
@@ -206,7 +208,7 @@ struct CTreatment: Codable {
                 object = InsulinEntry(amount: amount,
                                       date: treatmentDate,
                                       type: .bolus,
-                                      externalID: treatment.uuid,
+                                      externalID: externalID,
                                       absorptionDuration: absorptionDuration)
             }
         case .basal:
@@ -214,14 +216,14 @@ struct CTreatment: Codable {
                 object = InsulinEntry(amount: amount,
                                       date: treatmentDate,
                                       type: .basal,
-                                      externalID: treatment.uuid)
+                                      externalID: externalID)
             }
         case .training:
             if let duration = treatment.duration, let intensity = treatment.exerciseIntensity {
                 object = TrainingEntry(duration: duration * .secondsPerMinute,
                                        intensity: TrainingIntensity(paramValue: intensity),
                                        date: treatmentDate,
-                                       externalID: treatment.uuid)
+                                       externalID: externalID)
             }
         default:
             break
@@ -230,23 +232,18 @@ struct CTreatment: Codable {
         return object
     }
     
-    private func getDate() -> Date {
-        let treatmentDate: Date
+    private var date: Date? {
+        var treatmentDate: Date?
+        let dateFormatter = DateFormatter()
         if let sysTime = sysTime {
-            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-            treatmentDate = dateFormatter.date(from: sysTime) ?? Date()
+            treatmentDate = dateFormatter.date(from: sysTime)
         } else if let timestamp = timestamp {
             treatmentDate = Date(timeIntervalSince1970: TimeInterval(timestamp))
-        } else {
-            let dateFormatter = DateFormatter()
+        } else if let createdAt = createdAt {
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
             dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-            if let createdAt = createdAt {
-                treatmentDate = dateFormatter.date(from: createdAt) ?? Date()
-            } else {
-                treatmentDate = Date()
-            }
+            treatmentDate = dateFormatter.date(from: createdAt)
         }
         return treatmentDate
     }
