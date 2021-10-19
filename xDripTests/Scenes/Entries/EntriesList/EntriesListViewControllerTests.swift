@@ -353,7 +353,7 @@ final class EntriesListViewControllerTests: XCTestCase {
                  let value = "value\(jIndex)"
                  let date = "date\(jIndex)"
                  
-                 let viewModel = EntriesListTableViewCell.ViewModel(value: value, date: date)
+                 let viewModel = EntriesListTableViewCell.ViewModel(value: value, date: date, isEnadled: true)
                  cellViewModels.append(viewModel)
              }
              

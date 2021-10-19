@@ -21,7 +21,7 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
     func testFormatEntry() {
         // Given
         let reading: GlucoseReading? = nil
-        let last2Readings = GlucoseReading.lastReadings(2, for: .main)
+        let last2Readings = GlucoseReading.lastReadings(2, mode: .main)
         // When
         let formattedEntry = sut.formatEntry(reading, last2Readings: last2Readings)
         // Then
@@ -67,7 +67,7 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
     func testSlopeToArrowSymbol() {
         // Given
         let reading: GlucoseReading? = nil
-        let last2Readings = GlucoseReading.lastReadings(2, for: .main)
+        let last2Readings = GlucoseReading.lastReadings(2, mode: .main)
         // When
         let formattedEntry = sut.formatEntry(reading, last2Readings: last2Readings)
         // Then

@@ -31,22 +31,22 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
     
     func subscribeForSensorStateChange(callback: @escaping (Home.SensorState) -> Void) {
         self.callback = callback
-        checkWarmUpState()
+        checkSensorState()
         CGMController.shared.subscribeForMetadataEvents(listener: self) { [weak self] type in
             if type == .sensorAge {
-                self?.checkWarmUpState()
+                self?.checkSensorState()
             }
         }
         
         CGMController.shared.subscribeForGlucoseDataEvents(listener: self) { [weak self] _ in
             guard let self = self else { return }
-            self.checkWarmUpState()
+            self.checkSensorState()
         }
         
         settingsObservers = NotificationCenter.default.subscribe(
-            forSettingsChange: [.warmUp, .sensorStarted]
+            forSettingsChange: [.warmUp, .sensorStarted, .deviceMode]
         ) { [weak self] in
-            self?.checkWarmUpState()
+            self?.checkSensorState()
         }
         
         calibrationObserver = NotificationCenter.default.addObserver(
@@ -54,7 +54,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
             object: nil,
             queue: nil,
             using: { [weak self] _ in
-                self?.checkWarmUpState()
+                self?.checkSensorState()
             }
         )
     }
@@ -71,7 +71,7 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
     private func startCheckTimer() {
         if timer == nil {
             timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { [weak self] _ in
-                self?.checkWarmUpState()
+                self?.checkSensorState()
             })
         }
     }
@@ -81,38 +81,42 @@ final class HomeSensorStateWorker: HomeSensorStateWorkerLogic {
         timer = nil
     }
     
-    private func checkWarmUpState() {
-        if CGMDevice.current.isWarmingUp {
-            isWarmingUp = true
-            guard let stringAge = CGMDevice.current.metadata(ofType: .sensorAge)?.value else { return }
-            guard let intervalAge = TimeInterval(stringAge) else { return }
-            guard let type = CGMDevice.current.deviceType else { return }
-            let age = Date().timeIntervalSince1970 - intervalAge
-            let minutesLeft = Int((type.warmUpInterval - age) / 60.0)
-            callback?(.warmingUp(minutesLeft: minutesLeft))
-            
-            startCheckTimer()
+    private func checkSensorState() {
+        if (User.current.settings.deviceMode == .follower) {
+            callback?(.notDefined)
         } else {
-            isWarmingUp = false
-            let state: Home.SensorState
-            
-            let errorMessage = createErrorMessage()
-            var waitForStop = false
-            
-            if CGMDevice.current.sensorStartDate != nil {
-                state = .started(errorMessage: errorMessage)
-            } else {
-                waitForStop = CGMDevice.current.sensorStopScheduleDate != nil
-                state = .stopped(waitForStop: waitForStop)
-            }
-            
-            if errorMessage != nil || waitForStop {
+            if CGMDevice.current.isWarmingUp {
+                isWarmingUp = true
+                guard let stringAge = CGMDevice.current.metadata(ofType: .sensorAge)?.value else { return }
+                guard let intervalAge = TimeInterval(stringAge) else { return }
+                guard let type = CGMDevice.current.deviceType else { return }
+                let age = Date().timeIntervalSince1970 - intervalAge
+                let minutesLeft = Int((type.warmUpInterval - age) / 60.0)
+                callback?(.warmingUp(minutesLeft: minutesLeft))
+                
                 startCheckTimer()
             } else {
-                stopCheckTimer()
+                isWarmingUp = false
+                let state: Home.SensorState
+                
+                let errorMessage = createErrorMessage()
+                var waitForStop = false
+                
+                if CGMDevice.current.sensorStartDate != nil {
+                    state = .started(errorMessage: errorMessage)
+                } else {
+                    waitForStop = CGMDevice.current.sensorStopScheduleDate != nil
+                    state = .stopped(waitForStop: waitForStop)
+                }
+                
+                if errorMessage != nil || waitForStop {
+                    startCheckTimer()
+                } else {
+                    stopCheckTimer()
+                }
+                
+                callback?(state)
             }
-            
-            callback?(state)
         }
     }
     

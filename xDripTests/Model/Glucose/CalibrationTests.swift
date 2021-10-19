@@ -381,7 +381,7 @@ final class CalibrationTests: AbstractRealmTest {
         
         try? Calibration.createRegularCalibration(glucoseLevel: 160.0, date: now)
         
-        let readings = GlucoseReading.lastReadings(30, for: .main)
+        let readings = GlucoseReading.lastReadings(30, mode: .main)
         let calibrations = Calibration.lastCalibrations(30)
         
         XCTAssert(readings.count == 30)
@@ -474,7 +474,7 @@ final class CalibrationTests: AbstractRealmTest {
             date2: Date()
         )
         
-        let readings = GlucoseReading.lastReadings(2, for: .main)
+        let readings = GlucoseReading.lastReadings(2, mode: .main)
         XCTAssert(readings[0].filteredCalculatedValue ~ 89.48000013830654)
         XCTAssert(readings[1].filteredCalculatedValue ~ 100.0)
     }

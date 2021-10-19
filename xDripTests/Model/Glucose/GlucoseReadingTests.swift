@@ -49,9 +49,9 @@ final class GlucoseReadingTests: AbstractRealmTest {
         )
         CGMDevice.current.updateSensorIsStarted(true)
         
-        XCTAssertTrue(GlucoseReading.lastReadings(0, for: .main).isEmpty)
-        XCTAssertTrue(GlucoseReading.lastReadings(1, for: .main).isEmpty)
-        XCTAssertTrue(GlucoseReading.lastReadings(10, for: .main).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastReadings(0, mode: .main).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastReadings(1, mode: .main).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastReadings(10, mode: .main).isEmpty)
         
         let reading1 = GlucoseReading()
         reading1.setValue(Date(timeIntervalSince1970: 1.0), forKey: "date")
@@ -62,21 +62,21 @@ final class GlucoseReadingTests: AbstractRealmTest {
             realm.add(reading1)
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(1, for: .main).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastReadings(1, mode: .main).isEmpty)
         
         realm.safeWrite {
             reading1.setValue(1.0, forKey: "rawValue")
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(1, for: .main).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastReadings(1, mode: .main).isEmpty)
         
         realm.safeWrite {
             reading1.setValue(1.0, forKey: "calculatedValue")
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(0, for: .main).isEmpty)
-        XCTAssertTrue(GlucoseReading.lastReadings(1, for: .main).count == 1)
-        XCTAssertTrue(GlucoseReading.lastReadings(2, for: .main).count == 1)
+        XCTAssertTrue(GlucoseReading.lastReadings(0, mode: .main).isEmpty)
+        XCTAssertTrue(GlucoseReading.lastReadings(1, mode: .main).count == 1)
+        XCTAssertTrue(GlucoseReading.lastReadings(2, mode: .main).count == 1)
         
         let reading2 = GlucoseReading()
         reading2.setValue(Date(timeIntervalSince1970: 2.0), forKey: "date")
@@ -89,9 +89,9 @@ final class GlucoseReadingTests: AbstractRealmTest {
             realm.add(reading2)
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(1, for: .main).count == 1)
-        XCTAssertTrue(GlucoseReading.lastReadings(2, for: .main).count == 2)
-        XCTAssertTrue(GlucoseReading.lastReadings(3, for: .main).count == 2)
+        XCTAssertTrue(GlucoseReading.lastReadings(1, mode: .main).count == 1)
+        XCTAssertTrue(GlucoseReading.lastReadings(2, mode: .main).count == 2)
+        XCTAssertTrue(GlucoseReading.lastReadings(3, mode: .main).count == 2)
         
         let reading3 = GlucoseReading()
         reading3.setValue(Date(timeIntervalSince1970: 3.0), forKey: "date")
@@ -104,12 +104,12 @@ final class GlucoseReadingTests: AbstractRealmTest {
             realm.add(reading3)
         }
         
-        XCTAssertTrue(GlucoseReading.lastReadings(1, for: .main).count == 1)
-        XCTAssertTrue(GlucoseReading.lastReadings(2, for: .main).count == 2)
-        XCTAssertTrue(GlucoseReading.lastReadings(3, for: .main).count == 3)
-        XCTAssertTrue(GlucoseReading.lastReadings(4, for: .main).count == 3)
+        XCTAssertTrue(GlucoseReading.lastReadings(1, mode: .main).count == 1)
+        XCTAssertTrue(GlucoseReading.lastReadings(2, mode: .main).count == 2)
+        XCTAssertTrue(GlucoseReading.lastReadings(3, mode: .main).count == 3)
+        XCTAssertTrue(GlucoseReading.lastReadings(4, mode: .main).count == 3)
         
-        let last3 = GlucoseReading.lastReadings(3, for: .main)
+        let last3 = GlucoseReading.lastReadings(3, mode: .main)
         
         XCTAssertTrue(last3[0].a ~ 3.0)
         XCTAssertTrue(last3[1].a ~ 2.0)
@@ -516,8 +516,8 @@ final class GlucoseReadingTests: AbstractRealmTest {
             GlucoseReading.create(filtered: filtered, unfiltered: unfiltered, rssi: 0.0, date: date)
         }
         
-        var allGrossReadings = GlucoseReading.allMaster()
-        var allLightReadings = LightGlucoseReading.allMaster
+        var allGrossReadings = GlucoseReading.allGlucoseReadings()
+        var allLightReadings = LightGlucoseReading.allReadings
         
         XCTAssertTrue(allGrossReadings.count == 288)
         XCTAssertTrue(allLightReadings.isEmpty)
@@ -543,8 +543,8 @@ final class GlucoseReadingTests: AbstractRealmTest {
         let date = now
         GlucoseReading.create(filtered: filtered, unfiltered: unfiltered, rssi: 0.0, date: date)
         
-        allGrossReadings = GlucoseReading.allMaster()
-        allLightReadings = LightGlucoseReading.allMaster
+        allGrossReadings = GlucoseReading.allGlucoseReadings()
+        allLightReadings = LightGlucoseReading.allReadings
         
         XCTAssertTrue(allGrossReadings.count == 288)
         XCTAssertTrue(allLightReadings.count == 1)

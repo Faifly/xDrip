@@ -48,7 +48,7 @@ final class HomeGlucoseDataWorkerTests: AbstractRealmTest {
         realm.safeWrite {
             realm.add(reading)
         }
-        var allReadings = GlucoseReading.allForCurrentMode(valid: false)
+        var allReadings = GlucoseReading.allGlucoseReadings(valid: false)
         // Then
         XCTAssertNil(sut.fetchLastGlucoseReading(readings: allReadings))
         
@@ -77,7 +77,7 @@ final class HomeGlucoseDataWorkerTests: AbstractRealmTest {
             realm.add(reading2)
         }
         
-        allReadings = GlucoseReading.allForCurrentMode(valid: false)
+        allReadings = GlucoseReading.allGlucoseReadings(valid: false)
         
         // Then
         XCTAssertNotNil(sut.fetchLastGlucoseReading(readings: allReadings))

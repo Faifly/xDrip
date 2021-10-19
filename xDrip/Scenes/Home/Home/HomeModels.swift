@@ -31,6 +31,7 @@ enum Home {
     }
     
     enum SensorState {
+        case notDefined
         case stopped(waitForStop: Bool)
         case warmingUp(minutesLeft: Int)
         case started(errorMessage: CalibrationStateError?)
@@ -207,6 +208,13 @@ enum Home {
         struct ViewModel {
             let shouldShow: Bool
             let text: NSAttributedString
+            
+            static var empty: ViewModel {
+                return ViewModel(
+                    shouldShow: false,
+                    text: NSMutableAttributedString(string: "")
+                )
+            }
         }
     }
 }
