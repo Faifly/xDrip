@@ -15,7 +15,7 @@ final class GlucoseNotificationWorker: NSObject {
     var notificationRequest: ((AlertEventType) -> Void)?
     
     private lazy var settingsChangeObserver: [NSObjectProtocol] = NotificationCenter.default.subscribe(
-        forSettingsChange: [.alertRepeat, .fastRise, .fastDrop, .urgentHigh, .urgentLow, .high, .low, .sensorStarted]
+        forSettingsChange: [.alertRepeat, .fastRise, .fastDrop, .urgentHigh, .urgentLow, .high, .low]
     ) { [weak self] setting in
         guard let self = self else { return }
         
@@ -28,8 +28,6 @@ final class GlucoseNotificationWorker: NSObject {
         case .high: alertType = .high
         case .low: alertType = .low
         case .alertRepeat: self.disableAlertsRelatedToDefaultConfig(); return
-        case .sensorStarted:
-            self.resetMissedReadingsTimer()
         default: break
         }
         
@@ -46,9 +44,7 @@ final class GlucoseNotificationWorker: NSObject {
         super.init()
         CGMController.shared.subscribeForGlucoseDataEvents(listener: self) { [weak self] reading in
             guard let reading = reading, let self = self, reading.isValid else { return }
-            if User.current.settings.deviceMode == .main {
-                guard Calibration.allForCurrentSensor.count > 1 else { return }
-            }
+            guard User.current.settings.deviceMode != .main || Calibration.allForCurrentSensor.count > 1 else { return }
             
             self.checkFastRise()
             self.checkFastDrop()
@@ -58,7 +54,6 @@ final class GlucoseNotificationWorker: NSObject {
         
         _ = settingsChangeObserver
         
-        resetMissedReadingsTimer()
         resetAlertTimer()
         setupRepeatAlertsData()
     }
@@ -68,34 +63,20 @@ final class GlucoseNotificationWorker: NSObject {
     }
     
     private func resetMissedReadingsTimer() {
-        let readings = GlucoseReading.lastReadings(4)
-        guard CGMDevice.current.isSensorStarted, !readings.isEmpty else {
+        guard CGMDevice.current.isSensorStarted else {
             missedReadingsTimer = nil
             return
         }
-        
-        var timeInterval = Constants.Glucose.defaultMissedReadingTimeInterval
-        if readings.count == Constants.Glucose.requiredReadingsCountToCalculateInterval {
-            var interval = 0.0
-            var count = 0.0
-            
-            for index in 1 ..< readings.count {
-                if let date1 = readings[index - 1].date, let date2 = readings[index].date {
-                    interval += date1.timeIntervalSince(date2)
-                    count += 1.0
-                }
-            }
-            
-            if count >= 2 {
-                timeInterval = 2.1 * interval / count 
-            }
-        }
-        
         missedReadingsTimer = nil
-        missedReadingsTimer = RepeatingTimer(timeInterval: timeInterval)
+        missedReadingsTimer = RepeatingTimer(timeInterval: Constants.Glucose.defaultMissedReadingTimeInterval)
         missedReadingsTimer?.eventHandler = { [weak self] in
-            DispatchQueue.main.async {
-                self?.checkMissedReadings()
+            guard let self = self else { return }
+            if CGMDevice.current.isSensorStarted {
+                DispatchQueue.main.async {
+                    self.checkMissedReadings()
+                }
+            } else {
+                self.missedReadingsTimer = nil
             }
         }
         missedReadingsTimer?.resume()
@@ -127,7 +108,7 @@ final class GlucoseNotificationWorker: NSObject {
                 
                 if now - data.value.lastFireTimestamp > 60.0 {
                     fireAlert(ofType: data.key)
-                
+                    
                     if repeatAlertsData[data.key]?.repeatCount >? Constants.Notifications.maximumRepeatCount {
                         disableAlert(data.key)
                     }
@@ -170,8 +151,8 @@ final class GlucoseNotificationWorker: NSObject {
         
         for type in alertTypes {
             if let config = User.current.settings.alert?.customConfiguration(for: type),
-                !config.isOverriden,
-                let defaultConfig = User.current.settings.alert?.defaultConfiguration {
+               !config.isOverriden,
+               let defaultConfig = User.current.settings.alert?.defaultConfiguration {
                 if defaultConfig.repeat {
                     disableAlert(type)
                 }
