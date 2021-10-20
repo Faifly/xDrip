@@ -15,8 +15,8 @@ protocol UploadRequestFactoryLogic {
     func createCalibrationRequest(_ calibration: Calibration) -> UploadRequest?
     func createDeleteCalibrationRequest(_ calibration: Calibration) -> UploadRequest?
     func createTestConnectionRequest(tryAuth: Bool) throws -> URLRequest
-    func createFetchFollowerDataRequest() -> URLRequest?
-    func createFetchTreatmentsRequest() -> URLRequest?
+    func createFetchFollowerGlucoseReadingsRequest() -> URLRequest?
+    func createFetchFollowerTreatmentsRequest() -> URLRequest?
     func createDeviceStatusRequest() -> URLRequest?
     func createNotUploadedTreatmentRequest(_ entry: CTreatment, requestType: UploadRequestType) -> UploadRequest?
     func createDeleteTreatmentRequest(_ uuid: String, requestType: UploadRequestType) -> UploadRequest?
@@ -125,7 +125,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         }
     }
     
-    func createFetchFollowerDataRequest() -> URLRequest? {
+    func createFetchFollowerGlucoseReadingsRequest() -> URLRequest? {
         LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
         guard let settings = User.current.settings.nightscoutSync else {
             LogController.log(
@@ -331,7 +331,7 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         return UploadRequest(request: request, itemIDs: [uuid], type: requestType)
     }
     
-    func createFetchTreatmentsRequest() -> URLRequest? {
+    func createFetchFollowerTreatmentsRequest() -> URLRequest? {
         LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
         guard let settings = User.current.settings.nightscoutSync, settings.isEnabled else {
             LogController.log(
@@ -375,30 +375,29 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
         let url = baseURL.safeAppendingPathComponent("/api/v1/treatments")
         var request = URLRequest(url: url)
         
-        guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret else {
-            LogController.log(
-                message: "[UploadRequestFactory]: Failed to %@ because of no api secret provided.",
-                type: .info,
-                #function
-            )
-            throw NightscoutError.noAPISecret
-        }
-        guard !apiSecret.isEmpty else {
-            LogController.log(
-                message: "[UploadRequestFactory]: Failed to %@ because of no api secret provided.",
-                type: .info,
-                #function
-            )
-            throw NightscoutError.noAPISecret
-        }
-        
         if uploading {
             request.httpMethod = "PUT"
+            guard let apiSecret = User.current.settings.nightscoutSync?.apiSecret else {
+                LogController.log(
+                    message: "[UploadRequestFactory]: Failed to %@ because of no api secret provided.",
+                    type: .info,
+                    #function
+                )
+                throw NightscoutError.noAPISecret
+            }
+            guard !apiSecret.isEmpty else {
+                LogController.log(
+                    message: "[UploadRequestFactory]: Failed to %@ because of no api secret provided.",
+                    type: .info,
+                    #function
+                )
+                throw NightscoutError.noAPISecret
+            }
+            request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
         } else {
             request.httpMethod = "GET"
         }
         
-        request.allHTTPHeaderFields = createHeaders(apiSecret: apiSecret.sha1)
         request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         
         return request

@@ -269,7 +269,7 @@
 "settings_nightscout_cloud_configuration_base_url_title" = "Базовый URL";
 "settings_nightscout_cloud_configuration_base_url_placeholder" = "https://nightscout.com";
 "settings_nightscout_cloud_configuration_credentials_section_footer" = "Это только базовый URL, загрузчик автоматически добавит /entries для запросов";
-"settings_nightscout_cloud_configuration_credentials_readonly_section_footer" = "Вы уже авторизованы на этом сервере Nightscout как последователь. Чтобы изменить эти настройки, перейдите в настройки режимов";
+"settings_nightscout_cloud_configuration_credentials_readonly_section_footer" = "Приложение в режиме последователя. Чтобы изменить эти настройки, перейдите в настройки режимов и установите режим мастера";
 "settings_nightscout_cloud_configuration_api_secret_title" = "Секретный Ключ API";
 "settings_nightscout_cloud_configuration_api_secret_placeholder" = "Секретный ключ";
 "settings_nightscout_cloud_configuration_api_test_button" = "Проверить Соединение";
@@ -322,7 +322,7 @@
 "settings_mode_settings_api_secret" = "API Secret";
 "settings_mode_settings_login_button" = "Авторизоваться";
 "settings_mode_settings_logout_button" = "Отписаться";
-"settings_mode_settings_follower_section_footer" = "Если подписчик хочет добавить лекарства к мастеру, его API Secret необходимо задать в поле выше. Если сайт мастера защищен переменной AUTH_DEFAULT_ROLES и не позволяет получать данные, то задав API Secret мастера проблема должна устранится. Если ни одна из этих функций не нужна, вы можете оставить это поле пустым";
+"settings_mode_settings_follower_section_footer" = "Если сайт мастера защищен переменной AUTH_DEFAULT_ROLES и не позволяет получать данные, то задав API Secret мастера проблема должна устранится. В противном случае вы можете оставить это поле пустым";
 "settings_mode_settings_follower_time_minutes" = "мин";
 "settings_mode_switch_from_follower_alert_title" = "Изменение режима";
 "settings_mode_switch_from_follower_alert_message" = "Вы авторизованы как последователь. Если вы измените режим сейчас, то авторизация будет разорвана и вы перестанете получать данные как последователь.";

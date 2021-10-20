@@ -84,24 +84,24 @@ final class CTreatmentTests: XCTestCase {
             trainingHandlerCalled = true
         }
         
-        CTreatment.parseTreatmentsToEntries(treatments: treatments)
+        CTreatment.parseFollowerTreatmentsToEntries(treatments: treatments)
         
-        let carbs = CarbEntriesWorker.fetchAllCarbEntries()
+        let carbs = CarbEntriesWorker.fetchAllCarbEntries(mode: .follower)
         XCTAssertTrue(carbs.count == 1)
         let carb = try XCTUnwrap(carbs.first)
         XCTAssertTrue(carb.amount == сarbEntry.amount)
         
-        let bolus = InsulinEntriesWorker.fetchAllBolusEntries()
+        let bolus = InsulinEntriesWorker.fetchAllBolusEntries(mode: .follower)
         XCTAssertTrue(bolus.count == 1)
         let entry = try XCTUnwrap(bolus.first)
         XCTAssertTrue(entry.amount == bolusEntry.amount)
         
-        let basals = InsulinEntriesWorker.fetchAllBasalEntries()
+        let basals = InsulinEntriesWorker.fetchAllBasalEntries(mode: .follower)
         XCTAssertTrue(basals.count == 1)
         let basal = try XCTUnwrap(basals.first)
         XCTAssertTrue(basal.amount == basalEntry.amount)
         
-        let trainings = TrainingEntriesWorker.fetchAllTrainings()
+        let trainings = TrainingEntriesWorker.fetchAllTrainings(mode: .follower)
         XCTAssertTrue(trainings.count == 1)
         let training = try XCTUnwrap(trainings.first)
         XCTAssertTrue(training.amount == trainingEntry.amount)
@@ -122,9 +122,9 @@ final class CTreatmentTests: XCTestCase {
         let сarbEntry = CarbEntry(amount: 1.3, foodType: "1.2", date: date)
         let treatment = CTreatment(entry: сarbEntry, treatmentType: .carbs)
         
-        CTreatment.parseTreatmentsToEntries(treatments: [treatment])
+        CTreatment.parseFollowerTreatmentsToEntries(treatments: [treatment])
         
-        let carbs = CarbEntriesWorker.fetchAllCarbEntries()
+        let carbs = CarbEntriesWorker.fetchAllCarbEntries(mode: .follower)
         XCTAssertTrue(carbs.count == 1)
         let carb = try XCTUnwrap(carbs.first)
         let firstInterval = try XCTUnwrap(carb.date?.timeIntervalSince1970)

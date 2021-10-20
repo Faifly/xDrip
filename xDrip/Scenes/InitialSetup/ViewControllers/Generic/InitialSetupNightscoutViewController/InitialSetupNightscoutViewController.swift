@@ -92,8 +92,13 @@ final class InitialSetupNightscoutViewController: InitialSetupAbstractStepSettin
         let popUpController = PopUpViewController()
         present(popUpController, animated: true, completion: nil)
         
-        User.current.settings.nightscoutSync?.updateBaseURL(baseURL)
-        User.current.settings.nightscoutSync?.updateAPISecret(apiSecret)
+        if User.current.settings.deviceMode == .main {
+            User.current.settings.nightscoutSync?.updateMasterBaseURL(baseURL)
+            User.current.settings.nightscoutSync?.updateMasterAPISecret(apiSecret)
+        } else {
+            User.current.settings.nightscoutSync?.updateFollowerBaseURL(baseURL)
+            User.current.settings.nightscoutSync?.updateFollowerAPISecret(apiSecret)
+        }
         
         let tryAuth = User.current.settings.deviceMode == .main || !String.isEmpty(apiSecret)
         NightscoutConnectionTestWorker().testNightscoutConnection(

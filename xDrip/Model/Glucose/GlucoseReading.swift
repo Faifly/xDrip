@@ -54,7 +54,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     @objc private(set) dynamic var displaySlope: Double = 0.0
     @objc private(set) dynamic var displayDeltaName: String?
     @objc private dynamic var rawDeviceMode: Int = UserDeviceMode.default.rawValue
-    @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notApplicable.rawValue
+    @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notUploaded.rawValue
     @objc private(set) dynamic var sourceInfo: String?
     
     var isValid: Bool {
@@ -69,7 +69,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     
     var cloudUploadStatus: CloudUploadStatus {
         get {
-            return CloudUploadStatus(rawValue: rawCloudUploadStatus) ?? .notApplicable
+            return CloudUploadStatus(rawValue: rawCloudUploadStatus) ?? .notUploaded
         }
         set {
             rawCloudUploadStatus = newValue.rawValue
@@ -110,6 +110,10 @@ final class GlucoseReading: Object, BaseGlucoseReading {
             Realm.shared.objects(GlucoseReading.self).sorted(by: [.dateDescending])
     }
     
+    static func allReadings(mode: UserDeviceMode, valid: Bool = true) -> Results<GlucoseReading> {
+        return allGlucoseReadings(valid: valid).filter(.deviceMode(mode: mode))
+    }
+    
     static func allMaster(valid: Bool = true) -> Results<GlucoseReading> {
         return allGlucoseReadings(valid: valid)
             .filter(.deviceMode(mode: .main))
@@ -121,6 +125,17 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         return allMaster(valid: valid).filter(.laterThan(date: sensorStartDate))
     }
     
+    static func allFollower(valid: Bool = true) -> Results<GlucoseReading> {
+        return allGlucoseReadings(valid: valid)
+            .filter(.deviceMode(mode: .follower))
+    }
+    
+    static func allForCurrentMode(valid: Bool = true) -> Results<GlucoseReading> {
+        return User.current.settings.deviceMode == .follower ?
+            allFollower(valid: valid) :
+            allMaster(valid: valid)
+    }
+
     static func lastReadings(_ amount: Int, mode: UserDeviceMode? = nil, valid: Bool = true) -> [GlucoseReading] {
         return last(amount: amount,
                     filter: NSCompoundPredicate(type: .and, subpredicates: [.calculatedValue, .rawValue]),
@@ -184,11 +199,6 @@ final class GlucoseReading: Object, BaseGlucoseReading {
             return nil
         }
         
-        guard User.current.settings.deviceMode == .main else {
-            LogController.log(message: "[Glucose] Can't create reading, deviceMode is not main(master)", type: .error)
-            return nil
-        }
-        
         let reading = GlucoseReading()
         reading.externalID = UUID().uuidString
         reading.calibration = Calibration.calibration(for: date)
@@ -200,10 +210,6 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         reading.calculateAgeAdjustedRawValue()
         reading.findSlope()
         reading.sourceInfo = CGMDevice.current.deviceType?.title
-        
-        if let settings = User.current.settings.nightscoutSync, settings.isEnabled {
-            reading.cloudUploadStatus = .notUploaded
-        }
         
         let realm = Realm.shared
         realm.safeWrite {
@@ -230,7 +236,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     
     static func clearOldReadings() {
         let readingsPerDay = Int(TimeInterval.secondsPerDay / Constants.dexcomPeriod)
-        let allReadings = allGlucoseReadings(valid: false)
+        let allReadings = allForCurrentMode(valid: false)
         guard allReadings.count > readingsPerDay,
               let lastReading = allReadings.last,
               let lastReadingDate = lastReading.date,
@@ -265,11 +271,6 @@ final class GlucoseReading: Object, BaseGlucoseReading {
             return nil
         }
         
-        guard User.current.settings.deviceMode == .main else {
-            LogController.log(message: "[Glucose] Can't createFromG6 reading, deviceMode is not main(master)", type: .error)
-            return nil
-        }
-        
         let reading = GlucoseReading()
         reading.externalID = UUID().uuidString
         reading.calculatedValue = calculatedValue
@@ -281,11 +282,6 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         reading.calculateAgeAdjustedRawValue()
         reading.findSlope()
         reading.sourceInfo = CGMDevice.current.deviceType?.title ?? "" + (forBackfill ? "Backfill" : "")
-        
-        if let settings = User.current.settings.nightscoutSync, settings.isEnabled,
-           !forBackfill {
-            reading.cloudUploadStatus = .notUploaded
-        }
         
         Realm.shared.safeWrite {
             Realm.shared.add(reading)
@@ -336,11 +332,11 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         }
     }
     
-    static func reading(for date: Date, precisionInMinutes: Int = 15, lockToSensor: Bool = false) -> GlucoseReading? {
+    static func reading(for date: Date, precisionInMinutes: Int = 15, mode: UserDeviceMode = .main) -> GlucoseReading? {
         let allowedOffset = TimeInterval.secondsPerMinute * Double(precisionInMinutes)
         let minOffset = date - allowedOffset
         let maxOffset = date + allowedOffset
-        let matching = allMaster(valid: false).filter { $0.date >? minOffset && $0.date <? maxOffset }
+        let matching = allReadings(mode: mode, valid: false).filter { $0.date >? minOffset && $0.date <? maxOffset }
         let offsets = matching.map {
             abs(($0.date?.timeIntervalSince1970 ?? .greatestFiniteMagnitude) - date.timeIntervalSince1970)
         }
@@ -379,32 +375,50 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         }
     }
     
-    static func parseFollowerEntries(_ rawEntries: [CGlucoseReading]) -> [GlucoseReading] {
-        let readings = rawEntries.compactMap { createReading(from: $0) }
+    static func parseFollowerEntries(_ rawEntries: [CGlucoseReading]) {
+        let readings = rawEntries.compactMap { createFollowerReading(from: $0) }
+        
         let realm = Realm.shared
         realm.safeWrite {
-            realm.add(readings)
+            realm.add(readings, update: .modified)
         }
         
         readings.forEach { _ in clearOldReadings() }
         
-        return readings
+        if !readings.isEmpty {
+            CGMController.shared.notifyGlucoseChange(readings.max(by: { $0.date >? $1.date }))
+        }
     }
     
-    static func createReading(from rawEntry: CGlucoseReading) -> GlucoseReading? {
-        guard rawEntry.type == "sgv" else { return nil }
+    static func createFollowerReading(from rawEntry: CGlucoseReading) -> GlucoseReading? {
+        guard let externalID = rawEntry.identifier else { return nil }
+        let followerID = externalID.hasSuffix(Constants.followerSuffix) ?
+        externalID :
+        externalID + Constants.followerSuffix
+        
+        let existingObject = Realm.shared.object(ofType: GlucoseReading.self, forPrimaryKey: followerID)
+        
+        guard let rawEntryDate = rawEntry.date,
+              existingObject == nil,
+              rawEntry.type == "sgv" else { return nil }
+        
+        let date = Date(timeIntervalSince1970: TimeInterval(rawEntryDate) / 1000.0)
+        
+        guard GlucoseReading.reading(for: date, precisionInMinutes: 4, mode: .follower) == nil else { return nil }
+        
         let entry = GlucoseReading()
         entry.calculatedValue = Double(rawEntry.sgv ?? 0)
         entry.filteredCalculatedValue = entry.calculatedValue
-        entry.date = Date(timeIntervalSince1970: TimeInterval(rawEntry.date ?? 0) / 1000.0)
+        entry.rawValue = entry.calculatedValue
+        entry.date = date
         entry.deviceMode = .follower
-        entry.externalID = rawEntry.identifier
+        entry.externalID = followerID
         entry.sourceInfo = "Nightscout Follower"
         return entry
     }
     
     static func readingsForInterval(_ interval: DateInterval) -> Results<GlucoseReading> {
-        return allGlucoseReadings().filter(
+        return allForCurrentMode().filter(
             NSCompoundPredicate(type: .and, subpredicates: [
                 .laterThanOrEqual(date: interval.start),
                 .earlierThanOrEqual(date: interval.end)
@@ -695,6 +709,14 @@ final class GlucoseReading: Object, BaseGlucoseReading {
             self.displayGlucose = displayGlucose.mgDl
             displaySlope = displayGlucose.slope
             displayDeltaName = displayGlucose.deltaName
+        }
+    }
+    
+    static func deleteAllReadings(mode: UserDeviceMode) {
+        let objects = Realm.shared.objects(GlucoseReading.self).filter(.deviceMode(mode: mode))
+        let realm = Realm.shared
+        realm.safeWrite {
+            realm.delete(objects)
         }
     }
 }

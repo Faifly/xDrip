@@ -35,13 +35,7 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
     
     static func deleteInsulinEntry(_ entry: InsulinEntry) {
         let type = entry.type
-        if let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments {
-            entry.updateCloudUploadStatus(.waitingForDeletion)
-        } else {
-            super.deleteEntry(entry)
-        }
-        
+        entry.updateCloudUploadStatus(.waitingForDeletion)
         switch type {
         case .bolus:
             bolusDataHandler?()
@@ -51,20 +45,22 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
         NightscoutService.shared.scanForNotUploadedTreatments()
     }
     
-    static func fetchAllBolusEntries() -> [InsulinEntry] {
-        return super.fetchAllEntries(type: InsulinEntry.self).filter { $0.type == .bolus }
+    static func fetchAllBolusEntries(mode: UserDeviceMode? = nil) -> [InsulinEntry] {
+        return fetchAllInsulinEntries(mode: mode).filter { $0.type == .bolus }
     }
     
-    static func fetchAllBasalEntries() -> [InsulinEntry] {
-        return super.fetchAllEntries(type: InsulinEntry.self).filter { $0.type == .basal }
+    static func fetchAllBasalEntries(mode: UserDeviceMode? = nil) -> [InsulinEntry] {
+        return fetchAllInsulinEntries(mode: mode).filter { $0.type == .basal }
     }
     
-    static func fetchAllPumpBasalEntries() -> [InsulinEntry] {
-        return super.fetchAllEntries(type: InsulinEntry.self).filter { $0.type == .pumpBasal }
+    static func fetchAllPumpBasalEntries(mode: UserDeviceMode? = nil) -> [InsulinEntry] {
+        return fetchAllInsulinEntries(mode: mode).filter { $0.type == .pumpBasal }
     }
     
-    static func fetchAllInsulinEntries() -> [InsulinEntry] {
-        return super.fetchAllEntries(type: InsulinEntry.self)
+    static func fetchAllInsulinEntries(mode: UserDeviceMode? = nil) -> [InsulinEntry] {
+        let entries = super.fetchAllEntries(type: InsulinEntry.self)
+            .filter(.deviceMode(mode: mode ?? User.current.settings.deviceMode))
+        return Array(entries)
     }
     
     static func updatedBolusEntry() {
@@ -89,5 +85,11 @@ final class InsulinEntriesWorker: AbstractEntriesWorker {
             return
         }
         entry.updateCloudUploadStatus(.uploaded)
+    }
+    
+    static func deleteAllEntries(mode: UserDeviceMode, filter: NSPredicate? = nil) {
+        super.deleteAllEntries(type: InsulinEntry.self, mode: mode, filter: filter)
+        bolusDataHandler?()
+        basalDataHandler?()
     }
 }

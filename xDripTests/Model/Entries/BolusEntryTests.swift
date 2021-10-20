@@ -26,7 +26,7 @@ final class BolusEntryTests: AbstractRealmTest {
         
         settings.updateUploadTreatments(false)
         let entry1 = InsulinEntry(amount: 5.1, date: Date(), type: .bolus)
-        XCTAssertTrue(entry1.cloudUploadStatus == .notApplicable)
+        XCTAssertTrue(entry1.cloudUploadStatus == .notUploaded)
         
         settings.updateUploadTreatments(true)
         let entry2 = InsulinEntry(amount: 6.1, date: Date(), type: .bolus, externalID: "12345")

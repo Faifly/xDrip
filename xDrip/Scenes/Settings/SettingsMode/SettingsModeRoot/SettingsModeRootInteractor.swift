@@ -43,6 +43,7 @@ final class SettingsModeRootInteractor: SettingsModeRootBusinessLogic, SettingsM
                     if confirmed {
                         User.current.settings.nightscoutSync?.updateIsFollowerAuthed(false)
                         switchToMain()
+                        self.updateData()
                     }
                 }
             } else {

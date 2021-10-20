@@ -34,7 +34,7 @@ final class AbstractEntryTests: XCTestCase {
     func testUpdateCloudUploadAsatus() {
         let entry = AbstractEntry(date: Date())
         
-        XCTAssertTrue(entry.cloudUploadStatus == .notApplicable)
+        XCTAssertTrue(entry.cloudUploadStatus == .notUploaded)
         
         let cloudUploadStatus: CloudUploadStatus = .waitingForDeletion
         

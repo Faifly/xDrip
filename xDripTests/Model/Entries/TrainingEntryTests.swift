@@ -26,7 +26,7 @@ final class TrainingEntryTests: AbstractRealmTest {
         
         settings.updateUploadTreatments(false)
         let entry1 = TrainingEntry(duration: 3.1, intensity: .low, date: date)
-        XCTAssertTrue(entry1.cloudUploadStatus == .notApplicable)
+        XCTAssertTrue(entry1.cloudUploadStatus == .notUploaded)
         
         settings.updateUploadTreatments(true)
         let entry2 = TrainingEntry(duration: 4.1, intensity: .low, date: date, externalID: "12345")

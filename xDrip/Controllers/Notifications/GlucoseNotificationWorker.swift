@@ -54,6 +54,7 @@ final class GlucoseNotificationWorker: NSObject {
         
         _ = settingsChangeObserver
         
+        resetMissedReadingsTimer()
         resetAlertTimer()
         setupRepeatAlertsData()
     }
@@ -63,12 +64,32 @@ final class GlucoseNotificationWorker: NSObject {
     }
     
     private func resetMissedReadingsTimer() {
-        guard CGMDevice.current.isSensorStarted else {
+        let readings = GlucoseReading.lastReadings(Constants.Glucose.requiredReadingsCountToCalculateInterval,
+                                                   mode: User.current.settings.deviceMode)
+        guard CGMDevice.current.isSensorStarted, !readings.isEmpty else {
             missedReadingsTimer = nil
             return
         }
+        
+        var timeInterval = Constants.Glucose.defaultMissedReadingTimeInterval
+        if readings.count == Constants.Glucose.requiredReadingsCountToCalculateInterval {
+            var interval = 0.0
+            var count = 0.0
+            
+            for index in 1 ..< readings.count {
+                if let date1 = readings[index - 1].date, let date2 = readings[index].date {
+                    interval += date1.timeIntervalSince(date2)
+                    count += 1.0
+                }
+            }
+            
+            if count >= 2 {
+                timeInterval = 2.1 * interval / count
+            }
+        }
+
         missedReadingsTimer = nil
-        missedReadingsTimer = RepeatingTimer(timeInterval: Constants.Glucose.defaultMissedReadingTimeInterval)
+        missedReadingsTimer = RepeatingTimer(timeInterval: timeInterval)
         missedReadingsTimer?.eventHandler = { [weak self] in
             guard let self = self else { return }
             if CGMDevice.current.isSensorStarted {

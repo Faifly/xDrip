@@ -13,7 +13,11 @@ final class NightscoutSyncSettings: Object {
     @objc private(set) dynamic var isEnabled: Bool = false
     @objc private(set) dynamic var useCellularData: Bool = true
     @objc private(set) dynamic var sendDisplayGlucose: Bool = false
-    @objc private(set) dynamic var baseURL: String?
+    @objc private(set) dynamic var masterBaseURL: String?
+    @objc private(set) dynamic var masterApiSecret: String?
+    @objc private(set) dynamic var currentFollowerBaseURL: String?
+    @objc private(set) dynamic var followerBaseURL: String?
+    @objc private(set) dynamic var followerApiSecret: String?
     @objc private(set) dynamic var downloadData: Bool = false
     @objc private(set) dynamic var automaticCalibration: Bool = false
     @objc private(set) dynamic var skipLANUploads: Bool = false
@@ -21,11 +25,14 @@ final class NightscoutSyncSettings: Object {
     @objc private(set) dynamic var uploadTreatments: Bool = false
     @objc private(set) dynamic var alertOnFailures: Bool = false
     @objc private(set) dynamic var appendSourceInfoToDevices: Bool = false
-    @objc private(set) dynamic var apiSecret: String?
     @objc private(set) dynamic var isFollowerAuthed: Bool = false
     
-    var inReadonlyFollowerMode: Bool {
-        return isFollowerAuthed && !String.isEmpty(apiSecret)
+    var baseURL: String? {
+        return User.current.settings.deviceMode == .follower ? followerBaseURL : masterBaseURL
+    }
+    
+    var apiSecret: String? {
+        return User.current.settings.deviceMode == .follower ? followerApiSecret : masterApiSecret
     }
     
     func updateIsEnabled(_ isEnabled: Bool) {
@@ -46,9 +53,33 @@ final class NightscoutSyncSettings: Object {
         }
     }
     
-    func updateBaseURL(_ url: String?) {
+    func updateMasterBaseURL(_ url: String?) {
         Realm.shared.safeWrite {
-            self.baseURL = url
+            self.masterBaseURL = url
+        }
+    }
+    
+    func updateMasterAPISecret(_ secret: String?) {
+        Realm.shared.safeWrite {
+            self.masterApiSecret = secret
+        }
+    }
+    
+    func updateFollowerBaseURL(_ url: String?) {
+        Realm.shared.safeWrite {
+            self.followerBaseURL = url
+        }
+    }
+    
+    func updateFollowerAPISecret(_ secret: String?) {
+        Realm.shared.safeWrite {
+            self.followerApiSecret = secret
+        }
+    }
+    
+    func updateCurrentFollowerBaseURL() {
+        Realm.shared.safeWrite {
+            self.currentFollowerBaseURL = self.followerBaseURL
         }
     }
     
@@ -91,12 +122,6 @@ final class NightscoutSyncSettings: Object {
     func updateAppendSourceInfoToDevices(_ append: Bool) {
         Realm.shared.safeWrite {
             self.appendSourceInfoToDevices = append
-        }
-    }
-    
-    func updateAPISecret(_ secret: String?) {
-        Realm.shared.safeWrite {
-            self.apiSecret = secret
         }
     }
     

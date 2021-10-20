@@ -33,8 +33,8 @@ final class NightscoutCloudBackfillInteractorTests: AbstractRealmTest {
         settings = try XCTUnwrap(User.current.settings.nightscoutSync)
         settings.updateIsEnabled(true)
         settings.updateUploadTreatments(true)
-        settings.updateBaseURL("baseURL")
-        settings.updateAPISecret("apiSecret")
+        settings.updateMasterBaseURL("baseURL")
+        settings.updateMasterAPISecret("apiSecret")
     }
     
     override func tearDown() {

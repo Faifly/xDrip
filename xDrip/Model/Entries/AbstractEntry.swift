@@ -21,7 +21,8 @@ protocol AbstractAbsorbableEntryProtocol: AbstractEntryProtocol {
 class AbstractEntry: Object {
     @objc private(set) dynamic var date: Date?
     @objc private(set) dynamic var externalID: String = UUID().uuidString.lowercased()
-    @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notApplicable.rawValue
+    @objc private dynamic var rawCloudUploadStatus: Int = CloudUploadStatus.notUploaded.rawValue
+    @objc private dynamic var rawDeviceMode: Int = UserDeviceMode.default.rawValue
     
     override class func primaryKey() -> String? {
         return "externalID"
@@ -29,10 +30,19 @@ class AbstractEntry: Object {
 
     var cloudUploadStatus: CloudUploadStatus {
         get {
-            return CloudUploadStatus(rawValue: rawCloudUploadStatus) ?? .notApplicable
+            return CloudUploadStatus(rawValue: rawCloudUploadStatus) ?? .notUploaded
         }
         set {
             rawCloudUploadStatus = newValue.rawValue
+        }
+    }
+    
+    var deviceMode: UserDeviceMode {
+        get {
+            return UserDeviceMode(rawValue: rawDeviceMode) ?? .default
+        }
+        set {
+            rawDeviceMode = newValue.rawValue
         }
     }
     

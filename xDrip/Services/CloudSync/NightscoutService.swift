@@ -23,9 +23,11 @@ final class NightscoutService {
         forSettingsChange: [.followerAuthStatus]) {
         guard let settings = User.current.settings.nightscoutSync else { return }
         if settings.isFollowerAuthed {
-            self.startFetchingFollowerData()
+            self.startFetchingFollowerGlucoseReadings()
+            self.startFetchingFollowerTreatments()
         } else {
             self.stopFetchingFollowerData()
+            self.stopFetchingTreatments()
         }
     }
     
@@ -36,16 +38,6 @@ final class NightscoutService {
             self.startFetchingPumpData()
         } else {
             self.stopFetchingPumpData()
-        }
-    }
-    
-    private lazy var downloadDataSettingsObserver: [Any] = NotificationCenter.default.subscribe(
-        forSettingsChange: [.downloadData]) {
-        guard let settings = User.current.settings.nightscoutSync else { return }
-        if settings.downloadData {
-            self.startFetchingTreatments()
-        } else {
-            self.stopFetchingTreatments()
         }
     }
     
@@ -68,14 +60,10 @@ final class NightscoutService {
     init() {
         requestFactory = UploadRequestFactory()
         _ = followerSettingsObserver
-        _ = downloadDataSettingsObserver
         _ = uploadTreatmentsSettingsObserver
         if let settings = User.current.settings.nightscoutSync, settings.isFollowerAuthed {
-            startFetchingFollowerData()
-        }
-        
-        if let settings = User.current.settings.nightscoutSync, settings.downloadData {
-            startFetchingTreatments()
+            startFetchingFollowerGlucoseReadings()
+            startFetchingFollowerTreatments()
         }
         
         if User.current.settings.pumpSync?.isEnabled ?? false {
@@ -133,6 +121,13 @@ final class NightscoutService {
             return
         }
         
+        guard User.current.settings.deviceMode == .main else {
+            LogController.log(
+                message: "[Glucose] Can't scanForNotUploadedEntries, deviceMode is not main(master)",
+                type: .error)
+            return
+        }
+        
         scanForTreatments(treatmentType: .carbs)
         scanForTreatments(treatmentType: .bolus)
         scanForTreatments(treatmentType: .basal)
@@ -151,6 +146,14 @@ final class NightscoutService {
             )
             return
         }
+        
+        guard User.current.settings.deviceMode == .main else {
+            LogController.log(
+                message: "[Glucose] Can't scanForNotUploadedEntries, deviceMode is not main(master)",
+                type: .error)
+            return
+        }
+        
         let requests = calibrations.compactMap { requestFactory.createDeleteCalibrationRequest($0) }
         requestQueue.append(contentsOf: requests)
         
@@ -361,26 +364,24 @@ final class NightscoutService {
         }.resume()
     }
     
-    private func startFetchingFollowerData() {
+    private func startFetchingFollowerGlucoseReadings() {
         LogController.log(message: "[NighscoutService]: Started fetching follower data.", type: .info)
         followerFetchTimer = Timer.scheduledTimer(
-            withTimeInterval: 60.0,
+            withTimeInterval: .secondsPerMinute,
             repeats: true) { _ in
-            self.fetchFollowerData()
+            self.fetchFollowerGlucoseReadings()
         }
-        fetchFollowerData()
+        fetchFollowerGlucoseReadings()
     }
     
-    private func startFetchingTreatments() {
+    private func startFetchingFollowerTreatments() {
         LogController.log(message: "[NighscoutService]: Started fetching treatments data.", type: .info)
         treatmentsFetchTimer = Timer.scheduledTimer(
-            withTimeInterval: 60.0,
+            withTimeInterval: .secondsPerMinute,
             repeats: true) { _ in
-            if let settings = User.current.settings.nightscoutSync, settings.isEnabled, settings.downloadData {
-                self.fetchTreatments()
-            }
+            self.fetchFollowerTreatments()
         }
-        fetchTreatments()
+        fetchFollowerTreatments()
     }
     
     private func startFetchingPumpData() {
@@ -411,49 +412,37 @@ final class NightscoutService {
         treatmentsFetchTimer = nil
     }
     
-    private func fetchFollowerData() {
+    private func fetchFollowerGlucoseReadings() {
         LogController.log(message: "[NighscoutService]: Try to %@.", type: .info, #function)
-        guard User.current.settings.deviceMode == .follower else {
-            LogController.log(message: "[Glucose] Can't fetchFollowerData, deviceMode is not follower", type: .error)
+        guard User.current.settings.nightscoutSync.isFollowerAuthed else {
+            LogController.log(message: "[Glucose] Can't fetchFollowerGlucoseReadings, deviceMode is not follower",
+                              type: .error)
             return
         }
-        guard let request = requestFactory.createFetchFollowerDataRequest() else { return }
+        guard let request = requestFactory.createFetchFollowerGlucoseReadingsRequest() else { return }
         URLSession.shared.loggableDataTask(with: request) { data, _, error in
             guard let data = data, error == nil else { return }
             guard let entries = try? JSONDecoder().decode([CGlucoseReading].self, from: data) else { return }
             if entries.isEmpty { return }
-            
-            var lastReadingDate: Date?
-            if let lastReading = GlucoseReading.allGlucoseReadings().first {
-                lastReadingDate = lastReading.date ?? Date()
-            }
-            
-            var newReadings: [CGlucoseReading] = []
-            
-            for entry in entries {
-                if Date(timeIntervalSince1970: TimeInterval(entry.date ?? 0) / 1000.0) >? lastReadingDate,
-                   !newReadings.contains(where: { $0.date == entry.date }) {
-                    newReadings.append(entry)
-                }
-            }
-            
-            if newReadings.isEmpty { return }
-        
             DispatchQueue.main.async {
-                let readings = GlucoseReading.parseFollowerEntries(newReadings).sorted(by: { $0.date >? $1.date })
-                CGMController.shared.notifyGlucoseChange(readings.first)
+              GlucoseReading.parseFollowerEntries(entries)
             }
         }.resume()
     }
     
-    private func fetchTreatments() {
+    private func fetchFollowerTreatments() {
         LogController.log(message: "[NighscoutService]: Try to %@.", type: .info, #function)
-        guard let request = requestFactory.createFetchTreatmentsRequest() else { return }
+        guard User.current.settings.nightscoutSync.isFollowerAuthed else {
+            LogController.log(message: "[Glucose] Can't fetchFollowerTreatments, deviceMode is not follower",
+                              type: .error)
+            return
+        }
+        guard let request = requestFactory.createFetchFollowerTreatmentsRequest() else { return }
         URLSession.shared.loggableDataTask(with: request) { data, _, error in
             guard let data = data, error == nil else { return }
             guard let entries = try? JSONDecoder().decode([CTreatment].self, from: data) else { return }
             DispatchQueue.main.async {
-                CTreatment.parseTreatmentsToEntries(treatments: entries)
+                CTreatment.parseFollowerTreatmentsToEntries(treatments: entries)
             }
         }.resume()
     }

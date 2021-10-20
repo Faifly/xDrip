@@ -27,7 +27,7 @@ final class CarbEntryTests: AbstractRealmTest {
         
         settings.updateUploadTreatments(false)
         let entry1 = CarbEntry(amount: 5.1, foodType: "2.2", date: Date())
-        XCTAssertTrue(entry1.cloudUploadStatus == .notApplicable)
+        XCTAssertTrue(entry1.cloudUploadStatus == .notUploaded)
         
         settings.updateUploadTreatments(true)
         let entry2 = CarbEntry(amount: 6.1, foodType: "2.2", date: Date(), externalID: "12345")

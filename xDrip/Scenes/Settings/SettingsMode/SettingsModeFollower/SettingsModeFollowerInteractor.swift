@@ -25,6 +25,7 @@ final class SettingsModeFollowerInteractor: SettingsModeFollowerBusinessLogic, S
     var router: SettingsModeFollowerRoutingLogic?
     
     private let connectionTestWorker: NightscoutConnectionTestWorkerLogic
+    private let followerSessionWorker: SettingsModeFollowerSessionWorkerLogic
     private lazy var settingsSubscribers: [NSObjectProtocol] = NotificationCenter.default.subscribe(
         forSettingsChange: [.followerAuthStatus]
     ) { [weak self] in
@@ -33,6 +34,7 @@ final class SettingsModeFollowerInteractor: SettingsModeFollowerBusinessLogic, S
     
     init() {
         connectionTestWorker = NightscoutConnectionTestWorker()
+        followerSessionWorker = SettingsModeFollowerSessionWorker()
     }
     
     deinit {
@@ -61,6 +63,7 @@ final class SettingsModeFollowerInteractor: SettingsModeFollowerBusinessLogic, S
             connectionTestWorker.testNightscoutConnection(tryAuth: tryAuth) { [weak self] success, message, icon in
                 self?.router?.finishConnectionTestingAlert(message: message, icon: icon)
                 if success {
+                    self?.followerSessionWorker.changeCurrentFollowerData()
                     settings.updateIsFollowerAuthed(true)
                     self?.updateData()
                 }
@@ -71,11 +74,9 @@ final class SettingsModeFollowerInteractor: SettingsModeFollowerBusinessLogic, S
     private func handleTextEditingChanged(_ field: SettingsModeFollower.Field, _ string: String?) {
         switch field {
         case .nightscoutUrl:
-            User.current.settings.nightscoutSync?.updateBaseURL(string?.trimmingCharacters(in: .whitespacesAndNewlines))
-            
+            User.current.settings.nightscoutSync?.updateFollowerBaseURL(string?.trimmingCharacters(in: .whitespacesAndNewlines))
         case .apiSecret:
-            User.current.settings.nightscoutSync?.updateAPISecret(string)
-            
+            User.current.settings.nightscoutSync?.updateFollowerAPISecret(string)
         default: break
         }
     }

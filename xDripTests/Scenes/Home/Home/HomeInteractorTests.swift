@@ -179,7 +179,7 @@ final class HomeInteractorTests: XCTestCase {
         
         spy.presentGlucoseDataCalled = false
         
-        let lastEntry = try XCTUnwrap(InsulinEntriesWorker.fetchAllBasalEntries().last)
+        let lastEntry = try XCTUnwrap(InsulinEntriesWorker.fetchAllBasalEntries(mode: .main).last)
         
         lastEntry.update(amount: 2.0, date: Date())
         

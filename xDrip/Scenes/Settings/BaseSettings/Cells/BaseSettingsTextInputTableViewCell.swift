@@ -23,6 +23,14 @@ final class BaseSettingsTextInputTableViewCell: UITableViewCell {
         textField.delegate = self
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        mainTextLabel.text = ""
+        detailLabel.text = ""
+        textField.text = ""
+        textField.placeholder = ""
+    }
+    
     func configure(
         mainText: String,
         detailText: String?,

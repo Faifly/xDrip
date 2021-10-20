@@ -17,7 +17,9 @@ final class CalibrationEntriesWorker: AbstractEntriesWorker {
         return add(entry: entry)
     }
     
-    static func fetchAllEntries() -> [CalibrationEntry] {
-        return super.fetchAllEntries(type: CalibrationEntry.self)
+    static func fetchAllEntries(mode: UserDeviceMode? = nil) -> [CalibrationEntry] {
+        let entries = super.fetchAllEntries(type: CalibrationEntry.self)
+            .filter(.deviceMode(mode: mode ?? User.current.settings.deviceMode))
+        return Array(entries)
     }
 }

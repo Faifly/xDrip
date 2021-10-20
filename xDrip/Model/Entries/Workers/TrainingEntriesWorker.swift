@@ -25,17 +25,14 @@ final class TrainingEntriesWorker: AbstractEntriesWorker {
         return addedEntry
     }
     
-    static func fetchAllTrainings() -> [TrainingEntry] {
-        return super.fetchAllEntries(type: TrainingEntry.self)
+    static func fetchAllTrainings(mode: UserDeviceMode? = nil) -> [TrainingEntry] {
+        let entries = super.fetchAllEntries(type: TrainingEntry.self)
+            .filter(.deviceMode(mode: mode ?? User.current.settings.deviceMode))
+        return Array(entries)
     }
     
     static func deleteTrainingEntry(_ entry: TrainingEntry) {
-        if let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments {
-            entry.updateCloudUploadStatus(.waitingForDeletion)
-        } else {
-            super.deleteEntry(entry)
-        }
+        entry.updateCloudUploadStatus(.waitingForDeletion)
         trainingDataHandler?()
         NightscoutService.shared.scanForNotUploadedTreatments()
     }
@@ -57,5 +54,10 @@ final class TrainingEntriesWorker: AbstractEntriesWorker {
             return
         }
         entry.updateCloudUploadStatus(.uploaded)
+    }
+    
+    static func deleteAllEntries(mode: UserDeviceMode, filter: NSPredicate? = nil) {
+        super.deleteAllEntries(type: TrainingEntry.self, mode: mode, filter: filter)
+        trainingDataHandler?()
     }
 }

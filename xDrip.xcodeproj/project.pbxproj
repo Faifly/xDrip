@@ -43,6 +43,7 @@
 		0A6E2F0825E4430E00AA933F /* NSPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E2F0725E4430E00AA933F /* NSPredicate.swift */; };
 		0A72BF102636C799005072B6 /* Int+Rounding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A72BF0F2636C799005072B6 /* Int+Rounding.swift */; };
 		0A81371D26040EAC00F9C1E2 /* BackgroundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A81371C26040EAC00F9C1E2 /* BackgroundPlayer.swift */; };
+		0A82F62F2721786A00C188E9 /* SettingsModeFollowerSessionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A82F62E2721786A00C188E9 /* SettingsModeFollowerSessionWorker.swift */; };
 		0A85E4A2259B878800733DBD /* DexcomG6CalibrationTxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A85E4A1259B878800733DBD /* DexcomG6CalibrationTxMessage.swift */; };
 		0A85E4A6259B894500733DBD /* DexcomG6CalibrationRxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A85E4A5259B894500733DBD /* DexcomG6CalibrationRxMessage.swift */; };
 		0A85E4AA259B8B8200733DBD /* DexcomG6CalibrationResponseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A85E4A9259B8B8200733DBD /* DexcomG6CalibrationResponseType.swift */; };
@@ -758,6 +759,7 @@
 		0A6E2F0725E4430E00AA933F /* NSPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPredicate.swift; sourceTree = "<group>"; };
 		0A72BF0F2636C799005072B6 /* Int+Rounding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Rounding.swift"; sourceTree = "<group>"; };
 		0A81371C26040EAC00F9C1E2 /* BackgroundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundPlayer.swift; sourceTree = "<group>"; };
+		0A82F62E2721786A00C188E9 /* SettingsModeFollowerSessionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModeFollowerSessionWorker.swift; sourceTree = "<group>"; };
 		0A85E4A1259B878800733DBD /* DexcomG6CalibrationTxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6CalibrationTxMessage.swift; sourceTree = "<group>"; };
 		0A85E4A5259B894500733DBD /* DexcomG6CalibrationRxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6CalibrationRxMessage.swift; sourceTree = "<group>"; };
 		0A85E4A9259B8B8200733DBD /* DexcomG6CalibrationResponseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexcomG6CalibrationResponseType.swift; sourceTree = "<group>"; };
@@ -1557,6 +1559,14 @@
 			isa = PBXGroup;
 			children = (
 				0A6D986725E5163D004DF9F1 /* HistoryGlucoseDataWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		0A82F62D2721781600C188E9 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				0A82F62E2721786A00C188E9 /* SettingsModeFollowerSessionWorker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -2517,6 +2527,7 @@
 		580E4BC7243F735C00565EDE /* SettingsModeFollower */ = {
 			isa = PBXGroup;
 			children = (
+				0A82F62D2721781600C188E9 /* Workers */,
 				580E4BC8243F736D00565EDE /* SettingsModeFollowerPresenter.swift */,
 				580E4BC9243F736D00565EDE /* SettingsModeFollowerRouter.swift */,
 				580E4BCA243F736D00565EDE /* SettingsModeFollowerModels.swift */,
@@ -4276,6 +4287,7 @@
 				580E4BA9243F723200565EDE /* NightscoutCloudExtraOptionsViewController.swift in Sources */,
 				580E4BD0243F736D00565EDE /* SettingsModeFollowerModels.swift in Sources */,
 				580E4CF22440BC6300565EDE /* MockedBluetoothServiceConfiguration.swift in Sources */,
+				0A82F62F2721786A00C188E9 /* SettingsModeFollowerSessionWorker.swift in Sources */,
 				580E4B9C243F721500565EDE /* NightscoutCloudConfigurationViewController.swift in Sources */,
 				91B2ED032523A4C800A8C3C1 /* PumpService.swift in Sources */,
 				5805C9A324389230002AFA1B /* DexcomG6PairRequestTxMessage.swift in Sources */,
@@ -4980,7 +4992,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.faifly.xDrip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5009,7 +5021,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.faifly.xDrip;
 				PRODUCT_NAME = "$(TARGET_NAME)";

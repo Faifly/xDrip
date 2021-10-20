@@ -40,9 +40,6 @@ final class TrainingEntry: AbstractEntry, TreatmentEntryProtocol {
         self.intensity = intensity
         if externalID != nil {
             self.cloudUploadStatus = .uploaded
-        } else if let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments {
-            self.cloudUploadStatus = .notUploaded
         }
     }
     

@@ -53,20 +53,20 @@ final class SettingsModeFollowerPresenter: SettingsModeFollowerPresentationLogic
             cells.append(
                 createInfoCell(
                     .nightscoutUrl,
-                    detailText: response.settings.baseURL
+                    detailText: response.settings.followerBaseURL
                 )
             )
             cells.append(
                 createInfoCell(
                     .apiSecret,
-                    detailText: response.settings.apiSecret
+                    detailText: response.settings.followerApiSecret
                 )
             )
         } else {
             cells.append(
                 createTextInputCell(
                     .nightscoutUrl,
-                    textFieldText: response.settings.baseURL,
+                    textFieldText: response.settings.followerBaseURL,
                     placeholder: "settings_nightscout_cloud_configuration_base_url_placeholder".localized,
                     textEditingChangedHandler: { text in
                         response.textEditingChangedHandler(.nightscoutUrl, text)
@@ -76,7 +76,7 @@ final class SettingsModeFollowerPresenter: SettingsModeFollowerPresentationLogic
             cells.append(
                 createTextInputCell(
                     .apiSecret,
-                    textFieldText: response.settings.apiSecret,
+                    textFieldText: response.settings.followerApiSecret,
                     placeholder: "settings_nightscout_cloud_configuration_api_secret_placeholder".localized,
                     textEditingChangedHandler: { text in
                         response.textEditingChangedHandler(.apiSecret, text)

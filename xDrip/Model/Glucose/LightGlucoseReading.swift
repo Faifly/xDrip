@@ -51,11 +51,26 @@ final class LightGlucoseReading: Object, BaseGlucoseReading {
         return Realm.shared.objects(LightGlucoseReading.self).sorted(by: [.dateDescending])
     }
     
+    static var allMaster: Results<LightGlucoseReading> {
+        return allReadings
+            .filter(.deviceMode(mode: .main))
+    }
+    
+    private static var allFollower: Results<LightGlucoseReading> {
+        return allReadings
+            .filter(.deviceMode(mode: .follower))
+    }
+    
+    static var allForCurrentMode: Results<LightGlucoseReading> {
+        clearOldReadings()
+        return User.current.settings.deviceMode == .follower ? allFollower : allMaster
+    }
+    
     static func readingsForInterval(_ interval: DateInterval) -> Results<LightGlucoseReading> {
-        return allReadings.filter(
+        return allForCurrentMode.filter(
             NSCompoundPredicate(type: .and, subpredicates: [
-                                    .laterThanOrEqual(date: interval.start),
-                                    .earlierThanOrEqual(date: interval.end)
+                .laterThanOrEqual(date: interval.start),
+                .earlierThanOrEqual(date: interval.end)
             ]))
     }
     
@@ -65,6 +80,14 @@ final class LightGlucoseReading: Object, BaseGlucoseReading {
         let realm = Realm.shared
         realm.safeWrite {
             realm.delete(oldReadings)
+        }
+    }
+    
+    static func deleteAllReadings(mode: UserDeviceMode) {
+        let objects = Realm.shared.objects(LightGlucoseReading.self).filter(.deviceMode(mode: mode))
+        let realm = Realm.shared
+        realm.safeWrite {
+            realm.delete(objects)
         }
     }
 }

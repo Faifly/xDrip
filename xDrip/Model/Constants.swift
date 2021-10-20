@@ -25,8 +25,10 @@ enum Constants {
         static let appIdentifierName = "xDrip iOS"
     }
     
+    static let followerSuffix = "follower"
     static let specialG5RawValuePlaceholder = -0.1597
     static let maxBackfillPeriod = TimeInterval(hours: 3)
     static let dexcomPeriod = TimeInterval(minutes: 5)
     static let observablePeriod = .secondsPerDay * 90.0
+    static let observableTreatmentsPeriod = .secondsPerDay * 7.0
 }

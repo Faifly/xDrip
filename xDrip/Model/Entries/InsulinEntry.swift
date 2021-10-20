@@ -46,9 +46,6 @@ final class InsulinEntry: AbstractEntry, AbstractAbsorbableEntryProtocol, Treatm
         }
         if externalID != nil {
             self.cloudUploadStatus = .uploaded
-        } else if let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments {
-            self.cloudUploadStatus = .notUploaded
         }
     }
     

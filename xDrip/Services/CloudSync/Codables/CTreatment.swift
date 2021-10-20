@@ -25,6 +25,7 @@ struct CTreatment: Codable {
     let sysTime: String?
     let utcOffset: Int?
     let timestamp: Int?
+    let timestampString: String?
     let enteredBy: String?
     let insulinInjections: String?
     let foodType: String?
@@ -102,6 +103,7 @@ struct CTreatment: Codable {
         timestamp = Int((entry.date ?? Date()).timeIntervalSince1970)
         enteredBy = Constants.Nightscout.appIdentifierName
         insulinInjections = "[]"
+        timestampString = createdAt
         
         if treatmentType == .carbs, let carbEntry = entry as? CarbEntry {
             foodType = carbEntry.foodType
@@ -122,6 +124,7 @@ struct CTreatment: Codable {
         sysTime = try? container.decode(String.self, forKey: .sysTime)
         utcOffset = try? container.decode(Int.self, forKey: .utcOffset)
         timestamp = try? container.decode(Int.self, forKey: .timestamp)
+        timestampString = try? container.decode(String.self, forKey: .timestamp)
         enteredBy = try? container.decode(String.self, forKey: .enteredBy)
         insulinInjections = try? container.decode(String.self, forKey: .insulinInjections)
         foodType = try? container.decode(String.self, forKey: .foodType)
@@ -129,17 +132,22 @@ struct CTreatment: Codable {
         exerciseIntensity = try? container.decode(String.self, forKey: .exerciseIntensity)
         absorptionTime = try? container.decode(Double.self, forKey: .absorptionTime)
         
-        switch eventType?.lowercased() {
-        case TreatmentType.carbs.rawValue.lowercased():
+        if carbs != nil {
             type = .carbs
-        case TreatmentType.bolus.rawValue.lowercased():
-            type = .bolus
-        case TreatmentType.basal.rawValue.lowercased():
-            type = .basal
-        case TreatmentType.training.rawValue.lowercased():
-            type = .training
-        default:
-            break
+        } else if insulin != nil {
+            switch eventType?.lowercased() {
+            case TreatmentType.basal.rawValue.lowercased():
+                type = .basal
+            default:
+                type = .bolus
+            }
+        } else {
+            switch eventType?.lowercased() {
+            case TreatmentType.training.rawValue.lowercased():
+                type = .training
+            default:
+                break
+            }
         }
     }
     
@@ -156,7 +164,7 @@ struct CTreatment: Codable {
         //Server doesn't accept ids with length more than 24 symbols
     }
     
-    static func parseTreatmentsToEntries(treatments: [CTreatment]) {
+    static func parseFollowerTreatmentsToEntries(treatments: [CTreatment]) {
         guard !treatments.isEmpty else { return }
         
         var allObjects: [Object] = []
@@ -176,23 +184,32 @@ struct CTreatment: Codable {
             realm.add(allObjects, update: .all)
         }
         
-        if types.contains(.carbs) { CarbEntriesWorker.updatedCarbsEntry() }
-        if types.contains(.bolus) { InsulinEntriesWorker.updatedBolusEntry() }
-        if types.contains(.basal) { InsulinEntriesWorker.updatedBasalEntry() }
-        if types.contains(.training) { TrainingEntriesWorker.updatedTrainingEntry() }
+        let datePredicate = NSPredicate.earlierThan(
+            date: Date().addingTimeInterval(-(Constants.observableTreatmentsPeriod)))
+        
+        CarbEntriesWorker.deleteAllEntries(mode: .follower, filter: datePredicate)
+        
+        if types.contains(.carbs) { CarbEntriesWorker.deleteAllEntries(mode: .follower, filter: datePredicate) }
+        if types.contains(.bolus) { InsulinEntriesWorker.deleteAllEntries(mode: .follower, filter: datePredicate) }
+        if types.contains(.basal) { InsulinEntriesWorker.deleteAllEntries(mode: .follower, filter: datePredicate) }
+        if types.contains(.training) { TrainingEntriesWorker.deleteAllEntries(mode: .follower, filter: datePredicate) }
     }
     
     private static func createRealmObjectFrom(treatment: CTreatment) -> Object? {
-        var object: Object?
+        var object: AbstractEntry?
         
         guard let treatmentDate = treatment.date,
-              let externalID = treatment.uuid
+              let externalID = treatment.identificator
         else { return nil }
-        
+       
         var absorptionDuration: TimeInterval?
         if let time = treatment.absorptionTime {
             absorptionDuration = time * .secondsPerMinute
         }
+        
+        let followerID = externalID.hasSuffix(Constants.followerSuffix) ?
+                         externalID :
+                         externalID + Constants.followerSuffix
         
         switch treatment.type {
         case .carbs:
@@ -200,7 +217,7 @@ struct CTreatment: Codable {
                 object = CarbEntry(amount: amount,
                                    foodType: treatment.foodType,
                                    date: treatmentDate,
-                                   externalID: externalID,
+                                   externalID: followerID,
                                    absorptionDuration: absorptionDuration)
             }
         case .bolus:
@@ -208,7 +225,7 @@ struct CTreatment: Codable {
                 object = InsulinEntry(amount: amount,
                                       date: treatmentDate,
                                       type: .bolus,
-                                      externalID: externalID,
+                                      externalID: followerID,
                                       absorptionDuration: absorptionDuration)
             }
         case .basal:
@@ -216,18 +233,20 @@ struct CTreatment: Codable {
                 object = InsulinEntry(amount: amount,
                                       date: treatmentDate,
                                       type: .basal,
-                                      externalID: externalID)
+                                      externalID: followerID)
             }
         case .training:
             if let duration = treatment.duration, let intensity = treatment.exerciseIntensity {
                 object = TrainingEntry(duration: duration * .secondsPerMinute,
                                        intensity: TrainingIntensity(paramValue: intensity),
                                        date: treatmentDate,
-                                       externalID: externalID)
+                                       externalID: followerID)
             }
         default:
             break
         }
+        
+        object?.deviceMode = .follower
         
         return object
     }
@@ -235,16 +254,27 @@ struct CTreatment: Codable {
     private var date: Date? {
         var treatmentDate: Date?
         let dateFormatter = DateFormatter()
-        if let sysTime = sysTime {
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-            treatmentDate = dateFormatter.date(from: sysTime)
-        } else if let timestamp = timestamp {
-            treatmentDate = Date(timeIntervalSince1970: TimeInterval(timestamp))
-        } else if let createdAt = createdAt {
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-            treatmentDate = dateFormatter.date(from: createdAt)
+        
+        let dateFormats = ["yyyy-MM-dd'T'HH:mm:ss.SSSZ", "yyyy-MM-dd'T'HH:mm:ss'Z'"]
+        let dateStrings = [sysTime, createdAt, timestampString]
+        
+        for dateFormat in dateFormats {
+            for dateString in dateStrings {
+                if let dateString = dateString, treatmentDate == nil {
+                    dateFormatter.dateFormat = dateFormat
+                    treatmentDate = dateFormatter.date(from: dateString)
+                }
+            }
         }
+        
+        if let timestamp = timestamp, treatmentDate == nil {
+            treatmentDate = Date(timeIntervalSince1970: TimeInterval(timestamp))
+        }
+      
         return treatmentDate
+    }
+
+    private var identificator: String? {
+        return uuid ?? treatmentID
     }
 }

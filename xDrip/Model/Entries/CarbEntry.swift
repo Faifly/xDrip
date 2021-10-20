@@ -29,9 +29,6 @@ final class CarbEntry: AbstractEntry, AbstractAbsorbableEntryProtocol, Treatment
         self.absorptionDuration = absorptionDuration ?? User.current.settings.carbsAbsorptionRate
         if externalID != nil {
             self.cloudUploadStatus = .uploaded
-        } else if let settings = User.current.settings.nightscoutSync,
-            settings.isEnabled, settings.uploadTreatments {
-            self.cloudUploadStatus = .notUploaded
         }
     }
     

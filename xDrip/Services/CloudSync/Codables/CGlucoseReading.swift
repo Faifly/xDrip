@@ -17,7 +17,7 @@ struct CGlucoseReading: Codable {
     let device: String?
     let identifier: String?
     let type: String?
-    let date: Int64?
+    let date: Double?
     let sgv: Double?
     let filtered: Double?
     let unfiltered: Double?
@@ -45,7 +45,7 @@ struct CGlucoseReading: Codable {
         id = nil
         identifier = reading.externalID
         type = "sgv"
-        date = Int64((reading.date?.timeIntervalSince1970 ?? 0.0) * 1000.0)
+        date = Double((reading.date?.timeIntervalSince1970 ?? 0.0) * 1000.0)
         if User.current.settings.nightscoutSync?.sendDisplayGlucose == true {
             sgv = reading.displayGlucose.rounded(to: 2)
             slope = reading.displaySlope * 5.0 * .secondsPerMinute
@@ -84,7 +84,7 @@ struct CGlucoseReading: Codable {
         }
         
         type = try? container.decode(String.self, forKey: .type)
-        date = try? container.decode(Int64.self, forKey: .date)
+        date = try? container.decode(Double.self, forKey: .date)
 
         if let sgv = try? container.decode(Double.self, forKey: .sgv) {
             self.sgv = sgv

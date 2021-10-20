@@ -166,7 +166,7 @@ final class NightscoutCloudExtraOptionsViewControllerTests: XCTestCase {
         treatmentsSwitch.isOn = true
         treatmentsSwitch.sendActions(for: .valueChanged)
         // Then
-        XCTAssert(settings?.uploadTreatments == true)
+        XCTAssert(settings?.uploadTreatments == false)
         
         // When
         treatmentsSwitch.isOn = false

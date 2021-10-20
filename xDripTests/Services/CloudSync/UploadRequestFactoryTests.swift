@@ -22,8 +22,8 @@ final class UploadRequestFactoryTests: XCTestCase {
         let carbEntry = CarbEntry(amount: 1.0, foodType: "1.1", date: Date())
         let treatment = CTreatment(entry: carbEntry, treatmentType: .carbs)
         let settings = try XCTUnwrap(User.current.settings.nightscoutSync)
-        settings.updateBaseURL("baseURL")
-        settings.updateAPISecret("apiSecret")
+        settings.updateMasterBaseURL("baseURL")
+        settings.updateMasterAPISecret("apiSecret")
         
         // When
         
@@ -45,8 +45,8 @@ final class UploadRequestFactoryTests: XCTestCase {
         // Given
         let uuid = "12345"
         let settings = try XCTUnwrap(User.current.settings.nightscoutSync)
-        settings.updateBaseURL("baseURL")
-        settings.updateAPISecret("apiSecret")
+        settings.updateMasterBaseURL("baseURL")
+        settings.updateMasterAPISecret("apiSecret")
         
         // When
         let deleteRequset = sut?.createDeleteTreatmentRequest(uuid, requestType: .deleteCarbs)
@@ -63,16 +63,16 @@ final class UploadRequestFactoryTests: XCTestCase {
         // Given
         let settings = try XCTUnwrap(User.current.settings.nightscoutSync)
         settings.updateIsEnabled(true)
-        settings.updateBaseURL("baseURL")
-        settings.updateAPISecret("apiSecret")
+        settings.updateMasterBaseURL("baseURL")
+        settings.updateMasterAPISecret("apiSecret")
         
         // When
-        let getRequset = sut?.createFetchTreatmentsRequest()
+        let getRequset = sut?.createFetchFollowerTreatmentsRequest()
         
         // Then
         XCTAssertTrue(getRequset?.url?.absoluteString == "baseURL/api/v1/treatments")
         XCTAssertTrue(getRequset?.httpMethod == "GET")
-        let fields = ["Content-Type": "application/json", "API-SECRET": "apiSecret".sha1]
-        XCTAssertTrue(getRequset?.allHTTPHeaderFields == fields)
+        let isFieldsEmpty = try XCTUnwrap(getRequset?.allHTTPHeaderFields?.isEmpty)
+        XCTAssertTrue(isFieldsEmpty)
     }
 }

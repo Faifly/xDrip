@@ -99,7 +99,7 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         response: NightscoutCloudConfiguration.UpdateData.Response
     ) -> BaseSettings.Section? {
         guard response.settings.isEnabled else { return nil }
-        if response.settings.isFollowerAuthed {
+        if User.current.settings.deviceMode == .follower {
             return createReadonlyCredentialsSection(response: response)
         } else {
             return createEditableCredentialsSection(response: response)
@@ -112,7 +112,7 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         let cells: [BaseSettings.Cell] = [
             createTextInputCell(
                 .baseURL,
-                textFieldText: response.settings.baseURL,
+                textFieldText: response.settings.masterBaseURL,
                 placeholder: "settings_nightscout_cloud_configuration_base_url_placeholder".localized,
                 textEditingChangedHandler: { text in
                     response.textEditingChangedHandler(.baseURL, text)
@@ -120,7 +120,7 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
             ),
             createTextInputCell(
                 .apiSecret,
-                textFieldText: response.settings.apiSecret,
+                textFieldText: response.settings.masterApiSecret,
                 placeholder: "settings_nightscout_cloud_configuration_api_secret_placeholder".localized,
                 textEditingChangedHandler: { text in
                     response.textEditingChangedHandler(.apiSecret, text)
@@ -145,12 +145,12 @@ final class NightscoutCloudConfigurationPresenter: NightscoutCloudConfigurationP
         let cells: [BaseSettings.Cell] = [
             .info(
                 mainText: NightscoutCloudConfiguration.Field.baseURL.title,
-                detailText: response.settings.baseURL,
+                detailText: response.settings.masterBaseURL,
                 detailTextColor: nil
             ),
             .info(
                 mainText: NightscoutCloudConfiguration.Field.apiSecret.title,
-                detailText: response.settings.apiSecret,
+                detailText: response.settings.masterApiSecret,
                 detailTextColor: nil
             )
         ]

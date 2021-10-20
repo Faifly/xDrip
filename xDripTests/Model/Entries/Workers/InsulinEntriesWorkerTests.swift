@@ -111,7 +111,7 @@ final class InsulinEntriesWorkerTests: AbstractRealmTest {
         
         let entry = try XCTUnwrap(entries.first)
         
-        XCTAssertTrue(entry.cloudUploadStatus == .notApplicable)
+        XCTAssertTrue(entry.cloudUploadStatus == .notUploaded)
         
         let externalID = entry.externalID
         

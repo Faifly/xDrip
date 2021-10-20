@@ -65,7 +65,7 @@ final class HomePresenter: HomePresentationLogic {
     }
     
     func presentGlucoseCurrentInfo(response: Home.GlucoseCurrentInfo.Response) {
-        let last2Readings = GlucoseReading.lastReadings(2)
+        let last2Readings = GlucoseReading.lastReadings(2, mode: User.current.settings.deviceMode)
         let value = glucoseFormattingWorker.formatEntry(response.lastGlucoseReading, last2Readings: last2Readings)
         let viewModel = Home.GlucoseCurrentInfo.ViewModel(
             glucoseIntValue: value.glucoseIntValue,
