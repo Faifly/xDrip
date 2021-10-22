@@ -47,10 +47,9 @@ final class InsulinEntriesWorkerTests: AbstractRealmTest {
     }
     
     func testDeleteBolusEntry() throws {
-        let settings = try XCTUnwrap(User.current.settings.nightscoutSync)
-        settings.updateIsEnabled(false)
-        settings.updateUploadTreatments(false)
-        let bolusEntry = InsulinEntry(amount: 1.9, date: Date(), type: .bolus)
+        let externalID = "123"
+        
+        let bolusEntry = InsulinEntry(amount: 1.9, date: Date(), type: .bolus, externalID: externalID)
         realm.safeWrite {
             realm.add(bolusEntry)
         }
@@ -63,20 +62,19 @@ final class InsulinEntriesWorkerTests: AbstractRealmTest {
         
         InsulinEntriesWorker.deleteInsulinEntry(entry)
         
-        XCTAssertTrue(InsulinEntriesWorker.fetchAllBolusEntries().isEmpty)
-        
-        settings.updateIsEnabled(true)
-        settings.updateUploadTreatments(true)
-        
-        let bolusEntry1 = InsulinEntry(amount: 4.9, date: Date(), type: .bolus)
-        realm.safeWrite {
-            realm.add(bolusEntry1)
-        }
-        
-        InsulinEntriesWorker.deleteInsulinEntry(bolusEntry1)
-        
         XCTAssertTrue(InsulinEntriesWorker.fetchAllBolusEntries().count == 1)
-        XCTAssertTrue(bolusEntry1.cloudUploadStatus == .waitingForDeletion)
+        
+        XCTAssertTrue(entry.cloudUploadStatus == .waitingForDeletion)
+        
+        let url = try XCTUnwrap(URL(string: "https://google.com"))
+        
+        NightscoutRequestCompleter.completeRequest(UploadRequest(request: URLRequest(url: url),
+                                                                 itemIDs: [externalID],
+                                                                 type: .deleteBolus))
+        
+        DispatchQueue.main.async {
+            XCTAssertTrue(InsulinEntriesWorker.fetchAllBolusEntries().isEmpty)
+        }
     }
     
     func testDeleteEntryWithExternalID() throws {

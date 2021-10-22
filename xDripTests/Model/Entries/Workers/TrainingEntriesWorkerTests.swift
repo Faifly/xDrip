@@ -49,12 +49,10 @@ final class TrainingEntriesWorkerTests: AbstractRealmTest {
     }
     
     func testDeleteEntry() throws {
-        let settings = try XCTUnwrap(User.current.settings.nightscoutSync)
-        settings.updateIsEnabled(false)
-        settings.updateUploadTreatments(false)
+        let externalID = "123"
         XCTAssertTrue(realm.objects(TrainingEntry.self).isEmpty)
         
-        TrainingEntriesWorker.addTraining(duration: 1.1, intensity: .high, date: Date())
+        TrainingEntriesWorker.addTraining(duration: 1.1, intensity: .high, date: Date(), externalID: externalID)
         
         let entries = TrainingEntriesWorker.fetchAllTrainings()
         
@@ -64,17 +62,19 @@ final class TrainingEntriesWorkerTests: AbstractRealmTest {
         
         TrainingEntriesWorker.deleteTrainingEntry(entry)
         
-        XCTAssertTrue(TrainingEntriesWorker.fetchAllTrainings().isEmpty)
-        
-        settings.updateIsEnabled(true)
-        settings.updateUploadTreatments(true)
-        
-        let trainigEntry = TrainingEntriesWorker.addTraining(duration: 1.5, intensity: .low, date: Date())
-        
-        TrainingEntriesWorker.deleteTrainingEntry(trainigEntry)
-        
         XCTAssertTrue(TrainingEntriesWorker.fetchAllTrainings().count == 1)
-        XCTAssertTrue(trainigEntry.cloudUploadStatus == .waitingForDeletion)
+        
+        XCTAssertTrue(entry.cloudUploadStatus == .waitingForDeletion)
+        
+        let url = try XCTUnwrap(URL(string: "https://google.com"))
+        
+        NightscoutRequestCompleter.completeRequest(UploadRequest(request: URLRequest(url: url),
+                                                                 itemIDs: [externalID],
+                                                                 type: .deleteTraining))
+        
+        DispatchQueue.main.async {
+            XCTAssertTrue(TrainingEntriesWorker.fetchAllTrainings().isEmpty)
+        }
     }
     
     func testUpdatedEntry() throws {

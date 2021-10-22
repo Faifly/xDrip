@@ -12,7 +12,11 @@ import AKUtils
 
 // swiftlint:disable function_body_length
 
-final class CTreatmentTests: XCTestCase {
+final class CTreatmentTests: AbstractRealmTest {
+    override func setUp() {
+        super.setUp()
+    }
+    
     func testInit() throws {
         let сarbEntry = CarbEntry(amount: 1.1, foodType: "2.2", date: Date())
         let treatment = CTreatment(entry: сarbEntry, treatmentType: .carbs)
@@ -130,6 +134,5 @@ final class CTreatmentTests: XCTestCase {
         let firstInterval = try XCTUnwrap(carb.date?.timeIntervalSince1970)
         let secondInterval = try XCTUnwrap(сarbEntry.date?.timeIntervalSince1970)
         XCTAssertTrue(firstInterval ~~ secondInterval)
-        CarbEntriesWorker.deleteCarbsEntry(carb)
     }
 }

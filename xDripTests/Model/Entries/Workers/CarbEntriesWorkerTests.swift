@@ -48,10 +48,8 @@ final class CarbEntriesWorkerTests: AbstractRealmTest {
     }
     
     func testDeleteCarbsEntry() throws {
-        let settings = try XCTUnwrap(User.current.settings.nightscoutSync)
-        settings.updateIsEnabled(false)
-        settings.updateUploadTreatments(false)
-        let carbEntry = CarbEntry(amount: 1.9, foodType: "1.2", date: Date())
+        let externalID = "123"
+        let carbEntry = CarbEntry(amount: 1.9, foodType: "1.2", date: Date(), externalID: externalID)
         realm.safeWrite {
             realm.add(carbEntry)
         }
@@ -64,20 +62,19 @@ final class CarbEntriesWorkerTests: AbstractRealmTest {
         
         CarbEntriesWorker.deleteCarbsEntry(entry)
         
-        XCTAssertTrue(CarbEntriesWorker.fetchAllCarbEntries().isEmpty)
-        
-        settings.updateIsEnabled(true)
-        settings.updateUploadTreatments(true)
-        
-        let carbEntry1 = CarbEntry(amount: 2.9, foodType: "1.1", date: Date())
-        realm.safeWrite {
-            realm.add(carbEntry1)
-        }
-        
-        CarbEntriesWorker.deleteCarbsEntry(carbEntry1)
-        
         XCTAssertTrue(CarbEntriesWorker.fetchAllCarbEntries().count == 1)
-        XCTAssertTrue(carbEntry1.cloudUploadStatus == .waitingForDeletion)
+        
+        XCTAssertTrue(entry.cloudUploadStatus == .waitingForDeletion)
+        
+        let url = try XCTUnwrap(URL(string: "https://google.com"))
+        
+        NightscoutRequestCompleter.completeRequest(UploadRequest(request: URLRequest(url: url),
+                                                                 itemIDs: [externalID],
+                                                                 type: .deleteCarbs))
+        
+        DispatchQueue.main.async {
+            XCTAssertTrue(CarbEntriesWorker.fetchAllCarbEntries().isEmpty)
+        }
     }
     
     func testDeleteEntryWithExternalID() throws {
