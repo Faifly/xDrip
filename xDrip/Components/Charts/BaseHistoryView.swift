@@ -145,22 +145,25 @@ class BaseHistoryView: UIView {
     func calculateVerticalLeftLabels(minValue: Double?, maxValue: Double?, isForGlucose: Bool = true) {
         guard let minValue = minValue else { return }
         guard let maxValue = maxValue else { return }
+        var labels: [String] = []
+        let adjustedMinValue: Int
+        let adjustedMaxValue: Int
+
         let unit = User.current.settings.unit
-        let isForMmolL = isForGlucose && (unit == .mmolL)
+        let useMinimalStep = !isForGlucose || (unit == .mmolL)
         
-        let verticalPadding = isForMmolL ? 1 : 10
+        let verticalPadding = useMinimalStep ? 1 : 10
         let maxV = Int(maxValue.rounded(.up))
         let minV = Int(minValue.rounded(.down))
-        let adjustedMinValue = max((isForMmolL ? minV : minV.roundedDown) - verticalPadding, 0)
-        let linesCount = max(((maxV - minV) / (isForMmolL ? 1 : 10)) + 1, 2)
+        adjustedMinValue = max((useMinimalStep ? minV : minV.roundedDown) - verticalPadding, 0)
+        let linesCount = max(((maxV - minV) / verticalPadding) + 1, 2)
         let adjustedLinesCount = min(linesCount, maxVerticalLinesCount)
         let diff = (maxV + verticalPadding) - adjustedMinValue
         let step = Int((Double(diff) / Double((adjustedLinesCount - 1))).rounded(.up))
-        let adjustedStep = (isForMmolL ? step : step.roundedUp)
-        let adjustedMaxValue = adjustedMinValue + (adjustedStep * (adjustedLinesCount - 1))
+        let adjustedStep = (useMinimalStep ? step : step.roundedUp)
+        adjustedMaxValue = adjustedMinValue + (adjustedStep * (adjustedLinesCount - 1))
 
-        var labels: [String] = []
-        let format = isForMmolL ? "%0.1f" : "%0.f"
+        let format = useMinimalStep && isForGlucose ? "%0.1f" : "%0.f"
         for index in 0..<adjustedLinesCount {
             labels.append(String(format: format, Double(adjustedMinValue + (adjustedStep * index))))
         }

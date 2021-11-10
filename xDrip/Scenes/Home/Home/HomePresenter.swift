@@ -45,14 +45,12 @@ final class HomePresenter: HomePresentationLogic {
     
     func presentGlucoseData(response: Home.GlucoseDataUpdate.Response) {
         let values = glucoseFormattingWorker.formatEntries(response.glucoseData)
-        let basal = glucoseFormattingWorker.formatEntries(response.insulinData)
-        let stroke = glucoseFormattingWorker.formatEntries(response.chartPointsData)
+        let stroke = homeEntriesFormattingWorker.calculateChartValues(for: 24, allBasals: response.basalData)
         let unit = User.current.settings.unit.label
         
         let viewModel = Home.GlucoseDataUpdate.ViewModel(
             glucoseValues: values,
             basalDisplayMode: response.basalDisplayMode,
-            basalValues: basal,
             strokeChartBasalValues: stroke,
             unit: unit
         )
@@ -81,7 +79,7 @@ final class HomePresenter: HomePresentationLogic {
     func presentBolusData(response: Home.BolusDataUpdate.Response) {
         let entry = homeEntriesFormattingWorker.formatBolusResponse(response)
         let chartButtonTitle = homeEntriesFormattingWorker.getChartButtonTitle(.bolus)
-        let chartShouldBeHidden = homeEntriesFormattingWorker.getChartShouldBeShown()
+        let chartShouldBeHidden = homeEntriesFormattingWorker.getChartShouldBeShown(.bolus)
         let viewModel = Home.BolusDataUpdate.ViewModel(chartTitle: entry.title,
                                                        chartButtonTitle: chartButtonTitle,
                                                        entries: entry.entries,
@@ -95,7 +93,7 @@ final class HomePresenter: HomePresentationLogic {
     func presentBolusChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
         homeEntriesFormattingWorker.setTimeInterval(response.timeInterval)
         let chartButtonTitle = homeEntriesFormattingWorker.getChartButtonTitle(.bolus)
-        let chartShouldBeShown = homeEntriesFormattingWorker.getChartShouldBeShown()
+        let chartShouldBeShown = homeEntriesFormattingWorker.getChartShouldBeShown(.bolus)
         let viewModel = Home.ChangeEntriesChartTimeFrame.ViewModel(timeInterval: response.timeInterval,
                                                                    buttonTitle: chartButtonTitle,
                                                                    isChartShown: chartShouldBeShown)
@@ -105,7 +103,7 @@ final class HomePresenter: HomePresentationLogic {
     func presentCarbsData(response: Home.CarbsDataUpdate.Response) {
         let entry = homeEntriesFormattingWorker.formatCarbsResponse(response)
         let chartButtonTitle = homeEntriesFormattingWorker.getChartButtonTitle(.carbs)
-        let chartShouldBeHidden = homeEntriesFormattingWorker.getChartShouldBeShown()
+        let chartShouldBeHidden = homeEntriesFormattingWorker.getChartShouldBeShown(.carbs)
         let viewModel = Home.CarbsDataUpdate.ViewModel(chartTitle: entry.title,
                                                        chartButtonTitle: chartButtonTitle,
                                                        entries: entry.entries,
@@ -119,7 +117,7 @@ final class HomePresenter: HomePresentationLogic {
     func presentCarbsChartTimeFrameChange(response: Home.ChangeEntriesChartTimeFrame.Response) {
         homeEntriesFormattingWorker.setTimeInterval(response.timeInterval)
         let chartButtonTitle = homeEntriesFormattingWorker.getChartButtonTitle(.carbs)
-        let chartShouldBeShown = homeEntriesFormattingWorker.getChartShouldBeShown()
+        let chartShouldBeShown = homeEntriesFormattingWorker.getChartShouldBeShown(.carbs)
         let viewModel = Home.ChangeEntriesChartTimeFrame.ViewModel(timeInterval: response.timeInterval,
                                                                    buttonTitle: chartButtonTitle,
                                                                    isChartShown: chartShouldBeShown)

@@ -41,9 +41,8 @@ final class InsulinEntry: AbstractEntry, AbstractAbsorbableEntryProtocol, Treatm
         super.init(date: date, externalID: externalID)
         self.amount = amount
         self.type = type
-        if type == .bolus {
-            self.absorptionDuration = absorptionDuration ?? User.current.settings.insulinActionTime
-        }
+        self.absorptionDuration = absorptionDuration ?? User.current.settings.insulinActionTime
+        
         if externalID != nil {
             self.cloudUploadStatus = .uploaded
         }

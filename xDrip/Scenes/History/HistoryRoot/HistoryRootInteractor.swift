@@ -74,8 +74,7 @@ final class HistoryRootInteractor: HistoryRootBusinessLogic, HistoryRootDataStor
     
     private func updateGlucoseChartData() {
         var glucoseData = [BaseGlucoseReading]()
-        var basalValues = [InsulinEntry]()
-        var chartEntries = [InsulinEntry]()
+        let basalData = BasalChartDataWorker.fetchAllBasalDataForCurrentMode()
         
         let lightReadings = LightGlucoseReading.allForCurrentMode
         let grossReadings = GlucoseReading.allForCurrentMode()
@@ -85,25 +84,18 @@ final class HistoryRootInteractor: HistoryRootBusinessLogic, HistoryRootDataStor
             let grossGlucoseData = glucoseDataWorker.fetchGlucoseData(for: 14 * 24, readings: grossReadings)
             
             glucoseData = grossGlucoseData + lightGlucoseData
-    
-            basalValues = BasalChartDataWorker.fetchBasalData(for: 14 * 24)
-            chartEntries = BasalChartDataWorker.calculateChartValues(for: 14 * 24)
         } else {
             let lightGlucoseData = lightGlucoseDataWorker.fetchGlucoseData(for: selectedDate, readings: lightReadings)
             let grossGlucoseData = glucoseDataWorker.fetchGlucoseData(for: selectedDate, readings: grossReadings)
             
             glucoseData = grossGlucoseData + lightGlucoseData
-            
-            basalValues = BasalChartDataWorker.fetchBasalData(for: selectedDate)
-            chartEntries = BasalChartDataWorker.calculateChartValues(for: selectedDate)
         }
         
         let response = HistoryRoot.GlucoseDataUpdate.Response(
             glucoseData: glucoseData,
             intervalGlucoseData: glucoseData,
             basalDisplayMode: User.current.settings.chart?.basalDisplayMode ?? .notShown,
-            insulinData: basalValues,
-            chartPointsData: chartEntries,
+            basalData: basalData,
             date: chartDate
         )
         presenter?.presentGlucoseData(response: response)

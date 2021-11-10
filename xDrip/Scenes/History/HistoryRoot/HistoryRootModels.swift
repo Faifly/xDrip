@@ -54,16 +54,14 @@ enum HistoryRoot {
             let glucoseData: [BaseGlucoseReading]
             let intervalGlucoseData: [BaseGlucoseReading]
             let basalDisplayMode: ChartSettings.BasalDisplayMode
-            let insulinData: [InsulinEntry]
-            let chartPointsData: [InsulinEntry]
+            let basalData: [InsulinEntry]
             let date: Date?
         }
         
         struct ViewModel {
             let glucoseValues: [GlucoseChartGlucoseEntry]
             let basalDisplayMode: ChartSettings.BasalDisplayMode
-            let basalValues: [BasalChartBasalEntry]
-            let strokeChartBasalValues: [BasalChartBasalEntry]
+            let strokeChartBasalValues: [BaseChartEntry]
             let unit: String
             let dataSection: Home.DataSectionViewModel
             let date: Date?

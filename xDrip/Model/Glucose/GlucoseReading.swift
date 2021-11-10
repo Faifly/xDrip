@@ -378,15 +378,8 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     static func parseFollowerEntries(_ rawEntries: [CGlucoseReading]) {
         let readings = rawEntries.compactMap { createFollowerReading(from: $0) }
         
-        let realm = Realm.shared
-        realm.safeWrite {
-            realm.add(readings, update: .modified)
-        }
-        
-        readings.forEach { _ in clearOldReadings() }
-        
         if !readings.isEmpty {
-            CGMController.shared.notifyGlucoseChange(readings.max(by: { $0.date >? $1.date }))
+            CGMController.shared.notifyGlucoseChange(readings.max(by: { $0.date <? $1.date }))
         }
     }
     
@@ -414,6 +407,15 @@ final class GlucoseReading: Object, BaseGlucoseReading {
         entry.deviceMode = .follower
         entry.externalID = followerID
         entry.sourceInfo = "Nightscout Follower"
+        entry.findSlope()
+        
+        let realm = Realm.shared
+        realm.safeWrite {
+            realm.add(entry, update: .modified)
+        }
+        
+        clearOldReadings()
+        
         return entry
     }
     
@@ -523,7 +525,7 @@ final class GlucoseReading: Object, BaseGlucoseReading {
     }
     
     func findSlope() {
-        let last2Readings = GlucoseReading.lastReadings(2, mode: .main)
+        let last2Readings = GlucoseReading.lastReadings(2, mode: User.current.settings.deviceMode)
         
         Realm.shared.safeWrite {
             if last2Readings.count == 2 {

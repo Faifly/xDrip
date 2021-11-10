@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import AKUtils
 
 protocol HomeBusinessLogic {
     func doLoad(request: Home.Load.Request)
@@ -203,8 +204,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         let response = Home.GlucoseDataUpdate.Response(
             glucoseData: glucoseDataWorker.fetchGlucoseData(for: 24, readings: allReadings),
             basalDisplayMode: User.current.settings.chart?.basalDisplayMode ?? .notShown,
-            insulinData: BasalChartDataWorker.fetchBasalData(for: 24),
-            chartPointsData: BasalChartDataWorker.calculateChartValues(for: 24)
+            basalData: BasalChartDataWorker.fetchAllBasalDataForCurrentMode()
         )
         presenter?.presentGlucoseData(response: response)
     }
@@ -235,7 +235,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         let isShown = User.current.settings.chart?.showActiveInsulin == true
         if isShown {
             insulinData = InsulinEntriesWorker.fetchAllBolusEntries().filter {
-                $0.isValid
+                $0.isValid && $0.date >? Date().addingTimeInterval(-2 * .secondsPerDay)
             }
         }
         let response = Home.BolusDataUpdate.Response(insulinData: insulinData, isShown: isShown)
@@ -246,7 +246,9 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         var carbsData: [CarbEntry] = []
         let isShown = User.current.settings.chart?.showActiveCarbs == true
         if  isShown {
-            carbsData = CarbEntriesWorker.fetchAllCarbEntries().filter { $0.isValid }
+            carbsData = CarbEntriesWorker.fetchAllCarbEntries().filter {
+                $0.isValid && $0.date >? Date().addingTimeInterval(-2 * .secondsPerDay)
+            }
         }
         let response = Home.CarbsDataUpdate.Response(carbsData: carbsData, isShown: isShown)
         presenter?.presentCarbsData(response: response)

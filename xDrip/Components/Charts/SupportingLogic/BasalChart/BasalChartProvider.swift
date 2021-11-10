@@ -10,8 +10,7 @@ import UIKit
 
 protocol BasalChartProvider: GlucoseChartProvider {
     var yRangeBasal: ClosedRange<Double> { get }
-    var basalEntries: [BasalChartBasalEntry] { get }
-    var strokePoints: [BasalChartBasalEntry] { get }
+    var strokePoints: [BaseChartEntry] { get }
     var basalDisplayMode: ChartSettings.BasalDisplayMode { get }
     var pixelPerValueBasal: Double { get set }
     var yIntervalBasal: Double { get set }
@@ -19,12 +18,7 @@ protocol BasalChartProvider: GlucoseChartProvider {
     func drawBasalStroke()
 }
 
-private struct BasalEntry: BasalChartBasalEntry {
-    var value: Double
-    var date: Date
-}
-
-extension BasalChartProvider where Self: GlucoseChartProvider & UIView {
+extension BasalChartProvider where Self: UIView {
     private var yMin: Double {
         return basalDisplayMode == .onBottom ? yInterval : 0
     }
@@ -48,33 +42,11 @@ extension BasalChartProvider where Self: GlucoseChartProvider & UIView {
             }
         }
         context.addLine(to: calcPoint(for: strokePoints.last?.date ?? Date(), and: 0.0))
-        context.addLine(to: CGPoint(x: bounds.width - insets.left - insets.right, y: CGFloat(yMin) + insets.top))
-        context.setLineWidth(2.0)
+        context.setLineWidth(0.0)
         context.setStrokeColor(UIColor.customBlue.cgColor)
         let path = context.path
         context.drawPath(using: .stroke)
         completeBasalChart(for: path)
-        markBasalEntries()
-    }
-    
-    private func markBasalEntries() {
-        guard let context = UIGraphicsGetCurrentContext() else { return }
-        let circleSide: CGFloat = 1.0
-        
-        for entry in basalEntries {
-            let pointValue = strokePoints.filter({ $0.date == entry.date }).max(by: { $0.value < $1.value })?.value
-            
-            let point = calcPoint(for: entry.date, and: pointValue ?? 0.0)
-            let circleRect = CGRect(
-                x: point.x - circleSide / 2.0,
-                y: point.y - circleSide / 2.0,
-                width: circleSide,
-                height: circleSide
-            )
-    
-            context.setFillColor(UIColor.customBlue.cgColor)
-            context.fillEllipse(in: circleRect)
-        }
     }
     
     private func completeBasalChart(for path: CGPath?) {

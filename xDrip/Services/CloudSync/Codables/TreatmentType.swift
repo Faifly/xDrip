@@ -30,9 +30,9 @@ extension TreatmentEntryProtocol {
 }
 
 enum TreatmentType: String {
-    case carbs
-    case bolus
-    case basal
+    case carbs = "Meal Bolus"
+    case bolus = "Correction Bolus"
+    case basal = "Temp Basal"
     case training
     
     func getUploadRequestTypeFor(requestType: RequestType) -> UploadRequestType {

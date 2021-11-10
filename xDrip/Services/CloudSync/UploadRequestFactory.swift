@@ -127,22 +127,6 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     
     func createFetchFollowerGlucoseReadingsRequest() -> URLRequest? {
         LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
-        guard let settings = User.current.settings.nightscoutSync else {
-            LogController.log(
-                message: "[UploadRequestFactory]: Failed to %@ because sync is disabled.",
-                type: .info,
-                #function
-            )
-            return nil
-        }
-        guard settings.isFollowerAuthed else {
-            LogController.log(
-                message: "[UploadRequestFactory]: Failed to %@ because follower is not authed.",
-                type: .info,
-                #function
-            )
-            return nil
-        }
         guard var request = try? createEntriesRequest(appendSecret: false) else {
             LogController.log(
                 message: "[UploadRequestFactory]: Failed to %@.",
@@ -333,15 +317,6 @@ final class UploadRequestFactory: UploadRequestFactoryLogic {
     
     func createFetchFollowerTreatmentsRequest() -> URLRequest? {
         LogController.log(message: "[UploadRequestFactory]: Try to %@.", type: .info, #function)
-        guard let settings = User.current.settings.nightscoutSync, settings.isEnabled else {
-            LogController.log(
-                message: "[UploadRequestFactory]: Failed to %@ because sync is disabled.",
-                type: .info,
-                #function
-            )
-            return nil
-        }
-        
         guard let request = try? createTreatmentsRequest(uploading: false) else {
             LogController.log(
                 message: "[UploadRequestFactory]: Failed to %@.",

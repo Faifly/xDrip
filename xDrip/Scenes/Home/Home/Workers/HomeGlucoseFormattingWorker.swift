@@ -39,15 +39,9 @@ private struct HomeGlucoseCurrentInfoEntry: GlucoseCurrentInfoEntry {
     }
 }
 
-private struct HomeBasalEntry: BasalChartBasalEntry {
-    let value: Double
-    let date: Date
-}
-
 protocol HomeGlucoseFormattingWorkerProtocol {
     func formatEntries(_ entries: [BaseGlucoseReading]) -> [GlucoseChartGlucoseEntry]
     func formatEntry(_ entry: BaseGlucoseReading?, last2Readings: [BaseGlucoseReading]) -> GlucoseCurrentInfoEntry
-    func formatEntries(_ entries: [InsulinEntry]) -> [BasalChartBasalEntry]
     func formatDataSection(_ entries: [BaseGlucoseReading]) -> Home.DataSectionViewModel
 }
 
@@ -114,16 +108,6 @@ final class HomeGlucoseFormattingWorker: HomeGlucoseFormattingWorkerProtocol {
             difValue: difValue,
             severityColor: color,
             isOutdated: isOutdated)
-    }
-    
-    func formatEntries(_ entries: [InsulinEntry]) -> [BasalChartBasalEntry] {
-        return entries.compactMap { entry -> HomeBasalEntry? in
-            guard entry.type == .basal else { return nil }
-            return HomeBasalEntry(
-                value: entry.amount,
-                date: entry.date ?? Date()
-            )
-        }
     }
     
     func formatDataSection(_ entries: [BaseGlucoseReading]) -> Home.DataSectionViewModel {

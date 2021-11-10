@@ -15,8 +15,7 @@ final class GlucoseHistoryView: BaseHistoryView {
     private var glucoseEntries: [GlucoseChartGlucoseEntry] = []
     private let rightLabelsView = ChartVerticalLabelsView()
     private var basalDisplayMode: ChartSettings.BasalDisplayMode = .notShown
-    private var basalEntries: [BasalChartBasalEntry] = []
-    private var strokeChartEntries: [BasalChartBasalEntry] = []
+    private var strokeChartEntries: [BaseChartEntry] = []
     private var rightLegendAnchorConstraint: NSLayoutConstraint?
     private var unit = ""
     
@@ -42,14 +41,12 @@ final class GlucoseHistoryView: BaseHistoryView {
     func setup(
         with entries: [GlucoseChartGlucoseEntry],
         basalDisplayMode: ChartSettings.BasalDisplayMode,
-        basalEntries: [BasalChartBasalEntry],
-        strokeChartEntries: [BasalChartBasalEntry],
+        strokeChartEntries: [BaseChartEntry],
         unit: String
     ) {
         self.glucoseEntries = entries
         self.glucoseChartView.glucoseEntries = entries
         self.basalDisplayMode = basalDisplayMode
-        self.basalEntries = basalEntries
         self.strokeChartEntries = strokeChartEntries
         self.unit = unit
         super.update()
@@ -141,9 +138,8 @@ final class GlucoseHistoryView: BaseHistoryView {
         var labels = [String]()
         let format = "home_basal_units".localized
         
-        let initVal = BasalChartDataWorker.getBasalValueForDate(date: glucoseChartView.dateInterval.start)
-        let maxBasalValue = basalEntries.max(by: { $0.value < $1.value })?.value
-        let adjustedMaxValue = max(initVal, maxBasalValue ?? 0.0).rounded(.up)
+        let maxBasalValue = strokeChartEntries.max(by: { $0.value < $1.value })?.value
+        let adjustedMaxValue = (maxBasalValue ?? 0.0).rounded(.up)
         
         if basalDisplayMode != .notShown {
             labels.append(String(format: format, 0.0))
@@ -194,7 +190,6 @@ final class GlucoseHistoryView: BaseHistoryView {
         updateGlucoseDataView()
         setupRightLabelViewsAnchorConstraint()
         calculateVerticalRightLabels()
-        glucoseChartView.basalEntries = basalEntries
         glucoseChartView.strokePoints = strokeChartEntries
         glucoseChartView.dateInterval = globalDateRange
         glucoseChartView.basalDisplayMode = basalDisplayMode

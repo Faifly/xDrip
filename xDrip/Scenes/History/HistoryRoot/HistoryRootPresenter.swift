@@ -37,15 +37,19 @@ final class HistoryRootPresenter: HistoryRootPresentationLogic {
     
     func presentGlucoseData(response: HistoryRoot.GlucoseDataUpdate.Response) {
         let values = glucoseFormattingWorker.formatEntries(response.glucoseData)
-        let basal = glucoseFormattingWorker.formatEntries(response.insulinData)
-        let stroke = glucoseFormattingWorker.formatEntries(response.chartPointsData)
+        let stroke: [BaseChartEntry]
+        if let date = response.date {
+            stroke = homeEntriesFormattingWorker.calculateChartValues(for: date, allBasals: response.basalData)
+        } else {
+            stroke = homeEntriesFormattingWorker.calculateChartValues(for: 14 * 24, allBasals: response.basalData)
+        }
+        
         let unit = User.current.settings.unit.label
         let dataSection = glucoseFormattingWorker.formatDataSection(response.intervalGlucoseData)
         
         let viewModel = HistoryRoot.GlucoseDataUpdate.ViewModel(
             glucoseValues: values,
             basalDisplayMode: response.basalDisplayMode,
-            basalValues: basal,
             strokeChartBasalValues: stroke,
             unit: unit,
             dataSection: dataSection,

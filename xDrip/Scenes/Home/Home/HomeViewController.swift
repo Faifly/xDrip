@@ -123,7 +123,6 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
             self?.glucoseChart.setup(
                 with: viewModel.glucoseValues,
                 basalDisplayMode: viewModel.basalDisplayMode,
-                basalEntries: viewModel.basalValues,
                 strokeChartEntries: viewModel.strokeChartBasalValues,
                 unit: viewModel.unit
             )

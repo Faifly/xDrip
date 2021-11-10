@@ -11,8 +11,7 @@ import UIKit
 final class GlucoseChartView: BaseChartView, GlucoseChartProvider, BasalChartProvider {
     var glucoseEntries: [GlucoseChartGlucoseEntry] = []
     
-    var basalEntries: [BasalChartBasalEntry] = []
-    var strokePoints: [BasalChartBasalEntry] = []
+    var strokePoints: [BaseChartEntry] = []
     let circleSide: CGFloat = 6.0
     var yRangeBasal: ClosedRange<Double> = 0.0...0.0
     var insets: UIEdgeInsets {
