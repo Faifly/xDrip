@@ -17,9 +17,9 @@ final class BasalChartDataWorkerTests: AbstractRealmTest {
         InsulinEntriesWorker.addBasalEntry(amount: 24.0, date: minimumDate - .secondsPerHour)
         InsulinEntriesWorker.addBolusEntry(amount: 12.0, date: minimumDate + .secondsPerHour)
         
-        let basals = BasalChartDataWorker.fetchBasalData(for: 24)
+        let basals = BasalChartDataWorker.fetchAllBasalDataForCurrentMode()
         
-        XCTAssert(basals.count == 1)
+        XCTAssert(basals.count == 2)
         
         let entry = try XCTUnwrap(basals.first)
         
@@ -27,35 +27,14 @@ final class BasalChartDataWorkerTests: AbstractRealmTest {
         
         XCTAssert(!entry.isValid)
         
-        let basals1 = BasalChartDataWorker.fetchBasalData(for: 24)
+        let basals1 = BasalChartDataWorker.fetchAllBasalDataForCurrentMode()
                
-        XCTAssert(basals1.isEmpty)
-    }
-    
-    func testGetBasalValueForDate() {
-        let settings = User.current.settings
-        
-        settings?.addBasalRate(startTime: 0.0, units: 5.0)
-        
-        let minimumDate = Date() - .secondsPerHour * 2.0
-        
-        let calculatedValue1 = BasalChartDataWorker.getBasalValueForDate(date: minimumDate)
-        XCTAssert(calculatedValue1 ~ 0.0)
-        
-        InsulinEntriesWorker.addBasalEntry(amount: 10.0, date: minimumDate)
-        InsulinEntriesWorker.addBasalEntry(amount: 5.0, date: minimumDate + .secondsPerHour)
-        
-        let calculatedValue2 = BasalChartDataWorker.getBasalValueForDate(date: minimumDate - .secondsPerDay * 3.0)
-        XCTAssert(calculatedValue2 ~ 0.0)
-        
-        let calculatedValue3 = BasalChartDataWorker.getBasalValueForDate(date: minimumDate + .secondsPerHour)
-        
-        XCTAssert(calculatedValue3 ~ 10.0)
+        XCTAssert(basals1.count == 1)
     }
     
     func testFetchBasalDataForDate() throws {
         InsulinEntriesWorker.addBasalEntry(amount: 12.0, date: Date())
-        let basals = BasalChartDataWorker.fetchBasalData(for: 24)
+        let basals = BasalChartDataWorker.fetchAllBasalDataForCurrentMode()
         
         let entry = try XCTUnwrap(basals.first)
         XCTAssert(entry.isValid)
@@ -63,7 +42,7 @@ final class BasalChartDataWorkerTests: AbstractRealmTest {
         entry.updateCloudUploadStatus(.waitingForDeletion)
         XCTAssert(!entry.isValid)
         
-        let basals1 = BasalChartDataWorker.fetchBasalData(for: 24)
+        let basals1 = BasalChartDataWorker.fetchAllBasalDataForCurrentMode()
                      
         XCTAssert(basals1.isEmpty)
     }

@@ -30,7 +30,16 @@ final class HomeEntriesFormattingWorkerTests: XCTestCase {
         let response = Home.BolusDataUpdate.Response(insulinData: insulinEntries, isShown: true)
         let formattedResponse = sut.formatBolusResponse(response)
         // Then
-        let entries = formattedResponse.entries
+        let triangles = formattedResponse.entries
+        
+        var entries = [BaseChartEntry]()
+        
+        for triangle in triangles {
+            entries.append(triangle.firstPoint)
+            entries.append(triangle.secondPoint)
+            entries.append(triangle.thirdPoint)
+        }
+        
         XCTAssert(entries.count == 9)
         XCTAssert(entries.first?.date ~~ insulinEntries.first?.date)
         XCTAssert(entries.first?.value ~ 0.0)
@@ -56,7 +65,16 @@ final class HomeEntriesFormattingWorkerTests: XCTestCase {
         let response1 = Home.BolusDataUpdate.Response(insulinData: insulinEntries1, isShown: true)
         let formattedResponse1 = sut.formatBolusResponse(response1)
         // Then
-        let entries1 = formattedResponse1.entries
+        let triangles1 = formattedResponse1.entries
+        
+        var entries1 = [BaseChartEntry]()
+        
+        for triangle in triangles1 {
+            entries1.append(triangle.firstPoint)
+            entries1.append(triangle.secondPoint)
+            entries1.append(triangle.thirdPoint)
+        }
+        
         XCTAssert(entries1.count == 3)
         XCTAssert(entries1.first?.date ~~ insulinEntries1.first?.date)
         XCTAssert(entries1.first?.value ~ 0.0)
@@ -85,7 +103,16 @@ final class HomeEntriesFormattingWorkerTests: XCTestCase {
         let response = Home.CarbsDataUpdate.Response(carbsData: carbsEntries, isShown: true)
         let formattedResponse = sut.formatCarbsResponse(response)
         // Then
-        let entries = formattedResponse.entries
+        let triangles = formattedResponse.entries
+        
+        var entries = [BaseChartEntry]()
+        
+        for triangle in triangles {
+            entries.append(triangle.firstPoint)
+            entries.append(triangle.secondPoint)
+            entries.append(triangle.thirdPoint)
+        }
+        
         XCTAssert(entries.count == 6)
         XCTAssert(entries.first?.date ~~ carbsEntries.first?.date)
         XCTAssert(entries.first?.value ~ 0.0)
@@ -103,7 +130,15 @@ final class HomeEntriesFormattingWorkerTests: XCTestCase {
         let response1 = Home.CarbsDataUpdate.Response(carbsData: carbsEntries1, isShown: true)
         let formattedResponse1 = sut.formatCarbsResponse(response1)
         // Then
-        let entries1 = formattedResponse1.entries
+        let triangles1 = formattedResponse1.entries
+        
+        var entries1 = [BaseChartEntry]()
+        
+        for triangle in triangles1 {
+            entries1.append(triangle.firstPoint)
+            entries1.append(triangle.secondPoint)
+            entries1.append(triangle.thirdPoint)
+        }
         XCTAssert(entries1.count == 3)
         XCTAssert(entries1.first?.date ~~ carbsEntries1.first?.date)
         XCTAssert(entries1.first?.value ~ 0.0)
@@ -129,63 +164,27 @@ final class HomeEntriesFormattingWorkerTests: XCTestCase {
         XCTAssert(formattedResponse3.entries.isEmpty)
     }
     
-    func testGetChartButtonTitle() {
-        // Given
-        let insulinEntries: [InsulinEntry] = []
-        // When
-        let response = Home.BolusDataUpdate.Response(insulinData: insulinEntries, isShown: true)
-        _ = sut.formatBolusResponse(response)
-        let bolusChartButtonTitle = sut.getChartButtonTitle(.bolus)
-        // Then
-        XCTAssert(bolusChartButtonTitle == "0.00 \(Root.EntryType.bolus.shortLabel) >")
+    func testGetBasalValueForDate() {
+        let settings = User.current.settings
         
-        // Given
-        let insulinEntries1 = [
-            InsulinEntry(amount: 61, date: Date(), type: .bolus)
-        ]
-        // When
-        let response1 = Home.BolusDataUpdate.Response(insulinData: insulinEntries1, isShown: true)
-        _ = sut.formatBolusResponse(response1)
-        let bolusChartButtonTitle1 = sut.getChartButtonTitle(.bolus)
-        // Then
-        let amoutString = String(format: "%.2f", insulinEntries1[0].amount.rounded(to: 2))
-        XCTAssert(bolusChartButtonTitle1 == "\(amoutString) \(Root.EntryType.bolus.shortLabel) >")
+        settings?.addBasalRate(startTime: 0.0, units: 5.0)
         
-        // Given
-        let insulinEntries2 = [
-            InsulinEntry(amount: 61, date: Date() - 500, type: .bolus),
-            InsulinEntry(amount: 39, date: Date(), type: .bolus)
-        ]
-        // When
-        let response2 = Home.BolusDataUpdate.Response(insulinData: insulinEntries2, isShown: true)
-        _ = sut.formatBolusResponse(response2)
-        let bolusChartButtonTitle2 = sut.getChartButtonTitle(.bolus)
-        // Then
-        let amount = insulinEntries2[0].amount + insulinEntries2[1].amount
-        let amoutString2 = String(format: "%.2f", amount.rounded(to: 2))
-        XCTAssert(bolusChartButtonTitle2 == "\(amoutString2) \(Root.EntryType.bolus.shortLabel) >")
+        let minimumDate = Date() - .secondsPerHour * 2.0
         
-        // Given
-        let insulinEntries3 = [
-            InsulinEntry(amount: 61, date: Date() - 3800, type: .bolus),
-            InsulinEntry(amount: 39, date: Date() - 500, type: .bolus),
-            InsulinEntry(amount: 50, date: Date(), type: .bolus)
-        ]
-        // When
-        let response3 = Home.BolusDataUpdate.Response(insulinData: insulinEntries3, isShown: true)
-        _ = sut.formatBolusResponse(response3)
-        let bolusChartButtonTitle3 = sut.getChartButtonTitle(.bolus)
-        // Then
-        let insulinAbsorbtionDuration = User.current.settings.insulinActionTime
-        let pointX = Date().timeIntervalSince1970 - .secondsPerHour
-        guard let entryDate = insulinEntries3[0].date else { return XCTFail("entryDate should not be nil.") }
-        let entry = insulinEntries3[0]
-        let startX = entryDate.timeIntervalSince1970
-        let entryEndDate = entryDate.addingTimeInterval(insulinAbsorbtionDuration)
-        let endX = entryEndDate.timeIntervalSince1970
-        let lastAmount = ((pointX - startX) * (0 - entry.amount)) / (endX - startX) + entry.amount
-        let amount1 = lastAmount + insulinEntries3[1].amount + insulinEntries3[2].amount
-        let amoutString3 = String(format: "%.2f", amount1.rounded(to: 2))
-        XCTAssert(bolusChartButtonTitle3 == "\(amoutString3) \(Root.EntryType.bolus.shortLabel) >")
+        let calculatedValue1 = sut.getBasalValueForDate(date: minimumDate,
+                                                        allBasals: BasalChartDataWorker.fetchAllBasalDataForCurrentMode())
+        XCTAssert(calculatedValue1 ~ 0.0)
+        
+        InsulinEntriesWorker.addBasalEntry(amount: 10.0, date: minimumDate)
+        InsulinEntriesWorker.addBasalEntry(amount: 5.0, date: minimumDate + .secondsPerHour)
+        
+        let calculatedValue2 = sut.getBasalValueForDate(date: minimumDate - .secondsPerDay * 3.0,
+                                                        allBasals: BasalChartDataWorker.fetchAllBasalDataForCurrentMode())
+        XCTAssert(calculatedValue2 ~ 0.0)
+        
+        let calculatedValue3 = sut.getBasalValueForDate(date: minimumDate + .secondsPerHour,
+                                                        allBasals: BasalChartDataWorker.fetchAllBasalDataForCurrentMode())
+        
+        XCTAssert(calculatedValue3 ~ 10.0)
     }
 }

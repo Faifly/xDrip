@@ -9,11 +9,17 @@
 import UIKit
 
 final class ChartEntryDetailView: UIView {
-    private let labelInsets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
+    private let labelInsets = UIEdgeInsets(top: min(UIScreen.main.bounds.width * 0.01, 5.0),
+                                           left: min(UIScreen.main.bounds.width * 0.02, 5.0),
+                                           bottom: min(UIScreen.main.bounds.width * 0.01, 5.0),
+                                           right: min(UIScreen.main.bounds.width * 0.02, 5.0))
+    
+    var leftPadding = 0.0
+    var rightPadding = 0.0
     
     let containerView: UIView = {
         let view = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 1000.0, height: 58.0))
-        view.backgroundColor = .chartSelectionLine
+        view.backgroundColor = .chartDetailsBackground
         view.layer.cornerRadius = 5.0
         view.translatesAutoresizingMaskIntoConstraints = true
         view.isHidden = true
@@ -65,7 +71,7 @@ final class ChartEntryDetailView: UIView {
         let valueSubstring = NSAttributedString(
             string: topLeft,
             attributes: [
-                .font: UIFont.systemFont(ofSize: 26.0, weight: .medium),
+                .font: UIFont.systemFont(ofSize: min(UIScreen.main.bounds.width * 0.04, 26.0), weight: .medium),
                 .foregroundColor: UIColor.highEmphasisText
             ]
         )
@@ -74,7 +80,7 @@ final class ChartEntryDetailView: UIView {
         let unitSubstring = NSAttributedString(
             string: " \(topRight)\n",
             attributes: [
-                .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                .font: UIFont.systemFont(ofSize: min(UIScreen.main.bounds.width * 0.03, 14.0), weight: .medium),
                 .foregroundColor: UIColor.mediumEmphasisText
             ]
         )
@@ -83,7 +89,7 @@ final class ChartEntryDetailView: UIView {
         let dateSubstring = NSAttributedString(
             string: bottom,
             attributes: [
-                .font: UIFont.systemFont(ofSize: 14.0, weight: .medium),
+                .font: UIFont.systemFont(ofSize: min(UIScreen.main.bounds.width * 0.03, 14.0), weight: .medium),
                 .foregroundColor: UIColor.mediumEmphasisText
             ]
         )
@@ -104,17 +110,17 @@ final class ChartEntryDetailView: UIView {
     private func updateFrame() {
         let textSize = label.sizeThatFits(CGSize(width: 1000.0, height: 58.0))
         var desiredCenter = bounds.width * relativeOffset
-        if desiredCenter - textSize.width / 2.0 < 0.0 {
-            desiredCenter = textSize.width / 2.0
-        } else if desiredCenter + textSize.width / 2.0 > bounds.width {
-            desiredCenter = bounds.width - textSize.width / 2.0
+        if desiredCenter - textSize.width / 2.0 < 0.0 + leftPadding {
+            desiredCenter = textSize.width / 2.0 + leftPadding
+        } else if desiredCenter + textSize.width / 2.0 > bounds.width - rightPadding {
+            desiredCenter = bounds.width - textSize.width / 2.0 - rightPadding
         }
         
         containerView.frame = CGRect(
             x: desiredCenter - textSize.width / 2.0,
             y: 0.0,
             width: textSize.width + labelInsets.left + labelInsets.right,
-            height: 58.0
+            height: min(UIScreen.main.bounds.width * 0.12, 58.0)
         )
     }
 }

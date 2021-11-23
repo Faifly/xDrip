@@ -49,6 +49,10 @@ final class ChartScrollContainer: UIView {
         selectionIndicator.isHidden = true
     }
     
+    func showDetailView() {
+        selectionIndicator.isHidden = false
+    }
+    
     private func updateFrame(forTouchX touchX: CGFloat) {
         let finalX: CGFloat
         if touchX < 0.0 {
@@ -61,7 +65,15 @@ final class ChartScrollContainer: UIView {
         
         let relative = finalX / bounds.width
         onSelectionChanged?(relative)
-        
+        updateSelectionIndicator(finalX: finalX)
+    }
+    
+    func updateSelectionIndicator(relativeOffcet: CGFloat) {
+        let finalX = relativeOffcet * bounds.width
+        updateSelectionIndicator(finalX: finalX)
+    }
+    
+    func updateSelectionIndicator(finalX: CGFloat) {
         selectionIndicator.frame = CGRect(
             x: finalX - 1.0,
             y: 0.0,
@@ -70,11 +82,14 @@ final class ChartScrollContainer: UIView {
         )
     }
     
+    func performeInitialSelection() {
+        updateFrame(forTouchX: bounds.width * 0.8)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard shouldHandleTouches else { return }
         guard let location = touches.first?.location(in: self) else { return }
         updateFrame(forTouchX: location.x)
-        selectionIndicator.isHidden = false
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

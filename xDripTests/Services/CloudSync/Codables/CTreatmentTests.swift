@@ -30,7 +30,7 @@ final class CTreatmentTests: AbstractRealmTest {
         XCTAssertNil(treatment.exerciseIntensity)
         XCTAssertNil(treatment.utcOffset)
         XCTAssertTrue(treatment.uuid == externalID)
-        XCTAssertTrue(treatment.eventType == "Carbs")
+        XCTAssertTrue(treatment.eventType == "Meal Bolus")
         XCTAssertTrue(treatment.insulinInjections == "[]")
         
         let entryDate = try XCTUnwrap(сarbEntry.date)

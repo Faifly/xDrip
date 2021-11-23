@@ -18,6 +18,9 @@ class BaseHistoryView: UIView {
     var chartView = BaseChartView()
     weak var chartWidthConstraint: NSLayoutConstraint?
     
+    private var timer: Timer?
+    var detailsView: ChartEntryDetailView?
+    
     var globalDateRange = DateInterval()
     var localDateRange = DateInterval()
     var localInterval: TimeInterval = .secondsPerHour
@@ -36,13 +39,31 @@ class BaseHistoryView: UIView {
         setLocalTimeFrame(.secondsPerHour)
     }
     
+    func startCheckTimer() {
+        timer?.invalidate()
+        timer = nil
+        timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false, block: { [weak self] _ in
+            self?.hideDetailView()
+        })
+    }
+    
+    func hideDetailView() {
+        detailsView?.setHidden(true)
+        scrollContainer.hideDetailView()
+    }
+    
+    func showDetailView() {
+        detailsView?.setHidden(false)
+        scrollContainer.showDetailView()
+    }
+    
     func setupViews() {
         isOpaque = false
         addSubview(leftLabelsView)
         addSubview(scrollContainer)
         scrollContainer.scrollView.addSubview(chartView)
         leftLabelsView.topAnchor.constraint(equalTo: scrollContainer.topAnchor).isActive = true
-        leftLabelsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0).isActive = true
+        leftLabelsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0.0).isActive = true
         leftLabelsView.trailingAnchor.constraint(equalTo: scrollContainer.leadingAnchor).isActive = true
         leftLabelsView.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
         chartView.bindToSuperview()
@@ -71,13 +92,7 @@ class BaseHistoryView: UIView {
     
     func setupOnRelativeOffsetChanged() {}
     
-    private func setupOnSelectionChanged() {
-        scrollContainer.onSelectionChanged = { [weak self] relativeOffset in
-            guard let self = self else { return }
-            self.userRelativeSelection = relativeOffset
-            self.updateDetailView(with: relativeOffset)
-        }
-    }
+    func setupOnSelectionChanged() {}
     
     func updateDetailView(with relativeOffset: CGFloat) {
     }
@@ -85,20 +100,19 @@ class BaseHistoryView: UIView {
     func setLocalTimeFrame(_ localInterval: TimeInterval) {
         self.localInterval = localInterval
         forwardTimeOffset = horizontalInterval(for: localInterval)
-        scrollContainer.hideDetailView()
+        hideDetailView()
         update()
     }
     
     func setGlobalTimeFrame(_ globalInterval: TimeInterval) {
         self.globalInterval = globalInterval
-        scrollContainer.hideDetailView()
+        hideDetailView()
         update()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         updateChart()
-        scrollContainer.hideDetailView()
     }
     
     func update() {

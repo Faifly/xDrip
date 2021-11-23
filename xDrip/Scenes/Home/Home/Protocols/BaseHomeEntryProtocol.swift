@@ -11,7 +11,7 @@ import UIKit
 
 protocol BaseHomeEntryProtocol {
     var title: String { get }
-    var entries: [BaseChartEntry] { get }
+    var entries: [BaseChartTriangle] { get }
     var unit: String { get }
     var color: UIColor { get }
 }

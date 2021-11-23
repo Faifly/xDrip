@@ -22,6 +22,7 @@ final class ChartSettings: Object {
     @objc private(set) dynamic var showActiveCarbs: Bool = true
     @objc private(set) dynamic var showData: Bool = true
     @objc private dynamic var rawBasalDisplayMode: Int = BasalDisplayMode.default.rawValue
+    @objc private(set) dynamic var selectedTimeLine: Int = 1
     
     private(set) var basalDisplayMode: BasalDisplayMode {
         get {
@@ -53,6 +54,12 @@ final class ChartSettings: Object {
     func updateBasalDispalyMode(_ mode: BasalDisplayMode) {
         Realm.shared.safeWrite {
             self.basalDisplayMode = mode
+        }
+    }
+    
+    func updateSelectedTimeLine(_ hours: Int) {
+        Realm.shared.safeWrite {
+            self.selectedTimeLine = hours
         }
     }
 }

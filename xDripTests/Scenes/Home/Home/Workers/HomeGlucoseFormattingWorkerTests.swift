@@ -129,19 +129,4 @@ final class HomeGlucoseFormattingWorkerTests: XCTestCase {
         // Then
         XCTAssertTrue(formattedEntry8.slopeValue == "→")
     }
-    
-    func testInsulinEntryToBasalChartEntry() {
-        let date = Date().addingTimeInterval(-.secondsPerHour)
-        let entry = InsulinEntry(amount: 12.0, date: date, type: .basal)
-        
-        let formattedArray = sut.formatEntries([entry])
-        
-        guard let formattedEntry = formattedArray.first else {
-            XCTFail("Expect 1 formatted entry, got 0")
-            return
-        }
-        
-        XCTAssert(formattedEntry.date == date)
-        XCTAssert(formattedEntry.value ~ 12.0)
-    }
 }

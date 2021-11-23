@@ -99,7 +99,8 @@ final class HomeViewControllerTests: XCTestCase {
     
     func testDisplayLoad() {
         // Given
-        let viewModel = Home.Load.ViewModel()
+        let viewModel = Home.Load.ViewModel(hours: 1,
+                                            timeInterval: .secondsPerHour * TimeInterval(1))
         
         // When
         loadView()
@@ -129,35 +130,6 @@ final class HomeViewControllerTests: XCTestCase {
         XCTAssertTrue(spy.doShowBasalsListCalled)
     }
     
-    func testUpdateIntervals() throws {
-        // Given
-        let spy = HomeBusinessLogicSpy()
-        sut.interactor = spy
-        let mirror = HomeViewControllerMirror(viewController: sut)
-        
-        // When
-        loadView()
-        let view = try XCTUnwrap(mirror.carbsHistoryView)
-        view.setLocalTimeFrame(.secondsPerHour)
-        
-        // Then
-        XCTAssertTrue(view.localDateRange.duration ~~ view.localInterval + 2 * view.forwardTimeOffset)
-        
-        // When
-        
-        view.setLocalTimeFrame(12 * .secondsPerHour)
-        
-        // Then
-        XCTAssertTrue(view.localDateRange.duration ~~ view.localInterval + 2 * view.forwardTimeOffset)
-        
-        // When
-        
-        view.setLocalTimeFrame(.secondsPerDay)
-        
-        // Then
-        XCTAssertTrue(view.localDateRange.duration ~~ view.localInterval + view.forwardTimeOffset)
-    }
-    
     func testDisplayGlucoseData() throws {
         let mirror = HomeViewControllerMirror(viewController: sut)
         let worker = HomeGlucoseFormattingWorker()
@@ -172,13 +144,10 @@ final class HomeViewControllerTests: XCTestCase {
             createEntry(130.0), createEntry(170.0)
         ]
         
-        let strokeChartBasalValues = worker.formatEntries([InsulinEntry(amount: 0.0, date: Date(), type: .basal)])
-        
         let viewModel = Home.GlucoseDataUpdate.ViewModel(
             glucoseValues: glucoseValues,
             basalDisplayMode: .onTop,
-            basalValues: [],
-            strokeChartBasalValues: strokeChartBasalValues,
+            strokeChartBasalValues: [],
             unit: User.current.settings.unit.label
         )
         
@@ -186,7 +155,6 @@ final class HomeViewControllerTests: XCTestCase {
             mirror.glucoseChart?.setup(
                 with: entries,
                 basalDisplayMode: viewModel.basalDisplayMode,
-                basalEntries: viewModel.basalValues,
                 strokeChartEntries: viewModel.strokeChartBasalValues,
                 unit: viewModel.unit
             )

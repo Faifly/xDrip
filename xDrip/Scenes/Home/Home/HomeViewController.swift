@@ -67,19 +67,14 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     @IBOutlet private weak var carbsHistoryView: EntriesHistoryView!
     @IBOutlet private weak var sensorStateLabel: UILabel!
     @IBOutlet private weak var sensorStateLabelTopConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var aboutGlucoseTitleLabel: UILabel!
-    @IBOutlet private weak var aboutGlucoseContentLabel: UILabel!
-    @IBOutlet private weak var bolusCarbsTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var carbsBolusStackView: UIStackView?
     @IBOutlet private weak var mainStackView: UIStackView?
-    @IBOutlet private weak var supportingStackView: UIStackView?
-    @IBOutlet private weak var topViewLandscapeWidthConstraint: NSLayoutConstraint?
     @IBOutlet private weak var glucoseDataStackView: UIStackView!
     @IBOutlet private weak var dataView: GlucoseDataView!
-    @IBOutlet private weak var dataContentView: UIView!
     @IBOutlet private weak var optionsView: OptionsView!
     @IBOutlet private weak var optionsTitleLabel: UILabel!
-    
+    @IBOutlet private weak var topViewLandscapeWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var dataStackView: UIStackView!
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -116,6 +111,23 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     // MARK: Display
     
     func displayLoad(viewModel: Home.Load.ViewModel) {
+        let selectedSegmentIndex: Int
+        switch viewModel.hours {
+        case 1: selectedSegmentIndex = 0
+        case 3: selectedSegmentIndex = 1
+        case 6: selectedSegmentIndex = 2
+        case 12: selectedSegmentIndex = 3
+        case 24: selectedSegmentIndex = 4
+        default: selectedSegmentIndex = 0
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.timeLineSegmentView.selectedSegmentIndex = selectedSegmentIndex
+            self.glucoseChart.setLocalTimeFrame(viewModel.timeInterval)
+            self.bolusHistoryView.setLocalTimeFrame(viewModel.timeInterval)
+            self.carbsHistoryView.setLocalTimeFrame(viewModel.timeInterval)
+        }
     }
     
     func displayGlucoseData(viewModel: Home.GlucoseDataUpdate.ViewModel) {
@@ -139,24 +151,18 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     func displayBolusData(viewModel: Home.BolusDataUpdate.ViewModel) {
         bolusHistoryView.setup(with: viewModel)
-        updateBolusCarbsTopConstraint()
     }
     
     func displayBolusChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
-        bolusHistoryView.setTimeFrame(viewModel.timeInterval,
-                                      chartButtonTitle: viewModel.buttonTitle,
-                                      showChart: viewModel.isChartShown)
+        bolusHistoryView.setLocalTimeFrame(viewModel.timeInterval)
     }
     
     func displayCarbsData(viewModel: Home.CarbsDataUpdate.ViewModel) {
         carbsHistoryView.setup(with: viewModel)
-        updateBolusCarbsTopConstraint()
     }
     
     func displayCarbsChartTimeFrame(viewModel: Home.ChangeEntriesChartTimeFrame.ViewModel) {
-        carbsHistoryView.setTimeFrame(viewModel.timeInterval,
-                                      chartButtonTitle: viewModel.buttonTitle,
-                                      showChart: viewModel.isChartShown)
+        carbsHistoryView.setLocalTimeFrame(viewModel.timeInterval)
     }
     
     func displayUpdateSensorState(viewModel: Home.UpdateSensorState.ViewModel) {
@@ -178,17 +184,7 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
     
     func displayUpdateGlucoseDataView(viewModel: Home.GlucoseDataViewUpdate.ViewModel) {
         dataView.setup(with: viewModel.dataSection)
-        dataContentView.isHidden = !viewModel.dataSection.isShown
-    }
-    
-    private func updateBolusCarbsTopConstraint() {
-        if bolusHistoryView.isHidden && carbsHistoryView.isHidden {
-            bolusCarbsTopConstraint?.constant = 0
-            supportingStackView?.spacing = 0
-        } else {
-            bolusCarbsTopConstraint?.constant = 16
-            supportingStackView?.spacing = 16
-        }
+        dataStackView.isHidden = !viewModel.dataSection.isShown
     }
     
     private func setupUI() {
@@ -209,13 +205,35 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
             )
         }
         timeLineSegmentView.selectedSegmentIndex = 0
-        aboutGlucoseTitleLabel.text = "home_about_glucose_title".localized.uppercased()
-        aboutGlucoseContentLabel.text = "home_about_glucose_content".localized
         optionsTitleLabel.text = "home_options_title".localized.uppercased()
         
         glucoseChart.updateGlucoseDataViewCallback = { [weak self] dateInterval in
             let request = Home.GlucoseDataViewUpdate.Request(dateInterval: dateInterval)
             self?.interactor?.doUpdateGlucoseDataView(request: request)
+        }
+        
+        glucoseChart.onSliderViewOffsetChanged = { [weak self] offset in
+            guard let self = self else { return }
+            self.carbsHistoryView.onRelativeOffsetChanged(offset)
+            self.bolusHistoryView.onRelativeOffsetChanged(offset)
+        }
+        
+        glucoseChart.onSelectionChanged = { [weak self] relativeOffset in
+            guard let self = self else { return }
+            self.carbsHistoryView.onSelectionChanged(relativeOffset)
+            self.bolusHistoryView.onSelectionChanged(relativeOffset)
+        }
+        
+        carbsHistoryView.onSelectionChanged = { [weak self] relativeOffset in
+            guard let self = self else { return }
+            self.glucoseChart.onSelectionChanged(relativeOffset)
+            self.bolusHistoryView.onSelectionChanged(relativeOffset)
+        }
+        
+        bolusHistoryView.onSelectionChanged = { [weak self] relativeOffset in
+            guard let self = self else { return }
+            self.glucoseChart.onSelectionChanged(relativeOffset)
+            self.carbsHistoryView.onSelectionChanged(relativeOffset)
         }
     }
     
@@ -247,19 +265,21 @@ class HomeViewController: NibViewController, HomeDisplayLogic {
         super.viewWillLayoutSubviews()
         guard UIApplication.shared.applicationState != .background else { return }
         if view.bounds.width >= view.bounds.height {
-            carbsBolusStackView?.axis = .vertical
-            glucoseDataStackView?.axis = .vertical
-            supportingStackView?.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 32)
             mainStackView?.axis = .horizontal
+            glucoseDataStackView?.isLayoutMarginsRelativeArrangement = true
+            glucoseDataStackView?.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16)
+            glucoseDataStackView?.axis = .vertical
+            glucoseDataStackView?.distribution = .fill
             DispatchQueue.main.async {
                 self.topViewLandscapeWidthConstraint?.priority = .required
             }
         } else {
-            topViewLandscapeWidthConstraint?.priority = .defaultLow
             mainStackView?.axis = .vertical
-            carbsBolusStackView?.axis = .horizontal
+            glucoseDataStackView?.isLayoutMarginsRelativeArrangement = true
+            glucoseDataStackView?.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
             glucoseDataStackView?.axis = .horizontal
-            supportingStackView?.layoutMargins = UIEdgeInsets(top: 32, left: 32, bottom: 0, right: 32)
+            glucoseDataStackView?.distribution = .fillEqually
+            topViewLandscapeWidthConstraint?.priority = .defaultLow
         }
     }
 }

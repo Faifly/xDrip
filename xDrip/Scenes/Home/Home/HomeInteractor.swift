@@ -38,7 +38,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     private var activeCarbsObserver: [NSObjectProtocol]?
     private var dataSectionObserver: [NSObjectProtocol]?
     private var deviceModeObserver: [NSObjectProtocol]?
-    private var hours: Int = 1
+    private var hours: Int = User.current.settings.chart.selectedTimeLine
     
     private var timer: Timer?
     private var currentGlucoseTimer: Timer?
@@ -151,7 +151,8 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     // MARK: Do something
     
     func doLoad(request: Home.Load.Request) {
-        let response = Home.Load.Response()
+        let response = Home.Load.Response(hours: hours,
+                                          timeInterval: .secondsPerHour * TimeInterval(hours))
         presenter?.presentLoad(response: response)
         updateGlucoseCurrentInfo()
         updateGlucoseChartData()
@@ -182,6 +183,7 @@ final class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     
     func doChangeGlucoseChartTimeFrame(request: Home.ChangeEntriesChartTimeFrame.Request) {
         hours = request.hours
+        User.current.settings.chart.updateSelectedTimeLine(request.hours)
         let response = Home.ChangeEntriesChartTimeFrame.Response(
             timeInterval: .secondsPerHour * TimeInterval(request.hours)
         )

@@ -14,12 +14,13 @@ import UIKit
 
 protocol BaseFoodEntryViewModel {
     var chartTitle: String { get }
-    var chartButtonTitle: String { get }
-    var entries: [BaseChartEntry] { get }
+    var chartUnit: String { get }
+    var entries: [BaseChartTriangle] { get }
     var unit: String { get }
     var color: UIColor { get }
     var isShown: Bool { get }
     var isChartShown: Bool { get }
+    var detailViewPaddings: UIEdgeInsets { get }
 }
 
 enum Home {
@@ -59,9 +60,13 @@ enum Home {
         }
         
         struct Response {
+            let hours: Int
+            let timeInterval: TimeInterval
         }
         
         struct ViewModel {
+            let hours: Int
+            let timeInterval: TimeInterval
         }
     }
     
@@ -108,12 +113,13 @@ enum Home {
         
         struct ViewModel: BaseFoodEntryViewModel {
             let chartTitle: String
-            let chartButtonTitle: String
-            let entries: [BaseChartEntry]
+            let chartUnit: String
+            let entries: [BaseChartTriangle]
             let unit: String
             let color: UIColor
             let isShown: Bool
             let isChartShown: Bool
+            let detailViewPaddings: UIEdgeInsets
         }
     }
         
@@ -128,12 +134,13 @@ enum Home {
         
         struct ViewModel: BaseFoodEntryViewModel {
             let chartTitle: String
-            let chartButtonTitle: String
-            let entries: [BaseChartEntry]
+            let chartUnit: String
+            let entries: [BaseChartTriangle]
             let unit: String
             let color: UIColor
             let isShown: Bool
             let isChartShown: Bool
+            let detailViewPaddings: UIEdgeInsets
         }
     }
     
@@ -174,7 +181,7 @@ enum Home {
         
         struct ViewModel {
             let timeInterval: TimeInterval
-            let buttonTitle: String
+            let chartUnit: String
             let isChartShown: Bool
         }
     }

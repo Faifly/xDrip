@@ -11,7 +11,7 @@ import AKUtils
 
 struct InsulinCarbEntry: BaseHomeEntryProtocol {
     let title: String
-    let entries: [BaseChartEntry]
+    let entries: [BaseChartTriangle]
     let unit: String
     let color: UIColor
 }
@@ -31,7 +31,7 @@ private class ChartEntry {
 protocol HomeEntriesFormattingWorkerProtocol {
     func formatBolusResponse(_ response: Home.BolusDataUpdate.Response) -> InsulinCarbEntry
     func formatCarbsResponse(_ response: Home.CarbsDataUpdate.Response) -> InsulinCarbEntry
-    func getChartButtonTitle(_ entryType: Root.EntryType) -> String
+    func getChartUnit(_ entryType: Root.EntryType) -> String
     func getChartShouldBeShown(_ entryType: Root.EntryType) -> Bool
     func setTimeInterval(_ localInterval: TimeInterval)
     func calculateChartValues(for hours: Int, allBasals: [InsulinEntry]) -> [BaseChartEntry]
@@ -61,9 +61,9 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
                                 color: .carbsChartEntry)
     }
     
-    func formatEntries(_ entries: [AbstractAbsorbableEntryProtocol]) -> [BaseChartEntry] {
+    func formatEntries(_ entries: [AbstractAbsorbableEntryProtocol]) -> [BaseChartTriangle] {
         let entries = createChartEntriesFrom(entries)
-        var baseChartEntries: [BaseChartEntry] = []
+        var baseChartEntries: [BaseChartTriangle] = []
         let chartStartDate = Date().addingTimeInterval(-.secondsPerDay)
         
         for entry in entries {
@@ -71,12 +71,12 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
             
             guard entry.endDate > chartStartDate else { continue }
             
-            baseChartEntries.append(BaseChartEntry(value: 0.0,
-                                                   date: entry.startDate))
-            baseChartEntries.append(BaseChartEntry(value: entry.amount,
-                                                   date: entry.startDate))
-            baseChartEntries.append(BaseChartEntry(value: 0.0,
-                                                   date: entry.endDate))
+            baseChartEntries.append(BaseChartTriangle(firstPoint: BaseChartEntry(value: 0.0,
+                                                                                 date: entry.startDate),
+                                                      secondPoint: BaseChartEntry(value: entry.amount,
+                                                                                  date: entry.startDate),
+                                                      thirdPoint: BaseChartEntry(value: 0.0,
+                                                                                 date: entry.endDate)))
         }
         return baseChartEntries
     }
@@ -85,21 +85,18 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
         timeInterval = localInterval
     }
     
-    func getChartButtonTitle(_ entryType: Root.EntryType) -> String {
-        var entries: [AbstractAbsorbableEntryProtocol]
+    func getChartUnit(_ entryType: Root.EntryType) -> String {
         var shortLabel: String
         switch entryType {
         case .bolus:
-            entries = insulinEntries
-            shortLabel = Root.EntryType.bolus.shortLabel + " >"
+            shortLabel = Root.EntryType.bolus.shortLabel
         case .carbs:
-            entries = carbEntries
-            shortLabel = Root.EntryType.carbs.shortLabel + " >"
+            shortLabel = Root.EntryType.carbs.shortLabel
         default:
             return ""
         }
         
-        return makeButtonTitle(entries: entries, shortLabel: shortLabel)
+        return shortLabel
     }
     
     private func createChartEntriesFrom(_ entries: [AbstractAbsorbableEntryProtocol]) -> [ChartEntry] {
@@ -114,31 +111,6 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
                                       endDate: date + entry.absorptionDuration))
         }
         return objects
-    }
-    
-    private func makeButtonTitle(entries: [AbstractAbsorbableEntryProtocol],
-                                 shortLabel: String) -> String {
-        let currentDate = Date()
-        let entries = createChartEntriesFrom(entries).sorted(by: { $0.startDate < $1.startDate })
-        entries.forEach { entry in adjustEntryAmount(entries, entry) }
-        
-        let validEntries = entries.filter({ $0.endDate > currentDate })
-        var totalAmount = 0.0
-        
-        for entry in validEntries {
-            let pointY = calculatePointYFor(pointX: currentDate,
-                                            startX: entry.startDate,
-                                            startY: entry.amount,
-                                            endX: entry.endDate)
-            
-            if totalAmount < pointY {
-                totalAmount = pointY
-            }
-        }
-        
-        currentAmount = totalAmount
-        
-        return String(format: "%.2f", totalAmount.rounded(to: 2)) + " \(shortLabel)"
     }
     
     private func adjustEntryAmount(_ objects: [ChartEntry], _ entry: ChartEntry) {
@@ -173,7 +145,7 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
         return ((pointX - startX) * (0.0 - startY)) / (endX - startX) + startY
     }
     
-    private func getBasalValueForDate(date: Date, allBasals: [InsulinEntry]) -> Double {
+    func getBasalValueForDate(date: Date, allBasals: [InsulinEntry]) -> Double {
         let minimumDate = date - .secondsPerDay * 3.0
         let all = allBasals.filter({ $0.date >=? minimumDate &&
             $0.date <=? date && $0.isValid })
@@ -250,12 +222,18 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
         for basalRate in basalRates {
             rates.append(contentsOf:
                             [
-                                BasalRate(startTime: basalRate.startTime - .secondsPerDay * 3.0, units: basalRate.units),
-                                BasalRate(startTime: basalRate.startTime - .secondsPerDay * 2.0, units: basalRate.units),
-                                BasalRate(startTime: basalRate.startTime - .secondsPerDay, units: basalRate.units),
-                                BasalRate(startTime: basalRate.startTime + .secondsPerDay, units: basalRate.units),
-                                BasalRate(startTime: basalRate.startTime + .secondsPerDay * 2.0, units: basalRate.units),
-                                BasalRate(startTime: basalRate.startTime + .secondsPerDay * 3.0, units: basalRate.units)
+                                BasalRate(startTime: basalRate.startTime - .secondsPerDay * 3.0,
+                                          units: basalRate.units),
+                                BasalRate(startTime: basalRate.startTime - .secondsPerDay * 2.0,
+                                          units: basalRate.units),
+                                BasalRate(startTime: basalRate.startTime - .secondsPerDay,
+                                          units: basalRate.units),
+                                BasalRate(startTime: basalRate.startTime + .secondsPerDay,
+                                          units: basalRate.units),
+                                BasalRate(startTime: basalRate.startTime + .secondsPerDay * 2.0,
+                                          units: basalRate.units),
+                                BasalRate(startTime: basalRate.startTime + .secondsPerDay * 3.0,
+                                          units: basalRate.units)
                             ]
             )
         }
@@ -280,8 +258,17 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
         let all = allBasals.filter({ $0.date >=? minimumDate &&
             $0.isValid })
         
-        if (User.current.settings.deviceMode == .follower) {
-            return formatEntries(all)
+        if User.current.settings.deviceMode == .follower {
+            let triangles = formatEntries(all)
+            var points = [BaseChartEntry]()
+            
+            for triangle in triangles {
+                points.append(triangle.firstPoint)
+                points.append(triangle.secondPoint)
+                points.append(triangle.thirdPoint)
+            }
+            
+            return points
         } else {
             let entries = all.map({ BaseChartEntry(value: $0.amount, date: $0.date ?? Date()) })
             
@@ -291,13 +278,17 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
             var prevEntry = BaseChartEntry(value: lastValue, date: minimumDate)
             points.append(prevEntry)
             for entry in entries {
-                points.append(contentsOf: calculateValue(prevEntry: prevEntry, toDate: entry.date, lastValue: &lastValue))
+                points.append(contentsOf: calculateValue(prevEntry: prevEntry,
+                                                         toDate: entry.date,
+                                                         lastValue: &lastValue))
                 lastValue += entry.value
                 points.append(BaseChartEntry(value: lastValue, date: entry.date))
                 prevEntry = entry
             }
             points.append(contentsOf:
-                            calculateValue(prevEntry: prevEntry, toDate: Date() + .secondsPerHour * 6.0, lastValue: &lastValue)
+                            calculateValue(prevEntry: prevEntry,
+                                           toDate: Date() + .secondsPerHour * 6.0,
+                                           lastValue: &lastValue)
             )
             points.sort { first, second -> Bool in
                 if first.date == second.date {
@@ -317,8 +308,17 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
             $0.date >=? minimumDate && $0.date <=? maximumDate && $0.isValid
         })
         
-        if (User.current.settings.deviceMode == .follower) {
-            return formatEntries(all)
+        if User.current.settings.deviceMode == .follower {
+            let triangles = formatEntries(all)
+            var points = [BaseChartEntry]()
+            
+            for triangle in triangles {
+                points.append(triangle.firstPoint)
+                points.append(triangle.secondPoint)
+                points.append(triangle.thirdPoint)
+            }
+        
+            return points
         } else {
             let entries = all.map({ BaseChartEntry(value: $0.amount, date: $0.date ?? Date()) })
             
@@ -328,13 +328,17 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
             var prevEntry = BaseChartEntry(value: lastValue, date: minimumDate)
             points.append(prevEntry)
             for entry in entries {
-                points.append(contentsOf: calculateValue(prevEntry: prevEntry, toDate: entry.date, lastValue: &lastValue))
+                points.append(contentsOf: calculateValue(prevEntry: prevEntry,
+                                                         toDate: entry.date,
+                                                         lastValue: &lastValue))
                 lastValue += entry.value
                 points.append(BaseChartEntry(value: lastValue, date: entry.date))
                 prevEntry = entry
             }
             points.append(contentsOf:
-                            calculateValue(prevEntry: prevEntry, toDate: maximumDate, lastValue: &lastValue)
+                            calculateValue(prevEntry: prevEntry,
+                                           toDate: maximumDate,
+                                           lastValue: &lastValue)
             )
             points.sort { first, second -> Bool in
                 if first.date == second.date {
@@ -345,7 +349,5 @@ final class HomeEntriesFormattingWorker: HomeEntriesFormattingWorkerProtocol {
             
             return points
         }
-        
-        
     }
 }

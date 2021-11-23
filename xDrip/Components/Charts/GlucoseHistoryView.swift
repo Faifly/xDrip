@@ -11,7 +11,7 @@ import UIKit
 final class GlucoseHistoryView: BaseHistoryView {
     private let chartSliderView = ChartSliderView()
     private var glucoseChartView = GlucoseChartView()
-    private var detailsView: ChartEntryDetailView?
+    
     private var glucoseEntries: [GlucoseChartGlucoseEntry] = []
     private let rightLabelsView = ChartVerticalLabelsView()
     private var basalDisplayMode: ChartSettings.BasalDisplayMode = .notShown
@@ -22,6 +22,9 @@ final class GlucoseHistoryView: BaseHistoryView {
     private var scrollContainerTopConstraint: NSLayoutConstraint?
     
     var updateGlucoseDataViewCallback: ((DateInterval) -> Void)?
+    
+    var onSliderViewOffsetChanged: ((CGFloat) -> Void)?
+    var onSelectionChanged: ((CGFloat) -> Void)?
     
     var detailsEnabled: Bool = true {
         didSet {
@@ -72,9 +75,9 @@ final class GlucoseHistoryView: BaseHistoryView {
             multiplier: 1.0 / 4.0,
             constant: rightLabelsView.chartInsets.bottom
         ).isActive = true
-        rightLabelsView.leadingAnchor.constraint(equalTo: scrollContainer.trailingAnchor, constant: 8.0).isActive = true
+        rightLabelsView.leadingAnchor.constraint(equalTo: scrollContainer.trailingAnchor, constant: 3.0).isActive = true
         rightLabelsView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        rightLabelsView.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
+        rightLabelsView.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
     }
     
     func setupDetailsView() {
@@ -120,9 +123,28 @@ final class GlucoseHistoryView: BaseHistoryView {
                 x: contentWidth * offset + 30.0 * offset / maxPossibleOffset,
                 y: 0.0
             )
+            
+            if self.userRelativeSelection == nil {
+                self.scrollContainer.performeInitialSelection()
+            }
+            
             self.updateDetailLabel()
             self.updateGlucoseDataView()
+            self.onSliderViewOffsetChanged?(offset)
         }
+    }
+    
+    override func setupOnSelectionChanged() {
+        scrollContainer.onSelectionChanged = { [weak self] relativeOffset in
+            guard let self = self else { return }
+            self.onSelectionChanged(relativeOffset)
+            self.onSelectionChanged?(relativeOffset)
+        }
+    }
+    
+    func onSelectionChanged(_ relativeOffset: CGFloat) {
+        self.userRelativeSelection = relativeOffset
+        self.updateDetailView(with: relativeOffset)
     }
     
     override func updateChartSliderView(with scrollSegments: CGFloat) {
@@ -166,22 +188,8 @@ final class GlucoseHistoryView: BaseHistoryView {
     override func updateDetailView(with relativeOffset: CGFloat) {
         updateDetailLabel()
         detailsView?.setRelativeOffset(relativeOffset)
+        scrollContainer.updateSelectionIndicator(relativeOffcet: relativeOffset)
       }
-    
-    override func setLocalTimeFrame(_ localInterval: TimeInterval) {
-        super.setLocalTimeFrame(localInterval)
-        detailsView?.setHidden(true)
-    }
-    
-    override func setGlobalTimeFrame(_ globalInterval: TimeInterval) {
-        super.setGlobalTimeFrame(globalInterval)
-        detailsView?.setHidden(true)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        detailsView?.setHidden(true)
-    }
     
     override func updateChart() {
         super.calculateVerticalLeftLabels(minValue: glucoseEntries.map({ $0.value }).min(),
@@ -222,9 +230,10 @@ final class GlucoseHistoryView: BaseHistoryView {
         let selectedDate = globalDateRange.start + currentRelativeStartTime
         if let entry = nearestEntry(forDate: selectedDate) {
             detailsView?.set(value: entry.value, unit: unit, date: entry.date)
-            detailsView?.setHidden(false)
+            showDetailView()
+            startCheckTimer()
         } else {
-            detailsView?.setHidden(true)
+            hideDetailView()
         }
     }
     

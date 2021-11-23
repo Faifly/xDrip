@@ -29,6 +29,7 @@ extension UIColor {
         case chartValueAbnormal
         case chartValueCritical
         case chartSliderBackground
+        case chartDetailsBackground
         case chartSelectionLine
         case customBlue
         case diffTextColor
@@ -119,6 +120,10 @@ extension UIColor {
     
     static var chartSelectionLine: UIColor {
         return color(withName: Colors.chartSelectionLine.rawValue)
+    }
+    
+    static var chartDetailsBackground: UIColor {
+        return color(withName: Colors.chartDetailsBackground.rawValue)
     }
     
     static var customBlue: UIColor {

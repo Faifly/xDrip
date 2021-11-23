@@ -24,3 +24,9 @@ struct BaseChartEntry {
     var value: Double
     var date: Date
 }
+
+struct BaseChartTriangle {
+    var firstPoint: BaseChartEntry
+    var secondPoint: BaseChartEntry
+    var thirdPoint: BaseChartEntry
+}

@@ -83,8 +83,7 @@ final class HistoryRootPresenterTests: XCTestCase {
             glucoseData: [],
             intervalGlucoseData: [],
             basalDisplayMode: .notShown,
-            insulinData: [],
-            chartPointsData: [],
+            basalData: [],
             date: nil
         )
         

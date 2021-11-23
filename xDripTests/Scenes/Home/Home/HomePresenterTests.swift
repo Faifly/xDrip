@@ -77,7 +77,8 @@ final class HomePresenterTests: XCTestCase {
         // Given
         let spy = HomeDisplayLogicSpy()
         sut.viewController = spy
-        let response = Home.Load.Response()
+        let response = Home.Load.Response(hours: 1,
+                                          timeInterval: .secondsPerHour * TimeInterval(1))
         
         // When
         sut.presentLoad(response: response)
